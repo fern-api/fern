@@ -2211,13 +2211,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "externalUserIdInfo": {
-                "primitive": {
-                  "string": "Info about external userId",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
               "superTokensUserId": {
                 "primitive": {
                   "string": "fa7a0841-b533-4478-95533-0fde890c3483",
@@ -2847,13 +2840,6 @@ exports[`open api parser supertokens parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "externalUserIdInfo": {
-                "primitive": {
-                  "string": "new external userId info",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
               "userId": {
                 "primitive": {
                   "string": "fa7a0841-b533-4478-95533-0fde890c3483",
@@ -5894,22 +5880,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -6184,22 +6155,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -6805,29 +6761,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -7088,15 +7022,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -7661,22 +7587,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "newPassword": {
-                "primitive": {
-                  "string": "newpassword123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -8155,22 +8066,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "passwordHash": {
-                "primitive": {
-                  "string": "passwordHash",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -8515,15 +8411,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "thirdPartyId": {
-                "primitive": {
-                  "string": "google",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -9283,6 +9171,13 @@ Note that there is an invisible character at the end of the path, this was to av
                             },
                             "type": "primitive",
                           },
+                          "userId": {
+                            "primitive": {
+                              "string": "userId",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                         },
                         "type": "object",
                       },
@@ -9539,6 +9434,13 @@ Note that there is an invisible character at the end of the path, this was to av
                           "id": {
                             "primitive": {
                               "string": "google",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "userId": {
+                            "primitive": {
+                              "string": "userId",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -10036,22 +9938,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -10264,22 +10151,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -10722,15 +10594,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "token": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -11019,22 +10883,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -11466,15 +11315,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -11748,15 +11589,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -12946,18 +12779,6 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
-              "permissions": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "permission",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -13464,18 +13285,6 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
-              "permissions": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "permission",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -14802,29 +14611,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "enableAntiCsrf": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "useDynamicSigningKey": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -15304,20 +15091,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "sessionHandles": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -15597,43 +15371,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "accessToken": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "antiCsrfToken": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "checkDatabase": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "doAntiCsrfCheck": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "enableAntiCsrf": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -16077,13 +15815,6 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
-              "antiCsrfToken": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
               "enableAntiCsrf": {
                 "primitive": {
                   "boolean": false,
@@ -16833,15 +16564,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "accessToken": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -17630,29 +17353,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "jwksDomain": {
-                "primitive": {
-                  "string": "https://api.test.com/",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "useStaticSigningKey": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "validity": {
-                "primitive": {
-                  "double": 86400,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -18565,22 +18266,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password@123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -18987,29 +18673,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "newEmail": {
-                "primitive": {
-                  "string": "test2@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "newPassword": {
-                "primitive": {
-                  "string": "password@123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -20143,15 +19807,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "sessionId": {
-                "primitive": {
-                  "string": "rf32f-f32342f-32f-323r2f3-23",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -20598,22 +20254,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password@123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -23055,15 +22696,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -23849,15 +23482,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "licenseKey": {
-                "primitive": {
-                  "string": "eyJhbGciOiJIUzI1NiIsIn...",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {

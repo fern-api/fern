@@ -1615,6 +1615,12 @@ exports[`open api parser hathora simple 1`] = `
                       "rooms": [
                         {
                           "appId": "appId",
+                          "currentAllocation": {
+                            "processId": "processId",
+                            "roomAllocationId": "roomAllocationId",
+                            "scheduledAt": "2024-01-15T09:30:00Z",
+                            "unscheduledAt": "2024-01-15T09:30:00Z",
+                          },
                           "roomId": "roomId",
                           "status": "scheduling",
                         },

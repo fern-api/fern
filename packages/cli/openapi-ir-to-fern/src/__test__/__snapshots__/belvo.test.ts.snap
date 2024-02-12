@@ -287,6 +287,7 @@ client.connect()
                       "interest_rates": [
                         {
                           "name": "jurosEfetivo",
+                          "type": "MONTHLY",
                           "value": 7.85,
                         },
                       ],
@@ -476,6 +477,7 @@ client.connect()
                     "results": [
                       {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -487,29 +489,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -809,9 +854,7 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -840,7 +883,17 @@ client.connect()
                       "currency": "MXN",
                       "funds_data": [
                         {
+                          "balance": 88427.94,
                           "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
                         },
                       ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -870,6 +923,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": "MONTHLY",
                             "value": 7.85,
                           },
                         ],
@@ -1048,7 +1102,6 @@ client.connect()
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1077,7 +1130,17 @@ client.connect()
                       "currency": "MXN",
                       "funds_data": [
                         {
+                          "balance": 88427.94,
                           "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
                         },
                       ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -1107,6 +1170,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": "MONTHLY",
                             "value": 7.85,
                           },
                         ],
@@ -1481,7 +1545,17 @@ client.connect()
                       "currency": "MXN",
                       "funds_data": [
                         {
+                          "balance": 88427.94,
                           "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
                         },
                       ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -1511,6 +1585,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": "MONTHLY",
                             "value": 7.85,
                           },
                         ],
@@ -1698,26 +1773,96 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
+                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "created_at": "2022-02-09T08:45:50.406032Z",
+                          "credit_data": {
+                            "collected_at": "2019-09-27T13:01:41.941Z",
+                            "credit_limit": 192000,
+                            "cutting_date": "2019-12-11",
+                            "end_date": "end_date",
+                            "interest_rate": 4,
+                            "last_payment_date": "last_payment_date",
+                            "minimum_payment": 2400.3,
+                            "monthly_payment": 1.1,
+                            "next_payment_date": "2019-12-13",
+                            "no_interest_payment": 2690.83,
+                          },
                           "currency": "MXN",
+                          "funds_data": [
+                            {
+                              "balance": 88427.94,
+                              "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "public_identifications": [
+                                {
+                                  "name": "CNPJ",
+                                  "value": "05.954.445/0221-68",
+                                },
+                              ],
+                              "type": "CNPJ",
+                            },
+                          ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "institution": {
+                            "name": "erebor_mx_retail",
+                            "type": "bank",
+                          },
+                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
+                            "credit_limit": 1.1,
+                            "cutting_date": "cutting_date",
+                            "cutting_day": "cutting_day",
+                            "fees": [
+                              {
+                                "type": "OPERATION_FEE",
+                                "value": 5.6,
+                              },
+                            ],
+                            "interest_rate": 1.1,
+                            "interest_rates": [
+                              {
+                                "name": "jurosEfetivo",
+                                "type": "MONTHLY",
+                                "value": 7.85,
+                              },
+                            ],
+                            "last_payment_date": "last_payment_date",
+                            "last_period_balance": 1.1,
+                            "limit_day": "limit_day",
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "no_interest_payment": 1.1,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
                           "number": "4057068115181",
                           "public_identification_name": "CLABE",
                           "public_identification_value": "150194683119900273",
+                          "receivables_data": {
+                            "anticipated": 1393.46,
+                            "available": 800.37,
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "current": 2193.83,
+                          },
                           "type": "Cuentas de efectivo",
                         },
                         "balance": 50000,
@@ -1961,15 +2106,14 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -1981,29 +2125,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -2160,17 +2347,16 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2021-01-18",
                   "date_to": "2021-02-15",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -2182,29 +2368,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -2729,7 +2958,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "institution": "BBVA",
                         "mcc": 1,
                         "merchant": {
+                          "logo": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?202110180743",
                           "merchant_name": "Apple, Inc",
+                          "website": "https://www.apple.com/br/",
                         },
                         "subcategory": "Freelance",
                         "transaction_id": "3CWE4927CF15355",
@@ -3079,6 +3310,7 @@ At the moment, the employment records resource is available for:
                         "employment_status_updates": [
                           {
                             "base_salary": 1033.09,
+                            "event": "DISMISSED_RESIGNED",
                             "update_date": "2021-09-01",
                           },
                         ],
@@ -3102,7 +3334,10 @@ At the moment, the employment records resource is available for:
                     "personal_data": {
                       "birth_date": "2022-02-09",
                       "document_ids": [
-                        {},
+                        {
+                          "document_number": "10277663582",
+                          "document_type": "NSS",
+                        },
                       ],
                       "email": "bruce.banner@avengers.com",
                       "entitlements": {
@@ -3181,7 +3416,15 @@ At the moment, the employment records resource is available for:
                             "currency": "MXN",
                             "employer": "Batman Enterprises CDMX",
                             "employer_id": "780-BAT-88769-CDMX",
+                            "employment_status_updates": [
+                              {
+                                "base_salary": 1033.09,
+                                "event": "DISMISSED_RESIGNED",
+                                "update_date": "2021-09-01",
+                              },
+                            ],
                             "end_date": "2019-12-31",
+                            "monthly_salary": 1.1,
                             "most_recent_base_salary": 762.54,
                             "start_date": "2019-10-10",
                             "state": "DISTRITO FEDERAL",
@@ -3197,7 +3440,31 @@ At the moment, the employment records resource is available for:
                         "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
                         "internal_identification": "BLPM951331IONVGR54",
                         "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                        "personal_data": {
+                          "birth_date": "2022-02-09",
+                          "document_ids": [
+                            {
+                              "document_number": "10277663582",
+                              "document_type": "NSS",
+                            },
+                          ],
+                          "email": "bruce.banner@avengers.com",
+                          "entitlements": {
+                            "entitled_to_company_benefits": true,
+                            "entitled_to_health_insurance": true,
+                            "status": "EMPLOYED",
+                            "valid_until": "valid_until",
+                          },
+                          "first_name": "Bruce",
+                          "last_name": "Banner del Torro",
+                          "official_name": "Bruce Banner del Torro",
+                        },
                         "report_date": "2023-01-19",
+                        "social_security_summary": {
+                          "weeks_contributed": 1,
+                          "weeks_redeemed": 1,
+                          "weeks_reinstated": 1,
+                        },
                       },
                     ],
                   },
@@ -3267,7 +3534,15 @@ At the moment, the employment records resource is available for:
                           "currency": "MXN",
                           "employer": "Batman Enterprises CDMX",
                           "employer_id": "780-BAT-88769-CDMX",
+                          "employment_status_updates": [
+                            {
+                              "base_salary": 1033.09,
+                              "event": "DISMISSED_RESIGNED",
+                              "update_date": "2021-09-01",
+                            },
+                          ],
                           "end_date": "2019-12-31",
+                          "monthly_salary": 1.1,
                           "most_recent_base_salary": 762.54,
                           "start_date": "2019-10-10",
                           "state": "DISTRITO FEDERAL",
@@ -3286,12 +3561,17 @@ At the moment, the employment records resource is available for:
                       "personal_data": {
                         "birth_date": "2022-02-09",
                         "document_ids": [
-                          {},
+                          {
+                            "document_number": "10277663582",
+                            "document_type": "NSS",
+                          },
                         ],
                         "email": "bruce.banner@avengers.com",
                         "entitlements": {
                           "entitled_to_company_benefits": true,
                           "entitled_to_health_insurance": true,
+                          "status": "EMPLOYED",
+                          "valid_until": "valid_until",
                         },
                         "first_name": "Bruce",
                         "last_name": "Banner del Torro",
@@ -3380,8 +3660,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "examples": [
               {
                 "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
                   "language": "pt",
                   "transactions": [
                     {
@@ -3987,9 +4265,7 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -4150,10 +4426,7 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "date_from": "2020-08-01",
-                  "date_to": "2020-12-30",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -4580,6 +4853,15 @@ client.connect()
                             "type": "text",
                             "validation": "^.{1,}$",
                             "validation_message": "Invalid client number",
+                            "values": [
+                              {
+                                "code": "001",
+                                "label": "Cédula de Ciudadanía",
+                                "placeholder": "DEF4444908M22",
+                                "validation": "^.{1,}$",
+                                "validation_message": "Invalid document number",
+                              },
+                            ],
                           },
                         ],
                         "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -5099,7 +5381,20 @@ client.connect()
                             "balance_gross": 100.09,
                             "balance_net": 99.09,
                             "currency": "USD",
+                            "fees": [
+                              {
+                                "type": "OPERATION_FEE",
+                                "value": 123.09,
+                              },
+                            ],
                             "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                            "interest_rates": [
+                              {
+                                "index": "CDI",
+                                "type": "yearly",
+                                "value": 11.31,
+                              },
+                            ],
                             "name": "CBD DIGITAL ESPECIAL",
                             "open_date": "2021-08-10",
                             "price": 10.41,
@@ -5111,6 +5406,12 @@ client.connect()
                               },
                             ],
                             "quantity": 27.46,
+                            "redemption_conditions": [
+                              {
+                                "type": "due_date",
+                                "value": "12-02-2023",
+                              },
+                            ],
                             "subtype": "CBD",
                             "type": "BOND",
                           },
@@ -5255,7 +5556,6 @@ client.connect()
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -5426,7 +5726,6 @@ client.connect()
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -5794,9 +6093,11 @@ client.connect()
                         "quantity": 1,
                         "retained_taxes": [
                           {
+                            "collected_at": "2019-09-27T13:01:41.941Z",
                             "retained_tax_amount": 209.79,
                             "tax": "ISR",
                             "tax_percentage": 10,
+                            "tax_type": "tax_type",
                           },
                         ],
                         "tax_amount": 64,
@@ -6041,12 +6342,23 @@ client.connect()
                         "invoice_date": "2019-12-01",
                         "invoice_details": [
                           {
+                            "collected_at": "2019-09-27T13:01:41.941Z",
                             "description": "December 2019 accounting fees",
                             "pre_tax_amount": 400,
                             "product_identification": "84101600",
                             "quantity": 1,
+                            "retained_taxes": [
+                              {
+                                "collected_at": "2019-09-27T13:01:41.941Z",
+                                "retained_tax_amount": 209.79,
+                                "tax": "ISR",
+                                "tax_percentage": 10,
+                                "tax_type": "tax_type",
+                              },
+                            ],
                             "tax_amount": 64,
                             "tax_percentage": 16,
+                            "tax_type": "tax_type",
                             "total_amount": 464,
                             "unit_amount": 200,
                             "unit_code": "E48",
@@ -6064,6 +6376,7 @@ client.connect()
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00.000Z",
                             "exchange_rate": "3.75",
@@ -6087,6 +6400,7 @@ client.connect()
                         ],
                         "payroll": {
                           "amount": 20400.1,
+                          "collected_at": "2019-09-27T13:01:41.941Z",
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 1,
@@ -6359,9 +6673,7 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -6380,12 +6692,23 @@ client.connect()
                       "invoice_date": "2019-12-01",
                       "invoice_details": [
                         {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
                           "description": "December 2019 accounting fees",
                           "pre_tax_amount": 400,
                           "product_identification": "84101600",
                           "quantity": 1,
+                          "retained_taxes": [
+                            {
+                              "collected_at": "2019-09-27T13:01:41.941Z",
+                              "retained_tax_amount": 209.79,
+                              "tax": "ISR",
+                              "tax_percentage": 10,
+                              "tax_type": "tax_type",
+                            },
+                          ],
                           "tax_amount": 64,
                           "tax_percentage": 16,
+                          "tax_type": "tax_type",
                           "total_amount": 464,
                           "unit_amount": 200,
                           "unit_code": "E48",
@@ -6403,6 +6726,7 @@ client.connect()
                         {
                           "amount": 8000.5,
                           "beneficiary_account_number": "12343453245633",
+                          "beneficiary_rfc": "BNM840515VB1",
                           "currency": "BRL",
                           "date": "2020-03-17T12:00:00.000Z",
                           "exchange_rate": "3.75",
@@ -6595,8 +6919,6 @@ client.connect()
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -6615,12 +6937,23 @@ client.connect()
                       "invoice_date": "2019-12-01",
                       "invoice_details": [
                         {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
                           "description": "December 2019 accounting fees",
                           "pre_tax_amount": 400,
                           "product_identification": "84101600",
                           "quantity": 1,
+                          "retained_taxes": [
+                            {
+                              "collected_at": "2019-09-27T13:01:41.941Z",
+                              "retained_tax_amount": 209.79,
+                              "tax": "ISR",
+                              "tax_percentage": 10,
+                              "tax_type": "tax_type",
+                            },
+                          ],
                           "tax_amount": 64,
                           "tax_percentage": 16,
+                          "tax_type": "tax_type",
                           "total_amount": 464,
                           "unit_amount": 200,
                           "unit_code": "E48",
@@ -6638,6 +6971,7 @@ client.connect()
                         {
                           "amount": 8000.5,
                           "beneficiary_account_number": "12343453245633",
+                          "beneficiary_rfc": "BNM840515VB1",
                           "currency": "BRL",
                           "date": "2020-03-17T12:00:00.000Z",
                           "exchange_rate": "3.75",
@@ -7483,7 +7817,6 @@ client.connect()
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -7636,19 +7969,8 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "certificate": "1234567890abcd=",
-                  "credentials_storage": "store",
-                  "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                  "fetch_historical": true,
                   "institution": "erebor_mx_retail",
-                  "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
                   "username": "username",
-                  "username2": "secondusername",
-                  "username3": "thirdusername",
-                  "username_type": "001",
                 },
                 "response": {
                   "body": {
@@ -7930,12 +8252,7 @@ For a list of standards codes, see the table below.
                   "omit": "link,balance",
                 },
                 "request": {
-                  "certificate": "1234567890abcd=",
                   "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
-                  "username_type": "001",
                 },
                 "response": {
                   "body": {
@@ -8665,9 +8982,7 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -8825,7 +9140,6 @@ client.connect()
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -9074,6 +9388,15 @@ client.connect()
                             "type": "text",
                             "validation": "^.{1,}$",
                             "validation_message": "Invalid client number",
+                            "values": [
+                              {
+                                "code": "001",
+                                "label": "Cédula de Ciudadanía",
+                                "placeholder": "DEF4444908M22",
+                                "validation": "^.{1,}$",
+                                "validation_message": "Invalid document number",
+                              },
+                            ],
                           },
                         ],
                         "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
@@ -9443,11 +9766,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "amount": "1234.12",
                   "customer": "06dc2f14-1217-4480-9b36-550a944a39d1",
                   "description": "Shoe payment",
-                  "expires_in": "7d",
                   "payment_method_details": {
                     "open_finance": {
                       "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                      "callback_url": "https://www.acmecorp.com/checkout/3487321",
                     },
                   },
                   "provider": "belvo",
@@ -10043,8 +10364,6 @@ You can use the Payment Transactions resource in order to get useful information
             "examples": [
               {
                 "request": {
-                  "auth_header": "Authorization",
-                  "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
                   "name": "Your webhook name",
                   "url": "https://mycompany.com/security/webhook",
                 },
@@ -10261,6 +10580,7 @@ You can use the Payment Transactions resource in order to get useful information
                           "id": "a7a3104c-5a3c-4536-81e1-14523097f645",
                           "institution": {
                             "name": "erebor_mx_retail",
+                            "type": "bank",
                           },
                         },
                         "collected_at": "2020-04-23T21:32:55.336854+00:00",
@@ -10268,6 +10588,7 @@ You can use the Payment Transactions resource in order to get useful information
                         "currency": "BRL",
                         "fees": [
                           {
+                            "type": "TRANSACTION_FEE",
                             "value": 2.21,
                           },
                         ],
@@ -10406,7 +10727,6 @@ You can use the Payment Transactions resource in order to get useful information
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -10659,6 +10979,7 @@ client.connect()
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -10670,29 +10991,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -10851,26 +11215,96 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
+                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "created_at": "2022-02-09T08:45:50.406032Z",
+                          "credit_data": {
+                            "collected_at": "2019-09-27T13:01:41.941Z",
+                            "credit_limit": 192000,
+                            "cutting_date": "2019-12-11",
+                            "end_date": "end_date",
+                            "interest_rate": 4,
+                            "last_payment_date": "last_payment_date",
+                            "minimum_payment": 2400.3,
+                            "monthly_payment": 1.1,
+                            "next_payment_date": "2019-12-13",
+                            "no_interest_payment": 2690.83,
+                          },
                           "currency": "MXN",
+                          "funds_data": [
+                            {
+                              "balance": 88427.94,
+                              "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "public_identifications": [
+                                {
+                                  "name": "CNPJ",
+                                  "value": "05.954.445/0221-68",
+                                },
+                              ],
+                              "type": "CNPJ",
+                            },
+                          ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "institution": {
+                            "name": "erebor_mx_retail",
+                            "type": "bank",
+                          },
+                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
+                            "credit_limit": 1.1,
+                            "cutting_date": "cutting_date",
+                            "cutting_day": "cutting_day",
+                            "fees": [
+                              {
+                                "type": "OPERATION_FEE",
+                                "value": 5.6,
+                              },
+                            ],
+                            "interest_rate": 1.1,
+                            "interest_rates": [
+                              {
+                                "name": "jurosEfetivo",
+                                "type": "MONTHLY",
+                                "value": 7.85,
+                              },
+                            ],
+                            "last_payment_date": "last_payment_date",
+                            "last_period_balance": 1.1,
+                            "limit_day": "limit_day",
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "no_interest_payment": 1.1,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
                           "number": "4057068115181",
                           "public_identification_name": "CLABE",
                           "public_identification_value": "150194683119900273",
+                          "receivables_data": {
+                            "anticipated": 1393.46,
+                            "available": 800.37,
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "current": 2193.83,
+                          },
                           "type": "Cuentas de efectivo",
                         },
                         "average_transaction_amount": 32.9,
@@ -11043,15 +11477,14 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -11063,29 +11496,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -11235,16 +11711,14 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -11256,29 +11730,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -11811,9 +12328,7 @@ client. risk_insights.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -11938,7 +12453,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -12661,7 +13175,6 @@ client.connect()
                 },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                 },
                 "response": {
                   "body": {
@@ -13418,9 +13931,7 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "year_from": "2018",
                   "year_to": "2019",
                 },
@@ -13882,6 +14393,7 @@ client.tax_retentions.list(params: {
                         "retention_breakdown": [
                           {
                             "base_amount": 0.03,
+                            "payment_status": "PAID",
                             "retained_amount": 0,
                             "tax_type": "01",
                           },
@@ -14002,6 +14514,7 @@ client.tax_retentions.list(params: {
                       "retention_breakdown": [
                         {
                           "base_amount": 0.03,
+                          "payment_status": "PAID",
                           "retained_amount": 0,
                           "tax_type": "01",
                         },
@@ -14661,11 +15174,9 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -15098,7 +15609,10 @@ client.connect()
                   "body": {
                     "address": {
                       "between_street": [
-                        {},
+                        {
+                          "street_one": "CALLE PRINCIPE",
+                          "street_two": "CALLE NUEVA ROMA",
+                        },
                       ],
                       "exterior_number": "432",
                       "interior_number": "PLANTA BAJA",
@@ -15295,32 +15809,69 @@ client.connect()
                     "results": [
                       {
                         "address": {
+                          "between_street": [
+                            {
+                              "street_one": "CALLE PRINCIPE",
+                              "street_two": "CALLE NUEVA ROMA",
+                            },
+                          ],
+                          "exterior_number": "432",
+                          "interior_number": "PLANTA BAJA",
+                          "locality": "none",
+                          "municipality": "CDMX DC",
                           "postal_code": "21255",
+                          "state": "Federal",
+                          "street": "LA MALINCHE",
+                          "street_type": "CALLE",
+                          "suburb": "BUENAVENTURA",
                         },
                         "collected_at": "2020-04-23T21:32:55.336Z",
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
                         "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
                         "economic_activity": [
-                          {},
+                          {
+                            "economic_activity": "Asalariado",
+                            "end_date": "end_date",
+                            "initial_date": "2020-12-06",
+                            "order": "2",
+                            "percentage": "1",
+                          },
                         ],
                         "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
                         "id_cif": "12345678901",
                         "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
                         "obligations": [
-                          {},
+                          {
+                            "end_date": "end_date",
+                            "expiration": "Conjuntamente con la declaración anual del ejercicio.",
+                            "initial_date": "2020-12-06",
+                            "obligation": "Declaración informativa de IVA con la anual de ISR",
+                          },
                         ],
                         "official_name": "John Doe",
                         "pdf": "=PDF-STRING=",
                         "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
                         "regimes": [
                           {
+                            "end_date": "end_date",
                             "initial_date": "2020-12-06",
                             "regimen": "Régimen de Ingresos por Dividendos (socios y accionistas)",
                           },
                         ],
                         "tax_payer_information": {
+                          "commercial_name": "Jar Jar Transport",
+                          "curp": "curp",
+                          "email": "john_doe@gmail.com",
+                          "first_last_name": "DOE",
+                          "last_status_change_date": "last_status_change_date",
+                          "name": "JOHN",
+                          "phone": "1234567890",
                           "rfc": "BEMP12345G58",
+                          "second_last_name": "SCHMOE",
+                          "social_name": "John Doe SA DE CV",
+                          "start_operations_date": "start_operations_date",
+                          "status_padron": "status_padron",
                         },
                       },
                     ],
@@ -15491,13 +16042,15 @@ client.connect()
                 },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                 },
                 "response": {
                   "body": {
                     "address": {
                       "between_street": [
-                        {},
+                        {
+                          "street_one": "CALLE PRINCIPE",
+                          "street_two": "CALLE NUEVA ROMA",
+                        },
                       ],
                       "exterior_number": "432",
                       "interior_number": "PLANTA BAJA",
@@ -15930,7 +16483,17 @@ client.connect()
                       "currency": "MXN",
                       "funds_data": [
                         {
+                          "balance": 88427.94,
                           "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
                         },
                       ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -15960,6 +16523,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": "MONTHLY",
                             "value": 7.85,
                           },
                         ],
@@ -16199,26 +16763,96 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
+                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "created_at": "2022-02-09T08:45:50.406032Z",
+                          "credit_data": {
+                            "collected_at": "2019-09-27T13:01:41.941Z",
+                            "credit_limit": 192000,
+                            "cutting_date": "2019-12-11",
+                            "end_date": "end_date",
+                            "interest_rate": 4,
+                            "last_payment_date": "last_payment_date",
+                            "minimum_payment": 2400.3,
+                            "monthly_payment": 1.1,
+                            "next_payment_date": "2019-12-13",
+                            "no_interest_payment": 2690.83,
+                          },
                           "currency": "MXN",
+                          "funds_data": [
+                            {
+                              "balance": 88427.94,
+                              "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "public_identifications": [
+                                {
+                                  "name": "CNPJ",
+                                  "value": "05.954.445/0221-68",
+                                },
+                              ],
+                              "type": "CNPJ",
+                            },
+                          ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "institution": {
+                            "name": "erebor_mx_retail",
+                            "type": "bank",
+                          },
+                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
+                            "credit_limit": 1.1,
+                            "cutting_date": "cutting_date",
+                            "cutting_day": "cutting_day",
+                            "fees": [
+                              {
+                                "type": "OPERATION_FEE",
+                                "value": 5.6,
+                              },
+                            ],
+                            "interest_rate": 1.1,
+                            "interest_rates": [
+                              {
+                                "name": "jurosEfetivo",
+                                "type": "MONTHLY",
+                                "value": 7.85,
+                              },
+                            ],
+                            "last_payment_date": "last_payment_date",
+                            "last_period_balance": 1.1,
+                            "limit_day": "limit_day",
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "no_interest_payment": 1.1,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
                           "number": "4057068115181",
                           "public_identification_name": "CLABE",
                           "public_identification_value": "150194683119900273",
+                          "receivables_data": {
+                            "anticipated": 1393.46,
+                            "available": 800.37,
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "current": 2193.83,
+                          },
                           "type": "Cuentas de efectivo",
                         },
                         "accounting_date": "2019-10-23T13:01:41.941Z",
@@ -16227,12 +16861,21 @@ client.connect()
                         "category": "Income & Payments",
                         "collected_at": "2019-11-28T10:27:44.813Z",
                         "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_card_data": {
+                          "bill_amount": 300,
+                          "bill_name": "apr-2020",
+                          "bill_status": "PAID",
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "previous_bill_total": "9614.30",
+                        },
                         "currency": "BRL",
                         "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
                         "merchant": {
+                          "logo": "https://logo.clearbit.com/asesor-contable.es",
                           "merchant_name": "Merchants R Us Global",
+                          "website": "https://merchants-r-us.com",
                         },
                         "observations": "OPTIONAL OBSERVATIONS",
                         "reference": "8703",
@@ -16595,15 +17238,14 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -16615,29 +17257,72 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -16819,17 +17504,16 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
                     {
                       "account": {
                         "balance": {
+                          "available": 5621.12,
                           "current": 5874.13,
                         },
                         "balance_type": "ASSET",
@@ -16841,29 +17525,72 @@ If you try to access older information than what we can access, we will return a
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
+                          "end_date": "end_date",
                           "interest_rate": 4,
+                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
+                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "public_identifications": [
+                              {
+                                "name": "CNPJ",
+                                "value": "05.954.445/0221-68",
+                              },
+                            ],
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "institution": {
                           "name": "erebor_mx_retail",
+                          "type": "bank",
                         },
                         "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40.000Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_amount": 202000,
                           "contract_end_date": "2027-10-01",
+                          "contract_number": "890ASLDJF87SD00",
+                          "contract_start_date": "2020-03-01",
+                          "credit_limit": 1.1,
+                          "cutting_date": "cutting_date",
+                          "cutting_day": "cutting_day",
+                          "fees": [
+                            {
+                              "type": "OPERATION_FEE",
+                              "value": 5.6,
+                            },
+                          ],
+                          "interest_rate": 1.1,
+                          "interest_rates": [
+                            {
+                              "name": "jurosEfetivo",
+                              "type": "MONTHLY",
+                              "value": 7.85,
+                            },
+                          ],
+                          "last_payment_date": "last_payment_date",
+                          "last_period_balance": 1.1,
+                          "limit_day": "limit_day",
+                          "loan_type": "Consignado",
                           "monthly_payment": 1000,
+                          "no_interest_payment": 1.1,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
+                          "outstanding_principal": 142023,
+                          "payment_day": "27",
                           "principal": 192000,
                         },
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -17052,11 +17779,9 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {

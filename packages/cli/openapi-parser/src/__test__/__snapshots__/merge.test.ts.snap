@@ -2232,6 +2232,18 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "eins": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "eins",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "id": {
                         "primitive": {
                           "string": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
@@ -2903,6 +2915,27 @@ exports[`open api parser merge parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "company_deduction": {
+                                "primitive": {
+                                  "double": 78.78,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "employee_deduction": {
+                                "primitive": {
+                                  "double": 34.54,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "employee_payroll_run": {
+                                "primitive": {
+                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
                               "id": {
                                 "primitive": {
                                   "string": "5fd439fc-1b64-4755-b275-64918936c365",
@@ -2917,6 +2950,44 @@ exports[`open api parser merge parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
+                              "name": {
+                                "primitive": {
+                                  "string": "Social Security",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "path",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "remote_id": {
+                                "primitive": {
+                                  "string": "93478612",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "remote_was_deleted": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
                             },
                             "type": "object",
                           },
@@ -2927,6 +2998,20 @@ exports[`open api parser merge parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "amount": {
+                                "primitive": {
+                                  "double": 1002.34,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "employee_payroll_run": {
+                                "primitive": {
+                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
                               "id": {
                                 "primitive": {
                                   "string": "babbced6-3a81-4775-8da2-490dc6385259",
@@ -2940,6 +3025,41 @@ exports[`open api parser merge parse open api 1`] = `
                                   "type": "datetime",
                                 },
                                 "type": "primitive",
+                              },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "path",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "remote_id": {
+                                "primitive": {
+                                  "string": "52802",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "remote_was_deleted": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "enum": "SALARY",
+                                "type": "enum",
                               },
                             },
                             "type": "object",
@@ -3038,6 +3158,27 @@ exports[`open api parser merge parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "amount": {
+                                "primitive": {
+                                  "double": 100.25,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "employee_payroll_run": {
+                                "primitive": {
+                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "employer_tax": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
                               "id": {
                                 "primitive": {
                                   "string": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
@@ -3049,6 +3190,44 @@ exports[`open api parser merge parse open api 1`] = `
                                 "primitive": {
                                   "datetime": "2021-10-16T00:00:00Z",
                                   "type": "datetime",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "California State Income Tax",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "path",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "remote_id": {
+                                "primitive": {
+                                  "string": "26806834",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "remote_was_deleted": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
                                 },
                                 "type": "primitive",
                               },
@@ -4116,6 +4295,18 @@ exports[`open api parser merge parse open api 1`] = `
                         "enum": "ACTIVE",
                         "type": "enum",
                       },
+                      "employments": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "employments",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "ethnicity": {
                         "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
                         "type": "enum",
@@ -4130,6 +4321,18 @@ exports[`open api parser merge parse open api 1`] = `
                       "gender": {
                         "enum": "MALE",
                         "type": "enum",
+                      },
+                      "groups": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "groups",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "hire_date": {
                         "primitive": {
@@ -9574,13 +9777,6 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "message": {
-                "primitive": {
-                  "string": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
               "reason": {
                 "enum": "GENERAL_CUSTOMER_REQUEST",
                 "type": "enum",
@@ -12751,6 +12947,13 @@ exports[`open api parser merge parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "image": {
+                            "primitive": {
+                              "string": "image",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "name": {
                             "primitive": {
                               "string": "name",
@@ -12768,6 +12971,13 @@ exports[`open api parser merge parse open api 1`] = `
                           "slug": {
                             "primitive": {
                               "string": "slug",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "square_image": {
+                            "primitive": {
+                              "string": "square_image",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -15849,9 +16059,30 @@ exports[`open api parser merge parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "common_model",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
                               "string": "condition_schema_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "field_name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "native_name",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -15878,9 +16109,30 @@ exports[`open api parser merge parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "common_model",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
                               "string": "condition_schema_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "field_name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "native_name",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -16082,9 +16334,30 @@ exports[`open api parser merge parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "common_model",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
                               "string": "condition_schema_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "field_name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "native_name",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -16111,9 +16384,30 @@ exports[`open api parser merge parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "common_model",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
                               "string": "condition_schema_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "field_name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "native_name",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -16365,7 +16659,22 @@ exports[`open api parser merge parse open api 1`] = `
                             "type": "object",
                           },
                           {
-                            "properties": {},
+                            "properties": {
+                              "is_unique": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                              "operator": {
+                                "primitive": {
+                                  "string": "operator",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
                             "type": "object",
                           },
                         ],
@@ -16418,7 +16727,22 @@ exports[`open api parser merge parse open api 1`] = `
                       "operators": {
                         "array": [
                           {
-                            "properties": {},
+                            "properties": {
+                              "is_unique": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                              "operator": {
+                                "primitive": {
+                                  "string": "operator",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
                             "type": "object",
                           },
                         ],

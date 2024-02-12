@@ -2051,6 +2051,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                             },
                             "type": "primitive",
                           },
+                          "regionName": {
+                            "primitive": {
+                              "string": "regionName",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                         },
                         "type": "object",
                       },
@@ -3580,6 +3587,20 @@ The default response lists only recent transactions. Normally, this is transacti
                       },
                       "check": {
                         "properties": {
+                          "imageBack_url": {
+                            "primitive": {
+                              "string": "imageBack_url",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "imageFront_url": {
+                            "primitive": {
+                              "string": "imageFront_url",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "number": {
                             "primitive": {
                               "int": 1,
@@ -3617,6 +3638,32 @@ The default response lists only recent transactions. Normally, this is transacti
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "merchant": {
+                        "properties": {
+                          "logo_url": {
+                            "primitive": {
+                              "string": "logo_url",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "website_url": {
+                            "primitive": {
+                              "string": "website_url",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "occurredOn": {
                         "primitive": {
@@ -4494,6 +4541,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "creditsOn": {
                             "primitive": {
                               "string": "2026-06-26",
@@ -4508,8 +4562,19 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "endsOn": {
+                            "primitive": {
+                              "string": "endsOn",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "frequency": {
                             "enum": "once",
+                            "type": "enum",
+                          },
+                          "recurrenceType": {
+                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4664,8 +4729,19 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "endsOn": {
+                            "primitive": {
+                              "string": "endsOn",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "frequency": {
                             "enum": "monthly",
+                            "type": "enum",
+                          },
+                          "recurrenceType": {
+                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4799,6 +4875,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "creditsOn": {
                             "primitive": {
                               "string": "2026-06-26",
@@ -4813,8 +4896,19 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "endsOn": {
+                            "primitive": {
+                              "string": "endsOn",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "frequency": {
                             "enum": "once",
+                            "type": "enum",
+                          },
+                          "recurrenceType": {
+                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4843,6 +4937,14 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                             },
                             "type": "primitive",
                           },
+                          "location": {
+                            "enum": "internal",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
                         },
                         "type": "object",
                       },
@@ -4865,6 +4967,10 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "location": {
+                            "enum": "internal",
+                            "type": "enum",
                           },
                           "type": {
                             "enum": "savings",
@@ -5123,13 +5229,6 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
@@ -5153,13 +5252,6 @@ Note: This operation requires an identity challenge if the financial institution
                     },
                     "type": "primitive",
                   },
-                  "label": {
-                    "primitive": {
-                      "string": "Checking *1008",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
                   "location": {
                     "enum": "internal",
                     "type": "enum",
@@ -5172,13 +5264,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "id": {
                     "primitive": {
                       "string": "88b1ca3e-d0f3",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "label": {
-                    "primitive": {
-                      "string": "Checking *1008",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -5796,13 +5881,6 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
@@ -5817,45 +5895,11 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "object",
               },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "primitive": {
-                      "string": "e821ce54-c715",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "label": {
-                    "primitive": {
-                      "string": "Premiere Checking *6789",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "location": {
-                    "enum": "internal",
-                    "type": "enum",
-                  },
-                  "type": {
-                    "enum": "checking",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
               "targetAccount": {
                 "properties": {
                   "id": {
                     "primitive": {
                       "string": "88b1ca3e-d0f3",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "label": {
-                    "primitive": {
-                      "string": "Checking *1008",
                       "type": "string",
                     },
                     "type": "primitive",

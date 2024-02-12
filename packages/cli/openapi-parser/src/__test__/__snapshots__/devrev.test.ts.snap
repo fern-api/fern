@@ -1526,6 +1526,13 @@ disabled.
                       },
                       "display_picture": {
                         "properties": {
+                          "display_id": {
+                            "primitive": {
+                              "string": "display_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "id": {
                             "primitive": {
                               "string": "id",

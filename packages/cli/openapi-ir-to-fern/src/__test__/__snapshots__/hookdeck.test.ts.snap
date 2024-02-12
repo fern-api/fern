@@ -315,7 +315,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "alias": "alias",
                         "created_at": "2024-01-15T09:30:00Z",
                         "data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "event_data_id": "event_data_id",
                         "id": "id",
@@ -1945,6 +1950,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2043,6 +2050,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2178,6 +2187,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2237,34 +2248,47 @@ exports[`open api parser hookdeck simple 1`] = `
                         "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "destination": {
+                          "archived_at": "2024-01-15T09:30:00Z",
+                          "cli_path": "cli_path",
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "name": "name",
+                          "path_forwarding_disabled": true,
+                          "rate_limit": 1,
+                          "rate_limit_period": "second",
                           "team_id": "team_id",
                           "updated_at": "2024-01-15T09:30:00Z",
+                          "url": "url",
                         },
                         "id": "id",
                         "name": "name",
                         "paused_at": "2024-01-15T09:30:00Z",
                         "resolved_rules": [
                           {
+                            "count": 1,
+                            "interval": 1,
                             "strategy": "linear",
                             "type": "retry",
                           },
                         ],
                         "rules": [
                           {
+                            "count": 1,
+                            "interval": 1,
                             "strategy": "linear",
                             "type": "retry",
                           },
                         ],
                         "ruleset": {
+                          "archived_at": "2024-01-15T09:30:00Z",
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "is_team_default": true,
                           "name": "name",
                           "rules": [
                             {
+                              "count": 1,
+                              "interval": 1,
                               "strategy": "linear",
                               "type": "retry",
                             },
@@ -2273,8 +2297,18 @@ exports[`open api parser hookdeck simple 1`] = `
                           "updated_at": "2024-01-15T09:30:00Z",
                         },
                         "source": {
+                          "archived_at": "2024-01-15T09:30:00Z",
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
+                          "integration": {
+                            "features": [
+                              "VERIFICATION",
+                            ],
+                            "id": "id",
+                            "label": "label",
+                            "provider": "twitter",
+                          },
+                          "integration_id": "integration_id",
                           "name": "name",
                           "team_id": "team_id",
                           "updated_at": "2024-01-15T09:30:00Z",
@@ -2376,6 +2410,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2473,6 +2509,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2570,6 +2608,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2670,6 +2710,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -2793,6 +2835,8 @@ exports[`open api parser hookdeck simple 1`] = `
                       "name": "name",
                       "rules": [
                         {
+                          "count": 1,
+                          "interval": 1,
                           "strategy": "linear",
                           "type": "retry",
                         },
@@ -3541,7 +3585,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "created_at": "2024-01-15T09:30:00Z",
                         "created_at_id": "created_at_id",
                         "data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "destination_id": "destination_id",
                         "event_data_id": "event_data_id",
@@ -4419,6 +4468,11 @@ exports[`open api parser hookdeck simple 1`] = `
                     "count": 1,
                     "models": [
                       {
+                        "channels": {
+                          "slack": {
+                            "channel_name": "channel_name",
+                          },
+                        },
                         "configs": {
                           "connections": "connections",
                           "strategy": "first_attempt",
@@ -5036,7 +5090,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "created_at": "2024-01-15T09:30:00Z",
                         "created_at_id": "created_at_id",
                         "data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "destination_id": "destination_id",
                         "event_data_id": "event_data_id",
@@ -5214,7 +5273,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "cli_events_count": 1,
                         "created_at": "2024-01-15T09:30:00Z",
                         "data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "duplicate_hash": "duplicate_hash",
                         "duplicate_hits": 1,
@@ -5303,7 +5367,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "created_at": "2024-01-15T09:30:00Z",
                         "created_at_id": "created_at_id",
                         "data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "destination_id": "destination_id",
                         "event_data_id": "event_data_id",
@@ -5598,6 +5667,8 @@ exports[`open api parser hookdeck simple 1`] = `
                         "name": "name",
                         "rules": [
                           {
+                            "count": 1,
+                            "interval": 1,
                             "strategy": "linear",
                             "type": "retry",
                           },
@@ -6421,13 +6492,23 @@ exports[`open api parser hookdeck simple 1`] = `
                           },
                         ],
                         "original_event_data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "original_event_data_id": "original_event_data_id",
                         "team_id": "team_id",
                         "transformation_id": "transformation_id",
                         "transformed_event_data": {
+                          "body": "body",
+                          "headers": "headers",
+                          "is_large_payload": true,
+                          "parsed_query": "parsed_query",
                           "path": "path",
+                          "query": "query",
                         },
                         "transformed_event_data_id": "transformed_event_data_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -6487,6 +6568,9 @@ exports[`open api parser hookdeck simple 1`] = `
                         "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "encrypted_env": "encrypted_env",
+                        "env": {
+                          "env": "env",
+                        },
                         "id": "id",
                         "iv": "iv",
                         "name": "name",

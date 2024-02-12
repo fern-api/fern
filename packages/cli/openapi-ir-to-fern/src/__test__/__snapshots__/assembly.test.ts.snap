@@ -462,7 +462,17 @@ The LLM response data, as well as any context provided in the original request w
                     "iab_categories_result": {
                       "results": [
                         {
+                          "labels": [
+                            {
+                              "label": "label",
+                              "relevance": 1.1,
+                            },
+                          ],
                           "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
                         },
                       ],
                       "status": "success",
@@ -518,6 +528,7 @@ The LLM response data, as well as any context provided in the original request w
                           {
                             "confidence": 1.1,
                             "end": 1,
+                            "speaker": "speaker",
                             "start": 1,
                             "text": "text",
                           },
@@ -678,7 +689,17 @@ The LLM response data, as well as any context provided in the original request w
                     "iab_categories_result": {
                       "results": [
                         {
+                          "labels": [
+                            {
+                              "label": "label",
+                              "relevance": 1.1,
+                            },
+                          ],
                           "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
                         },
                       ],
                       "status": "success",
@@ -734,6 +755,7 @@ The LLM response data, as well as any context provided in the original request w
                           {
                             "confidence": 1.1,
                             "end": 1,
+                            "speaker": "speaker",
                             "start": 1,
                             "text": "text",
                           },
@@ -884,7 +906,17 @@ The LLM response data, as well as any context provided in the original request w
                     "iab_categories_result": {
                       "results": [
                         {
+                          "labels": [
+                            {
+                              "label": "label",
+                              "relevance": 1.1,
+                            },
+                          ],
                           "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
                         },
                       ],
                       "status": "success",
@@ -940,6 +972,7 @@ The LLM response data, as well as any context provided in the original request w
                           {
                             "confidence": 1.1,
                             "end": 1,
+                            "speaker": "speaker",
                             "start": 1,
                             "text": "text",
                           },
@@ -1011,6 +1044,7 @@ The LLM response data, as well as any context provided in the original request w
                           {
                             "confidence": 1.1,
                             "end": 1,
+                            "speaker": "speaker",
                             "start": 1,
                             "text": "text",
                           },
@@ -1104,6 +1138,7 @@ The LLM response data, as well as any context provided in the original request w
                           {
                             "confidence": 1.1,
                             "end": 1,
+                            "speaker": "speaker",
                             "start": 1,
                             "text": "text",
                           },

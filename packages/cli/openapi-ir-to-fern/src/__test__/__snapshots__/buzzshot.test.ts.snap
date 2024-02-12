@@ -63,11 +63,16 @@ exports[`open api parser buzzshot simple 1`] = `
                         "added_at": "2024-01-15T09:30:00Z",
                         "complete": {
                           "completed_at": "2024-01-15T09:30:00Z",
+                          "completion_time": 1,
+                          "did_win": true,
+                          "hints": 1,
+                          "score": 1,
                         },
                         "date": "date",
                         "extra_fields": [
                           {
                             "key": "key",
+                            "label": "label",
                             "present": true,
                           },
                         ],
@@ -76,7 +81,10 @@ exports[`open api parser buzzshot simple 1`] = `
                         "name": "name",
                         "photos": [
                           {
+                            "added_at": "2024-01-15T09:30:00Z",
                             "photo": "photo",
+                            "processed_image": "processed_image",
+                            "ready": "ready",
                           },
                         ],
                         "room": "room",
@@ -137,17 +145,28 @@ exports[`open api parser buzzshot simple 1`] = `
                         "date": "date",
                         "games": [
                           {
+                            "added_at": "2024-01-15T09:30:00Z",
                             "complete": {
                               "completed_at": "2024-01-15T09:30:00Z",
+                              "completion_time": 1,
+                              "did_win": true,
+                              "hints": 1,
+                              "score": 1,
                             },
                             "date": "date",
                             "extra_fields": [
                               {
                                 "key": "key",
+                                "label": "label",
                                 "present": true,
                               },
                             ],
+                            "id": 1,
+                            "name": "name",
+                            "room": "room",
+                            "start_at": "2024-01-15T09:30:00Z",
                             "time": "time",
+                            "updated_at": "2024-01-15T09:30:00Z",
                           },
                         ],
                         "id": 1,
@@ -155,19 +174,30 @@ exports[`open api parser buzzshot simple 1`] = `
                         "name": "name",
                         "photos": [
                           {
+                            "added_at": "2024-01-15T09:30:00Z",
+                            "game": "game",
                             "photo": "photo",
+                            "processed_image": "processed_image",
+                            "ready": "ready",
                           },
                         ],
                         "players": [
                           {
+                            "added_at": "2024-01-15T09:30:00Z",
                             "email": "email",
                             "extra_fields": [
                               {
                                 "key": "key",
+                                "label": "label",
                                 "present": true,
                               },
                             ],
+                            "first_name": "first_name",
+                            "last_name": "last_name",
                             "phone": "phone",
+                            "player": "player",
+                            "signature": "signature",
+                            "updated_at": "2024-01-15T09:30:00Z",
                           },
                         ],
                         "start_at": "2024-01-15T09:30:00Z",
@@ -257,7 +287,12 @@ exports[`open api parser buzzshot simple 1`] = `
                         "original_image": "original_image",
                         "processed": [
                           {
+                            "added_at": "2024-01-15T09:30:00Z",
+                            "game": "game",
+                            "group": "group",
                             "photo": "photo",
+                            "processed_image": "processed_image",
+                            "ready": "ready",
                           },
                         ],
                       },
@@ -299,6 +334,7 @@ exports[`open api parser buzzshot simple 1`] = `
                         "extra_fields": [
                           {
                             "key": "key",
+                            "label": "label",
                             "present": true,
                           },
                         ],
@@ -456,11 +492,16 @@ exports[`open api parser buzzshot simple 1`] = `
                         "added_at": "2024-01-15T09:30:00Z",
                         "complete": {
                           "completed_at": "2024-01-15T09:30:00Z",
+                          "completion_time": 1,
+                          "did_win": true,
+                          "hints": 1,
+                          "score": 1,
                         },
                         "date": "date",
                         "extra_fields": [
                           {
                             "key": "key",
+                            "label": "label",
                             "present": true,
                           },
                         ],
@@ -491,6 +532,7 @@ exports[`open api parser buzzshot simple 1`] = `
                         "extra_fields": [
                           {
                             "key": "key",
+                            "label": "label",
                             "present": true,
                           },
                         ],

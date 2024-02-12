@@ -649,24 +649,35 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                       },
                       "actions": {
                         "clone": {
+                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                          "key": "key",
+                          "name": "name",
                         },
                         "push": {
+                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                          "key": "key",
+                          "name": "name",
                         },
                         "read": {
+                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                          "key": "key",
+                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -825,24 +836,35 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       },
                       "actions": {
                         "clone": {
+                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                          "key": "key",
+                          "name": "name",
                         },
                         "push": {
+                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                          "key": "key",
+                          "name": "name",
                         },
                         "read": {
+                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                          "key": "key",
+                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -937,24 +959,35 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         },
                         "actions": {
                           "clone": {
+                            "description": "description",
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                            "key": "key",
+                            "name": "name",
                           },
                           "push": {
+                            "description": "description",
                             "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                            "key": "key",
+                            "name": "name",
                           },
                           "read": {
+                            "description": "description",
                             "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                            "key": "key",
+                            "name": "name",
                           },
                         },
                         "attributes": {
                           "created": {
                             "description": "the time (timestamp) the repository was created",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                            "key": "key",
                             "type": "time",
                           },
                           "private": {
                             "description": "whether the repo is private (if false, the repo is public)",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                            "key": "key",
                             "type": "bool",
                           },
                         },
@@ -1063,24 +1096,35 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         },
                         "actions": {
                           "clone": {
+                            "description": "description",
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                            "key": "key",
+                            "name": "name",
                           },
                           "push": {
+                            "description": "description",
                             "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                            "key": "key",
+                            "name": "name",
                           },
                           "read": {
+                            "description": "description",
                             "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                            "key": "key",
+                            "name": "name",
                           },
                         },
                         "attributes": {
                           "created": {
                             "description": "the time (timestamp) the repository was created",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                            "key": "key",
                             "type": "time",
                           },
                           "private": {
                             "description": "whether the repo is private (if false, the repo is public)",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                            "key": "key",
                             "type": "bool",
                           },
                         },
@@ -1182,26 +1226,42 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource": {
+                          "action_groups": {
+                            "action_groups": [
+                              "action_groups",
+                            ],
+                          },
                           "actions": {
                             "clone": {
+                              "description": "description",
                               "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                              "key": "key",
+                              "name": "name",
                             },
                             "push": {
+                              "description": "description",
                               "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                              "key": "key",
+                              "name": "name",
                             },
                             "read": {
+                              "description": "description",
                               "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                              "key": "key",
+                              "name": "name",
                             },
                           },
                           "attributes": {
                             "created": {
                               "description": "the time (timestamp) the repository was created",
                               "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                              "key": "key",
                               "type": "time",
                             },
                             "private": {
                               "description": "whether the repo is private (if false, the repo is public)",
                               "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                              "key": "key",
                               "type": "bool",
                             },
                           },
@@ -1340,24 +1400,35 @@ Fields that will be provided will be completely overwritten.",
                       },
                       "actions": {
                         "clone": {
+                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                          "key": "key",
+                          "name": "name",
                         },
                         "push": {
+                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                          "key": "key",
+                          "name": "name",
                         },
                         "read": {
+                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                          "key": "key",
+                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -1808,13 +1879,29 @@ allowed.",
                           "grants": [
                             {
                               "access_level": "admin",
+                              "environment_id": "environment_id",
+                              "environment_key": "environment_key",
+                              "environment_name": "environment_name",
                               "object_type": "org",
                               "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                              "organization_key": "organization_key",
+                              "organization_name": "organization_name",
+                              "project_id": "project_id",
+                              "project_key": "project_key",
+                              "project_name": "project_name",
                             },
                             {
                               "access_level": "admin",
+                              "environment_id": "environment_id",
+                              "environment_key": "environment_key",
+                              "environment_name": "environment_name",
                               "object_type": "org",
                               "organization_id": "organization_id",
+                              "organization_key": "organization_key",
+                              "organization_name": "organization_name",
+                              "project_id": "project_id",
+                              "project_key": "project_key",
+                              "project_name": "project_name",
                             },
                           ],
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
@@ -1842,6 +1929,7 @@ allowed.",
                             "failed_reason": "",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                             "invite_code": "40ef0e48-a11f-4963-a229-e396c9eeefff",
+                            "member_id": "member_id",
                             "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                             "role": "admin",
                             "status": "pending",
@@ -4997,24 +5085,35 @@ A resource may also contain:
                         },
                         "actions": {
                           "clone": {
+                            "description": "description",
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                            "key": "key",
+                            "name": "name",
                           },
                           "push": {
+                            "description": "description",
                             "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                            "key": "key",
+                            "name": "name",
                           },
                           "read": {
+                            "description": "description",
                             "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                            "key": "key",
+                            "name": "name",
                           },
                         },
                         "attributes": {
                           "created": {
                             "description": "the time (timestamp) the repository was created",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                            "key": "key",
                             "type": "time",
                           },
                           "private": {
                             "description": "whether the repo is private (if false, the repo is public)",
                             "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                            "key": "key",
                             "type": "bool",
                           },
                         },

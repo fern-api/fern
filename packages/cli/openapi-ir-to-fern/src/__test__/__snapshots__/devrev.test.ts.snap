@@ -700,6 +700,7 @@ organization.
                         "display_id": "display_id",
                         "display_name": "display_name",
                         "display_picture": {
+                          "display_id": "display_id",
                           "id": "id",
                         },
                         "email": "email",

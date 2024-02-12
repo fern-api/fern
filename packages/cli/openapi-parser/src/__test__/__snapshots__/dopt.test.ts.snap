@@ -908,6 +908,13 @@ exports[`open api parser dopt parse open api 1`] = `
                                   },
                                   "type": "primitive",
                                 },
+                                "value": {
+                                  "primitive": {
+                                    "string": "fields",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
                               },
                               "type": "discriminated",
                             },

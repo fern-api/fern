@@ -713,6 +713,7 @@ This information provides hints to clients, allowing bank customers to select tr
                           "locality": "Andalasia",
                           "postalCode": "28407",
                           "regionCode": "NC",
+                          "regionName": "regionName",
                         },
                         "locator": "503000196",
                         "locatorType": "abaRoutingNumber",
@@ -1094,12 +1095,19 @@ The default response lists only recent transactions. Normally, this is transacti
                           "label": "label",
                         },
                         "check": {
+                          "imageBack_url": "imageBack_url",
+                          "imageFront_url": "imageFront_url",
                           "number": 1,
                         },
                         "createdOn": "2023-05-18",
                         "description": "description",
                         "id": "d62c0701-0d74",
                         "memo": "memo",
+                        "merchant": {
+                          "logo_url": "logo_url",
+                          "name": "name",
+                          "website_url": "website_url",
+                        },
                         "occurredOn": "2023-06-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
@@ -1266,18 +1274,15 @@ Note: This operation requires an identity challenge if the financial institution
                   "amount": "275.00",
                   "memo": "Cover check for car repair",
                   "schedule": {
-                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
                   },
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
-                    "label": "Checking *1008",
                     "location": "internal",
                   },
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
-                    "label": "Checking *1008",
                     "location": "internal",
                   },
                 },
@@ -1460,9 +1465,12 @@ Note: This operation requires an identity challenge if the financial institution
                         "processedAt": "2022-06-28T021:00:00.000Z",
                         "schedule": {
                           "amountLimit": "3456.78",
+                          "count": 1,
                           "creditsOn": "2026-06-26",
                           "debitsOn": "2026-06-24",
+                          "endsOn": "endsOn",
                           "frequency": "once",
+                          "recurrenceType": "fixed",
                           "scheduledOn": "2026-06-28",
                         },
                         "sourceAccount": {
@@ -1492,7 +1500,9 @@ Note: This operation requires an identity challenge if the financial institution
                           "count": 9,
                           "creditsOn": "2023-08-01",
                           "debitsOn": "2026-08-01",
+                          "endsOn": "endsOn",
                           "frequency": "monthly",
+                          "recurrenceType": "fixed",
                           "scheduledOn": "2023-08-01",
                         },
                         "sourceAccount": {
@@ -1519,19 +1529,25 @@ Note: This operation requires an identity challenge if the financial institution
                         "processedAt": "2026-06-26T021:00:00.000Z",
                         "schedule": {
                           "amountLimit": "3456.78",
+                          "count": 1,
                           "creditsOn": "2026-06-26",
                           "debitsOn": "2026-06-24",
+                          "endsOn": "endsOn",
                           "frequency": "once",
+                          "recurrenceType": "fixed",
                           "scheduledOn": "2026-06-28",
                         },
                         "sourceAccount": {
                           "id": "bd9b7af2-6f9b",
                           "label": "Checking *1008",
+                          "location": "internal",
+                          "type": "savings",
                         },
                         "state": "unscheduled",
                         "targetAccount": {
                           "id": "88b1ca3e-d0f3",
                           "label": "Personal Savings *4567",
+                          "location": "internal",
                           "type": "savings",
                         },
                         "updatedAt": "2022-04-18T07:21:35.375Z",
@@ -1602,19 +1618,11 @@ Note: This operation requires an identity challenge if the financial institution
                 "request": {
                   "amount": "275.00",
                   "schedule": {
-                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
                   },
-                  "sourceAccount": {
-                    "id": "e821ce54-c715",
-                    "label": "Premiere Checking *6789",
-                    "location": "internal",
-                    "type": "checking",
-                  },
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
-                    "label": "Checking *1008",
                   },
                 },
                 "response": {

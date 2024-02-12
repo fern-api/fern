@@ -65,6 +65,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -130,6 +131,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -249,6 +251,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -313,6 +316,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -369,6 +373,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -435,6 +440,7 @@ exports[`open api parser squidex simple 1`] = `
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -445,7 +451,23 @@ exports[`open api parser squidex simple 1`] = `
                           "schemaIds",
                         ],
                         "steps": {
-                          "steps": {},
+                          "steps": {
+                            "color": "color",
+                            "noUpdate": true,
+                            "noUpdateExpression": "noUpdateExpression",
+                            "noUpdateRoles": [
+                              "noUpdateRoles",
+                            ],
+                            "transitions": {
+                              "transitions": {
+                                "expression": "expression",
+                                "roles": [
+                                  "roles",
+                                ],
+                              },
+                            },
+                            "validate": true,
+                          },
                         },
                       },
                     ],
@@ -544,6 +566,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "_links": {
                         "_links": {
                           "href": "href",
+                          "metadata": "metadata",
                           "method": "method",
                         },
                       },
@@ -652,6 +675,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -711,6 +735,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -782,6 +807,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -871,6 +897,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -975,6 +1002,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "_links": {
                         "_links": {
                           "href": "href",
+                          "metadata": "metadata",
                           "method": "method",
                         },
                       },
@@ -1045,6 +1073,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1055,7 +1084,23 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           "schemaIds",
                         ],
                         "steps": {
-                          "steps": {},
+                          "steps": {
+                            "color": "color",
+                            "noUpdate": true,
+                            "noUpdateExpression": "noUpdateExpression",
+                            "noUpdateRoles": [
+                              "noUpdateRoles",
+                            ],
+                            "transitions": {
+                              "transitions": {
+                                "expression": "expression",
+                                "roles": [
+                                  "roles",
+                                ],
+                              },
+                            },
+                            "validate": true,
+                          },
                         },
                       },
                     ],
@@ -1179,6 +1224,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1255,6 +1301,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1316,6 +1363,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1389,6 +1437,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1466,6 +1515,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1476,7 +1526,23 @@ The client secret is auto generated on the server and returned. The client does 
                           "schemaIds",
                         ],
                         "steps": {
-                          "steps": {},
+                          "steps": {
+                            "color": "color",
+                            "noUpdate": true,
+                            "noUpdateExpression": "noUpdateExpression",
+                            "noUpdateRoles": [
+                              "noUpdateRoles",
+                            ],
+                            "transitions": {
+                              "transitions": {
+                                "expression": "expression",
+                                "roles": [
+                                  "roles",
+                                ],
+                              },
+                            },
+                            "validate": true,
+                          },
                         },
                       },
                     ],
@@ -1776,6 +1842,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1868,6 +1935,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -1956,6 +2024,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -2140,6 +2209,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -2150,7 +2220,23 @@ The client secret is auto generated on the server and returned. The client does 
                           "schemaIds",
                         ],
                         "steps": {
-                          "steps": {},
+                          "steps": {
+                            "color": "color",
+                            "noUpdate": true,
+                            "noUpdateExpression": "noUpdateExpression",
+                            "noUpdateRoles": [
+                              "noUpdateRoles",
+                            ],
+                            "transitions": {
+                              "transitions": {
+                                "expression": "expression",
+                                "roles": [
+                                  "roles",
+                                ],
+                              },
+                            },
+                            "validate": true,
+                          },
                         },
                       },
                     ],
@@ -2657,6 +2743,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -2671,6 +2758,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -2738,6 +2826,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -2851,6 +2940,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -3631,6 +3721,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4125,6 +4216,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4268,6 +4360,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4363,6 +4456,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4610,6 +4704,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4714,6 +4809,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4807,6 +4903,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -4910,6 +5007,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5017,6 +5115,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5117,6 +5216,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5314,6 +5414,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5430,6 +5531,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5531,6 +5633,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -5690,6 +5793,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -6640,11 +6744,15 @@ The client secret is auto generated on the server and returned. The client does 
                       "iconImage": "iconImage",
                       "properties": [
                         {
+                          "description": "description",
                           "display": "display",
                           "editor": "Checkbox",
                           "isFormattable": true,
                           "isRequired": true,
                           "name": "name",
+                          "options": [
+                            "options",
+                          ],
                         },
                       ],
                       "readMore": "readMore",
@@ -6744,6 +6852,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -7853,6 +7962,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -7862,6 +7972,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "fieldRules": [
                           {
                             "action": "Disable",
+                            "condition": "condition",
                             "field": "field",
                           },
                         ],
@@ -7882,9 +7993,24 @@ The client secret is auto generated on the server and returned. The client does 
                           "previewUrls": "previewUrls",
                         },
                         "properties": {
+                          "contentEditorUrl": "contentEditorUrl",
+                          "contentSidebarUrl": "contentSidebarUrl",
+                          "contentsSidebarUrl": "contentsSidebarUrl",
+                          "hints": "hints",
+                          "label": "label",
+                          "tags": [
+                            "tags",
+                          ],
                           "validateOnPublish": true,
                         },
-                        "scripts": {},
+                        "scripts": {
+                          "change": "change",
+                          "create": "create",
+                          "delete": "delete",
+                          "query": "query",
+                          "queryPre": "queryPre",
+                          "update": "update",
+                        },
                         "type": "Default",
                         "version": 1,
                       },
@@ -9938,6 +10064,7 @@ The client secret is auto generated on the server and returned. The client does 
                       "_links": {
                         "_links": {
                           "href": "href",
+                          "metadata": "metadata",
                           "method": "method",
                         },
                       },
@@ -10340,6 +10467,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -10402,6 +10530,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -10459,6 +10588,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -10547,6 +10677,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                       "_links": {
                         "_links": {
                           "href": "href",
+                          "metadata": "metadata",
                           "method": "method",
                         },
                       },
@@ -10602,6 +10733,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -10822,6 +10954,7 @@ You will be assigned as owner of the new team automatically.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -11018,6 +11151,7 @@ You will be assigned as owner of the new team automatically.",
                         "_links": {
                           "_links": {
                             "href": "href",
+                            "metadata": "metadata",
                             "method": "method",
                           },
                         },
@@ -11422,6 +11556,7 @@ You will be assigned as owner of the new team automatically.",
                       "_links": {
                         "_links": {
                           "href": "href",
+                          "metadata": "metadata",
                           "method": "method",
                         },
                       },

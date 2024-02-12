@@ -35,6 +35,23 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "array": [
                   {
                     "properties": {
+                      "channels": {
+                        "properties": {
+                          "slack": {
+                            "properties": {
+                              "channel_name": {
+                                "primitive": {
+                                  "string": "channel_name",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "configs": {
                         "properties": {
                           "connections": {
@@ -2843,9 +2860,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -7433,9 +7485,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -25128,9 +25215,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -27249,9 +27371,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -27686,9 +27843,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -36352,6 +36544,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "count": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "interval": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
                               "strategy": {
                                 "enum": "linear",
                                 "type": "enum",
@@ -40973,6 +41179,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "env": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "env",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "env",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
                       "id": {
                         "primitive": {
                           "string": "id",
@@ -42956,9 +43180,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "original_event_data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42989,9 +43248,44 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "transformed_event_data": {
                         "properties": {
+                          "body": {
+                            "primitive": {
+                              "string": "body",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "headers": {
+                            "primitive": {
+                              "string": "headers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_large_payload": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "parsed_query": {
+                            "primitive": {
+                              "string": "parsed_query",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "path": {
                             "primitive": {
                               "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "query": {
+                            "primitive": {
+                              "string": "query",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -44057,6 +44351,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "destination": {
                         "properties": {
+                          "archived_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "cli_path": {
+                            "primitive": {
+                              "string": "cli_path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "created_at": {
                             "primitive": {
                               "datetime": "2024-01-15T09:30:00Z",
@@ -44078,6 +44386,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "path_forwarding_disabled": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "rate_limit": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "rate_limit_period": {
+                            "enum": "second",
+                            "type": "enum",
+                          },
                           "team_id": {
                             "primitive": {
                               "string": "team_id",
@@ -44089,6 +44415,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "primitive": {
                               "datetime": "2024-01-15T09:30:00Z",
                               "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "url": {
+                            "primitive": {
+                              "string": "url",
+                              "type": "string",
                             },
                             "type": "primitive",
                           },
@@ -44120,6 +44453,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "count": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "interval": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
                               "strategy": {
                                 "enum": "linear",
                                 "type": "enum",
@@ -44141,6 +44488,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "array": [
                           {
                             "properties": {
+                              "count": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "interval": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
                               "strategy": {
                                 "enum": "linear",
                                 "type": "enum",
@@ -44160,6 +44521,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "ruleset": {
                         "properties": {
+                          "archived_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
                           "created_at": {
                             "primitive": {
                               "datetime": "2024-01-15T09:30:00Z",
@@ -44192,6 +44560,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "array": [
                               {
                                 "properties": {
+                                  "count": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "interval": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
                                   "strategy": {
                                     "enum": "linear",
                                     "type": "enum",
@@ -44228,6 +44610,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "source": {
                         "properties": {
+                          "archived_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
                           "created_at": {
                             "primitive": {
                               "datetime": "2024-01-15T09:30:00Z",
@@ -44238,6 +44627,45 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "id": {
                             "primitive": {
                               "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "integration": {
+                            "properties": {
+                              "features": {
+                                "array": [
+                                  {
+                                    "enum": "VERIFICATION",
+                                    "type": "enum",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "label": {
+                                "primitive": {
+                                  "string": "label",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "provider": {
+                                "enum": "twitter",
+                                "type": "enum",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "integration_id": {
+                            "primitive": {
+                              "string": "integration_id",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -45616,6 +46044,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -46541,6 +46983,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -47465,6 +47921,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -47920,6 +48390,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -48564,6 +49048,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -49014,6 +49512,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -49464,6 +49976,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",
@@ -49914,6 +50440,20 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "interval": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
                           "strategy": {
                             "enum": "linear",
                             "type": "enum",

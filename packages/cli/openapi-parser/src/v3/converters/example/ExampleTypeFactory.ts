@@ -68,8 +68,12 @@ export class ExampleTypeFactory {
             case "nullable": {
                 if (
                     example == null &&
-                    !this.hasExample(schema.value) &&
-                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                    options.ignoreOptionals &&
+                    !this.hasExample({
+                        schema: schema.value,
+                        options,
+                        depth
+                    })
                 ) {
                     return undefined;
                 }
@@ -94,8 +98,12 @@ export class ExampleTypeFactory {
             case "optional": {
                 if (
                     example == null &&
-                    !this.hasExample(schema.value) &&
-                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                    options.ignoreOptionals &&
+                    !this.hasExample({
+                        schema: schema.value,
+                        options,
+                        depth
+                    })
                 ) {
                     return undefined;
                 }
@@ -372,23 +380,51 @@ export class ExampleTypeFactory {
         }
     }
 
-    private hasExample(schema: SchemaWithExample): boolean {
+    private hasExample({
+        schema,
+        options,
+        depth
+    }: {
+        schema: SchemaWithExample;
+        options: ExampleTypeFactory.Options;
+        depth: number;
+    }): boolean {
+        if (this.exceedsMaxDepth(depth, options)) {
+            return false;
+        }
         switch (schema.type) {
             case "array":
-                return this.hasExample(schema.value);
+                return this.hasExample({
+                    schema: schema.value,
+                    options,
+                    depth
+                });
             case "enum":
                 return schema.example != null;
             case "literal":
                 return false;
             case "map":
-                return schema.key.schema.example != null && this.hasExample(schema.value);
+                return (
+                    schema.key.schema.example != null &&
+                    this.hasExample({
+                        schema: schema.value,
+                        options,
+                        depth
+                    })
+                );
             case "object": {
                 const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0;
                 if (objectExample) {
                     return true;
                 }
                 for (const property of schema.properties) {
-                    if (this.hasExample(property.schema)) {
+                    if (
+                        this.hasExample({
+                            schema: property.schema,
+                            options,
+                            depth
+                        })
+                    ) {
                         return true;
                     }
                 }
@@ -399,14 +435,24 @@ export class ExampleTypeFactory {
             case "reference": {
                 const resolvedSchema = this.schemas[schema.schema];
                 if (resolvedSchema != null) {
-                    return this.hasExample(resolvedSchema);
+                    return this.hasExample({
+                        schema: resolvedSchema,
+                        options,
+                        depth
+                    });
                 }
                 return false;
             }
             case "unknown":
                 return schema.example != null;
             case "oneOf":
-                return Object.values(schema.oneOf.schemas).some((schema) => this.hasExample(schema));
+                return Object.values(schema.oneOf.schemas).some((schema) =>
+                    this.hasExample({
+                        schema,
+                        options,
+                        depth
+                    })
+                );
             default:
                 return false;
         }

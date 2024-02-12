@@ -97,6 +97,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -106,6 +109,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -161,6 +165,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -224,6 +229,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -233,6 +241,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -288,6 +297,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -476,6 +486,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -485,6 +498,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -540,6 +554,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -603,6 +618,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -612,6 +630,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -667,6 +686,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -715,6 +735,404 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
                     },
                   },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
@@ -787,6 +1205,22 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -799,6 +1233,22 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -812,6 +1262,22 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -823,6 +1289,22 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1044,6 +1526,404 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "amountCurrency": "GBP",
                       "amountValue": 800,
                     },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                    },
                   },
                   "userDetails": {
                     "countryOfNationality": "DE",
@@ -1106,331 +1986,6 @@ Each consumer Business entity needs three mandatory fields:
             {
               "request": {
                 "createdTimestamp": 1.1,
-                "directors": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "contactNumbers": [
-                        "+371 123132",
-                        "contactNumbers",
-                      ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                        "emailIds",
-                      ],
-                      "websites": [
-                        "flagright.com",
-                        "websites",
-                      ],
-                    },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                ],
-                "legalEntity": {
-                  "companyFinancialDetails": {
-                    "expectedTransactionAmountPerMonth": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "expectedTurnoverPerMonth": {
-                      "amountCurrency": "USD",
-                      "amountValue": 8000,
-                    },
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                  "companyGeneralDetails": {
-                    "businessIndustry": [
-                      "Farming",
-                      "businessIndustry",
-                    ],
-                    "legalName": "Ozkan Hazelnut Export JSC",
-                    "mainProductsServicesSold": [
-                      "Hazelnut",
-                      "mainProductsServicesSold",
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                  "companyRegistrationDetails": {
-                    "registrationCountry": "DE",
-                    "registrationIdentifier": "PSJ554342",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                },
-                "shareHolders": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "contactNumbers": [
-                        "+371 123132",
-                        "contactNumbers",
-                      ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                        "emailIds",
-                      ],
-                      "websites": [
-                        "flagright.com",
-                        "websites",
-                      ],
-                    },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                },
                 "userId": "userId",
               },
               "response": {
@@ -1444,6 +1999,22 @@ Each consumer Business entity needs three mandatory fields:
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1457,6 +2028,22 @@ Each consumer Business entity needs three mandatory fields:
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1510,627 +2097,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
-                "updatedBusinessUserAttributes": {
-                  "directors": [
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                          "contactNumbers",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                          "emailIds",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                          "websites",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                          "contactNumbers",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                          "emailIds",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                          "websites",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "legalEntity": {
-                    "companyFinancialDetails": {
-                      "expectedTransactionAmountPerMonth": {
-                        "amountCurrency": "GBP",
-                        "amountValue": 800,
-                      },
-                      "expectedTurnoverPerMonth": {
-                        "amountCurrency": "USD",
-                        "amountValue": 8000,
-                      },
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    "companyGeneralDetails": {
-                      "businessIndustry": [
-                        "Farming",
-                        "businessIndustry",
-                      ],
-                      "legalName": "Ozkan Hazelnut Export JSC",
-                      "mainProductsServicesSold": [
-                        "Hazelnut",
-                        "mainProductsServicesSold",
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    "companyRegistrationDetails": {
-                      "registrationCountry": "DE",
-                      "registrationIdentifier": "PSJ554342",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "reasonForAccountOpening": [
-                      "string",
-                      "reasonForAccountOpening",
-                    ],
-                  },
-                  "shareHolders": [
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                          "contactNumbers",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                          "emailIds",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                          "websites",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                          "contactNumbers",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                          "emailIds",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                          "websites",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "transactionLimits": {
-                    "maximumDailyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumMonthlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumQuarterlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumWeeklyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumYearlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                  },
-                },
                 "userId": "userId",
               },
               "response": {
@@ -2191,6 +2157,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -2200,6 +2169,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -2255,6 +2225,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -2278,6 +2249,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2291,6 +2278,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2450,6 +2453,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "baran@flagright.com",
                           "emailIds",
                         ],
+                        "faxNumbers": [
+                          "faxNumbers",
+                        ],
                         "websites": [
                           "flagright.com",
                           "websites",
@@ -2459,6 +2465,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
+                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -2514,6 +2521,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "pepStatus": [
                         {
                           "isPepHit": true,
+                          "pepCountry": "pepCountry",
                         },
                       ],
                       "tags": [
@@ -2558,6 +2566,404 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
                     },
                   },
                   "userId": "userId",
@@ -2691,6 +3097,22 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2703,6 +3125,22 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2716,6 +3154,22 @@ Here are some of the most used payload fields explained (you can find the full p
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2727,6 +3181,22 @@ Here are some of the most used payload fields explained (you can find the full p
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2846,11 +3316,6 @@ Each consumer User entity needs three mandatory fields:
                     "documentIssuedDate": 1639939034000,
                     "documentNumber": "Z9431P",
                     "documentType": "passport",
-                    "nameOnDocument": {
-                      "firstName": "Baran",
-                      "lastName": "Ozkan",
-                      "middleName": "Realblood",
-                    },
                     "tags": [
                       {
                         "key": "customerType",
@@ -2868,11 +3333,6 @@ Each consumer User entity needs three mandatory fields:
                     "documentIssuedDate": 1639939034000,
                     "documentNumber": "Z9431P",
                     "documentType": "passport",
-                    "nameOnDocument": {
-                      "firstName": "Baran",
-                      "lastName": "Ozkan",
-                      "middleName": "Realblood",
-                    },
                     "tags": [
                       {
                         "key": "customerType",
@@ -2895,32 +3355,6 @@ Each consumer User entity needs three mandatory fields:
                     "value": "customValue",
                   },
                 ],
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                },
                 "userDetails": {
                   "countryOfNationality": "DE",
                   "countryOfResidence": "US",
@@ -2944,6 +3378,22 @@ Each consumer User entity needs three mandatory fields:
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -2957,6 +3407,22 @@ Each consumer User entity needs three mandatory fields:
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3023,43 +3489,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "timestamp": 1431231244001,
                 "transactionId": "443dea26147a406b957d9ee3a1247b11",
                 "transactionState": "SUCCESSFUL",
-                "updatedTransactionAttributes": {
-                  "destinationAmountDetails": {
-                    "country": "IN",
-                    "transactionAmount": 68351.34,
-                    "transactionCurrency": "INR",
-                  },
-                  "deviceData": {
-                    "appVersion": "1.1.0",
-                    "batteryLevel": 95,
-                    "deviceIdentifier": "3c49f915d04485e34caba",
-                    "deviceLatitude": 13.0033,
-                    "deviceLongitude": 76.1004,
-                    "deviceMaker": "ASUS",
-                    "deviceModel": "Zenphone M2 Pro Max",
-                    "deviceYear": "2018",
-                    "ipAddress": "10.23.191.2",
-                    "operatingSystem": "Android 11.2",
-                    "vpnUsed": false,
-                  },
-                  "originAmountDetails": {
-                    "country": "DE",
-                    "transactionAmount": 800,
-                    "transactionCurrency": "EUR",
-                  },
-                  "promotionCodeUsed": true,
-                  "reference": "loan repayment",
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                },
               },
               "response": {
                 "body": {
@@ -3073,6 +3502,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3085,6 +3530,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3098,6 +3559,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3109,6 +3586,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3236,144 +3729,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
-                "updatedConsumerUserAttributes": {
-                  "contactDetails": {
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20",
-                        ],
-                        "city": "Berlin",
-                        "country": "Germany",
-                        "postcode": "10557",
-                        "state": "Berlin",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20",
-                        ],
-                        "city": "Berlin",
-                        "country": "Germany",
-                        "postcode": "10557",
-                        "state": "Berlin",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                    ],
-                    "contactNumbers": [
-                      "+37112345432",
-                      "contactNumbers",
-                    ],
-                    "emailIds": [
-                      "baran@flagright.com",
-                      "emailIds",
-                    ],
-                    "websites": [
-                      "flagright.com",
-                      "websites",
-                    ],
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "documentIssuedDate": 1639939034000,
-                      "documentNumber": "Z9431P",
-                      "documentType": "passport",
-                      "nameOnDocument": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                    {
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "documentIssuedDate": 1639939034000,
-                      "documentNumber": "Z9431P",
-                      "documentType": "passport",
-                      "nameOnDocument": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet",
-                        },
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "transactionLimits": {
-                    "maximumDailyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumMonthlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumQuarterlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumWeeklyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumYearlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                  },
-                },
                 "userId": "userId",
               },
               "response": {
@@ -3424,6 +3779,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3437,6 +3808,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "name",
+                            "searchId": "searchId",
+                          },
+                        ],
+                      },
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -3510,6 +3897,404 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "month": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "week": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "year": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                        },
+                        "transactionCountLimit": {
+                          "day": 1.1,
+                          "month": 1.1,
+                          "week": 1.1,
+                          "year": 1.1,
+                        },
+                      },
                     },
                   },
                   "userDetails": {
