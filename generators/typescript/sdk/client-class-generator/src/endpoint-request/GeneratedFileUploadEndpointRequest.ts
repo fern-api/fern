@@ -64,7 +64,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
 
-        if (requestBody.properties.some((property) => property.type === "bodyProperty")) {
+        if (
+            requestBody.properties.some(
+                (property) => property.type === "bodyProperty" || endpoint.queryParameters.length > 0
+            )
+        ) {
             if (this.endpoint.sdkRequest == null) {
                 throw new Error("SdkRequest is not defined for file upload endpoint");
             }

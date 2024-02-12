@@ -90,14 +90,15 @@ export function convertRequest({
                     : undefined,
             description: undefined,
             properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
+                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
+
                 if (!isReferenceObject(definition) && definition.type === "string" && definition.format === "binary") {
                     return {
                         key,
-                        schema: MultipartSchema.file(),
+                        schema: MultipartSchema.file({ isOptional: schemaWithExample.type === "optional" }),
                         description: undefined
                     };
                 }
-                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
                 const audiences = getExtension<string[]>(definition, FernOpenAPIExtension.AUDIENCES) ?? [];
                 return {
                     key,
