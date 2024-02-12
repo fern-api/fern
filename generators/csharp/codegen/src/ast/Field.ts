@@ -21,6 +21,8 @@ export declare namespace Field {
         annotations?: Annotation[];
         /* The initializer for the field */
         initializer?: CodeBlock;
+        /* The summary tag (used for describing the field) */
+        summary?: string;
     }
 }
 
@@ -32,8 +34,9 @@ export class Field extends AstNode {
     private access: Access;
     private annotations: Annotation[];
     private initializer: CodeBlock | undefined;
+    private summary: string | undefined;
 
-    constructor({ name, type, get, init, access, annotations, initializer }: Field.Args) {
+    constructor({ name, type, get, init, access, annotations, initializer, summary }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -42,9 +45,16 @@ export class Field extends AstNode {
         this.access = access;
         this.annotations = annotations ?? [];
         this.initializer = initializer;
+        this.summary = summary;
     }
 
     public write(writer: Writer): void {
+        if (this.summary != null) {
+            writer.writeLine("/// <summary>");
+            writer.writeLine(`/// ${this.summary}`);
+            writer.writeLine("/// </summary>");
+        }
+
         if (this.annotations.length > 0) {
             writer.write("[");
             for (const annotation of this.annotations) {
@@ -53,7 +63,9 @@ export class Field extends AstNode {
             writer.writeLine("]");
         }
 
-        writer.write(`${this.access} ${this.type.write(writer)} ${this.name}`);
+        writer.write(`${this.access} `);
+        writer.writeNode(this.type);
+        writer.write(` ${this.name}`);
         if (this.get || this.init) {
             writer.write(" { ");
             if (this.get) {
@@ -62,10 +74,10 @@ export class Field extends AstNode {
             if (this.init) {
                 writer.write("init; ");
             }
-            writer.write(" { ");
+            writer.write("}");
         }
 
-        if (this.initializer) {
+        if (this.initializer != null) {
             writer.write(" = ");
             this.initializer.write(writer);
             writer.writeLine(";");

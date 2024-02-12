@@ -48,7 +48,7 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeLine(`namespace ${this.namespace}`);
-        writer.writeLine("");
+        writer.newLine();
         writer.write(`${this.access} `);
         if (this.sealed) {
             writer.write("sealed ");

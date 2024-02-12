@@ -1,29 +1,30 @@
-import { Access, CSharp } from "..";
+import * as csharp from "../csharp";
 
 describe("class", () => {
     it("basic", () => {
-        const plant = new CSharp.Class({
+        const plant = csharp.class_({
             name: "Plant",
             namespace: "Fern",
             partial: true,
-            access: Access.Public
+            access: "public"
         });
         plant.addField(
-            new CSharp.Field({
+            csharp.field({
                 name: "watered",
-                type: CSharp.Type.boolean(),
-                access: Access.Public,
+                type: csharp.Types.boolean(),
+                access: "public",
                 get: true,
                 init: true,
                 annotations: [
-                    new CSharp.Annotation({
-                        reference: new CSharp.ClassReference({
+                    csharp.annotation({
+                        reference: csharp.classReference({
                             name: "JsonProperty",
                             namespace: "System.Text.Json.Serialization"
                         }),
                         argument: '"watered"'
                     })
-                ]
+                ],
+                summary: "Whether the plant has been watered"
             })
         );
         expect(plant.name).toBe("Plant");

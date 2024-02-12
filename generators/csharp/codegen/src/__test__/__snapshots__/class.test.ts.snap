@@ -1,13 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`class basic 1`] = `
-"
+"using System.Text.Json.Serialization
+
 namespace Fern
 
 public partial class Plant
 {
-    [JsonPropertyJsonProperty("watered")]
-    bool public undefined watered { get; init; } 
+    /// <summary>
+    /// Whether the plant has been watered
+    /// </summary>
+    [JsonProperty("watered")]
+    public bool watered { get; init; }
 }
 "
 `;

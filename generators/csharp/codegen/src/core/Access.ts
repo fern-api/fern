@@ -1,4 +1,6 @@
-export enum Access {
-    Public = "public",
-    Private = "private"
-}
+export type Access = "public" | "private";
+
+export const Access = {
+    Public: "public",
+    Private: "private"
+} as const;

@@ -21,7 +21,7 @@ export class ClassReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.addReference(this);
+        writer.addReference(this);
         writer.write(`${this.name}`);
     }
 }
