@@ -27,11 +27,10 @@ export class Gemspec extends FunctionInvocation {
         license,
         hasFileBasedDependencies = false
     }: Gemspec.Init) {
-        // +  spec.add_dependency "faraday-multipart", ">= 0.0", "< 1.1"
         const globalDependencies: ExternalDependency[] = [
             new ExternalDependency({
                 packageName: "faraday",
-                lowerBound: { specifier: ">=", version: "1.0" },
+                lowerBound: { specifier: ">=", version: "1.10" },
                 upperBound: { specifier: "<", version: "3.0" }
             }),
             new ExternalDependency({
