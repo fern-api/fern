@@ -216,9 +216,9 @@ config:
   version: v1 # or v2 or "both"
 ```
 
-## Releases
+## Versions
 
-All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-python/releases). You can directly use these version numbers in your generator configuration files.
+Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
 
 For instance, if you want to use version `0.3.7` of the Python generator:
 
@@ -235,11 +235,3 @@ groups:
 ```
 
 Fern will handle the rest automatically.
-
-## Contributing
-
-We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](./CONTRIBUTING.md) on how you can contribute to Fern!
-
-<a href="https://github.com/fern-api/fern-python/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fern-api/fern-python" />
-</a>

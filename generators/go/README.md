@@ -47,7 +47,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
   version: 0.13.0
   output:
     location: local-file-system
-    path: ../../generated/go
+    path: ../generated/go
 ```
 
 By default, Fern runs the generators in the cloud.
@@ -76,7 +76,7 @@ groups:
           packageName: acme
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 ### Import path
@@ -98,7 +98,7 @@ groups:
           importPath: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>/generated/go
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 Note that you will need to update the `<YOUR_ORGANIZATION>` and `<YOUR_REPOSITORY>` placeholders
@@ -125,7 +125,7 @@ groups:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 This configuration will generate a `go.mod` alongside the rest of the Go SDK code at the target output
@@ -148,7 +148,7 @@ groups:
             version: "1.19"
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 Note that if you want to depend on the generated Go SDK locally (without distributing it as a separate Go module),
@@ -200,14 +200,14 @@ groups:
           enableExplicitNull: true
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 Note that this feature requires generics, so the generated `go.mod` will be upgraded to `1.18` (as opposed to `1.13`).
 
-## Releases
+## Versions
 
-All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-go/releases). You can directly use these version numbers in your generator configuration files.
+Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
 
 For instance, if you want to use version `0.12.1` of the Go generator:
 
@@ -220,7 +220,7 @@ groups:
         version: 0.12.1
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../generated/go
 ```
 
 Fern will handle the rest automatically.
