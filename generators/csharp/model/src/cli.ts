@@ -1,10 +1,9 @@
-import { SdkGeneratorCLI } from "./ModelGeneratorCli";
+import { ModelGeneratorCLI } from "./ModelGeneratorCli";
 
 void runCli();
 
 export async function runCli(): Promise<void> {
-    // eslint-disable-next-line no-console
-    const cli = new SdkGeneratorCLI();
+    const cli = new ModelGeneratorCLI();
 
     const pathToConfig = process.argv[process.argv.length - 1];
 

@@ -5,7 +5,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
-export class SdkGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSchema> {
+export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSchema> {
     protected parseCustomConfig(customConfig: unknown): ModelCustomConfigSchema {
         const parsed = customConfig != null ? ModelCustomConfigSchema.parse(customConfig) : undefined;
         return parsed ?? {};
