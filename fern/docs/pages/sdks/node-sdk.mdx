@@ -1,5 +1,5 @@
-[Source code](https://github.com/fern-api/fern-typescript)<br/>
-**Latest version**: `0.9.5`
+[Source code](https://github.com/fern-api/fern/tree/main/generators/typescript)<br/>
+**Latest version**: `0.9.6`
 
 The TypeScript Node.js SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side use. It can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository).
 
@@ -30,7 +30,7 @@ groups:
   internal:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.9.6
         output:
           location: npm.buildwithfern.com
           package-name: @fern-imdb/api # replace imdb with your org name
@@ -47,7 +47,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.9.6
         output:
           location: npm
           package-name: imdb # replace with your package name
@@ -65,7 +65,7 @@ generators:
   groups:
     public:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.9.6
         output:
           location: npm
           package-name: imdb # replace with your package name
@@ -83,7 +83,7 @@ You can include one or more options for `config`, such as:
 <CodeBlock title="generators.yml">
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.9.5
+  version: 0.9.6
   output:
     location: npm
     package-name: imdb
@@ -114,7 +114,7 @@ To customize these names, you can use `namespaceExport`:
 <CodeBlock title="generators.yml">
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.9.5
+  version: 0.9.6
   output:
     location: npm
     package-name: imdb
