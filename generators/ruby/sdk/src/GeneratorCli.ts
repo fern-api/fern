@@ -72,7 +72,8 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 config.license,
                 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                 hasFileUploadEndpoints(intermediateRepresentation) ||
-                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
+                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
+                true
             )
         );
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));

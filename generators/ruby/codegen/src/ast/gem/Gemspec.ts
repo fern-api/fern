@@ -15,6 +15,7 @@ export declare namespace Gemspec {
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
         hasFileBasedDependencies?: boolean;
+        hasEndpoints?: boolean;
         license?: { licenseFilePath: string; licenseType?: string };
     }
 }
@@ -25,30 +26,36 @@ export class Gemspec extends FunctionInvocation {
         dependencies,
         sdkVersion,
         license,
-        hasFileBasedDependencies = false
+        hasFileBasedDependencies = false,
+        hasEndpoints = false
     }: Gemspec.Init) {
-        const globalDependencies: ExternalDependency[] = [
-            new ExternalDependency({
-                packageName: "faraday",
-                lowerBound: { specifier: ">=", version: "1.10" },
-                upperBound: { specifier: "<", version: "3.0" }
-            }),
-            new ExternalDependency({
-                packageName: "faraday-net_http",
-                lowerBound: { specifier: ">=", version: "1.0" },
-                upperBound: { specifier: "<", version: "4.0" }
-            }),
-            new ExternalDependency({
-                packageName: "faraday-retry",
-                lowerBound: { specifier: ">=", version: "1.0" },
-                upperBound: { specifier: "<", version: "3.0" }
-            }),
-            new ExternalDependency({
-                packageName: "async-http-faraday",
-                lowerBound: { specifier: ">=", version: "0.0" },
-                upperBound: { specifier: "<", version: "1.0" }
-            })
-        ];
+        const globalDependencies: ExternalDependency[] = [];
+        if (hasEndpoints) {
+            globalDependencies.push(
+                ...[
+                    new ExternalDependency({
+                        packageName: "faraday",
+                        lowerBound: { specifier: ">=", version: "1.10" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-net_http",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "4.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-retry",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "async-http-faraday",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "1.0" }
+                    })
+                ]
+            );
+        }
         if (hasFileBasedDependencies) {
             globalDependencies.push(
                 ...[

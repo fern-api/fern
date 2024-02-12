@@ -58,7 +58,8 @@ export function generateGemspec(
     extraDependencies: ExternalDependency[],
     sdkVersion?: string,
     licenseConfig?: FernGeneratorExec.LicenseConfig,
-    hasFileBasedDependencies = false
+    hasFileBasedDependencies = false,
+    hasEndpoints = false
 ): GeneratedRubyFile {
     const license = licenseConfig?._visit({
         basic: (l: BasicLicense) => {
@@ -77,7 +78,8 @@ export function generateGemspec(
         dependencies: extraDependencies,
         sdkVersion,
         license,
-        hasFileBasedDependencies
+        hasFileBasedDependencies,
+        hasEndpoints
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
