@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.16.0] - 2024-02-12
+- Feature: The generator now supports whitelabelling. When this is turned on, 
+  there will be no mention of Fern in the generated code. 
+
+  **Note**: You must be on the enterprise tier to enable this mode. 
+
 ## [0.15.0] - 2024-02-09
 
 - Feature: Enforce RFC3339 for date[time] serialization in request bodies.
