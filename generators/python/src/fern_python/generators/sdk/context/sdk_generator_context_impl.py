@@ -100,8 +100,8 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage)
 
-    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
-        type = header.value_type.get_as_union()
+    def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[str]:
+        type = reference.get_as_union()
         if type.type == "named":
             shape = self.pydantic_generator_context.get_declaration_for_type_id(type.type_id).shape.get_as_union()
             if shape.type == "alias":
@@ -121,3 +121,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                     string=lambda string: string,
                 )
         return None
+
+    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
+        return self.get_literal_value(header.value_type)

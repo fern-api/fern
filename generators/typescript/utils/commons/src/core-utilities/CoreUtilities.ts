@@ -3,6 +3,7 @@ import { BaseCoreUtilities } from "./base/BaseCoreUtilities";
 import { CallbackQueue } from "./callback-queue/CallbackQueue";
 import { Fetcher } from "./fetcher/Fetcher";
 import { FormDataUtils } from "./form-data-utils/FormDataUtils";
+import { Runtime } from "./runtime/Runtime";
 import { StreamUtils } from "./stream-utils/StreamUtils";
 import { Zurg } from "./zurg/Zurg";
 
@@ -14,4 +15,5 @@ export interface CoreUtilities {
     auth: Auth;
     base: BaseCoreUtilities;
     formDataUtils: FormDataUtils;
+    runtime: Runtime;
 }
