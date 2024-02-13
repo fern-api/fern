@@ -309,23 +309,48 @@ Fern has three font types:
 - `bodyFont`: affects paragraph text and other body text
 - `codeFont`: affects code blocks and inline code snippets
 
-To customize the font used for each font type, add a top-level `typography` list to `docs.yml`. 
-Then in it, specify the path of your font file for one or more of the font types. You can also name a font.
+To customize the font used for each font type, add a top-level `typography` list to `docs.yml`. Then in it, specify the path of your font file for one or more of the font types.
+
+A font has two properties:
+- `name`: the name of the font; defaults to a generated name that will be used to reference your custom font in the eventually injected CSS
+- `path`: the path to the font file
 
 <CodeBlock title="Example of specifying custom fonts in docs.yml">
 ```yaml
 typography:
-  headingsFont:
-    path: ./fonts/Inter-Bold.woff2
-    name: Inter-Bold
   bodyFont:
-    path: ./fonts/Inter-Regular.woff2
     name: Inter-Regular
+    path: ./fonts/Inter-Regular.woff2
+  headingsFont:
+    name: Inter-Bold
+    path: ./fonts/Inter-Bold.woff2
   codeFont: 
+    name: Roboto-Mono-Regular
     path:  ./fonts/Roboto-Mono-Regular.woff2
     name: Roboto-Mono-Regular
 ```
 </CodeBlock>
+
+If the font file is not variable, you can specify font weights.
+
+A font path has three properties:
+- `path`: indicate that there are multiple font files
+- `weight`: a string of weights that are supported by this font file
+- `style`: the style of the font file, either `normal` or `italic`
+
+<CodeBlock title="Example of specifying font weights in docs.yml">
+```yaml
+typograpghy:
+  bodyFont:
+    name: Inter-Regular
+    paths:
+      - path: ./fonts/Inter-Regular.woff2
+        weight: "400"
+        style: normal
+      - path: ./fonts/Inter-Bold.woff2
+        weight: 500 900 # <-- indicates a range of weights
+        style: normal
+```        
 
 #### Tabs
 
