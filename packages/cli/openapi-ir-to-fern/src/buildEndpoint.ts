@@ -351,7 +351,7 @@ function getRequest({
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };
-        if ("extends" in requestBodySchema && extendedSchemas.length > 0) {
+        if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
 

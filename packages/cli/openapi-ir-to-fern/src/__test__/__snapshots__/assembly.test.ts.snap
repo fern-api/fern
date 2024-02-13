@@ -164,6 +164,9 @@ The LLM response data, as well as any context provided in the original request w
             "path": "/lemur/v3/generate/question-answer",
             "request": {
               "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
                 "properties": {
                   "questions": {
                     "docs": "A list of questions to ask.",
@@ -211,6 +214,9 @@ The LLM response data, as well as any context provided in the original request w
             "path": "/lemur/v3/generate/summary",
             "request": {
               "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
                 "properties": {
                   "answer_format": {
                     "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
@@ -260,6 +266,9 @@ The LLM response data, as well as any context provided in the original request w
             "path": "/lemur/v3/generate/task",
             "request": {
               "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
                 "properties": {
                   "prompt": {
                     "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
@@ -539,6 +548,9 @@ The LLM response data, as well as any context provided in the original request w
             "path": "/v2/transcript",
             "request": {
               "body": {
+                "extends": [
+                  "root.CreateTranscriptOptionalParameters",
+                ],
                 "properties": {
                   "audio_url": {
                     "docs": "The URL of the audio or video file to transcribe.",
