@@ -15,7 +15,7 @@ export class OpenApiIrConverterContext {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
-        this.builder = new FernDefinitionBuilderImpl(ir);
+        this.builder = new FernDefinitionBuilderImpl(ir, false);
     }
 
     public getSchema(id: SchemaId): Schema {
