@@ -1,13 +1,14 @@
 import typing
 
 try:
-    import pydantic.v1 as pydantic  # type: ignore
+    import NotRequired from typing  # type: ignore
 except ImportError:
-    import pydantic  # type: ignore
+    import NotRequired from typing_extensions  # type: ignore
 
 
-class RequestOptions(pydantic.BaseModel):
-    timeout_in_seconds: typing.Optional[int] = None
-    additional_headers: typing.Dict[str, typing.Any] = {}
-    additional_query_parameters: typing.Dict[str, typing.Any] = {}
-    additional_body_parameters: typing.Dict[str, typing.Any] = {}
+class RequestOptions(typing.TypedDict):
+    timeout_in_seconds: NotRequired[int]
+    max_retries: NotRequired[int]
+    additional_headers: NotRequired[typing.Dict[str, typing.Any]]
+    additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
+    additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
