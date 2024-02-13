@@ -35,6 +35,14 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
             };
         }
 
+        // If no operation id and tag, use summary to generate id
+        if (endpoint.summary != null) {
+            return {
+                file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                endpointId: camelCase(endpoint.summary)
+            };
+        }
+
         // TODO(dsinghvi): warn that using path and method to generate id
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
