@@ -77,7 +77,23 @@ export function convertObject({
                         breadcrumbs
                     );
                     if (convertedOneOfSchema.type === "object") {
-                        inlinedParentProperties.push(...convertedOneOfSchema.properties);
+                        inlinedParentProperties.push(
+                            ...convertedOneOfSchema.properties.map((property) => {
+                                if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
+                                    return {
+                                        ...property,
+                                        schema: SchemaWithExample.optional({
+                                            nameOverride: undefined,
+                                            generatedName: "",
+                                            value: property.schema,
+                                            description: undefined,
+                                            groupName: undefined
+                                        })
+                                    };
+                                }
+                                return property;
+                            })
+                        );
                     }
                 }
                 continue;
