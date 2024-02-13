@@ -305,22 +305,25 @@ Include the custom fonts in your `fern/` project:
 </CodeBlock>
 
 Fern has three font types:
-- `headingsFont`: affects page and section titles
-- `bodyFont`: affects page body text
-- `codeFont`: affects code blocks
+- `headingsFont`: affects page and section titles; if not supplied, defaults to the body font
+- `bodyFont`: affects paragraph text and other body text
+- `codeFont`: affects code blocks and inline code snippets
 
 To customize the font used for each font type, add a top-level `typography` list to `docs.yml`. 
-Then in it, specify the path of your font file for one or more of the font types.
+Then in it, specify the path of your font file for one or more of the font types. You can also name a font.
 
 <CodeBlock title="Example of specifying custom fonts in docs.yml">
 ```yaml
 typography:
   headingsFont:
     path: ./fonts/Inter-Bold.woff2
+    name: Inter-Bold
   bodyFont:
     path: ./fonts/Inter-Regular.woff2
+    name: Inter-Regular
   codeFont: 
     path:  ./fonts/Roboto-Mono-Regular.woff2
+    name: Roboto-Mono-Regular
 ```
 </CodeBlock>
 
