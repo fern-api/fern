@@ -1,4 +1,3 @@
-from .backports import Backports
 from .fastapi import FastAPI
 from .functools import Functools
 from .httpx import HttpX
@@ -14,7 +13,6 @@ __all__ = [
     "UrlLib",
     "HttpX",
     "Functools",
-    "Backports",
     "Json",
     "UrlLibParse",
     "PydanticVersionCompatibility",
