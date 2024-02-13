@@ -54,6 +54,7 @@ type Config struct {
 	DryRun                     bool
 	EnableExplicitNull         bool
 	IncludeLegacyClientOptions bool
+	Whitelabel                 bool
 	Organization               string
 	CoordinatorURL             string
 	CoordinatorTaskID          string
@@ -178,6 +179,7 @@ func newConfig(configFilename string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	var (
 		coordinatorURL    string
 		coordinatorTaskID string
@@ -191,6 +193,7 @@ func newConfig(configFilename string) (*Config, error) {
 		IncludeLegacyClientOptions: customConfig.IncludeLegacyClientOptions,
 		EnableExplicitNull:         customConfig.EnableExplicitNull,
 		Organization:               config.Organization,
+		Whitelabel:                 config.Whitelabel,
 		CoordinatorURL:             coordinatorURL,
 		CoordinatorTaskID:          coordinatorTaskID,
 		Version:                    outputVersionFromGeneratorConfig(config),

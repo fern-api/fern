@@ -172,16 +172,17 @@ class EndpointFunctionGenerator:
         parameters: List[AST.NamedFunctionParameter] = []
 
         for query_parameter in endpoint.query_parameters:
-            query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                query_parameter.value_type
-            )
-            parameters.append(
-                AST.NamedFunctionParameter(
-                    name=get_parameter_name(query_parameter.name.name),
-                    docs=query_parameter.docs,
-                    type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
-                ),
-            )
+            if not self._is_type_literal(type_reference=query_parameter.value_type):
+                query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    query_parameter.value_type
+                )
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(query_parameter.name.name),
+                        docs=query_parameter.docs,
+                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                    ),
+                )
 
         if request_body_parameters is not None:
             parameters.extend(request_body_parameters.get_parameters())
@@ -268,7 +269,7 @@ class EndpointFunctionGenerator:
                     #        to not have to merge together an integer and a hash, for example
                     # If there is not an existing request body, send the encoded dict
                     additional_parameters = (
-                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_body_parameters"
+                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters')"
                     )
                     json_encoded_additional_params = self._context.core_utilities.jsonable_encoder(
                         self._context.core_utilities.remove_none_from_dict(AST.Expression(additional_parameters))
@@ -306,7 +307,7 @@ class EndpointFunctionGenerator:
                 else f"{self._context.custom_config.timeout_in_seconds}"
             )
             timeout = AST.Expression(
-                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds is not None else {timeout_default}"
+                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else {timeout_default}"
             )
 
             writer.write_node(
@@ -482,15 +483,16 @@ class EndpointFunctionGenerator:
     ) -> List[AST.NamedFunctionParameter]:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
-            named_parameters.append(
-                AST.NamedFunctionParameter(
-                    name=get_parameter_name(path_parameter.name),
-                    docs=path_parameter.docs,
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        path_parameter.value_type
+            if not self._is_type_literal(path_parameter.value_type):
+                named_parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(path_parameter.name),
+                        docs=path_parameter.docs,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type
+                        ),
                     ),
-                ),
-            )
+                )
         return named_parameters
 
     def _get_path_for_endpoint(self, endpoint: ir_types.HttpEndpoint) -> AST.Expression:
@@ -503,7 +505,9 @@ class EndpointFunctionGenerator:
         def write(writer: AST.NodeWriter) -> None:
             writer.write('f"')
             writer.write(head)
-            for part in endpoint.full_path.parts:
+            for i, part in enumerate(endpoint.full_path.parts):
+                parameter_obj = endpoint.all_path_parameters[i]
+                possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 writer.write("{")
                 writer.write(
                     get_parameter_name(
@@ -512,6 +516,8 @@ class EndpointFunctionGenerator:
                             path_parameter_name=part.path_parameter,
                         ).name,
                     )
+                ) if possible_path_part_literal is None else writer.write_node(
+                    AST.Expression(f'"{possible_path_part_literal}"')
                 )
                 writer.write("}")
                 writer.write(part.tail)
@@ -665,7 +671,7 @@ class EndpointFunctionGenerator:
                 f"**self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}(),"
             )
             writer.write(
-                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_headers if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_headers', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
             )
             writer.write_line("}")
 
@@ -686,7 +692,7 @@ class EndpointFunctionGenerator:
                 writer.write_node(header_value)
                 writer.write(", ")
             writer.write(
-                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_headers if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_headers', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
             )
             writer.write_line("},")
 
@@ -696,20 +702,28 @@ class EndpointFunctionGenerator:
             )
         )
 
+    def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
+        possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
+        return (
+            self._get_reference_to_query_parameter(query_parameter)
+            if possible_query_literal is None
+            else AST.Expression(f'"{possible_query_literal}"')
+        )
+
     def _get_query_parameters_for_endpoint(
         self,
         *,
         endpoint: ir_types.HttpEndpoint,
     ) -> Optional[AST.Expression]:
         query_parameters = [
-            (query_parameter.name.wire_value, self._get_reference_to_query_parameter(query_parameter))
+            (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
             for query_parameter in endpoint.query_parameters
         ]
 
         if len(query_parameters) == 0:
             return self._context.core_utilities.jsonable_encoder(
                 AST.Expression(
-                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
                 )
             )
 
@@ -720,7 +734,7 @@ class EndpointFunctionGenerator:
                 writer.write_node(query_param_value)
                 writer.write(", ")
             writer.write(
-                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
             )
             writer.write_line("},")
 
@@ -810,6 +824,9 @@ class EndpointFunctionGenerator:
             primitive=lambda primitive: primitive in expected,
             unknown=lambda: False,
         )
+
+    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
+        return self._context.get_literal_value(reference=type_reference) is not None
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None

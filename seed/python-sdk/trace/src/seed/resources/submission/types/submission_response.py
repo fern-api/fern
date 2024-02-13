@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 from .exception_info import ExceptionInfo
@@ -18,7 +16,7 @@ except ImportError:
 
 
 class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["serverInitialized"]
+    type: typing.Literal["serverInitialized"]
 
     class Config:
         frozen = True
@@ -26,7 +24,7 @@ class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
 
 
 class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["problemInitialized"]
+    type: typing.Literal["problemInitialized"]
     value: ProblemId
 
     class Config:
@@ -35,7 +33,7 @@ class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
 
 
 class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["workspaceInitialized"]
+    type: typing.Literal["workspaceInitialized"]
 
     class Config:
         frozen = True
@@ -43,7 +41,7 @@ class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
 
 
 class SubmissionResponse_ServerErrored(ExceptionInfo):
-    type: typing_extensions.Literal["serverErrored"]
+    type: typing.Literal["serverErrored"]
 
     class Config:
         frozen = True
@@ -52,7 +50,7 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
-    type: typing_extensions.Literal["codeExecutionUpdate"]
+    type: typing.Literal["codeExecutionUpdate"]
     value: CodeExecutionUpdate
 
     class Config:
@@ -61,7 +59,7 @@ class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
 
 
 class SubmissionResponse_Terminated(TerminatedResponse):
-    type: typing_extensions.Literal["terminated"]
+    type: typing.Literal["terminated"]
 
     class Config:
         frozen = True

@@ -9,10 +9,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 boto3 = "1.28.57"
 httpx = ">=0.21.2"
-pydantic = ">= 1.9.2, < 2.5.0"
+pydantic = ">= 1.9.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "0.971"

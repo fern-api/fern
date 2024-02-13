@@ -35,3 +35,4 @@ scripts:
       - dmypy run .
 allowedFailures: 
   - response-property
+

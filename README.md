@@ -78,10 +78,11 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 | Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-node-sdk`     | `0.9.7`        | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
-| `fernapi/fern-python-sdk`              | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-java-sdk`                | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/fern-ruby-sdk`                | `0.0.6`        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |
+| `fernapi/fern-typescript-node-sdk`     | `0.11.0`       | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
+| `fernapi/fern-python-sdk`              | `0.9.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-sdk`                | `0.8.0`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/fern-ruby-sdk`                | `0.0.6`        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
+| `fernapi/fern-go-sdk`                  | `0.16.0`       | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
 
 ### Server-side Generators
 
@@ -113,7 +114,7 @@ Fern's spec generators can output an OpenAPI spec or a Postman collection.
 | Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `fernapi/fern-openapi`                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
-| `fernapi/fern-postman`                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
+| `fernapi/fern-postman`                 | `0.1.0`       | [CHANGELOG.md](./generators/postman/CHANGELOG.md)         | [cli.ts](./generators/postman//src/cli.ts)                                       |
 
 ## 🌿 CLI Commands
 
@@ -139,8 +140,8 @@ Define your API, and use Fern to generate models, networking code and boilerplat
 type safety to your API implementation - if your backend doesn't implement the API correctly, it won't compile.
 
 Frameworks currently supported:
-- [Express](https://github.com/fern-api/fern-typescript)
-- [Spring Boot](https://github.com/fern-api/fern-java)
+- [Express](./generators/typescript)
+- [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
 
 For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).

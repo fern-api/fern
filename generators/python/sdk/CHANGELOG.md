@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.10.0] - 2024-02-13
+
+- Improvement: Remove support for Python 3.7. In order to support newer versions of libraries we depend on (such as typing and typing-extensions), we must move on to Python 3.8. With this change we are also able to:
+  - Remove the `backports` dependency, as `cached_property` is now included within `functools`
+  - Remove the upper bound dependency on Pydantic which had dropped support for Python 3.7
+
+## [0.9.1] - 2024-02-11
+
+- Fix: Remove literals from SDK function signatures, as they are not modifiable for end users.
+
+  Before:
+
+  ```python
+  def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
+    ...
+    json=jsonable_encoder({"dryRun": dry_run}),
+    ...
+  ```
+
+  After:
+
+  ```python
+  def get_options(self, *) -> Options:
+    ...
+    json=jsonable_encoder({"dryRun": "true"}),
+  ```
+
+- Fix: Acknowledge the optionality of a `File` property, previously we were requiring all `File` type inputs, even if they were specified as optional within the OpenAPI or Fern definition. Now, we check if the parameter is required and make the parameter optional if it is not.
+
+## [0.9.0] - 2024-02-11
+
+- Feature: The SDK generator now supports whitelabelling. When this is turned on,
+  there will be no mention of Fern in the generated code.
+
+  **Note**: You must be on the enterprise tier to enable this mode.
+
 ## [0.8.3-rc0] - 2024-01-29
 
 - Fix: Increase recursion depth to allow for highly nested and complex examples,

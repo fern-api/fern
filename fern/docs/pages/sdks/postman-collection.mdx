@@ -1,6 +1,5 @@
-[Source code](https://github.com/fern-api/fern-postman)
-
-**Latest version**: `0.0.46`
+[Source code](https://github.com/fern-api/fern/tree/main/generators/postman)<br />
+**Latest version**: `0.1.0`
 
 The [Postman](https://www.postman.com/) generator outputs a Postman Collection that includes example requests and responses for your endpoints (if they're in your API definition).
 
@@ -12,10 +11,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-postman
-        version: 0.0.46
+        version: 0.1.0
         output:
           location: local-file-system
-          path: ../../generated/postman
+          path: ../generated/postman
 ```
 </CodeBlock>
 
@@ -27,7 +26,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-postman
-        version: 0.0.46
+        version: 0.1.0
         output:
           location: postman
           api-key: ${POSTMAN_API_KEY}

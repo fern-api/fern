@@ -2,7 +2,7 @@ import enum
 
 from fern_python.codegen import AST
 
-PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2, < 2.5.0")
+PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2")
 
 
 class PydanticVersionCompatibility(str, enum.Enum):

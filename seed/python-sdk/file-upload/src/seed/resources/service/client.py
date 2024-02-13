@@ -27,7 +27,7 @@ class ServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         file: typing.IO,
-        maybe_file: typing.IO,
+        maybe_file: typing.Optional[typing.IO] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -48,7 +48,7 @@ class ServiceClient:
 
             - file: typing.IO.
 
-            - maybe_file: typing.IO.
+            - maybe_file: typing.Optional[typing.IO].
 
             - maybe_integer: typing.Optional[int].
 
@@ -79,24 +79,7 @@ class ServiceClient:
                 request_options.additional_query_parameters if request_options is not None else None
             ),
             data=jsonable_encoder(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "setOfStrings": set_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "optionalSetOfStrings": optional_set_of_strings,
-                    "maybeList": maybe_list,
-                    "optionalMaybeList": optional_maybe_list,
-                    "maybeListOrSet": maybe_list_or_set,
-                    "optionalMaybeListOrSet": optional_maybe_list_or_set,
-                    "listOfObjects": list_of_objects,
-                }
-            )
-            if request_options is None or request_options.additional_body_parameters is None
-            else {
-                **jsonable_encoder(
+                remove_none_from_dict(
                     {
                         "maybeString": maybe_string,
                         "integer": integer,
@@ -111,10 +94,31 @@ class ServiceClient:
                         "optionalMaybeListOrSet": optional_maybe_list_or_set,
                         "listOfObjects": list_of_objects,
                     }
+                )
+            )
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "setOfStrings": set_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            "optionalSetOfStrings": optional_set_of_strings,
+                            "maybeList": maybe_list,
+                            "optionalMaybeList": optional_maybe_list,
+                            "maybeListOrSet": maybe_list_or_set,
+                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
+                            "listOfObjects": list_of_objects,
+                        }
+                    )
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file, "maybeFile": maybe_file},
+            files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -148,13 +152,13 @@ class ServiceClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            data=jsonable_encoder({})
+            data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({}),
+                **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file},
+            files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -217,13 +221,13 @@ class ServiceClient:
                     }
                 )
             ),
-            data=jsonable_encoder({})
+            data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({}),
+                **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file},
+            files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -255,7 +259,7 @@ class AsyncServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         file: typing.IO,
-        maybe_file: typing.IO,
+        maybe_file: typing.Optional[typing.IO] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -276,7 +280,7 @@ class AsyncServiceClient:
 
             - file: typing.IO.
 
-            - maybe_file: typing.IO.
+            - maybe_file: typing.Optional[typing.IO].
 
             - maybe_integer: typing.Optional[int].
 
@@ -307,24 +311,7 @@ class AsyncServiceClient:
                 request_options.additional_query_parameters if request_options is not None else None
             ),
             data=jsonable_encoder(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "setOfStrings": set_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "optionalSetOfStrings": optional_set_of_strings,
-                    "maybeList": maybe_list,
-                    "optionalMaybeList": optional_maybe_list,
-                    "maybeListOrSet": maybe_list_or_set,
-                    "optionalMaybeListOrSet": optional_maybe_list_or_set,
-                    "listOfObjects": list_of_objects,
-                }
-            )
-            if request_options is None or request_options.additional_body_parameters is None
-            else {
-                **jsonable_encoder(
+                remove_none_from_dict(
                     {
                         "maybeString": maybe_string,
                         "integer": integer,
@@ -339,10 +326,31 @@ class AsyncServiceClient:
                         "optionalMaybeListOrSet": optional_maybe_list_or_set,
                         "listOfObjects": list_of_objects,
                     }
+                )
+            )
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "setOfStrings": set_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            "optionalSetOfStrings": optional_set_of_strings,
+                            "maybeList": maybe_list,
+                            "optionalMaybeList": optional_maybe_list,
+                            "maybeListOrSet": maybe_list_or_set,
+                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
+                            "listOfObjects": list_of_objects,
+                        }
+                    )
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file, "maybeFile": maybe_file},
+            files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -376,13 +384,13 @@ class AsyncServiceClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            data=jsonable_encoder({})
+            data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({}),
+                **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file},
+            files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -445,13 +453,13 @@ class AsyncServiceClient:
                     }
                 )
             ),
-            data=jsonable_encoder({})
+            data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({}),
+                **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
-            files={"file": file},
+            files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

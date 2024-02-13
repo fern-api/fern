@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .exception_info import ExceptionInfo
 
 try:
@@ -15,7 +13,7 @@ except ImportError:
 
 
 class Exception_Generic(ExceptionInfo):
-    type: typing_extensions.Literal["generic"]
+    type: typing.Literal["generic"]
 
     class Config:
         frozen = True
@@ -24,7 +22,7 @@ class Exception_Generic(ExceptionInfo):
 
 
 class Exception_Timeout(pydantic.BaseModel):
-    type: typing_extensions.Literal["timeout"]
+    type: typing.Literal["timeout"]
 
     class Config:
         frozen = True

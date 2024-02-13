@@ -4,8 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import typing_extensions
-
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
@@ -69,13 +67,9 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_options(
-        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
-    ) -> Options:
+    def get_options(self, *, request_options: typing.Optional[RequestOptions] = None) -> Options:
         """
         Parameters:
-            - dry_run: typing_extensions.Literal[True].
-
             - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -84,10 +78,10 @@ class LiteralClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": dry_run})
+            json=jsonable_encoder({"dryRun": "true"})
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({"dryRun": dry_run}),
+                **jsonable_encoder({"dryRun": "true"}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
@@ -111,12 +105,10 @@ class LiteralClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_undiscriminated_options(
-        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+        self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> UndiscriminatedOptions:
         """
         Parameters:
-            - dry_run: typing_extensions.Literal[True].
-
             - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -125,10 +117,10 @@ class LiteralClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": dry_run})
+            json=jsonable_encoder({"dryRun": "true"})
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({"dryRun": dry_run}),
+                **jsonable_encoder({"dryRun": "true"}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
@@ -197,13 +189,9 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_options(
-        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
-    ) -> Options:
+    async def get_options(self, *, request_options: typing.Optional[RequestOptions] = None) -> Options:
         """
         Parameters:
-            - dry_run: typing_extensions.Literal[True].
-
             - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -212,10 +200,10 @@ class AsyncLiteralClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": dry_run})
+            json=jsonable_encoder({"dryRun": "true"})
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({"dryRun": dry_run}),
+                **jsonable_encoder({"dryRun": "true"}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
@@ -239,12 +227,10 @@ class AsyncLiteralClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_undiscriminated_options(
-        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+        self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> UndiscriminatedOptions:
         """
         Parameters:
-            - dry_run: typing_extensions.Literal[True].
-
             - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -253,10 +239,10 @@ class AsyncLiteralClient:
             params=jsonable_encoder(
                 request_options.additional_query_parameters if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": dry_run})
+            json=jsonable_encoder({"dryRun": "true"})
             if request_options is None or request_options.additional_body_parameters is None
             else {
-                **jsonable_encoder({"dryRun": dry_run}),
+                **jsonable_encoder({"dryRun": "true"}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(

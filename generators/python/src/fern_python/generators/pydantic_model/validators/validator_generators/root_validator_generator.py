@@ -191,7 +191,7 @@ class RootValidatorGenerator(ValidatorGenerator):
             name=self._get_root_validator_protocol_name(pre),
             extends=[
                 AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing_extensions",))),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
                     qualified_name_excluding_import=("Protocol",),
                 )
             ],
