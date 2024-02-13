@@ -11516,6 +11516,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "AlgoliaRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "apiKey": {
             "docs": "The API key to grant access to Squidex.",
@@ -11699,6 +11702,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ArrayFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "maxItems": {
             "docs": "The maximum allowed items for the field value.",
@@ -11716,6 +11722,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "AssetChangedRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {
           "condition": {
             "docs": "Javascript condition when to trigger.",
@@ -11963,6 +11972,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "AssetsFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "allowDuplicates": {
             "docs": "True, if duplicate values are allowed.",
@@ -12069,6 +12081,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "AzureQueueRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "connectionString": {
             "docs": "The connection string to the storage account.",
@@ -12137,6 +12152,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "BooleanFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "defaultValue": {
             "docs": "The default value for the field value.",
@@ -12437,6 +12455,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "CommentRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "client": {
             "docs": "An optional client name.",
@@ -12450,6 +12471,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "CommentRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {
           "condition": {
             "docs": "Javascript condition when to trigger.",
@@ -12480,6 +12504,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ComponentFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "schemaIds": {
             "docs": "The ID of the embedded schemas.",
@@ -12489,6 +12516,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ComponentsFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "maxItems": {
             "docs": "The maximum allowed items for the field value.",
@@ -12511,6 +12541,9 @@ You will be assigned as owner of the new team automatically.",
       "ConfigurePreviewUrlsDto": "map<string, string>",
       "ContentChangedRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {
           "handleAll": {
             "docs": "Determines whether the trigger should handle all content changes events.",
@@ -12684,6 +12717,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "CreateContentRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "client": {
             "docs": "An optional client name.",
@@ -12745,6 +12781,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "DateTimeFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "calculatedDefaultValue": {
             "docs": "The calculated default value for the field value.",
@@ -12778,6 +12817,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "DiscourseRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "apiKey": {
             "docs": "The api key to authenticate to your discourse server.",
@@ -12824,6 +12866,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ElasticSearchRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "delete": {
             "docs": "The condition when to delete the document.",
@@ -12853,6 +12898,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "EmailRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "messageBody": {
             "docs": "The message body.",
@@ -12964,6 +13012,9 @@ You will be assigned as owner of the new team automatically.",
       "ExposedValues": "map<string, string>",
       "FastlyRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "apiKey": {
             "docs": "The API key to grant access to Squidex.",
@@ -13122,6 +13173,9 @@ You will be assigned as owner of the new team automatically.",
       "GeolocationFieldEditor": "literal<"Map">",
       "GeolocationFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "editor": {
             "docs": "The editor that is used to manage this field.",
@@ -13182,6 +13236,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "JsonFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "graphQLSchema": {
             "docs": "The GraphQL schema.",
@@ -13222,10 +13279,16 @@ You will be assigned as owner of the new team automatically.",
       },
       "ManualRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {},
       },
       "MediumRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "accessToken": {
             "docs": "The self issued access token.",
@@ -13291,6 +13354,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "NotificationRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "client": {
             "docs": "An optional client name.",
@@ -13321,6 +13387,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "NumberFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "allowedValues": {
             "docs": "The allowed values for the field value.",
@@ -13358,6 +13427,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "OpenSearchRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "delete": {
             "docs": "The condition when to delete the document.",
@@ -13500,6 +13572,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "PrerenderRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "token": {
             "docs": "The prerender token from your account.",
@@ -13554,6 +13629,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ReferencesFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "allowDuplicates": {
             "docs": "True, if duplicate values are allowed.",
@@ -14024,6 +14102,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "SchemaChangedRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {
           "condition": {
             "docs": "Javascript condition when to trigger.",
@@ -14202,6 +14283,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "ScriptRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "script": {
             "docs": "The script to render.",
@@ -14242,6 +14326,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "SignalRRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "action": {
             "docs": "* Broadcast = send to all users.
@@ -14340,6 +14427,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "SlackRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "text": {
             "docs": "The text that is sent as message to slack.",
@@ -14420,6 +14510,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "StringFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "allowedValues": {
             "docs": "The allowed values for the field value.",
@@ -14509,6 +14602,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "TagsFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "allowedValues": {
             "docs": "The allowed values for the field value.",
@@ -14646,6 +14742,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "TweetRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "accessSecret": {
             "docs": " The generated access secret.",
@@ -14663,6 +14762,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "TypesenseRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "apiKey": {
             "docs": "The api key.",
@@ -14689,6 +14791,9 @@ You will be assigned as owner of the new team automatically.",
       "UiFieldEditor": "literal<"Separator">",
       "UiFieldPropertiesDto": {
         "docs": undefined,
+        "extends": [
+          "FieldPropertiesDto",
+        ],
         "properties": {
           "editor": {
             "docs": "The editor that is used to manage this field.",
@@ -14838,6 +14943,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "UsageRuleTriggerDto": {
         "docs": undefined,
+        "extends": [
+          "RuleTriggerDto",
+        ],
         "properties": {
           "limit": {
             "docs": "The number of monthly api calls.",
@@ -14912,6 +15020,9 @@ You will be assigned as owner of the new team automatically.",
       },
       "WebhookRuleActionDto": {
         "docs": undefined,
+        "extends": [
+          "RuleActionDto",
+        ],
         "properties": {
           "headers": {
             "docs": "The message headers in the format '[Key]=[Value]', one entry per line.",

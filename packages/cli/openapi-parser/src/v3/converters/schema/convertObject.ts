@@ -54,12 +54,7 @@ export function convertObject({
     const parents: ReferencedAllOfInfo[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
-            // if allOf element is a union, then don't inherit from it
             const resolvedReference = context.resolveSchemaReference(allOfElement);
-            if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
-                continue;
-            }
-            // if allOf element is a oneOf, then don't inherit from it
             if (resolvedReference.oneOf != null) {
                 // try to grab all properties from the oneOf schemas
                 for (const oneOfSchema of resolvedReference.oneOf) {
