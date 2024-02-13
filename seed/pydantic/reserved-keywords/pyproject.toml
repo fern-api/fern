@@ -9,8 +9,8 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-pydantic = ">= 1.9.2, < 2.5.0"
+python = "^3.8"
+pydantic = ">= 1.9.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "0.971"
