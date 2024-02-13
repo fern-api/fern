@@ -23,6 +23,9 @@ tabs:
   api-reference:
     display-name: API Reference
     icon: "fa-solid fa-file-contract"
+  change-log:
+    display-name: Changelog
+    icon: "fa-solid fa-bolt"
 
 navigation:
   - tab: overview
@@ -76,6 +79,7 @@ navigation:
             path: ./docs/pages/guides/publish-to-maven-central.mdx
       - section: Changelog
         contents: 
+          - page: February
           - page: December 2023
             path: ./docs/pages/changelog/december-2023.mdx
   - tab: api-definition
@@ -200,6 +204,16 @@ navigation:
         snippets:
           python: fern-api
           typescript: "@fern-api/node-sdk"
+  - tab: change-log
+    layout:
+      - section: "2024"
+        contents:
+          - page: February
+            path: ./docs/content/change-log/2024-02.mdx
+            slug: 2024-02
+          - page: January
+            path: ./docs/content/change-log/2024-01.mdx
+            slug: 2024-01
 
 navbar-links:
   - type: secondary
