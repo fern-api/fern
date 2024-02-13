@@ -42,6 +42,8 @@ export class Homepage {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
@@ -85,6 +87,8 @@ export class Homepage {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {

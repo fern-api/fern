@@ -42,6 +42,8 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -88,6 +90,8 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -128,6 +132,8 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -172,6 +178,8 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
@@ -218,6 +226,8 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
