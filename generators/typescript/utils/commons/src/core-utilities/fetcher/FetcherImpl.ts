@@ -138,6 +138,21 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
+    public readonly RUNTIME = {
+        type: {
+            _getReferenceTo: this.withExportedName(
+                "RUNTIME",
+                (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "type")
+            )
+        },
+        version: {
+            _getReferenceTo: this.withExportedName(
+                "RUNTIME",
+                (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "version")
+            )
+        }
+    };
+
     public readonly APIResponse = {
         _getReferenceToType: this.withExportedName(
             "APIResponse",

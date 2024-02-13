@@ -502,6 +502,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
+        headers.push(
+            {
+                header: "X-Fern-Runtime",
+                value: context.coreUtilities.runtime.type._getReferenceTo()
+            },
+            {
+                header: "X-Fern-Runtime-Version",
+                value: context.coreUtilities.runtime.version._getReferenceTo()
+            }
+        );
+
         return headers;
     }
 
