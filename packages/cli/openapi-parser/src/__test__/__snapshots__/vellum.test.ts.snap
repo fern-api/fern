@@ -2808,7 +2808,7 @@ Upload a document to be indexed and used for search.
             "description": undefined,
             "key": "contents",
             "schema": {
-              "isOptional": true,
+              "isOptional": false,
               "type": "file",
             },
           },
