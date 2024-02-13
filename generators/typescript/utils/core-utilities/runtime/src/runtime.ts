@@ -58,7 +58,7 @@ const isReactNative = typeof navigator !== "undefined" && navigator?.product ===
 /**
  * A constant that indicates which environment and version the SDK is running in.
  */
-export const runtime: Runtime = evaluateRuntime();
+export const RUNTIME: Runtime = evaluateRuntime();
 
 export interface Runtime {
     type: "browser" | "web-worker" | "deno" | "bun" | "node" | "react-native" | "unknown";

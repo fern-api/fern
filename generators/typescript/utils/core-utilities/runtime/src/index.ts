@@ -1,1 +1,1 @@
-export { runtime } from ".";
+export { RUNTIME } from "./runtime";
