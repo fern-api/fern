@@ -32,7 +32,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
     def _get_property_type(self, property: ir_types.FileUploadRequestProperty) -> AST.TypeHint:
         return property.visit(
-            file=lambda x: AST.TypeHint.IO(),
+            file=lambda x: AST.TypeHint.IO() if not x.is_optional else AST.TypeHint.optional(AST.TypeHint.IO()),
             body_property=lambda body_property: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 body_property.value_type
             ),
@@ -62,7 +62,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         )
             writer.write_line("}")
 
-        return AST.Expression(AST.CodeWriter(write))
+        return self._context.core_utilities.remove_none_from_dict(AST.Expression(AST.CodeWriter(write)))
 
     def get_files(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
@@ -76,7 +76,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         )
             writer.write_line("}")
 
-        return AST.Expression(AST.CodeWriter(write))
+        return self._context.core_utilities.remove_none_from_dict(AST.Expression(AST.CodeWriter(write)))
 
     def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
         return None

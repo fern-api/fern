@@ -4,8 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import typing_extensions
-
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
@@ -46,15 +44,11 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
-        """
-        Parameters:
-            - dry_run: typing_extensions.Literal[True].
-        """
+    def get_options(self) -> Options:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            json=jsonable_encoder({"dryRun": dry_run}),
+            json=jsonable_encoder({"dryRun": "true"}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
@@ -66,15 +60,11 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
-        """
-        Parameters:
-            - dry_run: typing_extensions.Literal[True].
-        """
+    def get_undiscriminated_options(self) -> UndiscriminatedOptions:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            json=jsonable_encoder({"dryRun": dry_run}),
+            json=jsonable_encoder({"dryRun": "true"}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
@@ -111,15 +101,11 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
-        """
-        Parameters:
-            - dry_run: typing_extensions.Literal[True].
-        """
+    async def get_options(self) -> Options:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            json=jsonable_encoder({"dryRun": dry_run}),
+            json=jsonable_encoder({"dryRun": "true"}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
@@ -131,15 +117,11 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
-        """
-        Parameters:
-            - dry_run: typing_extensions.Literal[True].
-        """
+    async def get_undiscriminated_options(self) -> UndiscriminatedOptions:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            json=jsonable_encoder({"dryRun": dry_run}),
+            json=jsonable_encoder({"dryRun": "true"}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
