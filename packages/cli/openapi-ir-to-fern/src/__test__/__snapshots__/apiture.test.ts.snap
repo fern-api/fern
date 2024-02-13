@@ -810,10 +810,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
             "request": {
               "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.JointOwnerInvitationFields",
-                ],
                 "properties": {},
               },
               "headers": undefined,
@@ -980,10 +976,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             },
             "request": {
               "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.OverdraftProtectionFields",
-                ],
                 "properties": {},
               },
               "headers": undefined,
@@ -1321,10 +1313,6 @@ Note: This operation requires an identity challenge if the financial institution
             "path": "/banking/transfers",
             "request": {
               "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
-                ],
                 "properties": {
                   "schedule": {
                     "docs": "When the transfer should occur and any recurrence.",
@@ -1663,10 +1651,6 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "request": {
               "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
-                ],
                 "properties": {
                   "schedule": {
                     "docs": "When the transfer should occur and any recurrence.",

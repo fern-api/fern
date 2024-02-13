@@ -250,9 +250,13 @@ types:
       key: string
       schema: MultipartSchema
 
+  FileSchema:
+    properties:
+      isOptional: boolean
+
   MultipartSchema:
     union:
-      file: {}
+      file: FileSchema
       json: Schema
 
   Response:

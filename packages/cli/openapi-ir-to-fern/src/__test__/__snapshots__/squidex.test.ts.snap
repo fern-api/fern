@@ -2220,7 +2220,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -2959,7 +2959,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -3073,7 +3073,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -3226,7 +3226,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -8458,9 +8458,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": {
-                "extends": [
-                  "root.UpsertSchemaDto",
-                ],
                 "properties": {
                   "isSingleton": {
                     "docs": "Set to true to allow a single content item only.",
@@ -9388,9 +9385,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": {
-                "extends": [
-                  "root.UpsertSchemaDto",
-                ],
                 "properties": {
                   "noFieldDeletion": {
                     "docs": "True, when fields should not be deleted.",

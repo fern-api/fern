@@ -351,7 +351,7 @@ function getRequest({
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };
-        if (extendedSchemas.length > 0) {
+        if ("extends" in requestBodySchema && extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
 
@@ -381,7 +381,7 @@ function getRequest({
         const properties = Object.fromEntries(
             request.properties.map((property) => {
                 if (property.schema.type === "file") {
-                    return [property.key, "file"];
+                    return [property.key, property.schema.isOptional ? "optional<file>" : "file"];
                 } else {
                     const propertyTypeReference = buildTypeReference({
                         schema: property.schema.json,

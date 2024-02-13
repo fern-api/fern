@@ -2028,6 +2028,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "key": "file",
             "schema": {
+              "isOptional": true,
               "type": "file",
             },
           },
