@@ -14,6 +14,7 @@ import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./fetcher/FetcherImpl";
 import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
+import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
@@ -38,7 +39,8 @@ export class CoreUtilitiesManager {
             auth: new AuthImpl({ getReferenceToExport }),
             base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
-            formDataUtils: new FormDataUtilsImpl({ getReferenceToExport })
+            formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
+            runtime: new RuntimeImpl({ getReferenceToExport })
         };
     }
 

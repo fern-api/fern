@@ -42,6 +42,15 @@ export interface Fetcher {
         ) => ts.Expression;
     };
 
+    readonly RUNTIME: {
+        type: {
+            _getReferenceTo: () => ts.Expression;
+        };
+        version: {
+            _getReferenceTo: () => ts.Expression;
+        };
+    };
+
     readonly APIResponse: {
         _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => ts.TypeNode;
 
