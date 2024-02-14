@@ -1,4 +1,4 @@
-import { visitObject } from "@fern-api/core-utils";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { DefinitionFileSchema } from "../schemas";
 import { DefinitionFileAstVisitor } from "./DefinitionFileAstVisitor";
 import { visitHttpService } from "./visitors/services/visitHttpService";
@@ -30,6 +30,8 @@ export async function visitDefinitionFileYamlAst(
                 await visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
             }
         },
+        // TODO(dsinghvi): Implement visitor for channel
+        channel: noop,
         errors: async (errors) => {
             await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         }

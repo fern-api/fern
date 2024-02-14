@@ -102,6 +102,8 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
@@ -144,6 +146,8 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
@@ -178,8 +182,33 @@ export class Service {
 
     public async justFileWithQueryParams(
         file: File | fs.ReadStream,
+        request: SeedFileUpload.JustFileWithQueryParamsRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
+        const _queryParams: Record<string, string | string[]> = {};
+        if (request.maybeString != null) {
+            _queryParams["maybeString"] = request.maybeString;
+        }
+
+        _queryParams["integer"] = request.integer.toString();
+        if (request.maybeInteger != null) {
+            _queryParams["maybeInteger"] = request.maybeInteger.toString();
+        }
+
+        if (Array.isArray(request.listOfStrings)) {
+            _queryParams["listOfStrings"] = request.listOfStrings.map((item) => item);
+        } else {
+            _queryParams["listOfStrings"] = request.listOfStrings;
+        }
+
+        if (request.optionalListOfStrings != null) {
+            if (Array.isArray(request.optionalListOfStrings)) {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings.map((item) => item);
+            } else {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings;
+            }
+        }
+
         const _request = new FormData();
         _request.append("file", file);
         const _response = await core.fetcher({
@@ -189,8 +218,11 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
+            queryParameters: _queryParams,
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

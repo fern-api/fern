@@ -264,7 +264,8 @@ export async function generateIntermediateRepresentation({
                 const convertedWebhookGroup = await convertWebhookGroup({ webhooks, file });
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
-            }
+            },
+            channel: noop
         });
     };
 
