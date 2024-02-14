@@ -129,8 +129,7 @@ export class ExampleTypeFactory {
             }
             case "reference": {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
-                if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
-                    visitedSchemaIds.add(schema.schema);
+                if (referencedSchemaWithExample != null) {
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
@@ -138,7 +137,6 @@ export class ExampleTypeFactory {
                         depth,
                         options
                     });
-                    visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
                 }
                 return undefined;
