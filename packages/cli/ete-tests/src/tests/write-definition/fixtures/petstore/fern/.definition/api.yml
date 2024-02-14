@@ -3,5 +3,5 @@ error-discrimination:
   strategy: status-code
 display-name: Swagger Petstore
 environments:
-  Default: http://petstore.swagger.io
+  Default: http://petstore.swagger.io/v1
 default-environment: Default

@@ -187,7 +187,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             declaration: true,
             emitDeclarationOnly: true,
             sourceMap: true,
-            noUnusedParameters: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: BundledTypescriptProject.SRC_DIRECTORY,
             baseUrl: BundledTypescriptProject.SRC_DIRECTORY
