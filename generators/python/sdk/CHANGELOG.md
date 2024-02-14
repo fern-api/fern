@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.10.1] - 2024-02-14
+
+- Improvement: Add support for a RequestOptions object for each generated function within Python SDKs. This parameter is an optional final parameter that allows for configuring timeout, as well as pass in arbitrary data through to the request. RequestOptions is a TypedDict, with optional fields, so there's no need to instantiate an object, just pass in the relevent keys within a dict!
+
+  - `timeout_in_seconds` overrides the timeout for this specific request
+  - `additional_body_parameters` are expanded into the JSON request body
+  - `additional_query_parameters` are expanded into the JSON query parameters map
+  - `additional_headers` are expanded into the request's header map
+  - Here's an example:
+
+    ```python
+    client\
+      .imdb\
+      .create_movie(
+        request=CreateMovieRequest(title="title", rating=4.3),
+        request_options={
+          "timeout_in_seconds": 99,
+          "additional_body_parameters": {"another": "body parameter"},
+          "additional_headers": {"another": "header"},
+        }
+      )
+    ```
+
 ## [0.10.0] - 2024-02-13
 
 - Improvement: Remove support for Python 3.7. In order to support newer versions of libraries we depend on (such as typing and typing-extensions), we must move on to Python 3.8. With this change we are also able to:

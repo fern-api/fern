@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .....commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
 from .file_info_v_2 import FileInfoV2
@@ -18,7 +16,7 @@ except ImportError:
 
 
 class CustomFiles_Basic(BasicCustomFiles):
-    type: typing_extensions.Literal["basic"]
+    type: typing.Literal["basic"]
 
     class Config:
         frozen = True
@@ -27,7 +25,7 @@ class CustomFiles_Basic(BasicCustomFiles):
 
 
 class CustomFiles_Custom(pydantic.BaseModel):
-    type: typing_extensions.Literal["custom"]
+    type: typing.Literal["custom"]
     value: typing.Dict[Language, Files]
 
     class Config:

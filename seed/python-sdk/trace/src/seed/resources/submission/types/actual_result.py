@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
 
@@ -16,7 +14,7 @@ except ImportError:
 
 
 class ActualResult_Value(pydantic.BaseModel):
-    type: typing_extensions.Literal["value"]
+    type: typing.Literal["value"]
     value: VariableValue
 
     class Config:
@@ -25,7 +23,7 @@ class ActualResult_Value(pydantic.BaseModel):
 
 
 class ActualResult_Exception(ExceptionInfo):
-    type: typing_extensions.Literal["exception"]
+    type: typing.Literal["exception"]
 
     class Config:
         frozen = True
@@ -34,7 +32,7 @@ class ActualResult_Exception(ExceptionInfo):
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):
-    type: typing_extensions.Literal["exceptionV2"]
+    type: typing.Literal["exceptionV2"]
     value: ExceptionV2
 
     class Config:

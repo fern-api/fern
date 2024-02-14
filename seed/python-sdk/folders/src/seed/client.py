@@ -7,6 +7,9 @@ import httpx
 
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.jsonable_encoder import jsonable_encoder
+from .core.remove_none_from_dict import remove_none_from_dict
+from .core.request_options import RequestOptions
 from .resources.a.client import AClient, AsyncAClient
 from .resources.folder.client import AsyncFolderClient, FolderClient
 
@@ -21,9 +24,31 @@ class SeedApi:
         self.a = AClient(client_wrapper=self._client_wrapper)
         self.folder = FolderClient(client_wrapper=self._client_wrapper)
 
-    def foo(self) -> None:
+    def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        """
         _response = self._client_wrapper.httpx_client.request(
-            "POST", self._client_wrapper.get_base_url(), headers=self._client_wrapper.get_headers(), timeout=60
+            "POST",
+            self._client_wrapper.get_base_url(),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -48,9 +73,31 @@ class AsyncSeedApi:
         self.a = AsyncAClient(client_wrapper=self._client_wrapper)
         self.folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
 
-    async def foo(self) -> None:
+    async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST", self._client_wrapper.get_base_url(), headers=self._client_wrapper.get_headers(), timeout=60
+            "POST",
+            self._client_wrapper.get_base_url(),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

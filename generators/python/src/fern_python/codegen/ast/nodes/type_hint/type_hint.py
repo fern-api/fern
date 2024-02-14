@@ -158,19 +158,14 @@ class TypeHint(AstNode):
     @staticmethod
     def annotated(type: TypeHint, annotation: Expression) -> TypeHint:
         return TypeHint(
-            type=ClassReference(
-                import_=ReferenceImport(
-                    module=Module.built_in(("typing_extensions",)),
-                ),
-                qualified_name_excluding_import=("Annotated",),
-            ),
+            type=get_reference_to_typing_import("Annotated"),
             type_parameters=[TypeParameter(type), TypeParameter(annotation)],
         )
 
     @staticmethod
     def literal(value: Expression) -> TypeHint:
         return TypeHint(
-            type=get_reference_to_typing_extensions_import("Literal"),
+            type=get_reference_to_typing_import("Literal"),
             type_parameters=[TypeParameter(value)],
             is_literal=True,
         )

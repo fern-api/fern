@@ -82,6 +82,7 @@ class HttpX:
 
             writer.write("timeout=")
             writer.write_node(timeout)
+            writer.write_line(",")
 
         def write_non_streaming_call(
             *,

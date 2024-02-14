@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -40,7 +38,7 @@ class Base(pydantic.BaseModel):
 
 
 class Metadata_Html(Base):
-    type: typing_extensions.Literal["html"]
+    type: typing.Literal["html"]
     value: str
 
     class Config:
@@ -50,7 +48,7 @@ class Metadata_Html(Base):
 
 
 class Metadata_Markdown(Base):
-    type: typing_extensions.Literal["markdown"]
+    type: typing.Literal["markdown"]
     value: str
 
     class Config:
