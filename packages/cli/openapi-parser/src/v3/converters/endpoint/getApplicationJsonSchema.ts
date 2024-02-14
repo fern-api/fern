@@ -4,9 +4,6 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { getExtension } from "../../extensions/getExtension";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 
-export const APPLICATION_JSON_CONTENT = "application/json";
-export const APPLICATION_JSON_REGEX = /^application.*json$/;
-
 export interface ApplicationJsonMediaObject {
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     examples: NamedFullExample[];
@@ -16,7 +13,7 @@ export function getApplicationJsonSchemaMediaObject(
     media: Record<string, OpenAPIV3.MediaTypeObject>
 ): ApplicationJsonMediaObject | undefined {
     for (const contentType of Object.keys(media)) {
-        if (contentType.includes(APPLICATION_JSON_CONTENT) || APPLICATION_JSON_REGEX.test(contentType)) {
+        if (contentType.includes("json")) {
             const mediaObject = media[contentType];
             if (mediaObject == null) {
                 continue;

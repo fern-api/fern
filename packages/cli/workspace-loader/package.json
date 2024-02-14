@@ -40,7 +40,7 @@
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/docs-config": "0.0.75",
     "@fern-fern/fiddle-sdk": "^0.0.411",
-    "@fern-fern/openapi-ir-model": "0.0.170",
+    "@fern-fern/openapi-ir-model": "0.0.171",
     "axios": "^0.27.2",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
