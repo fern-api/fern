@@ -257,6 +257,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -5489,6 +5490,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_commons/types": {
       "docs": null,
@@ -5605,6 +5607,7 @@ exports[`generate IR 1`] = `
         "type_commons/types:Data",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file": {
       "docs": null,
@@ -5682,6 +5685,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification": {
       "docs": null,
@@ -5796,6 +5800,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification/service": {
       "docs": null,
@@ -5945,6 +5950,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/service": {
       "docs": null,
@@ -6058,6 +6064,7 @@ exports[`generate IR 1`] = `
         "type_file/service:Filename",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health": {
       "docs": null,
@@ -6134,6 +6141,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health/service": {
       "docs": null,
@@ -6245,6 +6253,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_service": {
       "docs": null,
@@ -6317,6 +6326,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types": {
       "docs": null,
@@ -6412,6 +6422,7 @@ exports[`generate IR 1`] = `
         "type_types:Test",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -21305,5 +21316,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

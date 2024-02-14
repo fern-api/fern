@@ -467,6 +467,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -543,6 +544,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             ],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -617,6 +619,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -730,6 +733,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -740,6 +744,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -765,4 +770,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `1412274`;
+exports[`dependencies file dependencies 1`] = `1412392`;
