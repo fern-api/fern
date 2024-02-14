@@ -32,10 +32,6 @@ public class FooClient {
     }
 
     public ImportingType find(FindRequest request, RequestOptions requestOptions) {
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions.getTimeout().isPresent()) {
-            client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), TimeUnit.SECONDS)
-        }
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
@@ -64,8 +60,13 @@ public class FooClient {
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ImportingType.class);
             }

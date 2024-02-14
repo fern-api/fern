@@ -6,23 +6,24 @@ package com.seed.audiences.core;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
-    private final Optional<Integer> maxRetries;
-
     private final Optional<Integer> timeout;
 
-    private RequestOptions(Optional<Integer> maxRetries, Optional<Integer> timeout) {
-        this.maxRetries = maxRetries;
-        this.timeout = timeout;
-    }
+    private final TimeUnit timeoutTimeUnit;
 
-    public Optional<Integer> getMaxRetries() {
-        return maxRetries;
+    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+        this.timeout = timeout;
+        this.timeoutTimeUnit = timeoutTimeUnit;
     }
 
     public Optional<Integer> getTimeout() {
         return timeout;
+    }
+
+    public TimeUnit getTimeoutTimeUnit() {
+        return timeoutTimeUnit;
     }
 
     public Map<String, String> getHeaders() {
@@ -35,22 +36,22 @@ public final class RequestOptions {
     }
 
     public static final class Builder {
-        private Optional<Integer> maxRetries = null;
-
         private Optional<Integer> timeout = null;
 
-        public Builder maxRetries(Optional<Integer> maxRetries) {
-            this.maxRetries = maxRetries;
-            return this;
-        }
+        private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 
         public Builder timeout(Optional<Integer> timeout) {
             this.timeout = timeout;
             return this;
         }
 
+        public Builder timeoutTimeUnit(TimeUnit timeoutTimeUnit) {
+            this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(maxRetries, timeout);
+            return new RequestOptions(timeout, timeoutTimeUnit);
         }
     }
 }

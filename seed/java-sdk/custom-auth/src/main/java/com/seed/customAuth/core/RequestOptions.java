@@ -5,14 +5,28 @@ package com.seed.customAuth.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
     private final String customAuthScheme;
 
-    private RequestOptions(String customAuthScheme, Integer maxRetries, Integer timeout) {
+    private final Optional<Integer> timeout;
+
+    private final TimeUnit timeoutTimeUnit;
+
+    private RequestOptions(String customAuthScheme, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
         this.customAuthScheme = customAuthScheme;
-        this.maxRetries = maxRetries;
         this.timeout = timeout;
+        this.timeoutTimeUnit = timeoutTimeUnit;
+    }
+
+    public Optional<Integer> getTimeout() {
+        return timeout;
+    }
+
+    public TimeUnit getTimeoutTimeUnit() {
+        return timeoutTimeUnit;
     }
 
     public Map<String, String> getHeaders() {
@@ -30,13 +44,27 @@ public final class RequestOptions {
     public static final class Builder {
         private String customAuthScheme = null;
 
+        private Optional<Integer> timeout = null;
+
+        private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
         public Builder customAuthScheme(String customAuthScheme) {
             this.customAuthScheme = customAuthScheme;
             return this;
         }
 
+        public Builder timeout(Optional<Integer> timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
+        public Builder timeoutTimeUnit(TimeUnit timeoutTimeUnit) {
+            this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(customAuthScheme, maxRetries, timeout);
+            return new RequestOptions(customAuthScheme, timeout, timeoutTimeUnit);
         }
     }
 }

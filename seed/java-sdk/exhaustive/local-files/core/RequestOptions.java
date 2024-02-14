@@ -8,14 +8,28 @@ import java.lang.Integer;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
   private final String token;
 
-  private RequestOptions(String token, Integer maxRetries, Integer timeout) {
+  private final Optional<Integer> timeout;
+
+  private final TimeUnit timeoutTimeUnit;
+
+  private RequestOptions(String token, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
     this.token = token;
-    this.maxRetries = maxRetries;
     this.timeout = timeout;
+    this.timeoutTimeUnit = timeoutTimeUnit;
+  }
+
+  public Optional<Integer> getTimeout() {
+    return timeout;
+  }
+
+  public TimeUnit getTimeoutTimeUnit() {
+    return timeoutTimeUnit;
   }
 
   public Map<String, String> getHeaders() {
@@ -33,13 +47,27 @@ public final class RequestOptions {
   public static final class Builder {
     private String token = null;
 
+    private Optional<Integer> timeout = null;
+
+    private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
     public Builder token(String token) {
       this.token = token;
       return this;
     }
 
+    public Builder timeout(Optional<Integer> timeout) {
+      this.timeout = timeout;
+      return this;
+    }
+
+    public Builder timeoutTimeUnit(TimeUnit timeoutTimeUnit) {
+      this.timeoutTimeUnit = timeoutTimeUnit;
+      return this;
+    }
+
     public RequestOptions build() {
-      return new RequestOptions(token, maxRetries, timeout);
+      return new RequestOptions(token, timeout, timeoutTimeUnit);
     }
   }
 }
