@@ -13,6 +13,7 @@ export async function visitPackageMarkerYamlAst(
         service: noop,
         webhooks: noop,
         errors: noop,
+        channel: noop,
         export: async (export_) => {
             await visitor.export?.(export_, ["export"]);
         },
