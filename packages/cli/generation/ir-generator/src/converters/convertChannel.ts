@@ -23,12 +23,6 @@ export async function convertChannel({
     variableResolver: VariableResolver;
     file: FernFileContext;
 }): Promise<WebsocketChannel> {
-    const endpointPathParameters = await convertPathParameters({
-        pathParameters: channel["path-parameters"] ?? {},
-        location: PathParameterLocation.Endpoint,
-        file,
-        variableResolver
-    });
     const messages: Record<WebsocketMessageId, WebsocketMessage> = {};
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
         messages[messageId] = {
@@ -45,6 +39,15 @@ export async function convertChannel({
         auth: channel.auth,
         headers: [],
         docs: channel.docs,
+        pathParameters:
+            channel["path-parameters"] != null
+                ? await convertPathParameters({
+                      pathParameters: channel["path-parameters"] ?? {},
+                      location: PathParameterLocation.Endpoint,
+                      file,
+                      variableResolver
+                  })
+                : [],
         queryParameters:
             channel["query-parameters"] != null
                 ? await Promise.all(

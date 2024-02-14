@@ -13,6 +13,7 @@ types:
       auth: boolean
       headers: list<http.HttpHeader>
       queryParameters: list<http.QueryParameter>
+      pathParameters: list<http.PathParameter>
       messages: 
         docs: "The messages that can be sent and received on this channel"
         type: map<WebsocketMessageId, WebsocketMessage>
