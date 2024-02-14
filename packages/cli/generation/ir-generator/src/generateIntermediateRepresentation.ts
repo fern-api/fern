@@ -275,7 +275,7 @@ export async function generateIntermediateRepresentation({
                 const websocketChannel = await convertChannel({ channel, file, variableResolver });
                 if (intermediateRepresentation.websocketChannels != null) {
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
-                    // packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
+                    packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
                 }
             }
         });
