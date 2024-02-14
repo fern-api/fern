@@ -5727,104 +5727,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "cpu": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "memory": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "rate_egress": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "total_egress": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -6097,39 +6000,6 @@ exports[`open api parser hathora parse open api 1`] = `
                               "type": "string",
                             },
                             "type": "primitive",
-                          },
-                          "currentAllocation": {
-                            "properties": {
-                              "processId": {
-                                "primitive": {
-                                  "string": "processId",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "roomAllocationId": {
-                                "primitive": {
-                                  "string": "roomAllocationId",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "scheduledAt": {
-                                "primitive": {
-                                  "datetime": "2024-01-15T09:30:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                              "unscheduledAt": {
-                                "primitive": {
-                                  "datetime": "2024-01-15T09:30:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
                           },
                           "roomId": {
                             "primitive": {
@@ -6867,41 +6737,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "response": {
             "properties": {
               "allocations": {
-                "array": [
-                  {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "processId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "roomAllocationId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "unscheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "appId": {
@@ -6910,39 +6746,6 @@ exports[`open api parser hathora parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "currentAllocation": {
-                "properties": {
-                  "processId": {
-                    "primitive": {
-                      "string": "processId",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "roomAllocationId": {
-                    "primitive": {
-                      "string": "roomAllocationId",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "scheduledAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "unscheduledAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
               },
               "roomId": {
                 "primitive": {
@@ -7066,39 +6869,6 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "processId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "roomAllocationId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "unscheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
                   },
                   "roomId": {
                     "primitive": {
@@ -7232,39 +7002,6 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "processId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "roomAllocationId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "unscheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
                   },
                   "roomId": {
                     "primitive": {

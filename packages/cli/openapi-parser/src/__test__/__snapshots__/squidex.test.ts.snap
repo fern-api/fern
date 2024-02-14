@@ -80,13 +80,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -1377,13 +1370,6 @@ exports[`open api parser squidex parse open api 1`] = `
                               },
                               "type": "primitive",
                             },
-                            "metadata": {
-                              "primitive": {
-                                "string": "metadata",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
                             "method": {
                               "primitive": {
                                 "string": "method",
@@ -1940,13 +1926,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -2238,18 +2217,6 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -2266,13 +2233,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -2471,18 +2431,6 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -2499,13 +2447,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -2706,18 +2647,6 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -2734,13 +2663,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -2938,18 +2860,6 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -2966,13 +2876,6 @@ exports[`open api parser squidex parse open api 1`] = `
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -3142,13 +3045,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
                             "href": {
                               "primitive": {
                                 "string": "href",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                            "metadata": {
-                              "primitive": {
-                                "string": "metadata",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -4991,13 +4887,6 @@ You will be assigned as owner of the new team automatically.",
                             "href": {
                               "primitive": {
                                 "string": "href",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                            "metadata": {
-                              "primitive": {
-                                "string": "metadata",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -12342,13 +12231,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -12391,13 +12273,6 @@ You will be assigned as owner of the new team automatically.",
                               "action": {
                                 "enum": "Disable",
                                 "type": "enum",
-                              },
-                              "condition": {
-                                "primitive": {
-                                  "string": "condition",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
                               },
                               "field": {
                                 "primitive": {
@@ -12502,53 +12377,6 @@ You will be assigned as owner of the new team automatically.",
                       },
                       "properties": {
                         "properties": {
-                          "contentEditorUrl": {
-                            "primitive": {
-                              "string": "contentEditorUrl",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "contentSidebarUrl": {
-                            "primitive": {
-                              "string": "contentSidebarUrl",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "contentsSidebarUrl": {
-                            "primitive": {
-                              "string": "contentsSidebarUrl",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "hints": {
-                            "primitive": {
-                              "string": "hints",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "label": {
-                            "primitive": {
-                              "string": "label",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "tags": {
-                            "array": [
-                              {
-                                "primitive": {
-                                  "string": "tags",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            ],
-                            "type": "array",
-                          },
                           "validateOnPublish": {
                             "primitive": {
                               "boolean": true,
@@ -12560,50 +12388,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "object",
                       },
                       "scripts": {
-                        "properties": {
-                          "change": {
-                            "primitive": {
-                              "string": "change",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "create": {
-                            "primitive": {
-                              "string": "create",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "delete": {
-                            "primitive": {
-                              "string": "delete",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "query": {
-                            "primitive": {
-                              "string": "query",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "queryPre": {
-                            "primitive": {
-                              "string": "queryPre",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "update": {
-                            "primitive": {
-                              "string": "update",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
+                        "properties": {},
                         "type": "object",
                       },
                       "type": {
@@ -17085,13 +16870,6 @@ You will be assigned as owner of the new team automatically.",
                       "array": [
                         {
                           "properties": {
-                            "description": {
-                              "primitive": {
-                                "string": "description",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
                             "display": {
                               "primitive": {
                                 "string": "display",
@@ -17123,18 +16901,6 @@ You will be assigned as owner of the new team automatically.",
                                 "type": "string",
                               },
                               "type": "primitive",
-                            },
-                            "options": {
-                              "array": [
-                                {
-                                  "primitive": {
-                                    "string": "options",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                              ],
-                              "type": "array",
                             },
                           },
                           "type": "object",
@@ -18617,13 +18383,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -19432,32 +19191,6 @@ You will be assigned as owner of the new team automatically.",
                 },
                 "type": "primitive",
               },
-              "referral": {
-                "properties": {
-                  "code": {
-                    "primitive": {
-                      "string": "code",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "condition": {
-                    "primitive": {
-                      "string": "condition",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "earned": {
-                    "primitive": {
-                      "string": "earned",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
             },
             "type": "object",
           },
@@ -19781,32 +19514,6 @@ You will be assigned as owner of the new team automatically.",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "referral": {
-                "properties": {
-                  "code": {
-                    "primitive": {
-                      "string": "code",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "condition": {
-                    "primitive": {
-                      "string": "condition",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "earned": {
-                    "primitive": {
-                      "string": "earned",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -20798,13 +20505,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -21604,13 +21304,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -21705,61 +21398,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -22078,13 +21716,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -22179,61 +21810,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -22576,13 +22152,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -22677,61 +22246,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -23070,86 +22584,6 @@ You will be assigned as owner of the new team automatically.",
                 },
                 "type": "primitive",
               },
-              "referenceData": {
-                "map": [
-                  {
-                    "key": {
-                      "string": "referenceData",
-                      "type": "string",
-                    },
-                    "value": {
-                      "map": [
-                        {
-                          "key": {
-                            "string": "referenceData",
-                            "type": "string",
-                          },
-                          "value": {
-                            "map": [
-                              {
-                                "key": {
-                                  "string": "key",
-                                  "type": "string",
-                                },
-                                "value": {
-                                  "primitive": {
-                                    "string": "value",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
-                            ],
-                            "type": "map",
-                          },
-                        },
-                      ],
-                      "type": "map",
-                    },
-                  },
-                ],
-                "type": "map",
-              },
-              "scheduleJob": {
-                "properties": {
-                  "color": {
-                    "primitive": {
-                      "string": "color",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "dueTime": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "id",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "scheduledBy": {
-                    "primitive": {
-                      "string": "scheduledBy",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "status": {
-                    "primitive": {
-                      "string": "status",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "schemaDisplayName": {
                 "primitive": {
                   "string": "schemaDisplayName",
@@ -23431,13 +22865,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -23532,61 +22959,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -23965,13 +23337,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -24066,61 +23431,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -24603,13 +23913,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -24704,61 +24007,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -25181,13 +24429,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -25282,61 +24523,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -25643,13 +24829,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -25744,61 +24923,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -26172,58 +25296,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "error": {
-                    "properties": {
-                      "details": {
-                        "array": [
-                          {
-                            "primitive": {
-                              "string": "details",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "errorCode": {
-                        "primitive": {
-                          "string": "errorCode",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "message": {
-                        "primitive": {
-                          "string": "message",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "statusCode": {
-                        "primitive": {
-                          "int": 1,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "traceId": {
-                        "primitive": {
-                          "string": "traceId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "primitive": {
-                          "string": "type",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -26400,58 +25472,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "error": {
-                    "properties": {
-                      "details": {
-                        "array": [
-                          {
-                            "primitive": {
-                              "string": "details",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "errorCode": {
-                        "primitive": {
-                          "string": "errorCode",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "message": {
-                        "primitive": {
-                          "string": "message",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "statusCode": {
-                        "primitive": {
-                          "int": 1,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "traceId": {
-                        "primitive": {
-                          "string": "traceId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "primitive": {
-                          "string": "type",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
                   },
                   "id": {
                     "primitive": {
@@ -26686,13 +25706,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -26787,61 +25800,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -27137,13 +26095,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -27238,61 +26189,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -27575,13 +26471,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -27676,61 +26565,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -28013,13 +26847,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -28114,61 +26941,6 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "referenceData": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "referenceData",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "scheduleJob": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "color",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dueTime": {
-                            "primitive": {
-                              "datetime": "2024-01-15T09:30:00Z",
-                              "type": "datetime",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "string": "id",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "scheduledBy": {
-                            "primitive": {
-                              "string": "scheduledBy",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "primitive": {
-                              "string": "status",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -28515,51 +27287,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
-              "createdComments": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "id",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "text",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "time": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "url",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "user": {
-                        "primitive": {
-                          "string": "user",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "deletedComments": {
                 "array": [
                   {
@@ -28568,51 +27295,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "updatedComments": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "id",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "text",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "time": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "url",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "user": {
-                        "primitive": {
-                          "string": "user",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
                   },
                 ],
                 "type": "array",
@@ -29210,51 +27892,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
-              "createdComments": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "id",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "text",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "time": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "url",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "user": {
-                        "primitive": {
-                          "string": "user",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "deletedComments": {
                 "array": [
                   {
@@ -29263,51 +27900,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "updatedComments": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "id",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "text",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "time": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "url",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "user": {
-                        "primitive": {
-                          "string": "user",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
                   },
                 ],
                 "type": "array",
@@ -29855,13 +28447,6 @@ You will be assigned as owner of the new team automatically.",
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -31068,13 +29653,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -31139,13 +29717,6 @@ You will be assigned as owner of the new team automatically.",
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -32384,13 +30955,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -32404,18 +30968,6 @@ You will be assigned as owner of the new team automatically.",
                           },
                         ],
                         "type": "map",
-                      },
-                      "_meta": {
-                        "properties": {
-                          "isDuplicate": {
-                            "primitive": {
-                              "string": "isDuplicate",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "created": {
                         "primitive": {
@@ -33056,13 +31608,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -33076,18 +31621,6 @@ You will be assigned as owner of the new team automatically.",
                           },
                         ],
                         "type": "map",
-                      },
-                      "_meta": {
-                        "properties": {
-                          "isDuplicate": {
-                            "primitive": {
-                              "string": "isDuplicate",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
                       },
                       "created": {
                         "primitive": {
@@ -33411,18 +31944,6 @@ You will be assigned as owner of the new team automatically.",
                   },
                 ],
                 "type": "map",
-              },
-              "_meta": {
-                "properties": {
-                  "isDuplicate": {
-                    "primitive": {
-                      "string": "isDuplicate",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
               },
               "created": {
                 "primitive": {
@@ -33910,18 +32431,6 @@ You will be assigned as owner of the new team automatically.",
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isDuplicate": {
-                    "primitive": {
-                      "string": "isDuplicate",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "created": {
                 "primitive": {
                   "datetime": "2024-01-15T09:30:00Z",
@@ -34386,58 +32895,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "error": {
-                    "properties": {
-                      "details": {
-                        "array": [
-                          {
-                            "primitive": {
-                              "string": "details",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "errorCode": {
-                        "primitive": {
-                          "string": "errorCode",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "message": {
-                        "primitive": {
-                          "string": "message",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "statusCode": {
-                        "primitive": {
-                          "int": 1,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "traceId": {
-                        "primitive": {
-                          "string": "traceId",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "primitive": {
-                          "string": "type",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -34711,18 +33168,6 @@ You will be assigned as owner of the new team automatically.",
                   },
                 ],
                 "type": "map",
-              },
-              "_meta": {
-                "properties": {
-                  "isDuplicate": {
-                    "primitive": {
-                      "string": "isDuplicate",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
               },
               "created": {
                 "primitive": {
@@ -35469,13 +33914,6 @@ You will be assigned as owner of the new team automatically.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -35701,13 +34139,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -35951,13 +34382,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -36219,13 +34643,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -36439,18 +34856,6 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -36467,13 +34872,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -36672,18 +35070,6 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -36700,13 +35086,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -36907,18 +35286,6 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -36935,13 +35302,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -37139,18 +35499,6 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
-              "_meta": {
-                "properties": {
-                  "isInvited": {
-                    "primitive": {
-                      "string": "isInvited",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "items": {
                 "array": [
                   {
@@ -37167,13 +35515,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -37772,13 +36113,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -37994,13 +36328,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -38235,13 +36562,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -38494,13 +36814,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -38725,13 +37038,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -38951,13 +37257,6 @@ The client secret is auto generated on the server and returned. The client does 
                                 "href": {
                                   "primitive": {
                                     "string": "href",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
                                     "type": "string",
                                   },
                                   "type": "primitive",
@@ -39321,13 +37620,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -39580,13 +37872,6 @@ The client secret is auto generated on the server and returned. The client does 
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -39761,13 +38046,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                             "href": {
                               "primitive": {
                                 "string": "href",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                            "metadata": {
-                              "primitive": {
-                                "string": "metadata",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -40242,13 +38520,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                             "href": {
                               "primitive": {
                                 "string": "href",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                            "metadata": {
-                              "primitive": {
-                                "string": "metadata",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -41869,13 +40140,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -41931,83 +40195,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                               "type": "string",
                             },
                             "value": {
-                              "properties": {
-                                "color": {
-                                  "primitive": {
-                                    "string": "color",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateExpression": {
-                                  "primitive": {
-                                    "string": "noUpdateExpression",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateRoles": {
-                                  "array": [
-                                    {
-                                      "primitive": {
-                                        "string": "noUpdateRoles",
-                                        "type": "string",
-                                      },
-                                      "type": "primitive",
-                                    },
-                                  ],
-                                  "type": "array",
-                                },
-                                "transitions": {
-                                  "map": [
-                                    {
-                                      "key": {
-                                        "string": "transitions",
-                                        "type": "string",
-                                      },
-                                      "value": {
-                                        "properties": {
-                                          "expression": {
-                                            "primitive": {
-                                              "string": "expression",
-                                              "type": "string",
-                                            },
-                                            "type": "primitive",
-                                          },
-                                          "roles": {
-                                            "array": [
-                                              {
-                                                "primitive": {
-                                                  "string": "roles",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            ],
-                                            "type": "array",
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    },
-                                  ],
-                                  "type": "map",
-                                },
-                                "validate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
+                              "properties": {},
                               "type": "object",
                             },
                           },
@@ -42191,13 +40379,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -42253,83 +40434,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                               "type": "string",
                             },
                             "value": {
-                              "properties": {
-                                "color": {
-                                  "primitive": {
-                                    "string": "color",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateExpression": {
-                                  "primitive": {
-                                    "string": "noUpdateExpression",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateRoles": {
-                                  "array": [
-                                    {
-                                      "primitive": {
-                                        "string": "noUpdateRoles",
-                                        "type": "string",
-                                      },
-                                      "type": "primitive",
-                                    },
-                                  ],
-                                  "type": "array",
-                                },
-                                "transitions": {
-                                  "map": [
-                                    {
-                                      "key": {
-                                        "string": "transitions",
-                                        "type": "string",
-                                      },
-                                      "value": {
-                                        "properties": {
-                                          "expression": {
-                                            "primitive": {
-                                              "string": "expression",
-                                              "type": "string",
-                                            },
-                                            "type": "primitive",
-                                          },
-                                          "roles": {
-                                            "array": [
-                                              {
-                                                "primitive": {
-                                                  "string": "roles",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            ],
-                                            "type": "array",
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    },
-                                  ],
-                                  "type": "map",
-                                },
-                                "validate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
+                              "properties": {},
                               "type": "object",
                             },
                           },
@@ -42551,13 +40656,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -42613,83 +40711,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                               "type": "string",
                             },
                             "value": {
-                              "properties": {
-                                "color": {
-                                  "primitive": {
-                                    "string": "color",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateExpression": {
-                                  "primitive": {
-                                    "string": "noUpdateExpression",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateRoles": {
-                                  "array": [
-                                    {
-                                      "primitive": {
-                                        "string": "noUpdateRoles",
-                                        "type": "string",
-                                      },
-                                      "type": "primitive",
-                                    },
-                                  ],
-                                  "type": "array",
-                                },
-                                "transitions": {
-                                  "map": [
-                                    {
-                                      "key": {
-                                        "string": "transitions",
-                                        "type": "string",
-                                      },
-                                      "value": {
-                                        "properties": {
-                                          "expression": {
-                                            "primitive": {
-                                              "string": "expression",
-                                              "type": "string",
-                                            },
-                                            "type": "primitive",
-                                          },
-                                          "roles": {
-                                            "array": [
-                                              {
-                                                "primitive": {
-                                                  "string": "roles",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            ],
-                                            "type": "array",
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    },
-                                  ],
-                                  "type": "map",
-                                },
-                                "validate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
+                              "properties": {},
                               "type": "object",
                             },
                           },
@@ -42902,13 +40924,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                                   },
                                   "type": "primitive",
                                 },
-                                "metadata": {
-                                  "primitive": {
-                                    "string": "metadata",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
                                 "method": {
                                   "primitive": {
                                     "string": "method",
@@ -42964,83 +40979,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                               "type": "string",
                             },
                             "value": {
-                              "properties": {
-                                "color": {
-                                  "primitive": {
-                                    "string": "color",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateExpression": {
-                                  "primitive": {
-                                    "string": "noUpdateExpression",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "noUpdateRoles": {
-                                  "array": [
-                                    {
-                                      "primitive": {
-                                        "string": "noUpdateRoles",
-                                        "type": "string",
-                                      },
-                                      "type": "primitive",
-                                    },
-                                  ],
-                                  "type": "array",
-                                },
-                                "transitions": {
-                                  "map": [
-                                    {
-                                      "key": {
-                                        "string": "transitions",
-                                        "type": "string",
-                                      },
-                                      "value": {
-                                        "properties": {
-                                          "expression": {
-                                            "primitive": {
-                                              "string": "expression",
-                                              "type": "string",
-                                            },
-                                            "type": "primitive",
-                                          },
-                                          "roles": {
-                                            "array": [
-                                              {
-                                                "primitive": {
-                                                  "string": "roles",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            ],
-                                            "type": "array",
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    },
-                                  ],
-                                  "type": "map",
-                                },
-                                "validate": {
-                                  "primitive": {
-                                    "boolean": true,
-                                    "type": "boolean",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
+                              "properties": {},
                               "type": "object",
                             },
                           },
