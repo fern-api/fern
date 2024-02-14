@@ -2460,10 +2460,10 @@ __metadata:
   resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
