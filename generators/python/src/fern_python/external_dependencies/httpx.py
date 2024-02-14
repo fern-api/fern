@@ -47,7 +47,7 @@ class HttpX:
         is_async: bool,
         is_streaming: bool,
         response_code_writer: AST.CodeWriter,
-        reference_to_client: AST.Expression
+        reference_to_client: AST.Expression,
     ) -> AST.Expression:
         def add_request_params(*, writer: AST.NodeWriter) -> None:
             if query_parameters is not None:

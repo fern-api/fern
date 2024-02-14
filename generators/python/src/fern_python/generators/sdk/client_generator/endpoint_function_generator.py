@@ -271,11 +271,11 @@ class EndpointFunctionGenerator:
                     additional_parameters = (
                         f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters')"
                     )
-                    additional_parameters_defaulted = (
-                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters', {'{}'})"
-                    )
+                    additional_parameters_defaulted = f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters', {'{}'})"
                     json_encoded_additional_params = self._context.core_utilities.jsonable_encoder(
-                        self._context.core_utilities.remove_none_from_dict(AST.Expression(additional_parameters_defaulted))
+                        self._context.core_utilities.remove_none_from_dict(
+                            AST.Expression(additional_parameters_defaulted)
+                        )
                     )
                     if encoded_json_request_body:
                         writer.write_node(encoded_json_request_body)

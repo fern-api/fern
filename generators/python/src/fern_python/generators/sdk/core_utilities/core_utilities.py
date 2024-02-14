@@ -3,7 +3,9 @@ from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY
-from fern_python.external_dependencies.typing_extensions import TYPING_EXTENSIONS_DEPENDENCY
+from fern_python.external_dependencies.typing_extensions import (
+    TYPING_EXTENSIONS_DEPENDENCY,
+)
 from fern_python.source_file_factory import SourceFileFactory
 
 
