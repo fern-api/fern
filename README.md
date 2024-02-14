@@ -15,7 +15,7 @@
 
 </div>
 
-Fern is an open-source toolkit that allows you to effortlessly generate SDKs and API documentation.
+Fern is a toolkit that allows you to effortlessly generate SDKs and API documentation.
 
 <div align="center">
     <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
@@ -31,7 +31,7 @@ The Fern toolkit is available as a command line interface (CLI). To install it, 
 npm install -g fern-api
 ```
 
-Initialize Fern with your OpenAPI spec: 
+Initialize Fern with your OpenAPI spec:
 
 ```bash
 fern init --openapi ./path/to/openapi.yml
@@ -39,7 +39,7 @@ fern init --openapi ./path/to/openapi.yml
 fern init --openapi https://petstore.swagger.io/v2/swagger.json
 ```
 
-Your directory should look like the following: 
+Your directory should look like the following:
 
 ```yaml
 fern/
@@ -67,11 +67,11 @@ Check out docs built with Fern:
 - [docs.superagent.sh](https://docs.superagent.sh/)
 - [docs.propexo.com](https://docs.propexo.com/)
 
-Get started [here](https://github.com/fern-api/docs-starter). 
+Get started [here](https://github.com/fern-api/docs-starter).
 
 ## 🌿 Generators
 
-Generators are process that take your API Definition as input and output artifacts (SDKs, 
+Generators are process that take your API Definition as input and output artifacts (SDKs,
 Postman Collections, Server boilerplate, etc.). To add a generator run `fern add <generator id>`
 
 ### SDK Generators
@@ -86,35 +86,35 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 ### Server-side Generators
 
-Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, 
-who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video). 
+Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers,
+who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
 
-| Generator ID                           | Latest Version | Changelog                                                      | Entrypoint                                                                      |
-| -------------------------------------- | -------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `fernapi/fern-express-server`          | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md)   | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                        |
-| `fernapi/fern-fastapi-server`          | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)       | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-java-spring`             | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)          | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java)|
+| Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
+| ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `fernapi/fern-express-server` | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
+| `fernapi/fern-fastapi-server` | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)     | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
+| `fernapi/fern-java-spring`    | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)        | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
 
 ### Model Generators
 
-Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition. 
+Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition.
 
-| Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
-| -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model`          | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-java-model`              | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/fern-ruby-model`              | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                    |
+| Generator ID                  | Latest Version | Changelog                                                 | Entrypoint                                                                    |
+| ----------------------------- | -------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `fernapi/fern-pydantic-model` | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
+| `fernapi/fern-java-model`     | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
+| `fernapi/fern-ruby-model`     | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
 
 ### Spec Generators
 
-Fern's spec generators can output an OpenAPI spec or a Postman collection. 
+Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
-> **Note**: The OpenAPI spec generator is primarly intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI. 
+> **Note**: The OpenAPI spec generator is primarly intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
 
-| Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
-| -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `fernapi/fern-openapi`                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
-| `fernapi/fern-postman`                 | `0.1.0`       | [CHANGELOG.md](./generators/postman/CHANGELOG.md)         | [cli.ts](./generators/postman//src/cli.ts)                                       |
+| Generator ID           | Latest Version | Changelog                                         | Entrypoint                                 |
+| ---------------------- | -------------- | ------------------------------------------------- | ------------------------------------------ |
+| `fernapi/fern-openapi` | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md) | [cli.ts](./generators/openapi/src/cli.ts)  |
+| `fernapi/fern-postman` | `0.1.0`        | [CHANGELOG.md](./generators/postman/CHANGELOG.md) | [cli.ts](./generators/postman//src/cli.ts) |
 
 ## 🌿 CLI Commands
 
@@ -130,16 +130,17 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 
 `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 
-## Advanced 
+## Advanced
 
-### API First 
+### API First
 
-Fern supports developers and teams that want to be API-first or Spec-first. 
+Fern supports developers and teams that want to be API-first or Spec-first.
 
-Define your API, and use Fern to generate models, networking code and boilerplate application code. The generated code adds 
+Define your API, and use Fern to generate models, networking code and boilerplate application code. The generated code adds
 type safety to your API implementation - if your backend doesn't implement the API correctly, it won't compile.
 
 Frameworks currently supported:
+
 - [Express](./generators/typescript)
 - [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
@@ -148,10 +149,10 @@ For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfe
 
 ### Fern Definition
 
-While we are big fans of OpenAPI, we know it isn't the *easiest* format to read and write. If you're looking for an alternative, 
-give the Fern Definition a try. 
+While we are big fans of OpenAPI, we know it isn't the _easiest_ format to read and write. If you're looking for an alternative,
+give the Fern Definition a try.
 
-Install the Fern CLI and initialize a Fern Project. 
+Install the Fern CLI and initialize a Fern Project.
 
 ```bash
 npm install -g fern-api
@@ -214,10 +215,11 @@ errors:
     type: MovieId
 ```
 
-Checkout open source projects that are using Fern Definitions: 
- - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
- - [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
- - [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
+Checkout open source projects that are using Fern Definitions:
+
+- [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
+- [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
+- [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
 
 ## Community
 
