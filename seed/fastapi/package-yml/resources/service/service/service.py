@@ -66,7 +66,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.nop.__globals__)
 
         router.get(
-            path="/{id}//{nested_id}",
+            path="//{id}/{nested_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.nop.__doc__,

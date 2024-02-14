@@ -84,7 +84,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_movie.__globals__)
 
         router.get(
-            path="//movie/{movie_id}",
+            path="/movie/{movie_id}",
             response_model=Movie,
             description=AbstractServiceService.get_movie.__doc__,
             **get_route_args(cls.get_movie, default_tag="service"),
@@ -120,7 +120,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.create_movie.__globals__)
 
         router.post(
-            path="//movie",
+            path="/movie",
             response_model=MovieId,
             description=AbstractServiceService.create_movie.__doc__,
             **get_route_args(cls.create_movie, default_tag="service"),
@@ -160,7 +160,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_metadata.__globals__)
 
         router.get(
-            path="//metadata",
+            path="/metadata",
             response_model=Metadata,
             description=AbstractServiceService.get_metadata.__doc__,
             **get_route_args(cls.get_metadata, default_tag="service"),

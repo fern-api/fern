@@ -74,7 +74,7 @@ class AbstractHealthServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.check.__globals__)
 
         router.get(
-            path="//check/{id}",
+            path="/check/{id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractHealthServiceService.check.__doc__,
@@ -111,7 +111,7 @@ class AbstractHealthServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.ping.__globals__)
 
         router.get(
-            path="//ping",
+            path="/ping",
             response_model=bool,
             description=AbstractHealthServiceService.ping.__doc__,
             **get_route_args(cls.ping, default_tag="health.service"),

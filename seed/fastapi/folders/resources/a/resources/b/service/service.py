@@ -64,7 +64,7 @@ class AbstractABService(AbstractFernService):
         wrapper.__globals__.update(cls.foo.__globals__)
 
         router.post(
-            path="/",
+            path="",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractABService.foo.__doc__,

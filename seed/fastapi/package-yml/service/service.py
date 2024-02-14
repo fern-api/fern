@@ -65,7 +65,7 @@ class AbstractRootService(AbstractFernService):
         wrapper.__globals__.update(cls.echo.__globals__)
 
         router.post(
-            path="/{id}/",
+            path="//{id}",
             response_model=str,
             description=AbstractRootService.echo.__doc__,
             **get_route_args(cls.echo, default_tag=""),
