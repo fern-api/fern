@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { DeclarationWithoutDocsSchema } from "./DeclarationSchema";
+import { DeclarationSchema } from "./DeclarationSchema";
+import { ExampleWebsocketMessageQueue } from "./ExampleWebsocketMessageQueue";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 import { WebsocketChannelMessageSchema } from "./WebsocketChannelMessageSchema";
-import { ExampleWebsocketMessageQueue } from "./ExampleWebsocketMessageQueue";
 
-export const WebsocketChannelSchema = DeclarationWithoutDocsSchema.extend({
+export const WebsocketChannelSchema = DeclarationSchema.extend({
     auth: z.boolean(),
     path: z.string(),
     "display-name": z.optional(z.string()),

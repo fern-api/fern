@@ -18,6 +18,7 @@ import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
+import { convertChannel } from "./converters/convertChannel";
 import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
@@ -134,7 +135,8 @@ export async function generateIntermediateRepresentation({
             typesReferencedOnlyByService: {},
             sharedTypes: []
         },
-        webhookGroups: {}
+        webhookGroups: {},
+        websocketChannels: {}
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -265,7 +267,17 @@ export async function generateIntermediateRepresentation({
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
-            channel: noop
+            channel: async (channel) => {
+                if (channel == null) {
+                    return;
+                }
+                const websocketChannelId = IdGenerator.generateWebsocketChannelId(file.fernFilepath);
+                const websocketChannel = await convertChannel({ channel, file, variableResolver });
+                if (intermediateRepresentation.websocketChannels != null) {
+                    intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
+                    packageTreeGenerator.addWebsocketChannel(websocketChannelId, file.fernFilepath);
+                }
+            }
         });
     };
 
