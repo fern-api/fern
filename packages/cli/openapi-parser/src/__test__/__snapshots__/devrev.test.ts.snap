@@ -502,6 +502,10 @@ given Dev organization.
                     },
                     "type": "primitive",
                   },
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
                   "scopes": {
                     "array": [
                       {
@@ -513,6 +517,10 @@ given Dev organization.
                       },
                     ],
                     "type": "array",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
                   },
                   "subject": {
                     "primitive": {
@@ -666,6 +674,10 @@ token type issued for a given subject.
                         },
                         "type": "primitive",
                       },
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
                       "scopes": {
                         "array": [
                           {
@@ -677,6 +689,10 @@ token type issued for a given subject.
                           },
                         ],
                         "type": "array",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
                       },
                       "subject": {
                         "primitive": {
@@ -968,6 +984,10 @@ organization.
                     },
                     "type": "primitive",
                   },
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
                   "scopes": {
                     "array": [
                       {
@@ -979,6 +999,10 @@ organization.
                       },
                     ],
                     "type": "array",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
                   },
                   "subject": {
                     "primitive": {
@@ -1500,12 +1524,33 @@ disabled.
                         },
                         "type": "primitive",
                       },
+                      "display_picture": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "email": {
                         "primitive": {
                           "string": "email",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "external_identities": {
+                        "array": [
+                          {
+                            "map": [],
+                            "type": "map",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "full_name": {
                         "primitive": {
@@ -1539,6 +1584,10 @@ disabled.
                           },
                         ],
                         "type": "array",
+                      },
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
                       },
                     },
                     "type": "object",
@@ -1805,12 +1854,40 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "display_picture": {
+                    "properties": {
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "email": {
                     "primitive": {
                       "string": "email",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "external_identities": {
+                    "array": [
+                      {
+                        "map": [],
+                        "type": "map",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "full_name": {
                     "primitive": {
@@ -1844,6 +1921,10 @@ used.
                       },
                     ],
                     "type": "array",
+                  },
+                  "state": {
+                    "enum": "active",
+                    "type": "enum",
                   },
                 },
                 "type": "object",
@@ -4572,6 +4653,15 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4817,6 +4907,15 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4948,6 +5047,15 @@ used.
                         },
                         "type": "primitive",
                       },
+                      "event_types": {
+                        "array": [
+                          {
+                            "enum": "part_created",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "id": {
                         "primitive": {
                           "string": "id",
@@ -5073,6 +5181,15 @@ used.
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "id": {
                     "primitive": {

@@ -29,11 +29,13 @@ Used to retrieve a deployment given its ID or name.
                       "active_model_version_ids",
                     ],
                     "created": "2024-01-15T09:30:00Z",
+                    "environment": "DEVELOPMENT",
                     "id": "id",
                     "label": "label",
                     "last_deployed_on": "2024-01-15T09:30:00Z",
                     "model_type": "GENERATE",
                     "name": "name",
+                    "status": "ACTIVE",
                   },
                 },
               },
@@ -95,6 +97,7 @@ Creates a new document index.",
                 "response": {
                   "body": {
                     "created": "2024-01-15T09:30:00Z",
+                    "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
                       "indexing_config": {
@@ -103,6 +106,7 @@ Creates a new document index.",
                     },
                     "label": "label",
                     "name": "name",
+                    "status": "ACTIVE",
                   },
                 },
               },
@@ -180,6 +184,26 @@ Used to list documents. Optionally filter on supported fields.
                     "count": 1,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                    "results": [
+                      {
+                        "document_to_document_indexes": [
+                          {
+                            "document_index_id": "document_index_id",
+                            "id": "id",
+                          },
+                        ],
+                        "external_id": "external_id",
+                        "id": "id",
+                        "keywords": [
+                          "keywords",
+                        ],
+                        "label": "label",
+                        "last_uploaded_at": "2024-01-15T09:30:00Z",
+                        "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                        "processing_state": "QUEUED",
+                        "status": "ACTIVE",
+                      },
+                    ],
                   },
                 },
               },
@@ -336,6 +360,12 @@ Used to retrieve a model version given its ID.
                   "body": {
                     "build_config": {
                       "base_model": "base_model",
+                      "sandbox_snapshot": {
+                        "id": "id",
+                        "prompt_id": "prompt_id",
+                        "prompt_index": 1,
+                        "sandbox_id": "sandbox_id",
+                      },
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
@@ -355,6 +385,16 @@ Used to retrieve a model version given its ID.
                         "top_k": 1.1,
                         "top_p": 1.1,
                       },
+                      "prompt_block_data": {
+                        "blocks": [
+                          {
+                            "block_type": "CHAT_MESSAGE",
+                            "id": "id",
+                            "properties": {},
+                          },
+                        ],
+                        "version": 1,
+                      },
                       "prompt_syntax_version": 1,
                       "prompt_template": "prompt_template",
                     },
@@ -363,6 +403,7 @@ Used to retrieve a model version given its ID.
                     "label": "label",
                     "model_type": "GENERATE",
                     "provider": "ANTHROPIC",
+                    "status": "CREATING",
                   },
                 },
               },
@@ -593,12 +634,23 @@ or overwritten with default values.",
                     "id": "id",
                     "inputs": [
                       {
+                        "chat_history": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
                         "key": "key",
+                        "type": "TEXT",
                         "value": "value",
                       },
                     ],
                     "label": "label",
-                    "metric_input_params": {},
+                    "metric_input_params": {
+                      "params": {
+                        "target": "target",
+                      },
+                    },
                   },
                 },
               },
@@ -844,7 +896,20 @@ Generate a completion using a previously defined deployment.
               "response": {
                 "body": {
                   "results": [
-                    {},
+                    {
+                      "data": {
+                        "completions": [
+                          {
+                            "id": "id",
+                            "model_version_id": "model_version_id",
+                            "text": "text",
+                          },
+                        ],
+                      },
+                      "error": {
+                        "message": "message",
+                      },
+                    },
                   ],
                 },
               },

@@ -2217,6 +2217,18 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "items": {
                 "array": [
                   {
@@ -2430,6 +2442,18 @@ exports[`open api parser squidex parse open api 1`] = `
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "items": {
                 "array": [
@@ -2647,6 +2671,18 @@ exports[`open api parser squidex parse open api 1`] = `
                 ],
                 "type": "map",
               },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "items": {
                 "array": [
                   {
@@ -2859,6 +2895,18 @@ exports[`open api parser squidex parse open api 1`] = `
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "items": {
                 "array": [
@@ -19191,6 +19239,32 @@ You will be assigned as owner of the new team automatically.",
                 },
                 "type": "primitive",
               },
+              "referral": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "code",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "condition": {
+                    "primitive": {
+                      "string": "condition",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "earned": {
+                    "primitive": {
+                      "string": "earned",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
             },
             "type": "object",
           },
@@ -19514,6 +19588,32 @@ You will be assigned as owner of the new team automatically.",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "referral": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "code",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "condition": {
+                    "primitive": {
+                      "string": "condition",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "earned": {
+                    "primitive": {
+                      "string": "earned",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -21399,6 +21499,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -21810,6 +21965,61 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -22247,6 +22457,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -22583,6 +22848,86 @@ You will be assigned as owner of the new team automatically.",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "referenceData": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "referenceData",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "referenceData",
+                            "type": "string",
+                          },
+                          "value": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "key",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "string": "value",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                        },
+                      ],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "scheduleJob": {
+                "properties": {
+                  "color": {
+                    "primitive": {
+                      "string": "color",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "dueTime": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "scheduledBy": {
+                    "primitive": {
+                      "string": "scheduledBy",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "primitive": {
+                      "string": "status",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "schemaDisplayName": {
                 "primitive": {
@@ -22959,6 +23304,61 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -23431,6 +23831,61 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -24008,6 +24463,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -24524,6 +25034,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -24924,6 +25489,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -25296,6 +25916,58 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
+                  "error": {
+                    "properties": {
+                      "details": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "details",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "errorCode": {
+                        "primitive": {
+                          "string": "errorCode",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "message": {
+                        "primitive": {
+                          "string": "message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "statusCode": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "traceId": {
+                        "primitive": {
+                          "string": "traceId",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "type",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -25472,6 +26144,58 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "error": {
+                    "properties": {
+                      "details": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "details",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "errorCode": {
+                        "primitive": {
+                          "string": "errorCode",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "message": {
+                        "primitive": {
+                          "string": "message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "statusCode": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "traceId": {
+                        "primitive": {
+                          "string": "traceId",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "type",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
                   },
                   "id": {
                     "primitive": {
@@ -25800,6 +26524,61 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -26190,6 +26969,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -26565,6 +27399,61 @@ You will be assigned as owner of the new team automatically.",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "schemaDisplayName": {
                         "primitive": {
@@ -26942,6 +27831,61 @@ You will be assigned as owner of the new team automatically.",
                         },
                         "type": "primitive",
                       },
+                      "referenceData": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "referenceData",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "scheduleJob": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "color",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dueTime": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "scheduledBy": {
+                            "primitive": {
+                              "string": "scheduledBy",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "primitive": {
+                              "string": "status",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "schemaDisplayName": {
                         "primitive": {
                           "string": "schemaDisplayName",
@@ -27287,6 +28231,51 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
+              "createdComments": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user": {
+                        "primitive": {
+                          "string": "user",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "deletedComments": {
                 "array": [
                   {
@@ -27295,6 +28284,51 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+              "updatedComments": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user": {
+                        "primitive": {
+                          "string": "user",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
                   },
                 ],
                 "type": "array",
@@ -27892,6 +28926,51 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
+              "createdComments": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user": {
+                        "primitive": {
+                          "string": "user",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "deletedComments": {
                 "array": [
                   {
@@ -27900,6 +28979,51 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+              "updatedComments": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user": {
+                        "primitive": {
+                          "string": "user",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
                   },
                 ],
                 "type": "array",
@@ -30969,6 +32093,18 @@ You will be assigned as owner of the new team automatically.",
                         ],
                         "type": "map",
                       },
+                      "_meta": {
+                        "properties": {
+                          "isDuplicate": {
+                            "primitive": {
+                              "string": "isDuplicate",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "created": {
                         "primitive": {
                           "datetime": "2024-01-15T09:30:00Z",
@@ -31623,6 +32759,18 @@ You will be assigned as owner of the new team automatically.",
                         ],
                         "type": "map",
                       },
+                      "_meta": {
+                        "properties": {
+                          "isDuplicate": {
+                            "primitive": {
+                              "string": "isDuplicate",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "created": {
                         "primitive": {
                           "datetime": "2024-01-15T09:30:00Z",
@@ -31945,6 +33093,18 @@ You will be assigned as owner of the new team automatically.",
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "primitive": {
+                      "string": "isDuplicate",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "created": {
                 "primitive": {
@@ -32433,6 +33593,18 @@ You will be assigned as owner of the new team automatically.",
                 ],
                 "type": "map",
               },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "primitive": {
+                      "string": "isDuplicate",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "created": {
                 "primitive": {
                   "datetime": "2024-01-15T09:30:00Z",
@@ -32897,6 +34069,58 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
+                  "error": {
+                    "properties": {
+                      "details": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "details",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "errorCode": {
+                        "primitive": {
+                          "string": "errorCode",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "message": {
+                        "primitive": {
+                          "string": "message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "statusCode": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "traceId": {
+                        "primitive": {
+                          "string": "traceId",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "type",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -33171,6 +34395,18 @@ You will be assigned as owner of the new team automatically.",
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "primitive": {
+                      "string": "isDuplicate",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "created": {
                 "primitive": {
@@ -34859,6 +36095,18 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "items": {
                 "array": [
                   {
@@ -35072,6 +36320,18 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "items": {
                 "array": [
@@ -35289,6 +36549,18 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "type": "map",
               },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "items": {
                 "array": [
                   {
@@ -35501,6 +36773,18 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 ],
                 "type": "map",
+              },
+              "_meta": {
+                "properties": {
+                  "isInvited": {
+                    "primitive": {
+                      "string": "isInvited",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
               },
               "items": {
                 "array": [

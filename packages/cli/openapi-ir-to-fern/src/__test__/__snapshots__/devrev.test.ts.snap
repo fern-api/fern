@@ -467,9 +467,11 @@ given Dev organization.
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
                         "scopes",
                       ],
+                      "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
                     },
@@ -521,9 +523,11 @@ token type issued for a given subject.
                         "id": "id",
                         "issued_at": "2024-01-15T09:30:00Z",
                         "modified_date": "2024-01-15T09:30:00Z",
+                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                         "scopes": [
                           "scopes",
                         ],
+                        "status": "active",
                         "subject": "subject",
                         "token_hint": "token_hint",
                       },
@@ -625,9 +629,11 @@ organization.
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
                         "scopes",
                       ],
+                      "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
                     },
@@ -693,13 +699,20 @@ organization.
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "display_name": "display_name",
+                        "display_picture": {
+                          "id": "id",
+                        },
                         "email": "email",
+                        "external_identities": [
+                          {},
+                        ],
                         "full_name": "full_name",
                         "id": "id",
                         "modified_date": "2024-01-15T09:30:00Z",
                         "phone_numbers": [
                           "phone_numbers",
                         ],
+                        "state": "active",
                       },
                     ],
                     "next_cursor": "next_cursor",
@@ -772,13 +785,21 @@ used.
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "display_name": "display_name",
+                      "display_picture": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
                       "email": "email",
+                      "external_identities": [
+                        {},
+                      ],
                       "full_name": "full_name",
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "phone_numbers": [
                         "phone_numbers",
                       ],
+                      "state": "active",
                     },
                   },
                 },
@@ -1838,6 +1859,9 @@ used.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -1948,6 +1972,9 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -1993,6 +2020,9 @@ response.
                       {
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
+                        "event_types": [
+                          "part_created",
+                        ],
                         "id": "id",
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -2033,6 +2063,9 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",

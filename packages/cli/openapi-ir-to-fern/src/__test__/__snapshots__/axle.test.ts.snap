@@ -22,7 +22,23 @@ exports[`open api parser axle simple 1`] = `
                   "id": "id",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "carrier": "carrier",
+                      "createdAt": "createdAt",
+                      "email": "email",
+                      "firstName": "firstName",
+                      "id": "id",
+                      "lastName": "lastName",
+                      "modifiedAt": "modifiedAt",
+                      "phone": "phone",
+                      "policies": [
+                        "policies",
+                      ],
+                      "refreshedAt": "refreshedAt",
+                    },
+                    "success": true,
+                  },
                 },
               },
             ],
@@ -79,7 +95,25 @@ exports[`open api parser axle simple 1`] = `
                   "id": "id",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
+                      "domain": "domain",
+                      "id": "id",
+                      "logoUrl": "logoUrl",
+                      "modifiedAt": "modifiedAt",
+                      "name": "name",
+                      "phone": "phone",
+                    },
+                    "success": true,
+                  },
                 },
               },
             ],
@@ -104,7 +138,20 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [
+                      {
+                        "address": {},
+                        "domain": "domain",
+                        "id": "id",
+                        "logoUrl": "logoUrl",
+                        "modifiedAt": "modifiedAt",
+                        "name": "name",
+                        "phone": "phone",
+                      },
+                    ],
+                    "success": true,
+                  },
                 },
               },
             ],
@@ -151,6 +198,9 @@ exports[`open api parser axle simple 1`] = `
                 "headers": {},
                 "request": {
                   "redirectUri": "https://example.com/redirect",
+                  "user": {
+                    "id": "id",
+                  },
                   "webhookUri": "https://example.com/webhook",
                 },
                 "response": {
@@ -237,7 +287,74 @@ exports[`open api parser axle simple 1`] = `
                   "id": "id",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "account": "account",
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
+                      "carrier": "carrier",
+                      "coverages": [
+                        {
+                          "code": "BI",
+                          "label": "Bodily Injury Liability",
+                          "limitPerAccident": 500000,
+                          "limitPerPerson": 250000,
+                        },
+                      ],
+                      "createdAt": "createdAt",
+                      "effectiveDate": "effectiveDate",
+                      "expirationDate": "expirationDate",
+                      "id": "id",
+                      "insureds": [
+                        {
+                          "dateOfBirth": "",
+                          "dateOfBirthYear": "1993",
+                          "firstName": "Armaan",
+                          "lastName": "Sikand",
+                          "licenseNo": "•••••7259",
+                          "licenseState": "GA",
+                          "licenseStatus": "Valid",
+                          "type": "Primary named insured",
+                        },
+                      ],
+                      "isActive": true,
+                      "modifiedAt": "modifiedAt",
+                      "policyNumber": "policyNumber",
+                      "properties": [
+                        {
+                          "data": {
+                            "make": "TRIUMPH",
+                            "model": "STREET SCRAMBLER",
+                            "vin": "SMTD44GN3HT812287",
+                            "year": "2017",
+                          },
+                          "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                          "type": "vehicle",
+                        },
+                      ],
+                      "refreshedAt": "refreshedAt",
+                      "thirdParties": [
+                        {
+                          "address": {
+                            "addressLine1": "Po Box 105205",
+                            "city": "Atlanta",
+                            "postalCode": "30348-5205",
+                            "state": "GA",
+                          },
+                          "name": "Georgias Own Credit Union",
+                          "type": "lienholder",
+                        },
+                      ],
+                      "type": "auto",
+                    },
+                    "success": true,
+                  },
                 },
               },
             ],

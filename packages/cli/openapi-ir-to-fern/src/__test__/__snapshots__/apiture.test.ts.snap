@@ -94,6 +94,7 @@ exports[`open api parser apiture simple 1`] = `
                     "label": "Checking *1008",
                     "location": "internal",
                     "maskedNumber": "maskedNumber",
+                    "nickname": "Payroll Checking",
                     "product": {
                       "code": "180D_CDA",
                       "description": "Certificate of Deposit with a 180 day term",
@@ -152,8 +153,12 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "updatedAt": "2022-05-02T06:51:19.375Z",
                       },
                       {
+                        "available": "3456.78",
+                        "current": "3456.78",
+                        "currentWithPending": "3456.78",
                         "id": "id",
                         "incomplete": true,
+                        "updatedAt": "2021-10-30T19:06:04.250Z",
                       },
                     ],
                   },
@@ -196,9 +201,33 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "response": {
                   "body": {
                     "count": 1,
-                    "items": [],
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "id",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "maskedNumber",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "180D_CDA",
+                          "description": "Certificate of Deposit with a 180 day term",
+                          "label": "180 Day CD",
+                          "type": "cd",
+                        },
+                      },
+                    ],
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                    "primaryAccountId": "primaryAccountId",
                     "start": "start",
                   },
                 },
@@ -675,6 +704,21 @@ This information provides hints to clients, allowing bank customers to select tr
                       "locatorType": "abaRoutingNumber",
                       "name": "First Bank of Andalasia",
                     },
+                    "intermediaryInstitutions": [
+                      {
+                        "address": {
+                          "address1": "239 West Princess Ave.",
+                          "address2": "Building 14, Suite 1500",
+                          "countryCode": "US",
+                          "locality": "Andalasia",
+                          "postalCode": "28407",
+                          "regionCode": "NC",
+                        },
+                        "locator": "503000196",
+                        "locatorType": "abaRoutingNumber",
+                        "name": "First Bank of Andalasia",
+                      },
+                    ],
                   },
                 },
               },
@@ -1045,6 +1089,13 @@ The default response lists only recent transactions. Normally, this is transacti
                       {
                         "amount": "0.00",
                         "balance": "8509.38",
+                        "category": {
+                          "id": "id",
+                          "label": "label",
+                        },
+                        "check": {
+                          "number": 1,
+                        },
                         "createdOn": "2023-05-18",
                         "description": "description",
                         "id": "d62c0701-0d74",
@@ -1058,10 +1109,24 @@ The default response lists only recent transactions. Normally, this is transacti
                       {
                         "amount": "1276.21",
                         "balance": "8509.38",
+                        "category": {
+                          "id": "127",
+                          "label": "Utilities",
+                        },
+                        "check": {
+                          "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                          "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                          "number": 8412,
+                        },
                         "createdOn": "2023-05-18",
                         "description": "description",
                         "id": "88f5bf17-ecc4",
                         "memo": "Paid electric bill",
+                        "merchant": {
+                          "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                          "name": "B&T's Excellent Electric Co.",
+                          "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
+                        },
                         "occurredOn": "2023-06-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
@@ -1071,10 +1136,24 @@ The default response lists only recent transactions. Normally, this is transacti
                       {
                         "amount": "1276.21",
                         "balance": "8509.38",
+                        "category": {
+                          "id": "127",
+                          "label": "Utilities",
+                        },
+                        "check": {
+                          "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                          "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                          "number": 8412,
+                        },
                         "createdOn": "2023-05-18",
                         "description": "description",
                         "id": "88f5bf17-ecc4",
                         "memo": "Paid electric bill",
+                        "merchant": {
+                          "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                          "name": "B&T's Excellent Electric Co.",
+                          "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
+                        },
                         "occurredOn": "2023-05-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
@@ -1187,6 +1266,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "amount": "275.00",
                   "memo": "Cover check for car repair",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
                   },
@@ -1209,11 +1289,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "memo": "Cover check for car repair",
                     "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
+                      "amountLimit": "3456.78",
                       "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
                       "endsOn": "endsOn",
                       "frequency": "once",
+                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {
@@ -1313,11 +1395,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "memo": "Cover check for car repair",
                     "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
+                      "amountLimit": "3456.78",
                       "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
                       "endsOn": "endsOn",
                       "frequency": "once",
+                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {
@@ -1375,6 +1459,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "memo": "Cover check for car repair",
                         "processedAt": "2022-06-28T021:00:00.000Z",
                         "schedule": {
+                          "amountLimit": "3456.78",
                           "creditsOn": "2026-06-26",
                           "debitsOn": "2026-06-24",
                           "frequency": "once",
@@ -1397,6 +1482,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "updatedBy": "updatedBy",
                       },
                       {
+                        "amount": "100.00",
                         "createdAt": "2022-04-18T07:21:35.375Z",
                         "id": "d62c0701-0d74",
                         "memo": "school expenses",
@@ -1425,6 +1511,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "updatedBy": "updatedBy",
                       },
                       {
+                        "amount": "275.00",
                         "createdAt": "2022-04-18T07:21:35.375Z",
                         "id": "id",
                         "memo": "memo",
@@ -1443,6 +1530,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "targetAccount": {
                           "id": "88b1ca3e-d0f3",
                           "label": "Personal Savings *4567",
+                          "type": "savings",
                         },
                         "updatedAt": "2022-04-18T07:21:35.375Z",
                         "updatedBy": "James Bond",
@@ -1512,8 +1600,19 @@ Note: This operation requires an identity challenge if the financial institution
                 "request": {
                   "amount": "275.00",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
+                  },
+                  "sourceAccount": {
+                    "id": "e821ce54-c715",
+                    "label": "Premiere Checking *6789",
+                    "location": "internal",
+                    "type": "checking",
+                  },
+                  "targetAccount": {
+                    "id": "88b1ca3e-d0f3",
+                    "label": "Checking *1008",
                   },
                 },
                 "response": {
@@ -1524,11 +1623,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "memo": "Cover check for car repair",
                     "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
+                      "amountLimit": "3456.78",
                       "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
                       "endsOn": "endsOn",
                       "frequency": "once",
+                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {

@@ -41,77 +41,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1641654664000,
-                  "legalEntity": {
-                    "companyFinancialDetails": {
-                      "expectedTransactionAmountPerMonth": {
-                        "amountCurrency": "GBP",
-                        "amountValue": 800,
-                      },
-                      "expectedTurnoverPerMonth": {
-                        "amountCurrency": "USD",
-                        "amountValue": 8000,
-                      },
-                    },
-                    "companyGeneralDetails": {
-                      "businessIndustry": [
-                        "Farming",
-                        "businessIndustry",
-                      ],
-                      "legalName": "Ozkan Hazelnut Export JSC",
-                      "mainProductsServicesSold": [
-                        "Hazelnut",
-                        "mainProductsServicesSold",
-                      ],
-                      "userSegment": "SOLE_PROPRIETORSHIP",
-                    },
-                    "companyRegistrationDetails": {
-                      "dateOfRegistration": "dateOfRegistration",
-                      "legalEntityType": "legalEntityType",
-                      "registrationCountry": "DE",
-                      "registrationIdentifier": "PSJ554342",
-                      "taxIdentifier": "taxIdentifier",
-                    },
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                        },
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                        },
-                      ],
-                      "contactNumbers": [
-                        "contactNumbers",
-                      ],
-                      "emailIds": [
-                        "emailIds",
-                      ],
-                      "faxNumbers": [
-                        "faxNumbers",
-                      ],
-                      "websites": [
-                        "websites",
-                      ],
-                    },
-                    "reasonForAccountOpening": [
-                      "string",
-                      "reasonForAccountOpening",
-                    ],
-                  },
-                  "shareHolders": [
+                  "directors": [
                     {
                       "contactDetails": {
                         "addresses": [
@@ -123,6 +58,16 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "country": "Germany",
                             "postcode": "10557",
                             "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
                           },
                           {
                             "addressLines": [
@@ -132,6 +77,16 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "country": "Germany",
                             "postcode": "10557",
                             "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
                           },
                         ],
                         "contactNumbers": [
@@ -164,6 +119,16 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "documentIssuedDate": 1639939034000,
                           "documentNumber": "Z9431P",
                           "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
                         },
                         {
                           "documentExpirationDate": 1839939034000,
@@ -171,11 +136,558 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "documentIssuedDate": 1639939034000,
                           "documentNumber": "Z9431P",
                           "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
                         },
                       ],
                     },
                   ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "USD",
+                        "amountValue": 8000,
+                      },
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "businessIndustry": [
+                        "Farming",
+                        "businessIndustry",
+                      ],
+                      "legalName": "Ozkan Hazelnut Export JSC",
+                      "mainProductsServicesSold": [
+                        "Hazelnut",
+                        "mainProductsServicesSold",
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
+                      "registrationCountry": "DE",
+                      "registrationIdentifier": "PSJ554342",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "taxIdentifier": "taxIdentifier",
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
+                    },
+                    "reasonForAccountOpening": [
+                      "string",
+                      "reasonForAccountOpening",
+                    ],
+                  },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -233,6 +745,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   },
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -241,6 +757,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -251,6 +771,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -258,6 +782,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -289,6 +817,8 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   ],
                   "timestamp": 1641654664000,
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                  "transactionState": "CREATED",
+                  "type": "DEPOSIT",
                 },
               },
             },
@@ -325,6 +855,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
                   "contactDetails": {
                     "addresses": [
                       {
@@ -383,6 +914,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     ],
                   },
                   "createdTimestamp": 1641654664000,
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalDocuments": [
                     {
                       "documentExpirationDate": 1839939034000,
@@ -390,6 +925,11 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "documentIssuedDate": 1639939034000,
                       "documentNumber": "Z9431P",
                       "documentType": "passport",
+                      "nameOnDocument": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
                       "tags": [
                         {
                           "key": "customerType",
@@ -407,6 +947,11 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "documentIssuedDate": 1639939034000,
                       "documentNumber": "Z9431P",
                       "documentType": "passport",
+                      "nameOnDocument": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
                       "tags": [
                         {
                           "key": "customerType",
@@ -419,9 +964,16 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       ],
                     },
                   ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
                   "reasonForAccountOpening": [
                     "reasonForAccountOpening",
                   ],
+                  "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
                       "key": "customKey",
@@ -432,8 +984,50 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "value": "customValue",
                     },
                   ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
+                  "userDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
+                  },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -477,12 +1071,174 @@ Each consumer Business entity needs three mandatory fields:
             {
               "request": {
                 "createdTimestamp": 1.1,
+                "legalEntity": {
+                  "companyFinancialDetails": {
+                    "expectedTransactionAmountPerMonth": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "expectedTurnoverPerMonth": {
+                      "amountCurrency": "USD",
+                      "amountValue": 8000,
+                    },
+                  },
+                  "companyGeneralDetails": {
+                    "businessIndustry": [
+                      "Farming",
+                      "businessIndustry",
+                    ],
+                    "legalName": "Ozkan Hazelnut Export JSC",
+                    "mainProductsServicesSold": [
+                      "Hazelnut",
+                      "mainProductsServicesSold",
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                  "companyRegistrationDetails": {
+                    "registrationCountry": "DE",
+                    "registrationIdentifier": "PSJ554342",
+                  },
+                },
+                "shareHolders": [
+                  {
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "+371 123132",
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "baran@flagright.com",
+                        "emailIds",
+                      ],
+                      "websites": [
+                        "flagright.com",
+                        "websites",
+                      ],
+                    },
+                    "generalDetails": {
+                      "countryOfNationality": "DE",
+                      "countryOfResidence": "US",
+                      "dateOfBirth": "1991-01-01",
+                      "name": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                    },
+                    "legalDocuments": [
+                      {
+                        "documentExpirationDate": 1839939034000,
+                        "documentIssuedCountry": "DE",
+                        "documentIssuedDate": 1639939034000,
+                        "documentNumber": "Z9431P",
+                        "documentType": "passport",
+                        "nameOnDocument": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                        "tags": [
+                          {
+                            "key": "customerType",
+                            "value": "wallet",
+                          },
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                      {
+                        "documentExpirationDate": 1839939034000,
+                        "documentIssuedCountry": "DE",
+                        "documentIssuedDate": 1639939034000,
+                        "documentNumber": "Z9431P",
+                        "documentType": "passport",
+                        "tags": [
+                          {
+                            "key": "customerType",
+                            "value": "wallet",
+                          },
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                ],
+                "transactionLimits": {
+                  "maximumDailyTransactionLimit": {
+                    "amountCurrency": "GBP",
+                    "amountValue": 800,
+                  },
+                },
                 "userId": "userId",
               },
               "response": {
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -493,6 +1249,10 @@ Each consumer Business entity needs three mandatory fields:
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -548,12 +1308,980 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
+                "updatedBusinessUserAttributes": {
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "USD",
+                        "amountValue": 8000,
+                      },
+                    },
+                    "companyGeneralDetails": {
+                      "businessIndustry": [
+                        "Farming",
+                        "businessIndustry",
+                      ],
+                      "legalName": "Ozkan Hazelnut Export JSC",
+                      "mainProductsServicesSold": [
+                        "Hazelnut",
+                        "mainProductsServicesSold",
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    "companyRegistrationDetails": {
+                      "registrationCountry": "DE",
+                      "registrationIdentifier": "PSJ554342",
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "reasonForAccountOpening": [
+                      "string",
+                      "reasonForAccountOpening",
+                    ],
+                  },
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
+                },
                 "userId": "userId",
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1.1,
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "USD",
+                        "amountValue": 8000,
+                      },
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "businessIndustry": [
+                        "Farming",
+                        "businessIndustry",
+                      ],
+                      "legalName": "Ozkan Hazelnut Export JSC",
+                      "mainProductsServicesSold": [
+                        "Hazelnut",
+                        "mainProductsServicesSold",
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
+                      "registrationCountry": "DE",
+                      "registrationIdentifier": "PSJ554342",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "taxIdentifier": "taxIdentifier",
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
+                    },
+                    "reasonForAccountOpening": [
+                      "reasonForAccountOpening",
+                    ],
+                  },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                          "contactNumbers",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                          "emailIds",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                          "websites",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
                   "userId": "userId",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -672,6 +2400,10 @@ Here are some of the most used payload fields explained (you can find the full p
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -680,6 +2412,10 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -690,6 +2426,10 @@ Here are some of the most used payload fields explained (you can find the full p
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -697,6 +2437,10 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -818,6 +2562,11 @@ Each consumer User entity needs three mandatory fields:
                     "documentIssuedDate": 1639939034000,
                     "documentNumber": "Z9431P",
                     "documentType": "passport",
+                    "nameOnDocument": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
                     "tags": [
                       {
                         "key": "customerType",
@@ -857,12 +2606,32 @@ Each consumer User entity needs three mandatory fields:
                     "value": "customValue",
                   },
                 ],
+                "transactionLimits": {
+                  "maximumDailyTransactionLimit": {
+                    "amountCurrency": "GBP",
+                    "amountValue": 800,
+                  },
+                },
+                "userDetails": {
+                  "countryOfNationality": "DE",
+                  "countryOfResidence": "US",
+                  "dateOfBirth": "1991-01-01",
+                  "name": {
+                    "firstName": "Baran",
+                    "lastName": "Ozkan",
+                    "middleName": "Realblood",
+                  },
+                },
                 "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
               },
               "response": {
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -873,6 +2642,10 @@ Each consumer User entity needs three mandatory fields:
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -941,12 +2714,53 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "timestamp": 1431231244001,
                 "transactionId": "443dea26147a406b957d9ee3a1247b11",
                 "transactionState": "SUCCESSFUL",
+                "updatedTransactionAttributes": {
+                  "destinationAmountDetails": {
+                    "country": "IN",
+                    "transactionAmount": 68351.34,
+                    "transactionCurrency": "INR",
+                  },
+                  "deviceData": {
+                    "appVersion": "1.1.0",
+                    "batteryLevel": 95,
+                    "deviceIdentifier": "3c49f915d04485e34caba",
+                    "deviceLatitude": 13.0033,
+                    "deviceLongitude": 76.1004,
+                    "deviceMaker": "ASUS",
+                    "deviceModel": "Zenphone M2 Pro Max",
+                    "deviceYear": "2018",
+                    "ipAddress": "10.23.191.2",
+                    "operatingSystem": "Android 11.2",
+                    "vpnUsed": false,
+                  },
+                  "originAmountDetails": {
+                    "country": "DE",
+                    "transactionAmount": 800,
+                    "transactionCurrency": "EUR",
+                  },
+                  "promotionCodeUsed": true,
+                  "reference": "loan repayment",
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                },
               },
               "response": {
                 "body": {
                   "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -955,6 +2769,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -965,6 +2783,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -972,6 +2794,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleName": "Proof of funds for high value transactions",
                     },
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1023,6 +2849,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     ],
                     "timestamp": 1641654664000,
                     "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                    "transactionState": "CREATED",
+                    "type": "DEPOSIT",
                   },
                 },
               },
@@ -1099,16 +2927,275 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
+                "updatedConsumerUserAttributes": {
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "contactNumbers": [
+                      "+37112345432",
+                      "contactNumbers",
+                    ],
+                    "emailIds": [
+                      "baran@flagright.com",
+                      "emailIds",
+                    ],
+                    "websites": [
+                      "flagright.com",
+                      "websites",
+                    ],
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "nameOnDocument": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                      "tags": [
+                        {
+                          "key": "customerType",
+                          "value": "wallet",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "tags": [
+                        {
+                          "key": "customerType",
+                          "value": "wallet",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
+                },
                 "userId": "userId",
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "contactNumbers": [
+                      "contactNumbers",
+                    ],
+                    "emailIds": [
+                      "emailIds",
+                    ],
+                    "faxNumbers": [
+                      "faxNumbers",
+                    ],
+                    "websites": [
+                      "websites",
+                    ],
+                  },
                   "createdTimestamp": 1.1,
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "nameOnDocument": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                      "tags": [
+                        {
+                          "key": "customerType",
+                          "value": "wallet",
+                        },
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
                   "reasonForAccountOpening": [
                     "reasonForAccountOpening",
                   ],
+                  "riskLevel": "VERY_HIGH",
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
+                  "userDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
+                  },
                   "userId": "userId",
                   "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
