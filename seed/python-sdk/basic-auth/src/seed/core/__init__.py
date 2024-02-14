@@ -5,11 +5,13 @@ from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWra
 from .datetime_utils import serialize_datetime
 from .jsonable_encoder import jsonable_encoder
 from .remove_none_from_dict import remove_none_from_dict
+from .request_options import RequestOptions
 
 __all__ = [
     "ApiError",
     "AsyncClientWrapper",
     "BaseClientWrapper",
+    "RequestOptions",
     "SyncClientWrapper",
     "jsonable_encoder",
     "remove_none_from_dict",

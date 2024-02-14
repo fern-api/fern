@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .metadata import Metadata
 from .tag import Tag
 
@@ -16,7 +14,7 @@ except ImportError:
 
 
 class EventInfo_Metadata(Metadata):
-    type: typing_extensions.Literal["metadata"]
+    type: typing.Literal["metadata"]
 
     class Config:
         frozen = True
@@ -25,7 +23,7 @@ class EventInfo_Metadata(Metadata):
 
 
 class EventInfo_Tag(pydantic.BaseModel):
-    type: typing_extensions.Literal["tag"]
+    type: typing.Literal["tag"]
     value: Tag
 
     class Config:

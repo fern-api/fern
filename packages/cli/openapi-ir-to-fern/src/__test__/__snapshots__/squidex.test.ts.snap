@@ -2208,7 +2208,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -2928,7 +2928,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -3042,7 +3042,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -3192,7 +3192,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,

@@ -2539,6 +2539,7 @@ Upload a document to be indexed and used for search.
             "description": undefined,
             "key": "contents",
             "schema": {
+              "isOptional": false,
               "type": "file",
             },
           },

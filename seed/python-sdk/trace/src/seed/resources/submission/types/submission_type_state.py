@@ -4,14 +4,12 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
 
 
 class SubmissionTypeState_Test(TestSubmissionState):
-    type: typing_extensions.Literal["test"]
+    type: typing.Literal["test"]
 
     class Config:
         frozen = True
@@ -20,7 +18,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
 
 class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
-    type: typing_extensions.Literal["workspace"]
+    type: typing.Literal["workspace"]
 
     class Config:
         frozen = True

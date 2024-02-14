@@ -4,14 +4,12 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .cat import Cat
 from .dog import Dog
 
 
 class Animal_Dog(Dog):
-    animal: typing_extensions.Literal["dog"]
+    animal: typing.Literal["dog"]
 
     class Config:
         frozen = True
@@ -20,7 +18,7 @@ class Animal_Dog(Dog):
 
 
 class Animal_Cat(Cat):
-    animal: typing_extensions.Literal["cat"]
+    animal: typing.Literal["cat"]
 
     class Config:
         frozen = True

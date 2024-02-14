@@ -39,7 +39,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/jointOwners",
+            "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -105,7 +105,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}",
+            "path": "/accounts/{accountId}",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -161,7 +161,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
-            "path": "/banking/accountBalances",
+            "path": "/accountBalances",
             "request": {
               "name": "AccountsListAccountBalancesRequest",
               "query-parameters": {
@@ -205,7 +205,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts",
+            "path": "/accounts",
             "request": {
               "name": "AccountsListAccountsRequest",
               "query-parameters": {
@@ -251,7 +251,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/banking/achEligibleAccounts",
+            "path": "/achEligibleAccounts",
             "request": {
               "name": "AccountsListEligibleAchAccountsRequest",
               "query-parameters": {
@@ -350,7 +350,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/cutoffTimes",
+            "path": "/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -512,7 +512,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/transferDateRestrictions",
+            "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -604,7 +604,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/transferSchedule",
+            "path": "/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -680,7 +680,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
-            "path": "/banking/institutionByLocator",
+            "path": "/institutionByLocator",
             "request": {
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
               "query-parameters": {
@@ -757,7 +757,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "POST",
-            "path": "/banking/accounts/{accountId}/jointOwnerInvitations",
+            "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -817,7 +817,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/overdraftProtection",
+            "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -872,7 +872,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/eligibleOverdraftAccounts",
+            "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -927,7 +927,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               },
             ],
             "method": "PATCH",
-            "path": "/banking/accounts/{accountId}/overdraftProtection",
+            "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -990,7 +990,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               },
             ],
             "method": "GET",
-            "path": "/banking/transactionCategories",
+            "path": "/transactionCategories",
             "request": {
               "headers": {
                 "If-None-Match": {
@@ -1090,7 +1090,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/transactions",
+            "path": "/accounts/{accountId}/transactions",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -1236,7 +1236,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "POST",
-            "path": "/banking/transfers",
+            "path": "/transfers",
             "request": {
               "body": {
                 "extends": [
@@ -1283,7 +1283,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "DELETE",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -1340,7 +1340,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -1456,7 +1456,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
-            "path": "/banking/transfers",
+            "path": "/transfers",
             "request": {
               "name": "TransfersListTransfersRequest",
               "query-parameters": {
@@ -1551,7 +1551,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "PATCH",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -3420,7 +3420,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     "default-environment": "Default",
     "display-name": "Apiture Digital Banking",
     "environments": {
-      "Default": "https://api.apiture.com",
+      "Default": "https://api.apiture.com/banking",
     },
     "error-discrimination": {
       "strategy": "status-code",

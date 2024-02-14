@@ -4,15 +4,13 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .compile_error import CompileError
 from .internal_error import InternalError
 from .runtime_error import RuntimeError
 
 
 class ErrorInfo_CompileError(CompileError):
-    type: typing_extensions.Literal["compileError"]
+    type: typing.Literal["compileError"]
 
     class Config:
         frozen = True
@@ -21,7 +19,7 @@ class ErrorInfo_CompileError(CompileError):
 
 
 class ErrorInfo_RuntimeError(RuntimeError):
-    type: typing_extensions.Literal["runtimeError"]
+    type: typing.Literal["runtimeError"]
 
     class Config:
         frozen = True
@@ -30,7 +28,7 @@ class ErrorInfo_RuntimeError(RuntimeError):
 
 
 class ErrorInfo_InternalError(InternalError):
-    type: typing_extensions.Literal["internalError"]
+    type: typing.Literal["internalError"]
 
     class Config:
         frozen = True

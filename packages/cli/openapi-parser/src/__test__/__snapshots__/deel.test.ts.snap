@@ -4067,6 +4067,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": undefined,
             "key": "file",
             "schema": {
+              "isOptional": true,
               "type": "file",
             },
           },
@@ -4144,6 +4145,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": undefined,
             "key": "file",
             "schema": {
+              "isOptional": true,
               "type": "file",
             },
           },
