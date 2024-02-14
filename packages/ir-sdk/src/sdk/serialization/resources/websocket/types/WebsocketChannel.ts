@@ -19,6 +19,9 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
         queryParameters: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).QueryParameter)
         ),
+        pathParameters: core.serialization.list(
+            core.serialization.lazyObject(async () => (await import("../../..")).PathParameter)
+        ),
         messages: core.serialization.record(
             core.serialization.lazy(async () => (await import("../../..")).WebsocketMessageId),
             core.serialization.lazyObject(async () => (await import("../../..")).WebsocketMessage)
@@ -32,6 +35,7 @@ export declare namespace WebsocketChannel {
         auth: boolean;
         headers: serializers.HttpHeader.Raw[];
         queryParameters: serializers.QueryParameter.Raw[];
+        pathParameters: serializers.PathParameter.Raw[];
         messages: Record<serializers.WebsocketMessageId.Raw, serializers.WebsocketMessage.Raw>;
     }
 }

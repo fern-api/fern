@@ -10,9 +10,14 @@ export function convertPackage(
 ): APIV1Write.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
+    const websocket =
+        irPackage.websocket != null && ir.websocketChannels != null
+            ? ir.websocketChannels[irPackage.websocket]
+            : undefined;
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
+        websockets: websocket != null ? [convertWebsocketChannel(websocket)] : [],
         types: irPackage.types.map((typeId) => typeId),
         subpackages: irPackage.subpackages.map((subpackageId) => subpackageId),
         pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined
@@ -102,6 +107,55 @@ function convertService(
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir))
         })
     );
+}
+
+function convertWebsocketChannel(channel: Ir.websocket.WebsocketChannel): APIV1Write.WebSocketDefinition {
+    const publish = Object.values(channel.messages).find((message) => message.origin === "client");
+    const subscribe = Object.values(channel.messages).find((message) => message.origin === "server");
+    return {
+        environments: [],
+        description: channel.docs ?? undefined,
+        id: "Realtime",
+        name: "Realtime Channel",
+        path: {
+            pathParameters: channel.pathParameters.map(
+                (pathParameter): APIV1Write.PathParameter => ({
+                    description: pathParameter.docs ?? undefined,
+                    key: pathParameter.name.originalName,
+                    type: convertTypeReference(pathParameter.valueType)
+                })
+            ),
+            parts: [...convertHttpPath(channel.path), ...convertHttpPath(channel.path)]
+        },
+        queryParameters: channel.queryParameters.map(
+            (queryParameter): APIV1Write.QueryParameter => ({
+                description: queryParameter.docs ?? undefined,
+                key: queryParameter.name.wireValue,
+                type: convertTypeReference(queryParameter.valueType)
+            })
+        ),
+        publish:
+            publish != null
+                ? convertMessageBody(publish.body)
+                : {
+                      type: {
+                          type: "object",
+                          extends: [],
+                          properties: []
+                      }
+                  },
+        subscribe:
+            subscribe != null
+                ? convertMessageBody(subscribe.body)
+                : {
+                      type: {
+                          type: "object",
+                          extends: [],
+                          properties: []
+                      }
+                  },
+        examples: []
+    };
 }
 
 export function convertIrAvailability({
@@ -453,5 +507,33 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): AP
             };
         default:
             assertNever(irWebhookPayload);
+    }
+}
+
+function convertMessageBody(irWebsocketBody: Ir.websocket.WebsocketMessageBody): APIV1Write.WebSocketPayload {
+    switch (irWebsocketBody.type) {
+        case "inlinedBody":
+            return {
+                type: {
+                    type: "object",
+                    extends: irWebsocketBody.extends.map((extension) => extension.typeId),
+                    properties: irWebsocketBody.properties.map(
+                        (property): APIV1Write.ObjectProperty => ({
+                            description: property.docs ?? undefined,
+                            key: property.name.wireValue,
+                            valueType: convertTypeReference(property.valueType)
+                        })
+                    )
+                }
+            };
+        case "reference":
+            return {
+                type: {
+                    type: "reference",
+                    value: convertTypeReference(irWebsocketBody.bodyType)
+                }
+            };
+        default:
+            assertNever(irWebsocketBody);
     }
 }

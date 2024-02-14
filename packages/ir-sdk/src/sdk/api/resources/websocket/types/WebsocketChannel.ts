@@ -9,6 +9,7 @@ export interface WebsocketChannel extends FernIr.Declaration {
     auth: boolean;
     headers: FernIr.HttpHeader[];
     queryParameters: FernIr.QueryParameter[];
+    pathParameters: FernIr.PathParameter[];
     /** The messages that can be sent and received on this channel */
     messages: Record<FernIr.WebsocketMessageId, FernIr.WebsocketMessage>;
 }
