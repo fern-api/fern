@@ -1706,7 +1706,7 @@ exports[`open api parser deel simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -1910,7 +1910,7 @@ exports[`open api parser deel simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,

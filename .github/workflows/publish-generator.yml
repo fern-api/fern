@@ -605,6 +605,7 @@ jobs:
 
   ts-express:
     runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-express == 'true' || inputs.generator == 'typescript-express' }}
     needs: versions-changed
     steps:
       - name: Checkout repo
@@ -652,6 +653,7 @@ jobs:
 
   ts-browser-sdk:
     runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
     needs: versions-changed
     steps:
       - name: Checkout repo
@@ -699,6 +701,7 @@ jobs:
 
   ts-node-sdk:
     runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
     needs: versions-changed
     steps:
       - name: Checkout repo
