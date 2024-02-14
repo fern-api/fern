@@ -68,12 +68,11 @@ export class ExampleTypeFactory {
             case "nullable": {
                 if (
                     example == null &&
-                    options.ignoreOptionals &&
                     !this.hasExample({
                         schema: schema.value,
-                        options,
-                        depth
-                    })
+                        visitedSchemaIds
+                    }) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
                     return undefined;
                 }
@@ -98,12 +97,11 @@ export class ExampleTypeFactory {
             case "optional": {
                 if (
                     example == null &&
-                    options.ignoreOptionals &&
                     !this.hasExample({
                         schema: schema.value,
-                        options,
-                        depth
-                    })
+                        visitedSchemaIds
+                    }) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
                     return undefined;
                 }
@@ -382,22 +380,16 @@ export class ExampleTypeFactory {
 
     private hasExample({
         schema,
-        options,
-        depth
+        visitedSchemaIds
     }: {
         schema: SchemaWithExample;
-        options: ExampleTypeFactory.Options;
-        depth: number;
+        visitedSchemaIds: Set<SchemaId>;
     }): boolean {
-        if (this.exceedsMaxDepth(depth, options)) {
-            return false;
-        }
         switch (schema.type) {
             case "array":
                 return this.hasExample({
                     schema: schema.value,
-                    options,
-                    depth
+                    visitedSchemaIds
                 });
             case "enum":
                 return schema.example != null;
@@ -408,8 +400,7 @@ export class ExampleTypeFactory {
                     schema.key.schema.example != null &&
                     this.hasExample({
                         schema: schema.value,
-                        options,
-                        depth
+                        visitedSchemaIds
                     })
                 );
             case "object": {
@@ -421,8 +412,7 @@ export class ExampleTypeFactory {
                     if (
                         this.hasExample({
                             schema: property.schema,
-                            options,
-                            depth
+                            visitedSchemaIds
                         })
                     ) {
                         return true;
@@ -433,14 +423,18 @@ export class ExampleTypeFactory {
             case "primitive":
                 return schema.schema.example != null;
             case "reference": {
+                if (visitedSchemaIds.has(schema.schema)) {
+                    return false;
+                }
+                visitedSchemaIds.add(schema.schema);
                 const resolvedSchema = this.schemas[schema.schema];
                 if (resolvedSchema != null) {
                     return this.hasExample({
                         schema: resolvedSchema,
-                        options,
-                        depth
+                        visitedSchemaIds
                     });
                 }
+                visitedSchemaIds.delete(schema.schema);
                 return false;
             }
             case "unknown":
@@ -449,8 +443,7 @@ export class ExampleTypeFactory {
                 return Object.values(schema.oneOf.schemas).some((schema) =>
                     this.hasExample({
                         schema,
-                        options,
-                        depth
+                        visitedSchemaIds
                     })
                 );
             default:
