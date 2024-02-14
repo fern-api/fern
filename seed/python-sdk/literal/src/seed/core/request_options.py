@@ -3,17 +3,13 @@
 import typing
 
 try:
-    import typing
-
-    import NotRequired  # type: ignore
+    from typing import NotRequired  # type: ignore
 except ImportError:
-    import NotRequired  # type: ignore
-    import typing_extensions
+    from typing_extensions import NotRequired  # type: ignore
 
 
 class RequestOptions(typing.TypedDict):
     timeout_in_seconds: NotRequired[int]
-    max_retries: NotRequired[int]
     additional_headers: NotRequired[typing.Dict[str, typing.Any]]
     additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
     additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]

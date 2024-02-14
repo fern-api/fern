@@ -33,18 +33,18 @@ class PropertyBasedErrorClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "property-based-error"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         try:
@@ -76,18 +76,18 @@ class AsyncPropertyBasedErrorClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "property-based-error"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         try:

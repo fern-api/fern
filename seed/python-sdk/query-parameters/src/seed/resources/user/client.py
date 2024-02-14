@@ -67,7 +67,11 @@ class UserClient:
                         "bytes": jsonable_encoder(bytes),
                         "optionalString": optional_string,
                         "filter": filter,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -75,12 +79,12 @@ class UserClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -139,7 +143,11 @@ class AsyncUserClient:
                         "bytes": jsonable_encoder(bytes),
                         "optionalString": optional_string,
                         "filter": filter,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -147,12 +155,12 @@ class AsyncUserClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:

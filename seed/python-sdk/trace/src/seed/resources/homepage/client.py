@@ -35,18 +35,18 @@ class HomepageClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         try:
@@ -70,24 +70,24 @@ class HomepageClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request)
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -114,18 +114,18 @@ class AsyncHomepageClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         try:
@@ -149,24 +149,24 @@ class AsyncHomepageClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request)
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:

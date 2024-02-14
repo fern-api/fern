@@ -76,7 +76,7 @@ class ServiceClient:
             "POST",
             self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             data=jsonable_encoder(
                 remove_none_from_dict(
@@ -96,7 +96,7 @@ class ServiceClient:
                     }
                 )
             )
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(
                     remove_none_from_dict(
@@ -116,19 +116,19 @@ class ServiceClient:
                         }
                     )
                 ),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -150,25 +150,25 @@ class ServiceClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(remove_none_from_dict({})),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -217,27 +217,31 @@ class ServiceClient:
                         "maybeInteger": maybe_integer,
                         "listOfStrings": list_of_strings,
                         "optionalListOfStrings": optional_list_of_strings,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(remove_none_from_dict({})),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -308,7 +312,7 @@ class AsyncServiceClient:
             "POST",
             self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             data=jsonable_encoder(
                 remove_none_from_dict(
@@ -328,7 +332,7 @@ class AsyncServiceClient:
                     }
                 )
             )
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(
                     remove_none_from_dict(
@@ -348,19 +352,19 @@ class AsyncServiceClient:
                         }
                     )
                 ),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -382,25 +386,25 @@ class AsyncServiceClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(remove_none_from_dict({})),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -449,27 +453,31 @@ class AsyncServiceClient:
                         "maybeInteger": maybe_integer,
                         "listOfStrings": list_of_strings,
                         "optionalListOfStrings": optional_list_of_strings,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
-            if request_options is None or request_options.additional_body_parameters is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(remove_none_from_dict({})),
-                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=remove_none_from_dict({"file": file}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:

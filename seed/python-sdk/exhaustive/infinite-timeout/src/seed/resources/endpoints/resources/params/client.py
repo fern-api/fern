@@ -36,18 +36,18 @@ class ParamsClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -79,7 +79,11 @@ class ParamsClient:
                     {
                         "query": query,
                         "number": number,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -87,12 +91,12 @@ class ParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -128,7 +132,11 @@ class ParamsClient:
                     {
                         "query": query,
                         "numer": numer,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -136,12 +144,12 @@ class ParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -172,7 +180,11 @@ class ParamsClient:
                 remove_none_from_dict(
                     {
                         "query": query,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -180,12 +192,12 @@ class ParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -213,19 +225,19 @@ class ParamsClient:
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -254,18 +266,18 @@ class AsyncParamsClient:
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -297,7 +309,11 @@ class AsyncParamsClient:
                     {
                         "query": query,
                         "number": number,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -305,12 +321,12 @@ class AsyncParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -346,7 +362,11 @@ class AsyncParamsClient:
                     {
                         "query": query,
                         "numer": numer,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -354,12 +374,12 @@ class AsyncParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -390,7 +410,11 @@ class AsyncParamsClient:
                 remove_none_from_dict(
                     {
                         "query": query,
-                        **(request_options.additional_query_parameters if request_options is not None else {}),
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
                     }
                 )
             ),
@@ -398,12 +422,12 @@ class AsyncParamsClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:
@@ -431,19 +455,19 @@ class AsyncParamsClient:
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
         )
         if 200 <= _response.status_code < 300:

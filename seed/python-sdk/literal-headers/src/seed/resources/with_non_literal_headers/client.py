@@ -47,9 +47,9 @@ class WithNonLiteralHeadersClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "with-non-literal-headers"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
             else None,
             headers=jsonable_encoder(
@@ -63,12 +63,12 @@ class WithNonLiteralHeadersClient:
                         "nonLiteralEndpointHeader": non_literal_endpoint_header,
                         "literalEndpointHeader": "endpoint header",
                         "trueEndpointHeader": "true",
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
@@ -116,9 +116,9 @@ class AsyncWithNonLiteralHeadersClient:
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "with-non-literal-headers"),
             params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
             else None,
             headers=jsonable_encoder(
@@ -132,12 +132,12 @@ class AsyncWithNonLiteralHeadersClient:
                         "nonLiteralEndpointHeader": non_literal_endpoint_header,
                         "literalEndpointHeader": "endpoint header",
                         "trueEndpointHeader": "true",
-                        **(request_options.additional_headers if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            timeout=request_options.timeout_in_seconds
-            if request_options is not None and request_options.timeout_in_seconds is not None
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
         )
         if 200 <= _response.status_code < 300:
