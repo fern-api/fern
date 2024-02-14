@@ -6,7 +6,6 @@ import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import { Collection, CollectionDefinition } from "postman-collection";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
@@ -129,19 +128,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 console.log("Publishing postman collection via legacy custom config...");
                 await publishCollection({
                     publishConfig: postmanGeneratorConfig.publishing,
-                    collectionDefinition: {
-                        ...rawCollectionDefinition,
-                        item: rawCollectionDefinition.item.map((item) => {
-                            if (item._type !== "container") {
-                                return item;
-                            }
-                            return {
-                                ...item,
-                                description: item.description ?? undefined
-                            };
-                        }),
-                        auth: rawCollectionDefinition.auth ?? undefined
-                    }
+                    collectionDefinition: rawCollectionDefinition
                 });
             } else {
                 // eslint-disable-next-line no-console
@@ -169,10 +156,10 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
 async function publishCollection({
     publishConfig,
-    collectionDefinition
+    collection
 }: {
     publishConfig: PublishConfigSchema;
-    collectionDefinition: CollectionDefinition;
+    collection: PostmanParsing.PostmanCollectionSchema.Raw;
 }) {
     // eslint-disable-next-line no-console
     console.log("Publishing postman collection...");
@@ -186,14 +173,14 @@ async function publishCollection({
         workspace
     });
     const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
-        return collectionMetadata.name === collectionDefinition.info?.name;
+        return collectionMetadata.name === collection.info.name;
     });
     if (collectionsToUpdate.length === 0) {
         // eslint-disable-next-line no-console
         console.log("Creating new postman collection!");
         await postman.collection.createCollection({
             workspace,
-            body: { collection: new Collection(collectionDefinition) }
+            body: { collection }
         });
     } else {
         await Promise.all(
@@ -201,7 +188,7 @@ async function publishCollection({
                 // eslint-disable-next-line no-console
                 console.log("Updating postman collection!");
                 await postman.collection.updateCollection(collectionMetadata.uid, {
-                    collection: new Collection(collectionDefinition)
+                    collection
                 });
             })
         );
