@@ -27,7 +27,7 @@ class SeedApi:
     def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -76,7 +76,7 @@ class AsyncSeedApi:
     async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

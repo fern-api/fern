@@ -31,7 +31,7 @@ class ServiceClient:
 
             - x_file_api_version: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -88,7 +88,7 @@ class AsyncServiceClient:
 
             - x_file_api_version: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment

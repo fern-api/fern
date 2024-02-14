@@ -23,7 +23,7 @@ class QueryParamClient:
         Parameters:
             - value: typing.Optional[Operand].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import SeedEnum
@@ -79,7 +79,7 @@ class QueryParamClient:
         Parameters:
             - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -131,7 +131,7 @@ class AsyncQueryParamClient:
         Parameters:
             - value: typing.Optional[Operand].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import AsyncSeedEnum
@@ -187,7 +187,7 @@ class AsyncQueryParamClient:
         Parameters:
             - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

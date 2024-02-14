@@ -18,7 +18,7 @@ class ServiceClient:
     def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -57,7 +57,7 @@ class AsyncServiceClient:
     async def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

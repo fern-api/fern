@@ -17,7 +17,7 @@ class ServiceClient:
     def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -61,7 +61,7 @@ class AsyncServiceClient:
     ) -> typing.AsyncIterator[bytes]:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",

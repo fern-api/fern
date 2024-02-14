@@ -216,7 +216,7 @@ class EndpointFunctionGenerator:
         parameters.append(
             AST.NamedFunctionParameter(
                 name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
-                docs="Additional options for request-specific configuration when calling APIs via the SDK.",
+                docs="Request-specific configuration.",
                 type_hint=AST.TypeHint.optional(
                     AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
                 ),

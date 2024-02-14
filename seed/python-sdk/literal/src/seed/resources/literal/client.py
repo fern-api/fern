@@ -33,7 +33,7 @@ class LiteralClient:
         Parameters:
             - values: typing.Dict[str, str].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -70,7 +70,7 @@ class LiteralClient:
     def get_options(self, *, request_options: typing.Optional[RequestOptions] = None) -> Options:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -109,7 +109,7 @@ class LiteralClient:
     ) -> UndiscriminatedOptions:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -155,7 +155,7 @@ class AsyncLiteralClient:
         Parameters:
             - values: typing.Dict[str, str].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -192,7 +192,7 @@ class AsyncLiteralClient:
     async def get_options(self, *, request_options: typing.Optional[RequestOptions] = None) -> Options:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -231,7 +231,7 @@ class AsyncLiteralClient:
     ) -> UndiscriminatedOptions:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

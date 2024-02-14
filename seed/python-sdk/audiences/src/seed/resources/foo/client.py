@@ -40,7 +40,7 @@ class FooClient:
 
             - private_property: typing.Optional[int].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:
@@ -109,7 +109,7 @@ class AsyncFooClient:
 
             - private_property: typing.Optional[int].
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:

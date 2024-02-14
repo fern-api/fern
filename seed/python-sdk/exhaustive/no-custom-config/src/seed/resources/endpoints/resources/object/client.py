@@ -35,7 +35,7 @@ class ObjectClient:
         Parameters:
             - request: ObjectWithOptionalField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -78,7 +78,7 @@ class ObjectClient:
         Parameters:
             - request: ObjectWithRequiredField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -121,7 +121,7 @@ class ObjectClient:
         Parameters:
             - request: ObjectWithMapOfMap.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -162,7 +162,7 @@ class ObjectClient:
         Parameters:
             - request: NestedObjectWithOptionalField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -205,7 +205,7 @@ class ObjectClient:
         Parameters:
             - request: NestedObjectWithRequiredField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -253,7 +253,7 @@ class AsyncObjectClient:
         Parameters:
             - request: ObjectWithOptionalField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -296,7 +296,7 @@ class AsyncObjectClient:
         Parameters:
             - request: ObjectWithRequiredField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -339,7 +339,7 @@ class AsyncObjectClient:
         Parameters:
             - request: ObjectWithMapOfMap.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -380,7 +380,7 @@ class AsyncObjectClient:
         Parameters:
             - request: NestedObjectWithOptionalField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -423,7 +423,7 @@ class AsyncObjectClient:
         Parameters:
             - request: NestedObjectWithRequiredField.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

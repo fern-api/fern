@@ -26,7 +26,7 @@ class NoReqBodyClient:
     ) -> ObjectWithOptionalField:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -57,7 +57,7 @@ class NoReqBodyClient:
     def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -98,7 +98,7 @@ class AsyncNoReqBodyClient:
     ) -> ObjectWithOptionalField:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -129,7 +129,7 @@ class AsyncNoReqBodyClient:
     async def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

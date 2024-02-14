@@ -23,7 +23,7 @@ class ServiceClient:
     def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -59,7 +59,7 @@ class AsyncServiceClient:
     async def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

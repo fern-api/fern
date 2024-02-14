@@ -31,7 +31,7 @@ class ServiceClient:
         Parameters:
             - movie_id: MovieId.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -75,7 +75,7 @@ class ServiceClient:
         Parameters:
             - request: Movie.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Movie
         from seed.client import SeedExamples
@@ -144,7 +144,7 @@ class ServiceClient:
 
             - x_api_version: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -206,7 +206,7 @@ class AsyncServiceClient:
         Parameters:
             - movie_id: MovieId.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -250,7 +250,7 @@ class AsyncServiceClient:
         Parameters:
             - request: Movie.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Movie
         from seed.client import AsyncSeedExamples
@@ -319,7 +319,7 @@ class AsyncServiceClient:
 
             - x_api_version: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment

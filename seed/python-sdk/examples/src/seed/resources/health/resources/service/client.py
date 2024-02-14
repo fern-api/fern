@@ -25,7 +25,7 @@ class ServiceClient:
         Parameters:
             - id: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -67,7 +67,7 @@ class ServiceClient:
     def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -114,7 +114,7 @@ class AsyncServiceClient:
         Parameters:
             - id: str.
 
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -156,7 +156,7 @@ class AsyncServiceClient:
     async def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters:
-            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
