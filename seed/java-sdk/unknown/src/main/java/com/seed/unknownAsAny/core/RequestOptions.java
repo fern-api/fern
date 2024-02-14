@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class RequestOptions {
-    private RequestOptions() {}
+    private RequestOptions(Integer maxRetries, Integer timeout) {
+        this.maxRetries = maxRetries;
+        this.timeout = timeout;
+    }
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
@@ -20,7 +23,7 @@ public final class RequestOptions {
 
     public static final class Builder {
         public RequestOptions build() {
-            return new RequestOptions();
+            return new RequestOptions(maxRetries, timeout);
         }
     }
 }

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -31,6 +32,10 @@ public class FooClient {
     }
 
     public ImportingType find(FindRequest request, RequestOptions requestOptions) {
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions.getTimeout().isPresent()) {
+            client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), TimeUnit.SECONDS)
+        }
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 

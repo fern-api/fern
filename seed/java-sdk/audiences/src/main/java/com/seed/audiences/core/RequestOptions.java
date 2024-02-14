@@ -5,9 +5,25 @@ package com.seed.audiences.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public final class RequestOptions {
-    private RequestOptions() {}
+    private final Optional<Integer> maxRetries;
+
+    private final Optional<Integer> timeout;
+
+    private RequestOptions(Optional<Integer> maxRetries, Optional<Integer> timeout) {
+        this.maxRetries = maxRetries;
+        this.timeout = timeout;
+    }
+
+    public Optional<Integer> getMaxRetries() {
+        return maxRetries;
+    }
+
+    public Optional<Integer> getTimeout() {
+        return timeout;
+    }
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
@@ -19,8 +35,22 @@ public final class RequestOptions {
     }
 
     public static final class Builder {
+        private Optional<Integer> maxRetries = null;
+
+        private Optional<Integer> timeout = null;
+
+        public Builder maxRetries(Optional<Integer> maxRetries) {
+            this.maxRetries = maxRetries;
+            return this;
+        }
+
+        public Builder timeout(Optional<Integer> timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions();
+            return new RequestOptions(maxRetries, timeout);
         }
     }
 }

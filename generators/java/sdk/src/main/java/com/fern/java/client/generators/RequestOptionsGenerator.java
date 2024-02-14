@@ -25,14 +25,9 @@ import com.fern.ir.model.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.*;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,6 +45,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
+
+    private static final FieldSpec.Builder TIMEOUT_FIELD_BUILDER = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
+                    "timeout",
+                    Modifier.PRIVATE);
 
     private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
@@ -100,6 +100,10 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
             fields.add(headerHandler.visitHeader(httpHeader));
         }
 
+        // Add in the other (static) fields for request options
+        createRequestOptionField("getTimeout", TIMEOUT_FIELD_BUILDER, requestOptionsTypeSpec, builderTypeSpec, fields);
+
+
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
         builderTypeSpec.addMethod(MethodSpec.methodBuilder("build")
@@ -111,8 +115,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addParameters(fields.stream()
-                        .map(authSchemeFields -> ParameterSpec.builder(
-                                        authSchemeFields.builderField.type, authSchemeFields.builderField.name)
+                        .map(field -> ParameterSpec.builder(
+                                        field.builderField.type, field.builderField.name)
                                 .build())
                         .collect(Collectors.toList()));
         for (RequestOption requestOption : fields) {
@@ -133,12 +137,50 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .build());
         requestOptionsTypeSpec.addType(builderTypeSpec.build());
 
+
         JavaFile requestOptionsFile = JavaFile.builder(className.packageName(), requestOptionsTypeSpec.build())
                 .build();
         return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(requestOptionsFile)
                 .build();
+    }
+
+    private void createRequestOptionField(
+            String getterFunctionName,
+            FieldSpec.Builder fieldSpecBuilder,
+            TypeSpec.Builder requestOptionsTypeSpec,
+            TypeSpec.Builder builderTypeSpec,
+            List<RequestOption> fields
+    ) {
+        FieldSpec field = fieldSpecBuilder.build();
+        requestOptionsTypeSpec.addField(fieldSpecBuilder
+                .addModifiers(Modifier.FINAL)
+                .build());
+        fields.add(new RequestOption(
+                fieldSpecBuilder
+                        .initializer("null")
+                        .build(),
+                field
+        ));
+        requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder(getterFunctionName)
+                .addModifiers(Modifier.PUBLIC)
+                .addStatement("return $N", field.name)
+                .returns(field.type)
+                .build());
+        FieldSpec retriesBuilderField = FieldSpec.builder(
+                        field.type, field.name, Modifier.PRIVATE)
+                .initializer("null")
+                .build();
+        builderTypeSpec.addField(retriesBuilderField);
+        MethodSpec retriesBuilderMethodSpec = MethodSpec.methodBuilder(field.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(retriesBuilderField.type, retriesBuilderField.name)
+                .addStatement("this.$L = $L", retriesBuilderField.name, retriesBuilderField.name)
+                .addStatement("return this")
+                .returns(builderClassName)
+                .build();
+        builderTypeSpec.addMethod(retriesBuilderMethodSpec);
     }
 
     private static class RequestOption {

@@ -9,8 +9,10 @@ import java.util.Map;
 public final class RequestOptions {
     private final String token;
 
-    private RequestOptions(String token) {
+    private RequestOptions(String token, Integer maxRetries, Integer timeout) {
         this.token = token;
+        this.maxRetries = maxRetries;
+        this.timeout = timeout;
     }
 
     public Map<String, String> getHeaders() {
@@ -34,7 +36,7 @@ public final class RequestOptions {
         }
 
         public RequestOptions build() {
-            return new RequestOptions(token);
+            return new RequestOptions(token, maxRetries, timeout);
         }
     }
 }
