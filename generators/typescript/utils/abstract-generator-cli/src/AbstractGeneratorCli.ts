@@ -33,6 +33,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async run(pathToConfig: string): Promise<void> {
         const configStr = await readFile(pathToConfig);
         const rawConfig = JSON.parse(configStr.toString());
+        // Fix weird bug
+        rawConfig.whitelabel = false;
         const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow(
             {
                 ...rawConfig,
