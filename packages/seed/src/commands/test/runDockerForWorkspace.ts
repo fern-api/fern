@@ -24,7 +24,7 @@ export async function runDockerForWorkspace({
     outputVersion,
     outputMode,
     fixtureName,
-    keepDocker
+    keepDocker,
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
