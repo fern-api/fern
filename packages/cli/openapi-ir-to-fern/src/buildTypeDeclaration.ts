@@ -284,20 +284,34 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
         enum: schema.values.map((enumValue) => {
             const name = enumValue.nameOverride ?? enumValue.generatedName;
             const value = enumValue.value;
-            if (name === value && enumValue.description == null) {
+            const setName = name !== value;
+            if (name === value && enumValue.description == null && enumValue.casing == null) {
                 return name;
-            } else if (name === value && enumValue.description != null) {
-                return {
-                    value,
-                    docs: enumValue.description
-                };
             }
+
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
-                name,
                 value: enumValue.value
             };
+            if (setName) {
+                enumValueDeclaration.name = name;
+            }
             if (enumValue.description != null) {
                 enumValueDeclaration.docs = enumValue.description;
+            }
+            if (enumValue.casing != null) {
+                enumValueDeclaration.casing = {};
+                if (enumValue.casing.camel != null) {
+                    enumValueDeclaration.casing.camel = enumValue.casing.camel;
+                }
+                if (enumValue.casing.screamingSnake != null) {
+                    enumValueDeclaration.casing["screaming-snake"] = enumValue.casing.screamingSnake;
+                }
+                if (enumValue.casing.snake != null) {
+                    enumValueDeclaration.casing.snake = enumValue.casing.snake;
+                }
+                if (enumValue.casing.pascal != null) {
+                    enumValueDeclaration.casing.pascal = enumValue.casing.pascal;
+                }
             }
             return enumValueDeclaration;
         })

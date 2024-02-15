@@ -1,21 +1,28 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
     generateName(name: string): Name;
-    generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
+    generateNameAndWireValue(args: {
+        name: string;
+        wireValue: string;
+        casingOverrides?: RawSchemas.CasingOverridesSchema;
+    }): NameAndWireValue;
 }
 
 const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
 
 export function constructCasingsGenerator({
     generationLanguage,
-    smartCasing
+    smartCasing,
+    casingOverrides = {}
 }: {
     generationLanguage: GenerationLanguage | undefined;
     smartCasing: boolean;
+    casingOverrides: RawSchemas.CasingOverridesSchema;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name) => {
@@ -75,10 +82,12 @@ export function constructCasingsGenerator({
 
             return {
                 originalName: name,
-                camelCase: generateSafeAndUnsafeString(camelCaseName),
-                snakeCase: generateSafeAndUnsafeString(snakeCaseName),
-                screamingSnakeCase: generateSafeAndUnsafeString(snakeCaseName.toUpperCase()),
-                pascalCase: generateSafeAndUnsafeString(pascalCaseName)
+                camelCase: generateSafeAndUnsafeString(casingOverrides.camel ?? camelCaseName),
+                snakeCase: generateSafeAndUnsafeString(casingOverrides.snake ?? snakeCaseName),
+                screamingSnakeCase: generateSafeAndUnsafeString(
+                    casingOverrides["screaming-snake"] ?? snakeCaseName.toUpperCase()
+                ),
+                pascalCase: generateSafeAndUnsafeString(casingOverrides.pascal ?? pascalCaseName)
             };
         },
         generateNameAndWireValue: ({ name, wireValue }) => ({

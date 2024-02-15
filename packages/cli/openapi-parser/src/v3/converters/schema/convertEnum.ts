@@ -36,7 +36,8 @@ export function convertEnum({
             nameOverride: fernEnumValue?.name ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
-            description: fernEnumValue?.description
+            description: fernEnumValue?.description,
+            casing: fernEnumValue?.casing
         };
     });
     return wrapEnum({

@@ -12,13 +12,16 @@ export async function convertEnumTypeDeclaration({
 }): Promise<Type> {
     return Type.enum({
         values: await Promise.all(
-            _enum.enum.map(async (value) => ({
-                ...(await convertDeclaration(value)),
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    wireValue: typeof value === "string" ? value : value.value,
-                    name: getEnumName(value).name
-                })
-            }))
+            _enum.enum.map(async (value) => {
+                return {
+                    ...(await convertDeclaration(value)),
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        wireValue: typeof value === "string" ? value : value.value,
+                        name: getEnumName(value).name,
+                        casingOverrides: typeof value !== "string" ? value.casing : undefined
+                    })
+                };
+            })
         )
     });
 }
