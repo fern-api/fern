@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -106,7 +104,7 @@ class VariableType(pydantic.BaseModel):
         if self.__root__.type == "doublyLinkedListType":
             return doubly_linked_list_type()
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _VariableType.IntegerType,
             _VariableType.DoubleType,
@@ -141,40 +139,40 @@ from .map_type import MapType as resources_commons_types_map_type_MapType  # noq
 
 class _VariableType:
     class IntegerType(pydantic.BaseModel):
-        type: typing_extensions.Literal["integerType"]
+        type: typing.Literal["integerType"]
 
     class DoubleType(pydantic.BaseModel):
-        type: typing_extensions.Literal["doubleType"]
+        type: typing.Literal["doubleType"]
 
     class BooleanType(pydantic.BaseModel):
-        type: typing_extensions.Literal["booleanType"]
+        type: typing.Literal["booleanType"]
 
     class StringType(pydantic.BaseModel):
-        type: typing_extensions.Literal["stringType"]
+        type: typing.Literal["stringType"]
 
     class CharType(pydantic.BaseModel):
-        type: typing_extensions.Literal["charType"]
+        type: typing.Literal["charType"]
 
     class ListType(resources_commons_types_list_type_ListType):
-        type: typing_extensions.Literal["listType"]
+        type: typing.Literal["listType"]
 
         class Config:
             allow_population_by_field_name = True
 
     class MapType(resources_commons_types_map_type_MapType):
-        type: typing_extensions.Literal["mapType"]
+        type: typing.Literal["mapType"]
 
         class Config:
             allow_population_by_field_name = True
 
     class BinaryTreeType(pydantic.BaseModel):
-        type: typing_extensions.Literal["binaryTreeType"]
+        type: typing.Literal["binaryTreeType"]
 
     class SinglyLinkedListType(pydantic.BaseModel):
-        type: typing_extensions.Literal["singlyLinkedListType"]
+        type: typing.Literal["singlyLinkedListType"]
 
     class DoublyLinkedListType(pydantic.BaseModel):
-        type: typing_extensions.Literal["doublyLinkedListType"]
+        type: typing.Literal["doublyLinkedListType"]
 
 
 _VariableType.ListType.update_forward_refs(

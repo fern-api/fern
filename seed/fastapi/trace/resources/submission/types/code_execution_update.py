@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
@@ -144,7 +142,7 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         if self.__root__.type == "finished":
             return finished(FinishedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _CodeExecutionUpdate.BuildingExecutor,
             _CodeExecutionUpdate.Running,
@@ -176,67 +174,67 @@ class CodeExecutionUpdate(pydantic.BaseModel):
 
 class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):
-        type: typing_extensions.Literal["buildingExecutor"]
+        type: typing.Literal["buildingExecutor"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Running(RunningResponse):
-        type: typing_extensions.Literal["running"]
+        type: typing.Literal["running"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Errored(ErroredResponse):
-        type: typing_extensions.Literal["errored"]
+        type: typing.Literal["errored"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Stopped(StoppedResponse):
-        type: typing_extensions.Literal["stopped"]
+        type: typing.Literal["stopped"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Graded(GradedResponse):
-        type: typing_extensions.Literal["graded"]
+        type: typing.Literal["graded"]
 
         class Config:
             allow_population_by_field_name = True
 
     class GradedV2(GradedResponseV2):
-        type: typing_extensions.Literal["gradedV2"]
+        type: typing.Literal["gradedV2"]
 
         class Config:
             allow_population_by_field_name = True
 
     class WorkspaceRan(WorkspaceRanResponse):
-        type: typing_extensions.Literal["workspaceRan"]
+        type: typing.Literal["workspaceRan"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Recording(RecordingResponseNotification):
-        type: typing_extensions.Literal["recording"]
+        type: typing.Literal["recording"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Recorded(RecordedResponseNotification):
-        type: typing_extensions.Literal["recorded"]
+        type: typing.Literal["recorded"]
 
         class Config:
             allow_population_by_field_name = True
 
     class InvalidRequest(InvalidRequestResponse):
-        type: typing_extensions.Literal["invalidRequest"]
+        type: typing.Literal["invalidRequest"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Finished(FinishedResponse):
-        type: typing_extensions.Literal["finished"]
+        type: typing.Literal["finished"]
 
         class Config:
             allow_population_by_field_name = True

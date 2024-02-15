@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import (
@@ -148,7 +146,7 @@ class VariableValue(pydantic.BaseModel):
         if self.__root__.type == "nullValue":
             return null_value()
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _VariableValue.IntegerValue,
             _VariableValue.BooleanValue,
@@ -184,55 +182,55 @@ from .map_value import MapValue as resources_commons_types_map_value_MapValue  #
 
 class _VariableValue:
     class IntegerValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["integerValue"]
+        type: typing.Literal["integerValue"]
         value: int
 
     class BooleanValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["booleanValue"]
+        type: typing.Literal["booleanValue"]
         value: bool
 
     class DoubleValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["doubleValue"]
+        type: typing.Literal["doubleValue"]
         value: float
 
     class StringValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["stringValue"]
+        type: typing.Literal["stringValue"]
         value: str
 
     class CharValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["charValue"]
+        type: typing.Literal["charValue"]
         value: str
 
     class MapValue(resources_commons_types_map_value_MapValue):
-        type: typing_extensions.Literal["mapValue"]
+        type: typing.Literal["mapValue"]
 
         class Config:
             allow_population_by_field_name = True
 
     class ListValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["listValue"]
+        type: typing.Literal["listValue"]
         value: typing.List[VariableValue]
 
     class BinaryTreeValue(resources_commons_types_binary_tree_value_BinaryTreeValue):
-        type: typing_extensions.Literal["binaryTreeValue"]
+        type: typing.Literal["binaryTreeValue"]
 
         class Config:
             allow_population_by_field_name = True
 
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
-        type: typing_extensions.Literal["singlyLinkedListValue"]
+        type: typing.Literal["singlyLinkedListValue"]
 
         class Config:
             allow_population_by_field_name = True
 
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
-        type: typing_extensions.Literal["doublyLinkedListValue"]
+        type: typing.Literal["doublyLinkedListValue"]
 
         class Config:
             allow_population_by_field_name = True
 
     class NullValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["nullValue"]
+        type: typing.Literal["nullValue"]
 
 
 _VariableValue.MapValue.update_forward_refs(

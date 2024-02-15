@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
@@ -86,7 +84,7 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
         if self.__root__.type == "finished":
             return finished()
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _TestSubmissionUpdateInfo.Running,
             _TestSubmissionUpdateInfo.Stopped,
@@ -113,30 +111,30 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
 
 class _TestSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
-        type: typing_extensions.Literal["running"]
+        type: typing.Literal["running"]
         value: RunningSubmissionState
 
     class Stopped(pydantic.BaseModel):
-        type: typing_extensions.Literal["stopped"]
+        type: typing.Literal["stopped"]
 
     class Errored(pydantic.BaseModel):
-        type: typing_extensions.Literal["errored"]
+        type: typing.Literal["errored"]
         value: ErrorInfo
 
     class GradedTestCase(GradedTestCaseUpdate):
-        type: typing_extensions.Literal["gradedTestCase"]
+        type: typing.Literal["gradedTestCase"]
 
         class Config:
             allow_population_by_field_name = True
 
     class RecordedTestCase(RecordedTestCaseUpdate):
-        type: typing_extensions.Literal["recordedTestCase"]
+        type: typing.Literal["recordedTestCase"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Finished(pydantic.BaseModel):
-        type: typing_extensions.Literal["finished"]
+        type: typing.Literal["finished"]
 
 
 TestSubmissionUpdateInfo.update_forward_refs()

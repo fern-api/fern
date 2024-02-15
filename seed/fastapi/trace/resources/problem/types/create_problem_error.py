@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .generic_create_problem_error import GenericCreateProblemError
 
@@ -52,7 +50,7 @@ class CreateProblemError(pydantic.BaseModel):
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
+        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
