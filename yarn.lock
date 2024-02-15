@@ -1970,13 +1970,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:5.5.3":
-  version: 5.5.3
-  resolution: "@faker-js/faker@npm:5.5.3"
-  checksum: d248a042e47ac00613d2d7cc29d4504cc5e5d843162454eede8c35f31c74b19a8fd7cecc0d5ea9e3fbbfc812abc51143c3699e51049fd64300e23e6588e76d39
-  languageName: node
-  linkType: hard
-
 "@fern-api/auth@workspace:*, @fern-api/auth@workspace:packages/cli/auth":
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
@@ -2930,7 +2923,6 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/lodash": ^4.14.199
     "@types/node": ^18.7.18
-    "@types/postman-collection": ^3.5.7
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
     endent: ^2.1.0
@@ -2940,7 +2932,6 @@ __metadata:
     jest: ^29.7.0
     lodash: ^4.17.21
     organize-imports-cli: ^0.10.0
-    postman-collection: ^4.3.0
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.22.3
@@ -5862,15 +5853,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/postman-collection@npm:^3.5.7":
-  version: 3.5.10
-  resolution: "@types/postman-collection@npm:3.5.10"
-  dependencies:
-    "@types/node": "*"
-  checksum: 46bee868d0214a2be9e9ca2c43e3f463aab09b7ae90f68c6570ba3b57a70e3025a30bc7bd8cf4a94d96678bc23a3b498bbf17401761b2fd263c0180538024da2
-  languageName: node
-  linkType: hard
-
 "@types/prettier@npm:^2.7.1":
   version: 2.7.3
   resolution: "@types/prettier@npm:2.7.3"
@@ -8118,13 +8100,6 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 6fd5da1f5d18ff5712c1e0aed41da200d7c51c28f11b36ee3c7b483f3696dabc08927fc6b227735eb8f0e1215c9a8abd8154637f3eff8cada5959df7f58b024d
-  languageName: node
-  linkType: hard
-
-"charset@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "charset@npm:1.0.1"
-  checksum: adf747e7bc76c0e47dbfbb555ef376f5adb2e67cad35718f19a2d02e27589345ccaf3c6170c185d2cc82298241f8478cdcdcab8be8ec429bf56807885f3c5300
   languageName: node
   linkType: hard
 
@@ -10759,7 +10734,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"file-type@npm:3.9.0, file-type@npm:^3.8.0":
+"file-type@npm:^3.8.0":
   version: 3.9.0
   resolution: "file-type@npm:3.9.0"
   checksum: 1db70b2485ac77c4edb4b8753c1874ee6194123533f43c2651820f96b518f505fa570b093fedd6672eb105ba9fb89c62f84b6492e46788e39c3447aed37afa2d
@@ -11830,13 +11805,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"http-reasons@npm:0.1.0":
-  version: 0.1.0
-  resolution: "http-reasons@npm:0.1.0"
-  checksum: da232d6e958416593989e4078a0fdf0508de19e1efb88fc461e1e214f067c2a8827bb1bb906296b0d7c1108cb6aca8cda964c793d9130c4f1491c98369c7a29c
-  languageName: node
-  linkType: hard
-
 "http-signature@npm:~1.2.0":
   version: 1.2.0
   resolution: "http-signature@npm:1.2.0"
@@ -11926,7 +11894,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.2":
+"iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -13860,13 +13828,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"liquid-json@npm:0.3.1":
-  version: 0.3.1
-  resolution: "liquid-json@npm:0.3.1"
-  checksum: b215fb17e7c9409e69a207a0ae275710311c274156862f34a78401dde363f97f15b863462fcc487f2fc3fb1d778d7d9f1d537bf00925a272b506a36e90826e2c
-  languageName: node
-  linkType: hard
-
 "listr2@npm:^4.0.5":
   version: 4.0.5
   resolution: "listr2@npm:4.0.5"
@@ -14145,7 +14106,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -15156,16 +15117,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mime-format@npm:2.0.1":
-  version: 2.0.1
-  resolution: "mime-format@npm:2.0.1"
-  dependencies:
-    charset: ^1.0.0
-  checksum: 294a29035e8d430bba2cb5985a1bf31d9f97effe53bcaf269a816ed054c10b7883fa838f30aabaaccdd44d553dce40f32c39ec0efe21b58fa26a9dbfb02015cd
-  languageName: node
-  linkType: hard
-
-"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:^2.1.35, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:^2.1.35, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -17039,34 +16991,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postman-collection@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "postman-collection@npm:4.3.0"
-  dependencies:
-    "@faker-js/faker": 5.5.3
-    file-type: 3.9.0
-    http-reasons: 0.1.0
-    iconv-lite: 0.6.3
-    liquid-json: 0.3.1
-    lodash: 4.17.21
-    mime-format: 2.0.1
-    mime-types: 2.1.35
-    postman-url-encoder: 3.0.5
-    semver: 7.5.4
-    uuid: 8.3.2
-  checksum: a07757d826101a60a2498ee57ce64a197e1f09e6f0836604539d8037b01d2f204ea29106769f67168524e393fc3cb52ec2c0b68eec3e92b85d2c93958356d8a7
-  languageName: node
-  linkType: hard
-
-"postman-url-encoder@npm:3.0.5":
-  version: 3.0.5
-  resolution: "postman-url-encoder@npm:3.0.5"
-  dependencies:
-    punycode: ^2.1.1
-  checksum: d46b52cf9aa344b86152ac422470854707ab4c6466c2ac7e2b86c5791b0ca2364f1b2957fbae32f7bdc80d0d027ddd78d6c799eb73119a2a4ab00b60e8daa4c4
-  languageName: node
-  linkType: hard
-
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -18307,17 +18231,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"semver@npm:7.5.4, semver@npm:^7.5.3, semver@npm:^7.5.4":
-  version: 7.5.4
-  resolution: "semver@npm:7.5.4"
-  dependencies:
-    lru-cache: ^6.0.0
-  bin:
-    semver: bin/semver.js
-  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
-  languageName: node
-  linkType: hard
-
 "semver@npm:^6.0.0, semver@npm:^6.3.0":
   version: 6.3.0
   resolution: "semver@npm:6.3.0"
@@ -18344,6 +18257,17 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     semver: bin/semver.js
   checksum: ba9c7cbbf2b7884696523450a61fee1a09930d888b7a8d7579025ad93d459b2d1949ee5bbfeb188b2be5f4ac163544c5e98491ad6152df34154feebc2cc337c1
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.5.3, semver@npm:^7.5.4":
+  version: 7.5.4
+  resolution: "semver@npm:7.5.4"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
   languageName: node
   linkType: hard
 
@@ -20502,15 +20426,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: c81095493225ecfc28add49c106ca4f09cdf56bc66731aa8dabc2edbbccb1e1bfe2de6a115e5c6a380d3ea166d1636410b62ef216bb07b3feb1cfde1d95d5080
-  languageName: node
-  linkType: hard
-
-"uuid@npm:8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 
