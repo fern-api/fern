@@ -33,7 +33,11 @@ describe("TypeResolver", () => {
         const fernFileContext = constructFernFileContext({
             relativeFilepath: fooFilepath,
             definitionFile: fooFile.contents,
-            casingsGenerator: constructCasingsGenerator({ generationLanguage: undefined, smartCasing: false }),
+            casingsGenerator: constructCasingsGenerator({
+                generationLanguage: undefined,
+                smartCasing: false,
+                casingOverrides: {}
+            }),
             rootApiFile: parseResult.workspace.definition.rootApiFile.contents
         });
 

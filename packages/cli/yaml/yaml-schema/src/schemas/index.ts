@@ -8,6 +8,7 @@ export { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
 export { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 export { BasicAuthSchemeSchema } from "./BasicAuthSchemeSchema";
 export { BearerAuthSchemeSchema } from "./BearerAuthSchemeSchema";
+export { CasingOverridesSchema } from "./CasingOverridesSchema";
 export { DeclarationSchema, DeclarationWithoutDocsSchema } from "./DeclarationSchema";
 export { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
 export { EnumSchema } from "./EnumSchema";
