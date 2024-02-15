@@ -124,6 +124,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 literal=lambda literal: set(),
             ),
             primitive=lambda primitive: set(),
-            named=lambda type_name: [type_name.type_id],
+            named=lambda type_name: set(type_name.type_id),
             unknown=lambda: set(),
         )
