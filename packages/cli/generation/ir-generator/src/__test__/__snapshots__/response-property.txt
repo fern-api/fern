@@ -81,6 +81,7 @@ exports[`generate IR 1`] = `
       "type_:WithMetadata",
     ],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -1623,6 +1624,7 @@ exports[`generate IR 1`] = `
         "type_service:Response",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -2613,5 +2615,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;
