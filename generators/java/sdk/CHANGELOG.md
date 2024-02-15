@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```java
   RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
   //  You could also specify the timeunit, similar to as if you were using OkHttp directly
-  //  RequestOptions ro = RequestOptions.builder().timeout(2).timeoutTimeUnit(TimeUnit.MINUTES).build();
+  //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
   client.films.list(ro);
   ```
 

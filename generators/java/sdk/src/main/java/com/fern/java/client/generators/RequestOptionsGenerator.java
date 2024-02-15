@@ -138,17 +138,17 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         FieldSpec timeUnitField = TIMEOUT_TIME_UNIT_FIELD_BUILDER.build();
         builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(timeoutField.type, timeoutField.name)
-                .addStatement("this.$L = $L", timeoutField.name, timeoutField.name)
+                .addParameter(Integer.class, timeoutField.name)
+                .addStatement("this.$L = Optional.of($L)", timeoutField.name, timeoutField.name)
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());
 
         builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(timeoutField.type, timeoutField.name)
+                .addParameter(Integer.class, timeoutField.name)
                 .addParameter(timeUnitField.type, timeUnitField.name)
-                .addStatement("this.$L = $L", timeoutField.name, timeoutField.name)
+                .addStatement("this.$L = Optional.of($L)", timeoutField.name, timeoutField.name)
                 .addStatement("this.$L = $L", timeUnitField.name, timeUnitField.name)
                 .addStatement("return this")
                 .returns(builderClassName)
