@@ -101,7 +101,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type).union(self.get_referenced_types_of_type_reference(map_type.value_type))
+                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                        self.get_referenced_types_of_type_reference(map_type.value_type)
+                    )
                 ),
                 literal=lambda literal: set(),
             ),
@@ -119,7 +121,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type).union(self.get_referenced_types_of_type_reference(map_type.value_type))
+                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                        self.get_referenced_types_of_type_reference(map_type.value_type)
+                    )
                 ),
                 literal=lambda literal: set(),
             ),
