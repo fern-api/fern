@@ -1,0 +1,20 @@
+imports: 
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /inlined-request
+      method: POST
+      request:
+        name: SendEnumInlinedRequest
+        body: 
+          properties: 
+            value:
+              type: optional<root.Operand>
+      examples: 
+        - request:
+            value: $root.Operand.GreaterThan
+      

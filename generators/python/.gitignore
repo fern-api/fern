@@ -1,0 +1,7 @@
+.DS_Store
+dist/
+.mypy_cache/
+__pycache__/
+poetry.toml
+.idea/
+.dmypy.json

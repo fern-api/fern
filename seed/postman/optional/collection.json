@@ -1,0 +1,55 @@
+{
+  "info": {
+    "name": "Objects With Imports",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Optional",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send Optional Body",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/send-optional-body",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "send-optional-body"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"example\": \"UNKNOWN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

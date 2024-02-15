@@ -3,10 +3,13 @@ import { StatusCode } from "@fern-fern/openapi-ir-model/commons";
 import { ResponseWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../extensions/getExtension";
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
+import { OperationContext } from "../contexts";
 import { convertSchema } from "../convertSchemas";
-import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 const APPLICATION_PDF = "application/pdf";
@@ -23,12 +26,14 @@ export interface ConvertedResponse {
 }
 
 export function convertResponse({
+    operationContext,
     responses,
     context,
     responseBreadcrumbs,
     responseStatusCode,
     isStreaming
 }: {
+    operationContext: OperationContext;
     isStreaming: boolean;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
@@ -46,7 +51,13 @@ export function convertResponse({
             continue;
         }
 
-        const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs, isStreaming });
+        const convertedResponse = convertResolvedResponse({
+            operationContext,
+            response,
+            context,
+            responseBreadcrumbs,
+            isStreaming
+        });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
                 case "json":
@@ -79,32 +90,37 @@ export function convertResponse({
 }
 
 function convertResolvedResponse({
+    operationContext,
     isStreaming,
     response,
     context,
     responseBreadcrumbs
 }: {
+    operationContext: OperationContext;
     isStreaming: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-    const jsonResponseSchema = getApplicationJsonResponse(resolvedResponse);
-    if (jsonResponseSchema != null) {
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
+    if (jsonMediaObject != null) {
         if (isStreaming) {
             return {
                 type: "streamingJson",
                 description: resolvedResponse.description,
+                responseProperty: undefined,
                 schema: convertSchemaWithExampleToSchema(
-                    convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
+                    convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
                 )
             };
         }
         return {
             type: "json",
             description: resolvedResponse.description,
-            schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
+            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
+            responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
+            fullExamples: jsonMediaObject.examples
         };
     }
 
@@ -155,12 +171,6 @@ function convertResolvedResponse({
     return undefined;
 }
 
-function getApplicationJsonResponse(
-    response: OpenAPIV3.ResponseObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return getApplicationJsonSchemaFromMedia(response.content ?? {});
-}
-
 function markErrorSchemas({
     responses,
     context
@@ -180,8 +190,8 @@ function markErrorSchemas({
         }
         errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const errorSchema = getApplicationJsonResponse(resolvedResponse) ?? {}; // unknown response
-        context.markSchemaForStatusCode(parsedStatusCode, errorSchema);
+        const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
+        context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
     }
     return errorStatusCodes;
 }

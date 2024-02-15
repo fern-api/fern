@@ -5,7 +5,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { OperationContext } from "../contexts";
-import { getApplicationJsonRequest } from "../endpoint/convertRequest";
+import { getApplicationJsonSchemaMediaObject } from "../endpoint/getApplicationJsonSchema";
 import { convertHttpOperation } from "./convertHttpOperation";
 
 const STREAM_SUFFIX = "stream";
@@ -120,18 +120,23 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    const applicationJsonRequest = getApplicationJsonRequest(resolvedRequestBody);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
 
-    if (applicationJsonRequest == null) {
+    if (jsonMediaObject == null) {
         return undefined;
     }
 
-    const resolvedRequstBodySchema = isReferenceObject(applicationJsonRequest.schema)
-        ? context.resolveSchemaReference(applicationJsonRequest.schema)
-        : applicationJsonRequest.schema;
+    const resolvedRequstBodySchema = isReferenceObject(jsonMediaObject.schema)
+        ? context.resolveSchemaReference(jsonMediaObject.schema)
+        : jsonMediaObject.schema;
 
     if (resolvedRequstBodySchema.allOf == null && resolvedRequstBodySchema.properties == null) {
         return undefined; // not an object
+    }
+
+    let streamingProperty = resolvedRequstBodySchema.properties?.[streamingExtension.streamConditionProperty];
+    if (streamingProperty != null && isReferenceObject(streamingProperty)) {
+        streamingProperty = undefined;
     }
 
     const requestBodySchemaWithLiteralProperty: OpenAPIV3.SchemaObject = {
@@ -140,8 +145,10 @@ function getRequestBody({
             ...resolvedRequstBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming
-            } as OpenAPIV3.SchemaObject
+                "x-fern-boolean-literal": isStreaming,
+                ...(streamingProperty ?? {})
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any
         },
         required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };

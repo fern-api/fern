@@ -1,5 +1,9 @@
 import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
-import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import {
+    NamedFullExample,
+    PrimitiveSchemaValueWithExample,
+    SchemaWithExample
+} from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -38,7 +42,14 @@ export function convertSchema(
         }
         return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
     } else {
-        return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs, propertiesToExclude);
+        return convertSchemaObject(
+            schema,
+            wrapAsNullable,
+            context,
+            breadcrumbs,
+            propertiesToExclude,
+            referencedAsRequest
+        );
     }
 }
 
@@ -53,6 +64,8 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride: undefined,
+            generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
             description: undefined,
             groupName: undefined
@@ -62,19 +75,47 @@ export function convertReferenceObject(
     }
 }
 
+// Returns a Schema Title if it's suitable as a code generated name
+function getTitleAsName(title: string | undefined): string | undefined {
+    if (title == null) {
+        return undefined;
+    }
+    if (title.includes(" ")) {
+        return undefined;
+    }
+    if (!/^[a-zA-Z]+$/.test(title)) {
+        return undefined;
+    }
+    return title;
+}
+
 export function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
-    propertiesToExclude: Set<string> = new Set()
+    propertiesToExclude: Set<string> = new Set(),
+    referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
-    const fernSchema = getFernTypeExtension({ schema, description });
+    const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
+    const fullExamples: NamedFullExample[] = [];
+    if (schema.example != null) {
+        fullExamples.push({ name: undefined, value: schema.example });
+    }
+    if (examples != null && Object.keys(examples).length > 0) {
+        fullExamples.push(
+            ...Object.entries(examples).map(([name, value]) => {
+                return { name: value.summary ?? name, value: value.value };
+            })
+        );
+    }
+
+    const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName });
     if (fernSchema != null) {
         return fernSchema;
     }
@@ -85,11 +126,13 @@ export function convertSchemaObject(
     }
 
     // enums
-    if (schema.enum != null) {
+    if (schema.enum != null && (schema.type === "string" || schema.type == null)) {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
+                nameOverride,
+                generatedName,
                 primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
@@ -103,6 +146,8 @@ export function convertSchemaObject(
 
         if (schema.enum.length === 1 && schema.enum[0] != null) {
             return convertLiteral({
+                nameOverride,
+                generatedName,
                 wrapAsNullable,
                 value: schema.enum[0],
                 description,
@@ -128,6 +173,8 @@ export function convertSchemaObject(
         const secondElement = schema.type[1];
         if (firstElement === "null") {
             return SchemaWithExample.nullable({
+                nameOverride,
+                generatedName,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -143,6 +190,8 @@ export function convertSchemaObject(
             });
         } else if (secondElement === "null") {
             return SchemaWithExample.nullable({
+                nameOverride,
+                generatedName,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -188,6 +237,8 @@ export function convertSchemaObject(
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
+                nameOverride,
+                generatedName,
                 literal: LiteralSchemaValue.boolean(literalValue),
                 wrapAsNullable,
                 description,
@@ -195,6 +246,8 @@ export function convertSchemaObject(
             });
         }
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 example: getExampleAsBoolean(schema)
             }),
@@ -205,6 +258,8 @@ export function convertSchemaObject(
     }
     if (schema === "number" || schema.type === "number") {
         return convertNumber({
+            nameOverride,
+            generatedName,
             format: schema.format,
             description,
             wrapAsNullable,
@@ -214,6 +269,8 @@ export function convertSchemaObject(
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
                 example: getExampleAsNumber(schema)
             }),
@@ -225,6 +282,8 @@ export function convertSchemaObject(
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
+                nameOverride,
+                generatedName,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
                     example: getExamplesString(schema)
                 }),
@@ -232,11 +291,21 @@ export function convertSchemaObject(
                 description,
                 groupName
             });
+        } else if (schema.format === "json-string") {
+            return SchemaWithExample.unknown({
+                nameOverride,
+                generatedName,
+                description,
+                groupName,
+                example: undefined
+            });
         }
 
         const maybeConstValue = getProperty<string>(schema, "const");
         if (maybeConstValue != null) {
             return wrapLiteral({
+                nameOverride,
+                generatedName,
                 literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
@@ -245,6 +314,8 @@ export function convertSchemaObject(
         }
 
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
@@ -258,12 +329,23 @@ export function convertSchemaObject(
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsNullable, context, groupName });
+        return convertArray({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            item: schema.items,
+            description,
+            wrapAsNullable,
+            context,
+            groupName
+        });
     }
 
     // maps
     if (schema.additionalProperties != null && schema.additionalProperties !== false && hasNoProperties(schema)) {
         return convertAdditionalProperties({
+            nameOverride,
+            generatedName,
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
@@ -309,7 +391,13 @@ export function convertSchemaObject(
                 groupName
             });
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
-            const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
+            const convertedSchema = convertSchema(
+                schema.oneOf[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         } else if (schema.oneOf.length > 1) {
             if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
@@ -375,15 +463,24 @@ export function convertSchemaObject(
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
-            const convertedSchema = convertSchema(schema.anyOf[0], wrapAsNullable, context, breadcrumbs);
+            const convertedSchema = convertSchema(
+                schema.anyOf[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         }
 
-        if (schema.anyOf.length === 2 && schema.anyOf[0] != null && schema.anyOf[1] != null) {
-            if (!isReferenceObject(schema.anyOf[0]) && (schema.anyOf[0].type as unknown) === "null") {
-                return convertSchema(schema.anyOf[1], true, context, breadcrumbs);
-            } else if (!isReferenceObject(schema.anyOf[1]) && (schema.anyOf[1].type as unknown) === "null") {
-                return convertSchema(schema.anyOf[0], true, context, breadcrumbs);
+        if (schema.anyOf.length === 2) {
+            const [firstSchema, secondSchema] = schema.anyOf;
+            if (firstSchema != null && secondSchema != null) {
+                if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
+                    return convertSchema(secondSchema, true, context, breadcrumbs);
+                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
+                    return convertSchema(firstSchema, true, context, breadcrumbs);
+                }
             }
         }
 
@@ -428,7 +525,13 @@ export function convertSchemaObject(
         if (schema.allOf != null) {
             const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
             if (maybeSingularAllOf != null) {
-                const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsNullable, context, breadcrumbs);
+                const convertedSchema = convertSchema(
+                    maybeSingularAllOf,
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    referencedAsRequest
+                );
                 return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
             }
         }
@@ -445,16 +548,21 @@ export function convertSchemaObject(
             allOf: schema.allOf ?? [],
             context,
             propertiesToExclude,
-            groupName
+            groupName,
+            fullExamples
         });
     }
 
     // handle vanilla object
     if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
         return wrapMap({
+            nameOverride,
+            generatedName,
             description,
             wrapAsNullable,
             keySchema: {
+                nameOverride: undefined,
+                generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
@@ -463,16 +571,25 @@ export function convertSchemaObject(
                 }),
                 groupName
             },
-            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined, groupName }),
+            valueSchema: SchemaWithExample.unknown({
+                nameOverride: undefined,
+                generatedName: `${generatedName}Value`,
+                description: undefined,
+                example: undefined,
+                groupName
+            }),
             groupName
         });
     }
 
     if (schema.type == null) {
+        const inferredValue = schema.example ?? schema.default;
         return SchemaWithExample.unknown({
+            nameOverride,
+            generatedName,
             description,
             groupName,
-            example: undefined
+            example: inferredValue
         });
     }
 
@@ -532,6 +649,8 @@ function maybeInjectDescriptionOrGroupName(
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
         return SchemaWithExample.optional({
+            nameOverride: schema.nameOverride,
+            generatedName: schema.generatedName,
             value: Schema.reference({
                 ...schema.value
             }),
@@ -540,6 +659,8 @@ function maybeInjectDescriptionOrGroupName(
         });
     } else if (schema.type === "nullable" && schema.value.type === "reference") {
         return SchemaWithExample.nullable({
+            nameOverride: schema.nameOverride,
+            generatedName: schema.generatedName,
             value: Schema.reference({
                 ...schema.value
             }),
@@ -585,16 +706,24 @@ export function wrapLiteral({
     literal,
     wrapAsNullable,
     groupName,
-    description
+    description,
+    nameOverride,
+    generatedName
 }: {
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
     groupName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.literal({
+                nameOverride,
+                generatedName,
                 value: literal,
                 description,
                 groupName
@@ -604,6 +733,8 @@ export function wrapLiteral({
         });
     }
     return SchemaWithExample.literal({
+        nameOverride,
+        generatedName,
         value: literal,
         groupName,
         description
@@ -614,16 +745,24 @@ export function wrapPrimitive({
     primitive,
     wrapAsNullable,
     groupName,
-    description
+    description,
+    generatedName,
+    nameOverride
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
     groupName: string | undefined;
     description: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.primitive({
+                nameOverride,
+                generatedName,
                 schema: primitive,
                 description,
                 groupName
@@ -633,6 +772,8 @@ export function wrapPrimitive({
         });
     }
     return SchemaWithExample.primitive({
+        nameOverride,
+        generatedName,
         schema: primitive,
         description,
         groupName
@@ -724,6 +865,11 @@ function getPossibleDiscriminants({
         const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const");
         if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
             possibleDiscrimimants[propertyName] = maybeConstValue;
+        }
+
+        // assuming that if a type property on the object exists and has an example then it could be the discriminant
+        if (propertyName === "type" && resolvedPropertySchema.example != null) {
+            possibleDiscrimimants[propertyName] = resolvedPropertySchema.example;
         }
     }
     return possibleDiscrimimants;

@@ -1,0 +1,61 @@
+Fern allows you to add SDK code snippets to your documentation. This is useful for showing how to use your SDK in different languages. By default, Fern will generate cURL snippets. By following the steps below, you can add code snippets for other languages.
+
+![SDK code snippet selector](https://fern-image-hosting.s3.amazonaws.com/sdk-code-snippets.png)
+
+<Callout intent="info">
+SDK snippets automatically populated in your Fern Docs is a paid feature included in the [SDK Starter plan](https://buildwithfern.com/pricing). 
+</Callout>
+
+## Language support
+
+TypeScript and Python are the SDK code snippet languages supported today. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
+
+## Configuring SDK Snippets
+
+To configure SDK snippets, you'll need to name your SDKs in `generators.yml` and then reference that name in `docs.yml`. In the following example, We'll use `your-organization` as the package name because it is a common practice. For example, Stripe calls their npm package `stripe` and Twilio calls their PyPI package `twilio`.
+
+### Step 0: Add examples to your API definition. 
+
+In order to generate code snippets, Fern needs to read request examples from your API definition. If you're using a Fern Definition, you can follow [these instructions](/api-definition/fern-definition/examples). If you're using an OpenAPI Specification, you can follow [these instructions](https://swagger.io/docs/specification/adding-examples/).
+
+### Step 1: Define a package name for your SDK(s).
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  production:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.7.6
+        output:
+          location: pypi
+          token: ${PYPI_TOKEN}
+          package-name: your-organization # <---- add this field
+        ...
+     - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.0
+        output:
+          location: npm
+          token: ${NPM_TOKEN}
+          package-name: your-organization # <---- add this field
+        ...        
+```
+</CodeBlock>          
+
+### Step 2: Add the package name to your docs configuration. 
+
+<CodeBlock title="docs.yml">
+```yaml 
+navigation:
+  - api: API Reference
+    snippets:
+      python: your-organization  # <---- needs to match the naming in generators.yml
+      typescript: your-organization 
+```
+</CodeBlock>
+
+## Access via API
+
+If you'd like to bring SDK snippets into your own documentation, you can use the [Snippets API](/api-reference/reference/snippets). API acces requires a a [SDK Business plan](https://buildwithfern.com/pricing). 
+
+Merge.dev is an example of a Fern customer that uses the Snippets API to bring Python code samples [into their API Reference](https://docs.merge.dev/hris/employees/#employees_list).

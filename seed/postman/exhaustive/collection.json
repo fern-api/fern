@@ -1,0 +1,1345 @@
+{
+  "info": {
+    "name": "Exhaustive",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Endpoints",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Container",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get And Return List Of Primitives",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/list-of-primitives",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "list-of-primitives"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n    \"example\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return List Of Objects",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/list-of-objects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "list-of-objects"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n    {\n        \"string\": \"example\"\n    }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Set Of Primitives",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/set-of-primitives",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "set-of-primitives"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n    \"example\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Set Of Objects",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/set-of-objects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "set-of-objects"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n    {\n        \"string\": \"example\"\n    }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Map Prim To Prim",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/map-prim-to-prim",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "map-prim-to-prim"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"example\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Map Of Prim To Object",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/map-prim-to-object",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "map-prim-to-object"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"example\": {\n        \"string\": \"example\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Optional",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/opt-objects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "opt-objects"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Enum",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Enum",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/enum",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enum"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"SUNNY\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Http Methods",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Test Get",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/http-methods/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "http-methods",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Test Post",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/http-methods",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "http-methods"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Test Put",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/http-methods/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "http-methods",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Test Patch",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/http-methods/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "http-methods",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Test Delete",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/http-methods/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "http-methods",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "DELETE",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Object",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get And Return With Optional Field",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-with-optional-field",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-with-optional-field"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return With Required Field",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-with-required-field",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-with-required-field"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return With Map Of Map",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-with-map-of-map",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-with-map-of-map"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"map\": {\n        \"example\": {\n            \"example\": \"example\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Nested With Optional Field",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-optional-field",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-nested-with-optional-field"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Nested With Required Field",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-nested-with-required-field"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Params",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get With Path",
+              "request": {
+                "description": "GET with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Query",
+              "request": {
+                "description": "GET with query param",
+                "url": {
+                  "raw": "{{baseUrl}}/params?query=&number=",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "",
+                      "description": null
+                    },
+                    {
+                      "key": "number",
+                      "value": "",
+                      "description": null
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Allow Multiple Query",
+              "request": {
+                "description": "GET with multiple of same query param",
+                "url": {
+                  "raw": "{{baseUrl}}/params?query=&numer=",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "",
+                      "description": null
+                    },
+                    {
+                      "key": "numer",
+                      "value": "",
+                      "description": null
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Path And Query",
+              "request": {
+                "description": "GET with path and query params",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param?query=",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "",
+                      "description": null
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Modify With Path",
+              "request": {
+                "description": "PUT to update with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
+                },
+                "header": [],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"example\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Primitive",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get And Return String",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "string"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"example\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Int",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/integer",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "integer"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "0",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Long",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/long",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "long"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "10000000",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Double",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/double",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "double"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "0",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Bool",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/boolean",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "boolean"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "true",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Datetime",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/datetime",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "datetime"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"1994-11-05T13:15:30Z\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Date",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/date",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "date"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"1994-11-05\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return UUID",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/uuid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "uuid"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"3d20db99-b2d9-4643-8f04-13452707b8e8\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Base 64",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/primitive/base64",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "primitive",
+                    "base64"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"SGVsbG8gV29ybGQ=\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Union",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get And Return Union",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/union",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "union"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"example\",\n    \"likesToWoof\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Inlined Requests",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Post With Object Bodyand Response",
+          "request": {
+            "description": "POST with custom object in request body, response is an object",
+            "url": {
+              "raw": "{{baseUrl}}/req-bodies/object",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "req-bodies",
+                "object"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "No Auth",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Post With No Auth",
+          "request": {
+            "description": "POST request with no auth",
+            "url": {
+              "raw": "{{baseUrl}}/no-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "no-auth"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"UNKNOWN\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "No Req Body",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With No Request Body",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/no-req-body",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "no-req-body"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Post With No Request Body",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/no-req-body",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "no-req-body"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Req With Headers",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With Custom Header",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/test-headers/custom-header",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test-headers",
+                "custom-header"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-TEST-SERVICE-HEADER",
+                "description": null,
+                "type": "text",
+                "value": "\"example\""
+              },
+              {
+                "key": "X-TEST-ENDPOINT-HEADER",
+                "description": null,
+                "type": "text",
+                "value": "\"example\""
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

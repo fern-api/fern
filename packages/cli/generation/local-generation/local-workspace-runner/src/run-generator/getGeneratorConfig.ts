@@ -93,7 +93,8 @@ export function getGeneratorConfig({
             workspaceName,
             organization,
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
-            dryRun: false
+            dryRun: false,
+            whitelabel: false
         }
     };
 }
@@ -132,6 +133,11 @@ function newDummyPublishOutputConfig(version: string): FernGeneratorExec.Generat
                     password: "",
                     registryUrl: "",
                     username: ""
+                },
+                rubygems: {
+                    registryUrl: "",
+                    apiKey: "",
+                    packageName: ""
                 }
             },
             version

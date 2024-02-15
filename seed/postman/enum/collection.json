@@ -1,0 +1,295 @@
+{
+  "info": {
+    "name": "Enum",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Inlined Request",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/inlined-request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inlined-request"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"value\": \">\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined-request",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined-request"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"value\": \">\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Path Param",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/path-param/:value",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "path-param",
+                ":value"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "value",
+                  "description": null,
+                  "value": ">"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path-param/:value",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path-param",
+                    ":value"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "value",
+                      "description": null,
+                      "value": ">"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Query Param",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/query?value=%3E",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "query"
+              ],
+              "query": [
+                {
+                  "key": "value",
+                  "description": null,
+                  "value": ">"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?value=%3E",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "value",
+                      "description": null,
+                      "value": ">"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Send List",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/query-list?value=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "query-list"
+              ],
+              "query": [
+                {
+                  "key": "value",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

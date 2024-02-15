@@ -25,6 +25,19 @@ exports[`open api parser devrev simple 1`] = `
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
+                },
+                "response": {
+                  "body": {
+                    "expires_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/artifacts.locate",
             "request": {
@@ -52,6 +65,25 @@ exports[`open api parser devrev simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "file_name": "file_name",
+                },
+                "response": {
+                  "body": {
+                    "form_data": [
+                      {
+                        "key": "key",
+                        "value": "value",
+                      },
+                    ],
+                    "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
+                    "url": "url",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/artifacts.prepare",
@@ -128,6 +160,13 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
@@ -189,10 +228,6 @@ created by the user.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auth_connections": [],
@@ -223,6 +258,13 @@ disabled.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
@@ -288,6 +330,21 @@ authenticated user.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {},
+                "response": {
+                  "body": {
+                    "access_token": "access_token",
+                    "client_id": "client_id",
+                    "expires_in": 1,
+                    "refresh_token": "refresh_token",
+                    "scope": "scope",
+                    "token_type": "bearer",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/auth-tokens.create",
@@ -359,11 +416,7 @@ given Dev organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {},
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -399,6 +452,33 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "token_id": "token_id",
+                },
+                "response": {
+                  "body": {
+                    "token": {
+                      "client_id": "client_id",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "expires_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "scopes",
+                      ],
+                      "status": "active",
+                      "subject": "subject",
+                      "token_hint": "token_hint",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
@@ -432,15 +512,26 @@ token type issued for a given subject.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "tokens": [],
+                    "tokens": [
+                      {
+                        "client_id": "client_id",
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "expires_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "issued_at": "2024-01-15T09:30:00Z",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                        "scopes": [
+                          "scopes",
+                        ],
+                        "status": "active",
+                        "subject": "subject",
+                        "token_hint": "token_hint",
+                      },
+                    ],
                   },
                 },
               },
@@ -492,13 +583,7 @@ authenticated user.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                },
-                "response": undefined,
+                "request": {},
               },
             ],
             "method": "POST",
@@ -527,6 +612,34 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "token_hint": "token_hint",
+                  "token_id": "token_id",
+                },
+                "response": {
+                  "body": {
+                    "token": {
+                      "client_id": "client_id",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "expires_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "scopes",
+                      ],
+                      "status": "active",
+                      "subject": "subject",
+                      "token_hint": "token_hint",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/auth-tokens.update",
@@ -579,16 +692,31 @@ organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "mode": "after",
-                  "state": "active",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "dev_users": [],
+                    "dev_users": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "display_name": "display_name",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "email",
+                        "external_identities": [
+                          {},
+                        ],
+                        "full_name": "full_name",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "phone_numbers": [
+                          "phone_numbers",
+                        ],
+                        "state": "active",
+                      },
+                    ],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -649,6 +777,34 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "response": {
+                  "body": {
+                    "dev_user": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "display_picture": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "email": "email",
+                      "external_identities": [
+                        {},
+                      ],
+                      "full_name": "full_name",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "phone_numbers": [
+                        "phone_numbers",
+                      ],
+                      "state": "active",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/dev-users.self",
             "response": {
@@ -704,14 +860,15 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {
+                      "key": "value",
+                    },
+                  },
                 },
               },
             ],
@@ -732,7 +889,7 @@ used.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.parts-delete-response",
+              "type": "root.PartsDeleteResponse",
             },
           },
           "get": {
@@ -778,16 +935,11 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "mode": "after",
-                  "type": "capability",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
                     "parts": [],
+                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -890,6 +1042,27 @@ organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "display_name": "display_name",
+                },
+                "response": {
+                  "body": {
+                    "rev_org": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rev-orgs.create",
             "request": {
@@ -944,14 +1117,15 @@ records.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {
+                      "key": "value",
+                    },
+                  },
                 },
               },
             ],
@@ -972,7 +1146,7 @@ records.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.rev-orgs-delete-response",
+              "type": "root.RevOrgsDeleteResponse",
             },
           },
           "get": {
@@ -986,6 +1160,27 @@ records.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
+                "response": {
+                  "body": {
+                    "rev_org": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rev-orgs.get",
@@ -1020,15 +1215,22 @@ to access.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "mode": "after",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "rev_orgs": [],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
+                    "rev_orgs": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "display_name": "display_name",
+                        "domain": "domain",
+                        "external_ref": "external_ref",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                      },
+                    ],
                   },
                 },
               },
@@ -1113,6 +1315,27 @@ them.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
+                "response": {
+                  "body": {
+                    "rev_org": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rev-orgs.update",
             "request": {
@@ -1183,6 +1406,28 @@ and a logical concept denoted by the tag's name.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "tag": {
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/tags.create",
             "request": {
@@ -1228,14 +1473,15 @@ permitted.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {
+                      "key": "value",
+                    },
+                  },
                 },
               },
             ],
@@ -1256,7 +1502,7 @@ permitted.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.tags-delete-response",
+              "type": "root.TagsDeleteResponse",
             },
           },
           "get": {
@@ -1270,6 +1516,28 @@ permitted.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                },
+                "response": {
+                  "body": {
+                    "tag": {
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/tags.get",
@@ -1300,15 +1568,23 @@ permitted.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "mode": "after",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "tags": [],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
+                    "tags": [
+                      {
+                        "allowed_values": [
+                          "allowed_values",
+                        ],
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                      },
+                    ],
                   },
                 },
               },
@@ -1352,6 +1628,28 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                },
+                "response": {
+                  "body": {
+                    "tag": {
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/tags.update",
@@ -1460,15 +1758,13 @@ tags.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
-                  "mode": "after",
                   "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                     "timeline_entries": [],
                   },
                 },
@@ -1553,6 +1849,29 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "url": "url",
+                },
+                "response": {
+                  "body": {
+                    "webhook": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
+                      "status": "active",
+                      "url": "url",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/webhooks.create",
             "request": {
@@ -1599,14 +1918,15 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {
+                      "key": "value",
+                    },
+                  },
                 },
               },
             ],
@@ -1627,7 +1947,7 @@ response.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.webhooks-delete-response",
+              "type": "root.WebhooksDeleteResponse",
             },
           },
           "get": {
@@ -1641,6 +1961,29 @@ response.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                },
+                "response": {
+                  "body": {
+                    "webhook": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
+                      "status": "active",
+                      "url": "url",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/webhooks.get",
@@ -1671,13 +2014,22 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "webhooks": [],
+                    "webhooks": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "event_types": [
+                          "part_created",
+                        ],
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "secret": "secret",
+                        "status": "active",
+                        "url": "url",
+                      },
+                    ],
                   },
                 },
               },
@@ -1700,6 +2052,29 @@ response.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                },
+                "response": {
+                  "body": {
+                    "webhook": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
+                      "status": "active",
+                      "url": "url",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/webhooks.update",
@@ -1789,14 +2164,15 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {
+                      "key": "value",
+                    },
+                  },
                 },
               },
             ],
@@ -1817,7 +2193,7 @@ won't receive any object events until successfully verified.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.works-delete-response",
+              "type": "root.WorksDeleteResponse",
             },
           },
           "export": {
@@ -1833,14 +2209,6 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "issue.priority": "p0",
-                  "ticket.severity": "blocker",
-                  "type": "issue",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
                     "works": [],
@@ -1955,17 +2323,10 @@ organizations.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "issue.priority": "p0",
-                  "mode": "after",
-                  "ticket.severity": "blocker",
-                  "type": "issue",
-                },
-                "request": undefined,
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                     "works": [],
                   },
                 },
@@ -2216,7 +2577,7 @@ authentication connection that is set up for a Dev organization.
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
           "samlp": "AuthConnectionOptionsSaml",
-          "social": "auth-connection-options-social",
+          "social": "AuthConnectionOptionsSocial",
           "waad": "AuthConnectionOptionsAzureAd",
         },
       },
@@ -2295,6 +2656,7 @@ authentication connection.
           },
         },
       },
+      "AuthConnectionOptionsSocial": "map<string, unknown>",
       "AuthConnectionToggle": {
         "enum": [
           "disable",
@@ -2444,6 +2806,7 @@ token. Only applicable for application access tokens.
           },
         ],
       },
+      "AuthTokenTokenType": "literal<"bearer">",
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -2478,7 +2841,7 @@ of values in which the order of values does not matter.
 ",
             "type": "optional<string>",
           },
-          "token_type": "auth-token-token-type",
+          "token_type": "AuthTokenTokenType",
         },
       },
       "AuthTokensGetResponse": {
@@ -2673,7 +3036,7 @@ connection.
         "properties": {
           "external_identities": {
             "docs": "IDs of the Dev User outside the DevRev SOR.",
-            "type": "optional<list<external-identity>>",
+            "type": "optional<list<ExternalIdentity>>",
           },
         },
       },
@@ -2706,28 +3069,15 @@ sort order. If not set, then no prior elements exist.
           "dev_user": "DevUser",
         },
       },
-      "Enhancement": {
-        "docs": undefined,
-        "extends": [
-          "PartBase",
-        ],
-        "properties": {
-          "target_close_date": {
-            "docs": "Timestamp when the enhancement is expected to be closed.",
-            "type": "optional<datetime>",
-          },
-        },
-      },
       "EnhancementSummary": "PartBaseSummary",
       "ErrorBadRequest": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "ErrorBadRequestType",
-        },
+        "properties": {},
       },
+      "ErrorBadRequestBadRequest": "map<string, unknown>",
       "ErrorBadRequestInvalidEnumValue": {
         "docs": undefined,
         "properties": {
@@ -2754,6 +3104,7 @@ sort order. If not set, then no prior elements exist.
           },
         },
       },
+      "ErrorBadRequestParseError": "map<string, unknown>",
       "ErrorBadRequestType": {
         "enum": [
           "bad_request",
@@ -2790,70 +3141,59 @@ sort order. If not set, then no prior elements exist.
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-forbidden-type",
-        },
+        "properties": {},
       },
+      "ErrorForbiddenForbidden": "map<string, unknown>",
+      "ErrorForbiddenType": "literal<"forbidden">",
       "ErrorInternalServerError": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "reference_id": {
-            "docs": "A unique ID that's generated for the error that can be used for
-inquiry.
-",
-            "type": "optional<string>",
-          },
-          "type": "error-internal-server-error-type",
-        },
+        "properties": {},
       },
+      "ErrorInternalServerErrorInternalError": "map<string, unknown>",
+      "ErrorInternalServerErrorType": "literal<"internal_error">",
       "ErrorNotFound": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-not-found-type",
-        },
+        "properties": {},
       },
+      "ErrorNotFoundNotFound": "map<string, unknown>",
+      "ErrorNotFoundType": "literal<"not_found">",
       "ErrorServiceUnavailable": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-service-unavailable-type",
-        },
+        "properties": {},
       },
+      "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
+      "ErrorServiceUnavailableType": "literal<"service_unavailable">",
       "ErrorTooManyRequests": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "retry_after": {
-            "docs": "The number of seconds after which the client should retry.
-",
-            "type": "optional<integer>",
-          },
-          "type": "error-too-many-requests-type",
-        },
+        "properties": {},
       },
+      "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
+      "ErrorTooManyRequestsType": "literal<"too_many_requests">",
       "ErrorUnauthorized": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-unauthorized-type",
-        },
+        "properties": {},
       },
+      "ErrorUnauthorizedType": "literal<"unauthenticated">",
+      "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
       "EventPartCreated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventPartDeleted": {
@@ -2868,7 +3208,7 @@ inquiry.
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventRevOrgCreated": {
@@ -2895,7 +3235,7 @@ inquiry.
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTagDeleted": {
@@ -2910,7 +3250,7 @@ inquiry.
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTimelineEntryCreated": {
@@ -2937,7 +3277,7 @@ inquiry.
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWebhookDeleted": {
@@ -2952,13 +3292,13 @@ inquiry.
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "EventWorkDeleted": {
@@ -2973,21 +3313,16 @@ inquiry.
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
+      },
+      "ExternalIdentity": {
+        "docs": "External identity of a user.",
+        "type": "map<string, unknown>",
       },
       "Feature": "PartBase",
       "FeatureSummary": "PartBaseSummary",
       "GroupSummary": "AtomBaseSummary",
-      "Issue": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "priority": "optional<IssuePriority>",
-        },
-      },
       "IssuePriority": {
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
@@ -3050,17 +3385,7 @@ always be returned in the specified sort-by order.
           "rev_org": "RevOrgSummary",
         },
       },
-      "Part": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "capability": "Capability",
-          "enhancement": "Enhancement",
-          "feature": "Feature",
-          "product": "Product",
-        },
-      },
+      "OrgType": "literal<"rev_org">",
       "PartBase": {
         "docs": undefined,
         "extends": [
@@ -3141,7 +3466,7 @@ always be returned in the specified sort-by order.
           "capability": "PartsCreateRequestCapability",
           "enhancement": "PartsCreateRequestEnhancement",
           "feature": "PartsCreateRequestFeature",
-          "product": "parts-create-request-product",
+          "product": "PartsCreateRequestProduct",
         },
       },
       "PartsCreateRequestCapability": {
@@ -3177,16 +3502,18 @@ always be returned in the specified sort-by order.
           },
         },
       },
+      "PartsCreateRequestProduct": "map<string, unknown>",
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
+      "PartsDeleteResponse": "map<string, unknown>",
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "PartsListResponse": {
@@ -3200,7 +3527,7 @@ sort order. If not set, then no later elements exist.
           },
           "parts": {
             "docs": "The list of parts.",
-            "type": "list<Part>",
+            "type": "list<part>",
           },
           "prev_cursor": {
             "docs": "The cursor used to iterate preceding results in accordance to the
@@ -3229,13 +3556,14 @@ sort order. If not set, then no prior elements exist.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": "parts-update-request-capability",
+          "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
-          "feature": "parts-update-request-feature",
+          "feature": "PartsUpdateRequestFeature",
           "none": "empty",
-          "product": "parts-update-request-product",
+          "product": "PartsUpdateRequestProduct",
         },
       },
+      "PartsUpdateRequestCapability": "map<string, unknown>",
       "PartsUpdateRequestEnhancement": {
         "docs": undefined,
         "properties": {
@@ -3245,6 +3573,7 @@ sort order. If not set, then no prior elements exist.
           },
         },
       },
+      "PartsUpdateRequestFeature": "map<string, unknown>",
       "PartsUpdateRequestOwnedBy": {
         "docs": undefined,
         "properties": {
@@ -3256,10 +3585,11 @@ empty.
           },
         },
       },
+      "PartsUpdateRequestProduct": "map<string, unknown>",
       "PartsUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "Product": "PartBase",
@@ -3295,6 +3625,10 @@ organization.
         "properties": {
           "rev_org": "RevOrg",
         },
+      },
+      "RevOrgsDeleteResponse": {
+        "docs": "The response to deleting a Rev organization.",
+        "type": "map<string, unknown>",
       },
       "RevOrgsGetResponse": {
         "docs": "The response to getting a Rev organization's information.",
@@ -3363,15 +3697,6 @@ the value must be one that's specified in the tag's allowed values.
           },
         },
       },
-      "Stage": {
-        "docs": "Describes the current stage of a work item.",
-        "properties": {
-          "name": {
-            "docs": "Current stage name of the work item.",
-            "type": "string",
-          },
-        },
-      },
       "StageInit": {
         "docs": "Sets an object's initial stage.",
         "properties": {
@@ -3392,34 +3717,6 @@ the value must be one that's specified in the tag's allowed values.
         },
       },
       "SysUserSummary": "UserBaseSummary",
-      "Tag": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "allowed_values": {
-            "docs": "The allowed values for the tag, where a value is provided when a
-tag is associated with an object. If empty, then no value should be
-provided when the association is made.
-",
-            "type": "optional<list<string>>",
-          },
-          "description": {
-            "docs": "An informative description for the tag that should provide context
-on the tag's purpose and usage.
-",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the tag, which denotes the logical concept by which all
-tagged objects will be associated. The name is guaranteed to be
-unique.
-",
-            "type": "string",
-          },
-        },
-      },
       "TagSummary": {
         "docs": undefined,
         "extends": [
@@ -3448,13 +3745,17 @@ unique.
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
+      },
+      "TagsDeleteResponse": {
+        "docs": "The response for deleting a tag.",
+        "type": "map<string, unknown>",
       },
       "TagsGetResponse": {
         "docs": "The response to getting a tag's information.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "TagsListResponse": {
@@ -3474,7 +3775,7 @@ sort order. If not set, then no prior elements exist.
           },
           "tags": {
             "docs": "The list of tags.",
-            "type": "list<Tag>",
+            "type": "list<tag>",
           },
         },
       },
@@ -3490,18 +3791,7 @@ sort order. If not set, then no prior elements exist.
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
-          "tag": "Tag",
-        },
-      },
-      "Ticket": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "group": "optional<GroupSummary>",
-          "rev_org": "optional<OrgSummary>",
-          "severity": "optional<TicketSeverity>",
+          "tag": "tag",
         },
       },
       "TicketSeverity": {
@@ -3549,7 +3839,7 @@ will appear in the response.
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
           },
-          "visibility": "optional<timeline-entry-visibility>",
+          "visibility": "optional<TimelineEntryVisibility>",
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
@@ -3575,6 +3865,7 @@ will appear in the response.
           },
         },
       },
+      "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
       "TimelineEntriesCreateResponse": {
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
@@ -3658,6 +3949,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
       },
+      "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
       "TimelineEntriesUpdateResponse": {
         "docs": "The response to updating a timeline entry.",
         "properties": {
@@ -3673,6 +3965,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
       },
       "TimelineEntryBase": "AtomBase",
+      "TimelineEntryType": "literal<"timeline_comment">",
+      "TimelineEntryVisibility": "literal<"private">",
       "UserBase": {
         "docs": undefined,
         "extends": [
@@ -3749,27 +4043,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "rev_user",
           "sys_user",
         ],
-      },
-      "Webhook": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "event_types": {
-            "docs": "The event types that the webhook will receive.",
-            "type": "optional<list<WebhookEventType>>",
-          },
-          "secret": {
-            "docs": "The secret to use for verifying webhook events.",
-            "type": "string",
-          },
-          "status": "WebhookStatus",
-          "url": {
-            "docs": "The URL of the webhook endpoint.",
-            "type": "string",
-          },
-        },
       },
       "WebhookEventRequest": {
         "docs": undefined,
@@ -3867,13 +4140,17 @@ be set for other request types.
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
+      },
+      "WebhooksDeleteResponse": {
+        "docs": "The response to deleting the webhook.",
+        "type": "map<string, unknown>",
       },
       "WebhooksGetResponse": {
         "docs": "The response to getting the information for the webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "WebhooksListResponse": {
@@ -3881,7 +4158,7 @@ be set for other request types.
         "properties": {
           "webhooks": {
             "docs": "The list of webhooks.",
-            "type": "list<Webhook>",
+            "type": "list<webhook>",
           },
         },
       },
@@ -3921,16 +4198,7 @@ event types. Note this is mutually exclusive with 'add' and
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
-          "webhook": "Webhook",
-        },
-      },
-      "Work": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "issue": "Issue",
-          "ticket": "Ticket",
+          "webhook": "webhook",
         },
       },
       "WorkBase": {
@@ -3956,7 +4224,7 @@ event types. Note this is mutually exclusive with 'add' and
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
           },
-          "stage": "optional<Stage>",
+          "stage": "optional<stage>",
           "tags": {
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
@@ -4051,22 +4319,23 @@ issues.
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
+      "WorksDeleteResponse": "map<string, unknown>",
       "WorksExportResponse": {
         "docs": undefined,
         "properties": {
           "works": {
             "docs": "The resulting collection of work items.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "WorksListResponse": {
@@ -4086,7 +4355,7 @@ sort order. If not set, then no prior elements exist.
           },
           "works": {
             "docs": "The list of works.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
@@ -4196,53 +4465,120 @@ empty.
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
-      "auth-connection-options-social": "map<string, unknown>",
-      "auth-token-token-type": "literal<"bearer">",
       "empty": "map<string, unknown>",
-      "error-bad-request-bad-request": "map<string, unknown>",
-      "error-bad-request-parse-error": "map<string, unknown>",
-      "error-forbidden-forbidden": "map<string, unknown>",
-      "error-forbidden-type": "literal<"forbidden">",
-      "error-internal-server-error-internal-error": "map<string, unknown>",
-      "error-internal-server-error-type": "literal<"internal_error">",
-      "error-not-found-not-found": "map<string, unknown>",
-      "error-not-found-type": "literal<"not_found">",
-      "error-service-unavailable-service-unavailable": "map<string, unknown>",
-      "error-service-unavailable-type": "literal<"service_unavailable">",
-      "error-too-many-requests-too-many-requests": "map<string, unknown>",
-      "error-too-many-requests-type": "literal<"too_many_requests">",
-      "error-unauthorized-type": "literal<"unauthenticated">",
-      "error-unauthorized-unauthenticated": "map<string, unknown>",
-      "external-identity": {
-        "docs": "External identity of a user.",
-        "type": "map<string, unknown>",
+      "enhancement": {
+        "docs": undefined,
+        "extends": [
+          "PartBase",
+        ],
+        "properties": {
+          "target_close_date": {
+            "docs": "Timestamp when the enhancement is expected to be closed.",
+            "type": "optional<datetime>",
+          },
+        },
       },
-      "org-type": "literal<"rev_org">",
-      "parts-create-request-product": "map<string, unknown>",
-      "parts-delete-response": "map<string, unknown>",
-      "parts-update-request-capability": "map<string, unknown>",
-      "parts-update-request-feature": "map<string, unknown>",
-      "parts-update-request-product": "map<string, unknown>",
-      "rev-orgs-delete-response": {
-        "docs": "The response to deleting a Rev organization.",
-        "type": "map<string, unknown>",
+      "issue": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "priority": "optional<IssuePriority>",
+        },
       },
-      "tags-delete-response": {
-        "docs": "The response for deleting a tag.",
-        "type": "map<string, unknown>",
+      "part": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "capability": "Capability",
+          "enhancement": "enhancement",
+          "feature": "Feature",
+          "product": "Product",
+        },
       },
-      "timeline-entries-create-request-type": "literal<"timeline_comment">",
-      "timeline-entries-update-request-type": "literal<"timeline_comment">",
-      "timeline-entry-type": "literal<"timeline_comment">",
-      "timeline-entry-visibility": "literal<"private">",
-      "webhooks-delete-response": {
-        "docs": "The response to deleting the webhook.",
-        "type": "map<string, unknown>",
+      "stage": {
+        "docs": "Describes the current stage of a work item.",
+        "properties": {
+          "name": {
+            "docs": "Current stage name of the work item.",
+            "type": "string",
+          },
+        },
       },
-      "works-delete-response": "map<string, unknown>",
+      "tag": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "allowed_values": {
+            "docs": "The allowed values for the tag, where a value is provided when a
+tag is associated with an object. If empty, then no value should be
+provided when the association is made.
+",
+            "type": "optional<list<string>>",
+          },
+          "description": {
+            "docs": "An informative description for the tag that should provide context
+on the tag's purpose and usage.
+",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+            "type": "string",
+          },
+        },
+      },
+      "ticket": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "group": "optional<GroupSummary>",
+          "rev_org": "optional<OrgSummary>",
+          "severity": "optional<TicketSeverity>",
+        },
+      },
+      "webhook": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "event_types": {
+            "docs": "The event types that the webhook will receive.",
+            "type": "optional<list<WebhookEventType>>",
+          },
+          "secret": {
+            "docs": "The secret to use for verifying webhook events.",
+            "type": "string",
+          },
+          "status": "WebhookStatus",
+          "url": {
+            "docs": "The URL of the webhook endpoint.",
+            "type": "string",
+          },
+        },
+      },
+      "work": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "issue": "issue",
+          "ticket": "ticket",
+        },
+      },
     },
   },
   "rootApiFile": {
@@ -4251,7 +4587,6 @@ empty.
       "auth-token": {
         "header": "Authorization",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

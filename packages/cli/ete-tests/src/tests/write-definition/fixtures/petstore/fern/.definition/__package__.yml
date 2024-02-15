@@ -1,0 +1,11 @@
+types:
+  Pet:
+    properties:
+      id: integer
+      name: string
+      tag: optional<string>
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string

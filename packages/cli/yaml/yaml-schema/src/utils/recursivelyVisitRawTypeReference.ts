@@ -1,4 +1,4 @@
-import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
+import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
 import { visitRawTypeReference } from "./visitRawTypeReference";
 
 export interface RecursiveRawTypeReferenceVisitor<R> {

@@ -34,15 +34,15 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.139",
+    "@fern-fern/openapi-ir-model": "0.0.170",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "eslint": "^8.26.0",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

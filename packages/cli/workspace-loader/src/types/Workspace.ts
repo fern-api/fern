@@ -22,7 +22,7 @@ export interface OpenAPIWorkspace {
     workspaceName: string | undefined;
     name: string;
     absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration;
+    generatorsConfiguration: GeneratorsConfiguration | undefined;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
 }
@@ -42,7 +42,7 @@ export interface FernWorkspace {
     name: string;
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration;
+    generatorsConfiguration: GeneratorsConfiguration | undefined;
     dependenciesConfiguration: DependenciesConfiguration;
     definition: FernDefinition;
 }

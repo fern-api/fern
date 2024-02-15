@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from "@fern-api/ir-sdk";
 
 export type AudienceId = string;
 export type TypeId = string;

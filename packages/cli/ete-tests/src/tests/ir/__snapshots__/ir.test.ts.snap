@@ -9737,6 +9737,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                     }
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         }
                     ],
@@ -14890,6 +14891,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     "jsonExample": "shrek-123"
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         },
                         {
@@ -15343,6 +15345,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     "jsonExample": "shrek-123"
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         }
                     ],
@@ -23063,6 +23066,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "jsonExample": "shrek-123"
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         },
                         {
@@ -23516,6 +23520,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "jsonExample": "shrek-123"
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         }
                     ],
@@ -24738,6 +24743,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         },
                         {
@@ -25009,6 +25015,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "jsonExample": "id-123"
                                 }
                             },
+                            "codeSamples": null,
                             "docs": null
                         }
                     ],

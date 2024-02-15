@@ -1,5 +1,5 @@
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
 import { GeneratorNameAndVersion } from "./IrMigrationContext";
 

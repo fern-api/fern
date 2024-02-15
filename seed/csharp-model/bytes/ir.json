@@ -1,0 +1,285 @@
+{
+  "apiName": {
+    "originalName": "bytes",
+    "camelCase": {
+      "unsafeName": "bytes",
+      "safeName": "bytes"
+    },
+    "snakeCase": {
+      "unsafeName": "bytes",
+      "safeName": "bytes"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "BYTES",
+      "safeName": "BYTES"
+    },
+    "pascalCase": {
+      "unsafeName": "Bytes",
+      "safeName": "Bytes"
+    }
+  },
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "errors": {},
+  "services": {
+    "service_service": {
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "service",
+              "camelCase": {
+                "unsafeName": "service",
+                "safeName": "service"
+              },
+              "snakeCase": {
+                "unsafeName": "service",
+                "safeName": "service"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SERVICE",
+                "safeName": "SERVICE"
+              },
+              "pascalCase": {
+                "unsafeName": "Service",
+                "safeName": "Service"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "service",
+            "camelCase": {
+              "unsafeName": "service",
+              "safeName": "service"
+            },
+            "snakeCase": {
+              "unsafeName": "service",
+              "safeName": "service"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SERVICE",
+              "safeName": "SERVICE"
+            },
+            "pascalCase": {
+              "unsafeName": "Service",
+              "safeName": "Service"
+            }
+          }
+        }
+      },
+      "basePath": {
+        "head": "",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "endpoints": [
+        {
+          "id": "endpoint_service.upload",
+          "name": {
+            "originalName": "upload",
+            "camelCase": {
+              "unsafeName": "upload",
+              "safeName": "upload"
+            },
+            "snakeCase": {
+              "unsafeName": "upload",
+              "safeName": "upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPLOAD",
+              "safeName": "UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "Upload",
+              "safeName": "Upload"
+            }
+          },
+          "auth": false,
+          "idempotent": false,
+          "method": "POST",
+          "path": {
+            "head": "/upload-content",
+            "parts": []
+          },
+          "fullPath": {
+            "head": "upload-content",
+            "parts": []
+          },
+          "pathParameters": [],
+          "allPathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "requestBody": {
+            "type": "bytes",
+            "isOptional": false,
+            "contentType": "application/octet-stream"
+          },
+          "sdkRequest": {
+            "shape": {
+              "value": {
+                "type": "bytes",
+                "isOptional": false
+              },
+              "type": "justRequestBody"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ]
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "pathParameters": [],
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  },
+  "webhookGroups": {},
+  "subpackages": {
+    "subpackage_service": {
+      "name": {
+        "originalName": "service",
+        "camelCase": {
+          "unsafeName": "service",
+          "safeName": "service"
+        },
+        "snakeCase": {
+          "unsafeName": "service",
+          "safeName": "service"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "SERVICE",
+          "safeName": "SERVICE"
+        },
+        "pascalCase": {
+          "unsafeName": "Service",
+          "safeName": "Service"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "service",
+            "camelCase": {
+              "unsafeName": "service",
+              "safeName": "service"
+            },
+            "snakeCase": {
+              "unsafeName": "service",
+              "safeName": "service"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SERVICE",
+              "safeName": "SERVICE"
+            },
+            "pascalCase": {
+              "unsafeName": "Service",
+              "safeName": "Service"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "service",
+          "camelCase": {
+            "unsafeName": "service",
+            "safeName": "service"
+          },
+          "snakeCase": {
+            "unsafeName": "service",
+            "safeName": "service"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SERVICE",
+            "safeName": "SERVICE"
+          },
+          "pascalCase": {
+            "unsafeName": "Service",
+            "safeName": "Service"
+          }
+        }
+      },
+      "service": "service_service",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": true
+    }
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [],
+    "errors": [],
+    "subpackages": [
+      "subpackage_service"
+    ],
+    "hasEndpointsInTree": true
+  },
+  "sdkConfig": {
+    "isAuthMandatory": false,
+    "hasStreamingEndpoints": false,
+    "hasFileDownloadEndpoints": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version"
+    }
+  }
+}

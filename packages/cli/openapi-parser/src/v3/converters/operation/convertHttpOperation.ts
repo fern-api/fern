@@ -6,6 +6,8 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExtension } from "../../extensions/getExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
+import { getFernExamples } from "../../extensions/getFernExamples";
+import { getReadmeCodeSamples } from "../../extensions/getReadmeCodeSamples";
 import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
@@ -79,6 +81,7 @@ export function convertHttpOperation({
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
     const convertedResponse = convertResponse({
+        operationContext,
         isStreaming: streamingResponse ?? false,
         responses: operation.responses,
         context,
@@ -87,6 +90,20 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
+    const examples = [...getFernExamples(operation)];
+    const readmeCodeSamples = getReadmeCodeSamples(operation);
+    if (readmeCodeSamples.length > 0) {
+        examples.push({
+            codeSamples: readmeCodeSamples,
+            name: undefined,
+            description: undefined,
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            request: undefined,
+            response: undefined
+        });
+    }
 
     return {
         summary: operation.summary,
@@ -111,7 +128,8 @@ export function convertHttpOperation({
         authed: isEndpointAuthed(operation, document),
         availability,
         method,
-        path
+        path,
+        examples
     };
 }
 

@@ -19,9 +19,9 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
-  
-  Tags: 
-    properties: 
+
+  Tags:
+    properties:
       tagsById: map<commons.TagId, commons.Tag>
       orderedTagIds: optional<list<commons.TagId>>
 
@@ -91,17 +91,72 @@ types:
       server: list<commons.Server>
       examples: list<EndpointExample>
 
+  CustomCodeSample:
+    availability: in-development
+    union:
+      language: CustomCodeSampleLanguage
+      sdk: CustomCodeSampleSdk
+
+  CustomCodeSampleLanguage:
+    docs: |
+      This is intended to co-exist with the auto-generated code samples.
+    extends: commons.WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      language: string
+      code: string
+      install:
+        type: optional<string>
+        docs: |
+          The command to install the dependencies for the code sample.
+          For example, `npm install` or `pip install -r requirements.txt`.
+
+  CustomCodeSampleSdk:
+    docs: |
+      This will be used to replace the auto-generated code samples.
+    extends: commons.WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      sdk: SupportedSdkLanguage
+      code: string
+
+  # be sure to keep this in sync with the SupportedSdkLanguage enum
+  SupportedSdkLanguage:
+    enum:
+      - curl
+      - python
+      - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
+      - js # alias to javascript
+      - node # alias to javascript
+      - ts # alias to typescript
+      - nodets # alias to typescript
+      - golang # alias to go
+      - dotnet # alias to csharp
+      - jvm # alias to java
+
   EndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
       PartialObjectExamples).
+    extends: commons.WithDescription
     properties:
+      name: optional<string>
       pathParameters: optional<list<PathParameterExample>>
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
       request: optional<example.FullExample>
       response: optional<example.FullExample>
+      codeSamples: list<CustomCodeSample>
 
   PathParameterExample:
     properties:
@@ -220,6 +275,7 @@ types:
     extends: commons.WithDescription
     properties:
       schema: Schema
+      responseProperty: optional<string>
 
   Schema:
     union:
@@ -233,11 +289,12 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: {}
+      unknown: commons.WithName
 
   PrimitiveSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValue
@@ -260,8 +317,9 @@ types:
       maxLength: optional<integer>
 
   LiteralSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: LiteralSchemaValue
@@ -312,30 +370,34 @@ types:
       differentSchema: boolean
 
   ArraySchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   MapSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   NullableSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema

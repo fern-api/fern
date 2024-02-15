@@ -3,7 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import path from "path";
 // import * as prettier from "prettier";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
@@ -58,7 +58,9 @@ it("generate IR", async () => {
         const intermediateRepresentation = await generateIntermediateRepresentation({
             workspace,
             generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" }
+            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            smartCasing: true, // Verify the special casing convention in tests.
+            disableExamples: false
         });
 
         const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(

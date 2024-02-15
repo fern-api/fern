@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import {
     FullExample,
@@ -17,22 +17,64 @@ export function buildEndpointExample({
     endpointExample: EndpointExample;
     context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema {
-    return {
-        "path-parameters":
-            endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
-                ? convertNamedFullExamples(endpointExample.pathParameters)
-                : undefined,
-        "query-parameters":
-            endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
-                ? convertQueryParameterExample(endpointExample.queryParameters)
-                : undefined,
-        headers:
-            endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertHeaderExamples({ context, namedFullExamples: endpointExample.headers })
-                : undefined,
-        request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
-        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined
-    };
+    const example: RawSchemas.ExampleEndpointCallSchema = {};
+
+    if (endpointExample.name != null) {
+        example.name = endpointExample.name;
+    }
+
+    if (endpointExample.description != null) {
+        example.docs = endpointExample.description;
+    }
+
+    if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
+        example["path-parameters"] = convertNamedFullExamples(endpointExample.pathParameters);
+    }
+
+    if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {
+        example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters);
+    }
+
+    if (endpointExample.headers != null && endpointExample.headers.length > 0) {
+        example.headers = convertHeaderExamples({ context, namedFullExamples: endpointExample.headers });
+    }
+
+    if (endpointExample.request != null) {
+        example.request = convertFullExample(endpointExample.request);
+    }
+
+    if (endpointExample.response != null) {
+        example.response = { body: convertFullExample(endpointExample.response) };
+    }
+
+    if (endpointExample.response != null) {
+        example.response = { body: convertFullExample(endpointExample.response) };
+    }
+
+    if (endpointExample.codeSamples.length > 0) {
+        example["code-samples"] = endpointExample.codeSamples
+            .map((codeSample) => {
+                if (codeSample.type === "language") {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        language: codeSample.language,
+                        code: codeSample.code,
+                        install: codeSample.install ?? undefined
+                    };
+                } else {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        sdk: codeSample.sdk,
+                        code: codeSample.code
+                    };
+                }
+            })
+            .filter(isNonNullish);
+    }
+
+    return example;
 }
 
 interface NamedFullExample {
@@ -58,7 +100,7 @@ function convertQueryParameterExample(
         const convertedExample = convertFullExample(namedFullExample.value);
         if (Array.isArray(convertedExample)) {
             result[namedFullExample.name] = convertedExample[0];
-        } else {
+        } else if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });
@@ -75,10 +117,11 @@ function convertHeaderExamples({
     const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
+        const convertedExample = convertFullExample(namedFullExample.value);
         if (globalHeaderNames.has(namedFullExample.name)) {
             return;
-        } else {
-            result[namedFullExample.name] = convertFullExample(namedFullExample.value);
+        } else if (convertedExample != null) {
+            result[namedFullExample.name] = convertedExample;
         }
     });
     return result;
@@ -164,7 +207,6 @@ function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeRef
     }
     return convertFullExample(oneOf.undisciminated);
 }
-
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
         case "string":

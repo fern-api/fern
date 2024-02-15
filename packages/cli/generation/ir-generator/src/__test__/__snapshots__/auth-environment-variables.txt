@@ -39,8 +39,8 @@ exports[`generate IR 1`] = `
             },
             "originalName": "APIKey",
             "pascalCase": {
-              "safeName": "ApiKey",
-              "unsafeName": "ApiKey",
+              "safeName": "APIKey",
+              "unsafeName": "APIKey",
             },
             "screamingSnakeCase": {
               "safeName": "API_KEY",
@@ -66,13 +66,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -153,13 +153,13 @@ exports[`generate IR 1`] = `
           "method": "GET",
           "name": {
             "camelCase": {
-              "safeName": "getWithApiKey",
-              "unsafeName": "getWithApiKey",
+              "safeName": "getWithAPIKey",
+              "unsafeName": "getWithAPIKey",
             },
             "originalName": "getWithApiKey",
             "pascalCase": {
-              "safeName": "GetWithApiKey",
-              "unsafeName": "GetWithApiKey",
+              "safeName": "GetWithAPIKey",
+              "unsafeName": "GetWithAPIKey",
             },
             "screamingSnakeCase": {
               "safeName": "GET_WITH_API_KEY",

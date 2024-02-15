@@ -3,11 +3,11 @@ import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
@@ -21,7 +21,8 @@ export async function createAndStartJob({
     version,
     context,
     shouldLogS3Url,
-    token
+    token,
+    whitelabel
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -31,6 +32,7 @@ export async function createAndStartJob({
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
+    whitelabel: FernFiddle.WhitelabelConfig | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
         workspace,
@@ -39,7 +41,8 @@ export async function createAndStartJob({
         version,
         context,
         shouldLogS3Url,
-        token
+        token,
+        whitelabel
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
@@ -52,7 +55,8 @@ async function createJob({
     version,
     context,
     shouldLogS3Url,
-    token
+    token,
+    whitelabel
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -61,6 +65,7 @@ async function createJob({
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
+    whitelabel: FernFiddle.WhitelabelConfig | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -69,6 +74,8 @@ async function createJob({
         customConfig: generatorInvocation.config
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
+    const whitelabelWithEnvVarSubstiutions =
+        whitelabel != null ? substituteEnvVariables(whitelabel, context) : undefined;
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -77,7 +84,8 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles"
+        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+        whitelabel: whitelabelWithEnvVarSubstiutions
     });
 
     if (!createResponse.ok) {
@@ -110,6 +118,11 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow("Insufficient permissions.");
+            },
+            orgNotConfiguredForWhitelabel: () => {
+                return context.failAndThrow(
+                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
+                );
             },
             _other: (content) => {
                 return context.failAndThrow("Failed to create job", content);

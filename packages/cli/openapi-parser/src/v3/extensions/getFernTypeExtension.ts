@@ -6,9 +6,13 @@ import { FernOpenAPIExtension } from "./fernExtensions";
 import { getExtension } from "./getExtension";
 
 export function getFernTypeExtension({
+    nameOverride,
+    generatedName,
     schema,
     description
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     schema: OpenAPIV3.SchemaObject;
     description: string | undefined;
 }): SchemaWithExample | undefined {
@@ -22,6 +26,8 @@ export function getFernTypeExtension({
             switch (primitive) {
                 case "BASE_64":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.base64({
@@ -30,6 +36,8 @@ export function getFernTypeExtension({
                     });
                 case "BOOLEAN":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.boolean({
@@ -38,6 +46,8 @@ export function getFernTypeExtension({
                     });
                 case "DATE":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.date({
@@ -46,6 +56,8 @@ export function getFernTypeExtension({
                     });
                 case "DATE_TIME":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.datetime({
@@ -54,6 +66,8 @@ export function getFernTypeExtension({
                     });
                 case "DOUBLE":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.double({
@@ -62,6 +76,8 @@ export function getFernTypeExtension({
                     });
                 case "INTEGER":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.int({
@@ -70,6 +86,8 @@ export function getFernTypeExtension({
                     });
                 case "LONG":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.int64({
@@ -79,6 +97,8 @@ export function getFernTypeExtension({
                 case "STRING":
                 case "UUID":
                     return SchemaWithExample.primitive({
+                        nameOverride,
+                        generatedName,
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.string({
@@ -93,6 +113,8 @@ export function getFernTypeExtension({
         },
         unknown: () => {
             return SchemaWithExample.unknown({
+                nameOverride,
+                generatedName,
                 example: undefined,
                 description,
                 groupName
@@ -101,6 +123,8 @@ export function getFernTypeExtension({
         map: ({ keyType, valueType }) =>
             keyType?.type === "primitive" && valueType != null
                 ? SchemaWithExample.map({
+                      nameOverride,
+                      generatedName,
                       key: keyType,
                       value: valueType,
                       description,
@@ -110,6 +134,8 @@ export function getFernTypeExtension({
         list: (itemType) =>
             itemType != null
                 ? SchemaWithExample.array({
+                      nameOverride,
+                      generatedName,
                       value: itemType,
                       description,
                       groupName
@@ -118,6 +144,8 @@ export function getFernTypeExtension({
         optional: (itemType) =>
             itemType != null
                 ? SchemaWithExample.optional({
+                      nameOverride,
+                      generatedName,
                       value: itemType,
                       description,
                       groupName
@@ -126,6 +154,8 @@ export function getFernTypeExtension({
         set: (itemType) =>
             itemType != null
                 ? SchemaWithExample.array({
+                      nameOverride,
+                      generatedName,
                       value: itemType,
                       description,
                       groupName
@@ -133,6 +163,8 @@ export function getFernTypeExtension({
                 : undefined,
         literal: (literal) =>
             SchemaWithExample.literal({
+                nameOverride,
+                generatedName,
                 value: literal,
                 description,
                 groupName

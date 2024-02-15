@@ -6,13 +6,13 @@ exports[`generate IR 1`] = `
   "apiDocs": null,
   "apiName": {
     "camelCase": {
-      "safeName": "multiUrlEnvironment",
-      "unsafeName": "multiUrlEnvironment",
+      "safeName": "multiURLEnvironment",
+      "unsafeName": "multiURLEnvironment",
     },
     "originalName": "multi-url-environment",
     "pascalCase": {
-      "safeName": "MultiUrlEnvironment",
-      "unsafeName": "MultiUrlEnvironment",
+      "safeName": "MultiURLEnvironment",
+      "unsafeName": "MultiURLEnvironment",
     },
     "screamingSnakeCase": {
       "safeName": "MULTI_URL_ENVIRONMENT",
@@ -58,13 +58,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -95,12 +95,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Ec2",
             },
             "screamingSnakeCase": {
-              "safeName": "EC_2",
-              "unsafeName": "EC_2",
+              "safeName": "EC2",
+              "unsafeName": "EC2",
             },
             "snakeCase": {
-              "safeName": "ec_2",
-              "unsafeName": "ec_2",
+              "safeName": "ec2",
+              "unsafeName": "ec2",
             },
           },
         },
@@ -117,12 +117,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "S3",
             },
             "screamingSnakeCase": {
-              "safeName": "S_3",
-              "unsafeName": "S_3",
+              "safeName": "S3",
+              "unsafeName": "S3",
             },
             "snakeCase": {
-              "safeName": "s_3",
-              "unsafeName": "s_3",
+              "safeName": "s3",
+              "unsafeName": "s3",
             },
           },
         },
@@ -411,12 +411,12 @@ exports[`generate IR 1`] = `
                 "unsafeName": "Ec2",
               },
               "screamingSnakeCase": {
-                "safeName": "EC_2",
-                "unsafeName": "EC_2",
+                "safeName": "EC2",
+                "unsafeName": "EC2",
               },
               "snakeCase": {
-                "safeName": "ec_2",
-                "unsafeName": "ec_2",
+                "safeName": "ec2",
+                "unsafeName": "ec2",
               },
             },
           ],
@@ -431,12 +431,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Ec2",
             },
             "screamingSnakeCase": {
-              "safeName": "EC_2",
-              "unsafeName": "EC_2",
+              "safeName": "EC2",
+              "unsafeName": "EC2",
             },
             "snakeCase": {
-              "safeName": "ec_2",
-              "unsafeName": "ec_2",
+              "safeName": "ec2",
+              "unsafeName": "ec2",
             },
           },
           "packagePath": [],
@@ -471,13 +471,13 @@ exports[`generate IR 1`] = `
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "getPresignedUrl",
-              "unsafeName": "getPresignedUrl",
+              "safeName": "getPresignedURL",
+              "unsafeName": "getPresignedURL",
             },
             "originalName": "getPresignedUrl",
             "pascalCase": {
-              "safeName": "GetPresignedUrl",
-              "unsafeName": "GetPresignedUrl",
+              "safeName": "GetPresignedURL",
+              "unsafeName": "GetPresignedURL",
             },
             "screamingSnakeCase": {
               "safeName": "GET_PRESIGNED_URL",
@@ -499,13 +499,13 @@ exports[`generate IR 1`] = `
             "extends": [],
             "name": {
               "camelCase": {
-                "safeName": "getPresignedUrlRequest",
-                "unsafeName": "getPresignedUrlRequest",
+                "safeName": "getPresignedURLRequest",
+                "unsafeName": "getPresignedURLRequest",
               },
               "originalName": "GetPresignedUrlRequest",
               "pascalCase": {
-                "safeName": "GetPresignedUrlRequest",
-                "unsafeName": "GetPresignedUrlRequest",
+                "safeName": "GetPresignedURLRequest",
+                "unsafeName": "GetPresignedURLRequest",
               },
               "screamingSnakeCase": {
                 "safeName": "GET_PRESIGNED_URL_REQUEST",
@@ -531,12 +531,12 @@ exports[`generate IR 1`] = `
                       "unsafeName": "S3Key",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "S_3_KEY",
-                      "unsafeName": "S_3_KEY",
+                      "safeName": "S3KEY",
+                      "unsafeName": "S3KEY",
                     },
                     "snakeCase": {
-                      "safeName": "s_3_key",
-                      "unsafeName": "s_3_key",
+                      "safeName": "s3key",
+                      "unsafeName": "s3key",
                     },
                   },
                   "wireValue": "s3Key",
@@ -603,13 +603,13 @@ exports[`generate IR 1`] = `
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "getPresignedUrlRequest",
-                  "unsafeName": "getPresignedUrlRequest",
+                  "safeName": "getPresignedURLRequest",
+                  "unsafeName": "getPresignedURLRequest",
                 },
                 "originalName": "GetPresignedUrlRequest",
                 "pascalCase": {
-                  "safeName": "GetPresignedUrlRequest",
-                  "unsafeName": "GetPresignedUrlRequest",
+                  "safeName": "GetPresignedURLRequest",
+                  "unsafeName": "GetPresignedURLRequest",
                 },
                 "screamingSnakeCase": {
                   "safeName": "GET_PRESIGNED_URL_REQUEST",
@@ -639,12 +639,12 @@ exports[`generate IR 1`] = `
                 "unsafeName": "S3",
               },
               "screamingSnakeCase": {
-                "safeName": "S_3",
-                "unsafeName": "S_3",
+                "safeName": "S3",
+                "unsafeName": "S3",
               },
               "snakeCase": {
-                "safeName": "s_3",
-                "unsafeName": "s_3",
+                "safeName": "s3",
+                "unsafeName": "s3",
               },
             },
           ],
@@ -659,12 +659,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "S3",
             },
             "screamingSnakeCase": {
-              "safeName": "S_3",
-              "unsafeName": "S_3",
+              "safeName": "S3",
+              "unsafeName": "S3",
             },
             "snakeCase": {
-              "safeName": "s_3",
-              "unsafeName": "s_3",
+              "safeName": "s3",
+              "unsafeName": "s3",
             },
           },
           "packagePath": [],
@@ -690,12 +690,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Ec2",
             },
             "screamingSnakeCase": {
-              "safeName": "EC_2",
-              "unsafeName": "EC_2",
+              "safeName": "EC2",
+              "unsafeName": "EC2",
             },
             "snakeCase": {
-              "safeName": "ec_2",
-              "unsafeName": "ec_2",
+              "safeName": "ec2",
+              "unsafeName": "ec2",
             },
           },
         ],
@@ -710,12 +710,12 @@ exports[`generate IR 1`] = `
             "unsafeName": "Ec2",
           },
           "screamingSnakeCase": {
-            "safeName": "EC_2",
-            "unsafeName": "EC_2",
+            "safeName": "EC2",
+            "unsafeName": "EC2",
           },
           "snakeCase": {
-            "safeName": "ec_2",
-            "unsafeName": "ec_2",
+            "safeName": "ec2",
+            "unsafeName": "ec2",
           },
         },
         "packagePath": [],
@@ -732,12 +732,12 @@ exports[`generate IR 1`] = `
           "unsafeName": "Ec2",
         },
         "screamingSnakeCase": {
-          "safeName": "EC_2",
-          "unsafeName": "EC_2",
+          "safeName": "EC2",
+          "unsafeName": "EC2",
         },
         "snakeCase": {
-          "safeName": "ec_2",
-          "unsafeName": "ec_2",
+          "safeName": "ec2",
+          "unsafeName": "ec2",
         },
       },
       "navigationConfig": null,
@@ -762,12 +762,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "S3",
             },
             "screamingSnakeCase": {
-              "safeName": "S_3",
-              "unsafeName": "S_3",
+              "safeName": "S3",
+              "unsafeName": "S3",
             },
             "snakeCase": {
-              "safeName": "s_3",
-              "unsafeName": "s_3",
+              "safeName": "s3",
+              "unsafeName": "s3",
             },
           },
         ],
@@ -782,12 +782,12 @@ exports[`generate IR 1`] = `
             "unsafeName": "S3",
           },
           "screamingSnakeCase": {
-            "safeName": "S_3",
-            "unsafeName": "S_3",
+            "safeName": "S3",
+            "unsafeName": "S3",
           },
           "snakeCase": {
-            "safeName": "s_3",
-            "unsafeName": "s_3",
+            "safeName": "s3",
+            "unsafeName": "s3",
           },
         },
         "packagePath": [],
@@ -804,12 +804,12 @@ exports[`generate IR 1`] = `
           "unsafeName": "S3",
         },
         "screamingSnakeCase": {
-          "safeName": "S_3",
-          "unsafeName": "S_3",
+          "safeName": "S3",
+          "unsafeName": "S3",
         },
         "snakeCase": {
-          "safeName": "s_3",
-          "unsafeName": "s_3",
+          "safeName": "s3",
+          "unsafeName": "s3",
         },
       },
       "navigationConfig": null,

@@ -4,14 +4,14 @@ import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
+import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import fs from "fs";
 import { writeFile } from "fs/promises";
 import { difference, isEqual } from "lodash-es";
 import path from "path";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
+import { OutputMode, ScriptConfig } from "../../config/api";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
@@ -44,18 +44,19 @@ export async function testWorkspaceFixtures({
     docker,
     scripts,
     taskContextFactory,
-    numDockers
+    numDockers,
+    keepDocker
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
-    dockerCommand: string | undefined;
     scripts: ScriptConfig[] | undefined;
     logLevel: LogLevel;
     taskContextFactory: TaskContextFactory;
     numDockers: number;
+    keepDocker: boolean | undefined;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
 
@@ -64,7 +65,7 @@ export async function testWorkspaceFixtures({
     // Start running a docker container for each script instance
     for (const script of scripts ?? []) {
         // Start script runner
-        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/bash"]);
+        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
         runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
     }
     for (const fixture of fixtures) {
@@ -95,7 +96,8 @@ export async function testWorkspaceFixtures({
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
                         ),
                         outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
-                        outputFolder: fixtureConfigInstance.outputFolder
+                        outputFolder: fixtureConfigInstance.outputFolder,
+                        keepDocker
                     })
                 );
             }
@@ -115,7 +117,8 @@ export async function testWorkspaceFixtures({
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                     outputMode: workspace.workspaceConfig.defaultOutputMode,
-                    outputFolder: fixture
+                    outputFolder: fixture,
+                    keepDocker
                 })
             );
         }
@@ -132,6 +135,7 @@ export async function testWorkspaceFixtures({
         );
     }
 
+    const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
     if (workspace.workspaceConfig.allowedFailures == null && failedFixtures.length > 0) {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
@@ -139,22 +143,23 @@ export async function testWorkspaceFixtures({
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. None were supposed to fail.`
         );
         process.exit(1);
-    } else if (isEqual(workspace.workspaceConfig.allowedFailures, failedFixtures)) {
+    } else if (isEqual(workspace.workspaceConfig.allowedFailures, failedFixtures) || unexpectedFixtures.length === 0) {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
                 results.length
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. All were expected.`
         );
     } else if (workspace.workspaceConfig.allowedFailures != null) {
-        const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures);
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(
-                ", "
-            )}. Unexpted fixtures were .${unexpectedFixtures.join(", ")}`
-        );
-        process.exit(1);
+        if (failedFixtures.length > 0) {
+            CONSOLE_LOGGER.info(
+                `${failedFixtures.length}/${
+                    results.length
+                } test cases failed. The failed fixtures include ${failedFixtures.join(
+                    ", "
+                )}. Unexpected fixtures were .${unexpectedFixtures.join(", ")}`
+            );
+            process.exit(1);
+        }
     } else {
         CONSOLE_LOGGER.info("All tests passed!");
     }
@@ -174,7 +179,8 @@ export async function acquireLocksAndRunTest({
     outputDir,
     absolutePathToWorkspace,
     outputMode,
-    outputFolder
+    outputFolder,
+    keepDocker
 }: {
     id: string;
     lock: Semaphore;
@@ -190,6 +196,7 @@ export async function acquireLocksAndRunTest({
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
     outputFolder: string;
+    keepDocker: boolean | undefined;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -207,7 +214,8 @@ export async function acquireLocksAndRunTest({
         outputDir,
         absolutePathToWorkspace,
         outputMode,
-        outputFolder
+        outputFolder,
+        keepDocker
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -227,7 +235,8 @@ async function testWithWriteToDisk({
     outputDir,
     absolutePathToWorkspace,
     outputMode,
-    outputFolder
+    outputFolder,
+    keepDocker
 }: {
     id: string;
     fixture: string;
@@ -242,6 +251,7 @@ async function testWithWriteToDisk({
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
     outputFolder: string;
+    keepDocker: boolean | undefined;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -260,25 +270,22 @@ async function testWithWriteToDisk({
                 id
             };
         }
-        if (workspace.workspace.type === "openapi") {
-            taskContext.logger.error("Expected fern workspace. Found OpenAPI instead!");
-            return {
-                type: "failure",
-                reason: "Expected fern workspace. Found OpenAPI instead!",
-                id
-            };
-        }
+        const fernWorkspace: FernWorkspace =
+            workspace.workspace.type === "fern"
+                ? workspace.workspace
+                : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext);
         await runDockerForWorkspace({
             absolutePathToOutput: outputDir,
             docker,
-            workspace: workspace.workspace,
+            workspace: fernWorkspace,
             language,
             customConfig,
             taskContext,
             irVersion,
             outputVersion,
             outputMode,
-            fixtureName: fixture
+            fixtureName: fixture,
+            keepDocker
         });
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script on ${fixture}`);
@@ -334,15 +341,7 @@ async function testWithWriteToDisk({
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
-                [
-                    "exec",
-                    script.containerId,
-                    "/bin/bash",
-                    "-c",
-                    `chmod +x /${workDir}/test.sh`,
-                    "&&",
-                    `/${workDir}/test.sh`
-                ],
+                ["exec", script.containerId, "/bin/bash", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
                 {
                     doNotPipeOutput: true
                 }

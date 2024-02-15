@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -14,8 +14,11 @@ export async function loadRawGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<GeneratorsConfigurationSchema> {
+}): Promise<GeneratorsConfigurationSchema | undefined> {
     const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    if (!(await doesPathExist(filepath))) {
+        return undefined;
+    }
     const contentsStr = await readFile(filepath);
     const contentsParsed = yaml.load(contentsStr.toString());
     return validateSchema({
@@ -32,15 +35,18 @@ export async function loadGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<GeneratorsConfiguration> {
+}): Promise<GeneratorsConfiguration | undefined> {
     const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    if (rawGeneratorsConfiguration == null) {
+        return undefined;
+    }
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ absolutePathToWorkspace }),
         rawGeneratorsConfiguration
     });
 }
 
-function getPathToGeneratorsConfiguration({
+export function getPathToGeneratorsConfiguration({
     absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;

@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: object
+  version: ''
+paths: {}
+components:
+  schemas:
+    Type:
+      title: Type
+      type: object
+      description: Exercises all of the built-in types.
+      properties:
+        one:
+          type: integer
+          example: 1
+        two:
+          type: number
+          format: double
+          example: 2
+        three:
+          type: string
+          example: three
+        four:
+          type: boolean
+          example: true
+        five:
+          type: integer
+          format: int64
+          example: 5
+        six:
+          type: string
+          format: date-time
+          example: '1994-01-01T01:01:01Z'
+        seven:
+          type: string
+          format: date
+          example: '1994-01-01'
+        eight:
+          type: string
+          format: uuid
+          example: 7f71f677-e138-4a5c-bb01-e4453a19bfef
+        nine:
+          type: string
+          format: byte
+          example: TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu
+        ten:
+          type: array
+          items:
+            type: integer
+          example:
+            - 10
+            - 10
+        eleven:
+          type: array
+          items:
+            type: number
+            format: double
+        twelve:
+          type: object
+          additionalProperties:
+            type: boolean
+        thirteen:
+          type: integer
+          format: int64
+          nullable: true
+        fourteen: {}
+        fifteen:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+        sixteen:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: integer
+        seventeen:
+          type: array
+          items:
+            type: string
+            format: uuid
+            nullable: true
+        eighteen:
+          type: string
+          enum:
+            - eighteen
+        nineteen:
+          $ref: '#/components/schemas/Name'
+      required:
+        - one
+        - two
+        - three
+        - four
+        - five
+        - six
+        - seven
+        - eight
+        - nine
+        - ten
+        - eleven
+        - twelve
+        - fourteen
+        - fifteen
+        - sixteen
+        - seventeen
+        - eighteen
+        - nineteen
+    Name:
+      title: Name
+      type: object
+      properties:
+        id:
+          type: string
+          example: name-sdfg8ajk
+        value:
+          type: string
+          example: name
+      required:
+        - id
+        - value
+  securitySchemes: {}

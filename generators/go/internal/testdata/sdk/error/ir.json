@@ -1,0 +1,1761 @@
+{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_user:UserNotFoundErrorBody": {
+            "name": {
+                "name": {
+                    "originalName": "UserNotFoundErrorBody",
+                    "camelCase": {
+                        "unsafeName": "userNotFoundErrorBody",
+                        "safeName": "userNotFoundErrorBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_not_found_error_body",
+                        "safeName": "user_not_found_error_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_NOT_FOUND_ERROR_BODY",
+                        "safeName": "USER_NOT_FOUND_ERROR_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserNotFoundErrorBody",
+                        "safeName": "UserNotFoundErrorBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "typeId": "type_user:UserNotFoundErrorBody"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "requestedUserId",
+                                "camelCase": {
+                                    "unsafeName": "requestedUserId",
+                                    "safeName": "requestedUserId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "requested_user_id",
+                                    "safeName": "requested_user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REQUESTED_USER_ID",
+                                    "safeName": "REQUESTED_USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RequestedUserId",
+                                    "safeName": "RequestedUserId"
+                                }
+                            },
+                            "wireValue": "requestedUserId"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        }
+    },
+    "errors": {
+        "error_user:UserNotFoundError": {
+            "name": {
+                "name": {
+                    "originalName": "UserNotFoundError",
+                    "camelCase": {
+                        "unsafeName": "userNotFoundError",
+                        "safeName": "userNotFoundError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_not_found_error",
+                        "safeName": "user_not_found_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_NOT_FOUND_ERROR",
+                        "safeName": "USER_NOT_FOUND_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserNotFoundError",
+                        "safeName": "UserNotFoundError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:UserNotFoundError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UserNotFoundError",
+                    "camelCase": {
+                        "unsafeName": "userNotFoundError",
+                        "safeName": "userNotFoundError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_not_found_error",
+                        "safeName": "user_not_found_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_NOT_FOUND_ERROR",
+                        "safeName": "USER_NOT_FOUND_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserNotFoundError",
+                        "safeName": "UserNotFoundError"
+                    }
+                },
+                "wireValue": "UserNotFoundError"
+            },
+            "statusCode": 404,
+            "type": {
+                "_type": "named",
+                "name": {
+                    "originalName": "UserNotFoundErrorBody",
+                    "camelCase": {
+                        "unsafeName": "userNotFoundErrorBody",
+                        "safeName": "userNotFoundErrorBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_not_found_error_body",
+                        "safeName": "user_not_found_error_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_NOT_FOUND_ERROR_BODY",
+                        "safeName": "USER_NOT_FOUND_ERROR_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserNotFoundErrorBody",
+                        "safeName": "UserNotFoundErrorBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "typeId": "type_user:UserNotFoundErrorBody"
+            },
+            "docs": null
+        },
+        "error_user:NotImplementedError": {
+            "name": {
+                "name": {
+                    "originalName": "NotImplementedError",
+                    "camelCase": {
+                        "unsafeName": "notImplementedError",
+                        "safeName": "notImplementedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "not_implemented_error",
+                        "safeName": "not_implemented_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NOT_IMPLEMENTED_ERROR",
+                        "safeName": "NOT_IMPLEMENTED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NotImplementedError",
+                        "safeName": "NotImplementedError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:NotImplementedError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "NotImplementedError",
+                    "camelCase": {
+                        "unsafeName": "notImplementedError",
+                        "safeName": "notImplementedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "not_implemented_error",
+                        "safeName": "not_implemented_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NOT_IMPLEMENTED_ERROR",
+                        "safeName": "NOT_IMPLEMENTED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NotImplementedError",
+                        "safeName": "NotImplementedError"
+                    }
+                },
+                "wireValue": "NotImplementedError"
+            },
+            "statusCode": 501,
+            "type": {
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "docs": null
+        },
+        "error_user:TeapotError": {
+            "name": {
+                "name": {
+                    "originalName": "TeapotError",
+                    "camelCase": {
+                        "unsafeName": "teapotError",
+                        "safeName": "teapotError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "teapot_error",
+                        "safeName": "teapot_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TEAPOT_ERROR",
+                        "safeName": "TEAPOT_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TeapotError",
+                        "safeName": "TeapotError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:TeapotError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "TeapotError",
+                    "camelCase": {
+                        "unsafeName": "teapotError",
+                        "safeName": "teapotError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "teapot_error",
+                        "safeName": "teapot_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TEAPOT_ERROR",
+                        "safeName": "TEAPOT_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TeapotError",
+                        "safeName": "TeapotError"
+                    }
+                },
+                "wireValue": "TeapotError"
+            },
+            "statusCode": 418,
+            "type": {
+                "_type": "container",
+                "container": {
+                    "_type": "list",
+                    "list": {
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "docs": null
+        },
+        "error_user:UpgradeError": {
+            "name": {
+                "name": {
+                    "originalName": "UpgradeError",
+                    "camelCase": {
+                        "unsafeName": "upgradeError",
+                        "safeName": "upgradeError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upgrade_error",
+                        "safeName": "upgrade_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPGRADE_ERROR",
+                        "safeName": "UPGRADE_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpgradeError",
+                        "safeName": "UpgradeError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:UpgradeError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UpgradeError",
+                    "camelCase": {
+                        "unsafeName": "upgradeError",
+                        "safeName": "upgradeError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upgrade_error",
+                        "safeName": "upgrade_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPGRADE_ERROR",
+                        "safeName": "UPGRADE_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpgradeError",
+                        "safeName": "UpgradeError"
+                    }
+                },
+                "wireValue": "UpgradeError"
+            },
+            "statusCode": 426,
+            "type": {
+                "_type": "container",
+                "container": {
+                    "_type": "literal",
+                    "literal": {
+                        "type": "string",
+                        "string": "upgrade"
+                    }
+                }
+            },
+            "docs": null
+        },
+        "error_user:UntypedError": {
+            "name": {
+                "name": {
+                    "originalName": "UntypedError",
+                    "camelCase": {
+                        "unsafeName": "untypedError",
+                        "safeName": "untypedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "untyped_error",
+                        "safeName": "untyped_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNTYPED_ERROR",
+                        "safeName": "UNTYPED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UntypedError",
+                        "safeName": "UntypedError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:UntypedError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UntypedError",
+                    "camelCase": {
+                        "unsafeName": "untypedError",
+                        "safeName": "untypedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "untyped_error",
+                        "safeName": "untyped_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNTYPED_ERROR",
+                        "safeName": "UNTYPED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UntypedError",
+                        "safeName": "UntypedError"
+                    }
+                },
+                "wireValue": "UntypedError"
+            },
+            "statusCode": 400,
+            "type": null,
+            "docs": null
+        },
+        "error_user:OptionalStringError": {
+            "name": {
+                "name": {
+                    "originalName": "OptionalStringError",
+                    "camelCase": {
+                        "unsafeName": "optionalStringError",
+                        "safeName": "optionalStringError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "optional_string_error",
+                        "safeName": "optional_string_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OPTIONAL_STRING_ERROR",
+                        "safeName": "OPTIONAL_STRING_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OptionalStringError",
+                        "safeName": "OptionalStringError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:OptionalStringError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "OptionalStringError",
+                    "camelCase": {
+                        "unsafeName": "optionalStringError",
+                        "safeName": "optionalStringError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "optional_string_error",
+                        "safeName": "optional_string_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OPTIONAL_STRING_ERROR",
+                        "safeName": "OPTIONAL_STRING_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OptionalStringError",
+                        "safeName": "OptionalStringError"
+                    }
+                },
+                "wireValue": "OptionalStringError"
+            },
+            "statusCode": 500,
+            "type": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "docs": null
+        }
+    },
+    "services": {
+        "service_user": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "id": "endpoint_user.get",
+                    "name": {
+                        "originalName": "get",
+                        "camelCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET",
+                            "safeName": "GET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Get",
+                            "safeName": "Get"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "fullPath": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UserNotFoundError",
+                                    "camelCase": {
+                                        "unsafeName": "userNotFoundError",
+                                        "safeName": "userNotFoundError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "user_not_found_error",
+                                        "safeName": "user_not_found_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USER_NOT_FOUND_ERROR",
+                                        "safeName": "USER_NOT_FOUND_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UserNotFoundError",
+                                        "safeName": "UserNotFoundError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UserNotFoundError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "NotImplementedError",
+                                    "camelCase": {
+                                        "unsafeName": "notImplementedError",
+                                        "safeName": "notImplementedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "not_implemented_error",
+                                        "safeName": "not_implemented_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NOT_IMPLEMENTED_ERROR",
+                                        "safeName": "NOT_IMPLEMENTED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "NotImplementedError",
+                                        "safeName": "NotImplementedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:NotImplementedError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "TeapotError",
+                                    "camelCase": {
+                                        "unsafeName": "teapotError",
+                                        "safeName": "teapotError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "teapot_error",
+                                        "safeName": "teapot_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TEAPOT_ERROR",
+                                        "safeName": "TEAPOT_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "TeapotError",
+                                        "safeName": "TeapotError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:TeapotError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UpgradeError",
+                                    "camelCase": {
+                                        "unsafeName": "upgradeError",
+                                        "safeName": "upgradeError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "upgrade_error",
+                                        "safeName": "upgrade_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UPGRADE_ERROR",
+                                        "safeName": "UPGRADE_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UpgradeError",
+                                        "safeName": "UpgradeError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UpgradeError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UntypedError",
+                                    "camelCase": {
+                                        "unsafeName": "untypedError",
+                                        "safeName": "untypedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "untyped_error",
+                                        "safeName": "untyped_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNTYPED_ERROR",
+                                        "safeName": "UNTYPED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UntypedError",
+                                        "safeName": "UntypedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UntypedError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_user.update",
+                    "name": {
+                        "originalName": "update",
+                        "camelCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE",
+                            "safeName": "UPDATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Update",
+                            "safeName": "Update"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "fullPath": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "contentType": null,
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "contentType": null,
+                                "docs": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UpgradeError",
+                                    "camelCase": {
+                                        "unsafeName": "upgradeError",
+                                        "safeName": "upgradeError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "upgrade_error",
+                                        "safeName": "upgrade_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UPGRADE_ERROR",
+                                        "safeName": "UPGRADE_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UpgradeError",
+                                        "safeName": "UpgradeError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UpgradeError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UntypedError",
+                                    "camelCase": {
+                                        "unsafeName": "untypedError",
+                                        "safeName": "untypedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "untyped_error",
+                                        "safeName": "untyped_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNTYPED_ERROR",
+                                        "safeName": "UNTYPED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UntypedError",
+                                        "safeName": "UntypedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UntypedError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_user:UserNotFoundErrorBody"
+        ]
+    },
+    "webhookGroups": {},
+    "subpackages": {
+        "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "user",
+                    "camelCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER",
+                        "safeName": "USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "User",
+                        "safeName": "User"
+                    }
+                }
+            },
+            "service": "service_user",
+            "types": [
+                "type_user:UserNotFoundErrorBody"
+            ],
+            "errors": [
+                "error_user:UserNotFoundError",
+                "error_user:NotImplementedError",
+                "error_user:TeapotError",
+                "error_user:UpgradeError",
+                "error_user:UntypedError",
+                "error_user:OptionalStringError"
+            ],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_user"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

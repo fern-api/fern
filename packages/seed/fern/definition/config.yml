@@ -1,0 +1,62 @@
+imports:
+  features: features.yml
+types:
+  SeedWorkspaceConfiguration:
+    properties:
+      irVersion: string
+      language: optional<Language>
+      defaultOutputMode: OutputMode
+      generatorType: GeneratorType
+      docker: string
+      dockerCommand: optional<DockerCommand>
+      fixtures:
+        type: optional<map<string, list<FixtureConfigurations>>>
+      scripts: optional<list<ScriptConfig>>
+      allowedFailures: 
+        type: optional<list<string>>
+        docs: | 
+          List any fixtures that are okay to fail. For normal fixtures 
+          just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
+      features: optional<features.GeneratorFeatures>
+
+  DockerCommand: 
+    discriminated: false
+    union: 
+      - string
+      - list<string>
+
+  ScriptConfig:
+    properties:
+      docker: string
+      commands: list<string>
+
+  Language:
+    enum:
+      - python
+      - java
+      - typescript
+      - go
+      - ruby
+
+  GeneratorType:
+    enum:
+      - SDK
+      - Model
+      - Server
+      - Documentation
+
+  FixtureConfigurations:
+    properties:
+      customConfig: unknown
+      outputFolder: string
+      outputVersion: optional<string>
+      outputMode: 
+        type: optional<OutputMode>
+        docs: Overrides the default output mode
+  
+  OutputMode: 
+    enum: 
+      - github
+      - local_files
+      - publish
+

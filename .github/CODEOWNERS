@@ -1,1 +1,5 @@
-* dsinghvi
+* @dsinghvi
+/packages/generators/cli/* @armandobelardo
+/packages/generators/commons/* @armandobelardo
+/packages/generators/docker/* @armandobelardo
+generators/ruby/* @armandobelardo

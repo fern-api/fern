@@ -1,0 +1,9 @@
+name: postman
+auth: api-key
+auth-schemes:
+  api-key:
+    header: X-API-KEY
+    name: apiKey
+default-environment: Production
+environments:
+  Production: https://api.getpostman.com

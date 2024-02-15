@@ -161,6 +161,8 @@ export function wrapDiscriminantedOneOf({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.oneOf({
                 type: "discriminated",
                 description,

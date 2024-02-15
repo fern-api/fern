@@ -1,0 +1,1 @@
+export { ExpressInlinedRequestBodySchemaGenerator } from "./ExpressInlinedRequestBodySchemaGenerator";

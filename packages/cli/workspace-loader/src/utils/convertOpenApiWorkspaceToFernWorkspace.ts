@@ -15,6 +15,7 @@ export async function getOpenAPIIRFromOpenAPIWorkspace(
     return await parse({
         absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
         absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
+        absolutePathToOpenAPIOverrides: openapiWorkspace.generatorsConfiguration?.absolutePathToOpenAPIOverrides,
         taskContext: context
     });
 }

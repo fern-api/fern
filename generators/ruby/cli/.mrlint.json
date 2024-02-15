@@ -1,0 +1,9 @@
+{
+  "type": "library",
+  "private": true,
+  "rules": {
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    }
+  }
+}

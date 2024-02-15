@@ -10,6 +10,8 @@ import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 export function convertAdditionalProperties({
+    nameOverride,
+    generatedName,
     breadcrumbs,
     additionalProperties,
     description,
@@ -17,6 +19,8 @@ export function convertAdditionalProperties({
     context,
     groupName
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
@@ -26,9 +30,13 @@ export function convertAdditionalProperties({
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
+            nameOverride,
+            generatedName,
             wrapAsNullable,
             description,
             keySchema: {
+                nameOverride: undefined,
+                generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
@@ -38,6 +46,8 @@ export function convertAdditionalProperties({
                 groupName: undefined
             },
             valueSchema: SchemaWithExample.unknown({
+                nameOverride: undefined,
+                generatedName: `${generatedName}Value`,
                 description: undefined,
                 example: undefined,
                 groupName: undefined
@@ -46,9 +56,13 @@ export function convertAdditionalProperties({
         });
     }
     return wrapMap({
+        nameOverride,
+        generatedName,
         wrapAsNullable,
         description,
         keySchema: {
+            nameOverride: undefined,
+            generatedName: `${generatedName}Key`,
             description: undefined,
             schema: PrimitiveSchemaValueWithExample.string({
                 minLength: undefined,
@@ -69,12 +83,16 @@ function isAdditionalPropertiesEmptyDictionary(
 }
 
 export function wrapMap({
+    nameOverride,
+    generatedName,
     keySchema,
     valueSchema,
     wrapAsNullable,
     description,
     groupName
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
@@ -83,7 +101,11 @@ export function wrapMap({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.map({
+                nameOverride,
+                generatedName,
                 description,
                 key: keySchema,
                 value: valueSchema,
@@ -94,6 +116,8 @@ export function wrapMap({
         });
     }
     return SchemaWithExample.map({
+        nameOverride,
+        generatedName,
         description,
         key: keySchema,
         value: valueSchema,

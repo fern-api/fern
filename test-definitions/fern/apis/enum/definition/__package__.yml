@@ -1,23 +1,19 @@
-types:
-  Enum:
+types: 
+  Operand:
+    docs: | 
+      Tests enum name and value can be 
+      different.
     enum:
-      - value: ONE
-        docs: The first enum value.
-      - TWO
-      - THREE
+      - value: ">"
+        name: GREATER_THAN 
+      - value: "="
+        name: EQUAL_TO
+      - value: less_than
+        docs: | 
+          The name and value should be similar
+          are similar for less than. 
     examples:
-      - name: Three
-        value: THREE
-
-  One:
-    docs: |
-      Represents a variety of casing conventions that
-      could collide without special care.
-    enum:
-      - one
-      - One
-      - ONe
-      - ONE
-    examples:
-      - name: One
-        value: One
+      - name: GreaterThan
+        value: ">"
+      - name: LessThan
+        value: less_than

@@ -13,14 +13,13 @@ exports[`open api parser streaming simple 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "stream": false,
               },
               "response": {
-                "body": {},
+                "body": {
+                  "id": "id",
+                },
               },
             },
           ],
@@ -74,14 +73,13 @@ exports[`open api parser streaming simple 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "stream": false,
               },
               "response": {
                 "body": {
+                  "id": "id",
+                  "name": "name",
                   "streamed": false,
                 },
               },
@@ -137,14 +135,14 @@ exports[`open api parser streaming simple 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "stream": false,
               },
               "response": {
-                "body": {},
+                "body": {
+                  "id": "id",
+                  "inline": true,
+                },
               },
             },
           ],

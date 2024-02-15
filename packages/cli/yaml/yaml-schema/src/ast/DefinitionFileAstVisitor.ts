@@ -13,6 +13,7 @@ import {
     HttpServiceSchema,
     TypeDeclarationSchema
 } from "../schemas";
+import { ExampleCodeSampleSchema } from "../schemas/ExampleCodeSampleSchema";
 
 export type DefinitionFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DefinitionFileAstNodeTypes]: DefinitionFileAstNodeVisitor<K, R>;
@@ -34,6 +35,12 @@ export interface DefinitionFileAstNodeTypes {
     serviceBaseUrl: string | undefined;
     endpointBaseUrl: { baseUrl: string | undefined; service: HttpServiceSchema };
     exampleHttpEndpointCall: {
+        example: ExampleEndpointCallSchema;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleCodeSample: {
+        sample: ExampleCodeSampleSchema;
         example: ExampleEndpointCallSchema;
         endpoint: HttpEndpointSchema;
         service: HttpServiceSchema;

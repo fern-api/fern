@@ -1,0 +1,50 @@
+openapi: 3.0.1
+info:
+  title: package-yml
+  version: ''
+paths:
+  /:
+    post:
+      operationId: echo
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Hello world!
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Example1:
+                value: Hello world!
+  /{nestedId}:
+    get:
+      operationId: service_nop
+      tags:
+        - Service
+      parameters:
+        - name: nestedId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: id-219xca8
+      responses:
+        '204':
+          description: ''
+components:
+  schemas: {}
+  securitySchemes: {}

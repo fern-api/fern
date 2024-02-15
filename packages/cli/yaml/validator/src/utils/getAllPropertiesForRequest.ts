@@ -31,7 +31,8 @@ export function getAllPropertiesForRequest({
             filepathOfDeclaration: filepath,
             definitionFile,
             workspace,
-            typeResolver
+            typeResolver,
+            smartCasing: false
         });
     }
 
@@ -45,7 +46,8 @@ export function getAllPropertiesForRequest({
             filepathOfDeclaration: filepath,
             definitionFile,
             workspace,
-            typeResolver
+            typeResolver,
+            smartCasing: false
         });
     }
 
@@ -58,6 +60,7 @@ export function getAllPropertiesForRequest({
         filepathOfDeclaration: filepath,
         definitionFile,
         workspace,
-        typeResolver
+        typeResolver,
+        smartCasing: false
     });
 }

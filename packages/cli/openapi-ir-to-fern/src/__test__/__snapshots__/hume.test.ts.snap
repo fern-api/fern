@@ -55,12 +55,9 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Get the JSON predictions of a completed job.",
           "examples": [
             {
-              "headers": undefined,
               "path-parameters": {
                 "id": "id",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": [],
               },
@@ -82,15 +79,6 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Sort and filter jobs.",
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": {
-                "direction": "asc",
-                "sort_by": "created",
-                "status": "QUEUED",
-                "when": "created_before",
-              },
-              "request": undefined,
               "response": {
                 "body": [],
               },
@@ -137,6 +125,16 @@ exports[`open api parser hume simple 1`] = `
           "auth": true,
           "display-name": "Start Job",
           "docs": "Start a new batch job.",
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "job_id": "job_id",
+                },
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v0/batch/jobs",
           "request": {
@@ -998,7 +996,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Authentication": {
         "header": "X-Hume-Api-Key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

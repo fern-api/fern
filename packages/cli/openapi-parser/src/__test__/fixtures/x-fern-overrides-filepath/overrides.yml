@@ -4,3 +4,8 @@ paths:
       summary: List users (Overriden description)
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: get
+components: 
+  schemas: 
+    User: 
+      required:
+        - id 

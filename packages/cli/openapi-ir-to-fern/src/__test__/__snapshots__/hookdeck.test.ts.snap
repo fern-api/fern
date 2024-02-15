@@ -20,8 +20,39 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "archived_at",
+                    "attempt_number": 1,
+                    "bulk_retry_id": "bulk_retry_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "delivered_at": "2024-01-15T09:30:00Z",
+                    "delivery_latency": 1,
+                    "destination_id": "destination_id",
+                    "error_code": "TIMEOUT",
+                    "event_id": "event_id",
+                    "id": "id",
+                    "requested_url": "requested_url",
+                    "responded_at": "2024-01-15T09:30:00Z",
+                    "response_latency": 1,
+                    "response_status": 1,
+                    "state": "DELIVERING",
+                    "status": "QUEUED",
+                    "successful_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "trigger": "INITIAL",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/attempts/{id}",
+            "path": "/2023-01-01/attempts/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -40,17 +71,46 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "archived_at": "archived_at",
+                        "attempt_number": 1,
+                        "bulk_retry_id": "bulk_retry_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "delivered_at": "2024-01-15T09:30:00Z",
+                        "delivery_latency": 1,
+                        "destination_id": "destination_id",
+                        "error_code": "TIMEOUT",
+                        "event_id": "event_id",
+                        "id": "id",
+                        "requested_url": "requested_url",
+                        "responded_at": "2024-01-15T09:30:00Z",
+                        "response_latency": 1,
+                        "response_status": 1,
+                        "state": "DELIVERING",
+                        "status": "QUEUED",
+                        "successful_at": "2024-01-15T09:30:00Z",
+                        "team_id": "team_id",
+                        "trigger": "INITIAL",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/attempts",
+            "path": "/2023-01-01/attempts",
             "request": {
               "name": "GetAttemptsRequest",
               "query-parameters": {
@@ -58,7 +118,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "event_id": "optional<string>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetAttemptsRequestOrderBy>",
                 "prev": "optional<string>",
               },
             },
@@ -74,6 +134,11 @@ exports[`open api parser hookdeck simple 1`] = `
           "enum": [
             "asc",
             "desc",
+          ],
+        },
+        "GetAttemptsRequestOrderBy": {
+          "enum": [
+            "created_at",
           ],
         },
       },
@@ -96,8 +161,38 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "event_data_id": "event_data_id",
+                  "label": "label",
+                  "webhook_id": "webhook_id",
+                },
+                "response": {
+                  "body": {
+                    "alias": "alias",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "label": "label",
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bookmarks",
+            "path": "/2023-01-01/bookmarks",
             "request": {
               "body": {
                 "properties": {
@@ -135,8 +230,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "id": "id",
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -152,8 +259,36 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "alias": "alias",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "label": "label",
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -172,17 +307,38 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "alias": "alias",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "data": {
+                          "path": "path",
+                        },
+                        "event_data_id": "event_data_id",
+                        "id": "id",
+                        "label": "label",
+                        "last_used_at": "2024-01-15T09:30:00Z",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bookmarks",
+            "path": "/2023-01-01/bookmarks",
             "request": {
               "name": "GetBookmarksRequest",
               "query-parameters": {
@@ -194,7 +350,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetBookmarksRequestOrderBy>",
                 "prev": "optional<string>",
                 "webhook_id": "optional<string>",
               },
@@ -215,21 +371,46 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "id",
                 },
-                "query-parameters": undefined,
-                "request": {
-                  "target": "http",
-                },
+                "request": {},
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "attempts": 1,
+                      "cli_id": "cli_id",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "created_at_id": "created_at_id",
+                      "data": {
+                        "body": "body",
+                        "headers": "headers",
+                        "is_large_payload": true,
+                        "parsed_query": "parsed_query",
+                        "path": "path",
+                        "query": "query",
+                      },
+                      "destination_id": "destination_id",
+                      "event_data_id": "event_data_id",
+                      "id": "id",
+                      "last_attempt_at": "2024-01-15T09:30:00Z",
+                      "last_attempt_at_id": "last_attempt_at_id",
+                      "next_attempt_at": "2024-01-15T09:30:00Z",
+                      "request_id": "request_id",
+                      "response_status": 1,
+                      "source_id": "source_id",
+                      "status": "SCHEDULED",
+                      "successful_at": "2024-01-15T09:30:00Z",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "webhook_id": "webhook_id",
+                    },
+                  ],
                 },
               },
             ],
             "method": "POST",
-            "path": "/bookmarks/{id}/trigger",
+            "path": "/2023-01-01/bookmarks/{id}/trigger",
             "path-parameters": {
               "id": "string",
             },
@@ -260,8 +441,37 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "alias": "alias",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "label": "label",
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -304,6 +514,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetBookmarksRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "TriggerBookmarkRequestTarget": {
           "docs": "Bookmark target",
           "enum": [
@@ -330,8 +545,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/events/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -348,8 +593,36 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {},
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/events/retry",
+            "path": "/2023-01-01/bulk/events/retry",
             "request": {
               "body": {
                 "properties": {
@@ -378,17 +651,17 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "progress": 1.1,
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/events/retry/plan",
+            "path": "/2023-01-01/bulk/events/retry/plan",
             "response": {
               "docs": "Events bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -404,21 +677,40 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {
-                    "include": "data",
-                  },
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "cancelled_at": "2024-01-15T09:30:00Z",
+                        "completed_at": "2024-01-15T09:30:00Z",
+                        "completed_count": 1,
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "estimated_batch": 1,
+                        "estimated_count": 1,
+                        "failed_count": 1,
+                        "id": "id",
+                        "in_progress": true,
+                        "number": 1.1,
+                        "processed_batch": 1,
+                        "progress": 1.1,
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/events/retry",
+            "path": "/2023-01-01/bulk/events/retry",
             "request": {
               "name": "GetEventBulkRetriesRequest",
               "query-parameters": {
@@ -430,7 +722,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetEventBulkRetriesRequestOrderBy>",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -447,8 +739,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/bulk/events/retry/{id}",
+            "path": "/2023-01-01/bulk/events/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -772,6 +1094,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetEventBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "bulkRetryIgnoredEvents.yml": {
@@ -791,8 +1118,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/ignored-events/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -809,8 +1166,36 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {},
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/ignored-events/retry",
+            "path": "/2023-01-01/bulk/ignored-events/retry",
             "request": {
               "body": {
                 "properties": {
@@ -839,17 +1224,17 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "progress": 1.1,
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry/plan",
+            "path": "/2023-01-01/bulk/ignored-events/retry/plan",
             "response": {
               "docs": "Ignored events bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -865,17 +1250,40 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "cancelled_at": "2024-01-15T09:30:00Z",
+                        "completed_at": "2024-01-15T09:30:00Z",
+                        "completed_count": 1,
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "estimated_batch": 1,
+                        "estimated_count": 1,
+                        "failed_count": 1,
+                        "id": "id",
+                        "in_progress": true,
+                        "number": 1.1,
+                        "processed_batch": 1,
+                        "progress": 1.1,
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry",
+            "path": "/2023-01-01/bulk/ignored-events/retry",
             "request": {
               "name": "GetIgnoredEventBulkRetriesRequest",
               "query-parameters": {
@@ -887,7 +1295,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -904,8 +1312,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry/{id}",
+            "path": "/2023-01-01/bulk/ignored-events/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -956,6 +1394,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetIgnoredEventBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "bulkRetryRequests.yml": {
@@ -975,8 +1418,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/requests/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -993,8 +1466,36 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {},
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/bulk/requests/retry",
+            "path": "/2023-01-01/bulk/requests/retry",
             "request": {
               "body": {
                 "properties": {
@@ -1023,21 +1524,17 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {
-                    "status": "accepted",
-                  },
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "progress": 1.1,
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/requests/retry/plan",
+            "path": "/2023-01-01/bulk/requests/retry/plan",
             "response": {
               "docs": "Requests bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -1053,22 +1550,40 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {
-                    "include": "data",
-                    "status": "accepted",
-                  },
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "cancelled_at": "2024-01-15T09:30:00Z",
+                        "completed_at": "2024-01-15T09:30:00Z",
+                        "completed_count": 1,
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "estimated_batch": 1,
+                        "estimated_count": 1,
+                        "failed_count": 1,
+                        "id": "id",
+                        "in_progress": true,
+                        "number": 1.1,
+                        "processed_batch": 1,
+                        "progress": 1.1,
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/bulk/requests/retry",
+            "path": "/2023-01-01/bulk/requests/retry",
             "request": {
               "name": "GetRequestBulkRetriesRequest",
               "query-parameters": {
@@ -1080,7 +1595,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetRequestBulkRetriesRequestOrderBy>",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -1097,8 +1612,38 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "completed_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "estimated_batch": 1,
+                    "estimated_count": 1,
+                    "failed_count": 1,
+                    "id": "id",
+                    "in_progress": true,
+                    "number": 1.1,
+                    "processed_batch": 1,
+                    "progress": 1.1,
+                    "query": {
+                      "query": {
+                        "key": "value",
+                      },
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/bulk/requests/retry/{id}",
+            "path": "/2023-01-01/bulk/requests/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1327,6 +1872,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetRequestBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "connections.yml": {
@@ -1346,8 +1896,88 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks/{id}/archive",
+            "path": "/2023-01-01/webhooks/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -1364,8 +1994,88 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -1419,8 +2129,88 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/webhooks/{id}",
+            "path": "/2023-01-01/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1439,17 +2229,74 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "archived_at": "2024-01-15T09:30:00Z",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "destination": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "name": "name",
+                          "team_id": "team_id",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                        },
+                        "id": "id",
+                        "name": "name",
+                        "paused_at": "2024-01-15T09:30:00Z",
+                        "resolved_rules": [
+                          {
+                            "strategy": "linear",
+                            "type": "retry",
+                          },
+                        ],
+                        "rules": [
+                          {
+                            "strategy": "linear",
+                            "type": "retry",
+                          },
+                        ],
+                        "ruleset": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "is_team_default": true,
+                          "name": "name",
+                          "rules": [
+                            {
+                              "strategy": "linear",
+                              "type": "retry",
+                            },
+                          ],
+                          "team_id": "team_id",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                        },
+                        "source": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "name": "name",
+                          "team_id": "team_id",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "url": "url",
+                        },
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "name": "GetConnectionsRequest",
               "query-parameters": {
@@ -1462,7 +2309,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetConnectionsRequestOrderBy>",
                 "paused_at": "optional<datetime>",
                 "prev": "optional<string>",
                 "source_id": "optional<string>",
@@ -1480,8 +2327,88 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks/{id}/pause",
+            "path": "/2023-01-01/webhooks/{id}/pause",
             "path-parameters": {
               "id": "string",
             },
@@ -1497,8 +2424,88 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks/{id}/unarchive",
+            "path": "/2023-01-01/webhooks/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -1514,8 +2521,88 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks/{id}/unpause",
+            "path": "/2023-01-01/webhooks/{id}/unpause",
             "path-parameters": {
               "id": "string",
             },
@@ -1533,8 +2620,89 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks/{id}",
+            "path": "/2023-01-01/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1576,8 +2744,88 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "cli_path": "cli_path",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                      "path_forwarding_disabled": true,
+                      "rate_limit": 1,
+                      "rate_limit_period": "second",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "id": "id",
+                    "name": "name",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "resolved_rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "ruleset": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "is_team_default": true,
+                      "name": "name",
+                      "rules": [
+                        {
+                          "strategy": "linear",
+                          "type": "retry",
+                        },
+                      ],
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "source": {
+                      "archived_at": "2024-01-15T09:30:00Z",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "integration": {
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                      },
+                      "integration_id": "integration_id",
+                      "name": "name",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "url": "url",
+                    },
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -1690,6 +2938,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetConnectionsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "UpdateConnectionRequestRuleset": {
           "docs": "Ruleset input object",
           "properties": {
@@ -1780,8 +3033,30 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/destinations/{id}/archive",
+            "path": "/2023-01-01/destinations/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -1798,8 +3073,30 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "body": {
                 "properties": {
@@ -1842,8 +3139,30 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/destinations/{id}",
+            "path": "/2023-01-01/destinations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1862,17 +3181,37 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "archived_at": "2024-01-15T09:30:00Z",
+                        "cli_path": "cli_path",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "path_forwarding_disabled": true,
+                        "rate_limit": 1,
+                        "rate_limit_period": "second",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "name": "GetDestinationsRequest",
               "query-parameters": {
@@ -1884,7 +3223,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetDestinationsRequestOrderBy>",
                 "prev": "optional<string>",
                 "url": "optional<string>",
               },
@@ -1901,8 +3240,30 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/destinations/{id}/unarchive",
+            "path": "/2023-01-01/destinations/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -1920,8 +3281,33 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/destinations/{id}",
+            "path": "/2023-01-01/destinations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1972,8 +3358,30 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "path_forwarding_disabled": true,
+                    "rate_limit": 1,
+                    "rate_limit_period": "second",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "body": {
                 "properties": {
@@ -2026,6 +3434,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetDestinationsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "UpdateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
@@ -2061,8 +3474,45 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "attempts": 1,
+                    "cli_id": "cli_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_at_id": "created_at_id",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "destination_id": "destination_id",
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "last_attempt_at": "2024-01-15T09:30:00Z",
+                    "last_attempt_at_id": "last_attempt_at_id",
+                    "next_attempt_at": "2024-01-15T09:30:00Z",
+                    "request_id": "request_id",
+                    "response_status": 1,
+                    "source_id": "source_id",
+                    "status": "SCHEDULED",
+                    "successful_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/events/{id}",
+            "path": "/2023-01-01/events/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2081,19 +3531,47 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "include": "data",
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "attempts": 1,
+                        "cli_id": "cli_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_at_id": "created_at_id",
+                        "data": {
+                          "path": "path",
+                        },
+                        "destination_id": "destination_id",
+                        "event_data_id": "event_data_id",
+                        "id": "id",
+                        "last_attempt_at": "2024-01-15T09:30:00Z",
+                        "last_attempt_at_id": "last_attempt_at_id",
+                        "next_attempt_at": "2024-01-15T09:30:00Z",
+                        "request_id": "request_id",
+                        "response_status": 1,
+                        "source_id": "source_id",
+                        "status": "SCHEDULED",
+                        "successful_at": "2024-01-15T09:30:00Z",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/events",
+            "path": "/2023-01-01/events",
             "request": {
               "name": "GetEventsRequest",
               "query-parameters": {
@@ -2137,8 +3615,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "body": "body",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/events/{id}/raw_body",
+            "path": "/2023-01-01/events/{id}/raw_body",
             "path-parameters": {
               "id": "string",
             },
@@ -2154,8 +3644,45 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "attempts": 1,
+                    "cli_id": "cli_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_at_id": "created_at_id",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "destination_id": "destination_id",
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "last_attempt_at": "2024-01-15T09:30:00Z",
+                    "last_attempt_at_id": "last_attempt_at_id",
+                    "next_attempt_at": "2024-01-15T09:30:00Z",
+                    "request_id": "request_id",
+                    "response_status": 1,
+                    "source_id": "source_id",
+                    "status": "SCHEDULED",
+                    "successful_at": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/events/{id}/mute",
+            "path": "/2023-01-01/events/{id}/mute",
             "path-parameters": {
               "id": "string",
             },
@@ -2171,8 +3698,69 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "attempt": {
+                      "archived_at": "archived_at",
+                      "attempt_number": 1,
+                      "bulk_retry_id": "bulk_retry_id",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "delivered_at": "2024-01-15T09:30:00Z",
+                      "delivery_latency": 1,
+                      "destination_id": "destination_id",
+                      "error_code": "TIMEOUT",
+                      "event_id": "event_id",
+                      "id": "id",
+                      "requested_url": "requested_url",
+                      "responded_at": "2024-01-15T09:30:00Z",
+                      "response_latency": 1,
+                      "response_status": 1,
+                      "state": "DELIVERING",
+                      "status": "QUEUED",
+                      "successful_at": "2024-01-15T09:30:00Z",
+                      "team_id": "team_id",
+                      "trigger": "INITIAL",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                    "event": {
+                      "attempts": 1,
+                      "cli_id": "cli_id",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "created_at_id": "created_at_id",
+                      "data": {
+                        "body": "body",
+                        "headers": "headers",
+                        "is_large_payload": true,
+                        "parsed_query": "parsed_query",
+                        "path": "path",
+                        "query": "query",
+                      },
+                      "destination_id": "destination_id",
+                      "event_data_id": "event_data_id",
+                      "id": "id",
+                      "last_attempt_at": "2024-01-15T09:30:00Z",
+                      "last_attempt_at_id": "last_attempt_at_id",
+                      "next_attempt_at": "2024-01-15T09:30:00Z",
+                      "request_id": "request_id",
+                      "response_status": 1,
+                      "source_id": "source_id",
+                      "status": "SCHEDULED",
+                      "successful_at": "2024-01-15T09:30:00Z",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "webhook_id": "webhook_id",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/events/{id}/retry",
+            "path": "/2023-01-01/events/{id}/retry",
             "path-parameters": {
               "id": "string",
             },
@@ -2217,8 +3805,21 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "source_id": "source_id",
+                },
+                "response": {
+                  "body": {
+                    "success": true,
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/integrations/{id}/attach/{source_id}",
+            "path": "/2023-01-01/integrations/{id}/attach/{source_id}",
             "path-parameters": {
               "id": "string",
               "source_id": "string",
@@ -2236,8 +3837,47 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "configs": {
+                    "algorithm": "md5",
+                    "encoding": "base64",
+                    "header_key": "header_key",
+                    "webhook_secret_key": "webhook_secret_key",
+                  },
+                  "features": [
+                    "VERIFICATION",
+                  ],
+                  "label": "label",
+                  "provider": "twitter",
+                },
+                "response": {
+                  "body": {
+                    "configs": {
+                      "algorithm": "md5",
+                      "encoding": "base64",
+                      "header_key": "header_key",
+                      "webhook_secret_key": "webhook_secret_key",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "features": [
+                      "VERIFICATION",
+                    ],
+                    "id": "id",
+                    "label": "label",
+                    "provider": "twitter",
+                    "sources": [
+                      "sources",
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/integrations",
+            "path": "/2023-01-01/integrations",
             "request": {
               "body": {
                 "properties": {
@@ -2272,8 +3912,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "id": "id",
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2292,20 +3944,17 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "id",
-                  "source_id": "source-id",
+                  "source_id": "source_id",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
               },
             ],
             "method": "PUT",
-            "path": "/integrations/{id}/detach/{source_id}",
+            "path": "/2023-01-01/integrations/{id}/detach/{source_id}",
             "path-parameters": {
               "id": "string",
               "source_id": "string",
@@ -2322,8 +3971,37 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "configs": {
+                      "algorithm": "md5",
+                      "encoding": "base64",
+                      "header_key": "header_key",
+                      "webhook_secret_key": "webhook_secret_key",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "features": [
+                      "VERIFICATION",
+                    ],
+                    "id": "id",
+                    "label": "label",
+                    "provider": "twitter",
+                    "sources": [
+                      "sources",
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2342,19 +4020,44 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "provider": "twitter",
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "configs": {
+                          "algorithm": "md5",
+                          "encoding": "base64",
+                          "header_key": "header_key",
+                          "webhook_secret_key": "webhook_secret_key",
+                        },
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "features": [
+                          "VERIFICATION",
+                        ],
+                        "id": "id",
+                        "label": "label",
+                        "provider": "twitter",
+                        "sources": [
+                          "sources",
+                        ],
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/integrations",
+            "path": "/2023-01-01/integrations",
             "request": {
               "name": "GetIntegrationsRequest",
               "query-parameters": {
@@ -2376,8 +4079,38 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "configs": {
+                      "algorithm": "md5",
+                      "encoding": "base64",
+                      "header_key": "header_key",
+                      "webhook_secret_key": "webhook_secret_key",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "features": [
+                      "VERIFICATION",
+                    ],
+                    "id": "id",
+                    "label": "label",
+                    "provider": "twitter",
+                    "sources": [
+                      "sources",
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2453,8 +4186,36 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "type": "delivery",
+                },
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "body": {
                 "properties": {
@@ -2486,8 +4247,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "id": "id",
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2503,8 +4276,36 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}/disable",
+            "path": "/2023-01-01/issue-triggers/{id}/disable",
             "path-parameters": {
               "id": "string",
             },
@@ -2520,8 +4321,36 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}/enable",
+            "path": "/2023-01-01/issue-triggers/{id}/enable",
             "path-parameters": {
               "id": "string",
             },
@@ -2537,8 +4366,36 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2557,19 +4414,38 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "type": "delivery",
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "configs": {
+                          "connections": "connections",
+                          "strategy": "first_attempt",
+                        },
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "deleted_at": "2024-01-15T09:30:00Z",
+                        "disabled_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "team_id": "team_id",
+                        "type": "delivery",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "name": "GetIssueTriggersRequest",
               "query-parameters": {
@@ -2596,8 +4472,37 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2636,8 +4541,37 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                  "type": "delivery",
+                },
+                "response": {
+                  "body": {
+                    "channels": {
+                      "slack": {
+                        "channel_name": "channel_name",
+                      },
+                    },
+                    "configs": {
+                      "connections": "connections",
+                      "strategy": "first_attempt",
+                    },
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "deleted_at": "2024-01-15T09:30:00Z",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "type": "delivery",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "body": {
                 "properties": {
@@ -2724,7 +4658,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2741,7 +4675,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2759,19 +4693,20 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
+                "query-parameters": {
+                  "id": "iss_YXKv5OdJXCiVwkPhGy",
+                  "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                  "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                },
                 "response": {
                   "body": {
-                    "count": 5,
+                    "count": 1,
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/issues/count",
+            "path": "/2023-01-01/issues/count",
             "request": {
               "name": "GetIssueCountRequest",
               "query-parameters": {
@@ -2806,17 +4741,27 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
+                "query-parameters": {
+                  "id": "iss_YXKv5OdJXCiVwkPhGy",
+                  "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                  "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/issues",
+            "path": "/2023-01-01/issues",
             "request": {
               "name": "GetIssuesRequest",
               "query-parameters": {
@@ -2850,7 +4795,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2891,7 +4836,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssueCountRequestStatus": {
-          "docs": "Issue status",
           "enum": [
             "OPENED",
             "IGNORED",
@@ -2900,7 +4844,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssueCountRequestType": {
-          "docs": "Issue type",
           "enum": [
             "delivery",
             "transformation",
@@ -2923,7 +4866,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssuesRequestStatus": {
-          "docs": "Issue status",
           "enum": [
             "OPENED",
             "IGNORED",
@@ -2932,7 +4874,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssuesRequestType": {
-          "docs": "Issue type",
           "enum": [
             "delivery",
             "transformation",
@@ -2964,8 +4905,22 @@ exports[`open api parser hookdeck simple 1`] = `
             "auth": true,
             "display-name": "Toggle webhook notifications for the workspace",
             "docs": "",
+            "examples": [
+              {
+                "request": {},
+                "response": {
+                  "body": {
+                    "enabled": true,
+                    "source_id": "source_id",
+                    "topics": [
+                      "issue.opened",
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/notifications/webhooks",
+            "path": "/2023-01-01/notifications/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -3012,8 +4967,43 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "cli_events_count": 1,
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "duplicate_hash": "duplicate_hash",
+                    "duplicate_hits": 1,
+                    "events_count": 1,
+                    "id": "id",
+                    "ignored_count": 1,
+                    "ingest_priority": "NORMAL",
+                    "ingested_at": "2024-01-15T09:30:00Z",
+                    "ingested_at_id": "ingested_at_id",
+                    "original_event_data_id": "original_event_data_id",
+                    "rejection_cause": "SOURCE_ARCHIVED",
+                    "source_id": "source_id",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "verified": true,
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/requests/{id}",
+            "path": "/2023-01-01/requests/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3033,21 +5023,50 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "id",
                 },
-                "query-parameters": {
-                  "include": "data",
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "attempts": 1,
+                        "cli_id": "cli_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_at_id": "created_at_id",
+                        "data": {
+                          "path": "path",
+                        },
+                        "destination_id": "destination_id",
+                        "event_data_id": "event_data_id",
+                        "id": "id",
+                        "last_attempt_at": "2024-01-15T09:30:00Z",
+                        "last_attempt_at_id": "last_attempt_at_id",
+                        "next_attempt_at": "2024-01-15T09:30:00Z",
+                        "request_id": "request_id",
+                        "response_status": 1,
+                        "source_id": "source_id",
+                        "status": "SCHEDULED",
+                        "successful_at": "2024-01-15T09:30:00Z",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/requests/{id}/events",
+            "path": "/2023-01-01/requests/{id}/events",
             "path-parameters": {
               "id": "string",
             },
@@ -3098,19 +5117,37 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "id",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "cause": "ARCHIVED",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "meta": "body",
+                        "request_id": "request_id",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/requests/{id}/ignored_events",
+            "path": "/2023-01-01/requests/{id}/ignored_events",
             "path-parameters": {
               "id": "string",
             },
@@ -3121,7 +5158,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetRequestIgnoredEventsRequestOrderBy>",
                 "prev": "optional<string>",
               },
             },
@@ -3137,8 +5174,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "body": "body",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/requests/{id}/raw_body",
+            "path": "/2023-01-01/requests/{id}/raw_body",
             "path-parameters": {
               "id": "string",
             },
@@ -3157,20 +5206,45 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "include": "data",
-                  "status": "accepted",
-                },
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "cli_events_count": 1,
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "data": {
+                          "path": "path",
+                        },
+                        "duplicate_hash": "duplicate_hash",
+                        "duplicate_hits": 1,
+                        "events_count": 1,
+                        "id": "id",
+                        "ignored_count": 1,
+                        "ingest_priority": "NORMAL",
+                        "ingested_at": "2024-01-15T09:30:00Z",
+                        "ingested_at_id": "ingested_at_id",
+                        "original_event_data_id": "original_event_data_id",
+                        "rejection_cause": "SOURCE_ARCHIVED",
+                        "source_id": "source_id",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "verified": true,
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/requests",
+            "path": "/2023-01-01/requests",
             "request": {
               "name": "GetRequestsRequest",
               "query-parameters": {
@@ -3210,8 +5284,75 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {
+                  "webhook_ids": [
+                    "webhook_ids",
+                  ],
+                },
+                "response": {
+                  "body": {
+                    "events": [
+                      {
+                        "attempts": 1,
+                        "cli_id": "cli_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_at_id": "created_at_id",
+                        "data": {
+                          "path": "path",
+                        },
+                        "destination_id": "destination_id",
+                        "event_data_id": "event_data_id",
+                        "id": "id",
+                        "last_attempt_at": "2024-01-15T09:30:00Z",
+                        "last_attempt_at_id": "last_attempt_at_id",
+                        "next_attempt_at": "2024-01-15T09:30:00Z",
+                        "request_id": "request_id",
+                        "response_status": 1,
+                        "source_id": "source_id",
+                        "status": "SCHEDULED",
+                        "successful_at": "2024-01-15T09:30:00Z",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "request": {
+                      "cli_events_count": 1,
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "data": {
+                        "body": "body",
+                        "headers": "headers",
+                        "is_large_payload": true,
+                        "parsed_query": "parsed_query",
+                        "path": "path",
+                        "query": "query",
+                      },
+                      "duplicate_hash": "duplicate_hash",
+                      "duplicate_hits": 1,
+                      "events_count": 1,
+                      "id": "id",
+                      "ignored_count": 1,
+                      "ingest_priority": "NORMAL",
+                      "ingested_at": "2024-01-15T09:30:00Z",
+                      "ingested_at_id": "ingested_at_id",
+                      "original_event_data_id": "original_event_data_id",
+                      "rejection_cause": "SOURCE_ARCHIVED",
+                      "source_id": "source_id",
+                      "team_id": "team_id",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "verified": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/requests/{id}/retry",
+            "path": "/2023-01-01/requests/{id}/retry",
             "path-parameters": {
               "id": "string",
             },
@@ -3255,6 +5396,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetRequestIgnoredEventsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "GetRequestsRequestDir": {
           "enum": [
             "asc",
@@ -3292,8 +5438,34 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/rulesets/{id}/archive",
+            "path": "/2023-01-01/rulesets/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -3310,8 +5482,34 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "body": {
                 "properties": {
@@ -3342,8 +5540,34 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/rulesets/{id}",
+            "path": "/2023-01-01/rulesets/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3362,17 +5586,39 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "archived_at": "2024-01-15T09:30:00Z",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "is_team_default": true,
+                        "name": "name",
+                        "rules": [
+                          {
+                            "strategy": "linear",
+                            "type": "retry",
+                          },
+                        ],
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "name": "GetRulesetsRequest",
               "query-parameters": {
@@ -3383,7 +5629,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetRulesetsRequestOrderBy>",
                 "prev": "optional<string>",
               },
             },
@@ -3399,8 +5645,34 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/rulesets/{id}/unarchive",
+            "path": "/2023-01-01/rulesets/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -3418,8 +5690,35 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/rulesets/{id}",
+            "path": "/2023-01-01/rulesets/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3458,8 +5757,34 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "is_team_default": true,
+                    "name": "name",
+                    "rules": [
+                      {
+                        "count": 1,
+                        "interval": 1,
+                        "strategy": "linear",
+                        "type": "retry",
+                      },
+                    ],
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "body": {
                 "properties": {
@@ -3492,6 +5817,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetRulesetsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "sources.yml": {
@@ -3511,8 +5841,35 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/sources/{id}/archive",
+            "path": "/2023-01-01/sources/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -3529,8 +5886,35 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "body": {
                 "properties": {
@@ -3556,8 +5940,35 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/sources/{id}",
+            "path": "/2023-01-01/sources/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3576,17 +5987,42 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "archived_at": "2024-01-15T09:30:00Z",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "integration": {
+                          "features": [
+                            "VERIFICATION",
+                          ],
+                          "id": "id",
+                          "label": "label",
+                          "provider": "twitter",
+                        },
+                        "integration_id": "integration_id",
+                        "name": "name",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "name": "GetSourcesRequest",
               "query-parameters": {
@@ -3598,7 +6034,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetSourcesRequestOrderBy>",
                 "prev": "optional<string>",
               },
             },
@@ -3614,8 +6050,35 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/sources/{id}/unarchive",
+            "path": "/2023-01-01/sources/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -3633,8 +6096,36 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/sources/{id}",
+            "path": "/2023-01-01/sources/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3668,8 +6159,35 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "integration": {
+                      "features": [
+                        "VERIFICATION",
+                      ],
+                      "id": "id",
+                      "label": "label",
+                      "provider": "twitter",
+                    },
+                    "integration_id": "integration_id",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "body": {
                 "properties": {
@@ -3697,6 +6215,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "desc",
           ],
         },
+        "GetSourcesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "transformations.yml": {
@@ -3717,8 +6240,31 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "code": "code",
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "code": "code",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "encrypted_env": "encrypted_env",
+                    "env": {
+                      "env": "env",
+                    },
+                    "id": "id",
+                    "iv": "iv",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "body": {
                 "properties": {
@@ -3752,8 +6298,30 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "code": "code",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "encrypted_env": "encrypted_env",
+                    "env": {
+                      "env": "env",
+                    },
+                    "id": "id",
+                    "iv": "iv",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/transformations/{id}",
+            "path": "/2023-01-01/transformations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3769,8 +6337,52 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "execution_id": "execution_id",
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "issue_id": "issue_id",
+                    "log_level": "debug",
+                    "logs": [
+                      {
+                        "message": "message",
+                        "type": "error",
+                      },
+                    ],
+                    "original_event_data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "original_event_data_id": "original_event_data_id",
+                    "team_id": "team_id",
+                    "transformation_id": "transformation_id",
+                    "transformed_event_data": {
+                      "body": "body",
+                      "headers": "headers",
+                      "is_large_payload": true,
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                      "query": "query",
+                    },
+                    "transformed_event_data_id": "transformed_event_data_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
+                },
+              },
+            ],
             "method": "GET",
-            "path": "/transformations/{id}/executions/{execution_id}",
+            "path": "/2023-01-01/transformations/{id}/executions/{execution_id}",
             "path-parameters": {
               "execution_id": "string",
               "id": "string",
@@ -3790,19 +6402,51 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "id",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "issue_id": "issue_id",
+                        "log_level": "debug",
+                        "logs": [
+                          {
+                            "message": "message",
+                            "type": "error",
+                          },
+                        ],
+                        "original_event_data": {
+                          "path": "path",
+                        },
+                        "original_event_data_id": "original_event_data_id",
+                        "team_id": "team_id",
+                        "transformation_id": "transformation_id",
+                        "transformed_event_data": {
+                          "path": "path",
+                        },
+                        "transformed_event_data_id": "transformed_event_data_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "webhook_id": "webhook_id",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/transformations/{id}/executions",
+            "path": "/2023-01-01/transformations/{id}/executions",
             "path-parameters": {
               "id": "string",
             },
@@ -3815,7 +6459,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetTransformationExecutionsRequestOrderBy>",
                 "prev": "optional<string>",
                 "webhook_id": "optional<string>",
               },
@@ -3835,17 +6479,34 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "count": 1,
+                    "models": [
+                      {
+                        "code": "code",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "encrypted_env": "encrypted_env",
+                        "id": "id",
+                        "iv": "iv",
+                        "name": "name",
+                        "team_id": "team_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "pagination": {
+                      "dir": "asc",
+                      "limit": 1,
+                      "next": "next",
+                      "order_by": "order_by",
+                      "prev": "prev",
+                    },
+                  },
                 },
               },
             ],
             "method": "GET",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "name": "GetTransformationsRequest",
               "query-parameters": {
@@ -3854,7 +6515,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "optional<GetTransformationsRequestOrderBy>",
                 "prev": "optional<string>",
               },
             },
@@ -3873,23 +6534,31 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "request": {
-                    "headers": {},
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
+                    "console": [
+                      {
+                        "message": "message",
+                        "type": "error",
+                      },
+                    ],
+                    "execution_id": "execution_id",
                     "log_level": "debug",
+                    "request": {
+                      "body": "body",
+                      "headers": "headers",
+                      "parsed_query": "parsed_query",
+                      "path": "path",
+                    },
+                    "request_id": "request_id",
+                    "transformation_id": "transformation_id",
                   },
                 },
               },
             ],
             "method": "PUT",
-            "path": "/transformations/run",
+            "path": "/2023-01-01/transformations/run",
             "request": {
               "body": {
                 "properties": {
@@ -3934,8 +6603,31 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "code": "code",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "encrypted_env": "encrypted_env",
+                    "env": {
+                      "env": "env",
+                    },
+                    "id": "id",
+                    "iv": "iv",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/transformations/{id}",
+            "path": "/2023-01-01/transformations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3973,8 +6665,31 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "code": "code",
+                  "name": "name",
+                },
+                "response": {
+                  "body": {
+                    "code": "code",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "encrypted_env": "encrypted_env",
+                    "env": {
+                      "env": "env",
+                    },
+                    "id": "id",
+                    "iv": "iv",
+                    "name": "name",
+                    "team_id": "team_id",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "body": {
                 "properties": {
@@ -4027,10 +6742,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "fatal",
           ],
         },
+        "GetTransformationExecutionsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "GetTransformationsRequestDir": {
           "enum": [
             "asc",
             "desc",
+          ],
+        },
+        "GetTransformationsRequestOrderBy": {
+          "enum": [
+            "created_at",
           ],
         },
         "TestTransformationRequestEnv": {
@@ -6001,7 +8726,7 @@ exports[`open api parser hookdeck simple 1`] = `
     "default-environment": "Default",
     "display-name": "Hookdeck Admin REST API",
     "environments": {
-      "Default": "https://api.hookdeck.com/2023-01-01",
+      "Default": "https://api.hookdeck.com",
     },
     "error-discrimination": {
       "strategy": "status-code",

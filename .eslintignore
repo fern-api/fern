@@ -6,3 +6,8 @@ dist
 generated
 bundle.c?js
 .pnp*
+packages/ir-sdk/**
+packages/seed/**
+generators/typescript/utils/core-utilities/**
+seed/**
+

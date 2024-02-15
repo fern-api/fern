@@ -34,9 +34,9 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
         "wireValue": "error",
       },
       "errorInstanceIdKey": {
-        "camelCase": "errorInstanceId",
+        "camelCase": "errorInstanceID",
         "originalValue": "errorInstanceId",
-        "pascalCase": "ErrorInstanceId",
+        "pascalCase": "ErrorInstanceID",
         "screamingSnakeCase": "ERROR_INSTANCE_ID",
         "snakeCase": "error_instance_id",
         "wireValue": "errorInstanceId",
@@ -84,16 +84,16 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
       "errorInstanceIdKey": {
         "name": {
           "safeName": {
-            "camelCase": "errorInstanceId",
+            "camelCase": "errorInstanceID",
             "originalValue": "errorInstanceId",
-            "pascalCase": "ErrorInstanceId",
+            "pascalCase": "ErrorInstanceID",
             "screamingSnakeCase": "ERROR_INSTANCE_ID",
             "snakeCase": "error_instance_id",
           },
           "unsafeName": {
-            "camelCase": "errorInstanceId",
+            "camelCase": "errorInstanceID",
             "originalValue": "errorInstanceId",
-            "pascalCase": "ErrorInstanceId",
+            "pascalCase": "ErrorInstanceID",
             "screamingSnakeCase": "ERROR_INSTANCE_ID",
             "snakeCase": "error_instance_id",
           },

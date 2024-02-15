@@ -1,0 +1,20 @@
+openapi: 3.0.1
+info:
+  title: plain-text
+  version: ''
+paths:
+  /text:
+    post:
+      operationId: service_getText
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas: {}
+  securitySchemes: {}

@@ -1,0 +1,17 @@
+irVersion: v31
+docker: fernapi/fern-java-spring:latest
+dockerCommand: 
+  - cd generators/java
+  - ./gradlew :spring:distTar
+  - docker build -f spring/Dockerfile -t fernapi/fern-java-spring:latest spring/
+language: java
+generatorType: Server
+defaultOutputMode: local_files
+allowedFailures:
+  - bytes
+  - file-download
+  - file-upload
+  - plain-text
+  - response-property
+  - streaming
+
