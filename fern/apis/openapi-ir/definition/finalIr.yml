@@ -23,9 +23,9 @@ types:
 
   GlobalHeader:
     properties:
-      name: string
-      alias: optional<string>
-      isOptional: optional<boolean>
+      header: string
+      name: optional<string>
+      optional: optional<boolean>
 
   Tags:
     properties:

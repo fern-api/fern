@@ -3,11 +3,11 @@ info:
   title: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
   version: 1.0.0
 x-fern-global-headers:
-  - name: my-api-key
-    alias: api-key-alias
-    isOptional: true
-  - name: another_header
-    isOptional: false
+  - header: my-api-key
+    name: api-key-alias
+    optional: true
+  - header: another_header
+    optional: false
 paths:
   "/user/{userId}":
     get:

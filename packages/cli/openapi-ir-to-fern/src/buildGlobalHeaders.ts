@@ -46,20 +46,20 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
 
     const globalHeaderThreshold = context.ir.endpoints.length * GLOBAL_HEADER_PERCENTAGE_THRESHOLD;
 
-    const predefinedGlobalHeaders = new Map(context.ir.globalHeaders?.map((header) => [header.name, header]));
+    const predefinedGlobalHeaders = new Map(context.ir.globalHeaders?.map((header) => [header.header, header]));
 
     for (const [headerName, header] of Object.entries(globalHeaders)) {
         const predefinedHeader = predefinedGlobalHeaders.get(headerName);
         let isRequired = header.count === context.ir.endpoints.length;
         const isOptional = header.count >= globalHeaderThreshold;
         if (predefinedHeader !== undefined) {
-            isRequired = (isRequired && predefinedHeader.isOptional !== true) || predefinedHeader.isOptional === false;
+            isRequired = (isRequired && predefinedHeader.optional !== true) || predefinedHeader.optional === false;
             const convertedHeaderSchema =
                 typeof header.schema === "string"
                     ? header.schema
                     : {
-                          name: predefinedHeader.alias ?? header.schema.name,
-                          ...header.schema
+                          ...header.schema,
+                          name: predefinedHeader.name ?? header.schema.name
                       };
             context.builder.addGlobalHeader({
                 name: headerName,

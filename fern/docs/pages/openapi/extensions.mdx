@@ -111,10 +111,10 @@ In order to label additional headers as global, or to alias the names of global 
 
 ```yaml
 x-fern-global-headers:
-  - name: custom_api_key
-    alias: api_key
-  - name: userpool_id
-    isOptional: true
+  - header: custom_api_key
+    name: api_key
+  - header: userpool_id
+    optional: true
 ```
 
 yields the following client:

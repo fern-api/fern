@@ -274,14 +274,14 @@ export const FernOpenAPIExtension = {
 
     /**
      * Allows users to specify which headers are global, and an optional alias for them
-     * the headerName is the name of the header used throughout your spec, while alias is the
-     * name you'd like it to appear as within your generated SDK to the consumer.
+     * `header` is the name of the header used throughout your spec, while `name` is the
+     * alias you'd like it to appear as within your generated SDK to the consumer.
      *
      * x-fern-global-headers:
-     *  - headerName: our_api_key
-     *    alias: api_key
-     *    isOptional: true
-     *  - headerName: telemetry_id
+     *  - header: our_api_key
+     *    name: api_key
+     *    optional: true
+     *  - header: telemetry_id
      */
     FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;

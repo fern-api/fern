@@ -119,7 +119,7 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
         "type": "string",
       },
       "my-api-key": {
-        "name": "myApiKey",
+        "name": "api-key-alias",
         "type": "optional<string>",
       },
       "x-api-key": {
