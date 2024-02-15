@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -65,7 +63,7 @@ class TestSubmissionStatus(pydantic.BaseModel):
         if self.__root__.type == "testCaseIdToState":
             return test_case_id_to_state(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _TestSubmissionStatus.Stopped,
             _TestSubmissionStatus.Errored,
@@ -90,18 +88,18 @@ class TestSubmissionStatus(pydantic.BaseModel):
 
 class _TestSubmissionStatus:
     class Stopped(pydantic.BaseModel):
-        type: typing_extensions.Literal["stopped"]
+        type: typing.Literal["stopped"]
 
     class Errored(pydantic.BaseModel):
-        type: typing_extensions.Literal["errored"]
+        type: typing.Literal["errored"]
         value: ErrorInfo
 
     class Running(pydantic.BaseModel):
-        type: typing_extensions.Literal["running"]
+        type: typing.Literal["running"]
         value: RunningSubmissionState
 
     class TestCaseIdToState(pydantic.BaseModel):
-        type: typing_extensions.Literal["testCaseIdToState"]
+        type: typing.Literal["testCaseIdToState"]
         value: typing.Dict[str, SubmissionStatusForTestCase]
 
 

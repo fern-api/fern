@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .object_value import ObjectValue as resources_ast_types_object_value_ObjectValue
 from .primitive_value import PrimitiveValue as resources_ast_types_primitive_value_PrimitiveValue
@@ -42,7 +40,7 @@ class FieldValue(pydantic.BaseModel):
         self,
         primitive_value: typing.Callable[[resources_ast_types_primitive_value_PrimitiveValue], T_Result],
         object_value: typing.Callable[[resources_ast_types_object_value_ObjectValue], T_Result],
-        container_value: typing.Callable[["resources_ast_types_container_value_ContainerValue"], T_Result],
+        container_value: typing.Callable[[resources_ast_types_container_value_ContainerValue], T_Result],
     ) -> T_Result:
         if self.__root__.type == "primitive_value":
             return primitive_value(self.__root__.value)
@@ -53,7 +51,7 @@ class FieldValue(pydantic.BaseModel):
         if self.__root__.type == "container_value":
             return container_value(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
         pydantic.Field(discriminator="type"),
     ]
@@ -76,21 +74,21 @@ from .container_value import ContainerValue as resources_ast_types_container_val
 
 class _FieldValue:
     class PrimitiveValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["primitive_value"]
+        type: typing.Literal["primitive_value"]
         value: resources_ast_types_primitive_value_PrimitiveValue
 
     class ObjectValue(resources_ast_types_object_value_ObjectValue):
-        type: typing_extensions.Literal["object_value"]
+        type: typing.Literal["object_value"]
 
         class Config:
             allow_population_by_field_name = True
 
     class ContainerValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["container_value"]
+        type: typing.Literal["container_value"]
         value: resources_ast_types_container_value_ContainerValue
 
 
 _FieldValue.ContainerValue.update_forward_refs(
     ContainerValue=resources_ast_types_container_value_ContainerValue, FieldValue=FieldValue
 )
-FieldValue.update_forward_refs(ContainerValue=resources_ast_types_container_value_ContainerValue, FieldValue=FieldValue)
+FieldValue.update_forward_refs()

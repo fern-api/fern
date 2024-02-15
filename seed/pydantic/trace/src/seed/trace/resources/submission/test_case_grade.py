@@ -4,21 +4,19 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .test_case_hidden_grade import TestCaseHiddenGrade
 from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
 
 class TestCaseGrade_Hidden(TestCaseHiddenGrade):
-    type: typing_extensions.Literal["hidden"]
+    type: typing.Literal["hidden"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
-    type: typing_extensions.Literal["nonHidden"]
+    type: typing.Literal["nonHidden"]
 
     class Config:
         allow_population_by_field_name = True

@@ -165,9 +165,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # that reference this type appear after the main (exported) model for the union.
                         # FernAwarePydanticModel will automatically add the import constraint if the
                         # referenced type_name circularly references this type.
-                        for referenced_type_id in self._context.get_referenced_types(self._name.type_id):
-                            if self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id):
-                                external_pydantic_model.add_ghost_reference(referenced_type_id)
+                        for type_id in forward_refed_types:
+                            external_pydantic_model.add_ghost_reference(type_id)
 
             root_type = AST.TypeHint.union(
                 *(

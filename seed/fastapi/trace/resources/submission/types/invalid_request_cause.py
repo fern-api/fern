@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
@@ -90,7 +88,7 @@ class InvalidRequestCause(pydantic.BaseModel):
                 UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _InvalidRequestCause.SubmissionIdNotFound,
             _InvalidRequestCause.CustomTestCasesUnsupported,
@@ -114,7 +112,7 @@ class InvalidRequestCause(pydantic.BaseModel):
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
-        type: typing_extensions.Literal["submissionIdNotFound"]
+        type: typing.Literal["submissionIdNotFound"]
 
         class Config:
             allow_population_by_field_name = True
@@ -122,13 +120,13 @@ class _InvalidRequestCause:
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
-        type: typing_extensions.Literal["customTestCasesUnsupported"]
+        type: typing.Literal["customTestCasesUnsupported"]
 
         class Config:
             allow_population_by_field_name = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
-        type: typing_extensions.Literal["unexpectedLanguage"]
+        type: typing.Literal["unexpectedLanguage"]
 
         class Config:
             allow_population_by_field_name = True

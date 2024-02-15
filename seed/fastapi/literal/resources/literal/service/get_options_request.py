@@ -3,8 +3,6 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -14,7 +12,7 @@ except ImportError:
 
 
 class GetOptionsRequest(pydantic.BaseModel):
-    dry_run: typing_extensions.Literal[True] = pydantic.Field(alias="dryRun")
+    dry_run: typing.Literal[True] = pydantic.Field(alias="dryRun")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

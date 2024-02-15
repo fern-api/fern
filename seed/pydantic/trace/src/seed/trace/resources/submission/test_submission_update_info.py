@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
@@ -18,35 +16,35 @@ except ImportError:
 
 
 class TestSubmissionUpdateInfo_Running(pydantic.BaseModel):
-    type: typing_extensions.Literal["running"]
+    type: typing.Literal["running"]
     value: RunningSubmissionState
 
 
 class TestSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
-    type: typing_extensions.Literal["stopped"]
+    type: typing.Literal["stopped"]
 
 
 class TestSubmissionUpdateInfo_Errored(pydantic.BaseModel):
-    type: typing_extensions.Literal["errored"]
+    type: typing.Literal["errored"]
     value: ErrorInfo
 
 
 class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
-    type: typing_extensions.Literal["gradedTestCase"]
+    type: typing.Literal["gradedTestCase"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
-    type: typing_extensions.Literal["recordedTestCase"]
+    type: typing.Literal["recordedTestCase"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
-    type: typing_extensions.Literal["finished"]
+    type: typing.Literal["finished"]
 
 
 TestSubmissionUpdateInfo = typing.Union[

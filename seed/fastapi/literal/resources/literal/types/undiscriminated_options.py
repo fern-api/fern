@@ -2,8 +2,4 @@
 
 import typing
 
-import typing_extensions
-
-UndiscriminatedOptions = typing.Union[
-    typing_extensions.Literal["options"], typing_extensions.Literal[True], typing.Dict[str, str]
-]
+UndiscriminatedOptions = typing.Union[typing.Literal["options"], typing.Literal[True], typing.Dict[str, str]]

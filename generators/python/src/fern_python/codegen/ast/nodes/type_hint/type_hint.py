@@ -16,7 +16,6 @@ class TypeHint(AstNode):
         arguments: Sequence[Expression] = None,
         is_optional: bool = False,
         is_literal: bool = False,
-        is_string_reference: bool = False,
     ):
         self._type = type
         self._type_parameters = type_parameters or []
@@ -24,7 +23,6 @@ class TypeHint(AstNode):
 
         self.is_optional = is_optional
         self.is_literal = is_literal
-        self.is_string_reference = is_string_reference
 
     @staticmethod
     def str_() -> TypeHint:
@@ -189,12 +187,9 @@ class TypeHint(AstNode):
 
     def write(self, writer: NodeWriter) -> None:
         if isinstance(self._type, GenericTypeVar):
-            if self.is_string_reference:
-                writer.write(f'"{self._type.name}"')
-            else:
-                writer.write(self._type.name)
+            writer.write(self._type.name)
         else:
-            writer.write_reference(self._type, is_string_reference=self.is_string_reference)
+            writer.write_reference(self._type)
 
         if len(self._type_parameters) > 0:
             writer.write("[")
