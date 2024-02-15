@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
@@ -13,49 +11,49 @@ except ImportError:
 
 
 class VariableType_IntegerType(pydantic.BaseModel):
-    type: typing_extensions.Literal["integerType"]
+    type: typing.Literal["integerType"]
 
 
 class VariableType_DoubleType(pydantic.BaseModel):
-    type: typing_extensions.Literal["doubleType"]
+    type: typing.Literal["doubleType"]
 
 
 class VariableType_BooleanType(pydantic.BaseModel):
-    type: typing_extensions.Literal["booleanType"]
+    type: typing.Literal["booleanType"]
 
 
 class VariableType_StringType(pydantic.BaseModel):
-    type: typing_extensions.Literal["stringType"]
+    type: typing.Literal["stringType"]
 
 
 class VariableType_CharType(pydantic.BaseModel):
-    type: typing_extensions.Literal["charType"]
+    type: typing.Literal["charType"]
 
 
 class VariableType_ListType(ListType):
-    type: typing_extensions.Literal["listType"]
+    type: typing.Literal["listType"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class VariableType_MapType(MapType):
-    type: typing_extensions.Literal["mapType"]
+    type: typing.Literal["mapType"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):
-    type: typing_extensions.Literal["binaryTreeType"]
+    type: typing.Literal["binaryTreeType"]
 
 
 class VariableType_SinglyLinkedListType(pydantic.BaseModel):
-    type: typing_extensions.Literal["singlyLinkedListType"]
+    type: typing.Literal["singlyLinkedListType"]
 
 
 class VariableType_DoublyLinkedListType(pydantic.BaseModel):
-    type: typing_extensions.Literal["doublyLinkedListType"]
+    type: typing.Literal["doublyLinkedListType"]
 
 
 VariableType = typing.Union[

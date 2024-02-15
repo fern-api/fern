@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -16,12 +14,12 @@ except ImportError:
 
 
 class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
-    type: typing_extensions.Literal["templateId"]
+    type: typing.Literal["templateId"]
     value: TestCaseTemplateId
 
 
 class TestCaseImplementationReference_Implementation(TestCaseImplementation):
-    type: typing_extensions.Literal["implementation"]
+    type: typing.Literal["implementation"]
 
     class Config:
         allow_population_by_field_name = True

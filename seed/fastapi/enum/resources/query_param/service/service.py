@@ -72,7 +72,7 @@ class AbstractQueryParamService(AbstractFernService):
         wrapper.__globals__.update(cls.send.__globals__)
 
         router.post(
-            path="/query",
+            path="//query",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractQueryParamService.send.__doc__,
@@ -109,7 +109,7 @@ class AbstractQueryParamService(AbstractFernService):
         wrapper.__globals__.update(cls.send_list.__globals__)
 
         router.post(
-            path="/query-list",
+            path="//query-list",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractQueryParamService.send_list.__doc__,
