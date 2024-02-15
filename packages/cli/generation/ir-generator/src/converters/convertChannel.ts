@@ -42,7 +42,7 @@ export async function convertChannel({
         pathParameters:
             channel["path-parameters"] != null
                 ? await convertPathParameters({
-                      pathParameters: channel["path-parameters"] ?? {},
+                      pathParameters: channel["path-parameters"],
                       location: PathParameterLocation.Endpoint,
                       file,
                       variableResolver
@@ -104,5 +104,6 @@ function convertMessageSchema({
 export function isReferencedWebhookPayloadSchema(
     payload: RawSchemas.WebsocketChannelMessageBodySchema
 ): payload is RawSchemas.WebsocketChannelReferencedMessageSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (payload as RawSchemas.WebsocketChannelReferencedMessageSchema).type != null;
 }
