@@ -253,6 +253,7 @@ types:
   FileSchema:
     properties:
       isOptional: boolean
+      isArray: boolean
 
   MultipartSchema:
     union:

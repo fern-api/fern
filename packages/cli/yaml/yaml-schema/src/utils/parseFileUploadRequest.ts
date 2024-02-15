@@ -14,6 +14,7 @@ export declare namespace RawFileUploadRequest {
     export interface FileProperty extends BaseProperty {
         isFile: true;
         isOptional: boolean;
+        isArray: boolean;
     }
 
     export interface InlinedRequestBodyProperty extends BaseProperty {

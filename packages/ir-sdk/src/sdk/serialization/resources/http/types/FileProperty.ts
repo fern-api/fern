@@ -10,11 +10,13 @@ export const FileProperty: core.serialization.ObjectSchema<serializers.FilePrope
     core.serialization.objectWithoutOptionalProperties({
         key: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
         isOptional: core.serialization.boolean(),
+        isArray: core.serialization.boolean(),
     });
 
 export declare namespace FileProperty {
     interface Raw {
         key: serializers.NameAndWireValue.Raw;
         isOptional: boolean;
+        isArray: boolean;
     }
 }

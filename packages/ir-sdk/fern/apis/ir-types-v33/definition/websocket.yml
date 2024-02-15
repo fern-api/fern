@@ -1,0 +1,53 @@
+imports:
+  commons: commons.yml
+  types: types.yml
+  http: http.yml
+
+types: 
+  WebsocketMessageId: string
+
+  WebsocketChannel: 
+    extends: commons.Declaration
+    properties: 
+      path: http.HttpPath
+      auth: boolean
+      headers: list<http.HttpHeader>
+      queryParameters: list<http.QueryParameter>
+      pathParameters: list<http.PathParameter>
+      messages: 
+        docs: "The messages that can be sent and received on this channel"
+        type: map<WebsocketMessageId, WebsocketMessage>
+  
+  WebsocketMessage: 
+    extends: commons.Declaration
+    properties: 
+      displayName: optional<string>
+      origin: WebsocketMessageOrigin
+      body: WebsocketMessageBody
+  
+  WebsocketMessageOrigin:
+    enum:
+      - client
+      - server
+  
+  WebsocketMessageBody:
+    union:
+      inlinedBody: InlinedWebsocketMessageBody
+      reference: WebsocketMessageBodyReference
+  
+  InlinedWebsocketMessageBody:
+    properties:
+      name: commons.Name
+      extends: list<types.DeclaredTypeName>
+      properties: list<InlinedWebsocketMessageBodyProperty>
+  
+  InlinedWebsocketMessageBodyProperty: 
+    extends: commons.WithDocs
+    properties: 
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+  
+  WebsocketMessageBodyReference:
+    extends: commons.WithDocs
+    properties: 
+      bodyType: types.TypeReference

@@ -48,7 +48,8 @@ export function convertHttpRequestBody({
                             wireValue: property.key,
                             name: property.key
                         }),
-                        isOptional: property.isOptional
+                        isOptional: property.isOptional,
+                        isArray: property.isArray
                     });
                 } else {
                     return FileUploadRequestProperty.bodyProperty(
