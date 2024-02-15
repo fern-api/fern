@@ -28,7 +28,7 @@ export function convertEnum({
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
-    const values = Array.from(uniqueValues).map((value, index) => {
+    const values = Array.from(uniqueValues).map((value, index): EnumValue => {
         const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
         const valueIsValidName = VALID_ENUM_NAME_REGEX.test(value);
@@ -37,7 +37,12 @@ export function convertEnum({
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
             description: fernEnumValue?.description,
-            casing: fernEnumValue?.casing
+            casing: {
+                snake: fernEnumValue?.casing?.snake ?? undefined,
+                pascal: fernEnumValue?.casing?.pascal ?? undefined,
+                screamingSnake: fernEnumValue?.casing?.screamingSnake ?? undefined,
+                camel: fernEnumValue?.casing?.camel ?? undefined
+            }
         };
     });
     return wrapEnum({

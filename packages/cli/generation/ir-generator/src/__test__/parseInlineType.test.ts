@@ -7,7 +7,11 @@ import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {
     it("nested containers", async () => {
-        const casingsGenerator = constructCasingsGenerator({ generationLanguage: undefined, smartCasing: false });
+        const casingsGenerator = constructCasingsGenerator({
+            generationLanguage: undefined,
+            smartCasing: false,
+            casingOverrides: {}
+        });
 
         const dummyTypeName = "Dummy";
         const dummyFilepath = RelativeFilePath.of("a/b/c");
