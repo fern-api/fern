@@ -328,7 +328,7 @@ class EndpointFunctionGenerator:
                     method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
                     request_body=AST.Expression(AST.CodeWriter(write_request_body))
-                    if (method is not "GET" and method is not "DELETE")
+                    if (method != "GET" and method != "DELETE")
                     else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=request_body_parameters.get_files() if request_body_parameters is not None else None,
