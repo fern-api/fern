@@ -8,9 +8,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     public readonly MANIFEST = {
         name: "fetcher",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/fetcher/src")
+            path: RelativeFilePath.of("packages/core-utilities/fetcher/src/fetcher")
         },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher"),
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "4.0.0");

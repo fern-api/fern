@@ -102,6 +102,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -109,6 +110,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -1006,6 +1008,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_app": {
             "name": {
@@ -1078,6 +1081,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -1153,6 +1157,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -1163,6 +1168,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -1557,6 +1563,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_file-upload": {
             "name": {
@@ -1627,6 +1634,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -1637,6 +1645,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -8157,6 +8166,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_endpoint-urls": {
             "name": {
@@ -8227,6 +8237,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -8299,6 +8310,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -8309,6 +8321,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -8403,6 +8416,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_subpackage": {
             "name": {
@@ -8477,6 +8491,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
             ],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -8588,6 +8603,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -8598,6 +8614,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -9790,6 +9807,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_nested": {
             "name": {
@@ -9864,6 +9882,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -9874,6 +9893,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -10574,6 +10594,7 @@ exports[`ir {"name":"packages"} 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_package": {
             "name": {
@@ -10651,6 +10672,7 @@ exports[`ir {"name":"packages"} 1`] = `
             ],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -10725,6 +10747,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": "I'm an importer!"
         },
@@ -10838,6 +10861,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -10949,6 +10973,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -10959,6 +10984,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": "service_",
         "types": [
             "type_:RootString"
@@ -12011,6 +12037,7 @@ exports[`ir {"name":"response-property"} 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -12085,6 +12112,7 @@ exports[`ir {"name":"response-property"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -12095,6 +12123,7 @@ exports[`ir {"name":"response-property"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -13000,6 +13029,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
         }
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -13074,6 +13104,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -13148,6 +13179,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -13158,6 +13190,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -15479,6 +15512,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         }
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -15553,6 +15587,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -15628,6 +15663,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -15638,6 +15674,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -25501,6 +25538,7 @@ exports[`ir {"name":"simple"} 1`] = `
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -25577,6 +25615,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -25654,6 +25693,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -25738,6 +25778,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -25748,6 +25789,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -26130,6 +26172,7 @@ exports[`ir {"name":"streaming"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_streaming": {
             "name": {
@@ -26200,6 +26243,7 @@ exports[`ir {"name":"streaming"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -26210,6 +26254,7 @@ exports[`ir {"name":"streaming"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -26969,6 +27014,7 @@ exports[`ir {"name":"variables"} 1`] = `
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -27041,6 +27087,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -27113,6 +27160,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -27123,6 +27171,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -27329,6 +27378,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
             }
         ]
     },
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_webhooks": {
             "name": {
@@ -27399,6 +27449,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": "webhooks_webhooks",
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -27409,6 +27460,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

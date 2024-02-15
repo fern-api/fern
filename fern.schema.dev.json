@@ -696,6 +696,7 @@
         "channel": {
           "type": "object",
           "properties": {
+            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
             "availability": {
               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
             },
@@ -723,6 +724,15 @@
                   "body": {
                     "anyOf": [
                       { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "type": { "type": "string" }
+                        },
+                        "required": ["type"],
+                        "additionalProperties": false
+                      },
                       {
                         "anyOf": [
                           {
