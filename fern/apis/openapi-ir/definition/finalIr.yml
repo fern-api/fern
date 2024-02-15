@@ -19,6 +19,13 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
+      globalHeaders: optional<list<GlobalHeader>>
+
+  GlobalHeader:
+    properties:
+      name: string
+      alias: optional<string>
+      isOptional: optional<boolean>
 
   Tags:
     properties:

@@ -19,7 +19,8 @@ describe("Fern Definition Builder", () => {
                 errors: {},
                 variables: {},
                 nonRequestReferencedSchemas: [],
-                securitySchemes: {}
+                securitySchemes: {},
+                globalHeaders: []
             },
             true
         );

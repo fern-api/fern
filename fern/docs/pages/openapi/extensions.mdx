@@ -1,3 +1,4 @@
+
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
 
 ## SDK method names
@@ -93,6 +94,38 @@ components:
         env: MY_HEADER_ENVVAR
 ```
 
+## Global headers
+At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs
+expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to 
+plug theirs in easily:
+```python
+import os
+
+class Client:
+
+  def __init__(self, *, apiKey: str)
+```
+
+To configure global headers, Fern will automatically pull out headers that are used in every request, or the majority of requests and mark them as global.
+In order to label additional headers as global, or to alias the names of global headers, you can leverage the `x-fern-global-headers` extension:
+
+```yaml
+x-fern-global-headers:
+  - name: custom_api_key
+    alias: api_key
+  - name: userpool_id
+    isOptional: true
+```
+
+yields the following client:
+
+```python
+import os
+
+class Client:
+
+  def __init__(self, *, apiKey: str, userpoolId: typing.Optional[str])
+```
 
 ## Enum descriptions and names
 
