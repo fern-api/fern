@@ -45,7 +45,8 @@ public final class RequestOptions {
             return this;
         }
 
-        public Builder timeoutTimeUnit(TimeUnit timeoutTimeUnit) {
+        public Builder timeout(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+            this.timeout = timeout;
             this.timeoutTimeUnit = timeoutTimeUnit;
             return this;
         }

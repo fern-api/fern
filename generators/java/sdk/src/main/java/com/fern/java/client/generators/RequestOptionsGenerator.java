@@ -134,6 +134,27 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 fields
         );
 
+        FieldSpec timeoutField = TIMEOUT_FIELD_BUILDER.build();
+        FieldSpec timeUnitField = TIMEOUT_TIME_UNIT_FIELD_BUILDER.build();
+        builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(timeoutField.type, timeoutField.name)
+                .addStatement("this.$L = $L", timeoutField.name, timeoutField.name)
+                .addStatement("return this")
+                .returns(builderClassName)
+                .build());
+
+        builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(timeoutField.type, timeoutField.name)
+                .addParameter(timeUnitField.type, timeUnitField.name)
+                .addStatement("this.$L = $L", timeoutField.name, timeoutField.name)
+                .addStatement("this.$L = $L", timeUnitField.name, timeUnitField.name)
+                .addStatement("return this")
+                .returns(builderClassName)
+                .build());
+
+
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
         builderTypeSpec.addMethod(MethodSpec.methodBuilder("build")
@@ -199,14 +220,6 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .initializer(initializer)
                 .build();
         builderTypeSpec.addField(builderField);
-        MethodSpec retriesBuilderMethodSpec = MethodSpec.methodBuilder(field.name)
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(builderField.type, builderField.name)
-                .addStatement("this.$L = $L", builderField.name, builderField.name)
-                .addStatement("return this")
-                .returns(builderClassName)
-                .build();
-        builderTypeSpec.addMethod(retriesBuilderMethodSpec);
 
         requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder(getterFunctionName)
                 .addModifiers(Modifier.PUBLIC)
