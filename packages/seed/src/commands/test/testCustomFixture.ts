@@ -17,7 +17,7 @@ export async function testCustomFixture({
     logLevel,
     numDockers,
     keepDocker,
-    skipScripts,
+    skipScripts
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
@@ -52,7 +52,7 @@ export async function testCustomFixture({
         outputFolder: "custom",
         id: "custom",
         keepDocker,
-        skipScripts,
+        skipScripts
     });
 
     if (result.type === "failure") {
