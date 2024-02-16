@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
@@ -25,73 +23,73 @@ except ImportError:
 
 
 class DebugVariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["integerValue"]
+    type: typing.Literal["integerValue"]
     value: int
 
 
 class DebugVariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["booleanValue"]
+    type: typing.Literal["booleanValue"]
     value: bool
 
 
 class DebugVariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["doubleValue"]
+    type: typing.Literal["doubleValue"]
     value: float
 
 
 class DebugVariableValue_StringValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["stringValue"]
+    type: typing.Literal["stringValue"]
     value: str
 
 
 class DebugVariableValue_CharValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["charValue"]
+    type: typing.Literal["charValue"]
     value: str
 
 
 class DebugVariableValue_MapValue(DebugMapValue):
-    type: typing_extensions.Literal["mapValue"]
+    type: typing.Literal["mapValue"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["listValue"]
+    type: typing.Literal["listValue"]
     value: typing.List[DebugVariableValue]
 
 
 class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
-    type: typing_extensions.Literal["binaryTreeNodeValue"]
+    type: typing.Literal["binaryTreeNodeValue"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
-    type: typing_extensions.Literal["singlyLinkedListNodeValue"]
+    type: typing.Literal["singlyLinkedListNodeValue"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
-    type: typing_extensions.Literal["doublyLinkedListNodeValue"]
+    type: typing.Literal["doublyLinkedListNodeValue"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["undefinedValue"]
+    type: typing.Literal["undefinedValue"]
 
 
 class DebugVariableValue_NullValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["nullValue"]
+    type: typing.Literal["nullValue"]
 
 
 class DebugVariableValue_GenericValue(GenericValue):
-    type: typing_extensions.Literal["genericValue"]
+    type: typing.Literal["genericValue"]
 
     class Config:
         allow_population_by_field_name = True

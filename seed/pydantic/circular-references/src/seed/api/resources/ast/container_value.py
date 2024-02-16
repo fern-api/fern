@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
@@ -16,12 +14,12 @@ except ImportError:
 
 
 class ContainerValue_List(pydantic.BaseModel):
-    type: typing_extensions.Literal["list"]
+    type: typing.Literal["list"]
     value: typing.List[FieldValue]
 
 
 class ContainerValue_Optional(pydantic.BaseModel):
-    type: typing_extensions.Literal["optional"]
+    type: typing.Literal["optional"]
     value: typing.Optional[FieldValue]
 
 

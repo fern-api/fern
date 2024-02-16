@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .options import Options as resources_literal_types_options_Options
 
@@ -19,7 +17,7 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def ok(self, value: typing_extensions.Literal[True]) -> CreateOptionsResponse:
+    def ok(self, value: typing.Literal[True]) -> CreateOptionsResponse:
         return CreateOptionsResponse(__root__=_CreateOptionsResponse.Ok(type="ok", value=value))
 
     def options(self, value: resources_literal_types_options_Options) -> CreateOptionsResponse:
@@ -36,7 +34,7 @@ class CreateOptionsResponse(pydantic.BaseModel):
 
     def visit(
         self,
-        ok: typing.Callable[[typing_extensions.Literal[True]], T_Result],
+        ok: typing.Callable[[typing.Literal[True]], T_Result],
         options: typing.Callable[[resources_literal_types_options_Options], T_Result],
     ) -> T_Result:
         if self.__root__.type == "ok":
@@ -46,7 +44,7 @@ class CreateOptionsResponse(pydantic.BaseModel):
                 resources_literal_types_options_Options(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[_CreateOptionsResponse.Ok, _CreateOptionsResponse.Options], pydantic.Field(discriminator="type")
     ]
 
@@ -65,11 +63,11 @@ class CreateOptionsResponse(pydantic.BaseModel):
 
 class _CreateOptionsResponse:
     class Ok(pydantic.BaseModel):
-        type: typing_extensions.Literal["ok"]
-        value: typing_extensions.Literal[True]
+        type: typing.Literal["ok"]
+        value: typing.Literal[True]
 
     class Options(resources_literal_types_options_Options):
-        type: typing_extensions.Literal["options"]
+        type: typing.Literal["options"]
 
         class Config:
             allow_population_by_field_name = True

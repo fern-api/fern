@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -18,39 +16,39 @@ except ImportError:
 
 
 class WorkspaceSubmissionUpdateInfo_Running(pydantic.BaseModel):
-    type: typing_extensions.Literal["running"]
+    type: typing.Literal["running"]
     value: RunningSubmissionState
 
 
 class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
-    type: typing_extensions.Literal["ran"]
+    type: typing.Literal["ran"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
-    type: typing_extensions.Literal["stopped"]
+    type: typing.Literal["stopped"]
 
 
 class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
-    type: typing_extensions.Literal["traced"]
+    type: typing.Literal["traced"]
 
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
-    type: typing_extensions.Literal["tracedV2"]
+    type: typing.Literal["tracedV2"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):
-    type: typing_extensions.Literal["errored"]
+    type: typing.Literal["errored"]
     value: ErrorInfo
 
 
 class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
-    type: typing_extensions.Literal["finished"]
+    type: typing.Literal["finished"]
 
 
 WorkspaceSubmissionUpdateInfo = typing.Union[

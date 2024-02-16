@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from ...commons.types.variable_value import VariableValue
 
@@ -52,7 +50,7 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
         if self.__root__.type == "testCaseId":
             return test_case_id(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
         ],
@@ -74,15 +72,15 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
 
 class _ProblemDescriptionBoard:
     class Html(pydantic.BaseModel):
-        type: typing_extensions.Literal["html"]
+        type: typing.Literal["html"]
         value: str
 
     class Variable(pydantic.BaseModel):
-        type: typing_extensions.Literal["variable"]
+        type: typing.Literal["variable"]
         value: VariableValue
 
     class TestCaseId(pydantic.BaseModel):
-        type: typing_extensions.Literal["testCaseId"]
+        type: typing.Literal["testCaseId"]
         value: str
 
 

@@ -15,7 +15,7 @@ pydantic = ">= 1.9.2"
 typing_extensions = ">= 4.0.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "0.971"
+mypy = "^1.8.0"
 pytest = "^7.4.0"
 
 [build-system]

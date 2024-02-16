@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .parameter_id import ParameterId
 
 try:
@@ -15,12 +13,12 @@ except ImportError:
 
 
 class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing_extensions.Literal["html"]
+    type: typing.Literal["html"]
     value: str
 
 
 class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
-    type: typing_extensions.Literal["paramId"]
+    type: typing.Literal["paramId"]
     value: ParameterId
 
 

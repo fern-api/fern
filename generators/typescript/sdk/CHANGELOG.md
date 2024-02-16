@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.4] - 2024-02-15
+
+- Fix: The `Fetcher` now supports sending binary as a request body. This is important
+  for APIs that intake `application/octet-stream` content types or for folks that have
+  .fernignored their and added custom utilities that leverage the fetcher. 
+
+## [0.11.3] - 2024-02-13
+
+- Fix: ensure SDK generator always uses `node-fetch` in Node.js environments. There is an experimental 
+  fetch packaged with newer versions of Node.js, however it causes unexpected behavior with 
+  file uploads.
 
 ## [0.11.2] - 2024-02-13
 

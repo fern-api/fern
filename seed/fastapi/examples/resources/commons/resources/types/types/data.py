@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ......core.datetime_utils import serialize_datetime
 
 try:
@@ -43,9 +41,7 @@ class Data(pydantic.BaseModel):
         if self.__root__.type == "base64":
             return base_64(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
-        typing.Union[_Data.String, _Data.Base64], pydantic.Field(discriminator="type")
-    ]
+    __root__: typing.Annotated[typing.Union[_Data.String, _Data.Base64], pydantic.Field(discriminator="type")]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -62,11 +58,11 @@ class Data(pydantic.BaseModel):
 
 class _Data:
     class String(pydantic.BaseModel):
-        type: typing_extensions.Literal["string"]
+        type: typing.Literal["string"]
         value: str
 
     class Base64(pydantic.BaseModel):
-        type: typing_extensions.Literal["base64"]
+        type: typing.Literal["base64"]
         value: str
 
 

@@ -1,11 +1,16 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
-    generateName(name: string): Name;
-    generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
+    generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
+    generateNameAndWireValue(args: {
+        name: string;
+        wireValue: string;
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema };
+    }): NameAndWireValue;
 }
 
 const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
@@ -18,7 +23,7 @@ export function constructCasingsGenerator({
     smartCasing: boolean;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
-        generateName: (name) => {
+        generateName: (name, opts) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
@@ -75,14 +80,16 @@ export function constructCasingsGenerator({
 
             return {
                 originalName: name,
-                camelCase: generateSafeAndUnsafeString(camelCaseName),
-                snakeCase: generateSafeAndUnsafeString(snakeCaseName),
-                screamingSnakeCase: generateSafeAndUnsafeString(snakeCaseName.toUpperCase()),
-                pascalCase: generateSafeAndUnsafeString(pascalCaseName)
+                camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
+                snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
+                screamingSnakeCase: generateSafeAndUnsafeString(
+                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
+                ),
+                pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             };
         },
-        generateNameAndWireValue: ({ name, wireValue }) => ({
-            name: casingsGenerator.generateName(name),
+        generateNameAndWireValue: ({ name, wireValue, opts }) => ({
+            name: casingsGenerator.generateName(name, opts),
             wireValue
         })
     };

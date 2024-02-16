@@ -78,6 +78,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
     ],
     "types": [],
     "webhooks": undefined,
+    "websocket": undefined,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -539,6 +540,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types": {
       "docs": undefined,
@@ -615,6 +617,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
         "type_types:ExceptionStatus",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
   },
   "types": {

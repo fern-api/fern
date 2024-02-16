@@ -4615,18 +4615,36 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "public",
                     "nameOverride": undefined,
                     "value": "public",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "private",
                     "nameOverride": undefined,
                     "value": "private",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "local",
                     "nameOverride": undefined,
@@ -8163,24 +8181,48 @@ exports[`open api parser hathora parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "created",
                 "nameOverride": undefined,
                 "value": "created",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "running",
                 "nameOverride": undefined,
                 "value": "running",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "succeeded",
                 "nameOverride": undefined,
                 "value": "succeeded",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "failed",
                 "nameOverride": undefined,
@@ -8836,18 +8878,36 @@ exports[`open api parser hathora parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "private",
                 "nameOverride": undefined,
                 "value": "private",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "public",
                 "nameOverride": undefined,
                 "value": "public",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "local",
                 "nameOverride": undefined,
@@ -8909,24 +8969,48 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "cpu",
           "nameOverride": undefined,
           "value": "cpu",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "memory",
           "nameOverride": undefined,
           "value": "memory",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rate_egress",
           "nameOverride": undefined,
           "value": "rate_egress",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "total_egress",
           "nameOverride": undefined,
@@ -9087,24 +9171,48 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tiny",
           "nameOverride": undefined,
           "value": "tiny",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "small",
           "nameOverride": undefined,
           "value": "small",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "medium",
           "nameOverride": undefined,
           "value": "medium",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "large",
           "nameOverride": undefined,
@@ -9611,60 +9719,120 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Seattle",
           "nameOverride": undefined,
           "value": "Seattle",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Washington_DC",
           "nameOverride": undefined,
           "value": "Washington_DC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Chicago",
           "nameOverride": undefined,
           "value": "Chicago",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "London",
           "nameOverride": undefined,
           "value": "London",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Frankfurt",
           "nameOverride": undefined,
           "value": "Frankfurt",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Mumbai",
           "nameOverride": undefined,
           "value": "Mumbai",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Singapore",
           "nameOverride": undefined,
           "value": "Singapore",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Tokyo",
           "nameOverride": undefined,
           "value": "Tokyo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Sydney",
           "nameOverride": undefined,
           "value": "Sydney",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Sao_Paulo",
           "nameOverride": undefined,
@@ -9877,24 +10045,48 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "scheduling",
           "nameOverride": undefined,
           "value": "scheduling",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "suspended",
           "nameOverride": undefined,
           "value": "suspended",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "destroyed",
           "nameOverride": undefined,
@@ -9943,18 +10135,36 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tcp",
           "nameOverride": undefined,
           "value": "tcp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "udp",
           "nameOverride": undefined,
           "value": "udp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tls",
           "nameOverride": undefined,

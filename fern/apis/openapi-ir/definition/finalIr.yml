@@ -42,6 +42,7 @@ types:
   Webhook:
     extends: commons.WithDescription
     properties:
+      sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
       summary: optional<string>
       operationId: string
@@ -434,6 +435,14 @@ types:
       value:
         type: string
         docs: Value of the enum
+      casing: optional<CasingOverrides>
+  
+  CasingOverrides: 
+    properties: 
+      snake: optional<string>
+      camel: optional<string>
+      screamingSnake: optional<string>
+      pascal: optional<string>
 
   ReferencedSchema:
     extends:

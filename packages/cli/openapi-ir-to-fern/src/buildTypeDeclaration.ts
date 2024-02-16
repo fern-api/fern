@@ -4,6 +4,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
+    CasingOverrides,
     EnumSchema,
     LiteralSchemaValue,
     MapSchema,
@@ -279,25 +280,53 @@ export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): Converte
     };
 }
 
+function isCasingEmpty(casing: CasingOverrides): boolean {
+    return casing.camel == null && casing.pascal == null && casing.screamingSnake == null && casing.snake == null;
+}
+
 export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDeclaration {
     const enumSchema: RawSchemas.EnumSchema = {
         enum: schema.values.map((enumValue) => {
             const name = enumValue.nameOverride ?? enumValue.generatedName;
             const value = enumValue.value;
-            if (name === value && enumValue.description == null) {
+            if (
+                name === value &&
+                enumValue.description == null &&
+                (enumValue.casing == null || isCasingEmpty(enumValue.casing))
+            ) {
                 return name;
-            } else if (name === value && enumValue.description != null) {
-                return {
-                    value,
-                    docs: enumValue.description
-                };
             }
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
-                name,
                 value: enumValue.value
             };
+            if (name !== value) {
+                enumValueDeclaration.name = name;
+            }
             if (enumValue.description != null) {
                 enumValueDeclaration.docs = enumValue.description;
+            }
+            if (enumValue.casing != null && !isCasingEmpty(enumValue.casing)) {
+                const casing: RawSchemas.CasingOverridesSchema = {};
+                let setCasing = false;
+                if (enumValue.casing.camel != null) {
+                    casing.camel = enumValue.casing.camel;
+                    setCasing = true;
+                }
+                if (enumValue.casing.screamingSnake != null) {
+                    casing["screaming-snake"] = enumValue.casing.screamingSnake;
+                    setCasing = true;
+                }
+                if (enumValue.casing.snake != null) {
+                    casing.snake = enumValue.casing.snake;
+                    setCasing = true;
+                }
+                if (enumValue.casing.pascal != null) {
+                    casing.pascal = enumValue.casing.pascal;
+                    setCasing = true;
+                }
+                if (setCasing) {
+                    enumValueDeclaration.casing = casing;
+                }
             }
             return enumValueDeclaration;
         })

@@ -204,10 +204,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/typescript/utils/core-utilities/form-data-utils"\
       },\
       {\
-        "name": "@fern-typescript/runtime",\
-        "reference": "workspace:generators/typescript/utils/core-utilities/runtime"\
-      },\
-      {\
         "name": "@fern-typescript/stream-utils",\
         "reference": "workspace:generators/typescript/utils/core-utilities/stream-utils"\
       },\
@@ -468,7 +464,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/generic-sdk-error-generators", ["workspace:generators/typescript/sdk/generic-sdk-error-generators"]],\
       ["@fern-typescript/request-wrapper-generator", ["workspace:generators/typescript/sdk/request-wrapper-generator"]],\
       ["@fern-typescript/resolvers", ["workspace:generators/typescript/utils/resolvers"]],\
-      ["@fern-typescript/runtime", ["workspace:generators/typescript/utils/core-utilities/runtime"]],\
       ["@fern-typescript/sdk-client-class-generator", ["workspace:generators/typescript/sdk/client-class-generator"]],\
       ["@fern-typescript/sdk-endpoint-type-schemas-generator", ["workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator"]],\
       ["@fern-typescript/sdk-error-generator", ["workspace:generators/typescript/sdk/sdk-error-generator"]],\
@@ -3978,15 +3973,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@faker-js/faker", [\
-        ["npm:5.5.3", {\
-          "packageLocation": "./.yarn/cache/@faker-js-faker-npm-5.5.3-d1b4d39808-d248a042e4.zip/node_modules/@faker-js/faker/",\
-          "packageDependencies": [\
-            ["@faker-js/faker", "npm:5.5.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@fern-api/auth", [\
         ["workspace:packages/cli/auth", {\
           "packageLocation": "./packages/cli/auth/",\
@@ -4920,7 +4906,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.175"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.180"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4946,7 +4932,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.175"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.180"],\
             ["@redocly/openapi-core", "npm:1.4.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5001,7 +4987,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/postman-collection", "npm:3.5.10"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.6"],\
             ["endent", "npm:2.1.0"],\
@@ -5011,7 +4996,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["postman-collection", "npm:4.3.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -5369,7 +5353,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/docs-config", "npm:0.0.75"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.175"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.180"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -5843,10 +5827,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/openapi-ir-model", [\
-        ["npm:0.0.175", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.175-662e8a7ab8-bcbf31c067.zip/node_modules/@fern-fern/openapi-ir-model/",\
+        ["npm:0.0.180", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.180-7bfdd99329-5d61ad6225.zip/node_modules/@fern-fern/openapi-ir-model/",\
           "packageDependencies": [\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.175"]\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.180"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6422,23 +6406,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.56.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/runtime", [\
-        ["workspace:generators/typescript/utils/core-utilities/runtime", {\
-          "packageLocation": "./generators/typescript/utils/core-utilities/runtime/",\
-          "packageDependencies": [\
-            ["@fern-typescript/runtime", "workspace:generators/typescript/utils/core-utilities/runtime"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -8283,16 +8250,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-parse-json-npm-4.0.0-298522afa6-fd6bce2b67.zip/node_modules/@types/parse-json/",\
           "packageDependencies": [\
             ["@types/parse-json", "npm:4.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/postman-collection", [\
-        ["npm:3.5.10", {\
-          "packageLocation": "./.yarn/cache/@types-postman-collection-npm-3.5.10-f983d93ca7-46bee868d0.zip/node_modules/@types/postman-collection/",\
-          "packageDependencies": [\
-            ["@types/postman-collection", "npm:3.5.10"],\
-            ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -11225,15 +11182,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chardet-npm-0.7.0-27933dd6c7-6fd5da1f5d.zip/node_modules/chardet/",\
           "packageDependencies": [\
             ["chardet", "npm:0.7.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["charset", [\
-        ["npm:1.0.1", {\
-          "packageLocation": "./.yarn/cache/charset-npm-1.0.1-56ffb0a667-adf747e7bc.zip/node_modules/charset/",\
-          "packageDependencies": [\
-            ["charset", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15451,15 +15399,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["http-reasons", [\
-        ["npm:0.1.0", {\
-          "packageLocation": "./.yarn/cache/http-reasons-npm-0.1.0-ab05037b78-da232d6e95.zip/node_modules/http-reasons/",\
-          "packageDependencies": [\
-            ["http-reasons", "npm:0.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["http-signature", [\
         ["npm:1.2.0", {\
           "packageLocation": "./.yarn/cache/http-signature-npm-1.2.0-ee92426f34-3324598712.zip/node_modules/http-signature/",\
@@ -17750,15 +17689,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["liquid-json", [\
-        ["npm:0.3.1", {\
-          "packageLocation": "./.yarn/cache/liquid-json-npm-0.3.1-ebd19d9d7f-b215fb17e7.zip/node_modules/liquid-json/",\
-          "packageDependencies": [\
-            ["liquid-json", "npm:0.3.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["listr2", [\
         ["npm:4.0.5", {\
           "packageLocation": "./.yarn/cache/listr2-npm-4.0.5-e9e44decc1-7af31851ab.zip/node_modules/listr2/",\
@@ -19201,16 +19131,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mime-db-npm-1.52.0-b5371d6fd2-0d99a03585.zip/node_modules/mime-db/",\
           "packageDependencies": [\
             ["mime-db", "npm:1.52.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["mime-format", [\
-        ["npm:2.0.1", {\
-          "packageLocation": "./.yarn/cache/mime-format-npm-2.0.1-e759d3f0c7-294a29035e.zip/node_modules/mime-format/",\
-          "packageDependencies": [\
-            ["mime-format", "npm:2.0.1"],\
-            ["charset", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21306,36 +21226,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["posthog-node", "npm:3.1.2"],\
             ["axios", "npm:0.27.2"],\
             ["rusha", "npm:0.8.14"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["postman-collection", [\
-        ["npm:4.3.0", {\
-          "packageLocation": "./.yarn/cache/postman-collection-npm-4.3.0-3fd5310c06-a07757d826.zip/node_modules/postman-collection/",\
-          "packageDependencies": [\
-            ["postman-collection", "npm:4.3.0"],\
-            ["@faker-js/faker", "npm:5.5.3"],\
-            ["file-type", "npm:3.9.0"],\
-            ["http-reasons", "npm:0.1.0"],\
-            ["iconv-lite", "npm:0.6.3"],\
-            ["liquid-json", "npm:0.3.1"],\
-            ["lodash", "npm:4.17.21"],\
-            ["mime-format", "npm:2.0.1"],\
-            ["mime-types", "npm:2.1.35"],\
-            ["postman-url-encoder", "npm:3.0.5"],\
-            ["semver", "npm:7.5.4"],\
-            ["uuid", "npm:8.3.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["postman-url-encoder", [\
-        ["npm:3.0.5", {\
-          "packageLocation": "./.yarn/cache/postman-url-encoder-npm-3.0.5-1e41381a6a-d46b52cf9a.zip/node_modules/postman-url-encoder/",\
-          "packageDependencies": [\
-            ["postman-url-encoder", "npm:3.0.5"],\
-            ["punycode", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -25364,13 +25254,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-58de2feed6.zip/node_modules/uuid/",\
           "packageDependencies": [\
             ["uuid", "npm:3.4.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:8.3.2", {\
-          "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
-          "packageDependencies": [\
-            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
         }],\
