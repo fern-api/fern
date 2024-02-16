@@ -15,13 +15,14 @@ export declare namespace ReferenceGeneratorSection {
 export interface ReferenceParameterDeclaration {
     name: string;
     type: string;
-    link?: string;
+    typePath?: string;
     description?: string;
 }
 export interface EndpointDeclaration {
-    link?: string;
+    functionPath?: string;
     functionName: string;
     returnType: string | undefined;
+    returnTypePath?: string;
     codeSnippet: string | undefined;
     parameters: ReferenceParameterDeclaration[];
     description?: string;
@@ -29,6 +30,10 @@ export interface EndpointDeclaration {
 
 function writeIndentedBlock(content: string): string {
     return `<dl>\n\n<dd>\n\n${content}\n\n</dd>\n\n</dl>`;
+}
+
+function wrapInLink(content: string, link?: string) {
+    return link !== undefined ? `<a href="./src${link}">${content}</a>` : content;
 }
 
 class ReferenceGeneratorSection {
@@ -48,7 +53,9 @@ class ReferenceGeneratorSection {
 
     private writeParameter(parameter: ReferenceParameterDeclaration): string {
         return `
-**${parameter.name}: \`${parameter.type}\`** ${parameter.description !== undefined ? "— " + parameter.description : ""}
+**${parameter.name}: \`${wrapInLink(parameter.type, parameter.typePath)}\`** ${
+            parameter.description !== undefined ? "— " + parameter.description : ""
+        }
 `;
     }
 
@@ -71,11 +78,13 @@ class ReferenceGeneratorSection {
                 : "";
 
         return `
-<details><summary> <code>${this.clientName}.${
-            endpoint.link !== undefined ? '<a href="src/' + endpoint.link + '">' : ""
-        }${endpoint.functionName}${endpoint.link !== undefined ? "</a>" : ""}({ ...params }) -> ${
-            endpoint.returnType === undefined ? "void" : endpoint.returnType
-        }</code> </summary>
+<details><summary> <code>${this.clientName}.${wrapInLink(
+            endpoint.functionName,
+            endpoint.functionPath
+        )}({ ...params }) -> ${wrapInLink(
+            endpoint.returnType === undefined ? "void" : endpoint.returnType,
+            endpoint.returnTypePath
+        )}</code> </summary>
 
 ${writeIndentedBlock(descriptionBlock + usageBlock + parametersBlock)}
 </details>
