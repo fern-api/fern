@@ -35,6 +35,7 @@ types:
   Webhook:
     extends: commons.WithDescription
     properties:
+      sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
       summary: optional<string>
       operationId: string
