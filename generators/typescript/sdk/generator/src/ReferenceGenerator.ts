@@ -52,9 +52,11 @@ class ReferenceGeneratorSection {
     }
 
     private writeParameter(parameter: ReferenceParameterDeclaration): string {
+        const desc = parameter.description?.match(/[^\r\n]+/g)?.length;
+        const containsLineBreak = desc !== undefined && desc > 1;
         return `
 **${parameter.name}: \`${wrapInLink(parameter.type, parameter.typePath)}\`** ${
-            parameter.description !== undefined ? "— " + parameter.description : ""
+            parameter.description !== undefined ? (containsLineBreak ? "\n\n" : "— ") + parameter.description : ""
         }
 `;
     }
