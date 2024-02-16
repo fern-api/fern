@@ -9,8 +9,7 @@ describe("parse inline types", () => {
     it("nested containers", async () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
-            smartCasing: false,
-            casingOverrides: {}
+            smartCasing: false
         });
 
         const dummyTypeName = "Dummy";

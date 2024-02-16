@@ -77,6 +77,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -511,6 +512,7 @@ exports[`generate IR 1`] = `
         "type_union:MyUnion",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -652,5 +654,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

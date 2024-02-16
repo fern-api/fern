@@ -159,12 +159,24 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "admin",
                   "nameOverride": undefined,
                   "value": "admin",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "user",
                   "nameOverride": undefined,

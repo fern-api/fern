@@ -473,6 +473,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -12903,6 +12904,7 @@ The method name cannot include the following characters:
         "type_admin:Test",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_commons": {
       "docs": null,
@@ -13002,6 +13004,7 @@ The method name cannot include the following characters:
         "type_commons:Language",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_homepage": {
       "docs": null,
@@ -13074,6 +13077,7 @@ The method name cannot include the following characters:
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_lang-server": {
       "docs": null,
@@ -13149,6 +13153,7 @@ The method name cannot include the following characters:
         "type_lang-server:LangServerResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_migration": {
       "docs": null,
@@ -13224,6 +13229,7 @@ The method name cannot include the following characters:
         "type_migration:Migration",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_playlist": {
       "docs": null,
@@ -13306,6 +13312,7 @@ The method name cannot include the following characters:
         "type_playlist:ReservedKeywordEnum",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_problem": {
       "docs": null,
@@ -13390,6 +13397,7 @@ The method name cannot include the following characters:
         "type_problem:GetDefaultStarterFilesResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_submission": {
       "docs": "Responsible for spinning up and spinning down execution.",
@@ -13543,6 +13551,7 @@ The method name cannot include the following characters:
         "type_submission:GetSubmissionStateResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_sysprop": {
       "docs": null,
@@ -13615,6 +13624,7 @@ The method name cannot include the following characters:
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2": {
       "docs": null,
@@ -13692,6 +13702,7 @@ The method name cannot include the following characters:
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/problem": {
       "docs": null,
@@ -13845,6 +13856,7 @@ The method name cannot include the following characters:
         "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/v3": {
       "docs": null,
@@ -13959,6 +13971,7 @@ The method name cannot include the following characters:
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/v3/problem": {
       "docs": null,
@@ -14150,6 +14163,7 @@ The method name cannot include the following characters:
         "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -86297,5 +86311,6 @@ The offset is the id of the next trace response to load.",
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

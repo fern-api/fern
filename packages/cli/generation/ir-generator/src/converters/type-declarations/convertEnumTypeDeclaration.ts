@@ -18,7 +18,9 @@ export async function convertEnumTypeDeclaration({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         wireValue: typeof value === "string" ? value : value.value,
                         name: getEnumName(value).name,
-                        casingOverrides: typeof value !== "string" ? value.casing : undefined
+                        opts: {
+                            casingOverrides: typeof value !== "string" ? value.casing : undefined
+                        }
                     })
                 };
             })
