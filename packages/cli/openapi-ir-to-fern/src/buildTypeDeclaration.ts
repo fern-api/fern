@@ -298,19 +298,27 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
             if (enumValue.description != null) {
                 enumValueDeclaration.docs = enumValue.description;
             }
-            if (enumValue.casing != null) {
-                enumValueDeclaration.casing = {};
+            if (enumValue.casing != null && Object.values(enumValue.casing).length > 0) {
+                const casing: RawSchemas.CasingOverridesSchema = {};
+                let setCasing = false;
                 if (enumValue.casing.camel != null) {
-                    enumValueDeclaration.casing.camel = enumValue.casing.camel;
+                    casing.camel = enumValue.casing.camel;
+                    setCasing = true;
                 }
                 if (enumValue.casing.screamingSnake != null) {
-                    enumValueDeclaration.casing["screaming-snake"] = enumValue.casing.screamingSnake;
+                    casing["screaming-snake"] = enumValue.casing.screamingSnake;
+                    setCasing = true;
                 }
                 if (enumValue.casing.snake != null) {
-                    enumValueDeclaration.casing.snake = enumValue.casing.snake;
+                    casing.snake = enumValue.casing.snake;
+                    setCasing = true; 
                 }
                 if (enumValue.casing.pascal != null) {
-                    enumValueDeclaration.casing.pascal = enumValue.casing.pascal;
+                    casing.pascal = enumValue.casing.pascal;
+                    setCasing = true;
+                }
+                if (setCasing) {
+                    enumValueDeclaration.casing = casing;
                 }
             }
             return enumValueDeclaration;

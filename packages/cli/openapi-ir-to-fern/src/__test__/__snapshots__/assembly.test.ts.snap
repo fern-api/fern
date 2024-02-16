@@ -1272,22 +1272,18 @@ The LLM response data, as well as any context provided in the original request w
           "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
           "enum": [
             {
-              "casing": {},
               "docs": "The audio file is in the queue to be processed by the API.",
               "value": "queued",
             },
             {
-              "casing": {},
               "docs": "The audio file is being processed by the API.",
               "value": "processing",
             },
             {
-              "casing": {},
               "docs": "The transcription job has been completed successfully.",
               "value": "completed",
             },
             {
-              "casing": {},
               "docs": "An error occurred while processing the audio file.",
               "value": "error",
             },
@@ -1328,11 +1324,9 @@ The LLM response data, as well as any context provided in the original request w
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
         "enum": [
           {
-            "casing": {},
             "value": "success",
           },
           {
-            "casing": {},
             "value": "unavailable",
           },
         ],
@@ -1614,150 +1608,121 @@ Valid values are in the range [0, 1] inclusive.
         "docs": "The type of entity for the detected entity",
         "enum": [
           {
-            "casing": {},
             "docs": "Banking information, including account and routing numbers",
             "value": "banking_information",
           },
           {
-            "casing": {},
             "docs": "Blood type (e.g., O-, AB positive)",
             "value": "blood_type",
           },
           {
-            "casing": {},
             "docs": "Credit card verification code (e.g., CVV: 080)
 ",
             "value": "credit_card_cvv",
           },
           {
-            "casing": {},
             "docs": "Expiration date of a credit card",
             "value": "credit_card_expiration",
           },
           {
-            "casing": {},
             "docs": "Credit card number",
             "value": "credit_card_number",
           },
           {
-            "casing": {},
             "docs": "Specific calendar date (e.g., December 18)",
             "value": "date",
           },
           {
-            "casing": {},
             "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)
 ",
             "value": "date_of_birth",
           },
           {
-            "casing": {},
             "docs": "Driver's license number (e.g., DL #356933-540)
 ",
             "value": "drivers_license",
           },
           {
-            "casing": {},
             "docs": "Medications, vitamins, or supplements (e.g., Advil, Acetaminophen, Panadol)",
             "value": "drug",
           },
           {
-            "casing": {},
             "docs": "Email address (e.g., support@assemblyai.com)",
             "value": "email_address",
           },
           {
-            "casing": {},
             "docs": "Name of an event or holiday (e.g., Olympics, Yom Kippur)",
             "value": "event",
           },
           {
-            "casing": {},
             "docs": "Bodily injury (e.g., I broke my arm, I have a sprained wrist)",
             "value": "injury",
           },
           {
-            "casing": {},
             "docs": "Name of a natural language (e.g., Spanish, French)",
             "value": "language",
           },
           {
-            "casing": {},
             "docs": "Any location reference including mailing address, postal code, city, state, province, or country",
             "value": "location",
           },
           {
-            "casing": {},
             "docs": "Name of a medical condition, disease, syndrome, deficit, or disorder (e.g., chronic fatigue syndrome, arrhythmia, depression)",
             "value": "medical_condition",
           },
           {
-            "casing": {},
             "docs": "Medical process, including treatments, procedures, and tests (e.g., heart surgery, CT scan)",
             "value": "medical_process",
           },
           {
-            "casing": {},
             "docs": "Name and/or amount of currency (e.g., 15 pesos, $94.50)",
             "value": "money_amount",
           },
           {
-            "casing": {},
             "docs": "Terms indicating nationality, ethnicity, or race (e.g., American, Asian, Caucasian)",
             "value": "nationality",
           },
           {
-            "casing": {},
             "docs": "Job title or profession (e.g., professor, actors, engineer, CPA)",
             "value": "occupation",
           },
           {
-            "casing": {},
             "docs": "Name of an organization (e.g., CNN, McDonalds, University of Alaska)",
             "value": "organization",
           },
           {
-            "casing": {},
             "docs": "Account passwords, PINs, access keys, or verification answers (e.g., 27%alfalfa, temp1234, My mother's maiden name is Smith)",
             "value": "password",
           },
           {
-            "casing": {},
             "docs": "Number associated with an age (e.g., 27, 75)",
             "value": "person_age",
           },
           {
-            "casing": {},
             "docs": "Name of a person (e.g., Bob, Doug Jones)",
             "value": "person_name",
           },
           {
-            "casing": {},
             "docs": "Telephone or fax number",
             "value": "phone_number",
           },
           {
-            "casing": {},
             "docs": "Terms referring to a political party, movement, or ideology (e.g., Republican, Liberal)",
             "value": "political_affiliation",
           },
           {
-            "casing": {},
             "docs": "Terms indicating religious affiliation (e.g., Hindu, Catholic)",
             "value": "religion",
           },
           {
-            "casing": {},
             "docs": "Expressions indicating clock times (e.g., 19:37:28, 10pm EST)",
             "value": "time",
           },
           {
-            "casing": {},
             "docs": "Internet addresses (e.g., www.assemblyai.com)",
             "value": "url",
           },
           {
-            "casing": {},
             "docs": "Social Security Number or equivalent",
             "value": "us_social_security_number",
           },
@@ -1833,11 +1798,9 @@ Can be any value between 0.0 and 1.0 inclusive.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "default",
           },
           {
-            "casing": {},
             "value": "basic",
           },
         ],
@@ -1944,111 +1907,84 @@ Can be any value between 0.0 and 1.0 inclusive.
       "PiiPolicy": {
         "enum": [
           {
-            "casing": {},
             "value": "medical_process",
           },
           {
-            "casing": {},
             "value": "medical_condition",
           },
           {
-            "casing": {},
             "value": "blood_type",
           },
           {
-            "casing": {},
             "value": "drug",
           },
           {
-            "casing": {},
             "value": "injury",
           },
           {
-            "casing": {},
             "value": "number_sequence",
           },
           {
-            "casing": {},
             "value": "email_address",
           },
           {
-            "casing": {},
             "value": "date_of_birth",
           },
           {
-            "casing": {},
             "value": "phone_number",
           },
           {
-            "casing": {},
             "value": "us_social_security_number",
           },
           {
-            "casing": {},
             "value": "credit_card_number",
           },
           {
-            "casing": {},
             "value": "credit_card_expiration",
           },
           {
-            "casing": {},
             "value": "credit_card_cvv",
           },
           {
-            "casing": {},
             "value": "date",
           },
           {
-            "casing": {},
             "value": "nationality",
           },
           {
-            "casing": {},
             "value": "event",
           },
           {
-            "casing": {},
             "value": "language",
           },
           {
-            "casing": {},
             "value": "location",
           },
           {
-            "casing": {},
             "value": "money_amount",
           },
           {
-            "casing": {},
             "value": "person_name",
           },
           {
-            "casing": {},
             "value": "person_age",
           },
           {
-            "casing": {},
             "value": "organization",
           },
           {
-            "casing": {},
             "value": "political_affiliation",
           },
           {
-            "casing": {},
             "value": "occupation",
           },
           {
-            "casing": {},
             "value": "religion",
           },
           {
-            "casing": {},
             "value": "drivers_license",
           },
           {
-            "casing": {},
             "value": "banking_information",
           },
         ],
@@ -2105,15 +2041,12 @@ Can be any value between 0.0 and 1.0 inclusive.
       "Sentiment": {
         "enum": [
           {
-            "casing": {},
             "value": "POSITIVE",
           },
           {
-            "casing": {},
             "value": "NEUTRAL",
           },
           {
-            "casing": {},
             "value": "NEGATIVE",
           },
         ],
@@ -2159,11 +2092,9 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
         "enum": [
           {
-            "casing": {},
             "value": "entity_type",
           },
           {
-            "casing": {},
             "value": "hash",
           },
         ],
@@ -2172,11 +2103,9 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "Format of the subtitles",
         "enum": [
           {
-            "casing": {},
             "value": "srt",
           },
           {
-            "casing": {},
             "value": "vtt",
           },
         ],
@@ -2185,15 +2114,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The model to summarize the transcript",
         "enum": [
           {
-            "casing": {},
             "value": "informative",
           },
           {
-            "casing": {},
             "value": "conversational",
           },
           {
-            "casing": {},
             "value": "catchy",
           },
         ],
@@ -2202,23 +2128,18 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The type of summary",
         "enum": [
           {
-            "casing": {},
             "value": "bullets",
           },
           {
-            "casing": {},
             "value": "bullets_verbose",
           },
           {
-            "casing": {},
             "value": "gist",
           },
           {
-            "casing": {},
             "value": "headline",
           },
           {
-            "casing": {},
             "value": "paragraph",
           },
         ],
@@ -2516,15 +2437,12 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
         "docs": "The word boost parameter value, if provided in the transcription request.",
         "enum": [
           {
-            "casing": {},
             "value": "low",
           },
           {
-            "casing": {},
             "value": "default",
           },
           {
-            "casing": {},
             "value": "high",
           },
         ],
@@ -2579,83 +2497,63 @@ The default value is 'en_us'.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "en",
           },
           {
-            "casing": {},
             "value": "en_au",
           },
           {
-            "casing": {},
             "value": "en_uk",
           },
           {
-            "casing": {},
             "value": "en_us",
           },
           {
-            "casing": {},
             "value": "es",
           },
           {
-            "casing": {},
             "value": "fr",
           },
           {
-            "casing": {},
             "value": "de",
           },
           {
-            "casing": {},
             "value": "it",
           },
           {
-            "casing": {},
             "value": "pt",
           },
           {
-            "casing": {},
             "value": "nl",
           },
           {
-            "casing": {},
             "value": "hi",
           },
           {
-            "casing": {},
             "value": "ja",
           },
           {
-            "casing": {},
             "value": "zh",
           },
           {
-            "casing": {},
             "value": "fi",
           },
           {
-            "casing": {},
             "value": "ko",
           },
           {
-            "casing": {},
             "value": "pl",
           },
           {
-            "casing": {},
             "value": "ru",
           },
           {
-            "casing": {},
             "value": "tr",
           },
           {
-            "casing": {},
             "value": "uk",
           },
           {
-            "casing": {},
             "value": "vi",
           },
         ],
@@ -2731,22 +2629,18 @@ The default value is 'en_us'.
         "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
         "enum": [
           {
-            "casing": {},
             "docs": "The audio file is in the queue to be processed by the API.",
             "value": "queued",
           },
           {
-            "casing": {},
             "docs": "The audio file is being processed by the API.",
             "value": "processing",
           },
           {
-            "casing": {},
             "docs": "The transcription job has been completed successfully.",
             "value": "completed",
           },
           {
-            "casing": {},
             "docs": "An error occurred while processing the audio file.",
             "value": "error",
           },

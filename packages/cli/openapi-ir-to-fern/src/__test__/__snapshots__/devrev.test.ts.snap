@@ -2660,11 +2660,9 @@ authentication connection.
       "AuthConnectionToggle": {
         "enum": [
           {
-            "casing": {},
             "value": "disable",
           },
           {
-            "casing": {},
             "value": "enable",
           },
         ],
@@ -2675,23 +2673,18 @@ for each authentication connection will depend on the type value.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "google_apps",
           },
           {
-            "casing": {},
             "value": "oidc",
           },
           {
-            "casing": {},
             "value": "samlp",
           },
           {
-            "casing": {},
             "value": "social",
           },
           {
-            "casing": {},
             "value": "waad",
           },
         ],
@@ -2736,12 +2729,10 @@ token. Only applicable for application access tokens.
         "docs": "Specifies the process of obtaining a token.",
         "enum": [
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
             "value": "urn:devrev:params:oauth:grant-type:token-issue",
           },
           {
-            "casing": {},
             "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
@@ -2751,47 +2742,38 @@ token. Only applicable for application access tokens.
         "docs": "The type of the requested token.",
         "enum": [
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeAat",
             "value": "urn:devrev:params:oauth:token-type:aat",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
             "value": "urn:devrev:params:oauth:token-type:aat:public",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeDev",
             "value": "urn:devrev:params:oauth:token-type:dev",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypePat",
             "value": "urn:devrev:params:oauth:token-type:pat",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeRev",
             "value": "urn:devrev:params:oauth:token-type:rev",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSession",
             "value": "urn:devrev:params:oauth:token-type:session",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
             "value": "urn:devrev:params:oauth:token-type:session:dev0",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSys",
             "value": "urn:devrev:params:oauth:token-type:sys",
           },
           {
-            "casing": {},
             "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
@@ -2801,15 +2783,12 @@ token. Only applicable for application access tokens.
         "docs": "The status of the token.",
         "enum": [
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "expired",
           },
           {
-            "casing": {},
             "value": "revoked",
           },
         ],
@@ -2818,37 +2797,30 @@ token. Only applicable for application access tokens.
         "docs": "The type of the subject token.",
         "enum": [
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
             "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
             "value": "urn:devrev:params:oauth:token-type:jwt:dev",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
             "value": "urn:devrev:params:oauth:token-type:revinfo",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSysu",
             "value": "urn:devrev:params:oauth:token-type:sysu",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
             "value": "urn:devrev:params:oauth:token-type:userinfo",
           },
           {
-            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
             "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
           },
           {
-            "casing": {},
             "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
@@ -2993,19 +2965,15 @@ authentication connections have different configuration parameters.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "google_apps",
           },
           {
-            "casing": {},
             "value": "oidc",
           },
           {
-            "casing": {},
             "value": "samlp",
           },
           {
-            "casing": {},
             "value": "waad",
           },
         ],
@@ -3074,23 +3042,18 @@ that can be updated.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "google_apps",
           },
           {
-            "casing": {},
             "value": "none",
           },
           {
-            "casing": {},
             "value": "oidc",
           },
           {
-            "casing": {},
             "value": "samlp",
           },
           {
-            "casing": {},
             "value": "waad",
           },
         ],
@@ -3183,23 +3146,18 @@ sort order. If not set, then no prior elements exist.
       "ErrorBadRequestType": {
         "enum": [
           {
-            "casing": {},
             "value": "bad_request",
           },
           {
-            "casing": {},
             "value": "invalid_enum_value",
           },
           {
-            "casing": {},
             "value": "missing_required_field",
           },
           {
-            "casing": {},
             "value": "parse_error",
           },
           {
-            "casing": {},
             "value": "value_not_permitted",
           },
         ],
@@ -3417,19 +3375,15 @@ sort order. If not set, then no prior elements exist.
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
           {
-            "casing": {},
             "value": "p0",
           },
           {
-            "casing": {},
             "value": "p1",
           },
           {
-            "casing": {},
             "value": "p2",
           },
           {
-            "casing": {},
             "value": "p3",
           },
         ],
@@ -3443,11 +3397,9 @@ always be returned in the specified sort-by order.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "after",
           },
           {
-            "casing": {},
             "value": "before",
           },
         ],
@@ -3481,15 +3433,12 @@ always be returned in the specified sort-by order.
 ",
         "enum": [
           {
-            "casing": {},
             "value": "production",
           },
           {
-            "casing": {},
             "value": "staging",
           },
           {
-            "casing": {},
             "value": "test",
           },
         ],
@@ -3557,19 +3506,15 @@ always be returned in the specified sort-by order.
       "PartType": {
         "enum": [
           {
-            "casing": {},
             "value": "capability",
           },
           {
-            "casing": {},
             "value": "enhancement",
           },
           {
-            "casing": {},
             "value": "feature",
           },
           {
-            "casing": {},
             "value": "product",
           },
         ],
@@ -3927,19 +3872,15 @@ sort order. If not set, then no prior elements exist.
         "docs": "Severity of the ticket.",
         "enum": [
           {
-            "casing": {},
             "value": "blocker",
           },
           {
-            "casing": {},
             "value": "high",
           },
           {
-            "casing": {},
             "value": "low",
           },
           {
-            "casing": {},
             "value": "medium",
           },
         ],
@@ -3971,11 +3912,9 @@ will appear in the response.
         "docs": "The type of the body to use for the comment.",
         "enum": [
           {
-            "casing": {},
             "value": "snap_kit",
           },
           {
-            "casing": {},
             "value": "text",
           },
         ],
@@ -4168,23 +4107,18 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "docs": "State of the user.",
         "enum": [
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "deactivated",
           },
           {
-            "casing": {},
             "value": "locked",
           },
           {
-            "casing": {},
             "value": "shadow",
           },
           {
-            "casing": {},
             "value": "unassigned",
           },
         ],
@@ -4202,15 +4136,12 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "UserType": {
         "enum": [
           {
-            "casing": {},
             "value": "dev_user",
           },
           {
-            "casing": {},
             "value": "rev_user",
           },
           {
-            "casing": {},
             "value": "sys_user",
           },
         ],
@@ -4271,79 +4202,60 @@ be set for other request types.
         "docs": "The event types that the webhook will receive.",
         "enum": [
           {
-            "casing": {},
             "value": "part_created",
           },
           {
-            "casing": {},
             "value": "part_deleted",
           },
           {
-            "casing": {},
             "value": "part_updated",
           },
           {
-            "casing": {},
             "value": "rev_org_created",
           },
           {
-            "casing": {},
             "value": "rev_org_deleted",
           },
           {
-            "casing": {},
             "value": "rev_org_updated",
           },
           {
-            "casing": {},
             "value": "tag_created",
           },
           {
-            "casing": {},
             "value": "tag_deleted",
           },
           {
-            "casing": {},
             "value": "tag_updated",
           },
           {
-            "casing": {},
             "value": "timeline_entry_created",
           },
           {
-            "casing": {},
             "value": "timeline_entry_deleted",
           },
           {
-            "casing": {},
             "value": "timeline_entry_updated",
           },
           {
-            "casing": {},
             "value": "verify",
           },
           {
-            "casing": {},
             "value": "webhook_created",
           },
           {
-            "casing": {},
             "value": "webhook_deleted",
           },
           {
-            "casing": {},
             "value": "webhook_updated",
           },
           {
-            "casing": {},
             "value": "work_created",
           },
           {
-            "casing": {},
             "value": "work_deleted",
           },
           {
-            "casing": {},
             "value": "work_updated",
           },
         ],
@@ -4361,15 +4273,12 @@ be set for other request types.
         "docs": "The status of the webhook.",
         "enum": [
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "inactive",
           },
           {
-            "casing": {},
             "value": "unverified",
           },
         ],
@@ -4403,11 +4312,9 @@ be set for other request types.
         "docs": "The action to update the webhook's status.",
         "enum": [
           {
-            "casing": {},
             "value": "activate",
           },
           {
-            "casing": {},
             "value": "deactivate",
           },
         ],
@@ -4485,11 +4392,9 @@ event types. Note this is mutually exclusive with 'add' and
       "WorkType": {
         "enum": [
           {
-            "casing": {},
             "value": "issue",
           },
           {
-            "casing": {},
             "value": "ticket",
           },
         ],

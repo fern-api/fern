@@ -11493,15 +11493,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Broadcast",
           },
           {
-            "casing": {},
             "value": "User",
           },
           {
-            "casing": {},
             "value": "Group",
           },
         ],
@@ -11864,15 +11861,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "PathAndItems",
           },
           {
-            "casing": {},
             "value": "Path",
           },
           {
-            "casing": {},
             "value": "Items",
           },
         ],
@@ -11910,15 +11904,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "ImageAndFileName",
           },
           {
-            "casing": {},
             "value": "Image",
           },
           {
-            "casing": {},
             "value": "FileName",
           },
         ],
@@ -11967,19 +11958,15 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Unknown",
           },
           {
-            "casing": {},
             "value": "Image",
           },
           {
-            "casing": {},
             "value": "Audio",
           },
           {
-            "casing": {},
             "value": "Video",
           },
         ],
@@ -12171,11 +12158,9 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Checkbox",
           },
           {
-            "casing": {},
             "value": "Toggle",
           },
         ],
@@ -12226,15 +12211,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Annotate",
           },
           {
-            "casing": {},
             "value": "Move",
           },
           {
-            "casing": {},
             "value": "Delete",
           },
         ],
@@ -12288,31 +12270,24 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Upsert",
           },
           {
-            "casing": {},
             "value": "ChangeStatus",
           },
           {
-            "casing": {},
             "value": "Create",
           },
           {
-            "casing": {},
             "value": "Delete",
           },
           {
-            "casing": {},
             "value": "Patch",
           },
           {
-            "casing": {},
             "value": "Update",
           },
           {
-            "casing": {},
             "value": "Validate",
           },
         ],
@@ -12808,11 +12783,9 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Now",
           },
           {
-            "casing": {},
             "value": "Today",
           },
         ],
@@ -12821,11 +12794,9 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Date",
           },
           {
-            "casing": {},
             "value": "DateTime",
           },
         ],
@@ -13185,15 +13156,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Disable",
           },
           {
-            "casing": {},
             "value": "Hide",
           },
           {
-            "casing": {},
             "value": "Require",
           },
         ],
@@ -13258,35 +13226,27 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "AVIF",
           },
           {
-            "casing": {},
             "value": "BMP",
           },
           {
-            "casing": {},
             "value": "GIF",
           },
           {
-            "casing": {},
             "value": "JPEG",
           },
           {
-            "casing": {},
             "value": "PNG",
           },
           {
-            "casing": {},
             "value": "TGA",
           },
           {
-            "casing": {},
             "value": "TIFF",
           },
           {
-            "casing": {},
             "value": "WEBP",
           },
         ],
@@ -13295,19 +13255,15 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Created",
           },
           {
-            "casing": {},
             "value": "Started",
           },
           {
-            "casing": {},
             "value": "Completed",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
         ],
@@ -13446,19 +13402,15 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Input",
           },
           {
-            "casing": {},
             "value": "Radio",
           },
           {
-            "casing": {},
             "value": "Dropdown",
           },
           {
-            "casing": {},
             "value": "Stars",
           },
         ],
@@ -13637,19 +13589,15 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "None",
           },
           {
-            "casing": {},
             "value": "NotOwner",
           },
           {
-            "casing": {},
             "value": "NoPermission",
           },
           {
-            "casing": {},
             "value": "ManagedByTeam",
           },
         ],
@@ -13702,23 +13650,18 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "List",
           },
           {
-            "casing": {},
             "value": "Dropdown",
           },
           {
-            "casing": {},
             "value": "Tags",
           },
           {
-            "casing": {},
             "value": "Checkboxes",
           },
           {
-            "casing": {},
             "value": "Input",
           },
         ],
@@ -13785,31 +13728,24 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Crop",
           },
           {
-            "casing": {},
             "value": "CropUpsize",
           },
           {
-            "casing": {},
             "value": "Pad",
           },
           {
-            "casing": {},
             "value": "BoxPad",
           },
           {
-            "casing": {},
             "value": "Max",
           },
           {
-            "casing": {},
             "value": "Min",
           },
           {
-            "casing": {},
             "value": "Stretch",
           },
         ],
@@ -14131,39 +14067,30 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Checkbox",
           },
           {
-            "casing": {},
             "value": "Dropdown",
           },
           {
-            "casing": {},
             "value": "Email",
           },
           {
-            "casing": {},
             "value": "Javascript",
           },
           {
-            "casing": {},
             "value": "Number",
           },
           {
-            "casing": {},
             "value": "Password",
           },
           {
-            "casing": {},
             "value": "Text",
           },
           {
-            "casing": {},
             "value": "TextArea",
           },
           {
-            "casing": {},
             "value": "Url",
           },
         ],
@@ -14172,23 +14099,18 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Pending",
           },
           {
-            "casing": {},
             "value": "Success",
           },
           {
-            "casing": {},
             "value": "Retry",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
           {
-            "casing": {},
             "value": "Cancelled",
           },
         ],
@@ -14197,19 +14119,15 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Pending",
           },
           {
-            "casing": {},
             "value": "Success",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
           {
-            "casing": {},
             "value": "Timeout",
           },
         ],
@@ -14430,15 +14348,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Default",
           },
           {
-            "casing": {},
             "value": "Singleton",
           },
           {
-            "casing": {},
             "value": "Component",
           },
         ],
@@ -14488,27 +14403,21 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Asset",
           },
           {
-            "casing": {},
             "value": "Content",
           },
           {
-            "casing": {},
             "value": "Dashboard",
           },
           {
-            "casing": {},
             "value": "Setting",
           },
           {
-            "casing": {},
             "value": "Rule",
           },
           {
-            "casing": {},
             "value": "Schema",
           },
         ],
@@ -14599,47 +14508,36 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "None",
           },
           {
-            "casing": {},
             "value": "ConditionDoesNotMatch",
           },
           {
-            "casing": {},
             "value": "ConditionPrecheckDoesNotMatch",
           },
           {
-            "casing": {},
             "value": "Disabled",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
           {
-            "casing": {},
             "value": "FromRule",
           },
           {
-            "casing": {},
             "value": "NoAction",
           },
           {
-            "casing": {},
             "value": "NoTrigger",
           },
           {
-            "casing": {},
             "value": "TooOld",
           },
           {
-            "casing": {},
             "value": "WrongEvent",
           },
           {
-            "casing": {},
             "value": "WrongEventForTrigger",
           },
         ],
@@ -14668,11 +14566,9 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Ascending",
           },
           {
-            "casing": {},
             "value": "Descending",
           },
         ],
@@ -14711,15 +14607,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Unspecified",
           },
           {
-            "casing": {},
             "value": "Html",
           },
           {
-            "casing": {},
             "value": "Markdown",
           },
         ],
@@ -14728,43 +14621,33 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Input",
           },
           {
-            "casing": {},
             "value": "Color",
           },
           {
-            "casing": {},
             "value": "Markdown",
           },
           {
-            "casing": {},
             "value": "Dropdown",
           },
           {
-            "casing": {},
             "value": "Html",
           },
           {
-            "casing": {},
             "value": "Radio",
           },
           {
-            "casing": {},
             "value": "RichText",
           },
           {
-            "casing": {},
             "value": "Slug",
           },
           {
-            "casing": {},
             "value": "StockPhoto",
           },
           {
-            "casing": {},
             "value": "TextArea",
           },
         ],
@@ -14854,15 +14737,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Tags",
           },
           {
-            "casing": {},
             "value": "Checkboxes",
           },
           {
-            "casing": {},
             "value": "Dropdown",
           },
         ],
@@ -14997,27 +14877,21 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "Translated",
           },
           {
-            "casing": {},
             "value": "LanguageNotSupported",
           },
           {
-            "casing": {},
             "value": "NotTranslated",
           },
           {
-            "casing": {},
             "value": "NotConfigured",
           },
           {
-            "casing": {},
             "value": "Unauthorized",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
         ],
@@ -15282,23 +15156,18 @@ You will be assigned as owner of the new team automatically.",
         "docs": "",
         "enum": [
           {
-            "casing": {},
             "value": "POST",
           },
           {
-            "casing": {},
             "value": "PUT",
           },
           {
-            "casing": {},
             "value": "GET",
           },
           {
-            "casing": {},
             "value": "DELETE",
           },
           {
-            "casing": {},
             "value": "PATCH",
           },
         ],

@@ -2474,19 +2474,15 @@ exports[`open api parser deel simple 1`] = `
         "CalculateFinalPaymentRequestCalculationType": {
           "enum": [
             {
-              "casing": {},
               "value": "CUSTOM_AMOUNT",
             },
             {
-              "casing": {},
               "value": "WORK_DAYS",
             },
             {
-              "casing": {},
               "value": "CALENDAR_DAYS",
             },
             {
-              "casing": {},
               "value": "FULL_AMOUNT",
             },
           ],
@@ -6133,11 +6129,9 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Status of webhook.",
           "enum": [
             {
-              "casing": {},
               "value": "enabled",
             },
             {
-              "casing": {},
               "value": "disabled",
             },
           ],
@@ -6146,11 +6140,9 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Status of webhook.",
           "enum": [
             {
-              "casing": {},
               "value": "enabled",
             },
             {
-              "casing": {},
               "value": "disabled",
             },
           ],
@@ -6711,11 +6703,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Flag to indicate who is supposed to sign a contract",
         "enum": [
           {
-            "casing": {},
             "value": "client",
           },
           {
-            "casing": {},
             "value": "contractor",
           },
         ],
@@ -6836,63 +6826,48 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Status of a contract in Deel workflow",
         "enum": [
           {
-            "casing": {},
             "value": "new",
           },
           {
-            "casing": {},
             "value": "under_review",
           },
           {
-            "casing": {},
             "value": "waiting_for_employee_contract",
           },
           {
-            "casing": {},
             "value": "waiting_for_client_sign",
           },
           {
-            "casing": {},
             "value": "processing_payment",
           },
           {
-            "casing": {},
             "value": "waiting_for_contractor_sign",
           },
           {
-            "casing": {},
             "value": "waiting_for_eor_sign",
           },
           {
-            "casing": {},
             "value": "waiting_for_employee_sign",
           },
           {
-            "casing": {},
             "value": "awaiting_deposit_payment",
           },
           {
-            "casing": {},
             "value": "in_progress",
           },
           {
-            "casing": {},
             "value": "completed",
           },
           {
-            "casing": {},
             "value": "cancelled",
           },
           {
-            "casing": {},
             "value": "user_cancelled",
           },
           {
-            "casing": {},
             "value": "rejected",
           },
           {
-            "casing": {},
             "value": "waiting_for_client_payment",
           },
         ],
@@ -7165,55 +7140,42 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of a contract",
         "enum": [
           {
-            "casing": {},
             "value": "ongoing_time_based",
           },
           {
-            "casing": {},
             "value": "milestones",
           },
           {
-            "casing": {},
             "value": "time_based",
           },
           {
-            "casing": {},
             "value": "pay_as_you_go_time_based",
           },
           {
-            "casing": {},
             "value": "commission",
           },
           {
-            "casing": {},
             "value": "payg_milestones",
           },
           {
-            "casing": {},
             "value": "payg_tasks",
           },
           {
-            "casing": {},
             "value": "eor",
           },
           {
-            "casing": {},
             "value": "unknown",
           },
           {
-            "casing": {},
             "value": "employee",
           },
           {
-            "casing": {},
             "value": "global_payroll",
           },
           {
-            "casing": {},
             "value": "shield_msa",
           },
           {
-            "casing": {},
             "value": "hris_direct_employee",
           },
         ],
@@ -7226,15 +7188,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of a contract",
         "enum": [
           {
-            "casing": {},
             "value": "pay_as_you_go_time_based",
           },
           {
-            "casing": {},
             "value": "payg_tasks",
           },
           {
-            "casing": {},
             "value": "payg_milestones",
           },
         ],
@@ -7243,15 +7202,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Flag to indicate who is supposed to provide regular reports",
         "enum": [
           {
-            "casing": {},
             "value": "both",
           },
           {
-            "casing": {},
             "value": "client",
           },
           {
-            "casing": {},
             "value": "contractor",
           },
         ],
@@ -7265,23 +7221,18 @@ exports[`open api parser deel simple 1`] = `
       "ContractsSortByEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "contract_title",
           },
           {
-            "casing": {},
             "value": "client_name",
           },
           {
-            "casing": {},
             "value": "worker_name",
           },
           {
-            "casing": {},
             "value": "total",
           },
           {
-            "casing": {},
             "value": "status",
           },
         ],
@@ -7372,15 +7323,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Time off type.",
         "enum": [
           {
-            "casing": {},
             "value": "VACATION",
           },
           {
-            "casing": {},
             "value": "SICK_LEAVE",
           },
           {
-            "casing": {},
             "value": "OTHER",
           },
         ],
@@ -7924,11 +7872,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
         "enum": [
           {
-            "casing": {},
             "value": "STANDARD",
           },
           {
-            "casing": {},
             "value": "SPECIFIC",
           },
         ],
@@ -7937,12 +7883,10 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Is it a full-time contract or a part-time contract?",
         "enum": [
           {
-            "casing": {},
             "name": "FullTime",
             "value": "Full-time",
           },
           {
-            "casing": {},
             "name": "PartTime",
             "value": "Part-time",
           },
@@ -7969,11 +7913,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of worker.",
         "enum": [
           {
-            "casing": {},
             "value": "Skilled",
           },
           {
-            "casing": {},
             "value": "Unskilled",
           },
         ],
@@ -8058,15 +8000,12 @@ exports[`open api parser deel simple 1`] = `
       "EorCountryValidationsDefiniteContractType": {
         "enum": [
           {
-            "casing": {},
             "value": "ALLOWED_WITHOUT_LIMITATION",
           },
           {
-            "casing": {},
             "value": "ALLOWED_WITH_MAXIMUM_LIMITATION",
           },
           {
-            "casing": {},
             "value": "NOT_ALLOWED",
           },
         ],
@@ -8100,15 +8039,12 @@ exports[`open api parser deel simple 1`] = `
       "EorCountryValidationsPartTimeHolidayType": {
         "enum": [
           {
-            "casing": {},
             "value": "PRORATED",
           },
           {
-            "casing": {},
             "value": "STANDARD",
           },
           {
-            "casing": {},
             "value": "SPECIFIC",
           },
         ],
@@ -8266,23 +8202,18 @@ exports[`open api parser deel simple 1`] = `
       "EorHolidaysRolloverType": {
         "enum": [
           {
-            "casing": {},
             "value": "EXPIRATION",
           },
           {
-            "casing": {},
             "value": "PAY_OUT",
           },
           {
-            "casing": {},
             "value": "UNLIMITED_ROLLOVER",
           },
           {
-            "casing": {},
             "value": "LIMITED_ROLLOVER",
           },
           {
-            "casing": {},
             "value": "UNSET",
           },
         ],
@@ -8463,19 +8394,15 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Either works days or calendar days",
         "enum": [
           {
-            "casing": {},
             "value": "CUSTOM_AMOUNT",
           },
           {
-            "casing": {},
             "value": "WORK_DAYS",
           },
           {
-            "casing": {},
             "value": "CALENDAR_DAYS",
           },
           {
-            "casing": {},
             "value": "FULL_AMOUNT",
           },
         ],
@@ -8513,27 +8440,22 @@ exports[`open api parser deel simple 1`] = `
         "docs": "type of files allowed when uploading attachments",
         "enum": [
           {
-            "casing": {},
             "name": "ApplicationPdf",
             "value": "application/pdf",
           },
           {
-            "casing": {},
             "name": "TextCsv",
             "value": "text/csv",
           },
           {
-            "casing": {},
             "name": "TextPlain",
             "value": "text/plain",
           },
           {
-            "casing": {},
             "name": "ImageJpeg",
             "value": "image/jpeg",
           },
           {
-            "casing": {},
             "name": "ImagePng",
             "value": "image/png",
           },
@@ -8576,19 +8498,15 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Either works days or calendar days",
         "enum": [
           {
-            "casing": {},
             "value": "CUSTOM_AMOUNT",
           },
           {
-            "casing": {},
             "value": "WORK_DAYS",
           },
           {
-            "casing": {},
             "value": "CALENDAR_DAYS",
           },
           {
-            "casing": {},
             "value": "FULL_AMOUNT",
           },
         ],
@@ -8748,15 +8666,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Health insurance status.",
         "enum": [
           {
-            "casing": {},
             "value": "REQUIRED",
           },
           {
-            "casing": {},
             "value": "ENABLED",
           },
           {
-            "casing": {},
             "value": "DISABLED",
           },
         ],
@@ -9041,11 +8956,9 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentReviewToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -9061,11 +8974,9 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentReviewsToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -9160,131 +9071,99 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of invoice adjustment.",
         "enum": [
           {
-            "casing": {},
             "value": "accrued_holiday",
           },
           {
-            "casing": {},
             "value": "additional_fee",
           },
           {
-            "casing": {},
             "value": "allowance",
           },
           {
-            "casing": {},
             "value": "bonus",
           },
           {
-            "casing": {},
             "value": "commission",
           },
           {
-            "casing": {},
             "value": "deduction",
           },
           {
-            "casing": {},
             "value": "deposit",
           },
           {
-            "casing": {},
             "value": "deposit_refund",
           },
           {
-            "casing": {},
             "value": "employer_cost",
           },
           {
-            "casing": {},
             "value": "expense",
           },
           {
-            "casing": {},
             "value": "health_allowance",
           },
           {
-            "casing": {},
             "value": "health_benefit",
           },
           {
-            "casing": {},
             "value": "health_insurance_fee",
           },
           {
-            "casing": {},
             "value": "legal_fee",
           },
           {
-            "casing": {},
             "value": "management_fee",
           },
           {
-            "casing": {},
             "value": "milestone",
           },
           {
-            "casing": {},
             "value": "offcycle",
           },
           {
-            "casing": {},
             "value": "other",
           },
           {
-            "casing": {},
             "value": "overtime",
           },
           {
-            "casing": {},
             "value": "pension",
           },
           {
-            "casing": {},
             "value": "pro_rata",
           },
           {
-            "casing": {},
             "value": "setup_fee",
           },
           {
-            "casing": {},
             "value": "severance",
           },
           {
-            "casing": {},
             "value": "shield_service",
           },
           {
-            "casing": {},
             "value": "signing_bonus",
           },
           {
-            "casing": {},
             "value": "signing_bonus_employer_cost",
           },
           {
-            "casing": {},
             "value": "refund",
           },
           {
-            "casing": {},
             "value": "task",
           },
           {
-            "casing": {},
             "value": "time_off",
           },
           {
-            "casing": {},
             "value": "vat",
           },
           {
-            "casing": {},
             "value": "withholding_tax",
           },
           {
-            "casing": {},
             "value": "work",
           },
         ],
@@ -9294,35 +9173,27 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of invoice adjustment.",
         "enum": [
           {
-            "casing": {},
             "value": "bonus",
           },
           {
-            "casing": {},
             "value": "commission",
           },
           {
-            "casing": {},
             "value": "deduction",
           },
           {
-            "casing": {},
             "value": "expense",
           },
           {
-            "casing": {},
             "value": "other",
           },
           {
-            "casing": {},
             "value": "overtime",
           },
           {
-            "casing": {},
             "value": "time_off",
           },
           {
-            "casing": {},
             "value": "vat",
           },
         ],
@@ -9348,31 +9219,24 @@ exports[`open api parser deel simple 1`] = `
         "docs": "invoice's allowed contract types",
         "enum": [
           {
-            "casing": {},
             "value": "pending",
           },
           {
-            "casing": {},
             "value": "paid",
           },
           {
-            "casing": {},
             "value": "processing",
           },
           {
-            "casing": {},
             "value": "canceled",
           },
           {
-            "casing": {},
             "value": "skipped",
           },
           {
-            "casing": {},
             "value": "failed",
           },
           {
-            "casing": {},
             "value": "refunded",
           },
         ],
@@ -9418,31 +9282,24 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Current status of the invoice.",
         "enum": [
           {
-            "casing": {},
             "value": "pending",
           },
           {
-            "casing": {},
             "value": "paid",
           },
           {
-            "casing": {},
             "value": "processing",
           },
           {
-            "casing": {},
             "value": "canceled",
           },
           {
-            "casing": {},
             "value": "skipped",
           },
           {
-            "casing": {},
             "value": "failed",
           },
           {
-            "casing": {},
             "value": "refunded",
           },
         ],
@@ -9455,51 +9312,39 @@ exports[`open api parser deel simple 1`] = `
         "docs": "invoice's type",
         "enum": [
           {
-            "casing": {},
             "value": "PAYMENT",
           },
           {
-            "casing": {},
             "value": "EOR_DEPOSIT",
           },
           {
-            "casing": {},
             "value": "EOR_FIRST_PAYMENT",
           },
           {
-            "casing": {},
             "value": "EOR_TERMINATION_OFFCYCLE",
           },
           {
-            "casing": {},
             "value": "SIGNING_BONUS",
           },
           {
-            "casing": {},
             "value": "REFUND_STATEMENT",
           },
           {
-            "casing": {},
             "value": "EOR_TAX_RULING",
           },
           {
-            "casing": {},
             "value": "GP_DEPOSIT_STATEMENT",
           },
           {
-            "casing": {},
             "value": "GP_FUNDING_STATEMENT",
           },
           {
-            "casing": {},
             "value": "GLOBAL_PAYROLL_FEES",
           },
           {
-            "casing": {},
             "value": "SHIELD_DEPOSIT",
           },
           {
-            "casing": {},
             "value": "EOR_MANAGEMENT_FEE",
           },
         ],
@@ -9546,11 +9391,9 @@ exports[`open api parser deel simple 1`] = `
       "LegalEntityType": {
         "enum": [
           {
-            "casing": {},
             "value": "individual",
           },
           {
-            "casing": {},
             "value": "company",
           },
         ],
@@ -9656,11 +9499,9 @@ exports[`open api parser deel simple 1`] = `
       "MilestoneReviewToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -9689,11 +9530,9 @@ exports[`open api parser deel simple 1`] = `
       "MilestoneReviewsToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -9723,91 +9562,76 @@ exports[`open api parser deel simple 1`] = `
       "OauthScope": {
         "enum": [
           {
-            "casing": {},
             "docs": "View payments and invoices in your organization.",
             "name": "AccountingRead",
             "value": "accounting:read",
           },
           {
-            "casing": {},
             "docs": "Create and edit payments and invoices.",
             "name": "AccountingWrite",
             "value": "accounting:write",
           },
           {
-            "casing": {},
             "docs": "View contracts in your organization.",
             "name": "ContractsRead",
             "value": "contracts:read",
           },
           {
-            "casing": {},
             "docs": "Create and amend contracts.",
             "name": "ContractsWrite",
             "value": "contracts:write",
           },
           {
-            "casing": {},
             "docs": "View invoices of your workforce.",
             "name": "InvoiceAdjustmentsRead",
             "value": "invoice-adjustments:read",
           },
           {
-            "casing": {},
             "docs": "Create, edit, review, and delete invoice adjustments.",
             "name": "InvoiceAdjustmentsWrite",
             "value": "invoice-adjustments:write",
           },
           {
-            "casing": {},
             "docs": "View milestones of your contractors.",
             "name": "MilestonesRead",
             "value": "milestones:read",
           },
           {
-            "casing": {},
             "docs": "Create, edit, review, and delete milestones.",
             "name": "MilestonesWrite",
             "value": "milestones:write",
           },
           {
-            "casing": {},
             "docs": "View basic information about your organizations, teams, legal entities and agreements.",
             "name": "OrganizationsRead",
             "value": "organizations:read",
           },
           {
-            "casing": {},
             "docs": "View your off-cycle payments.",
             "name": "OffCyclePaymentsRead",
             "value": "off-cycle-payments:read",
           },
           {
-            "casing": {},
             "docs": "Create, edit, review your off-cycle payments.",
             "name": "OffCyclePaymentsWrite",
             "value": "off-cycle-payments:write",
           },
           {
-            "casing": {},
             "docs": "View work submitted for time-based contracts.",
             "name": "TimesheetsRead",
             "value": "timesheets:read",
           },
           {
-            "casing": {},
             "docs": "Create, edit, review, and delete timesheets.",
             "name": "TimesheetsWrite",
             "value": "timesheets:write",
           },
           {
-            "casing": {},
             "docs": "View your pay-as-you-go tasks.",
             "name": "TasksRead",
             "value": "tasks:read",
           },
           {
-            "casing": {},
             "docs": "Create, edit, review and delete your pay-as-you-go tasks.",
             "name": "TasksWrite",
             "value": "tasks:write",
@@ -10050,59 +9874,45 @@ exports[`open api parser deel simple 1`] = `
         "docs": "All the supported payment types",
         "enum": [
           {
-            "casing": {},
             "value": "stripe_bacs_debit",
           },
           {
-            "casing": {},
             "value": "pay_pal",
           },
           {
-            "casing": {},
             "value": "stripe_card",
           },
           {
-            "casing": {},
             "value": "bt_card",
           },
           {
-            "casing": {},
             "value": "stripe_ach",
           },
           {
-            "casing": {},
             "value": "coinbase",
           },
           {
-            "casing": {},
             "value": "go_cardless",
           },
           {
-            "casing": {},
             "value": "brex",
           },
           {
-            "casing": {},
             "value": "stripe_sepa_debit",
           },
           {
-            "casing": {},
             "value": "transferwise",
           },
           {
-            "casing": {},
             "value": "go_cardless_becs",
           },
           {
-            "casing": {},
             "value": "bank_transfer",
           },
           {
-            "casing": {},
             "value": "mercury_wire",
           },
           {
-            "casing": {},
             "value": "bt_pay_pal",
           },
         ],
@@ -10129,11 +9939,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "status of payment",
         "enum": [
           {
-            "casing": {},
             "value": "paid",
           },
           {
-            "casing": {},
             "value": "processing",
           },
         ],
@@ -10432,11 +10240,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Review status.",
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -10459,11 +10265,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Review status.",
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -10603,19 +10407,15 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Either works days or calendar days",
         "enum": [
           {
-            "casing": {},
             "value": "CUSTOM_AMOUNT",
           },
           {
-            "casing": {},
             "value": "WORK_DAYS",
           },
           {
-            "casing": {},
             "value": "CALENDAR_DAYS",
           },
           {
-            "casing": {},
             "value": "FULL_AMOUNT",
           },
         ],
@@ -10623,27 +10423,21 @@ exports[`open api parser deel simple 1`] = `
       "ProfileTypeEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "client",
           },
           {
-            "casing": {},
             "value": "contractor",
           },
           {
-            "casing": {},
             "value": "icp",
           },
           {
-            "casing": {},
             "value": "direct_employee",
           },
           {
-            "casing": {},
             "value": "hris_direct_employee",
           },
           {
-            "casing": {},
             "value": "service_account",
           },
         ],
@@ -10736,11 +10530,9 @@ exports[`open api parser deel simple 1`] = `
       "SortDirEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "asc",
           },
           {
-            "casing": {},
             "value": "desc",
           },
         ],
@@ -10868,15 +10660,12 @@ exports[`open api parser deel simple 1`] = `
       "TimeoffsStatusEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "REQUESTED",
           },
           {
-            "casing": {},
             "value": "APPROVED",
           },
           {
-            "casing": {},
             "value": "REJECTED",
           },
         ],
@@ -10884,15 +10673,12 @@ exports[`open api parser deel simple 1`] = `
       "TimeoffsTypeEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "VACATION",
           },
           {
-            "casing": {},
             "value": "SICK_LEAVE",
           },
           {
-            "casing": {},
             "value": "OTHER",
           },
         ],
@@ -10968,11 +10754,9 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetReviewToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -10988,11 +10772,9 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetReviewsToCreateStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "approved",
           },
           {
-            "casing": {},
             "value": "declined",
           },
         ],
@@ -11148,11 +10930,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Status of webhook.",
         "enum": [
           {
-            "casing": {},
             "value": "enabled",
           },
           {
-            "casing": {},
             "value": "disabled",
           },
         ],
@@ -11167,31 +10947,24 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Days of the week.",
         "enum": [
           {
-            "casing": {},
             "value": "Sunday",
           },
           {
-            "casing": {},
             "value": "Monday",
           },
           {
-            "casing": {},
             "value": "Tuesday",
           },
           {
-            "casing": {},
             "value": "Wednesday",
           },
           {
-            "casing": {},
             "value": "Thursday",
           },
           {
-            "casing": {},
             "value": "Friday",
           },
           {
-            "casing": {},
             "value": "Saturday",
           },
         ],
@@ -11200,15 +10973,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Cycle end can be weekly 1-7 (Monday = 1) or monthly 1-31.",
         "enum": [
           {
-            "casing": {},
             "value": "DAY_OF_WEEK",
           },
           {
-            "casing": {},
             "value": "DAY_OF_LAST_WEEK",
           },
           {
-            "casing": {},
             "value": "DAY_OF_MONTH",
           },
         ],
@@ -11217,23 +10987,18 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Scale of the invoice cycle.",
         "enum": [
           {
-            "casing": {},
             "value": "weekly",
           },
           {
-            "casing": {},
             "value": "monthly",
           },
           {
-            "casing": {},
             "value": "biweekly",
           },
           {
-            "casing": {},
             "value": "semimonthly",
           },
           {
-            "casing": {},
             "name": "CalendarMonth",
             "value": "calendar-month",
           },
@@ -11243,11 +11008,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Type of payment due. If the payment is due on the last day of month, enter 'WITHIN_MONTH'.",
         "enum": [
           {
-            "casing": {},
             "value": "REGULAR",
           },
           {
-            "casing": {},
             "value": "WITHIN_MONTH",
           },
         ],
@@ -11256,31 +11019,24 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
         "enum": [
           {
-            "casing": {},
             "value": "hourly",
           },
           {
-            "casing": {},
             "value": "daily",
           },
           {
-            "casing": {},
             "value": "weekly",
           },
           {
-            "casing": {},
             "value": "monthly",
           },
           {
-            "casing": {},
             "value": "biweekly",
           },
           {
-            "casing": {},
             "value": "semimonthly",
           },
           {
-            "casing": {},
             "value": "custom",
           },
         ],
@@ -11289,31 +11045,24 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
         "enum": [
           {
-            "casing": {},
             "value": "hourly",
           },
           {
-            "casing": {},
             "value": "daily",
           },
           {
-            "casing": {},
             "value": "weekly",
           },
           {
-            "casing": {},
             "value": "monthly",
           },
           {
-            "casing": {},
             "value": "biweekly",
           },
           {
-            "casing": {},
             "value": "semimonthly",
           },
           {
-            "casing": {},
             "value": "custom",
           },
         ],

@@ -173,128 +173,99 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Bcp47Tag": {
         "enum": [
           {
-            "casing": {},
             "value": "zh",
           },
           {
-            "casing": {},
             "value": "da",
           },
           {
-            "casing": {},
             "value": "nl",
           },
           {
-            "casing": {},
             "value": "en",
           },
           {
-            "casing": {},
             "name": "EnAu",
             "value": "en-AU",
           },
           {
-            "casing": {},
             "name": "EnIn",
             "value": "en-IN",
           },
           {
-            "casing": {},
             "name": "EnNz",
             "value": "en-NZ",
           },
           {
-            "casing": {},
             "name": "EnGb",
             "value": "en-GB",
           },
           {
-            "casing": {},
             "value": "fr",
           },
           {
-            "casing": {},
             "name": "FrCa",
             "value": "fr-CA",
           },
           {
-            "casing": {},
             "value": "de",
           },
           {
-            "casing": {},
             "value": "hi",
           },
           {
-            "casing": {},
             "name": "HiLatn",
             "value": "hi-Latn",
           },
           {
-            "casing": {},
             "value": "id",
           },
           {
-            "casing": {},
             "value": "it",
           },
           {
-            "casing": {},
             "value": "ja",
           },
           {
-            "casing": {},
             "value": "ko",
           },
           {
-            "casing": {},
             "value": "no",
           },
           {
-            "casing": {},
             "value": "pl",
           },
           {
-            "casing": {},
             "value": "pt",
           },
           {
-            "casing": {},
             "name": "PtBr",
             "value": "pt-BR",
           },
           {
-            "casing": {},
             "name": "PtPt",
             "value": "pt-PT",
           },
           {
-            "casing": {},
             "value": "ru",
           },
           {
-            "casing": {},
             "value": "es",
           },
           {
-            "casing": {},
             "name": "Es419",
             "value": "es-419",
           },
           {
-            "casing": {},
             "value": "sv",
           },
           {
-            "casing": {},
             "value": "ta",
           },
           {
-            "casing": {},
             "value": "tr",
           },
           {
-            "casing": {},
             "value": "uk",
           },
         ],
@@ -375,11 +346,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Direction": {
         "enum": [
           {
-            "casing": {},
             "value": "asc",
           },
           {
-            "casing": {},
             "value": "desc",
           },
         ],
@@ -535,19 +504,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
         "enum": [
           {
-            "casing": {},
             "value": "word",
           },
           {
-            "casing": {},
             "value": "sentence",
           },
           {
-            "casing": {},
             "value": "utterance",
           },
           {
-            "casing": {},
             "value": "conversational_turn",
           },
         ],
@@ -920,15 +885,12 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "SortBy": {
         "enum": [
           {
-            "casing": {},
             "value": "created",
           },
           {
-            "casing": {},
             "value": "started",
           },
           {
-            "casing": {},
             "value": "ended",
           },
         ],
@@ -1009,19 +971,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Status": {
         "enum": [
           {
-            "casing": {},
             "value": "QUEUED",
           },
           {
-            "casing": {},
             "value": "IN_PROGRESS",
           },
           {
-            "casing": {},
             "value": "COMPLETED",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -1080,11 +1038,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "When": {
         "enum": [
           {
-            "casing": {},
             "value": "created_before",
           },
           {
-            "casing": {},
             "value": "created_after",
           },
         ],

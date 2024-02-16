@@ -318,11 +318,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         "AccountsListAccountsRequestLocation": {
           "enum": [
             {
-              "casing": {},
               "value": "internal",
             },
             {
-              "casing": {},
               "value": "external",
             },
           ],
@@ -1826,31 +1824,24 @@ Note: This operation requires an identity challenge if the financial institution
 ",
         "enum": [
           {
-            "casing": {},
             "value": "billPay",
           },
           {
-            "casing": {},
             "value": "transferFrom",
           },
           {
-            "casing": {},
             "value": "transferTo",
           },
           {
-            "casing": {},
             "value": "mobileCheckDeposit",
           },
           {
-            "casing": {},
             "value": "view",
           },
           {
-            "casing": {},
             "value": "viewCards",
           },
           {
-            "casing": {},
             "value": "manageCards",
           },
         ],
@@ -1971,15 +1962,12 @@ Note: This operation requires an identity challenge if the financial institution
 Account transfers are only allowed between \`internal\` and \`external\` accounts. All accounts are considered when calculating total cash balance.",
         "enum": [
           {
-            "casing": {},
             "value": "internal",
           },
           {
-            "casing": {},
             "value": "external",
           },
           {
-            "casing": {},
             "value": "outside",
           },
         ],
@@ -2089,19 +2077,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
         "enum": [
           {
-            "casing": {},
             "value": "early",
           },
           {
-            "casing": {},
             "value": "normal",
           },
           {
-            "casing": {},
             "value": "float",
           },
           {
-            "casing": {},
             "value": "sameDay",
           },
         ],
@@ -2152,43 +2136,33 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
         "enum": [
           {
-            "casing": {},
             "value": "arc",
           },
           {
-            "casing": {},
             "value": "boc",
           },
           {
-            "casing": {},
             "value": "ccd",
           },
           {
-            "casing": {},
             "value": "cie",
           },
           {
-            "casing": {},
             "value": "ctx",
           },
           {
-            "casing": {},
             "value": "pop",
           },
           {
-            "casing": {},
             "value": "ppd",
           },
           {
-            "casing": {},
             "value": "rck",
           },
           {
-            "casing": {},
             "value": "tel",
           },
           {
-            "casing": {},
             "value": "web",
           },
         ],
@@ -2331,23 +2305,18 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
         "enum": [
           {
-            "casing": {},
             "value": "sms",
           },
           {
-            "casing": {},
             "value": "email",
           },
           {
-            "casing": {},
             "value": "voice",
           },
           {
-            "casing": {},
             "value": "securityQuestions",
           },
           {
-            "casing": {},
             "value": "authenticatorToken",
           },
         ],
@@ -2439,31 +2408,24 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
         "enum": [
           {
-            "casing": {},
             "value": "ach",
           },
           {
-            "casing": {},
             "value": "sameDayAch",
           },
           {
-            "casing": {},
             "value": "domesticWireTransfer",
           },
           {
-            "casing": {},
             "value": "internationalWireTransfer",
           },
           {
-            "casing": {},
             "value": "internalTransfer",
           },
           {
-            "casing": {},
             "value": "externalTransfer",
           },
           {
-            "casing": {},
             "value": "billPay",
           },
         ],
@@ -2546,15 +2508,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "instant",
           },
           {
-            "casing": {},
             "value": "microDeposits",
           },
           {
-            "casing": {},
             "value": "manual",
           },
         ],
@@ -2643,15 +2602,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "abaRoutingNumber",
           },
           {
-            "casing": {},
             "value": "swiftBicCode",
           },
           {
-            "casing": {},
             "value": "ibanAccountNumber",
           },
         ],
@@ -2836,27 +2792,21 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "savings",
           },
           {
-            "casing": {},
             "value": "checking",
           },
           {
-            "casing": {},
             "value": "cd",
           },
           {
-            "casing": {},
             "value": "ira",
           },
           {
-            "casing": {},
             "value": "loan",
           },
           {
-            "casing": {},
             "value": "creditCard",
           },
         ],
@@ -2985,11 +2935,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "credit",
           },
           {
-            "casing": {},
             "value": "debit",
           },
         ],
@@ -3115,11 +3063,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "check",
           },
           {
-            "casing": {},
             "value": "other",
           },
         ],
@@ -3152,15 +3098,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "balance",
           },
           {
-            "casing": {},
             "value": "debit",
           },
           {
-            "casing": {},
             "value": "credit",
           },
         ],
@@ -3271,27 +3214,21 @@ The client can use this value to localize the \`items[].time\` values to the loc
 ",
         "enum": [
           {
-            "casing": {},
             "value": "pastDate",
           },
           {
-            "casing": {},
             "value": "pastCutoffTime",
           },
           {
-            "casing": {},
             "value": "riskRestricted",
           },
           {
-            "casing": {},
             "value": "holiday",
           },
           {
-            "casing": {},
             "value": "closure",
           },
           {
-            "casing": {},
             "value": "other",
           },
         ],
@@ -3402,55 +3339,42 @@ The response may include dates prior to requested the start date, as that is use
 ",
         "enum": [
           {
-            "casing": {},
             "value": "once",
           },
           {
-            "casing": {},
             "value": "occasional",
           },
           {
-            "casing": {},
             "value": "daily",
           },
           {
-            "casing": {},
             "value": "weekly",
           },
           {
-            "casing": {},
             "value": "biweekly",
           },
           {
-            "casing": {},
             "value": "semimonthly",
           },
           {
-            "casing": {},
             "value": "monthly",
           },
           {
-            "casing": {},
             "value": "monthlyFirstDay",
           },
           {
-            "casing": {},
             "value": "monthlyLastDay",
           },
           {
-            "casing": {},
             "value": "bimonthly",
           },
           {
-            "casing": {},
             "value": "quarterly",
           },
           {
-            "casing": {},
             "value": "semiyearly",
           },
           {
-            "casing": {},
             "value": "yearly",
           },
         ],
@@ -3524,11 +3448,9 @@ The response may include dates prior to requested the start date, as that is use
 ",
         "enum": [
           {
-            "casing": {},
             "value": "fixed",
           },
           {
-            "casing": {},
             "value": "variable",
           },
         ],
@@ -3586,15 +3508,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
         "enum": [
           {
-            "casing": {},
             "value": "debit",
           },
           {
-            "casing": {},
             "value": "credit",
           },
           {
-            "casing": {},
             "value": "both",
           },
         ],
@@ -3668,31 +3587,24 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
         "enum": [
           {
-            "casing": {},
             "value": "unscheduled",
           },
           {
-            "casing": {},
             "value": "pendingApproval",
           },
           {
-            "casing": {},
             "value": "scheduled",
           },
           {
-            "casing": {},
             "value": "processing",
           },
           {
-            "casing": {},
             "value": "processed",
           },
           {
-            "casing": {},
             "value": "failed",
           },
           {
-            "casing": {},
             "value": "other",
           },
         ],
@@ -3735,27 +3647,21 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
         "enum": [
           {
-            "casing": {},
             "value": "internal",
           },
           {
-            "casing": {},
             "value": "ach",
           },
           {
-            "casing": {},
             "value": "achDebit",
           },
           {
-            "casing": {},
             "value": "achCredit",
           },
           {
-            "casing": {},
             "value": "domesticWireTransfer",
           },
           {
-            "casing": {},
             "value": "internationalWireTransfer",
           },
         ],

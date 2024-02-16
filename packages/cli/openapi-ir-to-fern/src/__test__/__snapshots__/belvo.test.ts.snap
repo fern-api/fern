@@ -6631,12 +6631,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "ListPaymentLinksRequestOrdering": {
           "enum": [
             {
-              "casing": {},
               "name": "Ascending",
               "value": "created_at",
             },
             {
-              "casing": {},
               "name": "Descending",
               "value": "-created_at",
             },
@@ -6645,11 +6643,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "ListPaymentLinksRequestStatus": {
           "enum": [
             {
-              "casing": {},
               "value": "ACTIVE",
             },
             {
-              "casing": {},
               "value": "INACTIVE",
             },
           ],
@@ -13102,15 +13098,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
         "enum": [
           {
-            "casing": {},
             "value": "PENDING",
           },
           {
-            "casing": {},
             "value": "SUCCEEDED",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -13873,11 +13866,9 @@ We return one of the following enum values:
         "docs": "The type of bank account. Can be either \`INDIVIDUAL\` or \`BUSINESS\`.",
         "enum": [
           {
-            "casing": {},
             "value": "INDIVIDUAL",
           },
           {
-            "casing": {},
             "value": "BUSINESS",
           },
         ],
@@ -13891,15 +13882,12 @@ We return one of the following enum values:
   - \`SALARY\`",
         "enum": [
           {
-            "casing": {},
             "value": "CHECKINGS",
           },
           {
-            "casing": {},
             "value": "SAVINGS",
           },
           {
-            "casing": {},
             "value": "SALARY",
           },
         ],
@@ -13913,19 +13901,15 @@ Can be either:
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
           {
-            "casing": {},
             "value": "CHECKING_ACCOUNT",
           },
           {
-            "casing": {},
             "value": "CREDIT_CARD",
           },
           {
-            "casing": {},
             "value": "LOAN_ACCOUNT",
           },
           {
-            "casing": {},
             "value": "SAVINGS_ACCOUNT",
           },
         ],
@@ -13938,11 +13922,9 @@ Can be either:
   - \`BUSINESS\`",
         "enum": [
           {
-            "casing": {},
             "value": "INDIVIDUAL",
           },
           {
-            "casing": {},
             "value": "BUSINESS",
           },
         ],
@@ -14065,11 +14047,9 @@ Can be either:
   - \`OUTFLOW\` indicates a sent transaction.",
         "enum": [
           {
-            "casing": {},
             "value": "INFLOW",
           },
           {
-            "casing": {},
             "value": "OUTFLOW",
           },
         ],
@@ -14081,11 +14061,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "CPF",
           },
           {
-            "casing": {},
             "value": "CNPJ",
           },
         ],
@@ -14097,23 +14075,18 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "CC",
           },
           {
-            "casing": {},
             "value": "PP",
           },
           {
-            "casing": {},
             "value": "CE",
           },
           {
-            "casing": {},
             "value": "TI",
           },
           {
-            "casing": {},
             "value": "NIT",
           },
         ],
@@ -14129,11 +14102,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "INDIVIDUAL",
           },
           {
-            "casing": {},
             "value": "BUSINESS",
           },
         ],
@@ -14146,11 +14117,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "NSS",
           },
           {
-            "casing": {},
             "value": "CURP",
           },
         ],
@@ -14160,11 +14129,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "EMPLOYED",
           },
           {
-            "casing": {},
             "value": "UNEMPLOYED",
           },
         ],
@@ -14181,27 +14148,21 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "DISMISSED_RESIGNED",
           },
           {
-            "casing": {},
             "value": "SALARY_MODIFICATION",
           },
           {
-            "casing": {},
             "value": "HIRED",
           },
           {
-            "casing": {},
             "value": "VOLUNTARY_CONTRIBUTION",
           },
           {
-            "casing": {},
             "value": "ABSENCE",
           },
           {
-            "casing": {},
             "value": "SICK_LEAVE",
           },
         ],
@@ -14217,15 +14178,12 @@ You can send through one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "HIGH",
           },
           {
-            "casing": {},
             "value": "MEDIUM",
           },
           {
-            "casing": {},
             "value": "LOW",
           },
         ],
@@ -14242,15 +14200,12 @@ We return one of the following enum values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "HIGH",
           },
           {
-            "casing": {},
             "value": "MEDIUM",
           },
           {
-            "casing": {},
             "value": "LOW",
           },
         ],
@@ -14268,23 +14223,18 @@ We return one of the following enum values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "MONTHLY",
           },
           {
-            "casing": {},
             "value": "FORTNIGHTLY",
           },
           {
-            "casing": {},
             "value": "WEEKLY",
           },
           {
-            "casing": {},
             "value": "IRREGULAR",
           },
           {
-            "casing": {},
             "value": "SINGLE",
           },
         ],
@@ -14307,43 +14257,33 @@ We return one of the following enum values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "SALARY",
           },
           {
-            "casing": {},
             "value": "GOVERNMENT",
           },
           {
-            "casing": {},
             "value": "INTEREST",
           },
           {
-            "casing": {},
             "value": "RENT",
           },
           {
-            "casing": {},
             "value": "RETIREMENT",
           },
           {
-            "casing": {},
             "value": "FREELANCE",
           },
           {
-            "casing": {},
             "value": "ALTERNATIVE_INCOME",
           },
           {
-            "casing": {},
             "value": "TRANSFER",
           },
           {
-            "casing": {},
             "value": "DEPOSIT",
           },
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
         ],
@@ -14355,11 +14295,9 @@ Can be either:
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
           {
-            "casing": {},
             "value": "CHECKING_ACCOUNT",
           },
           {
-            "casing": {},
             "value": "SAVINGS_ACCOUNT",
           },
         ],
@@ -14380,11 +14318,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "credentials",
           },
           {
-            "casing": {},
             "value": "openbanking",
           },
         ],
@@ -14394,11 +14330,9 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "healthy",
           },
           {
-            "casing": {},
             "value": "down",
           },
         ],
@@ -14412,15 +14346,12 @@ Can be either:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "bank",
           },
           {
-            "casing": {},
             "value": "fiscal",
           },
           {
-            "casing": {},
             "value": "employment",
           },
         ],
@@ -14440,31 +14371,24 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "BOND",
           },
           {
-            "casing": {},
             "value": "DEPOSIT",
           },
           {
-            "casing": {},
             "value": "ETF",
           },
           {
-            "casing": {},
             "value": "FUND",
           },
           {
-            "casing": {},
             "value": "OTHER",
           },
           {
-            "casing": {},
             "value": "PENSION",
           },
           {
-            "casing": {},
             "value": "STOCK",
           },
         ],
@@ -14481,19 +14405,15 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "FIXED_INCOME",
           },
           {
-            "casing": {},
             "value": "OTHER",
           },
           {
-            "casing": {},
             "value": "PENSION",
           },
           {
-            "casing": {},
             "value": "VARIABLE_INCOME",
           },
         ],
@@ -14513,43 +14433,33 @@ You can send through one or more of the following values:
   - \`UNKNOWN\`",
         "enum": [
           {
-            "casing": {},
             "value": "SALARY",
           },
           {
-            "casing": {},
             "value": "GOVERNMENT",
           },
           {
-            "casing": {},
             "value": "INTEREST",
           },
           {
-            "casing": {},
             "value": "RENT",
           },
           {
-            "casing": {},
             "value": "RETIREMENT",
           },
           {
-            "casing": {},
             "value": "FREELANCE",
           },
           {
-            "casing": {},
             "value": "ALTERNATIVE_INCOME",
           },
           {
-            "casing": {},
             "value": "TRANSFER",
           },
           {
-            "casing": {},
             "value": "DEPOSIT",
           },
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
         ],
@@ -14587,24 +14497,19 @@ For Mexico's SAT, we return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "Egreso",
           },
           {
-            "casing": {},
             "value": "Ingreso",
           },
           {
-            "casing": {},
             "name": "Nomina",
             "value": "Nómina",
           },
           {
-            "casing": {},
             "value": "Pago",
           },
           {
-            "casing": {},
             "value": "Traslado",
           },
         ],
@@ -14632,11 +14537,9 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
 ",
         "enum": [
           {
-            "casing": {},
             "value": "single",
           },
           {
-            "casing": {},
             "value": "recurrent",
           },
         ],
@@ -14673,19 +14576,15 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "valid",
           },
           {
-            "casing": {},
             "value": "invalid",
           },
           {
-            "casing": {},
             "value": "unconfirmed",
           },
           {
-            "casing": {},
             "value": "token_required",
           },
         ],
@@ -14699,15 +14598,12 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "OPERATION_FEE",
           },
           {
-            "casing": {},
             "value": "INSURANCE_FEE",
           },
           {
-            "casing": {},
             "value": "OTHERS",
           },
         ],
@@ -14720,11 +14616,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "MONTHLY",
           },
           {
-            "casing": {},
             "value": "YEARLY",
           },
         ],
@@ -14733,11 +14627,9 @@ We return one of the following values:
         "docs": "Type of bank account holder. For PSE, this value must be \`INDIVIDUAL\`.",
         "enum": [
           {
-            "casing": {},
             "value": "INDIVIDUAL",
           },
           {
-            "casing": {},
             "value": "BUSINESS",
           },
         ],
@@ -14747,23 +14639,18 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "REQUIRES_PAYMENT_METHOD",
           },
           {
-            "casing": {},
             "value": "REQUIRES_ACTION",
           },
           {
-            "casing": {},
             "value": "SUCCEEDED",
           },
           {
-            "casing": {},
             "value": "PROCESSING",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -14775,11 +14662,9 @@ We return one of the following values:
   - For 🇨🇴 Colombia's PSE, the value must be \`pse\`.",
         "enum": [
           {
-            "casing": {},
             "value": "open_finance",
           },
           {
-            "casing": {},
             "value": "pse",
           },
         ],
@@ -14793,11 +14678,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "belvo",
           },
           {
-            "casing": {},
             "value": "payments_way",
           },
         ],
@@ -14811,11 +14694,9 @@ We return one of the following values:
 **Note:** You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
         "enum": [
           {
-            "casing": {},
             "value": "ACTIVE",
           },
           {
-            "casing": {},
             "value": "INACTIVE",
           },
         ],
@@ -14827,11 +14708,9 @@ We return one of the following values:
   - \`OUTFLOW\` indicates money coming out of the account.",
         "enum": [
           {
-            "casing": {},
             "value": "INFLOW",
           },
           {
-            "casing": {},
             "value": "OUTFLOW",
           },
         ],
@@ -14845,11 +14724,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "BRA",
           },
           {
-            "casing": {},
             "value": "COL",
           },
         ],
@@ -14862,11 +14739,9 @@ We return one of the following values:
   - 🇨🇴 COP (Colombian Peso)",
         "enum": [
           {
-            "casing": {},
             "value": "BRL",
           },
           {
-            "casing": {},
             "value": "COP",
           },
         ],
@@ -14886,19 +14761,15 @@ We return one of the following values:
   - \`UNCATEGORIZED\`",
         "enum": [
           {
-            "casing": {},
             "value": "APPROVED",
           },
           {
-            "casing": {},
             "value": "CANCELLED",
           },
           {
-            "casing": {},
             "value": "REVERTED",
           },
           {
-            "casing": {},
             "value": "UNCATEGORIZED",
           },
         ],
@@ -14930,31 +14801,25 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "name": "BillsUtilities",
             "value": "Bills & Utilities",
           },
           {
-            "casing": {},
             "name": "CreditsLoans",
             "value": "Credits & Loans",
           },
           {
-            "casing": {},
             "value": "Insurance",
           },
           {
-            "casing": {},
             "name": "OnlinePlatformsLeisure",
             "value": "Online Platforms & Leisure",
           },
           {
-            "casing": {},
             "name": "TransportTravel",
             "value": "Transport & Travel",
           },
           {
-            "casing": {},
             "value": "Taxes",
           },
         ],
@@ -14968,11 +14833,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "SUBSCRIPTION",
           },
           {
-            "casing": {},
             "value": "REGULAR",
           },
         ],
@@ -14981,15 +14844,12 @@ We return one of the following values:
         "docs": "Indicates whether the taxpayer is complying to all their tax obligations (\`POSITIVE\`), if they are not (\`NEGATIVE\`), or have none to comply to (\`NO_OBLIGATIONS\`).",
         "enum": [
           {
-            "casing": {},
             "value": "POSITIVE",
           },
           {
-            "casing": {},
             "value": "NEGATIVE",
           },
           {
-            "casing": {},
             "value": "NO_OBLIGATIONS",
           },
         ],
@@ -15001,11 +14861,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "PAID",
           },
           {
-            "casing": {},
             "value": "PROVISIONED",
           },
         ],
@@ -15017,11 +14875,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "NATIONAL",
           },
           {
-            "casing": {},
             "value": "FOREIGN",
           },
         ],
@@ -15034,11 +14890,9 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "casing": {},
             "value": "OUTFLOW",
           },
           {
-            "casing": {},
             "value": "INFLOW",
           },
         ],

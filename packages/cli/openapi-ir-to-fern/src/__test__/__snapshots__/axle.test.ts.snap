@@ -533,35 +533,27 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "CoverageCode": {
         "enum": [
           {
-            "casing": {},
             "value": "BI",
           },
           {
-            "casing": {},
             "value": "PD",
           },
           {
-            "casing": {},
             "value": "UMBI",
           },
           {
-            "casing": {},
             "value": "UMPD",
           },
           {
-            "casing": {},
             "value": "UIMBI",
           },
           {
-            "casing": {},
             "value": "UIMPD",
           },
           {
-            "casing": {},
             "value": "COLL",
           },
           {
-            "casing": {},
             "value": "COMP",
           },
         ],
@@ -626,11 +618,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "PolicyType": {
         "enum": [
           {
-            "casing": {},
             "value": "auto",
           },
           {
-            "casing": {},
             "value": "motorcycle",
           },
         ],
@@ -659,15 +649,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "ThirdPartyType": {
         "enum": [
           {
-            "casing": {},
             "value": "lienholder",
           },
           {
-            "casing": {},
             "value": "lessor",
           },
           {
-            "casing": {},
             "value": "interest",
           },
         ],

@@ -991,15 +991,12 @@ exports[`open api parser suger simple 1`] = `
         "ListEntitlementsByPartnerRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1720,15 +1717,12 @@ exports[`open api parser suger simple 1`] = `
         "DeleteIntegrationRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1736,11 +1730,9 @@ exports[`open api parser suger simple 1`] = `
         "DeleteIntegrationRequestService": {
           "enum": [
             {
-              "casing": {},
               "value": "MARKETPLACE",
             },
             {
-              "casing": {},
               "value": "CRM",
             },
           ],
@@ -1748,15 +1740,12 @@ exports[`open api parser suger simple 1`] = `
         "GetIntegrationRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1764,11 +1753,9 @@ exports[`open api parser suger simple 1`] = `
         "GetIntegrationRequestService": {
           "enum": [
             {
-              "casing": {},
               "value": "MARKETPLACE",
             },
             {
-              "casing": {},
               "value": "CRM",
             },
           ],
@@ -1776,15 +1763,12 @@ exports[`open api parser suger simple 1`] = `
         "SharedCreateIntegrationParamsPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1792,15 +1776,12 @@ exports[`open api parser suger simple 1`] = `
         "SharedUpdateIntegrationParamsPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1808,15 +1789,12 @@ exports[`open api parser suger simple 1`] = `
         "UpdateIntegrationRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1824,11 +1802,9 @@ exports[`open api parser suger simple 1`] = `
         "UpdateIntegrationRequestService": {
           "enum": [
             {
-              "casing": {},
               "value": "MARKETPLACE",
             },
             {
-              "casing": {},
               "value": "CRM",
             },
           ],
@@ -1836,15 +1812,12 @@ exports[`open api parser suger simple 1`] = `
         "VerifyIntegrationRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -1852,11 +1825,9 @@ exports[`open api parser suger simple 1`] = `
         "VerifyIntegrationRequestService": {
           "enum": [
             {
-              "casing": {},
               "value": "MARKETPLACE",
             },
             {
-              "casing": {},
               "value": "CRM",
             },
           ],
@@ -3367,15 +3338,12 @@ exports[`open api parser suger simple 1`] = `
         "ListOffersByPartnerRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -3926,15 +3894,12 @@ exports[`open api parser suger simple 1`] = `
         "ListProductsByPartnerRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -4289,15 +4254,12 @@ exports[`open api parser suger simple 1`] = `
         "ListRevenueRecordDetailsRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -4305,15 +4267,12 @@ exports[`open api parser suger simple 1`] = `
         "ListRevenueRecordsRequestPartner": {
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -4322,15 +4281,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": "Required.",
           "enum": [
             {
-              "casing": {},
               "value": "AWS",
             },
             {
-              "casing": {},
               "value": "AZURE",
             },
             {
-              "casing": {},
               "value": "GCP",
             },
           ],
@@ -4384,11 +4340,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureIncludedBaseQuantityRecurringUnit": {
         "enum": [
           {
-            "casing": {},
             "value": "Monthly",
           },
           {
-            "casing": {},
             "value": "Annual",
           },
         ],
@@ -4406,15 +4360,12 @@ exports[`open api parser suger simple 1`] = `
       "AzureListingContactType": {
         "enum": [
           {
-            "casing": {},
             "value": "CustomerSupport",
           },
           {
-            "casing": {},
             "value": "Engineering",
           },
           {
-            "casing": {},
             "value": "ChannelManager",
           },
         ],
@@ -4465,19 +4416,15 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketStateState": {
         "enum": [
           {
-            "casing": {},
             "value": "Disabled",
           },
           {
-            "casing": {},
             "value": "Enabled",
           },
           {
-            "casing": {},
             "value": "StopSelling",
           },
           {
-            "casing": {},
             "value": "Terminated",
           },
         ],
@@ -4578,11 +4525,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType": {
         "enum": [
           {
-            "casing": {},
             "value": "cspCustomer",
           },
           {
-            "casing": {},
             "value": "billingGroup",
           },
         ],
@@ -4623,11 +4568,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplacePrivateOfferPricingDiscountType": {
         "enum": [
           {
-            "casing": {},
             "value": "percentage",
           },
           {
-            "casing": {},
             "value": "absolute",
           },
         ],
@@ -4636,11 +4579,9 @@ exports[`open api parser suger simple 1`] = `
         "docs": "The type of the plan, FLAT_RATE or PER_USER.",
         "enum": [
           {
-            "casing": {},
             "value": "FLAT_RATE",
           },
           {
-            "casing": {},
             "value": "PER_USER",
           },
         ],
@@ -4648,11 +4589,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplacePrivateOfferPrivateOfferType": {
         "enum": [
           {
-            "casing": {},
             "value": "customerPromotion",
           },
           {
-            "casing": {},
             "value": "cspPromotion",
           },
         ],
@@ -4667,19 +4606,15 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplacePrivateOfferState": {
         "enum": [
           {
-            "casing": {},
             "value": "draft",
           },
           {
-            "casing": {},
             "value": "live",
           },
           {
-            "casing": {},
             "value": "withdrawn",
           },
           {
-            "casing": {},
             "value": "deleted",
           },
         ],
@@ -4687,11 +4622,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplacePrivateOfferSubState": {
         "enum": [
           {
-            "casing": {},
             "value": "pendingAcceptance",
           },
           {
-            "casing": {},
             "value": "accepted",
           },
         ],
@@ -4709,19 +4642,15 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplaceTermType": {
         "enum": [
           {
-            "casing": {},
             "value": "day",
           },
           {
-            "casing": {},
             "value": "week",
           },
           {
-            "casing": {},
             "value": "month",
           },
           {
-            "casing": {},
             "value": "year",
           },
         ],
@@ -4739,55 +4668,42 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplaceValidationCode": {
         "enum": [
           {
-            "casing": {},
             "value": "businessValidationError",
           },
           {
-            "casing": {},
             "value": "collectionLimitExceeded",
           },
           {
-            "casing": {},
             "value": "invalidId",
           },
           {
-            "casing": {},
             "value": "invalidEntityStatus",
           },
           {
-            "casing": {},
             "value": "invalidRequest",
           },
           {
-            "casing": {},
             "value": "invalidResource",
           },
           {
-            "casing": {},
             "value": "invalidState",
           },
           {
-            "casing": {},
             "value": "notDeployed",
           },
           {
-            "casing": {},
             "value": "notSupported",
           },
           {
-            "casing": {},
             "value": "operationCanceled",
           },
           {
-            "casing": {},
             "value": "productLocked",
           },
           {
-            "casing": {},
             "value": "resourceNotFound",
           },
           {
-            "casing": {},
             "value": "schemaValidationError",
           },
         ],
@@ -4795,11 +4711,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureMarketplaceValidationLevel": {
         "enum": [
           {
-            "casing": {},
             "value": "informational",
           },
           {
-            "casing": {},
             "value": "warning",
           },
         ],
@@ -4836,11 +4750,9 @@ exports[`open api parser suger simple 1`] = `
         "docs": "default "usd"",
         "enum": [
           {
-            "casing": {},
             "value": "perMarket",
           },
           {
-            "casing": {},
             "value": "usd",
           },
         ],
@@ -4887,11 +4799,9 @@ exports[`open api parser suger simple 1`] = `
         "docs": "default "usd"",
         "enum": [
           {
-            "casing": {},
             "value": "perMarket",
           },
           {
-            "casing": {},
             "value": "usd",
           },
         ],
@@ -4906,11 +4816,9 @@ exports[`open api parser suger simple 1`] = `
       "AzurePriceCadenceType": {
         "enum": [
           {
-            "casing": {},
             "value": "Month",
           },
           {
-            "casing": {},
             "value": "Year",
           },
         ],
@@ -4927,15 +4835,12 @@ exports[`open api parser suger simple 1`] = `
       "AzurePriceSchedulePricingModel": {
         "enum": [
           {
-            "casing": {},
             "value": "Flat",
           },
           {
-            "casing": {},
             "value": "Recurring",
           },
           {
-            "casing": {},
             "value": "Usage",
           },
         ],
@@ -4953,11 +4858,9 @@ exports[`open api parser suger simple 1`] = `
       "AzurePricingUnitName": {
         "enum": [
           {
-            "casing": {},
             "value": "sharedcore",
           },
           {
-            "casing": {},
             "value": "transactions",
           },
         ],
@@ -5029,11 +4932,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductFeatureAvailabilityVisibility": {
         "enum": [
           {
-            "casing": {},
             "value": "Public",
           },
           {
-            "casing": {},
             "value": "Private",
           },
         ],
@@ -5080,15 +4981,12 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductListingAssetResourceType": {
         "enum": [
           {
-            "casing": {},
             "value": "ListingAsset",
           },
           {
-            "casing": {},
             "value": "ListingImage",
           },
           {
-            "casing": {},
             "value": "ListingVideo",
           },
         ],
@@ -5096,23 +4994,18 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductListingAssetState": {
         "enum": [
           {
-            "casing": {},
             "value": "PendingUpload",
           },
           {
-            "casing": {},
             "value": "Uploaded",
           },
           {
-            "casing": {},
             "value": "InProcessing",
           },
           {
-            "casing": {},
             "value": "Processed",
           },
           {
-            "casing": {},
             "value": "ProcessFailed",
           },
         ],
@@ -5166,16 +5059,13 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductSetupCallToAction": {
         "enum": [
           {
-            "casing": {},
             "value": "free",
           },
           {
-            "casing": {},
             "name": "FreeTrial",
             "value": "free-trial",
           },
           {
-            "casing": {},
             "name": "ContactMe",
             "value": "contact-me",
           },
@@ -5184,11 +5074,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductSetupSellingOption": {
         "enum": [
           {
-            "casing": {},
             "value": "ListingOnly",
           },
           {
-            "casing": {},
             "value": "ListAndSell",
           },
         ],
@@ -5213,11 +5101,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductSubmissionState": {
         "enum": [
           {
-            "casing": {},
             "value": "Inprogress",
           },
           {
-            "casing": {},
             "value": "Published",
           },
         ],
@@ -5225,35 +5111,27 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductSubmissionSubState": {
         "enum": [
           {
-            "casing": {},
             "value": "InDraft",
           },
           {
-            "casing": {},
             "value": "Submitted",
           },
           {
-            "casing": {},
             "value": "Failed",
           },
           {
-            "casing": {},
             "value": "FailedInCertification",
           },
           {
-            "casing": {},
             "value": "ReadyToPublish",
           },
           {
-            "casing": {},
             "value": "Publishing",
           },
           {
-            "casing": {},
             "value": "Published",
           },
           {
-            "casing": {},
             "value": "InStore",
           },
         ],
@@ -5309,11 +5187,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductVariantResourceType": {
         "enum": [
           {
-            "casing": {},
             "value": "AzureSkuVariant",
           },
           {
-            "casing": {},
             "value": "AzureTestDriveVariant",
           },
         ],
@@ -5321,11 +5197,9 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductVariantState": {
         "enum": [
           {
-            "casing": {},
             "value": "InActive",
           },
           {
-            "casing": {},
             "value": "Active",
           },
         ],
@@ -5342,15 +5216,12 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductVariantTrialDurationType": {
         "enum": [
           {
-            "casing": {},
             "value": "Minute",
           },
           {
-            "casing": {},
             "value": "Days",
           },
           {
-            "casing": {},
             "value": "Months",
           },
         ],
@@ -5358,19 +5229,15 @@ exports[`open api parser suger simple 1`] = `
       "AzureProductVariantTrialType": {
         "enum": [
           {
-            "casing": {},
             "value": "NoTrial",
           },
           {
-            "casing": {},
             "value": "TimedAccess",
           },
           {
-            "casing": {},
             "value": "TimedUsage",
           },
           {
-            "casing": {},
             "value": "Unlimited",
           },
         ],
@@ -5522,39 +5389,30 @@ This member is required.",
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum": {
         "enum": [
           {
-            "casing": {},
             "value": "Accepted",
           },
           {
-            "casing": {},
             "value": "Expired",
           },
           {
-            "casing": {},
             "value": "Duplicate",
           },
           {
-            "casing": {},
             "value": "Error",
           },
           {
-            "casing": {},
             "value": "ResourceNotFound",
           },
           {
-            "casing": {},
             "value": "ResourceNotAuthorized",
           },
           {
-            "casing": {},
             "value": "InvalidDimension",
           },
           {
-            "casing": {},
             "value": "InvalidQuantity",
           },
           {
-            "casing": {},
             "value": "BadArgument",
           },
         ],
@@ -5961,15 +5819,12 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedAwsSnsSubscriptionStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
           {
-            "casing": {},
             "value": "CONFIRMED",
           },
           {
-            "casing": {},
             "value": "PENDING_CONFIRMATION",
           },
         ],
@@ -6062,15 +5917,12 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem": {
         "enum": [
           {
-            "casing": {},
             "value": "Read",
           },
           {
-            "casing": {},
             "value": "Update",
           },
           {
-            "casing": {},
             "value": "Delete",
           },
         ],
@@ -6078,11 +5930,9 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedAzureMarketplaceSubscriptionSandboxType": {
         "enum": [
           {
-            "casing": {},
             "value": "None",
           },
           {
-            "casing": {},
             "value": "Csp",
           },
         ],
@@ -6090,11 +5940,9 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedAzureMarketplaceSubscriptionSessionMode": {
         "enum": [
           {
-            "casing": {},
             "value": "None",
           },
           {
-            "casing": {},
             "value": "DryRun",
           },
         ],
@@ -6102,23 +5950,18 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedAzureMarketplaceSubscriptionStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "NotStarted",
           },
           {
-            "casing": {},
             "value": "PendingFulfillmentStart",
           },
           {
-            "casing": {},
             "value": "Subscribed",
           },
           {
-            "casing": {},
             "value": "Suspended",
           },
           {
-            "casing": {},
             "value": "Unsubscribed",
           },
         ],
@@ -6209,15 +6052,12 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedCommitDimensionTimeUnit": {
         "enum": [
           {
-            "casing": {},
             "value": "DAY",
           },
           {
-            "casing": {},
             "value": "MONTH",
           },
           {
-            "casing": {},
             "value": "YEAR",
           },
         ],
@@ -6225,11 +6065,9 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedCommitDimensionType": {
         "enum": [
           {
-            "casing": {},
             "value": "FLAT_RATE",
           },
           {
-            "casing": {},
             "value": "PER_USER",
           },
         ],
@@ -6329,28 +6167,22 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedEntitlementTermType": {
         "enum": [
           {
-            "casing": {},
             "name": "Unknown",
             "value": "",
           },
           {
-            "casing": {},
             "value": "AutoRenew",
           },
           {
-            "casing": {},
             "value": "ManualRenew",
           },
           {
-            "casing": {},
             "value": "PlanChange",
           },
           {
-            "casing": {},
             "value": "QuantityChange",
           },
           {
-            "casing": {},
             "value": "Signup",
           },
         ],
@@ -6367,27 +6199,21 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedEntityType": {
         "enum": [
           {
-            "casing": {},
             "value": "ORGANIZATION",
           },
           {
-            "casing": {},
             "value": "PRODUCT",
           },
           {
-            "casing": {},
             "value": "OFFER",
           },
           {
-            "casing": {},
             "value": "ENTITLEMENT",
           },
           {
-            "casing": {},
             "value": "ENTITLEMENT_TERM",
           },
           {
-            "casing": {},
             "value": "INTEGRATION",
           },
         ],
@@ -6395,28 +6221,22 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedEulaType": {
         "enum": [
           {
-            "casing": {},
             "name": "UNKNOWN",
             "value": "",
           },
           {
-            "casing": {},
             "value": "SCMP",
           },
           {
-            "casing": {},
             "value": "ECMP",
           },
           {
-            "casing": {},
             "value": "CUSTOM",
           },
           {
-            "casing": {},
             "value": "ISV",
           },
           {
-            "casing": {},
             "value": "CURRENT",
           },
         ],
@@ -6498,19 +6318,15 @@ in the google.rpc.Status.details field, or localized by the client.",
       "SharedGcpCommerceProducerPriceModel": {
         "enum": [
           {
-            "casing": {},
             "value": "FREE",
           },
           {
-            "casing": {},
             "value": "SUBSCRIPTION",
           },
           {
-            "casing": {},
             "value": "USAGE",
           },
           {
-            "casing": {},
             "value": "SUBSCRIPTION_PLUS_USAGE",
           },
         ],
@@ -6790,42 +6606,34 @@ This field is present only if the product has usage-based billing configured.",
       "SharedGcpMarketplaceEntitlementState": {
         "enum": [
           {
-            "casing": {},
             "name": "STATE_UNSPECIFIED",
             "value": "ENTITLEMENT_STATE_UNSPECIFIED",
           },
           {
-            "casing": {},
             "name": "ACTIVATION_REQUESTED",
             "value": "ENTITLEMENT_ACTIVATION_REQUESTED",
           },
           {
-            "casing": {},
             "name": "ACTIVE",
             "value": "ENTITLEMENT_ACTIVE",
           },
           {
-            "casing": {},
             "name": "PENDING_CANCELLATION",
             "value": "ENTITLEMENT_PENDING_CANCELLATION",
           },
           {
-            "casing": {},
             "name": "CANCELLED",
             "value": "ENTITLEMENT_CANCELLED",
           },
           {
-            "casing": {},
             "name": "PENDING_PLAN_CHANGE",
             "value": "ENTITLEMENT_PENDING_PLAN_CHANGE",
           },
           {
-            "casing": {},
             "name": "PENDING_PLAN_CHANGE_APPROVAL",
             "value": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
           },
           {
-            "casing": {},
             "name": "SUSPENDED",
             "value": "ENTITLEMENT_SUSPENDED",
           },
@@ -6884,19 +6692,15 @@ This field is present only if the product has usage-based billing configured.",
       "SharedGcpMarketplaceUserAccountApprovalState": {
         "enum": [
           {
-            "casing": {},
             "value": "STATE_UNSPECIFIED",
           },
           {
-            "casing": {},
             "value": "PENDING",
           },
           {
-            "casing": {},
             "value": "APPROVED",
           },
           {
-            "casing": {},
             "value": "REJECTED",
           },
         ],
@@ -6904,12 +6708,10 @@ This field is present only if the product has usage-based billing configured.",
       "SharedGcpMarketplaceUserAccountState": {
         "enum": [
           {
-            "casing": {},
             "name": "UNSPECIFIED",
             "value": "ACCOUNT_STATE_UNSPECIFIED",
           },
           {
-            "casing": {},
             "name": "ACTIVE",
             "value": "ACCOUNT_ACTIVE",
           },
@@ -7004,15 +6806,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedIdentityBuyerPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7034,15 +6833,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedIdentityIntegrationPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7050,15 +6846,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedIdentityIntegrationStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "CREATED",
           },
           {
-            "casing": {},
             "value": "VERIFIED",
           },
           {
-            "casing": {},
             "value": "NOT_VERIFIED",
           },
         ],
@@ -7282,47 +7075,36 @@ This field is present only if the product has usage-based billing configured.",
       "SharedNotificationEventAction": {
         "enum": [
           {
-            "casing": {},
             "value": "ACCEPT",
           },
           {
-            "casing": {},
             "value": "CREATE",
           },
           {
-            "casing": {},
             "value": "DELETE",
           },
           {
-            "casing": {},
             "value": "CANCEL",
           },
           {
-            "casing": {},
             "value": "PENDING_CANCEL",
           },
           {
-            "casing": {},
             "value": "EXPIRE",
           },
           {
-            "casing": {},
             "value": "REINSTATE",
           },
           {
-            "casing": {},
             "value": "SUSPEND",
           },
           {
-            "casing": {},
             "value": "UPDATE",
           },
           {
-            "casing": {},
             "value": "NOTIFY_CONTACTS",
           },
           {
-            "casing": {},
             "value": "TEST",
           },
         ],
@@ -7330,24 +7112,19 @@ This field is present only if the product has usage-based billing configured.",
       "SharedNotificationEventStatus": {
         "enum": [
           {
-            "casing": {},
             "name": "UNKNOWN",
             "value": "",
           },
           {
-            "casing": {},
             "value": "SCHEDULED",
           },
           {
-            "casing": {},
             "value": "PENDING",
           },
           {
-            "casing": {},
             "value": "DONE",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -7409,11 +7186,9 @@ This field is present only if the product has usage-based billing configured.",
         "docs": "The default visibility of offer is PRIVATE.",
         "enum": [
           {
-            "casing": {},
             "value": "PRIVATE",
           },
           {
-            "casing": {},
             "value": "PUBLIC",
           },
         ],
@@ -7571,15 +7346,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedRevenueReportType": {
         "enum": [
           {
-            "casing": {},
             "value": "InvoicedAmount",
           },
           {
-            "casing": {},
             "value": "CollectableAmount",
           },
           {
-            "casing": {},
             "value": "DisbursedAmount",
           },
         ],
@@ -7667,32 +7439,25 @@ This field is present only if the product has usage-based billing configured.",
       "SharedValueType": {
         "enum": [
           {
-            "casing": {},
             "name": "UNSPECIFIED",
             "value": "VALUE_TYPE_UNSPECIFIED",
           },
           {
-            "casing": {},
             "value": "BOOL",
           },
           {
-            "casing": {},
             "value": "INT64",
           },
           {
-            "casing": {},
             "value": "DOUBLE",
           },
           {
-            "casing": {},
             "value": "STRING",
           },
           {
-            "casing": {},
             "value": "DISTRIBUTION",
           },
           {
-            "casing": {},
             "value": "MONEY",
           },
         ],
@@ -7727,15 +7492,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadEntitlementPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7743,23 +7505,18 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadEntitlementStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "ACTIVE",
           },
           {
-            "casing": {},
             "value": "CANCELLED",
           },
           {
-            "casing": {},
             "value": "SUSPENDED",
           },
           {
-            "casing": {},
             "value": "PENDING_START",
           },
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
         ],
@@ -7792,15 +7549,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadEntitlementTermPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7836,35 +7590,27 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadOfferOfferType": {
         "enum": [
           {
-            "casing": {},
             "value": "DEFAULT",
           },
           {
-            "casing": {},
             "value": "CONTRACT",
           },
           {
-            "casing": {},
             "value": "SUBSCRIPTION",
           },
           {
-            "casing": {},
             "value": "FREE_TRIAL",
           },
           {
-            "casing": {},
             "value": "FLAT_RATE",
           },
           {
-            "casing": {},
             "value": "PER_USER",
           },
           {
-            "casing": {},
             "value": "PRIVATE",
           },
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
         ],
@@ -7872,15 +7618,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadOfferPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7888,43 +7631,33 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadOfferStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "ACCEPTED",
           },
           {
-            "casing": {},
             "value": "PENDING_CREATE",
           },
           {
-            "casing": {},
             "value": "CREATE_FAILED",
           },
           {
-            "casing": {},
             "value": "CREATE_SUCCESS",
           },
           {
-            "casing": {},
             "value": "DRAFT",
           },
           {
-            "casing": {},
             "value": "EXPIRED",
           },
           {
-            "casing": {},
             "value": "PENDING_ACCEPTANCE",
           },
           {
-            "casing": {},
             "value": "PENDING_CANCEL",
           },
           {
-            "casing": {},
             "value": "CANCEL_FAILED",
           },
           {
-            "casing": {},
             "value": "CANCEL_SUCCESS",
           },
         ],
@@ -7951,15 +7684,12 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadProductPartner": {
         "enum": [
           {
-            "casing": {},
             "value": "AWS",
           },
           {
-            "casing": {},
             "value": "AZURE",
           },
           {
-            "casing": {},
             "value": "GCP",
           },
         ],
@@ -7967,27 +7697,21 @@ This field is present only if the product has usage-based billing configured.",
       "SharedWorkloadProductProductType": {
         "enum": [
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
           {
-            "casing": {},
             "value": "SUBSCRIPTION",
           },
           {
-            "casing": {},
             "value": "CONTRACT",
           },
           {
-            "casing": {},
             "value": "FLAT_RATE",
           },
           {
-            "casing": {},
             "value": "PER_USER",
           },
           {
-            "casing": {},
             "value": "USAGE_BASED",
           },
         ],
@@ -8162,15 +7886,12 @@ the same customer, dimension, and time, but a different quantity.",
       "TypesUsageRecordResultStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "Success",
           },
           {
-            "casing": {},
             "value": "CustomerNotSubscribed",
           },
           {
-            "casing": {},
             "value": "DuplicateRecord",
           },
         ],

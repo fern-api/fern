@@ -1377,15 +1377,12 @@ exports[`open api parser hathora simple 1`] = `
         "CreateLobbyRequestVisibility": {
           "enum": [
             {
-              "casing": {},
               "value": "public",
             },
             {
-              "casing": {},
               "value": "private",
             },
             {
-              "casing": {},
               "value": "local",
             },
           ],
@@ -2072,19 +2069,15 @@ exports[`open api parser hathora simple 1`] = `
       "BuildStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "created",
           },
           {
-            "casing": {},
             "value": "running",
           },
           {
-            "casing": {},
             "value": "succeeded",
           },
           {
-            "casing": {},
             "value": "failed",
           },
         ],
@@ -2157,15 +2150,12 @@ exports[`open api parser hathora simple 1`] = `
       "LobbyVisibility": {
         "enum": [
           {
-            "casing": {},
             "value": "private",
           },
           {
-            "casing": {},
             "value": "public",
           },
           {
-            "casing": {},
             "value": "local",
           },
         ],
@@ -2173,19 +2163,15 @@ exports[`open api parser hathora simple 1`] = `
       "MetricName": {
         "enum": [
           {
-            "casing": {},
             "value": "cpu",
           },
           {
-            "casing": {},
             "value": "memory",
           },
           {
-            "casing": {},
             "value": "rate_egress",
           },
           {
-            "casing": {},
             "value": "total_egress",
           },
         ],
@@ -2215,19 +2201,15 @@ exports[`open api parser hathora simple 1`] = `
       "PlanName": {
         "enum": [
           {
-            "casing": {},
             "value": "tiny",
           },
           {
-            "casing": {},
             "value": "small",
           },
           {
-            "casing": {},
             "value": "medium",
           },
           {
-            "casing": {},
             "value": "large",
           },
         ],
@@ -2280,43 +2262,33 @@ exports[`open api parser hathora simple 1`] = `
       "Region": {
         "enum": [
           {
-            "casing": {},
             "value": "Seattle",
           },
           {
-            "casing": {},
             "value": "Washington_DC",
           },
           {
-            "casing": {},
             "value": "Chicago",
           },
           {
-            "casing": {},
             "value": "London",
           },
           {
-            "casing": {},
             "value": "Frankfurt",
           },
           {
-            "casing": {},
             "value": "Mumbai",
           },
           {
-            "casing": {},
             "value": "Singapore",
           },
           {
-            "casing": {},
             "value": "Tokyo",
           },
           {
-            "casing": {},
             "value": "Sydney",
           },
           {
-            "casing": {},
             "value": "Sao_Paulo",
           },
         ],
@@ -2345,19 +2317,15 @@ exports[`open api parser hathora simple 1`] = `
       "RoomStatus": {
         "enum": [
           {
-            "casing": {},
             "value": "scheduling",
           },
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "suspended",
           },
           {
-            "casing": {},
             "value": "destroyed",
           },
         ],
@@ -2373,15 +2341,12 @@ exports[`open api parser hathora simple 1`] = `
       "TransportType": {
         "enum": [
           {
-            "casing": {},
             "value": "tcp",
           },
           {
-            "casing": {},
             "value": "udp",
           },
           {
-            "casing": {},
             "value": "tls",
           },
         ],

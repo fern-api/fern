@@ -1119,19 +1119,15 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FUNCTION_DEFINITION\` - FUNCTION_DEFINITION",
         "enum": [
           {
-            "casing": {},
             "value": "CHAT_MESSAGE",
           },
           {
-            "casing": {},
             "value": "CHAT_HISTORY",
           },
           {
-            "casing": {},
             "value": "JINJA",
           },
           {
-            "casing": {},
             "value": "FUNCTION_DEFINITION",
           },
         ],
@@ -1157,19 +1153,15 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FUNCTION\` - Function",
         "enum": [
           {
-            "casing": {},
             "value": "SYSTEM",
           },
           {
-            "casing": {},
             "value": "ASSISTANT",
           },
           {
-            "casing": {},
             "value": "USER",
           },
           {
-            "casing": {},
             "value": "FUNCTION",
           },
         ],
@@ -1191,11 +1183,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`JSON\` - JSON",
         "enum": [
           {
-            "casing": {},
             "value": "STRING",
           },
           {
-            "casing": {},
             "value": "JSON",
           },
         ],
@@ -1260,15 +1250,12 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`ARCHIVED\` - Archived",
         "enum": [
           {
-            "casing": {},
             "value": "ACTIVE",
           },
           {
-            "casing": {},
             "value": "INACTIVE",
           },
           {
-            "casing": {},
             "value": "ARCHIVED",
           },
         ],
@@ -1352,11 +1339,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`ARCHIVED\` - Archived",
         "enum": [
           {
-            "casing": {},
             "value": "ACTIVE",
           },
           {
-            "casing": {},
             "value": "ARCHIVED",
           },
         ],
@@ -1401,15 +1386,12 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PRODUCTION\` - Production",
         "enum": [
           {
-            "casing": {},
             "value": "DEVELOPMENT",
           },
           {
-            "casing": {},
             "value": "STAGING",
           },
           {
-            "casing": {},
             "value": "PRODUCTION",
           },
         ],
@@ -1438,15 +1420,12 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`UNKNOWN\` - UNKNOWN",
         "enum": [
           {
-            "casing": {},
             "value": "LENGTH",
           },
           {
-            "casing": {},
             "value": "STOP",
           },
           {
-            "casing": {},
             "value": "UNKNOWN",
           },
         ],
@@ -1558,23 +1537,18 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FAILED\` - Failed",
         "enum": [
           {
-            "casing": {},
             "value": "AWAITING_PROCESSING",
           },
           {
-            "casing": {},
             "value": "QUEUED",
           },
           {
-            "casing": {},
             "value": "INDEXING",
           },
           {
-            "casing": {},
             "value": "INDEXED",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -1584,11 +1558,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`NONE\` - NONE",
         "enum": [
           {
-            "casing": {},
             "value": "ALL",
           },
           {
-            "casing": {},
             "value": "NONE",
           },
         ],
@@ -1598,11 +1570,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`CLASSIFY\` - Classify",
         "enum": [
           {
-            "casing": {},
             "value": "GENERATE",
           },
           {
-            "casing": {},
             "value": "CLASSIFY",
           },
         ],
@@ -1731,19 +1701,15 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`DISABLED\` - Disabled",
         "enum": [
           {
-            "casing": {},
             "value": "CREATING",
           },
           {
-            "casing": {},
             "value": "READY",
           },
           {
-            "casing": {},
             "value": "CREATION_FAILED",
           },
           {
-            "casing": {},
             "value": "DISABLED",
           },
         ],
@@ -1799,19 +1765,15 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FAILED\` - Failed",
         "enum": [
           {
-            "casing": {},
             "value": "QUEUED",
           },
           {
-            "casing": {},
             "value": "PROCESSING",
           },
           {
-            "casing": {},
             "value": "PROCESSED",
           },
           {
-            "casing": {},
             "value": "FAILED",
           },
         ],
@@ -1915,35 +1877,27 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PYQ\` - Pyq",
         "enum": [
           {
-            "casing": {},
             "value": "ANTHROPIC",
           },
           {
-            "casing": {},
             "value": "COHERE",
           },
           {
-            "casing": {},
             "value": "GOOGLE",
           },
           {
-            "casing": {},
             "value": "HOSTED",
           },
           {
-            "casing": {},
             "value": "MOSAICML",
           },
           {
-            "casing": {},
             "value": "MYSTIC",
           },
           {
-            "casing": {},
             "value": "OPENAI",
           },
           {
-            "casing": {},
             "value": "PYQ",
           },
         ],
@@ -2135,11 +2089,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`CHAT_HISTORY\` - Chat History",
         "enum": [
           {
-            "casing": {},
             "value": "TEXT",
           },
           {
-            "casing": {},
             "value": "CHAT_HISTORY",
           },
         ],
@@ -2426,11 +2378,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`NODE_EXECUTION\` - NODE_EXECUTION",
         "enum": [
           {
-            "casing": {},
             "value": "WORKFLOW_INITIALIZATION",
           },
           {
-            "casing": {},
             "value": "NODE_EXECUTION",
           },
         ],
@@ -2483,19 +2433,15 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`REJECTED\` - REJECTED",
         "enum": [
           {
-            "casing": {},
             "value": "INITIATED",
           },
           {
-            "casing": {},
             "value": "STREAMING",
           },
           {
-            "casing": {},
             "value": "FULFILLED",
           },
           {
-            "casing": {},
             "value": "REJECTED",
           },
         ],

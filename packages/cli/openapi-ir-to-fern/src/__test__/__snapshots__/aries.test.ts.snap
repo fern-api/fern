@@ -1101,12 +1101,10 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingConnectionsRequestConnectionProtocol": {
           "enum": [
             {
-              "casing": {},
               "name": "Connections10",
               "value": "connections/1.0",
             },
             {
-              "casing": {},
               "name": "Didexchange10",
               "value": "didexchange/1.0",
             },
@@ -1115,39 +1113,30 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingConnectionsRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "start",
             },
             {
-              "casing": {},
               "value": "error",
             },
             {
-              "casing": {},
               "value": "response",
             },
             {
-              "casing": {},
               "value": "request",
             },
             {
-              "casing": {},
               "value": "abandoned",
             },
             {
-              "casing": {},
               "value": "init",
             },
             {
-              "casing": {},
               "value": "invitation",
             },
             {
-              "casing": {},
               "value": "active",
             },
             {
-              "casing": {},
               "value": "completed",
             },
           ],
@@ -1155,19 +1144,15 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingConnectionsRequestTheirRole": {
           "enum": [
             {
-              "casing": {},
               "value": "invitee",
             },
             {
-              "casing": {},
               "value": "requester",
             },
             {
-              "casing": {},
               "value": "inviter",
             },
             {
-              "casing": {},
               "value": "responder",
             },
           ],
@@ -3268,15 +3253,12 @@ exports[`open api parser aries simple 1`] = `
         "SetEndorserRoleForConnIdRequestTransactionMyJob": {
           "enum": [
             {
-              "casing": {},
               "value": "TRANSACTION_AUTHOR",
             },
             {
-              "casing": {},
               "value": "TRANSACTION_ENDORSER",
             },
             {
-              "casing": {},
               "value": "reset",
             },
           ],
@@ -5899,11 +5881,9 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingCredExRecordsRequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "issuer",
             },
             {
-              "casing": {},
               "value": "holder",
             },
           ],
@@ -5911,47 +5891,36 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingCredExRecordsRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "proposal_sent",
             },
             {
-              "casing": {},
               "value": "proposal_received",
             },
             {
-              "casing": {},
               "value": "offer_sent",
             },
             {
-              "casing": {},
               "value": "offer_received",
             },
             {
-              "casing": {},
               "value": "request_sent",
             },
             {
-              "casing": {},
               "value": "request_received",
             },
             {
-              "casing": {},
               "value": "credential_issued",
             },
             {
-              "casing": {},
               "value": "credential_received",
             },
             {
-              "casing": {},
               "value": "credential_acked",
             },
             {
-              "casing": {},
               "value": "credential_revoked",
             },
             {
-              "casing": {},
               "value": "abandoned",
             },
           ],
@@ -9765,11 +9734,9 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingCredExRecordsV2RequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "issuer",
             },
             {
-              "casing": {},
               "value": "holder",
             },
           ],
@@ -9777,56 +9744,45 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingCredExRecordsV2RequestState": {
           "enum": [
             {
-              "casing": {},
               "name": "ProposalSent",
               "value": "proposal-sent",
             },
             {
-              "casing": {},
               "name": "ProposalReceived",
               "value": "proposal-received",
             },
             {
-              "casing": {},
               "name": "OfferSent",
               "value": "offer-sent",
             },
             {
-              "casing": {},
               "name": "OfferReceived",
               "value": "offer-received",
             },
             {
-              "casing": {},
               "name": "RequestSent",
               "value": "request-sent",
             },
             {
-              "casing": {},
               "name": "RequestReceived",
               "value": "request-received",
             },
             {
-              "casing": {},
               "name": "CredentialIssued",
               "value": "credential-issued",
             },
             {
-              "casing": {},
               "name": "CredentialReceived",
               "value": "credential-received",
             },
             {
-              "casing": {},
               "value": "done",
             },
             {
-              "casing": {},
               "name": "CredentialRevoked",
               "value": "credential-revoked",
             },
             {
-              "casing": {},
               "value": "abandoned",
             },
           ],
@@ -10303,15 +10259,12 @@ exports[`open api parser aries simple 1`] = `
         "GetPublishedDidEndpointRequestEndpointType": {
           "enum": [
             {
-              "casing": {},
               "value": "Endpoint",
             },
             {
-              "casing": {},
               "value": "Profile",
             },
             {
-              "casing": {},
               "value": "LinkedDomains",
             },
           ],
@@ -10319,23 +10272,18 @@ exports[`open api parser aries simple 1`] = `
         "RegisterNymRequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "STEWARD",
             },
             {
-              "casing": {},
               "value": "TRUSTEE",
             },
             {
-              "casing": {},
               "value": "ENDORSER",
             },
             {
-              "casing": {},
               "value": "NETWORK_MONITOR",
             },
             {
-              "casing": {},
               "value": "reset",
             },
           ],
@@ -11141,11 +11089,9 @@ exports[`open api parser aries simple 1`] = `
         "GetKeylistsRequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "client",
             },
             {
-              "casing": {},
               "value": "server",
             },
           ],
@@ -11153,15 +11099,12 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingMediationRecordsRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "request",
             },
             {
-              "casing": {},
               "value": "granted",
             },
             {
-              "casing": {},
               "value": "denied",
             },
           ],
@@ -11512,15 +11455,12 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
           "enum": [
             {
-              "casing": {},
               "value": "default",
             },
             {
-              "casing": {},
               "value": "both",
             },
             {
-              "casing": {},
               "value": "base",
             },
           ],
@@ -11529,15 +11469,12 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Key derivation",
           "enum": [
             {
-              "casing": {},
               "value": "ARGON2I_MOD",
             },
             {
-              "casing": {},
               "value": "ARGON2I_INT",
             },
             {
-              "casing": {},
               "value": "RAW",
             },
           ],
@@ -11546,15 +11483,12 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Type of the wallet to create",
           "enum": [
             {
-              "casing": {},
               "value": "askar",
             },
             {
-              "casing": {},
               "value": "in_memory",
             },
             {
-              "casing": {},
               "value": "indy",
             },
           ],
@@ -11563,15 +11497,12 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
           "enum": [
             {
-              "casing": {},
               "value": "default",
             },
             {
-              "casing": {},
               "value": "both",
             },
             {
-              "casing": {},
               "value": "base",
             },
           ],
@@ -14182,11 +14113,9 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingPresExRecordsRequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "prover",
             },
             {
-              "casing": {},
               "value": "verifier",
             },
           ],
@@ -14194,39 +14123,30 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingPresExRecordsRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "proposal_sent",
             },
             {
-              "casing": {},
               "value": "proposal_received",
             },
             {
-              "casing": {},
               "value": "request_sent",
             },
             {
-              "casing": {},
               "value": "request_received",
             },
             {
-              "casing": {},
               "value": "presentation_sent",
             },
             {
-              "casing": {},
               "value": "presentation_received",
             },
             {
-              "casing": {},
               "value": "verified",
             },
             {
-              "casing": {},
               "value": "presentation_acked",
             },
             {
-              "casing": {},
               "value": "abandoned",
             },
           ],
@@ -15969,11 +15889,9 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingPresExRecordsV2RequestRole": {
           "enum": [
             {
-              "casing": {},
               "value": "prover",
             },
             {
-              "casing": {},
               "value": "verifier",
             },
           ],
@@ -15981,41 +15899,33 @@ exports[`open api parser aries simple 1`] = `
         "GetMatchingPresExRecordsV2RequestState": {
           "enum": [
             {
-              "casing": {},
               "name": "ProposalSent",
               "value": "proposal-sent",
             },
             {
-              "casing": {},
               "name": "ProposalReceived",
               "value": "proposal-received",
             },
             {
-              "casing": {},
               "name": "RequestSent",
               "value": "request-sent",
             },
             {
-              "casing": {},
               "name": "RequestReceived",
               "value": "request-received",
             },
             {
-              "casing": {},
               "name": "PresentationSent",
               "value": "presentation-sent",
             },
             {
-              "casing": {},
               "name": "PresentationReceived",
               "value": "presentation-received",
             },
             {
-              "casing": {},
               "value": "done",
             },
             {
-              "casing": {},
               "value": "abandoned",
             },
           ],
@@ -17175,23 +17085,18 @@ exports[`open api parser aries simple 1`] = `
         "GetCreatedRegistriesRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "init",
             },
             {
-              "casing": {},
               "value": "generated",
             },
             {
-              "casing": {},
               "value": "posted",
             },
             {
-              "casing": {},
               "value": "active",
             },
             {
-              "casing": {},
               "value": "full",
             },
           ],
@@ -17200,11 +17105,9 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Specify which version of the revocation notification should be sent",
           "enum": [
             {
-              "casing": {},
               "value": "v1_0",
             },
             {
-              "casing": {},
               "value": "v2_0",
             },
           ],
@@ -17212,23 +17115,18 @@ exports[`open api parser aries simple 1`] = `
         "SetRevocationRegistryStateRequestState": {
           "enum": [
             {
-              "casing": {},
               "value": "init",
             },
             {
-              "casing": {},
               "value": "generated",
             },
             {
-              "casing": {},
               "value": "posted",
             },
             {
-              "casing": {},
               "value": "active",
             },
             {
-              "casing": {},
               "value": "full",
             },
           ],
@@ -18033,15 +17931,12 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Endpoint type to set (default 'Endpoint'); affects only public or posted DIDs",
           "enum": [
             {
-              "casing": {},
               "value": "Endpoint",
             },
             {
-              "casing": {},
               "value": "Profile",
             },
             {
-              "casing": {},
               "value": "LinkedDomains",
             },
           ],
@@ -18049,11 +17944,9 @@ exports[`open api parser aries simple 1`] = `
         "GetDidsRequestKeyType": {
           "enum": [
             {
-              "casing": {},
               "value": "ed25519",
             },
             {
-              "casing": {},
               "value": "bls12381g2",
             },
           ],
@@ -18061,11 +17954,9 @@ exports[`open api parser aries simple 1`] = `
         "GetDidsRequestMethod": {
           "enum": [
             {
-              "casing": {},
               "value": "key",
             },
             {
-              "casing": {},
               "value": "sov",
             },
           ],
@@ -18073,15 +17964,12 @@ exports[`open api parser aries simple 1`] = `
         "GetDidsRequestPosture": {
           "enum": [
             {
-              "casing": {},
               "value": "public",
             },
             {
-              "casing": {},
               "value": "posted",
             },
             {
-              "casing": {},
               "value": "wallet_only",
             },
           ],
@@ -18375,12 +18263,10 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Attachment type",
         "enum": [
           {
-            "casing": {},
             "name": "CredentialOffer",
             "value": "credential-offer",
           },
           {
-            "casing": {},
             "name": "PresentProof",
             "value": "present-proof",
           },
@@ -18509,11 +18395,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Connection acceptance: manual or auto",
         "enum": [
           {
-            "casing": {},
             "value": "manual",
           },
           {
-            "casing": {},
             "value": "auto",
           },
         ],
@@ -18522,12 +18406,10 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Connection protocol used",
         "enum": [
           {
-            "casing": {},
             "name": "Connections10",
             "value": "connections/1.0",
           },
           {
-            "casing": {},
             "name": "Didexchange10",
             "value": "didexchange/1.0",
           },
@@ -18537,15 +18419,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Invitation mode",
         "enum": [
           {
-            "casing": {},
             "value": "once",
           },
           {
-            "casing": {},
             "value": "multi",
           },
           {
-            "casing": {},
             "value": "static",
           },
         ],
@@ -18554,19 +18433,15 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Routing state of connection",
         "enum": [
           {
-            "casing": {},
             "value": "none",
           },
           {
-            "casing": {},
             "value": "request",
           },
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "error",
           },
         ],
@@ -18575,19 +18450,15 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Their role in the connection protocol",
         "enum": [
           {
-            "casing": {},
             "value": "invitee",
           },
           {
-            "casing": {},
             "value": "requester",
           },
           {
-            "casing": {},
             "value": "inviter",
           },
           {
-            "casing": {},
             "value": "responder",
           },
         ],
@@ -18699,15 +18570,12 @@ exports[`open api parser aries simple 1`] = `
       "ConstraintsStatusActive": {
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "allowed",
           },
           {
-            "casing": {},
             "value": "disallowed",
           },
         ],
@@ -18715,15 +18583,12 @@ exports[`open api parser aries simple 1`] = `
       "ConstraintsStatusRevoked": {
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "allowed",
           },
           {
-            "casing": {},
             "value": "disallowed",
           },
         ],
@@ -18731,15 +18596,12 @@ exports[`open api parser aries simple 1`] = `
       "ConstraintsStatusSuspended": {
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "allowed",
           },
           {
-            "casing": {},
             "value": "disallowed",
           },
         ],
@@ -18748,11 +18610,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "SubjectIsIssuer",
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "preferred",
           },
         ],
@@ -18794,11 +18654,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Mode regarding management of wallet key",
         "enum": [
           {
-            "casing": {},
             "value": "managed",
           },
           {
-            "casing": {},
             "value": "unmanaged",
           },
         ],
@@ -19199,11 +19057,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
         "enum": [
           {
-            "casing": {},
             "value": "ed25519",
           },
           {
-            "casing": {},
             "value": "bls12381g2",
           },
         ],
@@ -19212,11 +19068,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Key type associated with the DID",
         "enum": [
           {
-            "casing": {},
             "value": "ed25519",
           },
           {
-            "casing": {},
             "value": "bls12381g2",
           },
         ],
@@ -19225,15 +19079,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet",
         "enum": [
           {
-            "casing": {},
             "value": "public",
           },
           {
-            "casing": {},
             "value": "posted",
           },
           {
-            "casing": {},
             "value": "wallet_only",
           },
         ],
@@ -19417,27 +19268,21 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Ledger role",
         "enum": [
           {
-            "casing": {},
             "value": "STEWARD",
           },
           {
-            "casing": {},
             "value": "TRUSTEE",
           },
           {
-            "casing": {},
             "value": "ENDORSER",
           },
           {
-            "casing": {},
             "value": "NETWORK_MONITOR",
           },
           {
-            "casing": {},
             "value": "USER",
           },
           {
-            "casing": {},
             "value": "ROLE_REMOVE",
           },
         ],
@@ -19648,19 +19493,15 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Predicate type",
         "enum": [
           {
-            "casing": {},
             "value": "LT",
           },
           {
-            "casing": {},
             "value": "LE",
           },
           {
-            "casing": {},
             "value": "GE",
           },
           {
-            "casing": {},
             "value": "GT",
           },
         ],
@@ -19749,22 +19590,18 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
         "enum": [
           {
-            "casing": {},
             "name": "LessThan",
             "value": "<",
           },
           {
-            "casing": {},
             "name": "LessThanOrEqualTo",
             "value": "<=",
           },
           {
-            "casing": {},
             "name": "GreaterThanOrEqualTo",
             "value": ">=",
           },
           {
-            "casing": {},
             "name": "GreaterThan",
             "value": ">",
           },
@@ -19956,22 +19793,18 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
         "enum": [
           {
-            "casing": {},
             "name": "LessThan",
             "value": "<",
           },
           {
-            "casing": {},
             "name": "LessThanOrEqualTo",
             "value": "<=",
           },
           {
-            "casing": {},
             "name": "GreaterThanOrEqualTo",
             "value": ">=",
           },
           {
-            "casing": {},
             "name": "GreaterThan",
             "value": ">",
           },
@@ -20509,11 +20342,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Action for specific key",
         "enum": [
           {
-            "casing": {},
             "value": "add",
           },
           {
-            "casing": {},
             "value": "remove",
           },
         ],
@@ -20876,11 +20707,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "OOB Role",
         "enum": [
           {
-            "casing": {},
             "value": "sender",
           },
           {
-            "casing": {},
             "value": "receiver",
           },
         ],
@@ -20889,35 +20718,28 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Out of band message exchange state",
         "enum": [
           {
-            "casing": {},
             "value": "initial",
           },
           {
-            "casing": {},
             "name": "PrepareResponse",
             "value": "prepare-response",
           },
           {
-            "casing": {},
             "name": "AwaitResponse",
             "value": "await-response",
           },
           {
-            "casing": {},
             "name": "ReuseNotAccepted",
             "value": "reuse-not-accepted",
           },
           {
-            "casing": {},
             "name": "ReuseAccepted",
             "value": "reuse-accepted",
           },
           {
-            "casing": {},
             "value": "done",
           },
           {
-            "casing": {},
             "value": "deleted",
           },
         ],
@@ -21052,11 +20874,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "feature type",
         "enum": [
           {
-            "casing": {},
             "value": "protocol",
           },
           {
-            "casing": {},
             "name": "GoalCode",
             "value": "goal-code",
           },
@@ -21392,15 +21212,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": "My transaction related job",
         "enum": [
           {
-            "casing": {},
             "value": "TRANSACTION_AUTHOR",
           },
           {
-            "casing": {},
             "value": "TRANSACTION_ENDORSER",
           },
           {
-            "casing": {},
             "value": "reset",
           },
         ],
@@ -21409,15 +21226,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Their transaction related job",
         "enum": [
           {
-            "casing": {},
             "value": "TRANSACTION_AUTHOR",
           },
           {
-            "casing": {},
             "value": "TRANSACTION_ENDORSER",
           },
           {
-            "casing": {},
             "value": "reset",
           },
         ],
@@ -21683,11 +21497,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange initiator: self or external",
         "enum": [
           {
-            "casing": {},
             "value": "self",
           },
           {
-            "casing": {},
             "value": "external",
           },
         ],
@@ -21709,11 +21521,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange role: holder or issuer",
         "enum": [
           {
-            "casing": {},
             "value": "holder",
           },
           {
-            "casing": {},
             "value": "issuer",
           },
         ],
@@ -21838,11 +21648,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange initiator: self or external",
         "enum": [
           {
-            "casing": {},
             "value": "self",
           },
           {
-            "casing": {},
             "value": "external",
           },
         ],
@@ -21876,11 +21684,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange role: prover or verifier",
         "enum": [
           {
-            "casing": {},
             "value": "prover",
           },
           {
-            "casing": {},
             "value": "verifier",
           },
         ],
@@ -21889,11 +21695,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Whether presentation is verified: true or false",
         "enum": [
           {
-            "casing": {},
             "value": "true",
           },
           {
-            "casing": {},
             "value": "false",
           },
         ],
@@ -22123,11 +21927,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange initiator: self or external",
         "enum": [
           {
-            "casing": {},
             "value": "self",
           },
           {
-            "casing": {},
             "value": "external",
           },
         ],
@@ -22174,11 +21976,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange role: holder or issuer",
         "enum": [
           {
-            "casing": {},
             "value": "issuer",
           },
           {
-            "casing": {},
             "value": "holder",
           },
         ],
@@ -22187,60 +21987,48 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange state",
         "enum": [
           {
-            "casing": {},
             "name": "ProposalSent",
             "value": "proposal-sent",
           },
           {
-            "casing": {},
             "name": "ProposalReceived",
             "value": "proposal-received",
           },
           {
-            "casing": {},
             "name": "OfferSent",
             "value": "offer-sent",
           },
           {
-            "casing": {},
             "name": "OfferReceived",
             "value": "offer-received",
           },
           {
-            "casing": {},
             "name": "RequestSent",
             "value": "request-sent",
           },
           {
-            "casing": {},
             "name": "RequestReceived",
             "value": "request-received",
           },
           {
-            "casing": {},
             "name": "CredentialIssued",
             "value": "credential-issued",
           },
           {
-            "casing": {},
             "name": "CredentialReceived",
             "value": "credential-received",
           },
           {
-            "casing": {},
             "value": "done",
           },
           {
-            "casing": {},
             "name": "CredentialRevoked",
             "value": "credential-revoked",
           },
           {
-            "casing": {},
             "value": "abandoned",
           },
           {
-            "casing": {},
             "value": "deleted",
           },
         ],
@@ -22590,11 +22378,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange initiator: self or external",
         "enum": [
           {
-            "casing": {},
             "value": "self",
           },
           {
-            "casing": {},
             "value": "external",
           },
         ],
@@ -22624,11 +22410,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange role: prover or verifier",
         "enum": [
           {
-            "casing": {},
             "value": "prover",
           },
           {
-            "casing": {},
             "value": "verifier",
           },
         ],
@@ -22637,45 +22421,36 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange state",
         "enum": [
           {
-            "casing": {},
             "name": "ProposalSent",
             "value": "proposal-sent",
           },
           {
-            "casing": {},
             "name": "ProposalReceived",
             "value": "proposal-received",
           },
           {
-            "casing": {},
             "name": "RequestSent",
             "value": "request-sent",
           },
           {
-            "casing": {},
             "name": "RequestReceived",
             "value": "request-received",
           },
           {
-            "casing": {},
             "name": "PresentationSent",
             "value": "presentation-sent",
           },
           {
-            "casing": {},
             "name": "PresentationReceived",
             "value": "presentation-received",
           },
           {
-            "casing": {},
             "value": "done",
           },
           {
-            "casing": {},
             "value": "abandoned",
           },
           {
-            "casing": {},
             "value": "deleted",
           },
         ],
@@ -22684,11 +22459,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Whether presentation is verified: 'true' or 'false'",
         "enum": [
           {
-            "casing": {},
             "value": "true",
           },
           {
-            "casing": {},
             "value": "false",
           },
         ],
@@ -22887,11 +22660,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Mode regarding management of wallet key",
         "enum": [
           {
-            "casing": {},
             "value": "managed",
           },
           {
-            "casing": {},
             "value": "unmanaged",
           },
         ],
@@ -22910,11 +22681,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Preference",
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "preferred",
           },
         ],
@@ -22923,11 +22692,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issuance type",
         "enum": [
           {
-            "casing": {},
             "value": "ISSUANCE_ON_DEMAND",
           },
           {
-            "casing": {},
             "value": "ISSUANCE_BY_DEFAULT",
           },
         ],
@@ -22948,11 +22715,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Preference",
         "enum": [
           {
-            "casing": {},
             "value": "required",
           },
           {
-            "casing": {},
             "value": "preferred",
           },
         ],
@@ -22965,11 +22730,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Selection",
         "enum": [
           {
-            "casing": {},
             "value": "all",
           },
           {
-            "casing": {},
             "value": "pick",
           },
         ],

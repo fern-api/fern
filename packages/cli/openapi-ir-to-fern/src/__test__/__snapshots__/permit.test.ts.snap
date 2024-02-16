@@ -1980,11 +1980,9 @@ allowed.",
           "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
           "enum": [
             {
-              "casing": {},
               "value": "fail",
             },
             {
-              "casing": {},
               "value": "overwrite",
             },
           ],
@@ -7999,27 +7997,21 @@ Fields that will be provided will be completely overwritten.",
         "docs": "supported attribute primitives",
         "enum": [
           {
-            "casing": {},
             "value": "bool",
           },
           {
-            "casing": {},
             "value": "number",
           },
           {
-            "casing": {},
             "value": "string",
           },
           {
-            "casing": {},
             "value": "time",
           },
           {
-            "casing": {},
             "value": "array",
           },
           {
-            "casing": {},
             "value": "json",
           },
         ],
@@ -8141,11 +8133,9 @@ Fields that will be provided will be completely overwritten.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "userset",
           },
           {
-            "casing": {},
             "value": "resourceset",
           },
         ],
@@ -8406,19 +8396,15 @@ Fields that will be provided will be completely overwritten.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "pending",
           },
           {
-            "casing": {},
             "value": "accepted",
           },
           {
-            "casing": {},
             "value": "failed",
           },
           {
-            "casing": {},
             "value": "canceled",
           },
         ],
@@ -8436,19 +8422,15 @@ Fields that will be provided will be completely overwritten.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "admin",
           },
           {
-            "casing": {},
             "value": "write",
           },
           {
-            "casing": {},
             "value": "read",
           },
           {
-            "casing": {},
             "value": "no_access",
           },
         ],
@@ -8457,15 +8439,12 @@ Fields that will be provided will be completely overwritten.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "org",
           },
           {
-            "casing": {},
             "value": "project",
           },
           {
-            "casing": {},
             "value": "env",
           },
         ],
@@ -8474,35 +8453,27 @@ Fields that will be provided will be completely overwritten.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "create_organization",
           },
           {
-            "casing": {},
             "value": "create_project",
           },
           {
-            "casing": {},
             "value": "create_resource",
           },
           {
-            "casing": {},
             "value": "create_actions",
           },
           {
-            "casing": {},
             "value": "assign_permissions",
           },
           {
-            "casing": {},
             "value": "assign_user_roles",
           },
           {
-            "casing": {},
             "value": "connect_sdk",
           },
           {
-            "casing": {},
             "value": "done",
           },
         ],
@@ -9534,11 +9505,9 @@ The actions represents the ways you can interact with a protected resource.",
         "docs": "An enumeration.",
         "enum": [
           {
-            "casing": {},
             "value": "active",
           },
           {
-            "casing": {},
             "value": "pending",
           },
         ],
