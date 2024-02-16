@@ -19,6 +19,7 @@ export interface ReferenceParameterDeclaration {
     description?: string;
 }
 export interface EndpointDeclaration {
+    funcionFileName: string;
     functionName: string;
     returnType: string | undefined;
     codeSnippet: string | undefined;

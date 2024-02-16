@@ -599,6 +599,9 @@ module.exports = {
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
             );
 
+            const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
+            const serviceFilepath = convertExportedFilePathToFilePath(exportedFilepath);
+
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
                     serviceReference = refGenerator?.addSection(
@@ -666,6 +669,7 @@ module.exports = {
                         });
 
                         serviceReference.addEndpoint({
+                            funcionFileName: serviceFilepath,
                             functionName: endpoint.name.camelCase.unsafeName,
                             returnType,
                             parameters: [],
