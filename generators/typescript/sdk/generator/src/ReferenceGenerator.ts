@@ -12,13 +12,13 @@ export declare namespace ReferenceGeneratorSection {
     }
 }
 
-interface ReferenceParameterDeclaration {
+export interface ReferenceParameterDeclaration {
     name: string;
     type: string;
     link?: string;
     description?: string;
 }
-interface EndpointDeclaration {
+export interface EndpointDeclaration {
     functionName: string;
     returnType: string | undefined;
     codeSnippet: string | undefined;
