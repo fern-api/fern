@@ -647,12 +647,16 @@ module.exports = {
                                 );
                                 const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(packageId);
                                 const endpointDetailed = clientClass.getEndpoint({ context, endpointId: endpoint.id });
-                                returnType = endpointDetailed?.getSignature(context).returnTypeWithoutPromise;
+                                const returnTypeNode = endpointDetailed?.getSignature(context).returnTypeWithoutPromise;
+                                returnType =
+                                    returnTypeNode !== undefined ? getTextOfTsNode(returnTypeNode) : returnTypeNode;
                                 parameters.push(
-                                    ...(endpointDetailed?.getSignature(context).parameters?.map((param) => ({
-                                        name: param.name,
-                                        type: param.type?.toString() ?? "unknown"
-                                    })) ?? [])
+                                    ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
+                                        return {
+                                            name: param.name,
+                                            type: param.type?.toString() ?? "unknown"
+                                        };
+                                    }) ?? [])
                                 );
 
                                 return this.runWithSnippet({
@@ -672,8 +676,9 @@ module.exports = {
                             functionFileName: serviceFilepath,
                             functionName: endpoint.name.camelCase.unsafeName,
                             returnType,
-                            parameters: [],
-                            codeSnippet: referenceSnippet
+                            parameters,
+                            codeSnippet: referenceSnippet,
+                            description: endpoint.docs
                         });
                     }
                 }

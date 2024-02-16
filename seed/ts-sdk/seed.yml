@@ -81,7 +81,7 @@ fixtures:
       outputFolder: exhaustive
   examples:
     - customConfig:
-        includeApiRefernece: true
+        includeApiReference: true
       outputFolder: examples-with-api-reference
 scripts:
   - docker: node:lts-slim

@@ -24,6 +24,11 @@ export interface EndpointDeclaration {
     returnType: string | undefined;
     codeSnippet: string | undefined;
     parameters: ReferenceParameterDeclaration[];
+    description?: string;
+}
+
+function writeIndentedBlock(content: string): string {
+    return `<dl>\n\n<dd>\n\n${content}\n\n</dd>\n\n</dl>`;
 }
 
 class ReferenceGeneratorSection {
@@ -44,36 +49,34 @@ class ReferenceGeneratorSection {
     private writeParameter(parameter: ReferenceParameterDeclaration): string {
         return `
 ##### ${parameter.name}: \`${parameter.type}\`
-
-${parameter.description ?? ""}
-
+${parameter.description !== undefined ? "\n" + parameter.description : ""}
 `;
     }
 
     private writeEndpoint(endpoint: EndpointDeclaration): string {
+        const descriptionBlock =
+            endpoint.description !== undefined ? `<br/>\n\n${writeIndentedBlock("> " + endpoint.description)}\n\n` : "";
+        const usageBlock =
+            endpoint.codeSnippet !== undefined
+                ? `#### 🔌 Usage\n\n${writeIndentedBlock(
+                      writeIndentedBlock("```ts\n" + endpoint.codeSnippet + "```")
+                  )}\n\n`
+                : "";
+        const parametersBlock =
+            endpoint.parameters.length > 0
+                ? `#### ⚙️ Parameters\n\n${writeIndentedBlock(
+                      endpoint.parameters
+                          .map((parameter) => writeIndentedBlock(this.writeParameter(parameter)))
+                          .join("\n\n")
+                  )}\n\n`
+                : "";
+
         return `
 <details><summary> <code>${this.clientName}.${endpoint.functionName}({ ...params }) -> ${
             endpoint.returnType === undefined ? "void" : endpoint.returnType
         }</code> </summary>
 
-<dl>
-<dd>
-
-${
-    endpoint.codeSnippet !== undefined
-        ? "#### 🔌 Usage\n\n<dl>\n\n<dd>\n\n```ts\n" + endpoint.codeSnippet + "```\n\n</dl>\n\n</dd>\n\n"
-        : ""
-}
-
-${
-    endpoint.parameters.length > 0
-        ? "#### ⚙️ Parameters\n\n" + endpoint.parameters.map((parameter) => this.writeParameter(parameter)).join("\n")
-        : ""
-}
-
-</dd>
-</dl>
-
+${writeIndentedBlock(descriptionBlock + usageBlock + parametersBlock)}
 </details>
 `;
     }
