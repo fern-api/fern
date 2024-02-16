@@ -20,8 +20,8 @@ interface ReferenceParameterDeclaration {
 }
 interface EndpointDeclaration {
     functionName: string;
-    returnType: string;
-    codeSnippet: string;
+    returnType: string | undefined;
+    codeSnippet: string | undefined;
     parameters: ReferenceParameterDeclaration[];
 }
 
@@ -52,20 +52,23 @@ ${parameter.description ?? ""}
     private writeEndpoint(endpoint: EndpointDeclaration): string {
         return `
 <details><summary> <code>${this.clientName}.${endpoint.functionName}({ ...params }) -> ${
-            endpoint.returnType
+            endpoint.returnType === undefined ? "void" : endpoint.returnType
         }</code> </summary>
 
 <dl>
 <dd>
 
-#### Usage
-\`\`\`ts
-${endpoint.codeSnippet}
-\`\`\`
+${
+    endpoint.codeSnippet !== undefined
+        ? "#### 🔌 Usage\n\n<dl>\n\n<dd>\n\n```ts\n" + endpoint.codeSnippet + "```\n\n</dl>\n\n</dd>\n\n"
+        : ""
+}
 
-#### Parameters
-
-${endpoint.parameters.map((parameter) => this.writeParameter(parameter)).join("\n")}
+${
+    endpoint.parameters.length > 0
+        ? "#### ⚙️ Parameters\n\n" + endpoint.parameters.map((parameter) => this.writeParameter(parameter)).join("\n")
+        : ""
+}
 
 </dd>
 </dl>
@@ -79,8 +82,6 @@ ${endpoint.parameters.map((parameter) => this.writeParameter(parameter)).join("\
 ## ${this.heading}
 
 ${this.endpoints.map((endpoint) => this.writeEndpoint(endpoint)).join("\n")}
-
----
 
 `;
     }
@@ -98,16 +99,15 @@ export class ReferenceGenerator {
     }
 
     public addSection(heading: string): ReferenceGeneratorSection {
-        return new ReferenceGeneratorSection({ clientName: this.clientName, heading });
+        const section = new ReferenceGeneratorSection({ clientName: this.clientName, heading });
+        this.sections.push(section);
+        return section;
     }
 
     public write(): string {
-        return `
-# ${this.apiName ?? "SDK"} Reference
-
----
-
-${this.sections.map((section) => section.write()).join("\n")}
-`;
+        return this.sections
+            .filter((section) => section.heading.length > 0)
+            .map((section) => section.write())
+            .join("\n");
     }
 }
