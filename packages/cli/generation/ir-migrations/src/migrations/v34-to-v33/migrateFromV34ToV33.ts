@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { FernIrV33 } from "@fern-fern/ir-v33-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -41,7 +42,32 @@ export const V34_TO_V33_MIGRATION: IrMigration<
         }),
     migrateBackwards: (V34): IrVersions.V33.ir.IntermediateRepresentation => {
         return {
-            ...V34
+            ...V34,
+            services: Object.fromEntries(
+                Object.entries(V34.services).map(([id, service]) => [
+                    id,
+                    {
+                        ...service,
+                        endpoints: service.endpoints.map((endpoint) => ({
+                            ...endpoint,
+                            requestBody: endpoint.requestBody?._visit<FernIrV33.HttpRequestBody | undefined>({
+                                inlinedRequestBody: (value) => FernIrV33.HttpRequestBody.inlinedRequestBody(value),
+                                reference: (value) => FernIrV33.HttpRequestBody.reference(value),
+                                fileUpload: (fileUpload) =>
+                                    FernIrV33.HttpRequestBody.fileUpload({
+                                        ...fileUpload,
+                                        properties: fileUpload.properties.map((property) => ({
+                                            ...property,
+                                            type: "file"
+                                        }))
+                                    }),
+                                bytes: (value) => FernIrV33.HttpRequestBody.bytes(value),
+                                _other: (_) => undefined
+                            })
+                        }))
+                    }
+                ])
+            )
         };
     }
 };

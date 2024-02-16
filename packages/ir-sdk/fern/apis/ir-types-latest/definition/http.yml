@@ -110,6 +110,15 @@ types:
       file: FileProperty
       bodyProperty: InlinedRequestBodyProperty
   FileProperty:
+    union:
+      file: FilePropertySingle
+      fileArray: FilePropertyArray
+  FilePropertySingle:
+    properties:
+      key: commons.NameAndWireValue
+      isOptional: boolean
+      isArray: boolean
+  FilePropertyArray:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
