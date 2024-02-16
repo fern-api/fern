@@ -24,6 +24,7 @@ export interface EndpointDeclaration {
     returnType: string | undefined;
     codeSnippet: string | undefined;
     parameters: ReferenceParameterDeclaration[];
+    link?: string;
     description?: string;
 }
 
@@ -49,7 +50,8 @@ class ReferenceGeneratorSection {
     private writeParameter(parameter: ReferenceParameterDeclaration): string {
         return `
 ##### ${parameter.name}: \`${parameter.type}\`
-${parameter.description !== undefined ? "\n" + parameter.description : ""}
+
+${parameter.description !== undefined ? parameter.description : ""}
 `;
     }
 
@@ -72,7 +74,9 @@ ${parameter.description !== undefined ? "\n" + parameter.description : ""}
                 : "";
 
         return `
-<details><summary> <code>${this.clientName}.${endpoint.functionName}({ ...params }) -> ${
+<details><summary> <code>${this.clientName}.${endpoint.link !== undefined ? "<a href=" + endpoint.link + ">" : ""}${
+            endpoint.functionName
+        }${endpoint.link !== undefined ? "</a>" : ""}({ ...params }) -> ${
             endpoint.returnType === undefined ? "void" : endpoint.returnType
         }</code> </summary>
 

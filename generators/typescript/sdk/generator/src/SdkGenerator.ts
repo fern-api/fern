@@ -654,7 +654,8 @@ module.exports = {
                                     ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
                                         return {
                                             name: param.name,
-                                            type: param.type?.toString() ?? "unknown"
+                                            type: param.type?.toString() ?? "unknown",
+                                            description: param.docs
                                         };
                                     }) ?? [])
                                 );

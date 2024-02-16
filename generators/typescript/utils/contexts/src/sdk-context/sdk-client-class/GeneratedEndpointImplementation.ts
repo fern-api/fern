@@ -4,7 +4,7 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { SdkContext } from "../SdkContext";
 
 export interface EndpointSignature {
-    parameters: OptionalKind<ParameterDeclarationStructure>[];
+    parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     returnTypeWithoutPromise: ts.TypeNode;
 }
 

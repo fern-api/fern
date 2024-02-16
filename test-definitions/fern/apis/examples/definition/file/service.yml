@@ -19,7 +19,9 @@ service:
       method: GET
       path: /{filename}
       path-parameters:
-        filename: string
+        filename:
+          type: string
+          docs: This is a filename
       request:
         name: GetFileRequest
       response: types.File

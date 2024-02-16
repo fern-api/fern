@@ -41,8 +41,7 @@ await seedExamples.echo("Hello world!");
 <dd>
 
 
-##### request: `string`
-
+##### request: `string` 
 
 
 </dd>
@@ -54,8 +53,7 @@ await seedExamples.echo("Hello world!");
 <dd>
 
 
-##### requestOptions: `SeedExamplesClient.RequestOptions`
-
+##### requestOptions: `SeedExamplesClient.RequestOptions` 
 
 
 </dd>
@@ -118,8 +116,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 <dd>
 
 
-##### notificationId: `string`
-
+##### notificationId: `string` 
 
 
 </dd>
@@ -131,8 +128,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -209,21 +205,7 @@ await seedExamples.file.service.getFile("file.txt", {
 <dd>
 
 
-##### filename: `string`
-
-
-
-</dd>
-
-</dl>
-
-<dl>
-
-<dd>
-
-
-##### request: `SeedExamples.file.GetFileRequest`
-
+##### filename: `string` : This is a filename
 
 
 </dd>
@@ -235,8 +217,19 @@ await seedExamples.file.service.getFile("file.txt", {
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
+##### request: `SeedExamples.file.GetFileRequest` 
 
+
+</dd>
+
+</dl>
+
+<dl>
+
+<dd>
+
+
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -311,8 +304,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 <dd>
 
 
-##### id: `string`
-
+##### id: `string` : The id to check
 
 
 </dd>
@@ -324,8 +316,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -395,8 +386,7 @@ await seedExamples.health.service.ping();
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -459,8 +449,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 <dd>
 
 
-##### movieId: `SeedExamples.MovieId`
-
+##### movieId: `SeedExamples.MovieId` 
 
 
 </dd>
@@ -472,8 +461,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -538,8 +526,7 @@ await seedExamples.service.createMovie({
 <dd>
 
 
-##### request: `SeedExamples.Movie`
-
+##### request: `SeedExamples.Movie` 
 
 
 </dd>
@@ -551,8 +538,7 @@ await seedExamples.service.createMovie({
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
@@ -614,8 +600,7 @@ await seedExamples.service.getMetadata({
 <dd>
 
 
-##### request: `SeedExamples.GetMetadataRequest`
-
+##### request: `SeedExamples.GetMetadataRequest` 
 
 
 </dd>
@@ -627,8 +612,7 @@ await seedExamples.service.getMetadata({
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions`
-
+##### requestOptions: `Service.RequestOptions` 
 
 
 </dd>
