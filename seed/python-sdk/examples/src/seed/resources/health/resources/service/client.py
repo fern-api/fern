@@ -22,8 +22,10 @@ class ServiceClient:
 
     def check(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        This endpoint checks the health of a resource.
+
         Parameters:
-            - id: str.
+            - id: str. The id to check
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -66,6 +68,8 @@ class ServiceClient:
 
     def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
+        This endpoint checks the health of the service.
+
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -111,8 +115,10 @@ class AsyncServiceClient:
 
     async def check(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        This endpoint checks the health of a resource.
+
         Parameters:
-            - id: str.
+            - id: str. The id to check
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -155,6 +161,8 @@ class AsyncServiceClient:
 
     async def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
+        This endpoint checks the health of the service.
+
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

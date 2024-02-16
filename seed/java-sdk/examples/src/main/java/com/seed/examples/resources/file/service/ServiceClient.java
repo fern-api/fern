@@ -22,14 +22,23 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename) {
         return getFile(filename, GetFileRequest.builder().build());
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request) {
         return getFile(filename, request, null);
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
