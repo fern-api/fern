@@ -6440,6 +6440,7 @@ organizations.
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "artifacts-locate-response",

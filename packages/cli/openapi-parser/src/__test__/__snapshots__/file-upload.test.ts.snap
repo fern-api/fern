@@ -51,6 +51,7 @@ exports[`file-upload file-upload parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {},

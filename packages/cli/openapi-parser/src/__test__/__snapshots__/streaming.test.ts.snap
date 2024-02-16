@@ -812,6 +812,7 @@ exports[`open api parser streaming parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "BaseStreamUser",

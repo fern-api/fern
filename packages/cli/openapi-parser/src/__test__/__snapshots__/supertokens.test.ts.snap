@@ -24461,6 +24461,7 @@ e.g.:
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "userId",

@@ -270,7 +270,20 @@ export const FernOpenAPIExtension = {
      *          name: password
      *          env: MY_PASSWORD
      */
-    FERN_BASIC_AUTH: "x-fern-basic"
+    FERN_BASIC_AUTH: "x-fern-basic",
+
+    /**
+     * Allows users to specify which headers are global, and an optional alias for them
+     * `header` is the name of the header used throughout your spec, while `name` is the
+     * alias you'd like it to appear as within your generated SDK to the consumer.
+     *
+     * x-fern-global-headers:
+     *  - header: our_api_key
+     *    name: api_key
+     *    optional: true
+     *  - header: telemetry_id
+     */
+    FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

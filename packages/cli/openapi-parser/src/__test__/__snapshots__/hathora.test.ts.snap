@@ -7672,6 +7672,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ApplicationWithDeployment",

@@ -59279,6 +59279,7 @@ Other details about this invoice",
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "Error",

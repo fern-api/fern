@@ -24792,6 +24792,7 @@ exports[`open api parser merge parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "AccountDetails",

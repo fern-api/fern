@@ -20,6 +20,7 @@ import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getExtension } from "./extensions/getExtension";
+import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
@@ -50,6 +51,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     );
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
     const variables = getVariableDefinitions(openApi);
+    const globalHeaders = getGlobalHeaders(openApi);
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
@@ -195,7 +197,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
-        variables
+        variables,
+        globalHeaders
     };
 
     return ir;
