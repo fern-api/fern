@@ -91,12 +91,15 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
-    public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
-        const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
+    public getEndpointParameters(
+        context: SdkContext
+    ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
+        const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
-                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+                docs: pathParameter.docs
             });
         }
         if (this.requestParameter != null) {

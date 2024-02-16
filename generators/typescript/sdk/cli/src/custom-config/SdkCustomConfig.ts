@@ -21,4 +21,5 @@ export interface SdkCustomConfig {
     includeContentHeadersOnFileDownloadResponse: boolean;
     noSerdeLayer: boolean;
     noOptionalProperties: boolean;
+    includeApiReference: boolean | undefined;
 }

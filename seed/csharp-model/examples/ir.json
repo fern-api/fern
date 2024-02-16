@@ -15951,7 +15951,8 @@
                 "primitive": "STRING",
                 "type": "primitive"
               },
-              "location": "ENDPOINT"
+              "location": "ENDPOINT",
+              "docs": "This is a filename"
             }
           ],
           "allPathParameters": [
@@ -15979,7 +15980,8 @@
                 "primitive": "STRING",
                 "type": "primitive"
               },
-              "location": "ENDPOINT"
+              "location": "ENDPOINT",
+              "docs": "This is a filename"
             }
           ],
           "queryParameters": [],
@@ -16348,7 +16350,8 @@
                 }
               }
             }
-          ]
+          ],
+          "docs": "This endpoint returns a file by its name."
         }
       ]
     },
@@ -16511,7 +16514,8 @@
                 "primitive": "STRING",
                 "type": "primitive"
               },
-              "location": "ENDPOINT"
+              "location": "ENDPOINT",
+              "docs": "The id to check"
             }
           ],
           "allPathParameters": [
@@ -16539,7 +16543,8 @@
                 "primitive": "STRING",
                 "type": "primitive"
               },
-              "location": "ENDPOINT"
+              "location": "ENDPOINT",
+              "docs": "The id to check"
             }
           ],
           "queryParameters": [],
@@ -16592,7 +16597,8 @@
                 "type": "ok"
               }
             }
-          ]
+          ],
+          "docs": "This endpoint checks the health of a resource."
         },
         {
           "id": "endpoint_health/service.ping",
@@ -16664,7 +16670,8 @@
                 }
               }
             }
-          ]
+          ],
+          "docs": "This endpoint checks the health of the service."
         }
       ]
     },
@@ -19934,6 +19941,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_commons": {
       "name": {
@@ -19955,6 +19963,7 @@
           "safeName": "Commons"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20026,6 +20035,7 @@
           "safeName": "Types"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20138,6 +20148,7 @@
           "safeName": "File"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20210,6 +20221,7 @@
           "safeName": "Notification"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20319,6 +20331,7 @@
           "safeName": "Service"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20465,6 +20478,7 @@
           "safeName": "Service"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20575,6 +20589,7 @@
           "safeName": "Health"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20646,6 +20661,7 @@
           "safeName": "Service"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20754,6 +20770,7 @@
           "safeName": "Service"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20823,6 +20840,7 @@
           "safeName": "Types"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -20900,6 +20918,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "service": "service_",
     "types": [],
     "errors": [],

@@ -20,10 +20,16 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * This endpoint checks the health of a resource.
+     */
     public void check(String id) {
         check(id, null);
     }
 
+    /**
+     * This endpoint checks the health of a resource.
+     */
     public void check(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -49,10 +55,16 @@ public class ServiceClient {
         }
     }
 
+    /**
+     * This endpoint checks the health of the service.
+     */
     public boolean ping() {
         return ping(null);
     }
 
+    /**
+     * This endpoint checks the health of the service.
+     */
     public boolean ping(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

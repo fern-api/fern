@@ -26,8 +26,10 @@ class ServiceClient:
         self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
+        This endpoint returns a file by its name.
+
         Parameters:
-            - filename: str.
+            - filename: str. This is a filename
 
             - x_file_api_version: str.
 
@@ -83,8 +85,10 @@ class AsyncServiceClient:
         self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
+        This endpoint returns a file by its name.
+
         Parameters:
-            - filename: str.
+            - filename: str. This is a filename
 
             - x_file_api_version: str.
 
