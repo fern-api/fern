@@ -7,15 +7,21 @@
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedPackageYmlClient } from "";
-
-const seedPackageYml = new SeedPackageYmlClient;
 await seedPackageYml.echo("Hello world!");
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 
@@ -35,15 +41,21 @@ await seedPackageYml.echo("Hello world!");
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedPackageYmlClient } from "";
-
-const seedPackageYml = new SeedPackageYmlClient;
 await seedPackageYml.service.nop("id-219xca8");
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 

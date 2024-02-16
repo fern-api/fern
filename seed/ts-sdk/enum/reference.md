@@ -7,17 +7,23 @@
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedEnumClient, SeedEnum } from "";
-
-const seedEnum = new SeedEnumClient;
 await seedEnum.inlinedRequest.send({
     value: SeedEnum.Operand.GreaterThan
 });
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 
@@ -37,15 +43,21 @@ await seedEnum.inlinedRequest.send({
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedEnumClient, SeedEnum } from "";
-
-const seedEnum = new SeedEnumClient;
 await seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan);
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 
@@ -65,17 +77,23 @@ await seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan);
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedEnumClient, SeedEnum } from "";
-
-const seedEnum = new SeedEnumClient;
 await seedEnum.queryParam.send({
     value: SeedEnum.Operand.GreaterThan
 });
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 

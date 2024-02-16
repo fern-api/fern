@@ -90,6 +90,7 @@ export declare namespace SdkGenerator {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
+        includeApiReference: boolean;
     }
 }
 
@@ -345,21 +346,25 @@ module.exports = {
         }
 
         if (this.config.snippetFilepath != null) {
-            const refGenerator = new ReferenceGenerator({
-                clientName: this.intermediateRepresentation.apiName.camelCase.safeName,
-                apiName: this.intermediateRepresentation.apiName.pascalCase.safeName
-            });
+            let refGenerator: ReferenceGenerator | undefined;
+            if (this.config.includeApiReference) {
+                refGenerator = new ReferenceGenerator({
+                    clientName: this.intermediateRepresentation.apiName.camelCase.safeName,
+                    apiName: this.intermediateRepresentation.apiName.pascalCase.safeName
+                });
+            }
             this.generateSnippets(refGenerator);
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
             };
-
             await writeFile(
                 this.config.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
-            this.extraFiles["reference.md"] = refGenerator.write();
+            if (this.config.includeApiReference && refGenerator !== undefined) {
+                this.extraFiles["reference.md"] = refGenerator.write();
+            }
             this.context.logger.debug("Generated snippets");
         }
         return this.config.shouldBundle
@@ -583,19 +588,19 @@ module.exports = {
         return [ts.factory.createExpressionStatement(endpointInvocation)];
     }
 
-    private generateSnippets(refGenerator: ReferenceGenerator) {
+    private generateSnippets(refGenerator: ReferenceGenerator | undefined) {
         const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = refGenerator.addSection(
+            let serviceReference = refGenerator?.addSection(
                 service.displayName ??
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
             );
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
-                    serviceReference = refGenerator.addSection(
+                    serviceReference = refGenerator?.addSection(
                         endpoint.displayName ?? endpoint.name.pascalCase.unsafeName
                     );
                 }
@@ -627,27 +632,29 @@ module.exports = {
                         });
                     }
 
-                    const referenceSnippet = this.withSnippet({
-                        run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
-                            return this.runWithSnippet({
-                                sourceFile,
-                                importsManager,
-                                rootPackage,
-                                packageId,
-                                endpoint,
-                                example,
-                                includeImports: false
-                            });
-                        },
-                        includeImports: false
-                    });
+                    if (serviceReference !== undefined) {
+                        const referenceSnippet = this.withSnippet({
+                            run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
+                                return this.runWithSnippet({
+                                    sourceFile,
+                                    importsManager,
+                                    rootPackage,
+                                    packageId,
+                                    endpoint,
+                                    example,
+                                    includeImports: false
+                                });
+                            },
+                            includeImports: false
+                        });
 
-                    serviceReference.addEndpoint({
-                        functionName: endpoint.name.camelCase.unsafeName,
-                        returnType: undefined,
-                        parameters: [],
-                        codeSnippet: referenceSnippet
-                    });
+                        serviceReference.addEndpoint({
+                            functionName: endpoint.name.camelCase.unsafeName,
+                            returnType: undefined,
+                            parameters: [],
+                            codeSnippet: referenceSnippet
+                        });
+                    }
                 }
             }
         });

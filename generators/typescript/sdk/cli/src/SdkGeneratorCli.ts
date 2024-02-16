@@ -46,7 +46,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
-            noOptionalProperties: parsed?.noOptionalProperties ?? false
+            noOptionalProperties: parsed?.noOptionalProperties ?? false,
+            includeApiReference: parsed?.includeApiReference ?? false
         };
     }
 
@@ -97,7 +98,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
-                noOptionalProperties: customConfig.noOptionalProperties
+                noOptionalProperties: customConfig.noOptionalProperties,
+                includeApiReference: customConfig.includeApiReference ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();

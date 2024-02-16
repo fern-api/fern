@@ -13,15 +13,21 @@
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedLiteralHeadersClient } from "";
-
-const seedLiteralHeaders = new SeedLiteralHeadersClient;
 await seedLiteralHeaders.onlyLiteralHeaders.get();
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 
@@ -41,12 +47,13 @@ await seedLiteralHeaders.onlyLiteralHeaders.get();
 <dl>
 <dd>
 
-#### Usage 
+#### 🔌 Usage
+
+<dl>
+
+<dd>
 
 ```ts
-import { SeedLiteralHeadersClient } from "";
-
-const seedLiteralHeaders = new SeedLiteralHeadersClient;
 await seedLiteralHeaders.withNonLiteralHeaders.get({
     integer: 42,
     literalServiceHeader: "service header",
@@ -55,8 +62,13 @@ await seedLiteralHeaders.withNonLiteralHeaders.get({
     literalEndpointHeader: "endpoint header",
     trueEndpointHeader: true
 });
-
 ```
+
+</dl>
+
+</dd>
+
+
 
 
 
