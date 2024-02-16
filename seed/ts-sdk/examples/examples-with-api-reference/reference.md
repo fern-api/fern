@@ -2,7 +2,7 @@
 ## Echo
 
 
-<details><summary> <code>examples.echo({ ...params }) -> string</code> </summary>
+<details><summary> <code>examples.<a href="src//Client.ts">echo</a>({ ...params }) -> string</code> </summary>
 
 <dl>
 
@@ -41,7 +41,7 @@ await seedExamples.echo("Hello world!");
 <dd>
 
 
-##### request: `string` 
+**request: `string`** 
 
 
 </dd>
@@ -53,7 +53,7 @@ await seedExamples.echo("Hello world!");
 <dd>
 
 
-##### requestOptions: `SeedExamplesClient.RequestOptions` 
+**requestOptions: `SeedExamplesClient.RequestOptions`** 
 
 
 </dd>
@@ -77,7 +77,7 @@ await seedExamples.echo("Hello world!");
 ## File Notification Service
 
 
-<details><summary> <code>examples.getException({ ...params }) -> SeedExamples.Exception</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>({ ...params }) -> SeedExamples.Exception</code> </summary>
 
 <dl>
 
@@ -116,7 +116,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 <dd>
 
 
-##### notificationId: `string` 
+**notificationId: `string`** 
 
 
 </dd>
@@ -128,7 +128,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -152,7 +152,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 ## File Service
 
 
-<details><summary> <code>examples.getFile({ ...params }) -> SeedExamples.File_</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/file/resources/service/client/Client.ts">getFile</a>({ ...params }) -> SeedExamples.File_</code> </summary>
 
 <dl>
 
@@ -205,7 +205,7 @@ await seedExamples.file.service.getFile("file.txt", {
 <dd>
 
 
-##### filename: `string` : This is a filename
+**filename: `string`** —This is a filename
 
 
 </dd>
@@ -217,7 +217,7 @@ await seedExamples.file.service.getFile("file.txt", {
 <dd>
 
 
-##### request: `SeedExamples.file.GetFileRequest` 
+**request: `SeedExamples.file.GetFileRequest`** 
 
 
 </dd>
@@ -229,7 +229,7 @@ await seedExamples.file.service.getFile("file.txt", {
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -253,7 +253,7 @@ await seedExamples.file.service.getFile("file.txt", {
 ## Health Service
 
 
-<details><summary> <code>examples.check({ ...params }) -> void</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/health/resources/service/client/Client.ts">check</a>({ ...params }) -> void</code> </summary>
 
 <dl>
 
@@ -304,7 +304,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 <dd>
 
 
-##### id: `string` : The id to check
+**id: `string`** —The id to check
 
 
 </dd>
@@ -316,7 +316,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -335,7 +335,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 </details>
 
 
-<details><summary> <code>examples.ping({ ...params }) -> boolean</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/health/resources/service/client/Client.ts">ping</a>({ ...params }) -> boolean</code> </summary>
 
 <dl>
 
@@ -386,7 +386,7 @@ await seedExamples.health.service.ping();
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -410,7 +410,7 @@ await seedExamples.health.service.ping();
 ## Service
 
 
-<details><summary> <code>examples.getMovie({ ...params }) -> SeedExamples.Movie</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> SeedExamples.Movie</code> </summary>
 
 <dl>
 
@@ -449,7 +449,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 <dd>
 
 
-##### movieId: `SeedExamples.MovieId` 
+**movieId: `SeedExamples.MovieId`** 
 
 
 </dd>
@@ -461,7 +461,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -480,7 +480,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 </details>
 
 
-<details><summary> <code>examples.createMovie({ ...params }) -> SeedExamples.MovieId</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> SeedExamples.MovieId</code> </summary>
 
 <dl>
 
@@ -526,7 +526,7 @@ await seedExamples.service.createMovie({
 <dd>
 
 
-##### request: `SeedExamples.Movie` 
+**request: `SeedExamples.Movie`** 
 
 
 </dd>
@@ -538,7 +538,7 @@ await seedExamples.service.createMovie({
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>
@@ -557,7 +557,7 @@ await seedExamples.service.createMovie({
 </details>
 
 
-<details><summary> <code>examples.getMetadata({ ...params }) -> SeedExamples.Metadata</code> </summary>
+<details><summary> <code>examples.<a href="src//api/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> SeedExamples.Metadata</code> </summary>
 
 <dl>
 
@@ -600,7 +600,7 @@ await seedExamples.service.getMetadata({
 <dd>
 
 
-##### request: `SeedExamples.GetMetadataRequest` 
+**request: `SeedExamples.GetMetadataRequest`** 
 
 
 </dd>
@@ -612,7 +612,7 @@ await seedExamples.service.getMetadata({
 <dd>
 
 
-##### requestOptions: `Service.RequestOptions` 
+**requestOptions: `Service.RequestOptions`** 
 
 
 </dd>

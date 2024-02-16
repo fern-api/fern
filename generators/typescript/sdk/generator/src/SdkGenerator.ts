@@ -674,7 +674,7 @@ module.exports = {
                         });
 
                         serviceReference.addEndpoint({
-                            functionFileName: serviceFilepath,
+                            link: serviceFilepath,
                             functionName: endpoint.name.camelCase.unsafeName,
                             returnType,
                             parameters,
