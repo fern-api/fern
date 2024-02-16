@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.1] - 2024-02-15
+
+- Fix: ensure the Ruby generators do not have strict dependencies on the IR. The generators have been updated to allow non breaking changes for the IR and the Fern CLI to happen without issue.
+
 ## [0.1.0-rc0] - 2024-02-12
 
 - Improvement: loosen the Faraday dependencies within the generated SDKs, now we are supporting Faraday 1.x, while continuing to support the same upperbound (specifically supporting the latest major version as well).
-- Release a major version as the Ruby generator is now being used in beta!
+- Release a minor version as the Ruby generator is now being used in beta!
 
 ## [0.0.6] - 2024-02-09
 
