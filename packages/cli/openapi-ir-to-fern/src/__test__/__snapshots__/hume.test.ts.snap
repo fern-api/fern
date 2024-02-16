@@ -172,62 +172,131 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "types": {
       "Bcp47Tag": {
         "enum": [
-          "zh",
-          "da",
-          "nl",
-          "en",
           {
+            "casing": {},
+            "value": "zh",
+          },
+          {
+            "casing": {},
+            "value": "da",
+          },
+          {
+            "casing": {},
+            "value": "nl",
+          },
+          {
+            "casing": {},
+            "value": "en",
+          },
+          {
+            "casing": {},
             "name": "EnAu",
             "value": "en-AU",
           },
           {
+            "casing": {},
             "name": "EnIn",
             "value": "en-IN",
           },
           {
+            "casing": {},
             "name": "EnNz",
             "value": "en-NZ",
           },
           {
+            "casing": {},
             "name": "EnGb",
             "value": "en-GB",
           },
-          "fr",
           {
+            "casing": {},
+            "value": "fr",
+          },
+          {
+            "casing": {},
             "name": "FrCa",
             "value": "fr-CA",
           },
-          "de",
-          "hi",
           {
+            "casing": {},
+            "value": "de",
+          },
+          {
+            "casing": {},
+            "value": "hi",
+          },
+          {
+            "casing": {},
             "name": "HiLatn",
             "value": "hi-Latn",
           },
-          "id",
-          "it",
-          "ja",
-          "ko",
-          "no",
-          "pl",
-          "pt",
           {
+            "casing": {},
+            "value": "id",
+          },
+          {
+            "casing": {},
+            "value": "it",
+          },
+          {
+            "casing": {},
+            "value": "ja",
+          },
+          {
+            "casing": {},
+            "value": "ko",
+          },
+          {
+            "casing": {},
+            "value": "no",
+          },
+          {
+            "casing": {},
+            "value": "pl",
+          },
+          {
+            "casing": {},
+            "value": "pt",
+          },
+          {
+            "casing": {},
             "name": "PtBr",
             "value": "pt-BR",
           },
           {
+            "casing": {},
             "name": "PtPt",
             "value": "pt-PT",
           },
-          "ru",
-          "es",
           {
+            "casing": {},
+            "value": "ru",
+          },
+          {
+            "casing": {},
+            "value": "es",
+          },
+          {
+            "casing": {},
             "name": "Es419",
             "value": "es-419",
           },
-          "sv",
-          "ta",
-          "tr",
-          "uk",
+          {
+            "casing": {},
+            "value": "sv",
+          },
+          {
+            "casing": {},
+            "value": "ta",
+          },
+          {
+            "casing": {},
+            "value": "tr",
+          },
+          {
+            "casing": {},
+            "value": "uk",
+          },
         ],
       },
       "BoundingBox": {
@@ -305,8 +374,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "Direction": {
         "enum": [
-          "asc",
-          "desc",
+          {
+            "casing": {},
+            "value": "asc",
+          },
+          {
+            "casing": {},
+            "value": "desc",
+          },
         ],
       },
       "EmotionScore": {
@@ -459,10 +534,22 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Granularity": {
         "docs": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
         "enum": [
-          "word",
-          "sentence",
-          "utterance",
-          "conversational_turn",
+          {
+            "casing": {},
+            "value": "word",
+          },
+          {
+            "casing": {},
+            "value": "sentence",
+          },
+          {
+            "casing": {},
+            "value": "utterance",
+          },
+          {
+            "casing": {},
+            "value": "conversational_turn",
+          },
         ],
       },
       "GroupedPredictionsBurstPrediction": {
@@ -832,9 +919,18 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "SortBy": {
         "enum": [
-          "created",
-          "started",
-          "ended",
+          {
+            "casing": {},
+            "value": "created",
+          },
+          {
+            "casing": {},
+            "value": "started",
+          },
+          {
+            "casing": {},
+            "value": "ended",
+          },
         ],
       },
       "Source": {
@@ -912,10 +1008,22 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "Status": {
         "enum": [
-          "QUEUED",
-          "IN_PROGRESS",
-          "COMPLETED",
-          "FAILED",
+          {
+            "casing": {},
+            "value": "QUEUED",
+          },
+          {
+            "casing": {},
+            "value": "IN_PROGRESS",
+          },
+          {
+            "casing": {},
+            "value": "COMPLETED",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
         ],
       },
       "TimeInterval": {
@@ -971,8 +1079,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "When": {
         "enum": [
-          "created_before",
-          "created_after",
+          {
+            "casing": {},
+            "value": "created_before",
+          },
+          {
+            "casing": {},
+            "value": "created_after",
+          },
         ],
       },
       "Window": {

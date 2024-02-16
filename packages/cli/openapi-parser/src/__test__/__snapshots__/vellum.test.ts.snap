@@ -3044,24 +3044,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_MESSAGE",
           "nameOverride": undefined,
           "value": "CHAT_MESSAGE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_HISTORY",
           "nameOverride": undefined,
           "value": "CHAT_HISTORY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "JINJA",
           "nameOverride": undefined,
           "value": "JINJA",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FUNCTION_DEFINITION",
           "nameOverride": undefined,
@@ -3166,24 +3190,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SYSTEM",
           "nameOverride": undefined,
           "value": "SYSTEM",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ASSISTANT",
           "nameOverride": undefined,
           "value": "ASSISTANT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "USER",
           "nameOverride": undefined,
           "value": "USER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FUNCTION",
           "nameOverride": undefined,
@@ -3268,12 +3316,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STRING",
           "nameOverride": undefined,
           "value": "STRING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "JSON",
           "nameOverride": undefined,
@@ -3598,18 +3658,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACTIVE",
           "nameOverride": undefined,
           "value": "ACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INACTIVE",
           "nameOverride": undefined,
           "value": "INACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ARCHIVED",
           "nameOverride": undefined,
@@ -4090,12 +4168,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACTIVE",
           "nameOverride": undefined,
           "value": "ACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ARCHIVED",
           "nameOverride": undefined,
@@ -4284,18 +4374,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DEVELOPMENT",
           "nameOverride": undefined,
           "value": "DEVELOPMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STAGING",
           "nameOverride": undefined,
           "value": "STAGING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PRODUCTION",
           "nameOverride": undefined,
@@ -4545,18 +4653,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "LENGTH",
           "nameOverride": undefined,
           "value": "LENGTH",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STOP",
           "nameOverride": undefined,
           "value": "STOP",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -5277,30 +5403,60 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "AWAITING_PROCESSING",
           "nameOverride": undefined,
           "value": "AWAITING_PROCESSING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDEXING",
           "nameOverride": undefined,
           "value": "INDEXING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDEXED",
           "nameOverride": undefined,
           "value": "INDEXED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -5317,12 +5473,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ALL",
           "nameOverride": undefined,
           "value": "ALL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NONE",
           "nameOverride": undefined,
@@ -5339,12 +5507,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GENERATE",
           "nameOverride": undefined,
           "value": "GENERATE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CLASSIFY",
           "nameOverride": undefined,
@@ -6025,24 +6205,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CREATING",
           "nameOverride": undefined,
           "value": "CREATING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "READY",
           "nameOverride": undefined,
           "value": "READY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CREATION_FAILED",
           "nameOverride": undefined,
           "value": "CREATION_FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DISABLED",
           "nameOverride": undefined,
@@ -6472,24 +6676,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROCESSING",
           "nameOverride": undefined,
           "value": "PROCESSING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROCESSED",
           "nameOverride": undefined,
           "value": "PROCESSED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -7428,48 +7656,96 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ANTHROPIC",
           "nameOverride": undefined,
           "value": "ANTHROPIC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "COHERE",
           "nameOverride": undefined,
           "value": "COHERE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GOOGLE",
           "nameOverride": undefined,
           "value": "GOOGLE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HOSTED",
           "nameOverride": undefined,
           "value": "HOSTED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MOSAICML",
           "nameOverride": undefined,
           "value": "MOSAICML",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MYSTIC",
           "nameOverride": undefined,
           "value": "MYSTIC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OPENAI",
           "nameOverride": undefined,
           "value": "OPENAI",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PYQ",
           "nameOverride": undefined,
@@ -8760,12 +9036,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TEXT",
           "nameOverride": undefined,
           "value": "TEXT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_HISTORY",
           "nameOverride": undefined,
@@ -10807,12 +11095,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "WORKFLOW_INITIALIZATION",
           "nameOverride": undefined,
           "value": "WORKFLOW_INITIALIZATION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NODE_EXECUTION",
           "nameOverride": undefined,
@@ -11201,24 +11501,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INITIATED",
           "nameOverride": undefined,
           "value": "INITIATED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STREAMING",
           "nameOverride": undefined,
           "value": "STREAMING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FULFILLED",
           "nameOverride": undefined,
           "value": "FULFILLED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "REJECTED",
           "nameOverride": undefined,

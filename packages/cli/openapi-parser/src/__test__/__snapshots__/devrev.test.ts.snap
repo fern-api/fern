@@ -7464,12 +7464,24 @@ authentication connection.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "disable",
           "nameOverride": undefined,
           "value": "disable",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "enable",
           "nameOverride": undefined,
@@ -7487,30 +7499,60 @@ for each authentication connection will depend on the type value.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "social",
           "nameOverride": undefined,
           "value": "social",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -7743,12 +7785,24 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:grant-type:token-issue",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthGrantTypeTokenExchange",
           "nameOverride": undefined,
@@ -7764,54 +7818,108 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeAat",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:aat",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeAatPublic",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:aat:public",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeDev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:dev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypePat",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:pat",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeRev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:rev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSession",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:session",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSessionDev0",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:session:dev0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSys",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:sys",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
           "nameOverride": undefined,
@@ -7827,18 +7935,36 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "expired",
           "nameOverride": undefined,
           "value": "expired",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "revoked",
           "nameOverride": undefined,
@@ -7854,42 +7980,84 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeJwtDev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:jwt:dev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeRevinfo",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:revinfo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSysu",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:sysu",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfo",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:userinfo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
           "nameOverride": undefined,
@@ -8893,24 +9061,48 @@ authentication connections have different configuration parameters.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -9206,30 +9398,60 @@ that can be updated.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "none",
           "nameOverride": undefined,
           "value": "none",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -9683,30 +9905,60 @@ sort order. If not set, then no prior elements exist.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "bad_request",
           "nameOverride": undefined,
           "value": "bad_request",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "invalid_enum_value",
           "nameOverride": undefined,
           "value": "invalid_enum_value",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "missing_required_field",
           "nameOverride": undefined,
           "value": "missing_required_field",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "parse_error",
           "nameOverride": undefined,
           "value": "parse_error",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "value_not_permitted",
           "nameOverride": undefined,
@@ -10699,24 +10951,48 @@ sort order. If not set, then no prior elements exist.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p0",
           "nameOverride": undefined,
           "value": "p0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p1",
           "nameOverride": undefined,
           "value": "p1",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p2",
           "nameOverride": undefined,
           "value": "p2",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p3",
           "nameOverride": undefined,
@@ -10737,12 +11013,24 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "after",
           "nameOverride": undefined,
           "value": "after",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "before",
           "nameOverride": undefined,
@@ -10849,18 +11137,36 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "production",
           "nameOverride": undefined,
           "value": "production",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "staging",
           "nameOverride": undefined,
           "value": "staging",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "test",
           "nameOverride": undefined,
@@ -11179,24 +11485,48 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "capability",
           "nameOverride": undefined,
           "value": "capability",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "enhancement",
           "nameOverride": undefined,
           "value": "enhancement",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "feature",
           "nameOverride": undefined,
           "value": "feature",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "product",
           "nameOverride": undefined,
@@ -13607,24 +13937,48 @@ tags.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "blocker",
           "nameOverride": undefined,
           "value": "blocker",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "high",
           "nameOverride": undefined,
           "value": "high",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "low",
           "nameOverride": undefined,
           "value": "low",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "medium",
           "nameOverride": undefined,
@@ -13773,12 +14127,24 @@ will appear in the response.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "snap_kit",
           "nameOverride": undefined,
           "value": "snap_kit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "text",
           "nameOverride": undefined,
@@ -14787,30 +15153,60 @@ default visibility.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "deactivated",
           "nameOverride": undefined,
           "value": "deactivated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "locked",
           "nameOverride": undefined,
           "value": "locked",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "shadow",
           "nameOverride": undefined,
           "value": "shadow",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unassigned",
           "nameOverride": undefined,
@@ -14864,18 +15260,36 @@ default visibility.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "dev_user",
           "nameOverride": undefined,
           "value": "dev_user",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_user",
           "nameOverride": undefined,
           "value": "rev_user",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sys_user",
           "nameOverride": undefined,
@@ -15521,114 +15935,228 @@ be set for other request types.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_created",
           "nameOverride": undefined,
           "value": "part_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_deleted",
           "nameOverride": undefined,
           "value": "part_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_updated",
           "nameOverride": undefined,
           "value": "part_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_created",
           "nameOverride": undefined,
           "value": "rev_org_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_deleted",
           "nameOverride": undefined,
           "value": "rev_org_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_updated",
           "nameOverride": undefined,
           "value": "rev_org_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_created",
           "nameOverride": undefined,
           "value": "tag_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_deleted",
           "nameOverride": undefined,
           "value": "tag_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_updated",
           "nameOverride": undefined,
           "value": "tag_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_created",
           "nameOverride": undefined,
           "value": "timeline_entry_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_deleted",
           "nameOverride": undefined,
           "value": "timeline_entry_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_updated",
           "nameOverride": undefined,
           "value": "timeline_entry_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "verify",
           "nameOverride": undefined,
           "value": "verify",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_created",
           "nameOverride": undefined,
           "value": "webhook_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_deleted",
           "nameOverride": undefined,
           "value": "webhook_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_updated",
           "nameOverride": undefined,
           "value": "webhook_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_created",
           "nameOverride": undefined,
           "value": "work_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_deleted",
           "nameOverride": undefined,
           "value": "work_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_updated",
           "nameOverride": undefined,
@@ -15673,18 +16201,36 @@ be set for other request types.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "inactive",
           "nameOverride": undefined,
           "value": "inactive",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unverified",
           "nameOverride": undefined,
@@ -15921,12 +16467,24 @@ response.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "activate",
           "nameOverride": undefined,
           "value": "activate",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "deactivate",
           "nameOverride": undefined,
@@ -16463,12 +17021,24 @@ event types. Note this is mutually exclusive with 'add' and
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "issue",
           "nameOverride": undefined,
           "value": "issue",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ticket",
           "nameOverride": undefined,

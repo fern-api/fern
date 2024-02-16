@@ -6631,10 +6631,12 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "ListPaymentLinksRequestOrdering": {
           "enum": [
             {
+              "casing": {},
               "name": "Ascending",
               "value": "created_at",
             },
             {
+              "casing": {},
               "name": "Descending",
               "value": "-created_at",
             },
@@ -6642,8 +6644,14 @@ During the payment intent flow, you need to fill in the payment intent with requ
         },
         "ListPaymentLinksRequestStatus": {
           "enum": [
-            "ACTIVE",
-            "INACTIVE",
+            {
+              "casing": {},
+              "value": "ACTIVE",
+            },
+            {
+              "casing": {},
+              "value": "INACTIVE",
+            },
           ],
         },
       },
@@ -13093,9 +13101,18 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "The current status of the charge.
 ",
         "enum": [
-          "PENDING",
-          "SUCCEEDED",
-          "FAILED",
+          {
+            "casing": {},
+            "value": "PENDING",
+          },
+          {
+            "casing": {},
+            "value": "SUCCEEDED",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
         ],
       },
       "CreateBankAccountOfpi": {
@@ -13855,8 +13872,14 @@ We return one of the following enum values:
       "EnumBankAccountHolderTypeOfpi": {
         "docs": "The type of bank account. Can be either \`INDIVIDUAL\` or \`BUSINESS\`.",
         "enum": [
-          "INDIVIDUAL",
-          "BUSINESS",
+          {
+            "casing": {},
+            "value": "INDIVIDUAL",
+          },
+          {
+            "casing": {},
+            "value": "BUSINESS",
+          },
         ],
       },
       "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
@@ -13867,9 +13890,18 @@ We return one of the following enum values:
   - \`SAVINGS\`
   - \`SALARY\`",
         "enum": [
-          "CHECKINGS",
-          "SAVINGS",
-          "SALARY",
+          {
+            "casing": {},
+            "value": "CHECKINGS",
+          },
+          {
+            "casing": {},
+            "value": "SAVINGS",
+          },
+          {
+            "casing": {},
+            "value": "SALARY",
+          },
         ],
       },
       "EnumCategorizationAccountCategory": {
@@ -13880,10 +13912,22 @@ Can be either:
   - \`LOAN_ACCOUNT\`
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
-          "CHECKING_ACCOUNT",
-          "CREDIT_CARD",
-          "LOAN_ACCOUNT",
-          "SAVINGS_ACCOUNT",
+          {
+            "casing": {},
+            "value": "CHECKING_ACCOUNT",
+          },
+          {
+            "casing": {},
+            "value": "CREDIT_CARD",
+          },
+          {
+            "casing": {},
+            "value": "LOAN_ACCOUNT",
+          },
+          {
+            "casing": {},
+            "value": "SAVINGS_ACCOUNT",
+          },
         ],
       },
       "EnumCategorizationAccountHolderType": {
@@ -13893,8 +13937,14 @@ Can be either:
   - \`INDIVIDUAL\`
   - \`BUSINESS\`",
         "enum": [
-          "INDIVIDUAL",
-          "BUSINESS",
+          {
+            "casing": {},
+            "value": "INDIVIDUAL",
+          },
+          {
+            "casing": {},
+            "value": "BUSINESS",
+          },
         ],
       },
       "EnumCategorizationTransactionCategory": {
@@ -14014,8 +14064,14 @@ Can be either:
   - \`INFLOW\` indicates a received transaction.
   - \`OUTFLOW\` indicates a sent transaction.",
         "enum": [
-          "INFLOW",
-          "OUTFLOW",
+          {
+            "casing": {},
+            "value": "INFLOW",
+          },
+          {
+            "casing": {},
+            "value": "OUTFLOW",
+          },
         ],
       },
       "EnumCustomerIdentifierTypeOfpi": {
@@ -14024,8 +14080,14 @@ Can be either:
 - 🇧🇷 Brazil options: \`CPF\` or \`CNPJ\`.
 ",
         "enum": [
-          "CPF",
-          "CNPJ",
+          {
+            "casing": {},
+            "value": "CPF",
+          },
+          {
+            "casing": {},
+            "value": "CNPJ",
+          },
         ],
       },
       "EnumCustomerIdentifierTypePse": {
@@ -14034,11 +14096,26 @@ Can be either:
 - 🇨🇴 Colombia options: \`CC\`, \`PP\`, \`CE\`, \`TI\`, or \`NIT\`.
 ",
         "enum": [
-          "CC",
-          "PP",
-          "CE",
-          "TI",
-          "NIT",
+          {
+            "casing": {},
+            "value": "CC",
+          },
+          {
+            "casing": {},
+            "value": "PP",
+          },
+          {
+            "casing": {},
+            "value": "CE",
+          },
+          {
+            "casing": {},
+            "value": "TI",
+          },
+          {
+            "casing": {},
+            "value": "NIT",
+          },
         ],
       },
       "EnumCustomerType": {
@@ -14051,8 +14128,14 @@ Can be either:
 **Notes:** For 🇨🇴 Colombia's PSE, you can only create customers of type \`INDIVIDUAL\`.
 ",
         "enum": [
-          "INDIVIDUAL",
-          "BUSINESS",
+          {
+            "casing": {},
+            "value": "INDIVIDUAL",
+          },
+          {
+            "casing": {},
+            "value": "BUSINESS",
+          },
         ],
       },
       "EnumEmploymentRecordDocumentType": {
@@ -14062,16 +14145,28 @@ Can be either:
   - \`CURP\`
 ",
         "enum": [
-          "NSS",
-          "CURP",
+          {
+            "casing": {},
+            "value": "NSS",
+          },
+          {
+            "casing": {},
+            "value": "CURP",
+          },
         ],
       },
       "EnumEmploymentRecordStatus": {
         "docs": "Indicates whether or not the individual is currently \`EMPLOYED\` or \`UNEMPLOYED\`.
 ",
         "enum": [
-          "EMPLOYED",
-          "UNEMPLOYED",
+          {
+            "casing": {},
+            "value": "EMPLOYED",
+          },
+          {
+            "casing": {},
+            "value": "UNEMPLOYED",
+          },
         ],
       },
       "EnumEmploymentRecordStatusUpdateEvents": {
@@ -14085,12 +14180,30 @@ Can be either:
   - \`SICK_LEAVE\`
 ",
         "enum": [
-          "DISMISSED_RESIGNED",
-          "SALARY_MODIFICATION",
-          "HIRED",
-          "VOLUNTARY_CONTRIBUTION",
-          "ABSENCE",
-          "SICK_LEAVE",
+          {
+            "casing": {},
+            "value": "DISMISSED_RESIGNED",
+          },
+          {
+            "casing": {},
+            "value": "SALARY_MODIFICATION",
+          },
+          {
+            "casing": {},
+            "value": "HIRED",
+          },
+          {
+            "casing": {},
+            "value": "VOLUNTARY_CONTRIBUTION",
+          },
+          {
+            "casing": {},
+            "value": "ABSENCE",
+          },
+          {
+            "casing": {},
+            "value": "SICK_LEAVE",
+          },
         ],
       },
       "EnumIncomeMinimumConfidenceLevelRequest": {
@@ -14103,9 +14216,18 @@ You can send through one of the following values:
   - \`LOW\`
 ",
         "enum": [
-          "HIGH",
-          "MEDIUM",
-          "LOW",
+          {
+            "casing": {},
+            "value": "HIGH",
+          },
+          {
+            "casing": {},
+            "value": "MEDIUM",
+          },
+          {
+            "casing": {},
+            "value": "LOW",
+          },
         ],
       },
       "EnumIncomeSourceType": "literal<"BANK">",
@@ -14119,9 +14241,18 @@ We return one of the following enum values:
   - \`LOW\`
 ",
         "enum": [
-          "HIGH",
-          "MEDIUM",
-          "LOW",
+          {
+            "casing": {},
+            "value": "HIGH",
+          },
+          {
+            "casing": {},
+            "value": "MEDIUM",
+          },
+          {
+            "casing": {},
+            "value": "LOW",
+          },
         ],
       },
       "EnumIncomeStreamFrequency": {
@@ -14136,11 +14267,26 @@ We return one of the following enum values:
   - \`SINGLE\` - For transactions that occur only once and do not repeat.
 ",
         "enum": [
-          "MONTHLY",
-          "FORTNIGHTLY",
-          "WEEKLY",
-          "IRREGULAR",
-          "SINGLE",
+          {
+            "casing": {},
+            "value": "MONTHLY",
+          },
+          {
+            "casing": {},
+            "value": "FORTNIGHTLY",
+          },
+          {
+            "casing": {},
+            "value": "WEEKLY",
+          },
+          {
+            "casing": {},
+            "value": "IRREGULAR",
+          },
+          {
+            "casing": {},
+            "value": "SINGLE",
+          },
         ],
       },
       "EnumIncomeStreamType": {
@@ -14160,16 +14306,46 @@ We return one of the following enum values:
   - \`UNKNOWN\`
 ",
         "enum": [
-          "SALARY",
-          "GOVERNMENT",
-          "INTEREST",
-          "RENT",
-          "RETIREMENT",
-          "FREELANCE",
-          "ALTERNATIVE_INCOME",
-          "TRANSFER",
-          "DEPOSIT",
-          "UNKNOWN",
+          {
+            "casing": {},
+            "value": "SALARY",
+          },
+          {
+            "casing": {},
+            "value": "GOVERNMENT",
+          },
+          {
+            "casing": {},
+            "value": "INTEREST",
+          },
+          {
+            "casing": {},
+            "value": "RENT",
+          },
+          {
+            "casing": {},
+            "value": "RETIREMENT",
+          },
+          {
+            "casing": {},
+            "value": "FREELANCE",
+          },
+          {
+            "casing": {},
+            "value": "ALTERNATIVE_INCOME",
+          },
+          {
+            "casing": {},
+            "value": "TRANSFER",
+          },
+          {
+            "casing": {},
+            "value": "DEPOSIT",
+          },
+          {
+            "casing": {},
+            "value": "UNKNOWN",
+          },
         ],
       },
       "EnumIncomeVerificationAccountCategory": {
@@ -14178,8 +14354,14 @@ Can be either:
   - \`CHECKING_ACCOUNT\`
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
-          "CHECKING_ACCOUNT",
-          "SAVINGS_ACCOUNT",
+          {
+            "casing": {},
+            "value": "CHECKING_ACCOUNT",
+          },
+          {
+            "casing": {},
+            "value": "SAVINGS_ACCOUNT",
+          },
         ],
       },
       "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
@@ -14197,16 +14379,28 @@ Can be either:
 - \`openbanking\`: Uses the bank's openbanking API to perform requests.
 ",
         "enum": [
-          "credentials",
-          "openbanking",
+          {
+            "casing": {},
+            "value": "credentials",
+          },
+          {
+            "casing": {},
+            "value": "openbanking",
+          },
         ],
       },
       "EnumInstitutionStatus": {
         "docs": "Indicates whether Belvo's integration with the institution is currently active (\`healthy\`) or undergoing maintenance (\`down\`).
 ",
         "enum": [
-          "healthy",
-          "down",
+          {
+            "casing": {},
+            "value": "healthy",
+          },
+          {
+            "casing": {},
+            "value": "down",
+          },
         ],
       },
       "EnumInstitutionType": {
@@ -14217,9 +14411,18 @@ Can be either:
   - \`employment\`
 ",
         "enum": [
-          "bank",
-          "fiscal",
-          "employment",
+          {
+            "casing": {},
+            "value": "bank",
+          },
+          {
+            "casing": {},
+            "value": "fiscal",
+          },
+          {
+            "casing": {},
+            "value": "employment",
+          },
         ],
       },
       "EnumInvestmentPortfolioInstrumentType": {
@@ -14236,13 +14439,34 @@ We return one of the following values:
   - \`STOCK\`
 ",
         "enum": [
-          "BOND",
-          "DEPOSIT",
-          "ETF",
-          "FUND",
-          "OTHER",
-          "PENSION",
-          "STOCK",
+          {
+            "casing": {},
+            "value": "BOND",
+          },
+          {
+            "casing": {},
+            "value": "DEPOSIT",
+          },
+          {
+            "casing": {},
+            "value": "ETF",
+          },
+          {
+            "casing": {},
+            "value": "FUND",
+          },
+          {
+            "casing": {},
+            "value": "OTHER",
+          },
+          {
+            "casing": {},
+            "value": "PENSION",
+          },
+          {
+            "casing": {},
+            "value": "STOCK",
+          },
         ],
       },
       "EnumInvestmentPortfolioType": {
@@ -14256,10 +14480,22 @@ We return one of the following values:
   - \`VARIABLE_INCOME\`
 ",
         "enum": [
-          "FIXED_INCOME",
-          "OTHER",
-          "PENSION",
-          "VARIABLE_INCOME",
+          {
+            "casing": {},
+            "value": "FIXED_INCOME",
+          },
+          {
+            "casing": {},
+            "value": "OTHER",
+          },
+          {
+            "casing": {},
+            "value": "PENSION",
+          },
+          {
+            "casing": {},
+            "value": "VARIABLE_INCOME",
+          },
         ],
       },
       "EnumInvoiceAllowedIncomeTypesRequest": {
@@ -14276,16 +14512,46 @@ You can send through one or more of the following values:
   - \`DEPOSIT\`
   - \`UNKNOWN\`",
         "enum": [
-          "SALARY",
-          "GOVERNMENT",
-          "INTEREST",
-          "RENT",
-          "RETIREMENT",
-          "FREELANCE",
-          "ALTERNATIVE_INCOME",
-          "TRANSFER",
-          "DEPOSIT",
-          "UNKNOWN",
+          {
+            "casing": {},
+            "value": "SALARY",
+          },
+          {
+            "casing": {},
+            "value": "GOVERNMENT",
+          },
+          {
+            "casing": {},
+            "value": "INTEREST",
+          },
+          {
+            "casing": {},
+            "value": "RENT",
+          },
+          {
+            "casing": {},
+            "value": "RETIREMENT",
+          },
+          {
+            "casing": {},
+            "value": "FREELANCE",
+          },
+          {
+            "casing": {},
+            "value": "ALTERNATIVE_INCOME",
+          },
+          {
+            "casing": {},
+            "value": "TRANSFER",
+          },
+          {
+            "casing": {},
+            "value": "DEPOSIT",
+          },
+          {
+            "casing": {},
+            "value": "UNKNOWN",
+          },
         ],
       },
       "EnumInvoiceDianInvoiceType": {
@@ -14320,14 +14586,27 @@ For Mexico's SAT, we return one of the following values:
   - \`Traslado\`
 ",
         "enum": [
-          "Egreso",
-          "Ingreso",
           {
+            "casing": {},
+            "value": "Egreso",
+          },
+          {
+            "casing": {},
+            "value": "Ingreso",
+          },
+          {
+            "casing": {},
             "name": "Nomina",
             "value": "Nómina",
           },
-          "Pago",
-          "Traslado",
+          {
+            "casing": {},
+            "value": "Pago",
+          },
+          {
+            "casing": {},
+            "value": "Traslado",
+          },
         ],
       },
       "EnumInvoiceSatPaymentMethod": {
@@ -14352,8 +14631,14 @@ For Mexico's SAT, we return one of the following values:
 For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
 ",
         "enum": [
-          "single",
-          "recurrent",
+          {
+            "casing": {},
+            "value": "single",
+          },
+          {
+            "casing": {},
+            "value": "recurrent",
+          },
         ],
       },
       "EnumLinkAccessModeResponse": {
@@ -14387,10 +14672,22 @@ We return one of the following values:
   - \`token_required\`
 ",
         "enum": [
-          "valid",
-          "invalid",
-          "unconfirmed",
-          "token_required",
+          {
+            "casing": {},
+            "value": "valid",
+          },
+          {
+            "casing": {},
+            "value": "invalid",
+          },
+          {
+            "casing": {},
+            "value": "unconfirmed",
+          },
+          {
+            "casing": {},
+            "value": "token_required",
+          },
         ],
       },
       "EnumLoanDataFeeType": {
@@ -14401,9 +14698,18 @@ We return one of the following values:
   - \`OTHERS\`
 ",
         "enum": [
-          "OPERATION_FEE",
-          "INSURANCE_FEE",
-          "OTHERS",
+          {
+            "casing": {},
+            "value": "OPERATION_FEE",
+          },
+          {
+            "casing": {},
+            "value": "INSURANCE_FEE",
+          },
+          {
+            "casing": {},
+            "value": "OTHERS",
+          },
         ],
       },
       "EnumLoanDataInterestRateType": {
@@ -14413,26 +14719,53 @@ We return one of the following values:
   - \`YEARLY\`
 ",
         "enum": [
-          "MONTHLY",
-          "YEARLY",
+          {
+            "casing": {},
+            "value": "MONTHLY",
+          },
+          {
+            "casing": {},
+            "value": "YEARLY",
+          },
         ],
       },
       "EnumPaymentIntentHolderTypePse": {
         "docs": "Type of bank account holder. For PSE, this value must be \`INDIVIDUAL\`.",
         "enum": [
-          "INDIVIDUAL",
-          "BUSINESS",
+          {
+            "casing": {},
+            "value": "INDIVIDUAL",
+          },
+          {
+            "casing": {},
+            "value": "BUSINESS",
+          },
         ],
       },
       "EnumPaymentIntentStatus": {
         "docs": "The current status of the payment intent.
 ",
         "enum": [
-          "REQUIRES_PAYMENT_METHOD",
-          "REQUIRES_ACTION",
-          "SUCCEEDED",
-          "PROCESSING",
-          "FAILED",
+          {
+            "casing": {},
+            "value": "REQUIRES_PAYMENT_METHOD",
+          },
+          {
+            "casing": {},
+            "value": "REQUIRES_ACTION",
+          },
+          {
+            "casing": {},
+            "value": "SUCCEEDED",
+          },
+          {
+            "casing": {},
+            "value": "PROCESSING",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
         ],
       },
       "EnumPaymentLinkAllowedPaymentMethod": {
@@ -14441,8 +14774,14 @@ We return one of the following values:
   - For 🇧🇷 Brazil's OFPI, the value must be \`open_finance\`.  
   - For 🇨🇴 Colombia's PSE, the value must be \`pse\`.",
         "enum": [
-          "open_finance",
-          "pse",
+          {
+            "casing": {},
+            "value": "open_finance",
+          },
+          {
+            "casing": {},
+            "value": "pse",
+          },
         ],
       },
       "EnumPaymentLinkProvider": {
@@ -14453,8 +14792,14 @@ We return one of the following values:
 - For 🇨🇴 Colombia's PSE, the value must be \`payments_way\`.
 ",
         "enum": [
-          "belvo",
-          "payments_way",
+          {
+            "casing": {},
+            "value": "belvo",
+          },
+          {
+            "casing": {},
+            "value": "payments_way",
+          },
         ],
       },
       "EnumPaymentLinksStatus": {
@@ -14465,8 +14810,14 @@ We return one of the following values:
 
 **Note:** You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
         "enum": [
-          "ACTIVE",
-          "INACTIVE",
+          {
+            "casing": {},
+            "value": "ACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "INACTIVE",
+          },
         ],
       },
       "EnumPaymentTransactionType": {
@@ -14475,8 +14826,14 @@ We return one of the following values:
   - \`INFLOW\` indicates money coming into the account.
   - \`OUTFLOW\` indicates money coming out of the account.",
         "enum": [
-          "INFLOW",
-          "OUTFLOW",
+          {
+            "casing": {},
+            "value": "INFLOW",
+          },
+          {
+            "casing": {},
+            "value": "OUTFLOW",
+          },
         ],
       },
       "EnumPaymentsCountry": {
@@ -14487,8 +14844,14 @@ We return one of the following values:
 -  COL (🇨🇴 Colombia)
 ",
         "enum": [
-          "BRA",
-          "COL",
+          {
+            "casing": {},
+            "value": "BRA",
+          },
+          {
+            "casing": {},
+            "value": "COL",
+          },
         ],
       },
       "EnumPaymentsCurrency": {
@@ -14498,8 +14861,14 @@ We return one of the following values:
   - 🇧🇷 BRL (Brazilian Real)
   - 🇨🇴 COP (Colombian Peso)",
         "enum": [
-          "BRL",
-          "COP",
+          {
+            "casing": {},
+            "value": "BRL",
+          },
+          {
+            "casing": {},
+            "value": "COP",
+          },
         ],
       },
       "EnumReceivableTransactionFeeType": {
@@ -14516,10 +14885,22 @@ We return one of the following values:
   - \`REVERTED\`
   - \`UNCATEGORIZED\`",
         "enum": [
-          "APPROVED",
-          "CANCELLED",
-          "REVERTED",
-          "UNCATEGORIZED",
+          {
+            "casing": {},
+            "value": "APPROVED",
+          },
+          {
+            "casing": {},
+            "value": "CANCELLED",
+          },
+          {
+            "casing": {},
+            "value": "REVERTED",
+          },
+          {
+            "casing": {},
+            "value": "UNCATEGORIZED",
+          },
         ],
       },
       "EnumReceivableTransactionType": {
@@ -14549,23 +14930,33 @@ We return one of the following values:
 ",
         "enum": [
           {
+            "casing": {},
             "name": "BillsUtilities",
             "value": "Bills & Utilities",
           },
           {
+            "casing": {},
             "name": "CreditsLoans",
             "value": "Credits & Loans",
           },
-          "Insurance",
           {
+            "casing": {},
+            "value": "Insurance",
+          },
+          {
+            "casing": {},
             "name": "OnlinePlatformsLeisure",
             "value": "Online Platforms & Leisure",
           },
           {
+            "casing": {},
             "name": "TransportTravel",
             "value": "Transport & Travel",
           },
-          "Taxes",
+          {
+            "casing": {},
+            "value": "Taxes",
+          },
         ],
       },
       "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
@@ -14576,16 +14967,31 @@ We return one of the following values:
   - \`REGULAR\`
 ",
         "enum": [
-          "SUBSCRIPTION",
-          "REGULAR",
+          {
+            "casing": {},
+            "value": "SUBSCRIPTION",
+          },
+          {
+            "casing": {},
+            "value": "REGULAR",
+          },
         ],
       },
       "EnumTaxComplianceStatusOutcome": {
         "docs": "Indicates whether the taxpayer is complying to all their tax obligations (\`POSITIVE\`), if they are not (\`NEGATIVE\`), or have none to comply to (\`NO_OBLIGATIONS\`).",
         "enum": [
-          "POSITIVE",
-          "NEGATIVE",
-          "NO_OBLIGATIONS",
+          {
+            "casing": {},
+            "value": "POSITIVE",
+          },
+          {
+            "casing": {},
+            "value": "NEGATIVE",
+          },
+          {
+            "casing": {},
+            "value": "NO_OBLIGATIONS",
+          },
         ],
       },
       "EnumTaxRetentionPaymentStatus": {
@@ -14594,8 +15000,14 @@ We return one of the following values:
   - \`PROVISIONED\`
 ",
         "enum": [
-          "PAID",
-          "PROVISIONED",
+          {
+            "casing": {},
+            "value": "PAID",
+          },
+          {
+            "casing": {},
+            "value": "PROVISIONED",
+          },
         ],
       },
       "EnumTaxRetentionReceiverNationality": {
@@ -14604,8 +15016,14 @@ We return one of the following values:
   - \`FOREIGN\`
 ",
         "enum": [
-          "NATIONAL",
-          "FOREIGN",
+          {
+            "casing": {},
+            "value": "NATIONAL",
+          },
+          {
+            "casing": {},
+            "value": "FOREIGN",
+          },
         ],
       },
       "EnumTaxRetentionType": {
@@ -14615,8 +15033,14 @@ We return one of the following values:
 - \`INFLOW\` related to a tax retention for a received invoice.
 ",
         "enum": [
-          "OUTFLOW",
-          "INFLOW",
+          {
+            "casing": {},
+            "value": "OUTFLOW",
+          },
+          {
+            "casing": {},
+            "value": "INFLOW",
+          },
         ],
       },
       "EnumTransactionBillStatus": {

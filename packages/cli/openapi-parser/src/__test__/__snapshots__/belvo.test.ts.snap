@@ -45663,12 +45663,24 @@ For example:
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ACTIVE",
                   "nameOverride": undefined,
                   "value": "ACTIVE",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "INACTIVE",
                   "nameOverride": undefined,
@@ -45699,12 +45711,24 @@ For example:
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "created_at",
                   "nameOverride": "Ascending",
                   "value": "created_at",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CreatedAt",
                   "nameOverride": "Descending",
@@ -54099,18 +54123,36 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "PENDING",
                 "nameOverride": undefined,
                 "value": "PENDING",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "SUCCEEDED",
                 "nameOverride": undefined,
                 "value": "SUCCEEDED",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "FAILED",
                 "nameOverride": undefined,
@@ -58523,12 +58565,24 @@ We return one of the following enum values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDIVIDUAL",
           "nameOverride": undefined,
           "value": "INDIVIDUAL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BUSINESS",
           "nameOverride": undefined,
@@ -58559,18 +58613,36 @@ We return one of the following enum values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHECKINGS",
           "nameOverride": undefined,
           "value": "CHECKINGS",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SAVINGS",
           "nameOverride": undefined,
           "value": "SAVINGS",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SALARY",
           "nameOverride": undefined,
@@ -58591,24 +58663,48 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHECKING_ACCOUNT",
           "nameOverride": undefined,
           "value": "CHECKING_ACCOUNT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CREDIT_CARD",
           "nameOverride": undefined,
           "value": "CREDIT_CARD",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "LOAN_ACCOUNT",
           "nameOverride": undefined,
           "value": "LOAN_ACCOUNT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SAVINGS_ACCOUNT",
           "nameOverride": undefined,
@@ -58628,12 +58724,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDIVIDUAL",
           "nameOverride": undefined,
           "value": "INDIVIDUAL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BUSINESS",
           "nameOverride": undefined,
@@ -58895,12 +59003,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INFLOW",
           "nameOverride": undefined,
           "value": "INFLOW",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OUTFLOW",
           "nameOverride": undefined,
@@ -58919,12 +59039,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CPF",
           "nameOverride": undefined,
           "value": "CPF",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CNPJ",
           "nameOverride": undefined,
@@ -58943,30 +59075,60 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CC",
           "nameOverride": undefined,
           "value": "CC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PP",
           "nameOverride": undefined,
           "value": "PP",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CE",
           "nameOverride": undefined,
           "value": "CE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TI",
           "nameOverride": undefined,
           "value": "TI",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NIT",
           "nameOverride": undefined,
@@ -58989,12 +59151,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDIVIDUAL",
           "nameOverride": undefined,
           "value": "INDIVIDUAL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BUSINESS",
           "nameOverride": undefined,
@@ -59024,12 +59198,24 @@ Can be either:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "NSS",
             "nameOverride": undefined,
             "value": "NSS",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "CURP",
             "nameOverride": undefined,
@@ -59054,12 +59240,24 @@ Can be either:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "EMPLOYED",
             "nameOverride": undefined,
             "value": "EMPLOYED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "UNEMPLOYED",
             "nameOverride": undefined,
@@ -59084,36 +59282,72 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DISMISSED_RESIGNED",
           "nameOverride": undefined,
           "value": "DISMISSED_RESIGNED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SALARY_MODIFICATION",
           "nameOverride": undefined,
           "value": "SALARY_MODIFICATION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HIRED",
           "nameOverride": undefined,
           "value": "HIRED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "VOLUNTARY_CONTRIBUTION",
           "nameOverride": undefined,
           "value": "VOLUNTARY_CONTRIBUTION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ABSENCE",
           "nameOverride": undefined,
           "value": "ABSENCE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SICK_LEAVE",
           "nameOverride": undefined,
@@ -59136,18 +59370,36 @@ You can send through one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HIGH",
           "nameOverride": undefined,
           "value": "HIGH",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MEDIUM",
           "nameOverride": undefined,
           "value": "MEDIUM",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "LOW",
           "nameOverride": undefined,
@@ -59185,18 +59437,36 @@ We return one of the following enum values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HIGH",
           "nameOverride": undefined,
           "value": "HIGH",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MEDIUM",
           "nameOverride": undefined,
           "value": "MEDIUM",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "LOW",
           "nameOverride": undefined,
@@ -59221,30 +59491,60 @@ We return one of the following enum values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MONTHLY",
           "nameOverride": undefined,
           "value": "MONTHLY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FORTNIGHTLY",
           "nameOverride": undefined,
           "value": "FORTNIGHTLY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "WEEKLY",
           "nameOverride": undefined,
           "value": "WEEKLY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "IRREGULAR",
           "nameOverride": undefined,
           "value": "IRREGULAR",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SINGLE",
           "nameOverride": undefined,
@@ -59274,60 +59574,120 @@ We return one of the following enum values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SALARY",
           "nameOverride": undefined,
           "value": "SALARY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GOVERNMENT",
           "nameOverride": undefined,
           "value": "GOVERNMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INTEREST",
           "nameOverride": undefined,
           "value": "INTEREST",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "RENT",
           "nameOverride": undefined,
           "value": "RENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "RETIREMENT",
           "nameOverride": undefined,
           "value": "RETIREMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FREELANCE",
           "nameOverride": undefined,
           "value": "FREELANCE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ALTERNATIVE_INCOME",
           "nameOverride": undefined,
           "value": "ALTERNATIVE_INCOME",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TRANSFER",
           "nameOverride": undefined,
           "value": "TRANSFER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DEPOSIT",
           "nameOverride": undefined,
           "value": "DEPOSIT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -59346,12 +59706,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHECKING_ACCOUNT",
           "nameOverride": undefined,
           "value": "CHECKING_ACCOUNT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SAVINGS_ACCOUNT",
           "nameOverride": undefined,
@@ -59408,12 +59780,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "credentials",
           "nameOverride": undefined,
           "value": "credentials",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "openbanking",
           "nameOverride": undefined,
@@ -59430,12 +59814,24 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "healthy",
           "nameOverride": undefined,
           "value": "healthy",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "down",
           "nameOverride": undefined,
@@ -59456,18 +59852,36 @@ Can be either:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "bank",
           "nameOverride": undefined,
           "value": "bank",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "fiscal",
           "nameOverride": undefined,
           "value": "fiscal",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "employment",
           "nameOverride": undefined,
@@ -59494,42 +59908,84 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BOND",
           "nameOverride": undefined,
           "value": "BOND",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DEPOSIT",
           "nameOverride": undefined,
           "value": "DEPOSIT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ETF",
           "nameOverride": undefined,
           "value": "ETF",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FUND",
           "nameOverride": undefined,
           "value": "FUND",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OTHER",
           "nameOverride": undefined,
           "value": "OTHER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PENSION",
           "nameOverride": undefined,
           "value": "PENSION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STOCK",
           "nameOverride": undefined,
@@ -59553,24 +60009,48 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FIXED_INCOME",
           "nameOverride": undefined,
           "value": "FIXED_INCOME",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OTHER",
           "nameOverride": undefined,
           "value": "OTHER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PENSION",
           "nameOverride": undefined,
           "value": "PENSION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "VARIABLE_INCOME",
           "nameOverride": undefined,
@@ -59597,60 +60077,120 @@ You can send through one or more of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SALARY",
           "nameOverride": undefined,
           "value": "SALARY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GOVERNMENT",
           "nameOverride": undefined,
           "value": "GOVERNMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INTEREST",
           "nameOverride": undefined,
           "value": "INTEREST",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "RENT",
           "nameOverride": undefined,
           "value": "RENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "RETIREMENT",
           "nameOverride": undefined,
           "value": "RETIREMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FREELANCE",
           "nameOverride": undefined,
           "value": "FREELANCE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ALTERNATIVE_INCOME",
           "nameOverride": undefined,
           "value": "ALTERNATIVE_INCOME",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TRANSFER",
           "nameOverride": undefined,
           "value": "TRANSFER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DEPOSIT",
           "nameOverride": undefined,
           "value": "DEPOSIT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -59751,30 +60291,60 @@ For Mexico's SAT, we return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "Egreso",
             "nameOverride": undefined,
             "value": "Egreso",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "Ingreso",
             "nameOverride": undefined,
             "value": "Ingreso",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "Nomina",
             "nameOverride": undefined,
             "value": "Nómina",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "Pago",
             "nameOverride": undefined,
             "value": "Pago",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "Traslado",
             "nameOverride": undefined,
@@ -59845,12 +60415,24 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "single",
           "nameOverride": undefined,
           "value": "single",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "recurrent",
           "nameOverride": undefined,
@@ -59938,24 +60520,48 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "valid",
           "nameOverride": undefined,
           "value": "valid",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "invalid",
           "nameOverride": undefined,
           "value": "invalid",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unconfirmed",
           "nameOverride": undefined,
           "value": "unconfirmed",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "token_required",
           "nameOverride": undefined,
@@ -59976,18 +60582,36 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OPERATION_FEE",
           "nameOverride": undefined,
           "value": "OPERATION_FEE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INSURANCE_FEE",
           "nameOverride": undefined,
           "value": "INSURANCE_FEE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OTHERS",
           "nameOverride": undefined,
@@ -60017,12 +60641,24 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "MONTHLY",
             "nameOverride": undefined,
             "value": "MONTHLY",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "YEARLY",
             "nameOverride": undefined,
@@ -60039,12 +60675,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDIVIDUAL",
           "nameOverride": undefined,
           "value": "INDIVIDUAL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BUSINESS",
           "nameOverride": undefined,
@@ -60061,30 +60709,60 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "REQUIRES_PAYMENT_METHOD",
           "nameOverride": undefined,
           "value": "REQUIRES_PAYMENT_METHOD",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "REQUIRES_ACTION",
           "nameOverride": undefined,
           "value": "REQUIRES_ACTION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SUCCEEDED",
           "nameOverride": undefined,
           "value": "SUCCEEDED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROCESSING",
           "nameOverride": undefined,
           "value": "PROCESSING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -60103,12 +60781,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "open_finance",
           "nameOverride": undefined,
           "value": "open_finance",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pse",
           "nameOverride": undefined,
@@ -60129,12 +60819,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "belvo",
           "nameOverride": undefined,
           "value": "belvo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "payments_way",
           "nameOverride": undefined,
@@ -60155,12 +60857,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACTIVE",
           "nameOverride": undefined,
           "value": "ACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INACTIVE",
           "nameOverride": undefined,
@@ -60179,12 +60893,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INFLOW",
           "nameOverride": undefined,
           "value": "INFLOW",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OUTFLOW",
           "nameOverride": undefined,
@@ -60205,12 +60931,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BRA",
           "nameOverride": undefined,
           "value": "BRA",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "COL",
           "nameOverride": undefined,
@@ -60230,12 +60968,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BRL",
           "nameOverride": undefined,
           "value": "BRL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "COP",
           "nameOverride": undefined,
@@ -60289,24 +61039,48 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "APPROVED",
             "nameOverride": undefined,
             "value": "APPROVED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "CANCELLED",
             "nameOverride": undefined,
             "value": "CANCELLED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "REVERTED",
             "nameOverride": undefined,
             "value": "REVERTED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "UNCATEGORIZED",
             "nameOverride": undefined,
@@ -60372,36 +61146,72 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BillsUtilities",
           "nameOverride": undefined,
           "value": "Bills & Utilities",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CreditsLoans",
           "nameOverride": undefined,
           "value": "Credits & Loans",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Insurance",
           "nameOverride": undefined,
           "value": "Insurance",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OnlinePlatformsLeisure",
           "nameOverride": undefined,
           "value": "Online Platforms & Leisure",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TransportTravel",
           "nameOverride": undefined,
           "value": "Transport & Travel",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Taxes",
           "nameOverride": undefined,
@@ -60446,12 +61256,24 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "SUBSCRIPTION",
             "nameOverride": undefined,
             "value": "SUBSCRIPTION",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "REGULAR",
             "nameOverride": undefined,
@@ -60474,18 +61296,36 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "POSITIVE",
             "nameOverride": undefined,
             "value": "POSITIVE",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "NEGATIVE",
             "nameOverride": undefined,
             "value": "NEGATIVE",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "NO_OBLIGATIONS",
             "nameOverride": undefined,
@@ -60514,12 +61354,24 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "PAID",
             "nameOverride": undefined,
             "value": "PAID",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "PROVISIONED",
             "nameOverride": undefined,
@@ -60548,12 +61400,24 @@ We return one of the following values:
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "NATIONAL",
             "nameOverride": undefined,
             "value": "NATIONAL",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "FOREIGN",
             "nameOverride": undefined,
@@ -60574,12 +61438,24 @@ We return one of the following values:
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OUTFLOW",
           "nameOverride": undefined,
           "value": "OUTFLOW",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INFLOW",
           "nameOverride": undefined,

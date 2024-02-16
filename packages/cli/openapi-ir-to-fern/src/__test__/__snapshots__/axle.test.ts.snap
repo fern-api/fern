@@ -532,14 +532,38 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       },
       "CoverageCode": {
         "enum": [
-          "BI",
-          "PD",
-          "UMBI",
-          "UMPD",
-          "UIMBI",
-          "UIMPD",
-          "COLL",
-          "COMP",
+          {
+            "casing": {},
+            "value": "BI",
+          },
+          {
+            "casing": {},
+            "value": "PD",
+          },
+          {
+            "casing": {},
+            "value": "UMBI",
+          },
+          {
+            "casing": {},
+            "value": "UMPD",
+          },
+          {
+            "casing": {},
+            "value": "UIMBI",
+          },
+          {
+            "casing": {},
+            "value": "UIMPD",
+          },
+          {
+            "casing": {},
+            "value": "COLL",
+          },
+          {
+            "casing": {},
+            "value": "COMP",
+          },
         ],
       },
       "Error": {
@@ -601,8 +625,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       },
       "PolicyType": {
         "enum": [
-          "auto",
-          "motorcycle",
+          {
+            "casing": {},
+            "value": "auto",
+          },
+          {
+            "casing": {},
+            "value": "motorcycle",
+          },
         ],
       },
       "Property": {
@@ -628,9 +658,18 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       },
       "ThirdPartyType": {
         "enum": [
-          "lienholder",
-          "lessor",
-          "interest",
+          {
+            "casing": {},
+            "value": "lienholder",
+          },
+          {
+            "casing": {},
+            "value": "lessor",
+          },
+          {
+            "casing": {},
+            "value": "interest",
+          },
         ],
       },
       "User": {

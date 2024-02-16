@@ -2659,8 +2659,14 @@ authentication connection.
       "AuthConnectionOptionsSocial": "map<string, unknown>",
       "AuthConnectionToggle": {
         "enum": [
-          "disable",
-          "enable",
+          {
+            "casing": {},
+            "value": "disable",
+          },
+          {
+            "casing": {},
+            "value": "enable",
+          },
         ],
       },
       "AuthConnectionType": {
@@ -2668,11 +2674,26 @@ authentication connection.
 for each authentication connection will depend on the type value.
 ",
         "enum": [
-          "google_apps",
-          "oidc",
-          "samlp",
-          "social",
-          "waad",
+          {
+            "casing": {},
+            "value": "google_apps",
+          },
+          {
+            "casing": {},
+            "value": "oidc",
+          },
+          {
+            "casing": {},
+            "value": "samlp",
+          },
+          {
+            "casing": {},
+            "value": "social",
+          },
+          {
+            "casing": {},
+            "value": "waad",
+          },
         ],
       },
       "AuthToken": {
@@ -2715,10 +2736,12 @@ token. Only applicable for application access tokens.
         "docs": "Specifies the process of obtaining a token.",
         "enum": [
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
             "value": "urn:devrev:params:oauth:grant-type:token-issue",
           },
           {
+            "casing": {},
             "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
@@ -2728,38 +2751,47 @@ token. Only applicable for application access tokens.
         "docs": "The type of the requested token.",
         "enum": [
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeAat",
             "value": "urn:devrev:params:oauth:token-type:aat",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
             "value": "urn:devrev:params:oauth:token-type:aat:public",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeDev",
             "value": "urn:devrev:params:oauth:token-type:dev",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypePat",
             "value": "urn:devrev:params:oauth:token-type:pat",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeRev",
             "value": "urn:devrev:params:oauth:token-type:rev",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSession",
             "value": "urn:devrev:params:oauth:token-type:session",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
             "value": "urn:devrev:params:oauth:token-type:session:dev0",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSys",
             "value": "urn:devrev:params:oauth:token-type:sys",
           },
           {
+            "casing": {},
             "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
@@ -2768,39 +2800,55 @@ token. Only applicable for application access tokens.
       "AuthTokenStatus": {
         "docs": "The status of the token.",
         "enum": [
-          "active",
-          "expired",
-          "revoked",
+          {
+            "casing": {},
+            "value": "active",
+          },
+          {
+            "casing": {},
+            "value": "expired",
+          },
+          {
+            "casing": {},
+            "value": "revoked",
+          },
         ],
       },
       "AuthTokenSubjectTokenType": {
         "docs": "The type of the subject token.",
         "enum": [
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
             "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
             "value": "urn:devrev:params:oauth:token-type:jwt:dev",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
             "value": "urn:devrev:params:oauth:token-type:revinfo",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeSysu",
             "value": "urn:devrev:params:oauth:token-type:sysu",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
             "value": "urn:devrev:params:oauth:token-type:userinfo",
           },
           {
+            "casing": {},
             "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
             "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
           },
           {
+            "casing": {},
             "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
@@ -2944,10 +2992,22 @@ it would appear on the login button as 'Log in to abclogin'.
 authentication connections have different configuration parameters.
 ",
         "enum": [
-          "google_apps",
-          "oidc",
-          "samlp",
-          "waad",
+          {
+            "casing": {},
+            "value": "google_apps",
+          },
+          {
+            "casing": {},
+            "value": "oidc",
+          },
+          {
+            "casing": {},
+            "value": "samlp",
+          },
+          {
+            "casing": {},
+            "value": "waad",
+          },
         ],
       },
       "DevOrgAuthConnectionsCreateResponse": {
@@ -3013,11 +3073,26 @@ of authentication connections have different configuration parameters
 that can be updated.
 ",
         "enum": [
-          "google_apps",
-          "none",
-          "oidc",
-          "samlp",
-          "waad",
+          {
+            "casing": {},
+            "value": "google_apps",
+          },
+          {
+            "casing": {},
+            "value": "none",
+          },
+          {
+            "casing": {},
+            "value": "oidc",
+          },
+          {
+            "casing": {},
+            "value": "samlp",
+          },
+          {
+            "casing": {},
+            "value": "waad",
+          },
         ],
       },
       "DevOrgAuthConnectionsUpdateResponse": {
@@ -3107,11 +3182,26 @@ sort order. If not set, then no prior elements exist.
       "ErrorBadRequestParseError": "map<string, unknown>",
       "ErrorBadRequestType": {
         "enum": [
-          "bad_request",
-          "invalid_enum_value",
-          "missing_required_field",
-          "parse_error",
-          "value_not_permitted",
+          {
+            "casing": {},
+            "value": "bad_request",
+          },
+          {
+            "casing": {},
+            "value": "invalid_enum_value",
+          },
+          {
+            "casing": {},
+            "value": "missing_required_field",
+          },
+          {
+            "casing": {},
+            "value": "parse_error",
+          },
+          {
+            "casing": {},
+            "value": "value_not_permitted",
+          },
         ],
       },
       "ErrorBadRequestValueNotPermitted": {
@@ -3326,10 +3416,22 @@ sort order. If not set, then no prior elements exist.
       "IssuePriority": {
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
-          "p0",
-          "p1",
-          "p2",
-          "p3",
+          {
+            "casing": {},
+            "value": "p0",
+          },
+          {
+            "casing": {},
+            "value": "p1",
+          },
+          {
+            "casing": {},
+            "value": "p2",
+          },
+          {
+            "casing": {},
+            "value": "p3",
+          },
         ],
       },
       "ListMode": {
@@ -3340,8 +3442,14 @@ returned, or if no cursor is provided, then from the end. Entries will
 always be returned in the specified sort-by order.
 ",
         "enum": [
-          "after",
-          "before",
+          {
+            "casing": {},
+            "value": "after",
+          },
+          {
+            "casing": {},
+            "value": "before",
+          },
         ],
       },
       "OrgBase": {
@@ -3372,9 +3480,18 @@ always be returned in the specified sort-by order.
         "docs": "The environment of the Org. Defaults to 'production' if not specified.
 ",
         "enum": [
-          "production",
-          "staging",
-          "test",
+          {
+            "casing": {},
+            "value": "production",
+          },
+          {
+            "casing": {},
+            "value": "staging",
+          },
+          {
+            "casing": {},
+            "value": "test",
+          },
         ],
       },
       "OrgSummary": {
@@ -3439,10 +3556,22 @@ always be returned in the specified sort-by order.
       },
       "PartType": {
         "enum": [
-          "capability",
-          "enhancement",
-          "feature",
-          "product",
+          {
+            "casing": {},
+            "value": "capability",
+          },
+          {
+            "casing": {},
+            "value": "enhancement",
+          },
+          {
+            "casing": {},
+            "value": "feature",
+          },
+          {
+            "casing": {},
+            "value": "product",
+          },
         ],
       },
       "PartsCreateRequest": {
@@ -3797,10 +3926,22 @@ sort order. If not set, then no prior elements exist.
       "TicketSeverity": {
         "docs": "Severity of the ticket.",
         "enum": [
-          "blocker",
-          "high",
-          "low",
-          "medium",
+          {
+            "casing": {},
+            "value": "blocker",
+          },
+          {
+            "casing": {},
+            "value": "high",
+          },
+          {
+            "casing": {},
+            "value": "low",
+          },
+          {
+            "casing": {},
+            "value": "medium",
+          },
         ],
       },
       "TimelineComment": {
@@ -3829,8 +3970,14 @@ will appear in the response.
       "TimelineCommentBodyType": {
         "docs": "The type of the body to use for the comment.",
         "enum": [
-          "snap_kit",
-          "text",
+          {
+            "casing": {},
+            "value": "snap_kit",
+          },
+          {
+            "casing": {},
+            "value": "text",
+          },
         ],
       },
       "TimelineEntriesCreateRequest": {
@@ -4020,11 +4167,26 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "UserState": {
         "docs": "State of the user.",
         "enum": [
-          "active",
-          "deactivated",
-          "locked",
-          "shadow",
-          "unassigned",
+          {
+            "casing": {},
+            "value": "active",
+          },
+          {
+            "casing": {},
+            "value": "deactivated",
+          },
+          {
+            "casing": {},
+            "value": "locked",
+          },
+          {
+            "casing": {},
+            "value": "shadow",
+          },
+          {
+            "casing": {},
+            "value": "unassigned",
+          },
         ],
       },
       "UserSummary": {
@@ -4039,9 +4201,18 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       },
       "UserType": {
         "enum": [
-          "dev_user",
-          "rev_user",
-          "sys_user",
+          {
+            "casing": {},
+            "value": "dev_user",
+          },
+          {
+            "casing": {},
+            "value": "rev_user",
+          },
+          {
+            "casing": {},
+            "value": "sys_user",
+          },
         ],
       },
       "WebhookEventRequest": {
@@ -4099,25 +4270,82 @@ be set for other request types.
       "WebhookEventType": {
         "docs": "The event types that the webhook will receive.",
         "enum": [
-          "part_created",
-          "part_deleted",
-          "part_updated",
-          "rev_org_created",
-          "rev_org_deleted",
-          "rev_org_updated",
-          "tag_created",
-          "tag_deleted",
-          "tag_updated",
-          "timeline_entry_created",
-          "timeline_entry_deleted",
-          "timeline_entry_updated",
-          "verify",
-          "webhook_created",
-          "webhook_deleted",
-          "webhook_updated",
-          "work_created",
-          "work_deleted",
-          "work_updated",
+          {
+            "casing": {},
+            "value": "part_created",
+          },
+          {
+            "casing": {},
+            "value": "part_deleted",
+          },
+          {
+            "casing": {},
+            "value": "part_updated",
+          },
+          {
+            "casing": {},
+            "value": "rev_org_created",
+          },
+          {
+            "casing": {},
+            "value": "rev_org_deleted",
+          },
+          {
+            "casing": {},
+            "value": "rev_org_updated",
+          },
+          {
+            "casing": {},
+            "value": "tag_created",
+          },
+          {
+            "casing": {},
+            "value": "tag_deleted",
+          },
+          {
+            "casing": {},
+            "value": "tag_updated",
+          },
+          {
+            "casing": {},
+            "value": "timeline_entry_created",
+          },
+          {
+            "casing": {},
+            "value": "timeline_entry_deleted",
+          },
+          {
+            "casing": {},
+            "value": "timeline_entry_updated",
+          },
+          {
+            "casing": {},
+            "value": "verify",
+          },
+          {
+            "casing": {},
+            "value": "webhook_created",
+          },
+          {
+            "casing": {},
+            "value": "webhook_deleted",
+          },
+          {
+            "casing": {},
+            "value": "webhook_updated",
+          },
+          {
+            "casing": {},
+            "value": "work_created",
+          },
+          {
+            "casing": {},
+            "value": "work_deleted",
+          },
+          {
+            "casing": {},
+            "value": "work_updated",
+          },
         ],
       },
       "WebhookEventVerify": {
@@ -4132,9 +4360,18 @@ be set for other request types.
       "WebhookStatus": {
         "docs": "The status of the webhook.",
         "enum": [
-          "active",
-          "inactive",
-          "unverified",
+          {
+            "casing": {},
+            "value": "active",
+          },
+          {
+            "casing": {},
+            "value": "inactive",
+          },
+          {
+            "casing": {},
+            "value": "unverified",
+          },
         ],
       },
       "WebhooksCreateResponse": {
@@ -4165,8 +4402,14 @@ be set for other request types.
       "WebhooksUpdateAction": {
         "docs": "The action to update the webhook's status.",
         "enum": [
-          "activate",
-          "deactivate",
+          {
+            "casing": {},
+            "value": "activate",
+          },
+          {
+            "casing": {},
+            "value": "deactivate",
+          },
         ],
       },
       "WebhooksUpdateRequestEventTypes": {
@@ -4241,8 +4484,14 @@ event types. Note this is mutually exclusive with 'add' and
       },
       "WorkType": {
         "enum": [
-          "issue",
-          "ticket",
+          {
+            "casing": {},
+            "value": "issue",
+          },
+          {
+            "casing": {},
+            "value": "ticket",
+          },
         ],
       },
       "WorksCreateRequest": {

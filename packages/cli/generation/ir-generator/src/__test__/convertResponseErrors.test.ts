@@ -9,8 +9,7 @@ describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
-            smartCasing: false,
-            casingOverrides: {}
+            smartCasing: false
         });
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],

@@ -1979,8 +1979,14 @@ allowed.",
         "EnvironmentCopyConflictStrategy": {
           "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
           "enum": [
-            "fail",
-            "overwrite",
+            {
+              "casing": {},
+              "value": "fail",
+            },
+            {
+              "casing": {},
+              "value": "overwrite",
+            },
           ],
         },
       },
@@ -7992,12 +7998,30 @@ Fields that will be provided will be completely overwritten.",
       "AttributeType": {
         "docs": "supported attribute primitives",
         "enum": [
-          "bool",
-          "number",
-          "string",
-          "time",
-          "array",
-          "json",
+          {
+            "casing": {},
+            "value": "bool",
+          },
+          {
+            "casing": {},
+            "value": "number",
+          },
+          {
+            "casing": {},
+            "value": "string",
+          },
+          {
+            "casing": {},
+            "value": "time",
+          },
+          {
+            "casing": {},
+            "value": "array",
+          },
+          {
+            "casing": {},
+            "value": "json",
+          },
         ],
       },
       "BulkRoleAssignmentReport": {
@@ -8116,8 +8140,14 @@ Fields that will be provided will be completely overwritten.",
       "ConditionSetType": {
         "docs": "An enumeration.",
         "enum": [
-          "userset",
-          "resourceset",
+          {
+            "casing": {},
+            "value": "userset",
+          },
+          {
+            "casing": {},
+            "value": "resourceset",
+          },
         ],
       },
       "EnvironmentCopyScope": {
@@ -8375,10 +8405,22 @@ Fields that will be provided will be completely overwritten.",
       "InviteStatus": {
         "docs": "An enumeration.",
         "enum": [
-          "pending",
-          "accepted",
-          "failed",
-          "canceled",
+          {
+            "casing": {},
+            "value": "pending",
+          },
+          {
+            "casing": {},
+            "value": "accepted",
+          },
+          {
+            "casing": {},
+            "value": "failed",
+          },
+          {
+            "casing": {},
+            "value": "canceled",
+          },
         ],
       },
       "JwksObj": {
@@ -8393,31 +8435,76 @@ Fields that will be provided will be completely overwritten.",
       "MemberAccessLevel": {
         "docs": "An enumeration.",
         "enum": [
-          "admin",
-          "write",
-          "read",
-          "no_access",
+          {
+            "casing": {},
+            "value": "admin",
+          },
+          {
+            "casing": {},
+            "value": "write",
+          },
+          {
+            "casing": {},
+            "value": "read",
+          },
+          {
+            "casing": {},
+            "value": "no_access",
+          },
         ],
       },
       "MemberAccessObj": {
         "docs": "An enumeration.",
         "enum": [
-          "org",
-          "project",
-          "env",
+          {
+            "casing": {},
+            "value": "org",
+          },
+          {
+            "casing": {},
+            "value": "project",
+          },
+          {
+            "casing": {},
+            "value": "env",
+          },
         ],
       },
       "OnboardingStep": {
         "docs": "An enumeration.",
         "enum": [
-          "create_organization",
-          "create_project",
-          "create_resource",
-          "create_actions",
-          "assign_permissions",
-          "assign_user_roles",
-          "connect_sdk",
-          "done",
+          {
+            "casing": {},
+            "value": "create_organization",
+          },
+          {
+            "casing": {},
+            "value": "create_project",
+          },
+          {
+            "casing": {},
+            "value": "create_resource",
+          },
+          {
+            "casing": {},
+            "value": "create_actions",
+          },
+          {
+            "casing": {},
+            "value": "assign_permissions",
+          },
+          {
+            "casing": {},
+            "value": "assign_user_roles",
+          },
+          {
+            "casing": {},
+            "value": "connect_sdk",
+          },
+          {
+            "casing": {},
+            "value": "done",
+          },
         ],
       },
       "OrgMemberReadWithGrants": {
@@ -9446,8 +9533,14 @@ The actions represents the ways you can interact with a protected resource.",
       "UserStatus": {
         "docs": "An enumeration.",
         "enum": [
-          "active",
-          "pending",
+          {
+            "casing": {},
+            "value": "active",
+          },
+          {
+            "casing": {},
+            "value": "pending",
+          },
         ],
       },
       "ValidationError": {

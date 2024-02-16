@@ -11492,9 +11492,18 @@ You will be assigned as owner of the new team automatically.",
       "ActionTypeEnum": {
         "docs": "",
         "enum": [
-          "Broadcast",
-          "User",
-          "Group",
+          {
+            "casing": {},
+            "value": "Broadcast",
+          },
+          {
+            "casing": {},
+            "value": "User",
+          },
+          {
+            "casing": {},
+            "value": "Group",
+          },
         ],
       },
       "AddFieldDto": {
@@ -11854,9 +11863,18 @@ You will be assigned as owner of the new team automatically.",
       "AssetFolderScope": {
         "docs": "",
         "enum": [
-          "PathAndItems",
-          "Path",
-          "Items",
+          {
+            "casing": {},
+            "value": "PathAndItems",
+          },
+          {
+            "casing": {},
+            "value": "Path",
+          },
+          {
+            "casing": {},
+            "value": "Items",
+          },
         ],
       },
       "AssetFoldersDto": {
@@ -11891,9 +11909,18 @@ You will be assigned as owner of the new team automatically.",
       "AssetPreviewMode": {
         "docs": "",
         "enum": [
-          "ImageAndFileName",
-          "Image",
-          "FileName",
+          {
+            "casing": {},
+            "value": "ImageAndFileName",
+          },
+          {
+            "casing": {},
+            "value": "Image",
+          },
+          {
+            "casing": {},
+            "value": "FileName",
+          },
         ],
       },
       "AssetScriptsDto": {
@@ -11939,10 +11966,22 @@ You will be assigned as owner of the new team automatically.",
       "AssetType": {
         "docs": "",
         "enum": [
-          "Unknown",
-          "Image",
-          "Audio",
-          "Video",
+          {
+            "casing": {},
+            "value": "Unknown",
+          },
+          {
+            "casing": {},
+            "value": "Image",
+          },
+          {
+            "casing": {},
+            "value": "Audio",
+          },
+          {
+            "casing": {},
+            "value": "Video",
+          },
         ],
       },
       "AssetsDto": {
@@ -12131,8 +12170,14 @@ You will be assigned as owner of the new team automatically.",
       "BooleanFieldEditor": {
         "docs": "",
         "enum": [
-          "Checkbox",
-          "Toggle",
+          {
+            "casing": {},
+            "value": "Checkbox",
+          },
+          {
+            "casing": {},
+            "value": "Toggle",
+          },
         ],
       },
       "BooleanFieldPropertiesDto": {
@@ -12180,9 +12225,18 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateAssetType": {
         "docs": "",
         "enum": [
-          "Annotate",
-          "Move",
-          "Delete",
+          {
+            "casing": {},
+            "value": "Annotate",
+          },
+          {
+            "casing": {},
+            "value": "Move",
+          },
+          {
+            "casing": {},
+            "value": "Delete",
+          },
         ],
       },
       "BulkUpdateAssetsJobDto": {
@@ -12233,13 +12287,34 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateContentType": {
         "docs": "",
         "enum": [
-          "Upsert",
-          "ChangeStatus",
-          "Create",
-          "Delete",
-          "Patch",
-          "Update",
-          "Validate",
+          {
+            "casing": {},
+            "value": "Upsert",
+          },
+          {
+            "casing": {},
+            "value": "ChangeStatus",
+          },
+          {
+            "casing": {},
+            "value": "Create",
+          },
+          {
+            "casing": {},
+            "value": "Delete",
+          },
+          {
+            "casing": {},
+            "value": "Patch",
+          },
+          {
+            "casing": {},
+            "value": "Update",
+          },
+          {
+            "casing": {},
+            "value": "Validate",
+          },
         ],
       },
       "BulkUpdateContentsJobDto": {
@@ -12732,15 +12807,27 @@ You will be assigned as owner of the new team automatically.",
       "DateTimeCalculatedDefaultValue": {
         "docs": "",
         "enum": [
-          "Now",
-          "Today",
+          {
+            "casing": {},
+            "value": "Now",
+          },
+          {
+            "casing": {},
+            "value": "Today",
+          },
         ],
       },
       "DateTimeFieldEditor": {
         "docs": "",
         "enum": [
-          "Date",
-          "DateTime",
+          {
+            "casing": {},
+            "value": "Date",
+          },
+          {
+            "casing": {},
+            "value": "DateTime",
+          },
         ],
       },
       "DateTimeFieldPropertiesDto": {
@@ -13097,9 +13184,18 @@ You will be assigned as owner of the new team automatically.",
       "FieldRuleAction": {
         "docs": "",
         "enum": [
-          "Disable",
-          "Hide",
-          "Require",
+          {
+            "casing": {},
+            "value": "Disable",
+          },
+          {
+            "casing": {},
+            "value": "Hide",
+          },
+          {
+            "casing": {},
+            "value": "Require",
+          },
         ],
       },
       "FieldRuleDto": {
@@ -13161,23 +13257,59 @@ You will be assigned as owner of the new team automatically.",
       "ImageFormat": {
         "docs": "",
         "enum": [
-          "AVIF",
-          "BMP",
-          "GIF",
-          "JPEG",
-          "PNG",
-          "TGA",
-          "TIFF",
-          "WEBP",
+          {
+            "casing": {},
+            "value": "AVIF",
+          },
+          {
+            "casing": {},
+            "value": "BMP",
+          },
+          {
+            "casing": {},
+            "value": "GIF",
+          },
+          {
+            "casing": {},
+            "value": "JPEG",
+          },
+          {
+            "casing": {},
+            "value": "PNG",
+          },
+          {
+            "casing": {},
+            "value": "TGA",
+          },
+          {
+            "casing": {},
+            "value": "TIFF",
+          },
+          {
+            "casing": {},
+            "value": "WEBP",
+          },
         ],
       },
       "JobStatus": {
         "docs": "",
         "enum": [
-          "Created",
-          "Started",
-          "Completed",
-          "Failed",
+          {
+            "casing": {},
+            "value": "Created",
+          },
+          {
+            "casing": {},
+            "value": "Started",
+          },
+          {
+            "casing": {},
+            "value": "Completed",
+          },
+          {
+            "casing": {},
+            "value": "Failed",
+          },
         ],
       },
       "JsonFieldPropertiesDto": {
@@ -13313,10 +13445,22 @@ You will be assigned as owner of the new team automatically.",
       "NumberFieldEditor": {
         "docs": "",
         "enum": [
-          "Input",
-          "Radio",
-          "Dropdown",
-          "Stars",
+          {
+            "casing": {},
+            "value": "Input",
+          },
+          {
+            "casing": {},
+            "value": "Radio",
+          },
+          {
+            "casing": {},
+            "value": "Dropdown",
+          },
+          {
+            "casing": {},
+            "value": "Stars",
+          },
         ],
       },
       "NumberFieldPropertiesDto": {
@@ -13492,10 +13636,22 @@ You will be assigned as owner of the new team automatically.",
       "PlansLockedReason": {
         "docs": "",
         "enum": [
-          "None",
-          "NotOwner",
-          "NoPermission",
-          "ManagedByTeam",
+          {
+            "casing": {},
+            "value": "None",
+          },
+          {
+            "casing": {},
+            "value": "NotOwner",
+          },
+          {
+            "casing": {},
+            "value": "NoPermission",
+          },
+          {
+            "casing": {},
+            "value": "ManagedByTeam",
+          },
         ],
       },
       "PrerenderRuleActionDto": {
@@ -13545,11 +13701,26 @@ You will be assigned as owner of the new team automatically.",
       "ReferencesFieldEditor": {
         "docs": "",
         "enum": [
-          "List",
-          "Dropdown",
-          "Tags",
-          "Checkboxes",
-          "Input",
+          {
+            "casing": {},
+            "value": "List",
+          },
+          {
+            "casing": {},
+            "value": "Dropdown",
+          },
+          {
+            "casing": {},
+            "value": "Tags",
+          },
+          {
+            "casing": {},
+            "value": "Checkboxes",
+          },
+          {
+            "casing": {},
+            "value": "Input",
+          },
         ],
       },
       "ReferencesFieldPropertiesDto": {
@@ -13613,13 +13784,34 @@ You will be assigned as owner of the new team automatically.",
       "ResizeMode": {
         "docs": "",
         "enum": [
-          "Crop",
-          "CropUpsize",
-          "Pad",
-          "BoxPad",
-          "Max",
-          "Min",
-          "Stretch",
+          {
+            "casing": {},
+            "value": "Crop",
+          },
+          {
+            "casing": {},
+            "value": "CropUpsize",
+          },
+          {
+            "casing": {},
+            "value": "Pad",
+          },
+          {
+            "casing": {},
+            "value": "BoxPad",
+          },
+          {
+            "casing": {},
+            "value": "Max",
+          },
+          {
+            "casing": {},
+            "value": "Min",
+          },
+          {
+            "casing": {},
+            "value": "Stretch",
+          },
         ],
       },
       "Resource": {
@@ -13938,34 +14130,88 @@ You will be assigned as owner of the new team automatically.",
       "RuleFieldEditor": {
         "docs": "",
         "enum": [
-          "Checkbox",
-          "Dropdown",
-          "Email",
-          "Javascript",
-          "Number",
-          "Password",
-          "Text",
-          "TextArea",
-          "Url",
+          {
+            "casing": {},
+            "value": "Checkbox",
+          },
+          {
+            "casing": {},
+            "value": "Dropdown",
+          },
+          {
+            "casing": {},
+            "value": "Email",
+          },
+          {
+            "casing": {},
+            "value": "Javascript",
+          },
+          {
+            "casing": {},
+            "value": "Number",
+          },
+          {
+            "casing": {},
+            "value": "Password",
+          },
+          {
+            "casing": {},
+            "value": "Text",
+          },
+          {
+            "casing": {},
+            "value": "TextArea",
+          },
+          {
+            "casing": {},
+            "value": "Url",
+          },
         ],
       },
       "RuleJobResult": {
         "docs": "",
         "enum": [
-          "Pending",
-          "Success",
-          "Retry",
-          "Failed",
-          "Cancelled",
+          {
+            "casing": {},
+            "value": "Pending",
+          },
+          {
+            "casing": {},
+            "value": "Success",
+          },
+          {
+            "casing": {},
+            "value": "Retry",
+          },
+          {
+            "casing": {},
+            "value": "Failed",
+          },
+          {
+            "casing": {},
+            "value": "Cancelled",
+          },
         ],
       },
       "RuleResult": {
         "docs": "",
         "enum": [
-          "Pending",
-          "Success",
-          "Failed",
-          "Timeout",
+          {
+            "casing": {},
+            "value": "Pending",
+          },
+          {
+            "casing": {},
+            "value": "Success",
+          },
+          {
+            "casing": {},
+            "value": "Failed",
+          },
+          {
+            "casing": {},
+            "value": "Timeout",
+          },
         ],
       },
       "RuleTriggerDto": {
@@ -14183,9 +14429,18 @@ You will be assigned as owner of the new team automatically.",
       "SchemaType": {
         "docs": "",
         "enum": [
-          "Default",
-          "Singleton",
-          "Component",
+          {
+            "casing": {},
+            "value": "Default",
+          },
+          {
+            "casing": {},
+            "value": "Singleton",
+          },
+          {
+            "casing": {},
+            "value": "Component",
+          },
         ],
       },
       "SchemasDto": {
@@ -14232,12 +14487,30 @@ You will be assigned as owner of the new team automatically.",
       "SearchResultType": {
         "docs": "",
         "enum": [
-          "Asset",
-          "Content",
-          "Dashboard",
-          "Setting",
-          "Rule",
-          "Schema",
+          {
+            "casing": {},
+            "value": "Asset",
+          },
+          {
+            "casing": {},
+            "value": "Content",
+          },
+          {
+            "casing": {},
+            "value": "Dashboard",
+          },
+          {
+            "casing": {},
+            "value": "Setting",
+          },
+          {
+            "casing": {},
+            "value": "Rule",
+          },
+          {
+            "casing": {},
+            "value": "Schema",
+          },
         ],
       },
       "SignalRRuleActionDto": {
@@ -14325,17 +14598,50 @@ You will be assigned as owner of the new team automatically.",
       "SkipReason": {
         "docs": "",
         "enum": [
-          "None",
-          "ConditionDoesNotMatch",
-          "ConditionPrecheckDoesNotMatch",
-          "Disabled",
-          "Failed",
-          "FromRule",
-          "NoAction",
-          "NoTrigger",
-          "TooOld",
-          "WrongEvent",
-          "WrongEventForTrigger",
+          {
+            "casing": {},
+            "value": "None",
+          },
+          {
+            "casing": {},
+            "value": "ConditionDoesNotMatch",
+          },
+          {
+            "casing": {},
+            "value": "ConditionPrecheckDoesNotMatch",
+          },
+          {
+            "casing": {},
+            "value": "Disabled",
+          },
+          {
+            "casing": {},
+            "value": "Failed",
+          },
+          {
+            "casing": {},
+            "value": "FromRule",
+          },
+          {
+            "casing": {},
+            "value": "NoAction",
+          },
+          {
+            "casing": {},
+            "value": "NoTrigger",
+          },
+          {
+            "casing": {},
+            "value": "TooOld",
+          },
+          {
+            "casing": {},
+            "value": "WrongEvent",
+          },
+          {
+            "casing": {},
+            "value": "WrongEventForTrigger",
+          },
         ],
       },
       "SlackRuleActionDto": {
@@ -14361,8 +14667,14 @@ You will be assigned as owner of the new team automatically.",
       "SortOrder": {
         "docs": "",
         "enum": [
-          "Ascending",
-          "Descending",
+          {
+            "casing": {},
+            "value": "Ascending",
+          },
+          {
+            "casing": {},
+            "value": "Descending",
+          },
         ],
       },
       "StatusInfoDto": {
@@ -14398,24 +14710,63 @@ You will be assigned as owner of the new team automatically.",
       "StringContentType": {
         "docs": "",
         "enum": [
-          "Unspecified",
-          "Html",
-          "Markdown",
+          {
+            "casing": {},
+            "value": "Unspecified",
+          },
+          {
+            "casing": {},
+            "value": "Html",
+          },
+          {
+            "casing": {},
+            "value": "Markdown",
+          },
         ],
       },
       "StringFieldEditor": {
         "docs": "",
         "enum": [
-          "Input",
-          "Color",
-          "Markdown",
-          "Dropdown",
-          "Html",
-          "Radio",
-          "RichText",
-          "Slug",
-          "StockPhoto",
-          "TextArea",
+          {
+            "casing": {},
+            "value": "Input",
+          },
+          {
+            "casing": {},
+            "value": "Color",
+          },
+          {
+            "casing": {},
+            "value": "Markdown",
+          },
+          {
+            "casing": {},
+            "value": "Dropdown",
+          },
+          {
+            "casing": {},
+            "value": "Html",
+          },
+          {
+            "casing": {},
+            "value": "Radio",
+          },
+          {
+            "casing": {},
+            "value": "RichText",
+          },
+          {
+            "casing": {},
+            "value": "Slug",
+          },
+          {
+            "casing": {},
+            "value": "StockPhoto",
+          },
+          {
+            "casing": {},
+            "value": "TextArea",
+          },
         ],
       },
       "StringFieldPropertiesDto": {
@@ -14502,9 +14853,18 @@ You will be assigned as owner of the new team automatically.",
       "TagsFieldEditor": {
         "docs": "",
         "enum": [
-          "Tags",
-          "Checkboxes",
-          "Dropdown",
+          {
+            "casing": {},
+            "value": "Tags",
+          },
+          {
+            "casing": {},
+            "value": "Checkboxes",
+          },
+          {
+            "casing": {},
+            "value": "Dropdown",
+          },
         ],
       },
       "TagsFieldPropertiesDto": {
@@ -14636,12 +14996,30 @@ You will be assigned as owner of the new team automatically.",
       "TranslationResultCode": {
         "docs": "",
         "enum": [
-          "Translated",
-          "LanguageNotSupported",
-          "NotTranslated",
-          "NotConfigured",
-          "Unauthorized",
-          "Failed",
+          {
+            "casing": {},
+            "value": "Translated",
+          },
+          {
+            "casing": {},
+            "value": "LanguageNotSupported",
+          },
+          {
+            "casing": {},
+            "value": "NotTranslated",
+          },
+          {
+            "casing": {},
+            "value": "NotConfigured",
+          },
+          {
+            "casing": {},
+            "value": "Unauthorized",
+          },
+          {
+            "casing": {},
+            "value": "Failed",
+          },
         ],
       },
       "TweetRuleActionDto": {
@@ -14903,11 +15281,26 @@ You will be assigned as owner of the new team automatically.",
       "WebhookMethod": {
         "docs": "",
         "enum": [
-          "POST",
-          "PUT",
-          "GET",
-          "DELETE",
-          "PATCH",
+          {
+            "casing": {},
+            "value": "POST",
+          },
+          {
+            "casing": {},
+            "value": "PUT",
+          },
+          {
+            "casing": {},
+            "value": "GET",
+          },
+          {
+            "casing": {},
+            "value": "DELETE",
+          },
+          {
+            "casing": {},
+            "value": "PATCH",
+          },
         ],
       },
       "WebhookRuleActionDto": {

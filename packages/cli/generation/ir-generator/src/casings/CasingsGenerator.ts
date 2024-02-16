@@ -5,11 +5,11 @@ import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
-    generateName(name: string): Name;
+    generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
-        casingOverrides?: RawSchemas.CasingOverridesSchema;
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema };
     }): NameAndWireValue;
 }
 
@@ -17,15 +17,13 @@ const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
 
 export function constructCasingsGenerator({
     generationLanguage,
-    smartCasing,
-    casingOverrides = {}
+    smartCasing
 }: {
     generationLanguage: GenerationLanguage | undefined;
     smartCasing: boolean;
-    casingOverrides: RawSchemas.CasingOverridesSchema;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
-        generateName: (name) => {
+        generateName: (name, opts) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
@@ -82,16 +80,16 @@ export function constructCasingsGenerator({
 
             return {
                 originalName: name,
-                camelCase: generateSafeAndUnsafeString(casingOverrides.camel ?? camelCaseName),
-                snakeCase: generateSafeAndUnsafeString(casingOverrides.snake ?? snakeCaseName),
+                camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
+                snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(
-                    casingOverrides["screaming-snake"] ?? snakeCaseName.toUpperCase()
+                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
                 ),
-                pascalCase: generateSafeAndUnsafeString(casingOverrides.pascal ?? pascalCaseName)
+                pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             };
         },
-        generateNameAndWireValue: ({ name, wireValue }) => ({
-            name: casingsGenerator.generateName(name),
+        generateNameAndWireValue: ({ name, wireValue, opts }) => ({
+            name: casingsGenerator.generateName(name, opts),
             wireValue
         })
     };

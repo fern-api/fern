@@ -1376,9 +1376,18 @@ exports[`open api parser hathora simple 1`] = `
       "types": {
         "CreateLobbyRequestVisibility": {
           "enum": [
-            "public",
-            "private",
-            "local",
+            {
+              "casing": {},
+              "value": "public",
+            },
+            {
+              "casing": {},
+              "value": "private",
+            },
+            {
+              "casing": {},
+              "value": "local",
+            },
           ],
         },
       },
@@ -2062,10 +2071,22 @@ exports[`open api parser hathora simple 1`] = `
       },
       "BuildStatus": {
         "enum": [
-          "created",
-          "running",
-          "succeeded",
-          "failed",
+          {
+            "casing": {},
+            "value": "created",
+          },
+          {
+            "casing": {},
+            "value": "running",
+          },
+          {
+            "casing": {},
+            "value": "succeeded",
+          },
+          {
+            "casing": {},
+            "value": "failed",
+          },
         ],
       },
       "ConnectionInfo": {
@@ -2135,17 +2156,38 @@ exports[`open api parser hathora simple 1`] = `
       },
       "LobbyVisibility": {
         "enum": [
-          "private",
-          "public",
-          "local",
+          {
+            "casing": {},
+            "value": "private",
+          },
+          {
+            "casing": {},
+            "value": "public",
+          },
+          {
+            "casing": {},
+            "value": "local",
+          },
         ],
       },
       "MetricName": {
         "enum": [
-          "cpu",
-          "memory",
-          "rate_egress",
-          "total_egress",
+          {
+            "casing": {},
+            "value": "cpu",
+          },
+          {
+            "casing": {},
+            "value": "memory",
+          },
+          {
+            "casing": {},
+            "value": "rate_egress",
+          },
+          {
+            "casing": {},
+            "value": "total_egress",
+          },
         ],
       },
       "MetricValue": {
@@ -2172,10 +2214,22 @@ exports[`open api parser hathora simple 1`] = `
       },
       "PlanName": {
         "enum": [
-          "tiny",
-          "small",
-          "medium",
-          "large",
+          {
+            "casing": {},
+            "value": "tiny",
+          },
+          {
+            "casing": {},
+            "value": "small",
+          },
+          {
+            "casing": {},
+            "value": "medium",
+          },
+          {
+            "casing": {},
+            "value": "large",
+          },
         ],
       },
       "Process": {
@@ -2225,16 +2279,46 @@ exports[`open api parser hathora simple 1`] = `
       },
       "Region": {
         "enum": [
-          "Seattle",
-          "Washington_DC",
-          "Chicago",
-          "London",
-          "Frankfurt",
-          "Mumbai",
-          "Singapore",
-          "Tokyo",
-          "Sydney",
-          "Sao_Paulo",
+          {
+            "casing": {},
+            "value": "Seattle",
+          },
+          {
+            "casing": {},
+            "value": "Washington_DC",
+          },
+          {
+            "casing": {},
+            "value": "Chicago",
+          },
+          {
+            "casing": {},
+            "value": "London",
+          },
+          {
+            "casing": {},
+            "value": "Frankfurt",
+          },
+          {
+            "casing": {},
+            "value": "Mumbai",
+          },
+          {
+            "casing": {},
+            "value": "Singapore",
+          },
+          {
+            "casing": {},
+            "value": "Tokyo",
+          },
+          {
+            "casing": {},
+            "value": "Sydney",
+          },
+          {
+            "casing": {},
+            "value": "Sao_Paulo",
+          },
         ],
       },
       "Room": {
@@ -2260,10 +2344,22 @@ exports[`open api parser hathora simple 1`] = `
       "RoomId": "string",
       "RoomStatus": {
         "enum": [
-          "scheduling",
-          "active",
-          "suspended",
-          "destroyed",
+          {
+            "casing": {},
+            "value": "scheduling",
+          },
+          {
+            "casing": {},
+            "value": "active",
+          },
+          {
+            "casing": {},
+            "value": "suspended",
+          },
+          {
+            "casing": {},
+            "value": "destroyed",
+          },
         ],
       },
       "RoomWithoutAllocations": "OmitRoomAllocations",
@@ -2276,9 +2372,18 @@ exports[`open api parser hathora simple 1`] = `
       "TailLines": "integer",
       "TransportType": {
         "enum": [
-          "tcp",
-          "udp",
-          "tls",
+          {
+            "casing": {},
+            "value": "tcp",
+          },
+          {
+            "casing": {},
+            "value": "udp",
+          },
+          {
+            "casing": {},
+            "value": "tls",
+          },
         ],
       },
     },

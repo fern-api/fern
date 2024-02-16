@@ -2053,18 +2053,36 @@ exports[`open api parser supertokens parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "SUPERTOKENS",
                   "nameOverride": undefined,
                   "value": "SUPERTOKENS",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "EXTERNAL",
                   "nameOverride": undefined,
                   "value": "EXTERNAL",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ANY",
                   "nameOverride": undefined,
@@ -2707,18 +2725,36 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "SUPERTOKENS",
                       "nameOverride": undefined,
                       "value": "SUPERTOKENS",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EXTERNAL",
                       "nameOverride": undefined,
                       "value": "EXTERNAL",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "ANY",
                       "nameOverride": undefined,
@@ -3007,18 +3043,36 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "SUPERTOKENS",
                       "nameOverride": undefined,
                       "value": "SUPERTOKENS",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EXTERNAL",
                       "nameOverride": undefined,
                       "value": "EXTERNAL",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "ANY",
                       "nameOverride": undefined,
@@ -3505,12 +3559,24 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "INCORRECT_USER_INPUT_CODE_ERROR",
                             "nameOverride": undefined,
                             "value": "INCORRECT_USER_INPUT_CODE_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "EXPIRED_USER_INPUT_CODE_ERROR",
                             "nameOverride": undefined,
@@ -4169,12 +4235,24 @@ Passing the optional deviceId signifies a resend code flow.
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "RESTART_FLOW_ERROR",
                             "nameOverride": undefined,
                             "value": "RESTART_FLOW_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "USER_INPUT_CODE_ALREADY_USED_ERROR",
                             "nameOverride": undefined,
@@ -5544,18 +5622,36 @@ Note that there is an invisible character at the end of the path, this was to av
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_EMAIL_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_EMAIL_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_PHONE_NUMBER_ERROR",
                             "nameOverride": undefined,
@@ -5834,24 +5930,48 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "OK",
                       "nameOverride": undefined,
                       "value": "OK",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "UNKNOWN_USER_ID_ERROR",
                       "nameOverride": undefined,
                       "value": "UNKNOWN_USER_ID_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EMAIL_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
                       "value": "EMAIL_ALREADY_EXISTS_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "PHONE_NUMBER_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
@@ -6752,12 +6872,24 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_EMAIL_ERROR",
                             "nameOverride": undefined,
@@ -7034,18 +7166,36 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "OK",
                       "nameOverride": undefined,
                       "value": "OK",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "UNKNOWN_USER_ID_ERROR",
                       "nameOverride": undefined,
                       "value": "UNKNOWN_USER_ID_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EMAIL_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
@@ -7528,12 +7678,24 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -8378,18 +8540,36 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "argon2",
                       "nameOverride": undefined,
                       "value": "argon2",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "bcrypt",
                       "nameOverride": undefined,
                       "value": "bcrypt",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "firebase_scrypt",
                       "nameOverride": undefined,
@@ -9184,12 +9364,24 @@ Note that there is an invisible character at the end of the path, this was to av
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_THIRD_PARTY_USER_ERROR",
                             "nameOverride": undefined,
@@ -9687,12 +9879,24 @@ Note that there is an invisible character at the end of the path, this was to av
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -22751,12 +22955,24 @@ e.g.:
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -22934,18 +23150,36 @@ e.g.:
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "emailpassword",
                               "nameOverride": undefined,
                               "value": "emailpassword",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "thirdparty",
                               "nameOverride": undefined,
                               "value": "thirdparty",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "passwordless",
                               "nameOverride": undefined,

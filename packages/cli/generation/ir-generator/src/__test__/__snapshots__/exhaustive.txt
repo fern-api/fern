@@ -1676,6 +1676,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -11846,6 +11847,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/container": {
       "docs": null,
@@ -11957,6 +11959,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/enum": {
       "docs": null,
@@ -12068,6 +12071,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/http-methods": {
       "docs": null,
@@ -12179,6 +12183,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/object": {
       "docs": null,
@@ -12290,6 +12295,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/params": {
       "docs": null,
@@ -12401,6 +12407,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/primitive": {
       "docs": null,
@@ -12512,6 +12519,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_endpoints/union": {
       "docs": null,
@@ -12623,6 +12631,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_general-errors": {
       "docs": null,
@@ -12699,6 +12708,7 @@ exports[`generate IR 1`] = `
         "type_general-errors:BadObjectRequestInfo",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_inlined-requests": {
       "docs": null,
@@ -12771,6 +12781,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_no-auth": {
       "docs": null,
@@ -12843,6 +12854,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_no-req-body": {
       "docs": null,
@@ -12915,6 +12927,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_req-with-headers": {
       "docs": null,
@@ -12987,6 +13000,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types": {
       "docs": null,
@@ -13065,6 +13079,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types/enum": {
       "docs": null,
@@ -13180,6 +13195,7 @@ exports[`generate IR 1`] = `
         "type_types/enum:WeatherReport",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types/object": {
       "docs": null,
@@ -13302,6 +13318,7 @@ exports[`generate IR 1`] = `
         "type_types/object:NestedObjectWithRequiredField",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types/union": {
       "docs": null,
@@ -13419,6 +13436,7 @@ exports[`generate IR 1`] = `
         "type_types/union:Cat",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -15957,5 +15975,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

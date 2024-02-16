@@ -3604,12 +3604,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
-          "ORGANIC",
-          "PAID",
-          "REFERRAL",
-          "OFFLINE",
-          "GATHERING",
-          "UNKNOWN",
+          {
+            "casing": {},
+            "value": "ORGANIC",
+          },
+          {
+            "casing": {},
+            "value": "PAID",
+          },
+          {
+            "casing": {},
+            "value": "REFERRAL",
+          },
+          {
+            "casing": {},
+            "value": "OFFLINE",
+          },
+          {
+            "casing": {},
+            "value": "GATHERING",
+          },
+          {
+            "casing": {},
+            "value": "UNKNOWN",
+          },
         ],
       },
       "Address": {
@@ -3800,27 +3818,63 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CardDetailsCardBrand": {
         "docs": "Brand of Card",
         "enum": [
-          "VISA",
-          "MASTERCARD",
-          "AMERICAN_EXPRESS",
-          "DISCOVER",
-          "UNIONPAY",
-          "RUPAY",
-          "JCB",
+          {
+            "casing": {},
+            "value": "VISA",
+          },
+          {
+            "casing": {},
+            "value": "MASTERCARD",
+          },
+          {
+            "casing": {},
+            "value": "AMERICAN_EXPRESS",
+          },
+          {
+            "casing": {},
+            "value": "DISCOVER",
+          },
+          {
+            "casing": {},
+            "value": "UNIONPAY",
+          },
+          {
+            "casing": {},
+            "value": "RUPAY",
+          },
+          {
+            "casing": {},
+            "value": "JCB",
+          },
         ],
       },
       "CardDetailsCardFunding": {
         "docs": "Funding of Card",
         "enum": [
-          "CREDIT",
-          "DEBIT",
-          "PREPAID",
+          {
+            "casing": {},
+            "value": "CREDIT",
+          },
+          {
+            "casing": {},
+            "value": "DEBIT",
+          },
+          {
+            "casing": {},
+            "value": "PREPAID",
+          },
         ],
       },
       "CardDetailsCardType": {
         "enum": [
-          "VIRTUAL",
-          "PHYSICAL",
+          {
+            "casing": {},
+            "value": "VIRTUAL",
+          },
+          {
+            "casing": {},
+            "value": "PHYSICAL",
+          },
         ],
       },
       "CardExpiry": {
@@ -3891,17 +3945,35 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CaseManagementEventCaseStatus": {
         "docs": "Status of a case. E.g. Open, Closed etc.",
         "enum": [
-          "CLOSED",
-          "HIT",
+          {
+            "casing": {},
+            "value": "CLOSED",
+          },
+          {
+            "casing": {},
+            "value": "HIT",
+          },
         ],
       },
       "CaseManagementEventCaseStatusReason": {
         "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
         "enum": [
-          "FALSE_POSITIVE",
-          "INVESTIGATION_COMPLETED",
-          "DOCUMENTS_COLLECTED",
-          "OTHER",
+          {
+            "casing": {},
+            "value": "FALSE_POSITIVE",
+          },
+          {
+            "casing": {},
+            "value": "INVESTIGATION_COMPLETED",
+          },
+          {
+            "casing": {},
+            "value": "DOCUMENTS_COLLECTED",
+          },
+          {
+            "casing": {},
+            "value": "OTHER",
+          },
         ],
       },
       "CheckDetails": {
@@ -3917,12 +3989,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "CheckDetailsDeliveryStatus": {
         "enum": [
-          "COMPLETED",
-          "PENDING",
-          "SETTLED",
-          "CANCELED",
-          "REFUND",
-          "DECLINED",
+          {
+            "casing": {},
+            "value": "COMPLETED",
+          },
+          {
+            "casing": {},
+            "value": "PENDING",
+          },
+          {
+            "casing": {},
+            "value": "SETTLED",
+          },
+          {
+            "casing": {},
+            "value": "CANCELED",
+          },
+          {
+            "casing": {},
+            "value": "REFUND",
+          },
+          {
+            "casing": {},
+            "value": "DECLINED",
+          },
         ],
       },
       "CheckPaymentMethod": "literal<"CHECK">",
@@ -3966,12 +4056,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CompanyGeneralDetailsUserSegment": {
         "docs": "Segmentation of the business user",
         "enum": [
-          "SOLE_PROPRIETORSHIP",
-          "SMB",
-          "SMALL",
-          "MEDIUM",
-          "LARGE",
-          "UNKNOWN",
+          {
+            "casing": {},
+            "value": "SOLE_PROPRIETORSHIP",
+          },
+          {
+            "casing": {},
+            "value": "SMB",
+          },
+          {
+            "casing": {},
+            "value": "SMALL",
+          },
+          {
+            "casing": {},
+            "value": "MEDIUM",
+          },
+          {
+            "casing": {},
+            "value": "LARGE",
+          },
+          {
+            "casing": {},
+            "value": "UNKNOWN",
+          },
         ],
       },
       "CompanyRegistrationDetails": {
@@ -4050,256 +4158,1004 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "CountryCode": {
         "enum": [
-          "AF",
-          "AL",
-          "DZ",
-          "AS",
-          "AD",
-          "AO",
-          "AI",
-          "AQ",
-          "AG",
-          "AR",
-          "AM",
-          "AW",
-          "AU",
-          "AT",
-          "AZ",
-          "BS",
-          "BH",
-          "BD",
-          "BB",
-          "BY",
-          "BE",
-          "BZ",
-          "BJ",
-          "BM",
-          "BT",
-          "BO",
-          "BQ",
-          "BA",
-          "BW",
-          "BV",
-          "BR",
-          "IO",
-          "BN",
-          "BG",
-          "BF",
-          "BI",
-          "CV",
-          "KH",
-          "CM",
-          "CA",
-          "KY",
-          "CF",
-          "TD",
-          "CL",
-          "CN",
-          "CX",
-          "CC",
-          "CO",
-          "KM",
-          "CD",
-          "CG",
-          "CK",
-          "CR",
-          "HR",
-          "CU",
-          "CW",
-          "CY",
-          "CZ",
-          "CI",
-          "DK",
-          "DJ",
-          "DM",
-          "DO",
-          "EC",
-          "EG",
-          "SV",
-          "GQ",
-          "ER",
-          "EE",
-          "SZ",
-          "ET",
-          "FK",
-          "FO",
-          "FJ",
-          "FI",
-          "FR",
-          "GF",
-          "PF",
-          "TF",
-          "GA",
-          "GM",
-          "GE",
-          "DE",
-          "GH",
-          "GI",
-          "GR",
-          "GL",
-          "GD",
-          "GP",
-          "GU",
-          "GT",
-          "GG",
-          "GN",
-          "GW",
-          "GY",
-          "HT",
-          "HM",
-          "VA",
-          "HN",
-          "HK",
-          "HU",
-          "IS",
-          "IN",
-          "ID",
-          "IR",
-          "IQ",
-          "IE",
-          "IM",
-          "IL",
-          "IT",
-          "JM",
-          "JP",
-          "JE",
-          "JO",
-          "KZ",
-          "KE",
-          "KI",
-          "KP",
-          "KR",
-          "KW",
-          "KG",
-          "LA",
-          "LV",
-          "LB",
-          "LS",
-          "LR",
-          "LY",
-          "LI",
-          "LT",
-          "LU",
-          "MO",
-          "MG",
-          "MW",
-          "MY",
-          "MV",
-          "ML",
-          "MT",
-          "MH",
-          "MQ",
-          "MR",
-          "MU",
-          "YT",
-          "MX",
-          "FM",
-          "MD",
-          "MC",
-          "MN",
-          "ME",
-          "MS",
-          "MA",
-          "MZ",
-          "MM",
-          "NA",
-          "NR",
-          "NP",
-          "NL",
-          "NC",
-          "NZ",
-          "NI",
-          "NE",
-          "NG",
-          "NU",
-          "NF",
-          "MK",
-          "MP",
-          "NO",
-          "OM",
-          "PK",
-          "PW",
-          "PS",
-          "PA",
-          "PG",
-          "PY",
-          "PE",
-          "PH",
-          "PN",
-          "PL",
-          "PT",
-          "PR",
-          "QA",
-          "RO",
-          "RU",
-          "RW",
-          "RE",
-          "BL",
-          "SH",
-          "KN",
-          "LC",
-          "MF",
-          "PM",
-          "VC",
-          "WS",
-          "SM",
-          "ST",
-          "SA",
-          "SN",
-          "RS",
-          "SC",
-          "SL",
-          "SG",
-          "SX",
-          "SK",
-          "SI",
-          "SB",
-          "SO",
-          "ZA",
-          "GS",
-          "SS",
-          "ES",
-          "LK",
-          "SD",
-          "SR",
-          "SJ",
-          "SE",
-          "CH",
-          "SY",
-          "TW",
-          "TJ",
-          "TZ",
-          "TH",
-          "TL",
-          "TG",
-          "TK",
-          "TO",
-          "TT",
-          "TN",
-          "TM",
-          "TC",
-          "TV",
-          "TR",
-          "UG",
-          "UA",
-          "AE",
-          "GB",
-          "UM",
-          "US",
-          "UY",
-          "UZ",
-          "VU",
-          "VE",
-          "VN",
-          "VG",
-          "VI",
-          "WF",
-          "EH",
-          "YE",
-          "ZM",
-          "ZW",
-          "AX",
           {
+            "casing": {},
+            "value": "AF",
+          },
+          {
+            "casing": {},
+            "value": "AL",
+          },
+          {
+            "casing": {},
+            "value": "DZ",
+          },
+          {
+            "casing": {},
+            "value": "AS",
+          },
+          {
+            "casing": {},
+            "value": "AD",
+          },
+          {
+            "casing": {},
+            "value": "AO",
+          },
+          {
+            "casing": {},
+            "value": "AI",
+          },
+          {
+            "casing": {},
+            "value": "AQ",
+          },
+          {
+            "casing": {},
+            "value": "AG",
+          },
+          {
+            "casing": {},
+            "value": "AR",
+          },
+          {
+            "casing": {},
+            "value": "AM",
+          },
+          {
+            "casing": {},
+            "value": "AW",
+          },
+          {
+            "casing": {},
+            "value": "AU",
+          },
+          {
+            "casing": {},
+            "value": "AT",
+          },
+          {
+            "casing": {},
+            "value": "AZ",
+          },
+          {
+            "casing": {},
+            "value": "BS",
+          },
+          {
+            "casing": {},
+            "value": "BH",
+          },
+          {
+            "casing": {},
+            "value": "BD",
+          },
+          {
+            "casing": {},
+            "value": "BB",
+          },
+          {
+            "casing": {},
+            "value": "BY",
+          },
+          {
+            "casing": {},
+            "value": "BE",
+          },
+          {
+            "casing": {},
+            "value": "BZ",
+          },
+          {
+            "casing": {},
+            "value": "BJ",
+          },
+          {
+            "casing": {},
+            "value": "BM",
+          },
+          {
+            "casing": {},
+            "value": "BT",
+          },
+          {
+            "casing": {},
+            "value": "BO",
+          },
+          {
+            "casing": {},
+            "value": "BQ",
+          },
+          {
+            "casing": {},
+            "value": "BA",
+          },
+          {
+            "casing": {},
+            "value": "BW",
+          },
+          {
+            "casing": {},
+            "value": "BV",
+          },
+          {
+            "casing": {},
+            "value": "BR",
+          },
+          {
+            "casing": {},
+            "value": "IO",
+          },
+          {
+            "casing": {},
+            "value": "BN",
+          },
+          {
+            "casing": {},
+            "value": "BG",
+          },
+          {
+            "casing": {},
+            "value": "BF",
+          },
+          {
+            "casing": {},
+            "value": "BI",
+          },
+          {
+            "casing": {},
+            "value": "CV",
+          },
+          {
+            "casing": {},
+            "value": "KH",
+          },
+          {
+            "casing": {},
+            "value": "CM",
+          },
+          {
+            "casing": {},
+            "value": "CA",
+          },
+          {
+            "casing": {},
+            "value": "KY",
+          },
+          {
+            "casing": {},
+            "value": "CF",
+          },
+          {
+            "casing": {},
+            "value": "TD",
+          },
+          {
+            "casing": {},
+            "value": "CL",
+          },
+          {
+            "casing": {},
+            "value": "CN",
+          },
+          {
+            "casing": {},
+            "value": "CX",
+          },
+          {
+            "casing": {},
+            "value": "CC",
+          },
+          {
+            "casing": {},
+            "value": "CO",
+          },
+          {
+            "casing": {},
+            "value": "KM",
+          },
+          {
+            "casing": {},
+            "value": "CD",
+          },
+          {
+            "casing": {},
+            "value": "CG",
+          },
+          {
+            "casing": {},
+            "value": "CK",
+          },
+          {
+            "casing": {},
+            "value": "CR",
+          },
+          {
+            "casing": {},
+            "value": "HR",
+          },
+          {
+            "casing": {},
+            "value": "CU",
+          },
+          {
+            "casing": {},
+            "value": "CW",
+          },
+          {
+            "casing": {},
+            "value": "CY",
+          },
+          {
+            "casing": {},
+            "value": "CZ",
+          },
+          {
+            "casing": {},
+            "value": "CI",
+          },
+          {
+            "casing": {},
+            "value": "DK",
+          },
+          {
+            "casing": {},
+            "value": "DJ",
+          },
+          {
+            "casing": {},
+            "value": "DM",
+          },
+          {
+            "casing": {},
+            "value": "DO",
+          },
+          {
+            "casing": {},
+            "value": "EC",
+          },
+          {
+            "casing": {},
+            "value": "EG",
+          },
+          {
+            "casing": {},
+            "value": "SV",
+          },
+          {
+            "casing": {},
+            "value": "GQ",
+          },
+          {
+            "casing": {},
+            "value": "ER",
+          },
+          {
+            "casing": {},
+            "value": "EE",
+          },
+          {
+            "casing": {},
+            "value": "SZ",
+          },
+          {
+            "casing": {},
+            "value": "ET",
+          },
+          {
+            "casing": {},
+            "value": "FK",
+          },
+          {
+            "casing": {},
+            "value": "FO",
+          },
+          {
+            "casing": {},
+            "value": "FJ",
+          },
+          {
+            "casing": {},
+            "value": "FI",
+          },
+          {
+            "casing": {},
+            "value": "FR",
+          },
+          {
+            "casing": {},
+            "value": "GF",
+          },
+          {
+            "casing": {},
+            "value": "PF",
+          },
+          {
+            "casing": {},
+            "value": "TF",
+          },
+          {
+            "casing": {},
+            "value": "GA",
+          },
+          {
+            "casing": {},
+            "value": "GM",
+          },
+          {
+            "casing": {},
+            "value": "GE",
+          },
+          {
+            "casing": {},
+            "value": "DE",
+          },
+          {
+            "casing": {},
+            "value": "GH",
+          },
+          {
+            "casing": {},
+            "value": "GI",
+          },
+          {
+            "casing": {},
+            "value": "GR",
+          },
+          {
+            "casing": {},
+            "value": "GL",
+          },
+          {
+            "casing": {},
+            "value": "GD",
+          },
+          {
+            "casing": {},
+            "value": "GP",
+          },
+          {
+            "casing": {},
+            "value": "GU",
+          },
+          {
+            "casing": {},
+            "value": "GT",
+          },
+          {
+            "casing": {},
+            "value": "GG",
+          },
+          {
+            "casing": {},
+            "value": "GN",
+          },
+          {
+            "casing": {},
+            "value": "GW",
+          },
+          {
+            "casing": {},
+            "value": "GY",
+          },
+          {
+            "casing": {},
+            "value": "HT",
+          },
+          {
+            "casing": {},
+            "value": "HM",
+          },
+          {
+            "casing": {},
+            "value": "VA",
+          },
+          {
+            "casing": {},
+            "value": "HN",
+          },
+          {
+            "casing": {},
+            "value": "HK",
+          },
+          {
+            "casing": {},
+            "value": "HU",
+          },
+          {
+            "casing": {},
+            "value": "IS",
+          },
+          {
+            "casing": {},
+            "value": "IN",
+          },
+          {
+            "casing": {},
+            "value": "ID",
+          },
+          {
+            "casing": {},
+            "value": "IR",
+          },
+          {
+            "casing": {},
+            "value": "IQ",
+          },
+          {
+            "casing": {},
+            "value": "IE",
+          },
+          {
+            "casing": {},
+            "value": "IM",
+          },
+          {
+            "casing": {},
+            "value": "IL",
+          },
+          {
+            "casing": {},
+            "value": "IT",
+          },
+          {
+            "casing": {},
+            "value": "JM",
+          },
+          {
+            "casing": {},
+            "value": "JP",
+          },
+          {
+            "casing": {},
+            "value": "JE",
+          },
+          {
+            "casing": {},
+            "value": "JO",
+          },
+          {
+            "casing": {},
+            "value": "KZ",
+          },
+          {
+            "casing": {},
+            "value": "KE",
+          },
+          {
+            "casing": {},
+            "value": "KI",
+          },
+          {
+            "casing": {},
+            "value": "KP",
+          },
+          {
+            "casing": {},
+            "value": "KR",
+          },
+          {
+            "casing": {},
+            "value": "KW",
+          },
+          {
+            "casing": {},
+            "value": "KG",
+          },
+          {
+            "casing": {},
+            "value": "LA",
+          },
+          {
+            "casing": {},
+            "value": "LV",
+          },
+          {
+            "casing": {},
+            "value": "LB",
+          },
+          {
+            "casing": {},
+            "value": "LS",
+          },
+          {
+            "casing": {},
+            "value": "LR",
+          },
+          {
+            "casing": {},
+            "value": "LY",
+          },
+          {
+            "casing": {},
+            "value": "LI",
+          },
+          {
+            "casing": {},
+            "value": "LT",
+          },
+          {
+            "casing": {},
+            "value": "LU",
+          },
+          {
+            "casing": {},
+            "value": "MO",
+          },
+          {
+            "casing": {},
+            "value": "MG",
+          },
+          {
+            "casing": {},
+            "value": "MW",
+          },
+          {
+            "casing": {},
+            "value": "MY",
+          },
+          {
+            "casing": {},
+            "value": "MV",
+          },
+          {
+            "casing": {},
+            "value": "ML",
+          },
+          {
+            "casing": {},
+            "value": "MT",
+          },
+          {
+            "casing": {},
+            "value": "MH",
+          },
+          {
+            "casing": {},
+            "value": "MQ",
+          },
+          {
+            "casing": {},
+            "value": "MR",
+          },
+          {
+            "casing": {},
+            "value": "MU",
+          },
+          {
+            "casing": {},
+            "value": "YT",
+          },
+          {
+            "casing": {},
+            "value": "MX",
+          },
+          {
+            "casing": {},
+            "value": "FM",
+          },
+          {
+            "casing": {},
+            "value": "MD",
+          },
+          {
+            "casing": {},
+            "value": "MC",
+          },
+          {
+            "casing": {},
+            "value": "MN",
+          },
+          {
+            "casing": {},
+            "value": "ME",
+          },
+          {
+            "casing": {},
+            "value": "MS",
+          },
+          {
+            "casing": {},
+            "value": "MA",
+          },
+          {
+            "casing": {},
+            "value": "MZ",
+          },
+          {
+            "casing": {},
+            "value": "MM",
+          },
+          {
+            "casing": {},
+            "value": "NA",
+          },
+          {
+            "casing": {},
+            "value": "NR",
+          },
+          {
+            "casing": {},
+            "value": "NP",
+          },
+          {
+            "casing": {},
+            "value": "NL",
+          },
+          {
+            "casing": {},
+            "value": "NC",
+          },
+          {
+            "casing": {},
+            "value": "NZ",
+          },
+          {
+            "casing": {},
+            "value": "NI",
+          },
+          {
+            "casing": {},
+            "value": "NE",
+          },
+          {
+            "casing": {},
+            "value": "NG",
+          },
+          {
+            "casing": {},
+            "value": "NU",
+          },
+          {
+            "casing": {},
+            "value": "NF",
+          },
+          {
+            "casing": {},
+            "value": "MK",
+          },
+          {
+            "casing": {},
+            "value": "MP",
+          },
+          {
+            "casing": {},
+            "value": "NO",
+          },
+          {
+            "casing": {},
+            "value": "OM",
+          },
+          {
+            "casing": {},
+            "value": "PK",
+          },
+          {
+            "casing": {},
+            "value": "PW",
+          },
+          {
+            "casing": {},
+            "value": "PS",
+          },
+          {
+            "casing": {},
+            "value": "PA",
+          },
+          {
+            "casing": {},
+            "value": "PG",
+          },
+          {
+            "casing": {},
+            "value": "PY",
+          },
+          {
+            "casing": {},
+            "value": "PE",
+          },
+          {
+            "casing": {},
+            "value": "PH",
+          },
+          {
+            "casing": {},
+            "value": "PN",
+          },
+          {
+            "casing": {},
+            "value": "PL",
+          },
+          {
+            "casing": {},
+            "value": "PT",
+          },
+          {
+            "casing": {},
+            "value": "PR",
+          },
+          {
+            "casing": {},
+            "value": "QA",
+          },
+          {
+            "casing": {},
+            "value": "RO",
+          },
+          {
+            "casing": {},
+            "value": "RU",
+          },
+          {
+            "casing": {},
+            "value": "RW",
+          },
+          {
+            "casing": {},
+            "value": "RE",
+          },
+          {
+            "casing": {},
+            "value": "BL",
+          },
+          {
+            "casing": {},
+            "value": "SH",
+          },
+          {
+            "casing": {},
+            "value": "KN",
+          },
+          {
+            "casing": {},
+            "value": "LC",
+          },
+          {
+            "casing": {},
+            "value": "MF",
+          },
+          {
+            "casing": {},
+            "value": "PM",
+          },
+          {
+            "casing": {},
+            "value": "VC",
+          },
+          {
+            "casing": {},
+            "value": "WS",
+          },
+          {
+            "casing": {},
+            "value": "SM",
+          },
+          {
+            "casing": {},
+            "value": "ST",
+          },
+          {
+            "casing": {},
+            "value": "SA",
+          },
+          {
+            "casing": {},
+            "value": "SN",
+          },
+          {
+            "casing": {},
+            "value": "RS",
+          },
+          {
+            "casing": {},
+            "value": "SC",
+          },
+          {
+            "casing": {},
+            "value": "SL",
+          },
+          {
+            "casing": {},
+            "value": "SG",
+          },
+          {
+            "casing": {},
+            "value": "SX",
+          },
+          {
+            "casing": {},
+            "value": "SK",
+          },
+          {
+            "casing": {},
+            "value": "SI",
+          },
+          {
+            "casing": {},
+            "value": "SB",
+          },
+          {
+            "casing": {},
+            "value": "SO",
+          },
+          {
+            "casing": {},
+            "value": "ZA",
+          },
+          {
+            "casing": {},
+            "value": "GS",
+          },
+          {
+            "casing": {},
+            "value": "SS",
+          },
+          {
+            "casing": {},
+            "value": "ES",
+          },
+          {
+            "casing": {},
+            "value": "LK",
+          },
+          {
+            "casing": {},
+            "value": "SD",
+          },
+          {
+            "casing": {},
+            "value": "SR",
+          },
+          {
+            "casing": {},
+            "value": "SJ",
+          },
+          {
+            "casing": {},
+            "value": "SE",
+          },
+          {
+            "casing": {},
+            "value": "CH",
+          },
+          {
+            "casing": {},
+            "value": "SY",
+          },
+          {
+            "casing": {},
+            "value": "TW",
+          },
+          {
+            "casing": {},
+            "value": "TJ",
+          },
+          {
+            "casing": {},
+            "value": "TZ",
+          },
+          {
+            "casing": {},
+            "value": "TH",
+          },
+          {
+            "casing": {},
+            "value": "TL",
+          },
+          {
+            "casing": {},
+            "value": "TG",
+          },
+          {
+            "casing": {},
+            "value": "TK",
+          },
+          {
+            "casing": {},
+            "value": "TO",
+          },
+          {
+            "casing": {},
+            "value": "TT",
+          },
+          {
+            "casing": {},
+            "value": "TN",
+          },
+          {
+            "casing": {},
+            "value": "TM",
+          },
+          {
+            "casing": {},
+            "value": "TC",
+          },
+          {
+            "casing": {},
+            "value": "TV",
+          },
+          {
+            "casing": {},
+            "value": "TR",
+          },
+          {
+            "casing": {},
+            "value": "UG",
+          },
+          {
+            "casing": {},
+            "value": "UA",
+          },
+          {
+            "casing": {},
+            "value": "AE",
+          },
+          {
+            "casing": {},
+            "value": "GB",
+          },
+          {
+            "casing": {},
+            "value": "UM",
+          },
+          {
+            "casing": {},
+            "value": "US",
+          },
+          {
+            "casing": {},
+            "value": "UY",
+          },
+          {
+            "casing": {},
+            "value": "UZ",
+          },
+          {
+            "casing": {},
+            "value": "VU",
+          },
+          {
+            "casing": {},
+            "value": "VE",
+          },
+          {
+            "casing": {},
+            "value": "VN",
+          },
+          {
+            "casing": {},
+            "value": "VG",
+          },
+          {
+            "casing": {},
+            "value": "VI",
+          },
+          {
+            "casing": {},
+            "value": "WF",
+          },
+          {
+            "casing": {},
+            "value": "EH",
+          },
+          {
+            "casing": {},
+            "value": "YE",
+          },
+          {
+            "casing": {},
+            "value": "ZM",
+          },
+          {
+            "casing": {},
+            "value": "ZW",
+          },
+          {
+            "casing": {},
+            "value": "AX",
+          },
+          {
+            "casing": {},
             "name": "NOT_APPLICABLE",
             "value": "N/A",
           },
@@ -4308,278 +5164,1086 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CurrencyCode": {
         "enum": [
           {
+            "casing": {},
             "name": "OneInch",
             "value": "1INCH",
           },
-          "AAVE",
-          "ADA",
-          "AED",
-          "AFN",
-          "ALGO",
-          "ALL",
-          "AMD",
-          "AMP",
-          "ANG",
-          "AOA",
-          "AR",
-          "ARS",
-          "ATOM",
-          "AUD",
-          "AVAX",
-          "AWG",
-          "AXS",
-          "AZN",
-          "BAM",
-          "BAT",
-          "BBD",
-          "BCH",
-          "BDT",
-          "BGN",
-          "BHD",
-          "BIF",
-          "BMD",
-          "BNB",
-          "BND",
-          "BOB",
-          "BRL",
-          "BSD",
-          "BSV",
-          "BTC",
-          "BTCB",
-          "BTG",
-          "BTN",
-          "BUSD",
-          "BWP",
-          "BYN",
-          "BYR",
-          "BZD",
-          "CAD",
-          "CAKE",
-          "CDF",
-          "CELO",
-          "CHF",
-          "CHZ",
-          "CLF",
-          "CLP",
-          "CNY",
-          "COMP",
-          "COP",
-          "CRC",
-          "CRO",
-          "CRV",
-          "CUC",
-          "CUP",
-          "CVE",
-          "CVX",
-          "CZK",
-          "DAI",
-          "DASH",
-          "DCR",
-          "DFI",
-          "DJF",
-          "DKK",
-          "DOGE",
-          "DOP",
-          "DOT",
-          "DZD",
-          "EGLD",
-          "EGP",
-          "ENJ",
-          "EOS",
-          "ERN",
-          "ETB",
-          "ETC",
-          "ETH",
-          "EUR",
-          "FEI",
-          "FIL",
-          "FJD",
-          "FKP",
-          "FLOW",
-          "FRAX",
-          "FTM",
-          "FTT",
-          "GALA",
-          "GBP",
-          "GEL",
-          "GGP",
-          "GHS",
-          "GIP",
-          "GMD",
-          "GNF",
-          "GNO",
-          "GRT",
-          "GT",
-          "GTQ",
-          "GYD",
-          "HBAR",
-          "HKD",
-          "HNL",
-          "HNT",
-          "HOT",
-          "HRK",
-          "HT",
-          "HTG",
-          "HUF",
-          "ICP",
-          "IDR",
-          "ILS",
-          "IMP",
-          "INJ",
-          "INR",
-          "IQD",
-          "IRR",
-          "ISK",
-          "JEP",
-          "JMD",
-          "JOD",
-          "JPY",
-          "KAVA",
-          "KCS",
-          "KDA",
-          "KES",
-          "KGS",
-          "KHR",
-          "KLAY",
-          "KMF",
-          "KNC",
-          "KPW",
-          "KRW",
-          "KSM",
-          "KWD",
-          "KYD",
-          "KZT",
-          "LAK",
-          "LBP",
-          "LEO",
-          "LINK",
-          "LKR",
-          "LRC",
-          "LRD",
-          "LSL",
-          "LTC",
-          "LTL",
-          "LUNA",
-          "LVL",
-          "LYD",
-          "MAD",
-          "MANA",
-          "MATIC",
-          "MDL",
-          "MGA",
-          "MINA",
-          "MIOTA",
-          "MKD",
-          "MKR",
-          "MMK",
-          "MNT",
-          "MOP",
-          "MRO",
-          "MUR",
-          "MVR",
-          "MWK",
-          "MXN",
-          "MYR",
-          "MZN",
-          "NAD",
-          "NEAR",
-          "NEO",
-          "NEXO",
-          "NGN",
-          "NIO",
-          "NOK",
-          "NPR",
-          "NZD",
-          "OKB",
-          "OMR",
-          "ONE",
-          "PAB",
-          "PAXG",
-          "PEN",
-          "PGK",
-          "PHP",
-          "PKR",
-          "PLN",
-          "PYG",
-          "QAR",
-          "QNT",
-          "QTUM",
-          "RON",
-          "RSD",
-          "RUB",
-          "RUNE",
-          "RWF",
-          "SAND",
-          "SAR",
-          "SBD",
-          "SCR",
-          "SDG",
-          "SEK",
-          "SGD",
-          "SHIB",
-          "SHP",
-          "SLE",
-          "SLL",
-          "SOL",
-          "SOS",
-          "SRD",
-          "STD",
-          "STX",
-          "SVC",
-          "SYP",
-          "SZL",
-          "THB",
-          "THETA",
-          "TJS",
-          "TMT",
-          "TND",
-          "TOP",
-          "TRX",
-          "TRY",
-          "TTD",
-          "TTT",
-          "TUSD",
-          "TWD",
-          "TZS",
-          "UAH",
-          "UGX",
-          "UNI",
-          "USD",
-          "USDC",
-          "USDP",
-          "USDT",
-          "UYU",
-          "UZS",
-          "VEF",
-          "VET",
-          "VND",
-          "VUV",
-          "WAVES",
-          "WBTC",
-          "WEMIX",
-          "WST",
-          "XAF",
-          "XAG",
-          "XAU",
-          "XCD",
-          "XCH",
-          "XDC",
-          "XDR",
-          "XEC",
-          "XEM",
-          "XLM",
-          "XMR",
-          "XOF",
-          "XPF",
-          "XRP",
-          "XTZ",
-          "YER",
-          "ZAR",
-          "ZEC",
-          "ZIL",
-          "ZMK",
-          "ZMW",
-          "ZWL",
+          {
+            "casing": {},
+            "value": "AAVE",
+          },
+          {
+            "casing": {},
+            "value": "ADA",
+          },
+          {
+            "casing": {},
+            "value": "AED",
+          },
+          {
+            "casing": {},
+            "value": "AFN",
+          },
+          {
+            "casing": {},
+            "value": "ALGO",
+          },
+          {
+            "casing": {},
+            "value": "ALL",
+          },
+          {
+            "casing": {},
+            "value": "AMD",
+          },
+          {
+            "casing": {},
+            "value": "AMP",
+          },
+          {
+            "casing": {},
+            "value": "ANG",
+          },
+          {
+            "casing": {},
+            "value": "AOA",
+          },
+          {
+            "casing": {},
+            "value": "AR",
+          },
+          {
+            "casing": {},
+            "value": "ARS",
+          },
+          {
+            "casing": {},
+            "value": "ATOM",
+          },
+          {
+            "casing": {},
+            "value": "AUD",
+          },
+          {
+            "casing": {},
+            "value": "AVAX",
+          },
+          {
+            "casing": {},
+            "value": "AWG",
+          },
+          {
+            "casing": {},
+            "value": "AXS",
+          },
+          {
+            "casing": {},
+            "value": "AZN",
+          },
+          {
+            "casing": {},
+            "value": "BAM",
+          },
+          {
+            "casing": {},
+            "value": "BAT",
+          },
+          {
+            "casing": {},
+            "value": "BBD",
+          },
+          {
+            "casing": {},
+            "value": "BCH",
+          },
+          {
+            "casing": {},
+            "value": "BDT",
+          },
+          {
+            "casing": {},
+            "value": "BGN",
+          },
+          {
+            "casing": {},
+            "value": "BHD",
+          },
+          {
+            "casing": {},
+            "value": "BIF",
+          },
+          {
+            "casing": {},
+            "value": "BMD",
+          },
+          {
+            "casing": {},
+            "value": "BNB",
+          },
+          {
+            "casing": {},
+            "value": "BND",
+          },
+          {
+            "casing": {},
+            "value": "BOB",
+          },
+          {
+            "casing": {},
+            "value": "BRL",
+          },
+          {
+            "casing": {},
+            "value": "BSD",
+          },
+          {
+            "casing": {},
+            "value": "BSV",
+          },
+          {
+            "casing": {},
+            "value": "BTC",
+          },
+          {
+            "casing": {},
+            "value": "BTCB",
+          },
+          {
+            "casing": {},
+            "value": "BTG",
+          },
+          {
+            "casing": {},
+            "value": "BTN",
+          },
+          {
+            "casing": {},
+            "value": "BUSD",
+          },
+          {
+            "casing": {},
+            "value": "BWP",
+          },
+          {
+            "casing": {},
+            "value": "BYN",
+          },
+          {
+            "casing": {},
+            "value": "BYR",
+          },
+          {
+            "casing": {},
+            "value": "BZD",
+          },
+          {
+            "casing": {},
+            "value": "CAD",
+          },
+          {
+            "casing": {},
+            "value": "CAKE",
+          },
+          {
+            "casing": {},
+            "value": "CDF",
+          },
+          {
+            "casing": {},
+            "value": "CELO",
+          },
+          {
+            "casing": {},
+            "value": "CHF",
+          },
+          {
+            "casing": {},
+            "value": "CHZ",
+          },
+          {
+            "casing": {},
+            "value": "CLF",
+          },
+          {
+            "casing": {},
+            "value": "CLP",
+          },
+          {
+            "casing": {},
+            "value": "CNY",
+          },
+          {
+            "casing": {},
+            "value": "COMP",
+          },
+          {
+            "casing": {},
+            "value": "COP",
+          },
+          {
+            "casing": {},
+            "value": "CRC",
+          },
+          {
+            "casing": {},
+            "value": "CRO",
+          },
+          {
+            "casing": {},
+            "value": "CRV",
+          },
+          {
+            "casing": {},
+            "value": "CUC",
+          },
+          {
+            "casing": {},
+            "value": "CUP",
+          },
+          {
+            "casing": {},
+            "value": "CVE",
+          },
+          {
+            "casing": {},
+            "value": "CVX",
+          },
+          {
+            "casing": {},
+            "value": "CZK",
+          },
+          {
+            "casing": {},
+            "value": "DAI",
+          },
+          {
+            "casing": {},
+            "value": "DASH",
+          },
+          {
+            "casing": {},
+            "value": "DCR",
+          },
+          {
+            "casing": {},
+            "value": "DFI",
+          },
+          {
+            "casing": {},
+            "value": "DJF",
+          },
+          {
+            "casing": {},
+            "value": "DKK",
+          },
+          {
+            "casing": {},
+            "value": "DOGE",
+          },
+          {
+            "casing": {},
+            "value": "DOP",
+          },
+          {
+            "casing": {},
+            "value": "DOT",
+          },
+          {
+            "casing": {},
+            "value": "DZD",
+          },
+          {
+            "casing": {},
+            "value": "EGLD",
+          },
+          {
+            "casing": {},
+            "value": "EGP",
+          },
+          {
+            "casing": {},
+            "value": "ENJ",
+          },
+          {
+            "casing": {},
+            "value": "EOS",
+          },
+          {
+            "casing": {},
+            "value": "ERN",
+          },
+          {
+            "casing": {},
+            "value": "ETB",
+          },
+          {
+            "casing": {},
+            "value": "ETC",
+          },
+          {
+            "casing": {},
+            "value": "ETH",
+          },
+          {
+            "casing": {},
+            "value": "EUR",
+          },
+          {
+            "casing": {},
+            "value": "FEI",
+          },
+          {
+            "casing": {},
+            "value": "FIL",
+          },
+          {
+            "casing": {},
+            "value": "FJD",
+          },
+          {
+            "casing": {},
+            "value": "FKP",
+          },
+          {
+            "casing": {},
+            "value": "FLOW",
+          },
+          {
+            "casing": {},
+            "value": "FRAX",
+          },
+          {
+            "casing": {},
+            "value": "FTM",
+          },
+          {
+            "casing": {},
+            "value": "FTT",
+          },
+          {
+            "casing": {},
+            "value": "GALA",
+          },
+          {
+            "casing": {},
+            "value": "GBP",
+          },
+          {
+            "casing": {},
+            "value": "GEL",
+          },
+          {
+            "casing": {},
+            "value": "GGP",
+          },
+          {
+            "casing": {},
+            "value": "GHS",
+          },
+          {
+            "casing": {},
+            "value": "GIP",
+          },
+          {
+            "casing": {},
+            "value": "GMD",
+          },
+          {
+            "casing": {},
+            "value": "GNF",
+          },
+          {
+            "casing": {},
+            "value": "GNO",
+          },
+          {
+            "casing": {},
+            "value": "GRT",
+          },
+          {
+            "casing": {},
+            "value": "GT",
+          },
+          {
+            "casing": {},
+            "value": "GTQ",
+          },
+          {
+            "casing": {},
+            "value": "GYD",
+          },
+          {
+            "casing": {},
+            "value": "HBAR",
+          },
+          {
+            "casing": {},
+            "value": "HKD",
+          },
+          {
+            "casing": {},
+            "value": "HNL",
+          },
+          {
+            "casing": {},
+            "value": "HNT",
+          },
+          {
+            "casing": {},
+            "value": "HOT",
+          },
+          {
+            "casing": {},
+            "value": "HRK",
+          },
+          {
+            "casing": {},
+            "value": "HT",
+          },
+          {
+            "casing": {},
+            "value": "HTG",
+          },
+          {
+            "casing": {},
+            "value": "HUF",
+          },
+          {
+            "casing": {},
+            "value": "ICP",
+          },
+          {
+            "casing": {},
+            "value": "IDR",
+          },
+          {
+            "casing": {},
+            "value": "ILS",
+          },
+          {
+            "casing": {},
+            "value": "IMP",
+          },
+          {
+            "casing": {},
+            "value": "INJ",
+          },
+          {
+            "casing": {},
+            "value": "INR",
+          },
+          {
+            "casing": {},
+            "value": "IQD",
+          },
+          {
+            "casing": {},
+            "value": "IRR",
+          },
+          {
+            "casing": {},
+            "value": "ISK",
+          },
+          {
+            "casing": {},
+            "value": "JEP",
+          },
+          {
+            "casing": {},
+            "value": "JMD",
+          },
+          {
+            "casing": {},
+            "value": "JOD",
+          },
+          {
+            "casing": {},
+            "value": "JPY",
+          },
+          {
+            "casing": {},
+            "value": "KAVA",
+          },
+          {
+            "casing": {},
+            "value": "KCS",
+          },
+          {
+            "casing": {},
+            "value": "KDA",
+          },
+          {
+            "casing": {},
+            "value": "KES",
+          },
+          {
+            "casing": {},
+            "value": "KGS",
+          },
+          {
+            "casing": {},
+            "value": "KHR",
+          },
+          {
+            "casing": {},
+            "value": "KLAY",
+          },
+          {
+            "casing": {},
+            "value": "KMF",
+          },
+          {
+            "casing": {},
+            "value": "KNC",
+          },
+          {
+            "casing": {},
+            "value": "KPW",
+          },
+          {
+            "casing": {},
+            "value": "KRW",
+          },
+          {
+            "casing": {},
+            "value": "KSM",
+          },
+          {
+            "casing": {},
+            "value": "KWD",
+          },
+          {
+            "casing": {},
+            "value": "KYD",
+          },
+          {
+            "casing": {},
+            "value": "KZT",
+          },
+          {
+            "casing": {},
+            "value": "LAK",
+          },
+          {
+            "casing": {},
+            "value": "LBP",
+          },
+          {
+            "casing": {},
+            "value": "LEO",
+          },
+          {
+            "casing": {},
+            "value": "LINK",
+          },
+          {
+            "casing": {},
+            "value": "LKR",
+          },
+          {
+            "casing": {},
+            "value": "LRC",
+          },
+          {
+            "casing": {},
+            "value": "LRD",
+          },
+          {
+            "casing": {},
+            "value": "LSL",
+          },
+          {
+            "casing": {},
+            "value": "LTC",
+          },
+          {
+            "casing": {},
+            "value": "LTL",
+          },
+          {
+            "casing": {},
+            "value": "LUNA",
+          },
+          {
+            "casing": {},
+            "value": "LVL",
+          },
+          {
+            "casing": {},
+            "value": "LYD",
+          },
+          {
+            "casing": {},
+            "value": "MAD",
+          },
+          {
+            "casing": {},
+            "value": "MANA",
+          },
+          {
+            "casing": {},
+            "value": "MATIC",
+          },
+          {
+            "casing": {},
+            "value": "MDL",
+          },
+          {
+            "casing": {},
+            "value": "MGA",
+          },
+          {
+            "casing": {},
+            "value": "MINA",
+          },
+          {
+            "casing": {},
+            "value": "MIOTA",
+          },
+          {
+            "casing": {},
+            "value": "MKD",
+          },
+          {
+            "casing": {},
+            "value": "MKR",
+          },
+          {
+            "casing": {},
+            "value": "MMK",
+          },
+          {
+            "casing": {},
+            "value": "MNT",
+          },
+          {
+            "casing": {},
+            "value": "MOP",
+          },
+          {
+            "casing": {},
+            "value": "MRO",
+          },
+          {
+            "casing": {},
+            "value": "MUR",
+          },
+          {
+            "casing": {},
+            "value": "MVR",
+          },
+          {
+            "casing": {},
+            "value": "MWK",
+          },
+          {
+            "casing": {},
+            "value": "MXN",
+          },
+          {
+            "casing": {},
+            "value": "MYR",
+          },
+          {
+            "casing": {},
+            "value": "MZN",
+          },
+          {
+            "casing": {},
+            "value": "NAD",
+          },
+          {
+            "casing": {},
+            "value": "NEAR",
+          },
+          {
+            "casing": {},
+            "value": "NEO",
+          },
+          {
+            "casing": {},
+            "value": "NEXO",
+          },
+          {
+            "casing": {},
+            "value": "NGN",
+          },
+          {
+            "casing": {},
+            "value": "NIO",
+          },
+          {
+            "casing": {},
+            "value": "NOK",
+          },
+          {
+            "casing": {},
+            "value": "NPR",
+          },
+          {
+            "casing": {},
+            "value": "NZD",
+          },
+          {
+            "casing": {},
+            "value": "OKB",
+          },
+          {
+            "casing": {},
+            "value": "OMR",
+          },
+          {
+            "casing": {},
+            "value": "ONE",
+          },
+          {
+            "casing": {},
+            "value": "PAB",
+          },
+          {
+            "casing": {},
+            "value": "PAXG",
+          },
+          {
+            "casing": {},
+            "value": "PEN",
+          },
+          {
+            "casing": {},
+            "value": "PGK",
+          },
+          {
+            "casing": {},
+            "value": "PHP",
+          },
+          {
+            "casing": {},
+            "value": "PKR",
+          },
+          {
+            "casing": {},
+            "value": "PLN",
+          },
+          {
+            "casing": {},
+            "value": "PYG",
+          },
+          {
+            "casing": {},
+            "value": "QAR",
+          },
+          {
+            "casing": {},
+            "value": "QNT",
+          },
+          {
+            "casing": {},
+            "value": "QTUM",
+          },
+          {
+            "casing": {},
+            "value": "RON",
+          },
+          {
+            "casing": {},
+            "value": "RSD",
+          },
+          {
+            "casing": {},
+            "value": "RUB",
+          },
+          {
+            "casing": {},
+            "value": "RUNE",
+          },
+          {
+            "casing": {},
+            "value": "RWF",
+          },
+          {
+            "casing": {},
+            "value": "SAND",
+          },
+          {
+            "casing": {},
+            "value": "SAR",
+          },
+          {
+            "casing": {},
+            "value": "SBD",
+          },
+          {
+            "casing": {},
+            "value": "SCR",
+          },
+          {
+            "casing": {},
+            "value": "SDG",
+          },
+          {
+            "casing": {},
+            "value": "SEK",
+          },
+          {
+            "casing": {},
+            "value": "SGD",
+          },
+          {
+            "casing": {},
+            "value": "SHIB",
+          },
+          {
+            "casing": {},
+            "value": "SHP",
+          },
+          {
+            "casing": {},
+            "value": "SLE",
+          },
+          {
+            "casing": {},
+            "value": "SLL",
+          },
+          {
+            "casing": {},
+            "value": "SOL",
+          },
+          {
+            "casing": {},
+            "value": "SOS",
+          },
+          {
+            "casing": {},
+            "value": "SRD",
+          },
+          {
+            "casing": {},
+            "value": "STD",
+          },
+          {
+            "casing": {},
+            "value": "STX",
+          },
+          {
+            "casing": {},
+            "value": "SVC",
+          },
+          {
+            "casing": {},
+            "value": "SYP",
+          },
+          {
+            "casing": {},
+            "value": "SZL",
+          },
+          {
+            "casing": {},
+            "value": "THB",
+          },
+          {
+            "casing": {},
+            "value": "THETA",
+          },
+          {
+            "casing": {},
+            "value": "TJS",
+          },
+          {
+            "casing": {},
+            "value": "TMT",
+          },
+          {
+            "casing": {},
+            "value": "TND",
+          },
+          {
+            "casing": {},
+            "value": "TOP",
+          },
+          {
+            "casing": {},
+            "value": "TRX",
+          },
+          {
+            "casing": {},
+            "value": "TRY",
+          },
+          {
+            "casing": {},
+            "value": "TTD",
+          },
+          {
+            "casing": {},
+            "value": "TTT",
+          },
+          {
+            "casing": {},
+            "value": "TUSD",
+          },
+          {
+            "casing": {},
+            "value": "TWD",
+          },
+          {
+            "casing": {},
+            "value": "TZS",
+          },
+          {
+            "casing": {},
+            "value": "UAH",
+          },
+          {
+            "casing": {},
+            "value": "UGX",
+          },
+          {
+            "casing": {},
+            "value": "UNI",
+          },
+          {
+            "casing": {},
+            "value": "USD",
+          },
+          {
+            "casing": {},
+            "value": "USDC",
+          },
+          {
+            "casing": {},
+            "value": "USDP",
+          },
+          {
+            "casing": {},
+            "value": "USDT",
+          },
+          {
+            "casing": {},
+            "value": "UYU",
+          },
+          {
+            "casing": {},
+            "value": "UZS",
+          },
+          {
+            "casing": {},
+            "value": "VEF",
+          },
+          {
+            "casing": {},
+            "value": "VET",
+          },
+          {
+            "casing": {},
+            "value": "VND",
+          },
+          {
+            "casing": {},
+            "value": "VUV",
+          },
+          {
+            "casing": {},
+            "value": "WAVES",
+          },
+          {
+            "casing": {},
+            "value": "WBTC",
+          },
+          {
+            "casing": {},
+            "value": "WEMIX",
+          },
+          {
+            "casing": {},
+            "value": "WST",
+          },
+          {
+            "casing": {},
+            "value": "XAF",
+          },
+          {
+            "casing": {},
+            "value": "XAG",
+          },
+          {
+            "casing": {},
+            "value": "XAU",
+          },
+          {
+            "casing": {},
+            "value": "XCD",
+          },
+          {
+            "casing": {},
+            "value": "XCH",
+          },
+          {
+            "casing": {},
+            "value": "XDC",
+          },
+          {
+            "casing": {},
+            "value": "XDR",
+          },
+          {
+            "casing": {},
+            "value": "XEC",
+          },
+          {
+            "casing": {},
+            "value": "XEM",
+          },
+          {
+            "casing": {},
+            "value": "XLM",
+          },
+          {
+            "casing": {},
+            "value": "XMR",
+          },
+          {
+            "casing": {},
+            "value": "XOF",
+          },
+          {
+            "casing": {},
+            "value": "XPF",
+          },
+          {
+            "casing": {},
+            "value": "XRP",
+          },
+          {
+            "casing": {},
+            "value": "XTZ",
+          },
+          {
+            "casing": {},
+            "value": "YER",
+          },
+          {
+            "casing": {},
+            "value": "ZAR",
+          },
+          {
+            "casing": {},
+            "value": "ZEC",
+          },
+          {
+            "casing": {},
+            "value": "ZIL",
+          },
+          {
+            "casing": {},
+            "value": "ZMK",
+          },
+          {
+            "casing": {},
+            "value": "ZMW",
+          },
+          {
+            "casing": {},
+            "value": "ZWL",
+          },
         ],
       },
       "Date": {
@@ -4782,11 +6446,26 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "IBANPaymentMethod": "literal<"IBAN">",
       "KYCStatus": {
         "enum": [
-          "SUCCESSFUL",
-          "FAILED",
-          "NOT_STARTED",
-          "IN_PROGRESS",
-          "MANUAL_REVIEW",
+          {
+            "casing": {},
+            "value": "SUCCESSFUL",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
+          {
+            "casing": {},
+            "value": "NOT_STARTED",
+          },
+          {
+            "casing": {},
+            "value": "IN_PROGRESS",
+          },
+          {
+            "casing": {},
+            "value": "MANUAL_REVIEW",
+          },
         ],
       },
       "KYCStatusDetails": {
@@ -4893,24 +6572,66 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "ListSubtype": {
         "enum": [
-          "USER_ID",
-          "CARD_FINGERPRINT_NUMBER",
-          "IBAN_NUMBER",
-          "BANK_ACCOUNT_NUMBER",
-          "ACH_ACCOUNT_NUMBER",
-          "SWIFT_ACCOUNT_NUMBER",
-          "BIC",
-          "BANK_SWIFT_CODE",
-          "UPI_IDENTIFYING_NUMBER",
-          "IP_ADDRESS",
-          "STRING",
+          {
+            "casing": {},
+            "value": "USER_ID",
+          },
+          {
+            "casing": {},
+            "value": "CARD_FINGERPRINT_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "IBAN_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "BANK_ACCOUNT_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "ACH_ACCOUNT_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "SWIFT_ACCOUNT_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "BIC",
+          },
+          {
+            "casing": {},
+            "value": "BANK_SWIFT_CODE",
+          },
+          {
+            "casing": {},
+            "value": "UPI_IDENTIFYING_NUMBER",
+          },
+          {
+            "casing": {},
+            "value": "IP_ADDRESS",
+          },
+          {
+            "casing": {},
+            "value": "STRING",
+          },
         ],
       },
       "ListType": {
         "enum": [
-          "WHITELIST",
-          "BLACKLIST",
-          "FLAGRIGHT_LIBRARY",
+          {
+            "casing": {},
+            "value": "WHITELIST",
+          },
+          {
+            "casing": {},
+            "value": "BLACKLIST",
+          },
+          {
+            "casing": {},
+            "value": "FLAGRIGHT_LIBRARY",
+          },
         ],
       },
       "MCCDetails": {
@@ -4946,11 +6667,26 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "MpesaDetailsTransactionType": {
         "docs": "Type of transaction",
         "enum": [
-          "CustomerPayBillOnline",
-          "CustomerBuyGoodsOnline",
-          "SalaryPayment",
-          "BusinessPayment",
-          "PromotionPayment",
+          {
+            "casing": {},
+            "value": "CustomerPayBillOnline",
+          },
+          {
+            "casing": {},
+            "value": "CustomerBuyGoodsOnline",
+          },
+          {
+            "casing": {},
+            "value": "SalaryPayment",
+          },
+          {
+            "casing": {},
+            "value": "BusinessPayment",
+          },
+          {
+            "casing": {},
+            "value": "PromotionPayment",
+          },
         ],
       },
       "MpesaPaymentMethod": "literal<"MPESA">",
@@ -4963,15 +6699,42 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "PaymentMethod": {
         "enum": [
-          "ACH",
-          "CARD",
-          "IBAN",
-          "UPI",
-          "GENERIC_BANK_ACCOUNT",
-          "MPESA",
-          "SWIFT",
-          "WALLET",
-          "CHECK",
+          {
+            "casing": {},
+            "value": "ACH",
+          },
+          {
+            "casing": {},
+            "value": "CARD",
+          },
+          {
+            "casing": {},
+            "value": "IBAN",
+          },
+          {
+            "casing": {},
+            "value": "UPI",
+          },
+          {
+            "casing": {},
+            "value": "GENERIC_BANK_ACCOUNT",
+          },
+          {
+            "casing": {},
+            "value": "MPESA",
+          },
+          {
+            "casing": {},
+            "value": "SWIFT",
+          },
+          {
+            "casing": {},
+            "value": "WALLET",
+          },
+          {
+            "casing": {},
+            "value": "CHECK",
+          },
         ],
       },
       "Person": {
@@ -5027,11 +6790,26 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "RiskLevel": {
         "enum": [
-          "VERY_HIGH",
-          "HIGH",
-          "MEDIUM",
-          "LOW",
-          "VERY_LOW",
+          {
+            "casing": {},
+            "value": "VERY_HIGH",
+          },
+          {
+            "casing": {},
+            "value": "HIGH",
+          },
+          {
+            "casing": {},
+            "value": "MEDIUM",
+          },
+          {
+            "casing": {},
+            "value": "LOW",
+          },
+          {
+            "casing": {},
+            "value": "VERY_LOW",
+          },
         ],
       },
       "RiskScoringResult": {
@@ -5054,10 +6832,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "enum": [
-          "ALLOW",
-          "FLAG",
-          "BLOCK",
-          "SUSPEND",
+          {
+            "casing": {},
+            "value": "ALLOW",
+          },
+          {
+            "casing": {},
+            "value": "FLAG",
+          },
+          {
+            "casing": {},
+            "value": "BLOCK",
+          },
+          {
+            "casing": {},
+            "value": "SUSPEND",
+          },
         ],
       },
       "RuleFailureException": {
@@ -5075,8 +6865,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "RuleHitDirection": {
         "enum": [
-          "ORIGIN",
-          "DESTINATION",
+          {
+            "casing": {},
+            "value": "ORIGIN",
+          },
+          {
+            "casing": {},
+            "value": "DESTINATION",
+          },
         ],
       },
       "RuleHitMeta": {
@@ -5089,26 +6885,74 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "RuleLabels": {
         "enum": [
-          "UNEXPECTED_BEHAVIOR",
-          "ILLICIT_GAINS_CHECK",
-          "RFI_TRIGGER",
-          "EDD_TRIGGER",
-          "KYC_TRIGGER",
-          "SCAM",
-          "ABUSE",
-          "ACCOUNT_TAKEOVER",
-          "DISPUTE",
-          "SANCTIONS",
-          "SANCTIONS_PEP",
-          "SANCTIONS_PEP_ADVERSE_MEDIA",
+          {
+            "casing": {},
+            "value": "UNEXPECTED_BEHAVIOR",
+          },
+          {
+            "casing": {},
+            "value": "ILLICIT_GAINS_CHECK",
+          },
+          {
+            "casing": {},
+            "value": "RFI_TRIGGER",
+          },
+          {
+            "casing": {},
+            "value": "EDD_TRIGGER",
+          },
+          {
+            "casing": {},
+            "value": "KYC_TRIGGER",
+          },
+          {
+            "casing": {},
+            "value": "SCAM",
+          },
+          {
+            "casing": {},
+            "value": "ABUSE",
+          },
+          {
+            "casing": {},
+            "value": "ACCOUNT_TAKEOVER",
+          },
+          {
+            "casing": {},
+            "value": "DISPUTE",
+          },
+          {
+            "casing": {},
+            "value": "SANCTIONS",
+          },
+          {
+            "casing": {},
+            "value": "SANCTIONS_PEP",
+          },
+          {
+            "casing": {},
+            "value": "SANCTIONS_PEP_ADVERSE_MEDIA",
+          },
         ],
       },
       "RuleNature": {
         "enum": [
-          "AML",
-          "FRAUD",
-          "CTF",
-          "SCREENING",
+          {
+            "casing": {},
+            "value": "AML",
+          },
+          {
+            "casing": {},
+            "value": "FRAUD",
+          },
+          {
+            "casing": {},
+            "value": "CTF",
+          },
+          {
+            "casing": {},
+            "value": "SCREENING",
+          },
         ],
       },
       "RulesResults": {
@@ -5165,14 +7009,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "SanctionsDetailsEntityType": {
         "enum": [
-          "CONSUMER_NAME",
-          "LEGAL_NAME",
-          "SHAREHOLDER",
-          "DIRECTOR",
-          "NAME_ON_CARD",
-          "PAYMENT_NAME",
-          "PAYMENT_BENEFICIARY_NAME",
-          "BANK_NAME",
+          {
+            "casing": {},
+            "value": "CONSUMER_NAME",
+          },
+          {
+            "casing": {},
+            "value": "LEGAL_NAME",
+          },
+          {
+            "casing": {},
+            "value": "SHAREHOLDER",
+          },
+          {
+            "casing": {},
+            "value": "DIRECTOR",
+          },
+          {
+            "casing": {},
+            "value": "NAME_ON_CARD",
+          },
+          {
+            "casing": {},
+            "value": "PAYMENT_NAME",
+          },
+          {
+            "casing": {},
+            "value": "PAYMENT_BENEFICIARY_NAME",
+          },
+          {
+            "casing": {},
+            "value": "BANK_NAME",
+          },
         ],
       },
       "Tag": {
@@ -5312,24 +7180,66 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "TransactionState": {
         "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
         "enum": [
-          "CREATED",
-          "PROCESSING",
-          "SENT",
-          "EXPIRED",
-          "DECLINED",
-          "SUSPENDED",
-          "REFUNDED",
-          "SUCCESSFUL",
+          {
+            "casing": {},
+            "value": "CREATED",
+          },
+          {
+            "casing": {},
+            "value": "PROCESSING",
+          },
+          {
+            "casing": {},
+            "value": "SENT",
+          },
+          {
+            "casing": {},
+            "value": "EXPIRED",
+          },
+          {
+            "casing": {},
+            "value": "DECLINED",
+          },
+          {
+            "casing": {},
+            "value": "SUSPENDED",
+          },
+          {
+            "casing": {},
+            "value": "REFUNDED",
+          },
+          {
+            "casing": {},
+            "value": "SUCCESSFUL",
+          },
         ],
       },
       "TransactionType": {
         "enum": [
-          "DEPOSIT",
-          "TRANSFER",
-          "EXTERNAL_PAYMENT",
-          "WITHDRAWAL",
-          "REFUND",
-          "OTHER",
+          {
+            "casing": {},
+            "value": "DEPOSIT",
+          },
+          {
+            "casing": {},
+            "value": "TRANSFER",
+          },
+          {
+            "casing": {},
+            "value": "EXTERNAL_PAYMENT",
+          },
+          {
+            "casing": {},
+            "value": "WITHDRAWAL",
+          },
+          {
+            "casing": {},
+            "value": "REFUND",
+          },
+          {
+            "casing": {},
+            "value": "OTHER",
+          },
         ],
       },
       "TransactionUpdatable": {
@@ -5474,9 +7384,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "UserDetailsGender": {
         "docs": "Gender of the individual - Male, Female or Non-Binary",
         "enum": [
-          "M",
-          "F",
-          "NB",
+          {
+            "casing": {},
+            "value": "M",
+          },
+          {
+            "casing": {},
+            "value": "F",
+          },
+          {
+            "casing": {},
+            "value": "NB",
+          },
         ],
       },
       "UserMonitoringResult": {
@@ -5515,28 +7434,70 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "UserOptionalUserSegment": {
         "enum": [
-          "RETAIL",
-          "PROFESSIONAL",
+          {
+            "casing": {},
+            "value": "RETAIL",
+          },
+          {
+            "casing": {},
+            "value": "PROFESSIONAL",
+          },
         ],
       },
       "UserRegistrationStatus": {
         "enum": [
-          "REGISTERED",
-          "UNREGISTERED",
+          {
+            "casing": {},
+            "value": "REGISTERED",
+          },
+          {
+            "casing": {},
+            "value": "UNREGISTERED",
+          },
         ],
       },
       "UserState": {
         "enum": [
-          "UNACCEPTABLE",
-          "UNDECIDED",
-          "TERMINATED",
-          "ACTIVE",
-          "INACTIVE",
-          "DORMANT",
-          "CREATED",
-          "DELETED",
-          "SUSPENDED",
-          "BLOCKED",
+          {
+            "casing": {},
+            "value": "UNACCEPTABLE",
+          },
+          {
+            "casing": {},
+            "value": "UNDECIDED",
+          },
+          {
+            "casing": {},
+            "value": "TERMINATED",
+          },
+          {
+            "casing": {},
+            "value": "ACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "INACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "DORMANT",
+          },
+          {
+            "casing": {},
+            "value": "CREATED",
+          },
+          {
+            "casing": {},
+            "value": "DELETED",
+          },
+          {
+            "casing": {},
+            "value": "SUSPENDED",
+          },
+          {
+            "casing": {},
+            "value": "BLOCKED",
+          },
         ],
       },
       "UserStateDetails": {
@@ -5595,9 +7556,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "WebhookEventType": {
         "enum": [
-          "CASE_CLOSED",
-          "USER_STATE_UPDATED",
-          "ALERT_CLOSED",
+          {
+            "casing": {},
+            "value": "CASE_CLOSED",
+          },
+          {
+            "casing": {},
+            "value": "USER_STATE_UPDATED",
+          },
+          {
+            "casing": {},
+            "value": "ALERT_CLOSED",
+          },
         ],
       },
     },

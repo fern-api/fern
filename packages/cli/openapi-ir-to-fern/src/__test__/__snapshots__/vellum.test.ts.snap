@@ -1118,10 +1118,22 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`JINJA\` - JINJA
 * \`FUNCTION_DEFINITION\` - FUNCTION_DEFINITION",
         "enum": [
-          "CHAT_MESSAGE",
-          "CHAT_HISTORY",
-          "JINJA",
-          "FUNCTION_DEFINITION",
+          {
+            "casing": {},
+            "value": "CHAT_MESSAGE",
+          },
+          {
+            "casing": {},
+            "value": "CHAT_HISTORY",
+          },
+          {
+            "casing": {},
+            "value": "JINJA",
+          },
+          {
+            "casing": {},
+            "value": "FUNCTION_DEFINITION",
+          },
         ],
       },
       "ChatMessage": {
@@ -1144,10 +1156,22 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`USER\` - User
 * \`FUNCTION\` - Function",
         "enum": [
-          "SYSTEM",
-          "ASSISTANT",
-          "USER",
-          "FUNCTION",
+          {
+            "casing": {},
+            "value": "SYSTEM",
+          },
+          {
+            "casing": {},
+            "value": "ASSISTANT",
+          },
+          {
+            "casing": {},
+            "value": "USER",
+          },
+          {
+            "casing": {},
+            "value": "FUNCTION",
+          },
         ],
       },
       "ConditionalNodeResult": {
@@ -1166,8 +1190,14 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": "* \`STRING\` - STRING
 * \`JSON\` - JSON",
         "enum": [
-          "STRING",
-          "JSON",
+          {
+            "casing": {},
+            "value": "STRING",
+          },
+          {
+            "casing": {},
+            "value": "JSON",
+          },
         ],
       },
       "DeploymentNodeResult": {
@@ -1229,9 +1259,18 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`INACTIVE\` - Inactive
 * \`ARCHIVED\` - Archived",
         "enum": [
-          "ACTIVE",
-          "INACTIVE",
-          "ARCHIVED",
+          {
+            "casing": {},
+            "value": "ACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "INACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "ARCHIVED",
+          },
         ],
       },
       "Document": {
@@ -1312,8 +1351,14 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": "* \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
         "enum": [
-          "ACTIVE",
-          "ARCHIVED",
+          {
+            "casing": {},
+            "value": "ACTIVE",
+          },
+          {
+            "casing": {},
+            "value": "ARCHIVED",
+          },
         ],
       },
       "EnrichedNormalizedCompletion": {
@@ -1355,9 +1400,18 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
         "enum": [
-          "DEVELOPMENT",
-          "STAGING",
-          "PRODUCTION",
+          {
+            "casing": {},
+            "value": "DEVELOPMENT",
+          },
+          {
+            "casing": {},
+            "value": "STAGING",
+          },
+          {
+            "casing": {},
+            "value": "PRODUCTION",
+          },
         ],
       },
       "EvaluationParams": {
@@ -1383,9 +1437,18 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`STOP\` - STOP
 * \`UNKNOWN\` - UNKNOWN",
         "enum": [
-          "LENGTH",
-          "STOP",
-          "UNKNOWN",
+          {
+            "casing": {},
+            "value": "LENGTH",
+          },
+          {
+            "casing": {},
+            "value": "STOP",
+          },
+          {
+            "casing": {},
+            "value": "UNKNOWN",
+          },
         ],
       },
       "GenerateErrorResponse": {
@@ -1494,27 +1557,54 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`INDEXED\` - Indexed
 * \`FAILED\` - Failed",
         "enum": [
-          "AWAITING_PROCESSING",
-          "QUEUED",
-          "INDEXING",
-          "INDEXED",
-          "FAILED",
+          {
+            "casing": {},
+            "value": "AWAITING_PROCESSING",
+          },
+          {
+            "casing": {},
+            "value": "QUEUED",
+          },
+          {
+            "casing": {},
+            "value": "INDEXING",
+          },
+          {
+            "casing": {},
+            "value": "INDEXED",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
         ],
       },
       "LogprobsEnum": {
         "docs": "* \`ALL\` - ALL
 * \`NONE\` - NONE",
         "enum": [
-          "ALL",
-          "NONE",
+          {
+            "casing": {},
+            "value": "ALL",
+          },
+          {
+            "casing": {},
+            "value": "NONE",
+          },
         ],
       },
       "ModelTypeEnum": {
         "docs": "* \`GENERATE\` - Generate
 * \`CLASSIFY\` - Classify",
         "enum": [
-          "GENERATE",
-          "CLASSIFY",
+          {
+            "casing": {},
+            "value": "GENERATE",
+          },
+          {
+            "casing": {},
+            "value": "CLASSIFY",
+          },
         ],
       },
       "ModelVersionBuildConfig": {
@@ -1640,10 +1730,22 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`CREATION_FAILED\` - Creation Failed
 * \`DISABLED\` - Disabled",
         "enum": [
-          "CREATING",
-          "READY",
-          "CREATION_FAILED",
-          "DISABLED",
+          {
+            "casing": {},
+            "value": "CREATING",
+          },
+          {
+            "casing": {},
+            "value": "READY",
+          },
+          {
+            "casing": {},
+            "value": "CREATION_FAILED",
+          },
+          {
+            "casing": {},
+            "value": "DISABLED",
+          },
         ],
       },
       "ModelVersionSandboxSnapshot": {
@@ -1696,10 +1798,22 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PROCESSED\` - Processed
 * \`FAILED\` - Failed",
         "enum": [
-          "QUEUED",
-          "PROCESSING",
-          "PROCESSED",
-          "FAILED",
+          {
+            "casing": {},
+            "value": "QUEUED",
+          },
+          {
+            "casing": {},
+            "value": "PROCESSING",
+          },
+          {
+            "casing": {},
+            "value": "PROCESSED",
+          },
+          {
+            "casing": {},
+            "value": "FAILED",
+          },
         ],
       },
       "PromptNodeResult": {
@@ -1800,14 +1914,38 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
         "enum": [
-          "ANTHROPIC",
-          "COHERE",
-          "GOOGLE",
-          "HOSTED",
-          "MOSAICML",
-          "MYSTIC",
-          "OPENAI",
-          "PYQ",
+          {
+            "casing": {},
+            "value": "ANTHROPIC",
+          },
+          {
+            "casing": {},
+            "value": "COHERE",
+          },
+          {
+            "casing": {},
+            "value": "GOOGLE",
+          },
+          {
+            "casing": {},
+            "value": "HOSTED",
+          },
+          {
+            "casing": {},
+            "value": "MOSAICML",
+          },
+          {
+            "casing": {},
+            "value": "MYSTIC",
+          },
+          {
+            "casing": {},
+            "value": "OPENAI",
+          },
+          {
+            "casing": {},
+            "value": "PYQ",
+          },
         ],
       },
       "RegisterPromptErrorResponse": {
@@ -1996,8 +2134,14 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": "* \`TEXT\` - Text
 * \`CHAT_HISTORY\` - Chat History",
         "enum": [
-          "TEXT",
-          "CHAT_HISTORY",
+          {
+            "casing": {},
+            "value": "TEXT",
+          },
+          {
+            "casing": {},
+            "value": "CHAT_HISTORY",
+          },
         ],
       },
       "SearchErrorResponse": {
@@ -2281,8 +2425,14 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": "* \`WORKFLOW_INITIALIZATION\` - WORKFLOW_INITIALIZATION
 * \`NODE_EXECUTION\` - NODE_EXECUTION",
         "enum": [
-          "WORKFLOW_INITIALIZATION",
-          "NODE_EXECUTION",
+          {
+            "casing": {},
+            "value": "WORKFLOW_INITIALIZATION",
+          },
+          {
+            "casing": {},
+            "value": "NODE_EXECUTION",
+          },
         ],
       },
       "WorkflowExecutionNodeResultEvent": {
@@ -2332,10 +2482,22 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FULFILLED\` - FULFILLED
 * \`REJECTED\` - REJECTED",
         "enum": [
-          "INITIATED",
-          "STREAMING",
-          "FULFILLED",
-          "REJECTED",
+          {
+            "casing": {},
+            "value": "INITIATED",
+          },
+          {
+            "casing": {},
+            "value": "STREAMING",
+          },
+          {
+            "casing": {},
+            "value": "FULFILLED",
+          },
+          {
+            "casing": {},
+            "value": "REJECTED",
+          },
         ],
       },
       "WorkflowRequestChatHistoryInputRequest": {
