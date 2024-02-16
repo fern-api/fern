@@ -48,7 +48,7 @@ class ReferenceGeneratorSection {
 
     private writeParameter(parameter: ReferenceParameterDeclaration): string {
         return `
-**${parameter.name}: \`${parameter.type}\`** ${parameter.description !== undefined ? "—" + parameter.description : ""}
+**${parameter.name}: \`${parameter.type}\`** ${parameter.description !== undefined ? "— " + parameter.description : ""}
 `;
     }
 
