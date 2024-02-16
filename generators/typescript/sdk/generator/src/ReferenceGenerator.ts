@@ -40,39 +40,52 @@ class ReferenceGeneratorSection {
         this.endpoints.push(endpoint);
     }
 
-    write(): string {
-        // TODO: Implement this correctly
-        return this.endpoints
-            .map((endpoint) => {
-                return `
-## ${this.heading}
+    private writeParameter(parameter: ReferenceParameterDeclaration): string {
+        return `
+##### ${parameter.name}: \`${parameter.type}\`
 
-<details><summary> <code>carbon.<a href="src/Client.ts">search</a>({ ...params }) -> DocumentResponseList</code> </summary>
+${parameter.description ?? ""}
+
+`;
+    }
+
+    private writeEndpoint(endpoint: EndpointDeclaration): string {
+        return `
+<details><summary> <code>${this.clientName}.${endpoint.functionName}({ ...params }) -> ${
+            endpoint.returnType
+        }</code> </summary>
 
 <dl>
 <dd>
 
 #### Usage
 \`\`\`ts
-
+${endpoint.codeSnippet}
 \`\`\`
 
 #### Parameters
 
-
+${endpoint.parameters.map((parameter) => this.writeParameter(parameter)).join("\n")}
 
 </dd>
 </dl>
 
 </details>
+`;
+    }
+
+    write(): string {
+        return `
+## ${this.heading}
+
+${this.endpoints.map((endpoint) => this.writeEndpoint(endpoint)).join("\n")}
 
 ---
 
 `;
-            })
-            .join("\n");
     }
 }
+
 export class ReferenceGenerator {
     apiName: string | undefined;
     clientName: string;
