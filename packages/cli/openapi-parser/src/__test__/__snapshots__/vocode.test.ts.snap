@@ -2720,6 +2720,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PhoneNumberPage",

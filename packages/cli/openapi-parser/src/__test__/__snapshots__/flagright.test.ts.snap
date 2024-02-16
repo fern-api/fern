@@ -15416,6 +15416,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ExecutedRulesResult",
