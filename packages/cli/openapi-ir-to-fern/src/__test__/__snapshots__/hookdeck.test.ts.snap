@@ -522,12 +522,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "TriggerBookmarkRequestTarget": {
           "docs": "Bookmark target",
           "enum": [
-            {
-              "value": "http",
-            },
-            {
-              "value": "cli",
-            },
+            "http",
+            "cli",
           ],
         },
       },
@@ -1866,12 +1862,8 @@ exports[`open api parser hookdeck simple 1`] = `
         },
         "CreateRequestBulkRetryRequestQueryStatus": {
           "enum": [
-            {
-              "value": "accepted",
-            },
-            {
-              "value": "rejected",
-            },
+            "accepted",
+            "rejected",
           ],
         },
         "GetRequestBulkRetriesRequestDir": {
@@ -2912,15 +2904,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "value": "second",
-            },
-            {
-              "value": "minute",
-            },
-            {
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "CreateConnectionRequestRuleset": {
@@ -3000,15 +2986,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpsertConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "value": "second",
-            },
-            {
-              "value": "minute",
-            },
-            {
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "UpsertConnectionRequestRuleset": {
@@ -3443,15 +3423,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "value": "second",
-            },
-            {
-              "value": "minute",
-            },
-            {
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "GetDestinationsRequestDir": {
@@ -3468,29 +3442,17 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpdateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "value": "second",
-            },
-            {
-              "value": "minute",
-            },
-            {
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "UpsertDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "value": "second",
-            },
-            {
-              "value": "minute",
-            },
-            {
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
       },
@@ -4921,18 +4883,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpdateIssueRequestStatus": {
           "docs": "New status",
           "enum": [
-            {
-              "value": "OPENED",
-            },
-            {
-              "value": "IGNORED",
-            },
-            {
-              "value": "ACKNOWLEDGED",
-            },
-            {
-              "value": "RESOLVED",
-            },
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
           ],
         },
       },
@@ -5461,12 +5415,8 @@ exports[`open api parser hookdeck simple 1`] = `
         },
         "GetRequestsRequestStatus": {
           "enum": [
-            {
-              "value": "accepted",
-            },
-            {
-              "value": "rejected",
-            },
+            "accepted",
+            "rejected",
           ],
         },
       },
@@ -6898,12 +6848,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "AlertStrategy": {
         "docs": "Alert strategy to use",
         "enum": [
-          {
-            "value": "each_attempt",
-          },
-          {
-            "value": "last_attempt",
-          },
+          "each_attempt",
+          "last_attempt",
         ],
       },
       "ApiErrorResponse": {
@@ -6944,119 +6890,53 @@ exports[`open api parser hookdeck simple 1`] = `
       "AttemptErrorCodes": {
         "docs": "Attempt could not complete because of an error",
         "enum": [
-          {
-            "value": "TIMEOUT",
-          },
-          {
-            "value": "NOT_FOUND",
-          },
-          {
-            "value": "CONNECTION_REFUSED",
-          },
-          {
-            "value": "CONNECTION_RESET",
-          },
-          {
-            "value": "MISSING_URL",
-          },
-          {
-            "value": "CLI",
-          },
-          {
-            "value": "CLI_UNAVAILABLE",
-          },
-          {
-            "value": "SELF_SIGNED_CERT",
-          },
-          {
-            "value": "ERR_TLS_CERT_ALTNAME_INVALID",
-          },
-          {
-            "value": "SSL_ERROR_CA_UNKNOWN",
-          },
-          {
-            "value": "TTL_EXPIRED",
-          },
-          {
-            "value": "DATA_ARCHIVED",
-          },
-          {
-            "value": "SSL_CERT_EXPIRED",
-          },
-          {
-            "value": "BULK_RETRY_CANCELLED",
-          },
-          {
-            "value": "DNS_LOOKUP_FAILED",
-          },
-          {
-            "value": "HOST_UNREACHABLE",
-          },
-          {
-            "value": "PROTOCOL_ERROR",
-          },
-          {
-            "value": "SOCKET_CLOSED",
-          },
-          {
-            "value": "UNKNOWN",
-          },
+          "TIMEOUT",
+          "NOT_FOUND",
+          "CONNECTION_REFUSED",
+          "CONNECTION_RESET",
+          "MISSING_URL",
+          "CLI",
+          "CLI_UNAVAILABLE",
+          "SELF_SIGNED_CERT",
+          "ERR_TLS_CERT_ALTNAME_INVALID",
+          "SSL_ERROR_CA_UNKNOWN",
+          "TTL_EXPIRED",
+          "DATA_ARCHIVED",
+          "SSL_CERT_EXPIRED",
+          "BULK_RETRY_CANCELLED",
+          "DNS_LOOKUP_FAILED",
+          "HOST_UNREACHABLE",
+          "PROTOCOL_ERROR",
+          "SOCKET_CLOSED",
+          "UNKNOWN",
         ],
       },
       "AttemptState": {
         "enum": [
-          {
-            "value": "DELIVERING",
-          },
-          {
-            "value": "QUEUED",
-          },
-          {
-            "value": "PENDING",
-          },
-          {
-            "value": "COMPLETED",
-          },
-          {
-            "value": "HOLD",
-          },
+          "DELIVERING",
+          "QUEUED",
+          "PENDING",
+          "COMPLETED",
+          "HOLD",
         ],
       },
       "AttemptStatus": {
         "docs": "Attempt status",
         "enum": [
-          {
-            "value": "QUEUED",
-          },
-          {
-            "value": "FAILED",
-          },
-          {
-            "value": "SUCCESSFUL",
-          },
-          {
-            "value": "HOLD",
-          },
+          "QUEUED",
+          "FAILED",
+          "SUCCESSFUL",
+          "HOLD",
         ],
       },
       "AttemptTrigger": {
         "docs": "How the attempt was triggered",
         "enum": [
-          {
-            "value": "INITIAL",
-          },
-          {
-            "value": "MANUAL",
-          },
-          {
-            "value": "BULK_RETRY",
-          },
-          {
-            "value": "UNPAUSE",
-          },
-          {
-            "value": "AUTOMATIC",
-          },
+          "INITIAL",
+          "MANUAL",
+          "BULK_RETRY",
+          "UNPAUSE",
+          "AUTOMATIC",
         ],
       },
       "BasicAuthIntegrationConfigs": {
@@ -7286,21 +7166,11 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "ConsoleLineType": {
         "enum": [
-          {
-            "value": "error",
-          },
-          {
-            "value": "log",
-          },
-          {
-            "value": "warn",
-          },
-          {
-            "value": "info",
-          },
-          {
-            "value": "debug",
-          },
+          "error",
+          "log",
+          "warn",
+          "info",
+          "debug",
         ],
       },
       "DelayRule": {
@@ -7503,15 +7373,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "DestinationRateLimitPeriod": {
         "docs": "Period to rate limit attempts",
         "enum": [
-          {
-            "value": "second",
-          },
-          {
-            "value": "minute",
-          },
-          {
-            "value": "hour",
-          },
+          "second",
+          "minute",
+          "hour",
         ],
       },
       "DetachedIntegrationFromSource": {
@@ -7728,21 +7592,11 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "EventStatus": {
         "enum": [
-          {
-            "value": "SCHEDULED",
-          },
-          {
-            "value": "QUEUED",
-          },
-          {
-            "value": "HOLD",
-          },
-          {
-            "value": "SUCCESSFUL",
-          },
-          {
-            "value": "FAILED",
-          },
+          "SCHEDULED",
+          "QUEUED",
+          "HOLD",
+          "SUCCESSFUL",
+          "FAILED",
         ],
       },
       "FilterRule": {
@@ -7757,18 +7611,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "FilteredMeta": {
         "enum": [
-          {
-            "value": "body",
-          },
-          {
-            "value": "headers",
-          },
-          {
-            "value": "path",
-          },
-          {
-            "value": "query",
-          },
+          "body",
+          "headers",
+          "path",
+          "query",
         ],
       },
       "HandledHmacConfigs": {
@@ -7779,18 +7625,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "HmacAlgorithms": {
         "enum": [
-          {
-            "value": "md5",
-          },
-          {
-            "value": "sha1",
-          },
-          {
-            "value": "sha256",
-          },
-          {
-            "value": "sha512",
-          },
+          "md5",
+          "sha1",
+          "sha256",
+          "sha512",
         ],
       },
       "HmacIntegrationConfigs": {
@@ -7804,12 +7642,8 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "HmacIntegrationConfigsEncoding": {
         "enum": [
-          {
-            "value": "base64",
-          },
-          {
-            "value": "hex",
-          },
+          "base64",
+          "hex",
         ],
       },
       "IgnoredEvent": {
@@ -7827,18 +7661,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "IgnoredEventCause": {
         "enum": [
-          {
-            "value": "ARCHIVED",
-          },
-          {
-            "value": "FILTERED",
-          },
-          {
-            "value": "TRANSFORMATION_FAILED",
-          },
-          {
-            "value": "CLI_DISCONNECTED",
-          },
+          "ARCHIVED",
+          "FILTERED",
+          "TRANSFORMATION_FAILED",
+          "CLI_DISCONNECTED",
         ],
       },
       "IgnoredEventMeta": {
@@ -7908,15 +7734,9 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "IntegrationFeature": {
         "enum": [
-          {
-            "value": "VERIFICATION",
-          },
-          {
-            "value": "HANDSHAKE",
-          },
-          {
-            "value": "POLLING",
-          },
+          "VERIFICATION",
+          "HANDSHAKE",
+          "POLLING",
         ],
       },
       "IntegrationPaginatedResult": {
@@ -7930,76 +7750,32 @@ exports[`open api parser hookdeck simple 1`] = `
       "IntegrationProvider": {
         "docs": "The provider name",
         "enum": [
-          {
-            "value": "twitter",
-          },
-          {
-            "value": "stripe",
-          },
-          {
-            "value": "recharge",
-          },
-          {
-            "value": "github",
-          },
-          {
-            "value": "shopify",
-          },
-          {
-            "value": "postmark",
-          },
-          {
-            "value": "typeform",
-          },
-          {
-            "value": "hmac",
-          },
-          {
-            "value": "basic_auth",
-          },
-          {
-            "value": "api_key",
-          },
-          {
-            "value": "xero",
-          },
-          {
-            "value": "svix",
-          },
-          {
-            "value": "zoom",
-          },
-          {
-            "value": "akeneo",
-          },
-          {
-            "value": "adyen",
-          },
-          {
-            "value": "gitlab",
-          },
+          "twitter",
+          "stripe",
+          "recharge",
+          "github",
+          "shopify",
+          "postmark",
+          "typeform",
+          "hmac",
+          "basic_auth",
+          "api_key",
+          "xero",
+          "svix",
+          "zoom",
+          "akeneo",
+          "adyen",
+          "gitlab",
           {
             "name": "PropertyFinder",
             "value": "property-finder",
           },
-          {
-            "value": "woocommerce",
-          },
-          {
-            "value": "oura",
-          },
-          {
-            "value": "commercelayer",
-          },
-          {
-            "value": "mailgun",
-          },
-          {
-            "value": "pipedrive",
-          },
-          {
-            "value": "sendgrid",
-          },
+          "woocommerce",
+          "oura",
+          "commercelayer",
+          "mailgun",
+          "pipedrive",
+          "sendgrid",
         ],
       },
       "Issue": {
@@ -8023,18 +7799,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueStatus": {
         "docs": "Issue status",
         "enum": [
-          {
-            "value": "OPENED",
-          },
-          {
-            "value": "IGNORED",
-          },
-          {
-            "value": "ACKNOWLEDGED",
-          },
-          {
-            "value": "RESOLVED",
-          },
+          "OPENED",
+          "IGNORED",
+          "ACKNOWLEDGED",
+          "RESOLVED",
         ],
       },
       "IssueTrigger": {
@@ -8158,12 +7926,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueTriggerStrategy": {
         "docs": "The strategy uses to open the issue",
         "enum": [
-          {
-            "value": "first_attempt",
-          },
-          {
-            "value": "final_attempt",
-          },
+          "first_attempt",
+          "final_attempt",
         ],
       },
       "IssueTriggerTransformationConfigs": {
@@ -8187,15 +7951,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueType": {
         "docs": "Issue type",
         "enum": [
-          {
-            "value": "delivery",
-          },
-          {
-            "value": "transformation",
-          },
-          {
-            "value": "backpressure",
-          },
+          "delivery",
+          "transformation",
+          "backpressure",
         ],
       },
       "IssueWithData": {
@@ -8217,18 +7975,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "OrderByDirection": {
         "enum": [
-          {
-            "value": "asc",
-          },
-          {
-            "value": "desc",
-          },
-          {
-            "value": "ASC",
-          },
-          {
-            "value": "DESC",
-          },
+          "asc",
+          "desc",
+          "ASC",
+          "DESC",
         ],
       },
       "RawBody": {
@@ -8345,12 +8095,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestIngestPriority": {
         "docs": "The priority attributed to the request when received",
         "enum": [
-          {
-            "value": "NORMAL",
-          },
-          {
-            "value": "LOW",
-          },
+          "NORMAL",
+          "LOW",
         ],
       },
       "RequestPaginatedResult": {
@@ -8363,33 +8109,15 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "RequestRejectionCause": {
         "enum": [
-          {
-            "value": "SOURCE_ARCHIVED",
-          },
-          {
-            "value": "NO_WEBHOOK",
-          },
-          {
-            "value": "VERIFICATION_FAILED",
-          },
-          {
-            "value": "UNSUPPORTED_HTTP_METHOD",
-          },
-          {
-            "value": "UNSUPPORTED_CONTENT_TYPE",
-          },
-          {
-            "value": "UNPARSABLE_JSON",
-          },
-          {
-            "value": "PAYLOAD_TOO_LARGE",
-          },
-          {
-            "value": "INGESTION_FATAL",
-          },
-          {
-            "value": "UNKNOWN",
-          },
+          "SOURCE_ARCHIVED",
+          "NO_WEBHOOK",
+          "VERIFICATION_FAILED",
+          "UNSUPPORTED_HTTP_METHOD",
+          "UNSUPPORTED_CONTENT_TYPE",
+          "UNPARSABLE_JSON",
+          "PAYLOAD_TOO_LARGE",
+          "INGESTION_FATAL",
+          "UNKNOWN",
         ],
       },
       "RetriedEvent": {
@@ -8424,12 +8152,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "RetryStrategy": {
         "docs": "Algorithm to use when calculating delay between retries",
         "enum": [
-          {
-            "value": "linear",
-          },
-          {
-            "value": "exponential",
-          },
+          "linear",
+          "exponential",
         ],
       },
       "Rule": {
@@ -8527,12 +8251,8 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "ShopifyIntegrationConfigsRateLimitPeriod": {
         "enum": [
-          {
-            "value": "minute",
-          },
-          {
-            "value": "second",
-          },
+          "minute",
+          "second",
         ],
       },
       "ShortEventData": {
@@ -8780,21 +8500,11 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutionLogLevel": {
         "docs": "The minimum log level to open the issue on",
         "enum": [
-          {
-            "value": "debug",
-          },
-          {
-            "value": "info",
-          },
-          {
-            "value": "warn",
-          },
-          {
-            "value": "error",
-          },
-          {
-            "value": "fatal",
-          },
+          "debug",
+          "info",
+          "warn",
+          "error",
+          "fatal",
         ],
       },
       "TransformationExecutionPaginatedResult": {

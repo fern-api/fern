@@ -1376,15 +1376,9 @@ exports[`open api parser hathora simple 1`] = `
       "types": {
         "CreateLobbyRequestVisibility": {
           "enum": [
-            {
-              "value": "public",
-            },
-            {
-              "value": "private",
-            },
-            {
-              "value": "local",
-            },
+            "public",
+            "private",
+            "local",
           ],
         },
       },
@@ -2068,18 +2062,10 @@ exports[`open api parser hathora simple 1`] = `
       },
       "BuildStatus": {
         "enum": [
-          {
-            "value": "created",
-          },
-          {
-            "value": "running",
-          },
-          {
-            "value": "succeeded",
-          },
-          {
-            "value": "failed",
-          },
+          "created",
+          "running",
+          "succeeded",
+          "failed",
         ],
       },
       "ConnectionInfo": {
@@ -2149,31 +2135,17 @@ exports[`open api parser hathora simple 1`] = `
       },
       "LobbyVisibility": {
         "enum": [
-          {
-            "value": "private",
-          },
-          {
-            "value": "public",
-          },
-          {
-            "value": "local",
-          },
+          "private",
+          "public",
+          "local",
         ],
       },
       "MetricName": {
         "enum": [
-          {
-            "value": "cpu",
-          },
-          {
-            "value": "memory",
-          },
-          {
-            "value": "rate_egress",
-          },
-          {
-            "value": "total_egress",
-          },
+          "cpu",
+          "memory",
+          "rate_egress",
+          "total_egress",
         ],
       },
       "MetricValue": {
@@ -2200,18 +2172,10 @@ exports[`open api parser hathora simple 1`] = `
       },
       "PlanName": {
         "enum": [
-          {
-            "value": "tiny",
-          },
-          {
-            "value": "small",
-          },
-          {
-            "value": "medium",
-          },
-          {
-            "value": "large",
-          },
+          "tiny",
+          "small",
+          "medium",
+          "large",
         ],
       },
       "Process": {
@@ -2261,36 +2225,16 @@ exports[`open api parser hathora simple 1`] = `
       },
       "Region": {
         "enum": [
-          {
-            "value": "Seattle",
-          },
-          {
-            "value": "Washington_DC",
-          },
-          {
-            "value": "Chicago",
-          },
-          {
-            "value": "London",
-          },
-          {
-            "value": "Frankfurt",
-          },
-          {
-            "value": "Mumbai",
-          },
-          {
-            "value": "Singapore",
-          },
-          {
-            "value": "Tokyo",
-          },
-          {
-            "value": "Sydney",
-          },
-          {
-            "value": "Sao_Paulo",
-          },
+          "Seattle",
+          "Washington_DC",
+          "Chicago",
+          "London",
+          "Frankfurt",
+          "Mumbai",
+          "Singapore",
+          "Tokyo",
+          "Sydney",
+          "Sao_Paulo",
         ],
       },
       "Room": {
@@ -2316,18 +2260,10 @@ exports[`open api parser hathora simple 1`] = `
       "RoomId": "string",
       "RoomStatus": {
         "enum": [
-          {
-            "value": "scheduling",
-          },
-          {
-            "value": "active",
-          },
-          {
-            "value": "suspended",
-          },
-          {
-            "value": "destroyed",
-          },
+          "scheduling",
+          "active",
+          "suspended",
+          "destroyed",
         ],
       },
       "RoomWithoutAllocations": "OmitRoomAllocations",
@@ -2340,15 +2276,9 @@ exports[`open api parser hathora simple 1`] = `
       "TailLines": "integer",
       "TransportType": {
         "enum": [
-          {
-            "value": "tcp",
-          },
-          {
-            "value": "udp",
-          },
-          {
-            "value": "tls",
-          },
+          "tcp",
+          "udp",
+          "tls",
         ],
       },
     },

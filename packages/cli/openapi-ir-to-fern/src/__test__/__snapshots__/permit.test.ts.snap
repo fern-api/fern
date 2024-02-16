@@ -1979,12 +1979,8 @@ allowed.",
         "EnvironmentCopyConflictStrategy": {
           "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
           "enum": [
-            {
-              "value": "fail",
-            },
-            {
-              "value": "overwrite",
-            },
+            "fail",
+            "overwrite",
           ],
         },
       },
@@ -7996,24 +7992,12 @@ Fields that will be provided will be completely overwritten.",
       "AttributeType": {
         "docs": "supported attribute primitives",
         "enum": [
-          {
-            "value": "bool",
-          },
-          {
-            "value": "number",
-          },
-          {
-            "value": "string",
-          },
-          {
-            "value": "time",
-          },
-          {
-            "value": "array",
-          },
-          {
-            "value": "json",
-          },
+          "bool",
+          "number",
+          "string",
+          "time",
+          "array",
+          "json",
         ],
       },
       "BulkRoleAssignmentReport": {
@@ -8132,12 +8116,8 @@ Fields that will be provided will be completely overwritten.",
       "ConditionSetType": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "userset",
-          },
-          {
-            "value": "resourceset",
-          },
+          "userset",
+          "resourceset",
         ],
       },
       "EnvironmentCopyScope": {
@@ -8395,18 +8375,10 @@ Fields that will be provided will be completely overwritten.",
       "InviteStatus": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "pending",
-          },
-          {
-            "value": "accepted",
-          },
-          {
-            "value": "failed",
-          },
-          {
-            "value": "canceled",
-          },
+          "pending",
+          "accepted",
+          "failed",
+          "canceled",
         ],
       },
       "JwksObj": {
@@ -8421,61 +8393,31 @@ Fields that will be provided will be completely overwritten.",
       "MemberAccessLevel": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "admin",
-          },
-          {
-            "value": "write",
-          },
-          {
-            "value": "read",
-          },
-          {
-            "value": "no_access",
-          },
+          "admin",
+          "write",
+          "read",
+          "no_access",
         ],
       },
       "MemberAccessObj": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "org",
-          },
-          {
-            "value": "project",
-          },
-          {
-            "value": "env",
-          },
+          "org",
+          "project",
+          "env",
         ],
       },
       "OnboardingStep": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "create_organization",
-          },
-          {
-            "value": "create_project",
-          },
-          {
-            "value": "create_resource",
-          },
-          {
-            "value": "create_actions",
-          },
-          {
-            "value": "assign_permissions",
-          },
-          {
-            "value": "assign_user_roles",
-          },
-          {
-            "value": "connect_sdk",
-          },
-          {
-            "value": "done",
-          },
+          "create_organization",
+          "create_project",
+          "create_resource",
+          "create_actions",
+          "assign_permissions",
+          "assign_user_roles",
+          "connect_sdk",
+          "done",
         ],
       },
       "OrgMemberReadWithGrants": {
@@ -9504,12 +9446,8 @@ The actions represents the ways you can interact with a protected resource.",
       "UserStatus": {
         "docs": "An enumeration.",
         "enum": [
-          {
-            "value": "active",
-          },
-          {
-            "value": "pending",
-          },
+          "active",
+          "pending",
         ],
       },
       "ValidationError": {

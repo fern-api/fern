@@ -317,12 +317,8 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "types": {
         "AccountsListAccountsRequestLocation": {
           "enum": [
-            {
-              "value": "internal",
-            },
-            {
-              "value": "external",
-            },
+            "internal",
+            "external",
           ],
         },
       },
@@ -1823,27 +1819,13 @@ Note: This operation requires an identity challenge if the financial institution
 
 ",
         "enum": [
-          {
-            "value": "billPay",
-          },
-          {
-            "value": "transferFrom",
-          },
-          {
-            "value": "transferTo",
-          },
-          {
-            "value": "mobileCheckDeposit",
-          },
-          {
-            "value": "view",
-          },
-          {
-            "value": "viewCards",
-          },
-          {
-            "value": "manageCards",
-          },
+          "billPay",
+          "transferFrom",
+          "transferTo",
+          "mobileCheckDeposit",
+          "view",
+          "viewCards",
+          "manageCards",
         ],
       },
       "AccountBalance": {
@@ -1961,15 +1943,9 @@ Note: This operation requires an identity challenge if the financial institution
   * \`outside\` accounts non-banking accounts such as brokerage and fund accounts.
 Account transfers are only allowed between \`internal\` and \`external\` accounts. All accounts are considered when calculating total cash balance.",
         "enum": [
-          {
-            "value": "internal",
-          },
-          {
-            "value": "external",
-          },
-          {
-            "value": "outside",
-          },
+          "internal",
+          "external",
+          "outside",
         ],
       },
       "AccountNickname": {
@@ -2076,18 +2052,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "value": "early",
-          },
-          {
-            "value": "normal",
-          },
-          {
-            "value": "float",
-          },
-          {
-            "value": "sameDay",
-          },
+          "early",
+          "normal",
+          "float",
+          "sameDay",
         ],
       },
       "AchSecCode": {
@@ -2135,36 +2103,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "value": "arc",
-          },
-          {
-            "value": "boc",
-          },
-          {
-            "value": "ccd",
-          },
-          {
-            "value": "cie",
-          },
-          {
-            "value": "ctx",
-          },
-          {
-            "value": "pop",
-          },
-          {
-            "value": "ppd",
-          },
-          {
-            "value": "rck",
-          },
-          {
-            "value": "tel",
-          },
-          {
-            "value": "web",
-          },
+          "arc",
+          "boc",
+          "ccd",
+          "cie",
+          "ctx",
+          "pop",
+          "ppd",
+          "rck",
+          "tel",
+          "web",
         ],
       },
       "Address": {
@@ -2304,21 +2252,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "value": "sms",
-          },
-          {
-            "value": "email",
-          },
-          {
-            "value": "voice",
-          },
-          {
-            "value": "securityQuestions",
-          },
-          {
-            "value": "authenticatorToken",
-          },
+          "sms",
+          "email",
+          "voice",
+          "securityQuestions",
+          "authenticatorToken",
         ],
       },
       "ChallengePromptId": {
@@ -2407,27 +2345,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "value": "ach",
-          },
-          {
-            "value": "sameDayAch",
-          },
-          {
-            "value": "domesticWireTransfer",
-          },
-          {
-            "value": "internationalWireTransfer",
-          },
-          {
-            "value": "internalTransfer",
-          },
-          {
-            "value": "externalTransfer",
-          },
-          {
-            "value": "billPay",
-          },
+          "ach",
+          "sameDayAch",
+          "domesticWireTransfer",
+          "internationalWireTransfer",
+          "internalTransfer",
+          "externalTransfer",
+          "billPay",
         ],
       },
       "CutoffTimes": {
@@ -2507,15 +2431,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "instant",
-          },
-          {
-            "value": "microDeposits",
-          },
-          {
-            "value": "manual",
-          },
+          "instant",
+          "microDeposits",
+          "manual",
         ],
       },
       "FullAccountNumber": {
@@ -2601,15 +2519,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "abaRoutingNumber",
-          },
-          {
-            "value": "swiftBicCode",
-          },
-          {
-            "value": "ibanAccountNumber",
-          },
+          "abaRoutingNumber",
+          "swiftBicCode",
+          "ibanAccountNumber",
         ],
       },
       "InstitutionLookupResult": {
@@ -2791,24 +2703,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "savings",
-          },
-          {
-            "value": "checking",
-          },
-          {
-            "value": "cd",
-          },
-          {
-            "value": "ira",
-          },
-          {
-            "value": "loan",
-          },
-          {
-            "value": "creditCard",
-          },
+          "savings",
+          "checking",
+          "cd",
+          "ira",
+          "loan",
+          "creditCard",
         ],
       },
       "ReadOnlyResourceId": {
@@ -2934,12 +2834,8 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "credit",
-          },
-          {
-            "value": "debit",
-          },
+          "credit",
+          "debit",
         ],
       },
       "TransactionCheck": {
@@ -3062,12 +2958,8 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "check",
-          },
-          {
-            "value": "other",
-          },
+          "check",
+          "other",
         ],
       },
       "TransactionType": {
@@ -3097,15 +2989,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "balance",
-          },
-          {
-            "value": "debit",
-          },
-          {
-            "value": "credit",
-          },
+          "balance",
+          "debit",
+          "credit",
         ],
       },
       "Transactions": {
@@ -3213,24 +3099,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "value": "pastDate",
-          },
-          {
-            "value": "pastCutoffTime",
-          },
-          {
-            "value": "riskRestricted",
-          },
-          {
-            "value": "holiday",
-          },
-          {
-            "value": "closure",
-          },
-          {
-            "value": "other",
-          },
+          "pastDate",
+          "pastCutoffTime",
+          "riskRestricted",
+          "holiday",
+          "closure",
+          "other",
         ],
       },
       "TransferDateRestrictions": {
@@ -3338,45 +3212,19 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
         "enum": [
-          {
-            "value": "once",
-          },
-          {
-            "value": "occasional",
-          },
-          {
-            "value": "daily",
-          },
-          {
-            "value": "weekly",
-          },
-          {
-            "value": "biweekly",
-          },
-          {
-            "value": "semimonthly",
-          },
-          {
-            "value": "monthly",
-          },
-          {
-            "value": "monthlyFirstDay",
-          },
-          {
-            "value": "monthlyLastDay",
-          },
-          {
-            "value": "bimonthly",
-          },
-          {
-            "value": "quarterly",
-          },
-          {
-            "value": "semiyearly",
-          },
-          {
-            "value": "yearly",
-          },
+          "once",
+          "occasional",
+          "daily",
+          "weekly",
+          "biweekly",
+          "semimonthly",
+          "monthly",
+          "monthlyFirstDay",
+          "monthlyLastDay",
+          "bimonthly",
+          "quarterly",
+          "semiyearly",
+          "yearly",
         ],
       },
       "TransferItem": {
@@ -3447,12 +3295,8 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
         "enum": [
-          {
-            "value": "fixed",
-          },
-          {
-            "value": "variable",
-          },
+          "fixed",
+          "variable",
         ],
       },
       "TransferSchedule": {
@@ -3507,15 +3351,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "value": "debit",
-          },
-          {
-            "value": "credit",
-          },
-          {
-            "value": "both",
-          },
+          "debit",
+          "credit",
+          "both",
         ],
       },
       "TransferScheduleItem": {
@@ -3586,27 +3424,13 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "value": "unscheduled",
-          },
-          {
-            "value": "pendingApproval",
-          },
-          {
-            "value": "scheduled",
-          },
-          {
-            "value": "processing",
-          },
-          {
-            "value": "processed",
-          },
-          {
-            "value": "failed",
-          },
-          {
-            "value": "other",
-          },
+          "unscheduled",
+          "pendingApproval",
+          "scheduled",
+          "processing",
+          "processed",
+          "failed",
+          "other",
         ],
       },
       "TransferTypeForDateRestrictions": {
@@ -3646,24 +3470,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "value": "internal",
-          },
-          {
-            "value": "ach",
-          },
-          {
-            "value": "achDebit",
-          },
-          {
-            "value": "achCredit",
-          },
-          {
-            "value": "domesticWireTransfer",
-          },
-          {
-            "value": "internationalWireTransfer",
-          },
+          "internal",
+          "ach",
+          "achDebit",
+          "achCredit",
+          "domesticWireTransfer",
+          "internationalWireTransfer",
         ],
       },
       "Transfers": {

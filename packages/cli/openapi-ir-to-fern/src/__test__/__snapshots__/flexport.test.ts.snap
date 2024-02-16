@@ -1309,32 +1309,20 @@ exports[`open api parser flexport simple 1`] = `
         },
         "BookingsIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "BookingsIndexRequestFStatus": {
           "enum": [
-            {
-              "value": "booked",
-            },
-            {
-              "value": "submitted",
-            },
+            "booked",
+            "submitted",
           ],
         },
         "BookingsIndexRequestSort": {
           "enum": [
-            {
-              "value": "cargo_ready_date",
-            },
-            {
-              "value": "created_at",
-            },
+            "cargo_ready_date",
+            "created_at",
           ],
         },
         "BookingsIndexResponse": {
@@ -1358,15 +1346,9 @@ exports[`open api parser flexport simple 1`] = `
         "CreateBookingDeclaredAsStrategy": {
           "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
           "enum": [
-            {
-              "value": "yes",
-            },
-            {
-              "value": "no",
-            },
-            {
-              "value": "notsure",
-            },
+            "yes",
+            "no",
+            "notsure",
           ],
         },
       },
@@ -1933,12 +1915,8 @@ exports[`open api parser flexport simple 1`] = `
         },
         "BookingLineItemIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "BookingLineItemIndexResponse": {
@@ -2110,58 +2088,30 @@ exports[`open api parser flexport simple 1`] = `
         "CreateCarbonCalculationFlightType": {
           "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
           "enum": [
-            {
-              "value": "freighter",
-            },
-            {
-              "value": "belly_freighter",
-            },
-            {
-              "value": "unknown",
-            },
+            "freighter",
+            "belly_freighter",
+            "unknown",
           ],
         },
         "CreateCarbonCalculationTransportationMode": {
           "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
           "enum": [
-            {
-              "value": "air",
-            },
-            {
-              "value": "ocean",
-            },
-            {
-              "value": "truck",
-            },
-            {
-              "value": "rail",
-            },
+            "air",
+            "ocean",
+            "truck",
+            "rail",
           ],
         },
         "CreateCarbonCalculationTruckingServiceType": {
           "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
           "enum": [
-            {
-              "value": "ftl",
-            },
-            {
-              "value": "ltl",
-            },
-            {
-              "value": "drayage",
-            },
-            {
-              "value": "cartage",
-            },
-            {
-              "value": "last_mile",
-            },
-            {
-              "value": "airport_transfer",
-            },
-            {
-              "value": "air_cartage",
-            },
+            "ftl",
+            "ltl",
+            "drayage",
+            "cartage",
+            "last_mile",
+            "airport_transfer",
+            "air_cartage",
           ],
         },
       },
@@ -6092,28 +6042,16 @@ Other details about this invoice",
       "types": {
         "InvoiceIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "InvoiceIndexRequestFStatus": {
           "enum": [
-            {
-              "value": "outstanding",
-            },
-            {
-              "value": "past_due",
-            },
-            {
-              "value": "void",
-            },
-            {
-              "value": "paid",
-            },
+            "outstanding",
+            "past_due",
+            "void",
+            "paid",
           ],
         },
         "InvoiceIndexResponse": {
@@ -6751,18 +6689,10 @@ Other details about this invoice",
       "types": {
         "PortsIndexRequestFPortType": {
           "enum": [
-            {
-              "value": "airport",
-            },
-            {
-              "value": "railport",
-            },
-            {
-              "value": "roadport",
-            },
-            {
-              "value": "seaport",
-            },
+            "airport",
+            "railport",
+            "roadport",
+            "seaport",
           ],
         },
         "PortsIndexResponse": {
@@ -8518,65 +8448,31 @@ Other details about this invoice",
       "types": {
         "PurchaseOrderIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "PurchaseOrderIndexRequestFRolesItem": {
           "enum": [
-            {
-              "value": "buyer",
-            },
-            {
-              "value": "seller",
-            },
-            {
-              "value": "owner",
-            },
-            {
-              "value": "shipper",
-            },
-            {
-              "value": "consignee",
-            },
-            {
-              "value": "freight_forwarder",
-            },
-            {
-              "value": "notify_party",
-            },
-            {
-              "value": "customs_broker",
-            },
-            {
-              "value": "carrier",
-            },
-            {
-              "value": "manufacturer",
-            },
-            {
-              "value": "buyers_agent",
-            },
-            {
-              "value": "sellers_agent",
-            },
+            "buyer",
+            "seller",
+            "owner",
+            "shipper",
+            "consignee",
+            "freight_forwarder",
+            "notify_party",
+            "customs_broker",
+            "carrier",
+            "manufacturer",
+            "buyers_agent",
+            "sellers_agent",
           ],
         },
         "PurchaseOrderIndexRequestFStatus": {
           "enum": [
-            {
-              "value": "open",
-            },
-            {
-              "value": "closed",
-            },
-            {
-              "value": "cancelled",
-            },
+            "open",
+            "closed",
+            "cancelled",
           ],
         },
         "PurchaseOrderIndexResponse": {
@@ -9020,12 +8916,8 @@ Other details about this invoice",
       "types": {
         "PurchaseOrderLineItemIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "PurchaseOrderLineItemIndexResponse": {
@@ -10441,31 +10333,17 @@ Other details about this invoice",
       "types": {
         "ShipmentIndexRequestDirection": {
           "enum": [
-            {
-              "value": "asc",
-            },
-            {
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "ShipmentIndexRequestSort": {
           "enum": [
-            {
-              "value": "id",
-            },
-            {
-              "value": "transportation_mode",
-            },
-            {
-              "value": "status",
-            },
-            {
-              "value": "updated_at",
-            },
-            {
-              "value": "archived_at",
-            },
+            "id",
+            "transportation_mode",
+            "status",
+            "updated_at",
+            "archived_at",
           ],
         },
         "ShipmentIndexResponse": {
@@ -11100,42 +10978,18 @@ Other details about this invoice",
       },
       "AirBookingDetailIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "AirShipmentDetail": {
@@ -11368,36 +11222,16 @@ Other details about this invoice",
       },
       "BookingQuoteStatus": {
         "enum": [
-          {
-            "value": "pending_quote",
-          },
-          {
-            "value": "sent_quote",
-          },
-          {
-            "value": "received_quote",
-          },
-          {
-            "value": "shared_quote",
-          },
-          {
-            "value": "expired_quote",
-          },
-          {
-            "value": "ready_to_share_quote",
-          },
-          {
-            "value": "accepted_quote",
-          },
-          {
-            "value": "rejected_quote",
-          },
-          {
-            "value": "requoted_quote",
-          },
-          {
-            "value": "archived_quote",
-          },
+          "pending_quote",
+          "sent_quote",
+          "received_quote",
+          "shared_quote",
+          "expired_quote",
+          "ready_to_share_quote",
+          "accepted_quote",
+          "rejected_quote",
+          "requoted_quote",
+          "archived_quote",
         ],
       },
       "BookingRef": {
@@ -11411,21 +11245,11 @@ Other details about this invoice",
       },
       "BookingStatus": {
         "enum": [
-          {
-            "value": "archived",
-          },
-          {
-            "value": "draft",
-          },
-          {
-            "value": "submitted",
-          },
-          {
-            "value": "booked",
-          },
-          {
-            "value": "shipment",
-          },
+          "archived",
+          "draft",
+          "submitted",
+          "booked",
+          "shipment",
         ],
       },
       "CarbonCalculation": {
@@ -11480,18 +11304,10 @@ Other details about this invoice",
       },
       "CargoLithiumBatteriesPackingTypesItem": {
         "enum": [
-          {
-            "value": "packed_loose",
-          },
-          {
-            "value": "packed_with_equipment",
-          },
-          {
-            "value": "contained_in_equipment",
-          },
-          {
-            "value": "contained_in_battery_powered_vehicles",
-          },
+          "packed_loose",
+          "packed_with_equipment",
+          "contained_in_equipment",
+          "contained_in_battery_powered_vehicles",
         ],
       },
       "CommercialInvoice": {
@@ -11551,15 +11367,9 @@ Other details about this invoice",
       "CommercialInvoiceDigitizationStatus": {
         "docs": "Status about if the digitization process for this commercial invoice is complete. If it is not complete, then the commercial invoice should be considered a draft that can change.",
         "enum": [
-          {
-            "value": "pending",
-          },
-          {
-            "value": "reviewed",
-          },
-          {
-            "value": "complete",
-          },
+          "pending",
+          "reviewed",
+          "complete",
         ],
       },
       "CommercialInvoiceLineItem": {
@@ -11809,42 +11619,18 @@ Other details about this invoice",
       },
       "CreateAirBookingIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "CreateBookingAmendmentHsCode": {
@@ -11923,18 +11709,10 @@ Other details about this invoice",
       },
       "CreateCargoLithiumBatteriesPackingTypesItem": {
         "enum": [
-          {
-            "value": "packed_loose",
-          },
-          {
-            "value": "packed_with_equipment",
-          },
-          {
-            "value": "contained_in_equipment",
-          },
-          {
-            "value": "contained_in_battery_powered_vehicles",
-          },
+          "packed_loose",
+          "packed_with_equipment",
+          "contained_in_equipment",
+          "contained_in_battery_powered_vehicles",
         ],
       },
       "CreateCommercialInvoiceLineItem": {
@@ -12130,53 +11908,25 @@ Other details about this invoice",
       "CreateLineItemIncoterm": {
         "docs": "Required if there is no incoterm in the line item's purchase order. The Incoterm of your line item.",
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
         ],
       },
       "CreateLineItemLineType": {
         "docs": "type of the line item",
         "enum": [
-          {
-            "value": "main_line",
-          },
-          {
-            "value": "sub_line",
-          },
-          {
-            "value": "component_line",
-          },
+          "main_line",
+          "sub_line",
+          "component_line",
         ],
       },
       "CreateLineItemMeasurement": {
@@ -12199,193 +11949,75 @@ Other details about this invoice",
       "CreateLineItemMeasurementMeasureType": {
         "docs": "The type of measure",
         "enum": [
-          {
-            "value": "length",
-          },
-          {
-            "value": "width",
-          },
-          {
-            "value": "height",
-          },
-          {
-            "value": "gross_weight",
-          },
-          {
-            "value": "net_weight",
-          },
-          {
-            "value": "net_net_weight",
-          },
-          {
-            "value": "gross_volume",
-          },
-          {
-            "value": "volume_weight",
-          },
+          "length",
+          "width",
+          "height",
+          "gross_weight",
+          "net_weight",
+          "net_net_weight",
+          "gross_volume",
+          "volume_weight",
         ],
       },
       "CreateLineItemTransportationMode": {
         "docs": "Required if there is no transportation_mode in purchase order",
         "enum": [
-          {
-            "value": "air",
-          },
-          {
-            "value": "ocean",
-          },
-          {
-            "value": "truck",
-          },
-          {
-            "value": "rail",
-          },
+          "air",
+          "ocean",
+          "truck",
+          "rail",
         ],
       },
       "CreateLineItemUnitOfMeasure": {
         "docs": "The measurement per unit for this line item.",
         "enum": [
-          {
-            "value": "BBL",
-          },
-          {
-            "value": "CAR",
-          },
-          {
-            "value": "CGM",
-          },
-          {
-            "value": "CKG",
-          },
-          {
-            "value": "CM",
-          },
-          {
-            "value": "CM2",
-          },
-          {
-            "value": "CTN",
-          },
-          {
-            "value": "CYK",
-          },
-          {
-            "value": "DOZ",
-          },
-          {
-            "value": "DPC",
-          },
-          {
-            "value": "DPR",
-          },
-          {
-            "value": "DS",
-          },
-          {
-            "value": "FBM",
-          },
-          {
-            "value": "G",
-          },
-          {
-            "value": "GBQ",
-          },
-          {
-            "value": "GR",
-          },
-          {
-            "value": "GRL",
-          },
-          {
-            "value": "HUN",
-          },
-          {
-            "value": "IRG",
-          },
-          {
-            "value": "JWL",
-          },
-          {
-            "value": "K",
-          },
-          {
-            "value": "KG",
-          },
-          {
-            "value": "KM3",
-          },
-          {
-            "value": "KM",
-          },
-          {
-            "value": "KWH",
-          },
-          {
-            "value": "L",
-          },
-          {
-            "value": "LNM",
-          },
-          {
-            "value": "M",
-          },
-          {
-            "value": "M2",
-          },
-          {
-            "value": "M3",
-          },
-          {
-            "value": "MBQ",
-          },
-          {
-            "value": "NO",
-          },
-          {
-            "value": "OSG",
-          },
-          {
-            "value": "PCS",
-          },
-          {
-            "value": "PDG",
-          },
-          {
-            "value": "PFL",
-          },
-          {
-            "value": "PK",
-          },
-          {
-            "value": "PRS",
-          },
-          {
-            "value": "PTG",
-          },
-          {
-            "value": "PX",
-          },
-          {
-            "value": "RHG",
-          },
-          {
-            "value": "RUG",
-          },
-          {
-            "value": "T",
-          },
-          {
-            "value": "TDWB",
-          },
-          {
-            "value": "THS",
-          },
-          {
-            "value": "W",
-          },
-          {
-            "value": "X",
-          },
+          "BBL",
+          "CAR",
+          "CGM",
+          "CKG",
+          "CM",
+          "CM2",
+          "CTN",
+          "CYK",
+          "DOZ",
+          "DPC",
+          "DPR",
+          "DS",
+          "FBM",
+          "G",
+          "GBQ",
+          "GR",
+          "GRL",
+          "HUN",
+          "IRG",
+          "JWL",
+          "K",
+          "KG",
+          "KM3",
+          "KM",
+          "KWH",
+          "L",
+          "LNM",
+          "M",
+          "M2",
+          "M3",
+          "MBQ",
+          "NO",
+          "OSG",
+          "PCS",
+          "PDG",
+          "PFL",
+          "PK",
+          "PRS",
+          "PTG",
+          "PX",
+          "RHG",
+          "RUG",
+          "T",
+          "TDWB",
+          "THS",
+          "W",
+          "X",
           {
             "name": "Twenty",
             "value": "20",
@@ -12402,219 +12034,77 @@ Other details about this invoice",
             "name": "FortyThree",
             "value": "43",
           },
-          {
-            "value": "AS",
-          },
-          {
-            "value": "BA",
-          },
-          {
-            "value": "BC",
-          },
-          {
-            "value": "BD",
-          },
-          {
-            "value": "BG",
-          },
-          {
-            "value": "BJ",
-          },
-          {
-            "value": "BK",
-          },
-          {
-            "value": "BN",
-          },
-          {
-            "value": "BO",
-          },
-          {
-            "value": "BU",
-          },
-          {
-            "value": "BX",
-          },
-          {
-            "value": "CA",
-          },
-          {
-            "value": "CB",
-          },
-          {
-            "value": "CC",
-          },
-          {
-            "value": "CF",
-          },
-          {
-            "value": "CI",
-          },
-          {
-            "value": "CN",
-          },
-          {
-            "value": "CP",
-          },
-          {
-            "value": "CQ",
-          },
-          {
-            "value": "CR",
-          },
-          {
-            "value": "CS",
-          },
-          {
-            "value": "CT",
-          },
-          {
-            "value": "CX",
-          },
-          {
-            "value": "CY",
-          },
-          {
-            "value": "DF",
-          },
-          {
-            "value": "DH",
-          },
-          {
-            "value": "DR",
-          },
-          {
-            "value": "DZ",
-          },
-          {
-            "value": "EA",
-          },
-          {
-            "value": "FT",
-          },
-          {
-            "value": "GA",
-          },
-          {
-            "value": "GRAM",
-          },
-          {
-            "value": "GS",
-          },
-          {
-            "value": "IN",
-          },
-          {
-            "value": "JO",
-          },
-          {
-            "value": "JR",
-          },
-          {
-            "value": "LB",
-          },
-          {
-            "value": "LT",
-          },
-          {
-            "value": "MP",
-          },
-          {
-            "value": "MR",
-          },
-          {
-            "value": "MT",
-          },
-          {
-            "value": "OZ",
-          },
-          {
-            "value": "PC",
-          },
-          {
-            "value": "PQ",
-          },
-          {
-            "value": "PR",
-          },
-          {
-            "value": "PS",
-          },
-          {
-            "value": "PT",
-          },
-          {
-            "value": "QT",
-          },
-          {
-            "value": "RA",
-          },
-          {
-            "value": "RL",
-          },
-          {
-            "value": "RM",
-          },
-          {
-            "value": "RO",
-          },
-          {
-            "value": "SC",
-          },
-          {
-            "value": "SF",
-          },
-          {
-            "value": "SH",
-          },
-          {
-            "value": "SI",
-          },
-          {
-            "value": "SJ",
-          },
-          {
-            "value": "SL",
-          },
-          {
-            "value": "SM",
-          },
-          {
-            "value": "SO",
-          },
-          {
-            "value": "SQ",
-          },
-          {
-            "value": "ST",
-          },
-          {
-            "value": "SV",
-          },
-          {
-            "value": "SX",
-          },
-          {
-            "value": "SY",
-          },
-          {
-            "value": "TE",
-          },
-          {
-            "value": "TN",
-          },
-          {
-            "value": "TO",
-          },
-          {
-            "value": "UN",
-          },
-          {
-            "value": "YD",
-          },
-          {
-            "value": "Z3",
-          },
+          "AS",
+          "BA",
+          "BC",
+          "BD",
+          "BG",
+          "BJ",
+          "BK",
+          "BN",
+          "BO",
+          "BU",
+          "BX",
+          "CA",
+          "CB",
+          "CC",
+          "CF",
+          "CI",
+          "CN",
+          "CP",
+          "CQ",
+          "CR",
+          "CS",
+          "CT",
+          "CX",
+          "CY",
+          "DF",
+          "DH",
+          "DR",
+          "DZ",
+          "EA",
+          "FT",
+          "GA",
+          "GRAM",
+          "GS",
+          "IN",
+          "JO",
+          "JR",
+          "LB",
+          "LT",
+          "MP",
+          "MR",
+          "MT",
+          "OZ",
+          "PC",
+          "PQ",
+          "PR",
+          "PS",
+          "PT",
+          "QT",
+          "RA",
+          "RL",
+          "RM",
+          "RO",
+          "SC",
+          "SF",
+          "SH",
+          "SI",
+          "SJ",
+          "SL",
+          "SM",
+          "SO",
+          "SQ",
+          "ST",
+          "SV",
+          "SX",
+          "SY",
+          "TE",
+          "TN",
+          "TO",
+          "UN",
+          "YD",
+          "Z3",
         ],
       },
       "CreateOceanBooking": {
@@ -12659,42 +12149,18 @@ Other details about this invoice",
       "CreateOceanBookingIncoterm": {
         "docs": "Always required. The Incoterm of your shipment",
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "CreateOrUpdatePurchaseOrder": {
@@ -12782,112 +12248,58 @@ Other details about this invoice",
       "CreateOrUpdatePurchaseOrderFreightPaymentTerms": {
         "docs": "The freight payment term for the purchase order",
         "enum": [
-          {
-            "value": "freight_collect",
-          },
-          {
-            "value": "freight_prepaid",
-          },
+          "freight_collect",
+          "freight_prepaid",
         ],
       },
       "CreateOrUpdatePurchaseOrderIncoterm": {
         "docs": "Required if there is no incoterm in each line item. The incoterm of your purchase order.",
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
         ],
       },
       "CreateOrUpdatePurchaseOrderOrderClass": {
         "docs": "Class of the purchase order.",
         "enum": [
-          {
-            "value": "purchase_order",
-          },
-          {
-            "value": "sales_order",
-          },
-          {
-            "value": "transfer_order",
-          },
-          {
-            "value": "delivery_order",
-          },
-          {
-            "value": "work_order",
-          },
+          "purchase_order",
+          "sales_order",
+          "transfer_order",
+          "delivery_order",
+          "work_order",
         ],
       },
       "CreateOrUpdatePurchaseOrderPriority": {
         "docs": "priority of the purchase order.",
         "enum": [
-          {
-            "value": "high",
-          },
-          {
-            "value": "standard",
-          },
+          "high",
+          "standard",
         ],
       },
       "CreateOrUpdatePurchaseOrderStatus": {
         "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used",
         "enum": [
-          {
-            "value": "open",
-          },
-          {
-            "value": "cancelled",
-          },
-          {
-            "value": "closed",
-          },
+          "open",
+          "cancelled",
+          "closed",
         ],
       },
       "CreateOrUpdatePurchaseOrderTransportationMode": {
         "docs": "Required if there is no transportation_mode in purchase order",
         "enum": [
-          {
-            "value": "air",
-          },
-          {
-            "value": "ocean",
-          },
-          {
-            "value": "truck",
-          },
-          {
-            "value": "rail",
-          },
+          "air",
+          "ocean",
+          "truck",
+          "rail",
         ],
       },
       "CreateParty": {
@@ -12924,42 +12336,18 @@ Other details about this invoice",
       "CreatePartyRole": {
         "docs": "The role that the party has",
         "enum": [
-          {
-            "value": "buyer",
-          },
-          {
-            "value": "seller",
-          },
-          {
-            "value": "owner",
-          },
-          {
-            "value": "shipper",
-          },
-          {
-            "value": "consignee",
-          },
-          {
-            "value": "freight_forwarder",
-          },
-          {
-            "value": "notify_party",
-          },
-          {
-            "value": "customs_broker",
-          },
-          {
-            "value": "carrier",
-          },
-          {
-            "value": "manufacturer",
-          },
-          {
-            "value": "buyers_agent",
-          },
-          {
-            "value": "sellers_agent",
-          },
+          "buyer",
+          "seller",
+          "owner",
+          "shipper",
+          "consignee",
+          "freight_forwarder",
+          "notify_party",
+          "customs_broker",
+          "carrier",
+          "manufacturer",
+          "buyers_agent",
+          "sellers_agent",
         ],
       },
       "CreatePurchaseOrderHsCode": {
@@ -12991,18 +12379,10 @@ Other details about this invoice",
       "CreatePurchaseOrderPortCodeType": {
         "docs": "The code type of the port",
         "enum": [
-          {
-            "value": "unlocode",
-          },
-          {
-            "value": "iata",
-          },
-          {
-            "value": "icao",
-          },
-          {
-            "value": "us_cbp",
-          },
+          "unlocode",
+          "iata",
+          "icao",
+          "us_cbp",
         ],
       },
       "CreatePurchaseOrderProduct": {
@@ -13074,27 +12454,13 @@ Other details about this invoice",
       "CreateQuantityUnit": {
         "docs": "Required. Unit of measurement.",
         "enum": [
-          {
-            "value": "pcs",
-          },
-          {
-            "value": "dpc",
-          },
-          {
-            "value": "doz",
-          },
-          {
-            "value": "hun",
-          },
-          {
-            "value": "ths",
-          },
-          {
-            "value": "prs",
-          },
-          {
-            "value": "dpr",
-          },
+          "pcs",
+          "dpc",
+          "doz",
+          "hun",
+          "ths",
+          "prs",
+          "dpr",
         ],
       },
       "CreateTruckingBooking": {
@@ -13117,12 +12483,8 @@ Other details about this invoice",
       "CreateTruckingBookingPaymentTerms": {
         "docs": "Whether the shipper or consignee is responsible for payment of trucking freight. This can be \`collect\` (consignee) or \`prepaid\` (shipper).",
         "enum": [
-          {
-            "value": "collect",
-          },
-          {
-            "value": "prepaid",
-          },
+          "collect",
+          "prepaid",
         ],
       },
       "CreditMemo": {
@@ -13186,15 +12548,9 @@ Other details about this invoice",
       "CustomsEntryReleaseStatus": {
         "docs": "The release status for this entry.",
         "enum": [
-          {
-            "value": "cleared",
-          },
-          {
-            "value": "customs_hold",
-          },
-          {
-            "value": "pending",
-          },
+          "cleared",
+          "customs_hold",
+          "pending",
         ],
       },
       "CustomsInvolvedParty": {
@@ -13232,12 +12588,8 @@ Other details about this invoice",
       "DistanceCreateUnit": {
         "docs": "Required. Unit of measurement. "km" for kilometers. "mi" for miles.",
         "enum": [
-          {
-            "value": "km",
-          },
-          {
-            "value": "mi",
-          },
+          "km",
+          "mi",
         ],
       },
       "Document": {
@@ -13322,51 +12674,21 @@ Other details about this invoice",
       "ExceptionRootCauseSlug": {
         "docs": "The main reason for the exception as an identifier.",
         "enum": [
-          {
-            "value": "carrier",
-          },
-          {
-            "value": "client",
-          },
-          {
-            "value": "consignee",
-          },
-          {
-            "value": "destination_agent",
-          },
-          {
-            "value": "destination_trucking_carrier",
-          },
-          {
-            "value": "export_customs_agent",
-          },
-          {
-            "value": "flexport",
-          },
-          {
-            "value": "government_agency",
-          },
-          {
-            "value": "import_customs_agent",
-          },
-          {
-            "value": "natural_event",
-          },
-          {
-            "value": "origin_agent",
-          },
-          {
-            "value": "origin_trucking_carrier",
-          },
-          {
-            "value": "shipper",
-          },
-          {
-            "value": "terminal",
-          },
-          {
-            "value": "unknown",
-          },
+          "carrier",
+          "client",
+          "consignee",
+          "destination_agent",
+          "destination_trucking_carrier",
+          "export_customs_agent",
+          "flexport",
+          "government_agency",
+          "import_customs_agent",
+          "natural_event",
+          "origin_agent",
+          "origin_trucking_carrier",
+          "shipper",
+          "terminal",
+          "unknown",
         ],
       },
       "FileMetadata": {
@@ -13388,18 +12710,10 @@ Other details about this invoice",
       },
       "FreightType": {
         "enum": [
-          {
-            "value": "port_to_door",
-          },
-          {
-            "value": "port_to_port",
-          },
-          {
-            "value": "door_to_door",
-          },
-          {
-            "value": "door_to_port",
-          },
+          "port_to_door",
+          "port_to_port",
+          "door_to_door",
+          "door_to_port",
         ],
       },
       "GenericCollectionRef": {
@@ -13540,24 +12854,12 @@ Other details about this invoice",
       "InvoiceItemCategory": {
         "docs": "Category of the charge.",
         "enum": [
-          {
-            "value": "freight",
-          },
-          {
-            "value": "origin",
-          },
-          {
-            "value": "destination",
-          },
-          {
-            "value": "customs",
-          },
-          {
-            "value": "additional",
-          },
-          {
-            "value": "capital",
-          },
+          "freight",
+          "origin",
+          "destination",
+          "customs",
+          "additional",
+          "capital",
         ],
       },
       "InvoiceQuantity": {
@@ -13597,32 +12899,18 @@ Other details about this invoice",
       "InvoiceStatus": {
         "docs": "Status of the invoice",
         "enum": [
-          {
-            "value": "outstanding",
-          },
-          {
-            "value": "past_due",
-          },
-          {
-            "value": "void",
-          },
-          {
-            "value": "paid",
-          },
-          {
-            "value": "payment_pending",
-          },
+          "outstanding",
+          "past_due",
+          "void",
+          "paid",
+          "payment_pending",
         ],
       },
       "InvoiceType": {
         "docs": "What the invoice is being issued for. Shipment related charges are type \`Shipment\` and non-shipment related charges are type \`Client\`",
         "enum": [
-          {
-            "value": "Shipment",
-          },
-          {
-            "value": "Client",
-          },
+          "Shipment",
+          "Client",
         ],
       },
       "LegCollectionRef": {
@@ -13684,23 +12972,15 @@ Other details about this invoice",
       "LengthCreateUnit": {
         "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
         "enum": [
-          {
-            "value": "cm",
-          },
-          {
-            "value": "in",
-          },
+          "cm",
+          "in",
         ],
       },
       "LengthUnit": {
         "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
         "enum": [
-          {
-            "value": "cm",
-          },
-          {
-            "value": "in",
-          },
+          "cm",
+          "in",
         ],
       },
       "LineItemMeasurement": {
@@ -13723,30 +13003,14 @@ Other details about this invoice",
       "LineItemMeasurementMeasureType": {
         "docs": "The type of measure",
         "enum": [
-          {
-            "value": "length",
-          },
-          {
-            "value": "width",
-          },
-          {
-            "value": "height",
-          },
-          {
-            "value": "gross_weight",
-          },
-          {
-            "value": "net_weight",
-          },
-          {
-            "value": "net_net_weight",
-          },
-          {
-            "value": "gross_volume",
-          },
-          {
-            "value": "volume_weight",
-          },
+          "length",
+          "width",
+          "height",
+          "gross_weight",
+          "net_weight",
+          "net_net_weight",
+          "gross_volume",
+          "volume_weight",
         ],
       },
       "Location": {
@@ -13844,42 +13108,18 @@ Other details about this invoice",
       },
       "OceanBookingDetailIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "OceanShipmentContainerLeg": {
@@ -13954,42 +13194,18 @@ Other details about this invoice",
       "PartiesRole": {
         "docs": "The role that the party has",
         "enum": [
-          {
-            "value": "buyer",
-          },
-          {
-            "value": "seller",
-          },
-          {
-            "value": "owner",
-          },
-          {
-            "value": "shipper",
-          },
-          {
-            "value": "consignee",
-          },
-          {
-            "value": "freight_forwarder",
-          },
-          {
-            "value": "notify_party",
-          },
-          {
-            "value": "customs_broker",
-          },
-          {
-            "value": "carrier",
-          },
-          {
-            "value": "manufacturer",
-          },
-          {
-            "value": "buyers_agent",
-          },
-          {
-            "value": "sellers_agent",
-          },
+          "buyer",
+          "seller",
+          "owner",
+          "shipper",
+          "consignee",
+          "freight_forwarder",
+          "notify_party",
+          "customs_broker",
+          "carrier",
+          "manufacturer",
+          "buyers_agent",
+          "sellers_agent",
         ],
       },
       "Place": {
@@ -14191,52 +13407,24 @@ Other details about this invoice",
       },
       "PurchaseOrderFreightPaymnetTerms": {
         "enum": [
-          {
-            "value": "freight_collect",
-          },
-          {
-            "value": "freight_prepaid",
-          },
+          "freight_collect",
+          "freight_prepaid",
         ],
       },
       "PurchaseOrderIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "PurchaseOrderLineItem": {
@@ -14317,55 +13505,25 @@ Other details about this invoice",
       },
       "PurchaseOrderLineItemIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "PurchaseOrderLineItemLineType": {
         "enum": [
-          {
-            "value": "main_line",
-          },
-          {
-            "value": "sub_line",
-          },
-          {
-            "value": "component_line",
-          },
+          "main_line",
+          "sub_line",
+          "component_line",
         ],
       },
       "PurchaseOrderLineItemRef": {
@@ -14379,171 +13537,67 @@ Other details about this invoice",
       },
       "PurchaseOrderLineItemUnitOfMeasure": {
         "enum": [
-          {
-            "value": "BBL",
-          },
-          {
-            "value": "CAR",
-          },
-          {
-            "value": "CGM",
-          },
-          {
-            "value": "CKG",
-          },
-          {
-            "value": "CM",
-          },
-          {
-            "value": "CM2",
-          },
-          {
-            "value": "CTN",
-          },
-          {
-            "value": "CYK",
-          },
-          {
-            "value": "DPC",
-          },
-          {
-            "value": "DPR",
-          },
-          {
-            "value": "DS",
-          },
-          {
-            "value": "FBM",
-          },
-          {
-            "value": "G",
-          },
-          {
-            "value": "GBQ",
-          },
-          {
-            "value": "GR",
-          },
-          {
-            "value": "GRL",
-          },
-          {
-            "value": "HUN",
-          },
-          {
-            "value": "IRG",
-          },
-          {
-            "value": "JWL",
-          },
-          {
-            "value": "K",
-          },
-          {
-            "value": "KG",
-          },
-          {
-            "value": "KM",
-          },
-          {
-            "value": "KM3",
-          },
-          {
-            "value": "KWH",
-          },
-          {
-            "value": "L",
-          },
-          {
-            "value": "LNM",
-          },
-          {
-            "value": "M",
-          },
-          {
-            "value": "M2",
-          },
-          {
-            "value": "M3",
-          },
-          {
-            "value": "MBQ",
-          },
-          {
-            "value": "NO",
-          },
-          {
-            "value": "OSG",
-          },
-          {
-            "value": "PCS",
-          },
-          {
-            "value": "PDG",
-          },
-          {
-            "value": "PFL",
-          },
-          {
-            "value": "PK",
-          },
-          {
-            "value": "PRS",
-          },
-          {
-            "value": "PTG",
-          },
-          {
-            "value": "PX",
-          },
-          {
-            "value": "RHG",
-          },
-          {
-            "value": "RUG",
-          },
-          {
-            "value": "T",
-          },
-          {
-            "value": "TDWB",
-          },
-          {
-            "value": "W",
-          },
-          {
-            "value": "X",
-          },
+          "BBL",
+          "CAR",
+          "CGM",
+          "CKG",
+          "CM",
+          "CM2",
+          "CTN",
+          "CYK",
+          "DPC",
+          "DPR",
+          "DS",
+          "FBM",
+          "G",
+          "GBQ",
+          "GR",
+          "GRL",
+          "HUN",
+          "IRG",
+          "JWL",
+          "K",
+          "KG",
+          "KM",
+          "KM3",
+          "KWH",
+          "L",
+          "LNM",
+          "M",
+          "M2",
+          "M3",
+          "MBQ",
+          "NO",
+          "OSG",
+          "PCS",
+          "PDG",
+          "PFL",
+          "PK",
+          "PRS",
+          "PTG",
+          "PX",
+          "RHG",
+          "RUG",
+          "T",
+          "TDWB",
+          "W",
+          "X",
         ],
       },
       "PurchaseOrderOrderClass": {
         "docs": "Class of the purchase order.",
         "enum": [
-          {
-            "value": "purchase_order",
-          },
-          {
-            "value": "sales_order",
-          },
-          {
-            "value": "transfer_order",
-          },
-          {
-            "value": "delivery_order",
-          },
-          {
-            "value": "work_order",
-          },
+          "purchase_order",
+          "sales_order",
+          "transfer_order",
+          "delivery_order",
+          "work_order",
         ],
       },
       "PurchaseOrderPriority": {
         "enum": [
-          {
-            "value": "standard",
-          },
-          {
-            "value": "high",
-          },
+          "standard",
+          "high",
         ],
       },
       "PurchaseOrderProduct": {
@@ -14611,15 +13665,9 @@ Other details about this invoice",
       "PurchaseOrderStatus": {
         "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used.",
         "enum": [
-          {
-            "value": "open",
-          },
-          {
-            "value": "closed",
-          },
-          {
-            "value": "cancelled",
-          },
+          "open",
+          "closed",
+          "cancelled",
         ],
       },
       "RailShipmentLeg": {
@@ -14827,58 +13875,26 @@ Other details about this invoice",
       },
       "ShipmentContainerContainerSize": {
         "enum": [
-          {
-            "value": "twenty_ft",
-          },
-          {
-            "value": "fourty_ft",
-          },
-          {
-            "value": "fourty_ft_hc",
-          },
-          {
-            "value": "fourty_five_ft_hc",
-          },
-          {
-            "value": "fifty_three_ft",
-          },
-          {
-            "value": "fifty_three_ft_hc",
-          },
+          "twenty_ft",
+          "fourty_ft",
+          "fourty_ft_hc",
+          "fourty_five_ft_hc",
+          "fifty_three_ft",
+          "fifty_three_ft_hc",
         ],
       },
       "ShipmentContainerContainerType": {
         "enum": [
-          {
-            "value": "dry",
-          },
-          {
-            "value": "flat_rack",
-          },
-          {
-            "value": "headload",
-          },
-          {
-            "value": "open",
-          },
-          {
-            "value": "reefer",
-          },
-          {
-            "value": "lcl",
-          },
-          {
-            "value": "tank",
-          },
-          {
-            "value": "ventilated",
-          },
-          {
-            "value": "bulk",
-          },
-          {
-            "value": "special",
-          },
+          "dry",
+          "flat_rack",
+          "headload",
+          "open",
+          "reefer",
+          "lcl",
+          "tank",
+          "ventilated",
+          "bulk",
+          "special",
         ],
       },
       "ShipmentDangerousGoods": {
@@ -14897,24 +13913,12 @@ Other details about this invoice",
       },
       "ShipmentDangerousGoodsReviewStatus": {
         "enum": [
-          {
-            "value": "pending",
-          },
-          {
-            "value": "in_progress",
-          },
-          {
-            "value": "complete",
-          },
-          {
-            "value": "denied",
-          },
-          {
-            "value": "not_applicable",
-          },
-          {
-            "value": "misflagged",
-          },
+          "pending",
+          "in_progress",
+          "complete",
+          "denied",
+          "not_applicable",
+          "misflagged",
         ],
       },
       "ShipmentEventData": {
@@ -14948,42 +13952,18 @@ Other details about this invoice",
       },
       "ShipmentIncoterm": {
         "enum": [
-          {
-            "value": "EXW",
-          },
-          {
-            "value": "FOB",
-          },
-          {
-            "value": "FAS",
-          },
-          {
-            "value": "FCA",
-          },
-          {
-            "value": "CPT",
-          },
-          {
-            "value": "CFR",
-          },
-          {
-            "value": "CIF",
-          },
-          {
-            "value": "CIP",
-          },
-          {
-            "value": "DAT",
-          },
-          {
-            "value": "DAP",
-          },
-          {
-            "value": "DDP",
-          },
-          {
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "ShipmentItem": {
@@ -15048,12 +14028,8 @@ Other details about this invoice",
       "ShipmentPriority": {
         "docs": "The level of attention Flexport should give to this shipment",
         "enum": [
-          {
-            "value": "standard",
-          },
-          {
-            "value": "high",
-          },
+          "standard",
+          "high",
         ],
       },
       "ShipmentRef": {
@@ -15079,45 +14055,19 @@ Other details about this invoice",
       },
       "ShipmentStatus": {
         "enum": [
-          {
-            "value": "seller_location",
-          },
-          {
-            "value": "origin_stop_off",
-          },
-          {
-            "value": "in_transit_to_departure_port",
-          },
-          {
-            "value": "departure_port",
-          },
-          {
-            "value": "in_transit_to_intermediary_port",
-          },
-          {
-            "value": "intermediary_port",
-          },
-          {
-            "value": "in_transit_to_arrival_port",
-          },
-          {
-            "value": "arrival_port",
-          },
-          {
-            "value": "deconsolidation",
-          },
-          {
-            "value": "in_transit_to_final_destination",
-          },
-          {
-            "value": "destination_stop_off",
-          },
-          {
-            "value": "gated_out",
-          },
-          {
-            "value": "final_destination",
-          },
+          "seller_location",
+          "origin_stop_off",
+          "in_transit_to_departure_port",
+          "departure_port",
+          "in_transit_to_intermediary_port",
+          "intermediary_port",
+          "in_transit_to_arrival_port",
+          "arrival_port",
+          "deconsolidation",
+          "in_transit_to_final_destination",
+          "destination_stop_off",
+          "gated_out",
+          "final_destination",
         ],
       },
       "ShippingUnit": {
@@ -15196,30 +14146,14 @@ Other details about this invoice",
       },
       "TransportationMode": {
         "enum": [
-          {
-            "value": "ocean",
-          },
-          {
-            "value": "air",
-          },
-          {
-            "value": "truck",
-          },
-          {
-            "value": "rail",
-          },
-          {
-            "value": "unknown_transportation",
-          },
-          {
-            "value": "ocean_air",
-          },
-          {
-            "value": "truck_intl",
-          },
-          {
-            "value": "warehouse_storage",
-          },
+          "ocean",
+          "air",
+          "truck",
+          "rail",
+          "unknown_transportation",
+          "ocean_air",
+          "truck_intl",
+          "warehouse_storage",
         ],
       },
       "TruckingBookingDetail": {
@@ -15236,12 +14170,8 @@ Other details about this invoice",
       },
       "TruckingBookingDetailPaymentTerms": {
         "enum": [
-          {
-            "value": "collect",
-          },
-          {
-            "value": "prepaid",
-          },
+          "collect",
+          "prepaid",
         ],
       },
       "TruckingShipmentLeg": {
@@ -15257,18 +14187,10 @@ Other details about this invoice",
       },
       "TruckingShipmentLegServiceType": {
         "enum": [
-          {
-            "value": "ltl",
-          },
-          {
-            "value": "ftl",
-          },
-          {
-            "value": "drayage",
-          },
-          {
-            "value": "cartage",
-          },
+          "ltl",
+          "ftl",
+          "drayage",
+          "cartage",
         ],
       },
       "VatNumber": {
@@ -15313,12 +14235,8 @@ Other details about this invoice",
       "VolumeCreateUnit": {
         "docs": "unit of measurement. "cbm" for cubic meters. "cbft" for cubic feet.",
         "enum": [
-          {
-            "value": "cbm",
-          },
-          {
-            "value": "cbft",
-          },
+          "cbm",
+          "cbft",
         ],
       },
       "WebhookEvent": {
@@ -15364,12 +14282,8 @@ Other details about this invoice",
       "WeightCreateUnit": {
         "docs": "Required. Unit of measurement. "kg" for kilograms, "lbs" for pounds",
         "enum": [
-          {
-            "value": "kg",
-          },
-          {
-            "value": "lbs",
-          },
+          "kg",
+          "lbs",
         ],
       },
       "WriteProductClassification": {

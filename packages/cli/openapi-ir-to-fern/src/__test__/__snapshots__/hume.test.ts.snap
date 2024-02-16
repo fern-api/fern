@@ -172,18 +172,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "types": {
       "Bcp47Tag": {
         "enum": [
-          {
-            "value": "zh",
-          },
-          {
-            "value": "da",
-          },
-          {
-            "value": "nl",
-          },
-          {
-            "value": "en",
-          },
+          "zh",
+          "da",
+          "nl",
+          "en",
           {
             "name": "EnAu",
             "value": "en-AU",
@@ -200,44 +192,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "name": "EnGb",
             "value": "en-GB",
           },
-          {
-            "value": "fr",
-          },
+          "fr",
           {
             "name": "FrCa",
             "value": "fr-CA",
           },
-          {
-            "value": "de",
-          },
-          {
-            "value": "hi",
-          },
+          "de",
+          "hi",
           {
             "name": "HiLatn",
             "value": "hi-Latn",
           },
-          {
-            "value": "id",
-          },
-          {
-            "value": "it",
-          },
-          {
-            "value": "ja",
-          },
-          {
-            "value": "ko",
-          },
-          {
-            "value": "no",
-          },
-          {
-            "value": "pl",
-          },
-          {
-            "value": "pt",
-          },
+          "id",
+          "it",
+          "ja",
+          "ko",
+          "no",
+          "pl",
+          "pt",
           {
             "name": "PtBr",
             "value": "pt-BR",
@@ -246,28 +218,16 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "name": "PtPt",
             "value": "pt-PT",
           },
-          {
-            "value": "ru",
-          },
-          {
-            "value": "es",
-          },
+          "ru",
+          "es",
           {
             "name": "Es419",
             "value": "es-419",
           },
-          {
-            "value": "sv",
-          },
-          {
-            "value": "ta",
-          },
-          {
-            "value": "tr",
-          },
-          {
-            "value": "uk",
-          },
+          "sv",
+          "ta",
+          "tr",
+          "uk",
         ],
       },
       "BoundingBox": {
@@ -345,12 +305,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "Direction": {
         "enum": [
-          {
-            "value": "asc",
-          },
-          {
-            "value": "desc",
-          },
+          "asc",
+          "desc",
         ],
       },
       "EmotionScore": {
@@ -503,18 +459,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Granularity": {
         "docs": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
         "enum": [
-          {
-            "value": "word",
-          },
-          {
-            "value": "sentence",
-          },
-          {
-            "value": "utterance",
-          },
-          {
-            "value": "conversational_turn",
-          },
+          "word",
+          "sentence",
+          "utterance",
+          "conversational_turn",
         ],
       },
       "GroupedPredictionsBurstPrediction": {
@@ -884,15 +832,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "SortBy": {
         "enum": [
-          {
-            "value": "created",
-          },
-          {
-            "value": "started",
-          },
-          {
-            "value": "ended",
-          },
+          "created",
+          "started",
+          "ended",
         ],
       },
       "Source": {
@@ -970,18 +912,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "Status": {
         "enum": [
-          {
-            "value": "QUEUED",
-          },
-          {
-            "value": "IN_PROGRESS",
-          },
-          {
-            "value": "COMPLETED",
-          },
-          {
-            "value": "FAILED",
-          },
+          "QUEUED",
+          "IN_PROGRESS",
+          "COMPLETED",
+          "FAILED",
         ],
       },
       "TimeInterval": {
@@ -1037,12 +971,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "When": {
         "enum": [
-          {
-            "value": "created_before",
-          },
-          {
-            "value": "created_after",
-          },
+          "created_before",
+          "created_after",
         ],
       },
       "Window": {

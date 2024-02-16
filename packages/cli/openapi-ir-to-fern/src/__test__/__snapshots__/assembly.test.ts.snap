@@ -1323,12 +1323,8 @@ The LLM response data, as well as any context provided in the original request w
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
         "enum": [
-          {
-            "value": "success",
-          },
-          {
-            "value": "unavailable",
-          },
+          "success",
+          "unavailable",
         ],
       },
       "AutoHighlightResult": {
@@ -1797,12 +1793,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
 ",
         "enum": [
-          {
-            "value": "default",
-          },
-          {
-            "value": "basic",
-          },
+          "default",
+          "basic",
         ],
       },
       "LemurQuestion": {
@@ -1906,87 +1898,33 @@ Can be any value between 0.0 and 1.0 inclusive.
       },
       "PiiPolicy": {
         "enum": [
-          {
-            "value": "medical_process",
-          },
-          {
-            "value": "medical_condition",
-          },
-          {
-            "value": "blood_type",
-          },
-          {
-            "value": "drug",
-          },
-          {
-            "value": "injury",
-          },
-          {
-            "value": "number_sequence",
-          },
-          {
-            "value": "email_address",
-          },
-          {
-            "value": "date_of_birth",
-          },
-          {
-            "value": "phone_number",
-          },
-          {
-            "value": "us_social_security_number",
-          },
-          {
-            "value": "credit_card_number",
-          },
-          {
-            "value": "credit_card_expiration",
-          },
-          {
-            "value": "credit_card_cvv",
-          },
-          {
-            "value": "date",
-          },
-          {
-            "value": "nationality",
-          },
-          {
-            "value": "event",
-          },
-          {
-            "value": "language",
-          },
-          {
-            "value": "location",
-          },
-          {
-            "value": "money_amount",
-          },
-          {
-            "value": "person_name",
-          },
-          {
-            "value": "person_age",
-          },
-          {
-            "value": "organization",
-          },
-          {
-            "value": "political_affiliation",
-          },
-          {
-            "value": "occupation",
-          },
-          {
-            "value": "religion",
-          },
-          {
-            "value": "drivers_license",
-          },
-          {
-            "value": "banking_information",
-          },
+          "medical_process",
+          "medical_condition",
+          "blood_type",
+          "drug",
+          "injury",
+          "number_sequence",
+          "email_address",
+          "date_of_birth",
+          "phone_number",
+          "us_social_security_number",
+          "credit_card_number",
+          "credit_card_expiration",
+          "credit_card_cvv",
+          "date",
+          "nationality",
+          "event",
+          "language",
+          "location",
+          "money_amount",
+          "person_name",
+          "person_age",
+          "organization",
+          "political_affiliation",
+          "occupation",
+          "religion",
+          "drivers_license",
+          "banking_information",
         ],
       },
       "PurgeLemurRequestDataResponse": {
@@ -2040,15 +1978,9 @@ Can be any value between 0.0 and 1.0 inclusive.
       },
       "Sentiment": {
         "enum": [
-          {
-            "value": "POSITIVE",
-          },
-          {
-            "value": "NEUTRAL",
-          },
-          {
-            "value": "NEGATIVE",
-          },
+          "POSITIVE",
+          "NEUTRAL",
+          "NEGATIVE",
         ],
       },
       "SentimentAnalysisResult": {
@@ -2091,57 +2023,33 @@ Can be any value between 0.0 and 1.0 inclusive.
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
         "enum": [
-          {
-            "value": "entity_type",
-          },
-          {
-            "value": "hash",
-          },
+          "entity_type",
+          "hash",
         ],
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
         "enum": [
-          {
-            "value": "srt",
-          },
-          {
-            "value": "vtt",
-          },
+          "srt",
+          "vtt",
         ],
       },
       "SummaryModel": {
         "docs": "The model to summarize the transcript",
         "enum": [
-          {
-            "value": "informative",
-          },
-          {
-            "value": "conversational",
-          },
-          {
-            "value": "catchy",
-          },
+          "informative",
+          "conversational",
+          "catchy",
         ],
       },
       "SummaryType": {
         "docs": "The type of summary",
         "enum": [
-          {
-            "value": "bullets",
-          },
-          {
-            "value": "bullets_verbose",
-          },
-          {
-            "value": "gist",
-          },
-          {
-            "value": "headline",
-          },
-          {
-            "value": "paragraph",
-          },
+          "bullets",
+          "bullets_verbose",
+          "gist",
+          "headline",
+          "paragraph",
         ],
       },
       "Timestamp": {
@@ -2436,15 +2344,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
       "TranscriptBoostParam": {
         "docs": "The word boost parameter value, if provided in the transcription request.",
         "enum": [
-          {
-            "value": "low",
-          },
-          {
-            "value": "default",
-          },
-          {
-            "value": "high",
-          },
+          "low",
+          "default",
+          "high",
         ],
       },
       "TranscriptContentSafetyLabels": {
@@ -2496,66 +2398,26 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 The default value is 'en_us'.
 ",
         "enum": [
-          {
-            "value": "en",
-          },
-          {
-            "value": "en_au",
-          },
-          {
-            "value": "en_uk",
-          },
-          {
-            "value": "en_us",
-          },
-          {
-            "value": "es",
-          },
-          {
-            "value": "fr",
-          },
-          {
-            "value": "de",
-          },
-          {
-            "value": "it",
-          },
-          {
-            "value": "pt",
-          },
-          {
-            "value": "nl",
-          },
-          {
-            "value": "hi",
-          },
-          {
-            "value": "ja",
-          },
-          {
-            "value": "zh",
-          },
-          {
-            "value": "fi",
-          },
-          {
-            "value": "ko",
-          },
-          {
-            "value": "pl",
-          },
-          {
-            "value": "ru",
-          },
-          {
-            "value": "tr",
-          },
-          {
-            "value": "uk",
-          },
-          {
-            "value": "vi",
-          },
+          "en",
+          "en_au",
+          "en_uk",
+          "en_us",
+          "es",
+          "fr",
+          "de",
+          "it",
+          "pt",
+          "nl",
+          "hi",
+          "ja",
+          "zh",
+          "fi",
+          "ko",
+          "pl",
+          "ru",
+          "tr",
+          "uk",
+          "vi",
         ],
       },
       "TranscriptList": {

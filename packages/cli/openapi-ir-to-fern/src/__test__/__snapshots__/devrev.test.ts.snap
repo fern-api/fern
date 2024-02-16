@@ -2659,12 +2659,8 @@ authentication connection.
       "AuthConnectionOptionsSocial": "map<string, unknown>",
       "AuthConnectionToggle": {
         "enum": [
-          {
-            "value": "disable",
-          },
-          {
-            "value": "enable",
-          },
+          "disable",
+          "enable",
         ],
       },
       "AuthConnectionType": {
@@ -2672,21 +2668,11 @@ authentication connection.
 for each authentication connection will depend on the type value.
 ",
         "enum": [
-          {
-            "value": "google_apps",
-          },
-          {
-            "value": "oidc",
-          },
-          {
-            "value": "samlp",
-          },
-          {
-            "value": "social",
-          },
-          {
-            "value": "waad",
-          },
+          "google_apps",
+          "oidc",
+          "samlp",
+          "social",
+          "waad",
         ],
       },
       "AuthToken": {
@@ -2782,15 +2768,9 @@ token. Only applicable for application access tokens.
       "AuthTokenStatus": {
         "docs": "The status of the token.",
         "enum": [
-          {
-            "value": "active",
-          },
-          {
-            "value": "expired",
-          },
-          {
-            "value": "revoked",
-          },
+          "active",
+          "expired",
+          "revoked",
         ],
       },
       "AuthTokenSubjectTokenType": {
@@ -2964,18 +2944,10 @@ it would appear on the login button as 'Log in to abclogin'.
 authentication connections have different configuration parameters.
 ",
         "enum": [
-          {
-            "value": "google_apps",
-          },
-          {
-            "value": "oidc",
-          },
-          {
-            "value": "samlp",
-          },
-          {
-            "value": "waad",
-          },
+          "google_apps",
+          "oidc",
+          "samlp",
+          "waad",
         ],
       },
       "DevOrgAuthConnectionsCreateResponse": {
@@ -3041,21 +3013,11 @@ of authentication connections have different configuration parameters
 that can be updated.
 ",
         "enum": [
-          {
-            "value": "google_apps",
-          },
-          {
-            "value": "none",
-          },
-          {
-            "value": "oidc",
-          },
-          {
-            "value": "samlp",
-          },
-          {
-            "value": "waad",
-          },
+          "google_apps",
+          "none",
+          "oidc",
+          "samlp",
+          "waad",
         ],
       },
       "DevOrgAuthConnectionsUpdateResponse": {
@@ -3145,21 +3107,11 @@ sort order. If not set, then no prior elements exist.
       "ErrorBadRequestParseError": "map<string, unknown>",
       "ErrorBadRequestType": {
         "enum": [
-          {
-            "value": "bad_request",
-          },
-          {
-            "value": "invalid_enum_value",
-          },
-          {
-            "value": "missing_required_field",
-          },
-          {
-            "value": "parse_error",
-          },
-          {
-            "value": "value_not_permitted",
-          },
+          "bad_request",
+          "invalid_enum_value",
+          "missing_required_field",
+          "parse_error",
+          "value_not_permitted",
         ],
       },
       "ErrorBadRequestValueNotPermitted": {
@@ -3374,18 +3326,10 @@ sort order. If not set, then no prior elements exist.
       "IssuePriority": {
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
-          {
-            "value": "p0",
-          },
-          {
-            "value": "p1",
-          },
-          {
-            "value": "p2",
-          },
-          {
-            "value": "p3",
-          },
+          "p0",
+          "p1",
+          "p2",
+          "p3",
         ],
       },
       "ListMode": {
@@ -3396,12 +3340,8 @@ returned, or if no cursor is provided, then from the end. Entries will
 always be returned in the specified sort-by order.
 ",
         "enum": [
-          {
-            "value": "after",
-          },
-          {
-            "value": "before",
-          },
+          "after",
+          "before",
         ],
       },
       "OrgBase": {
@@ -3432,15 +3372,9 @@ always be returned in the specified sort-by order.
         "docs": "The environment of the Org. Defaults to 'production' if not specified.
 ",
         "enum": [
-          {
-            "value": "production",
-          },
-          {
-            "value": "staging",
-          },
-          {
-            "value": "test",
-          },
+          "production",
+          "staging",
+          "test",
         ],
       },
       "OrgSummary": {
@@ -3505,18 +3439,10 @@ always be returned in the specified sort-by order.
       },
       "PartType": {
         "enum": [
-          {
-            "value": "capability",
-          },
-          {
-            "value": "enhancement",
-          },
-          {
-            "value": "feature",
-          },
-          {
-            "value": "product",
-          },
+          "capability",
+          "enhancement",
+          "feature",
+          "product",
         ],
       },
       "PartsCreateRequest": {
@@ -3871,18 +3797,10 @@ sort order. If not set, then no prior elements exist.
       "TicketSeverity": {
         "docs": "Severity of the ticket.",
         "enum": [
-          {
-            "value": "blocker",
-          },
-          {
-            "value": "high",
-          },
-          {
-            "value": "low",
-          },
-          {
-            "value": "medium",
-          },
+          "blocker",
+          "high",
+          "low",
+          "medium",
         ],
       },
       "TimelineComment": {
@@ -3911,12 +3829,8 @@ will appear in the response.
       "TimelineCommentBodyType": {
         "docs": "The type of the body to use for the comment.",
         "enum": [
-          {
-            "value": "snap_kit",
-          },
-          {
-            "value": "text",
-          },
+          "snap_kit",
+          "text",
         ],
       },
       "TimelineEntriesCreateRequest": {
@@ -4106,21 +4020,11 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "UserState": {
         "docs": "State of the user.",
         "enum": [
-          {
-            "value": "active",
-          },
-          {
-            "value": "deactivated",
-          },
-          {
-            "value": "locked",
-          },
-          {
-            "value": "shadow",
-          },
-          {
-            "value": "unassigned",
-          },
+          "active",
+          "deactivated",
+          "locked",
+          "shadow",
+          "unassigned",
         ],
       },
       "UserSummary": {
@@ -4135,15 +4039,9 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       },
       "UserType": {
         "enum": [
-          {
-            "value": "dev_user",
-          },
-          {
-            "value": "rev_user",
-          },
-          {
-            "value": "sys_user",
-          },
+          "dev_user",
+          "rev_user",
+          "sys_user",
         ],
       },
       "WebhookEventRequest": {
@@ -4201,63 +4099,25 @@ be set for other request types.
       "WebhookEventType": {
         "docs": "The event types that the webhook will receive.",
         "enum": [
-          {
-            "value": "part_created",
-          },
-          {
-            "value": "part_deleted",
-          },
-          {
-            "value": "part_updated",
-          },
-          {
-            "value": "rev_org_created",
-          },
-          {
-            "value": "rev_org_deleted",
-          },
-          {
-            "value": "rev_org_updated",
-          },
-          {
-            "value": "tag_created",
-          },
-          {
-            "value": "tag_deleted",
-          },
-          {
-            "value": "tag_updated",
-          },
-          {
-            "value": "timeline_entry_created",
-          },
-          {
-            "value": "timeline_entry_deleted",
-          },
-          {
-            "value": "timeline_entry_updated",
-          },
-          {
-            "value": "verify",
-          },
-          {
-            "value": "webhook_created",
-          },
-          {
-            "value": "webhook_deleted",
-          },
-          {
-            "value": "webhook_updated",
-          },
-          {
-            "value": "work_created",
-          },
-          {
-            "value": "work_deleted",
-          },
-          {
-            "value": "work_updated",
-          },
+          "part_created",
+          "part_deleted",
+          "part_updated",
+          "rev_org_created",
+          "rev_org_deleted",
+          "rev_org_updated",
+          "tag_created",
+          "tag_deleted",
+          "tag_updated",
+          "timeline_entry_created",
+          "timeline_entry_deleted",
+          "timeline_entry_updated",
+          "verify",
+          "webhook_created",
+          "webhook_deleted",
+          "webhook_updated",
+          "work_created",
+          "work_deleted",
+          "work_updated",
         ],
       },
       "WebhookEventVerify": {
@@ -4272,15 +4132,9 @@ be set for other request types.
       "WebhookStatus": {
         "docs": "The status of the webhook.",
         "enum": [
-          {
-            "value": "active",
-          },
-          {
-            "value": "inactive",
-          },
-          {
-            "value": "unverified",
-          },
+          "active",
+          "inactive",
+          "unverified",
         ],
       },
       "WebhooksCreateResponse": {
@@ -4311,12 +4165,8 @@ be set for other request types.
       "WebhooksUpdateAction": {
         "docs": "The action to update the webhook's status.",
         "enum": [
-          {
-            "value": "activate",
-          },
-          {
-            "value": "deactivate",
-          },
+          "activate",
+          "deactivate",
         ],
       },
       "WebhooksUpdateRequestEventTypes": {
@@ -4391,12 +4241,8 @@ event types. Note this is mutually exclusive with 'add' and
       },
       "WorkType": {
         "enum": [
-          {
-            "value": "issue",
-          },
-          {
-            "value": "ticket",
-          },
+          "issue",
+          "ticket",
         ],
       },
       "WorksCreateRequest": {
