@@ -64,9 +64,23 @@ jobs:
 
       - name: compile
         run: yarn compile
+  
+  eslint:
+    runs-on: CLI
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
 
       - name: lint:eslint
-        run: yarn lint:eslint
+        run: yarn lint:eslint        
 
   check-test-definitions:
     runs-on: CLI
