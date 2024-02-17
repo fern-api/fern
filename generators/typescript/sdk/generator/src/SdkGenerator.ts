@@ -95,6 +95,7 @@ export declare namespace SdkGenerator {
 }
 
 export class SdkGenerator {
+    private namespaceExport: string;
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
@@ -150,6 +151,7 @@ export class SdkGenerator {
         generateJestTests
     }: SdkGenerator.Init) {
         this.context = context;
+        this.namespaceExport = namespaceExport;
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
         this.npmPackage = npmPackage;
@@ -350,7 +352,7 @@ module.exports = {
             if (this.config.includeApiReference) {
                 refGenerator = new ReferenceGenerator({
                     clientName: this.intermediateRepresentation.apiName.camelCase.safeName,
-                    apiName: this.intermediateRepresentation.apiName.pascalCase.safeName
+                    apiName: this.namespaceExport === "api" ? "client" : this.namespaceExport
                 });
             }
             this.generateSnippets(refGenerator);
