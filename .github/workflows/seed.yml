@@ -11,7 +11,7 @@ on:
 
 jobs:
   changes:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     outputs:
       seed: ${{ steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}
