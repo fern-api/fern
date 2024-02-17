@@ -77,7 +77,7 @@ await seedExamples.echo("Hello world!");
 ## File Notification Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>({ ...params }) -> SeedExamples.Exception</code> </summary>
+<details><summary> <code>examples.<a href="./src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code> </summary>
 
 <dl>
 
@@ -152,19 +152,27 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 ## File Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/file/resources/service/client/Client.ts">getFile</a>({ ...params }) -> SeedExamples.File_</code> </summary>
+<details><summary> <code>examples.<a href="./src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code> </summary>
 
 <dl>
 
 <dd>
 
-<br/>
+#### 📝 Description
 
 <dl>
 
 <dd>
 
-> This endpoint returns a file by its name.
+<dl>
+
+<dd>
+
+This endpoint returns a file by its name.
+
+</dd>
+
+</dl>
 
 </dd>
 
@@ -253,19 +261,27 @@ await seedExamples.file.service.getFile("file.txt", {
 ## Health Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>({ ...params }) -> void</code> </summary>
+<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code> </summary>
 
 <dl>
 
 <dd>
 
-<br/>
+#### 📝 Description
 
 <dl>
 
 <dd>
 
-> This endpoint checks the health of a resource.
+<dl>
+
+<dd>
+
+This endpoint checks the health of a resource.
+
+</dd>
+
+</dl>
 
 </dd>
 
@@ -335,19 +351,27 @@ await seedExamples.health.service.check("id-2sdx82h");
 </details>
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>({ ...params }) -> boolean</code> </summary>
+<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code> </summary>
 
 <dl>
 
 <dd>
 
-<br/>
+#### 📝 Description
 
 <dl>
 
 <dd>
 
-> This endpoint checks the health of the service.
+<dl>
+
+<dd>
+
+This endpoint checks the health of the service.
+
+</dd>
+
+</dl>
 
 </dd>
 
@@ -410,7 +434,7 @@ await seedExamples.health.service.ping();
 ## Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> SeedExamples.Movie</code> </summary>
+<details><summary> <code>examples.<a href="./src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code> </summary>
 
 <dl>
 

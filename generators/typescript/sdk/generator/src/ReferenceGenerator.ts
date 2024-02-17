@@ -36,6 +36,13 @@ function wrapInLink(content: string, link?: string) {
     return link !== undefined ? `<a href="./src${link}">${content}</a>` : content;
 }
 
+function writeSignature(parameters: ReferenceParameterDeclaration[]): string {
+    return `(${parameters
+        .filter((param) => param.name !== "requestOptions")
+        .map((param) => (param.name === "request" ? "{ ...params }" : param.name))
+        .join(", ")})`;
+}
+
 class ReferenceGeneratorSection {
     clientName: string;
     heading: string;
@@ -63,7 +70,9 @@ class ReferenceGeneratorSection {
 
     private writeEndpoint(endpoint: EndpointDeclaration): string {
         const descriptionBlock =
-            endpoint.description !== undefined ? `<br/>\n\n${writeIndentedBlock("> " + endpoint.description)}\n\n` : "";
+            endpoint.description !== undefined
+                ? `#### 📝 Description\n\n${writeIndentedBlock(writeIndentedBlock(endpoint.description))}\n\n`
+                : "";
         const usageBlock =
             endpoint.codeSnippet !== undefined
                 ? `#### 🔌 Usage\n\n${writeIndentedBlock(
@@ -80,10 +89,9 @@ class ReferenceGeneratorSection {
                 : "";
 
         return `
-<details><summary> <code>${this.clientName}.${wrapInLink(
-            endpoint.functionName,
-            endpoint.functionPath
-        )}({ ...params }) -> ${wrapInLink(
+<details><summary> <code>${this.clientName}.${wrapInLink(endpoint.functionName, endpoint.functionPath)}${writeSignature(
+            endpoint.parameters
+        )} -> ${wrapInLink(
             endpoint.returnType === undefined ? "void" : endpoint.returnType,
             endpoint.returnTypePath
         )}</code> </summary>
