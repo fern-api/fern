@@ -5,9 +5,26 @@ package com.seed.nurseryApi.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
-    private RequestOptions() {}
+    private final Optional<Integer> timeout;
+
+    private final TimeUnit timeoutTimeUnit;
+
+    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+        this.timeout = timeout;
+        this.timeoutTimeUnit = timeoutTimeUnit;
+    }
+
+    public Optional<Integer> getTimeout() {
+        return timeout;
+    }
+
+    public TimeUnit getTimeoutTimeUnit() {
+        return timeoutTimeUnit;
+    }
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
@@ -19,8 +36,23 @@ public final class RequestOptions {
     }
 
     public static final class Builder {
+        private Optional<Integer> timeout = null;
+
+        private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        public Builder timeout(Integer timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
+            this.timeout = Optional.of(timeout);
+            this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions();
+            return new RequestOptions(timeout, timeoutTimeUnit);
         }
     }
 }

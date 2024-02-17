@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.RuntimeException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -55,7 +56,11 @@ public class NoAuthClient {
       .addHeader("Content-Type", "application/json")
       .build();
     try {
-      Response response = clientOptions.httpClient().newCall(okhttpRequest).execute();
+      OkHttpClient client = clientOptions.httpClient();
+      if (requestOptions.getTimeout().isPresent()) {
+        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+      }
+      Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), boolean.class);
       }

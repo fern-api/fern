@@ -5,15 +5,31 @@ package com.seed.literalHeaders.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
     private final String apiHeader;
 
     private final String apiTest;
 
-    private RequestOptions(String apiHeader, String apiTest) {
+    private final Optional<Integer> timeout;
+
+    private final TimeUnit timeoutTimeUnit;
+
+    private RequestOptions(String apiHeader, String apiTest, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
         this.apiHeader = apiHeader;
         this.apiTest = apiTest;
+        this.timeout = timeout;
+        this.timeoutTimeUnit = timeoutTimeUnit;
+    }
+
+    public Optional<Integer> getTimeout() {
+        return timeout;
+    }
+
+    public TimeUnit getTimeoutTimeUnit() {
+        return timeoutTimeUnit;
     }
 
     public Map<String, String> getHeaders() {
@@ -36,6 +52,10 @@ public final class RequestOptions {
 
         private String apiTest = null;
 
+        private Optional<Integer> timeout = null;
+
+        private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
         public Builder apiHeader(String apiHeader) {
             this.apiHeader = apiHeader;
             return this;
@@ -46,8 +66,19 @@ public final class RequestOptions {
             return this;
         }
 
+        public Builder timeout(Integer timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
+            this.timeout = Optional.of(timeout);
+            this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(apiHeader, apiTest);
+            return new RequestOptions(apiHeader, apiTest, timeout, timeoutTimeUnit);
         }
     }
 }
