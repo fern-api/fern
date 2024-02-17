@@ -17,7 +17,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   compile:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
         run: yarn lint:eslint
 
   check-test-definitions:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -91,7 +91,7 @@ jobs:
           FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -111,7 +111,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   ete-tests:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
