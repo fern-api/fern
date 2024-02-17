@@ -51,6 +51,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli
@@ -74,6 +77,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli
@@ -97,6 +103,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -124,6 +133,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -151,6 +163,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -178,6 +193,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -198,6 +216,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -218,6 +239,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -238,6 +262,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -258,6 +285,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -278,6 +308,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -298,6 +331,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
