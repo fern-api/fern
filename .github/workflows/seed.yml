@@ -60,7 +60,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ruby-model --parallel 8
+          yarn seed:local test --workspace ruby-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -83,7 +83,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ruby-sdk --parallel 8
+          yarn seed:local test --workspace ruby-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -110,7 +110,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace pydantic --parallel 8
+          yarn seed:local test --workspace pydantic --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -137,7 +137,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace python-sdk --parallel 8
+          yarn seed:local test --workspace python-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -164,7 +164,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace fastapi --parallel 8
+          yarn seed:local test --workspace fastapi --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -184,7 +184,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace openapi --parallel 8
+          yarn seed:local test --workspace openapi --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -204,7 +204,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace postman --parallel 8
+          yarn seed:local test --workspace postman --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -224,7 +224,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-sdk --parallel 8
+          yarn seed:local test --workspace java-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -244,7 +244,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-model --parallel 8
+          yarn seed:local test --workspace java-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -264,7 +264,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-spring --parallel 8
+          yarn seed:local test --workspace java-spring --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
