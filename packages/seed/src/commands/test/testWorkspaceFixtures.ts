@@ -139,41 +139,25 @@ export async function testWorkspaceFixtures({
         }
     }
     const results = await Promise.all(testCases);
+
+    printTestCases(results);
+
     const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.id);
+    const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
+
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
-    }
-
-    const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
-    if (workspace.workspaceConfig.allowedFailures == null && failedFixtures.length > 0) {
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. None were supposed to fail.`
-        );
-        process.exit(1);
-    } else if (isEqual(workspace.workspaceConfig.allowedFailures, failedFixtures) || unexpectedFixtures.length === 0) {
+    } else if (isEqual(workspace.workspaceConfig.allowedFailures ?? [], failedFixtures)) {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
                 results.length
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. All were expected.`
         );
-    } else if (workspace.workspaceConfig.allowedFailures != null) {
-        if (failedFixtures.length > 0) {
-            CONSOLE_LOGGER.info(
-                `${failedFixtures.length}/${
-                    results.length
-                } test cases failed. The failed fixtures include ${failedFixtures.join(
-                    ", "
-                )}. Unexpected fixtures were .${unexpectedFixtures.join(", ")}`
-            );
+        if (unexpectedFixtures.length > 0) {
+            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
             process.exit(1);
         }
-    } else {
-        CONSOLE_LOGGER.info("All tests passed!");
     }
-
-    printTestCases(results);
 }
 
 export async function acquireLocksAndRunTest({
