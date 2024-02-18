@@ -130,15 +130,7 @@ class EndpointFunctionGenerator:
                 snippet=endpoint_snippet,
             ),
             signature=AST.FunctionSignature(
-                parameters=[
-                    AST.FunctionParameter(
-                        name=get_parameter_name(path_parameter.name),
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type
-                        ),
-                    )
-                    for path_parameter in self._endpoint.all_path_parameters
-                ],
+                parameters=self._get_endpoint_path_parameters(),
                 named_parameters=named_parameters,
                 return_type=(
                     self._get_response_body_type(self._endpoint.response, self._is_async)
@@ -160,6 +152,22 @@ class EndpointFunctionGenerator:
             is_default_body_parameter_used=request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
+
+    def _get_endpoint_path_parameters(
+        self,
+    ) -> List[AST.FunctionParameter]:
+        parameters: List[AST.FunctionParameter] = []
+        for path_parameter in self._endpoint.all_path_parameters: 
+            if not self._is_type_literal(path_parameter.value_type):
+                parameters.append(
+                    AST.FunctionParameter(
+                        name=get_parameter_name(path_parameter.name),
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type
+                        ),
+                    ),
+                )
+        return parameters    
 
     def _get_endpoint_named_parameters(
         self,
@@ -904,7 +912,7 @@ class EndpointFunctionSnippetGenerator:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
             )
-            if path_parameter_value is not None:
+            if not self._is_path_literal(path_parameter.name.original_name) and path_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(path_parameter.name),
@@ -928,7 +936,7 @@ class EndpointFunctionSnippetGenerator:
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_header.value,
             )
-            if example_header_parameter_value is not None:
+            if not self._is_header_literal(example_header.name.wire_value) and example_header_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_header.name.name),
@@ -940,7 +948,7 @@ class EndpointFunctionSnippetGenerator:
             query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=query_parameter.value,
             )
-            if query_parameter_value is not None:
+            if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(query_parameter.name.name),
@@ -1007,6 +1015,24 @@ class EndpointFunctionSnippetGenerator:
         if self.endpoint.sdk_request is None:
             raise Exception("request body is referenced but SDKRequestBody is not defined")
         return self.endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
+
+    def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
+        param = next(filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters))
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+    
+    def _is_path_literal(self, path_parameter_original_name: str) -> bool:
+        param = next(filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters))
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_header_literal(self, header_wire_value: str) -> bool:
+        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers))
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:

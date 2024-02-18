@@ -21,9 +21,7 @@ class PathClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(
-        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SendResponse:
+    def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
@@ -33,9 +31,7 @@ class PathClient:
         client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.path.send(
-            id="123",
-        )
+        client.path.send()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -71,9 +67,7 @@ class AsyncPathClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(
-        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SendResponse:
+    async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
@@ -83,9 +77,7 @@ class AsyncPathClient:
         client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.path.send(
-            id="123",
-        )
+        await client.path.send()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

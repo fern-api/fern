@@ -34,8 +34,6 @@ class QueryClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.query.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
@@ -97,8 +95,6 @@ class AsyncQueryClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.query.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
