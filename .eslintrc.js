@@ -116,6 +116,7 @@ module.exports = {
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
-        "@typescript-eslint/no-empty-interface": "off"
+        "@typescript-eslint/no-empty-interface": "off",
+        "no-unused-disable": "off"
     }
 };
