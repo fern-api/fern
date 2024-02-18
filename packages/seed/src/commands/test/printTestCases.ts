@@ -7,7 +7,9 @@ export function printTestCases(result: TestResult[]): void {
             Name: r.id,
             Result: r.type,
             "Generation Time": r.metrics.generationTime,
-            "Verificatio Time": r.metrics.verificationTime
+            "Verification Time": r.metrics.verificationTime,
+            "Failure Type": r.type === "failure" ? r.cause : undefined,
+            "Failure Message": r.type === "failure" ? r.message : undefined
         };
     });
     printTable(items);

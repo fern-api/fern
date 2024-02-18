@@ -31,7 +31,8 @@ export interface TestSuccess {
 
 export interface TestFailure {
     type: "failure";
-    reason: string | undefined;
+    cause: "invalid-fixture" | "generation" | "verification";
+    message?: string;
     id: string;
     metrics: TestCaseMetrics;
 }
@@ -267,7 +268,8 @@ async function testWithWriteToDisk({
             taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);
             return {
                 type: "failure",
-                reason: Object.entries(workspace.failures)
+                cause: "invalid-fixture",
+                message: Object.entries(workspace.failures)
                     .map(([file, reason]) => `${file}: ${reason.type}`)
                     .join("\n"),
                 id,
@@ -299,6 +301,16 @@ async function testWithWriteToDisk({
         if (skipScripts) {
             return { type: "success", id, metrics };
         }
+    } catch (err) {
+        return {
+            type: "failure",
+            cause: "generation",
+            message: (err as Error).message,
+            id,
+            metrics
+        };
+    }
+    try {
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${fixture}`);
             const scriptStopwatch = new Stopwatch();
@@ -321,7 +333,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
                 taskContext.logger.error(mkdirCommand.stdout);
                 taskContext.logger.error(mkdirCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id, metrics };
+                return { type: "failure", cause: "verification", message: mkdirCommand.stdout, id, metrics };
             }
             const copyScriptCommand = await loggingExeca(
                 undefined,
@@ -335,7 +347,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy script. See ouptut below");
                 taskContext.logger.error(copyScriptCommand.stdout);
                 taskContext.logger.error(copyScriptCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id, metrics };
+                return { type: "failure", cause: "verification", message: copyScriptCommand.stdout, id, metrics };
             }
             const copyCommand = await loggingExeca(
                 taskContext.logger,
@@ -349,7 +361,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy generated files. See ouptut below");
                 taskContext.logger.error(copyCommand.stdout);
                 taskContext.logger.error(copyCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id, metrics };
+                return { type: "failure", cause: "verification", message: copyCommand.stdout, id, metrics };
             }
 
             // Now actually run the test script
@@ -367,14 +379,15 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to run script. See ouptut below");
                 taskContext.logger.error(command.stdout);
                 taskContext.logger.error(command.stderr);
-                return { type: "failure", reason: "Failed to run script...", id, metrics };
+                return { type: "failure", cause: "verification", message: command.stdout, id, metrics };
             }
         }
         return { type: "success", id, metrics };
     } catch (err) {
         return {
             type: "failure",
-            reason: (err as Error).message,
+            cause: "verification",
+            message: (err as Error).message,
             id,
             metrics
         };
