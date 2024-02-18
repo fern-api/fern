@@ -31,9 +31,6 @@ class PydanticGeneratorContext(ABC):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
-        check_is_circular_reference: Optional[
-            Callable[[ir_types.DeclaredTypeName, ir_types.DeclaredTypeName], bool]
-        ] = None,
     ) -> AST.TypeHint:
         ...
 

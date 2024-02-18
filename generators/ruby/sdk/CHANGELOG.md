@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.1] - 2024-02-15
+
+- Fix: ensure the Ruby generators do not have strict dependencies on the IR. The generators have been updated to allow non breaking changes for the IR and the Fern CLI to happen without issue.
+
+## [0.1.0-rc0] - 2024-02-12
+
+- Improvement: loosen the Faraday dependencies within the generated SDKs, now we are supporting Faraday 1.x, while continuing to support the same upperbound (specifically supporting the latest major version as well).
+- Release a minor version as the Ruby generator is now being used in beta!
+
+## [0.0.6] - 2024-02-09
+
+- Improvement: license files are now specified within the gem config if they are provided
+
+```
+generators:
+  - name: fernapi/fern-ruby-sdk
+    version: 0.0.6
+    github:
+      repository: org/repo-name
+      mode: pull-request
+      license: MIT
+```
+
+- Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a publishing configuration
+
+```
+generators:
+  - name:
+     output:  # <-- Publishing configuration
+       location: rubygems
+       api-key: ${API_KEY}
+       package-name: "petstore"
+```
+
 ## [0.0.5] - 2024-02-06
 
 - This release contains no changes to the API.
@@ -40,8 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 groups:
  - name: ...
     version: ...
-    location:
-       output: rubygems
+    output:
+       location: rubygems
        api-key: ${API_KEY}
        package-name: "petstore"
 ```

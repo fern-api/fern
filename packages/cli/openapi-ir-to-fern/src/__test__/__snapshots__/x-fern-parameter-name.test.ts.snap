@@ -15,7 +15,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
             {
               "headers": {},
               "query-parameters": {
-                "foo": "string",
+                "foo": "foo",
               },
               "response": {
                 "body": "string",

@@ -121,6 +121,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -412,6 +413,7 @@ exports[`generate IR 1`] = `
         "type_package:Record",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -651,12 +653,12 @@ exports[`generate IR 1`] = `
                   "unsafeName": "3D",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "3_D",
-                  "unsafeName": "3_D",
+                  "safeName": "3D",
+                  "unsafeName": "3D",
                 },
                 "snakeCase": {
-                  "safeName": "3_d",
-                  "unsafeName": "3_d",
+                  "safeName": "3d",
+                  "unsafeName": "3d",
                 },
               },
               "wireValue": "3d",
@@ -672,5 +674,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

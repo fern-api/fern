@@ -2,7 +2,7 @@ module.exports = {
     root: true,
     env: {
         browser: true,
-        es2021: true,
+        es2021: true
     },
     plugins: [
         "@typescript-eslint",
@@ -11,7 +11,7 @@ module.exports = {
         "deprecation",
         "import",
         "react",
-        "eslint-plugin-tailwindcss",
+        "eslint-plugin-tailwindcss"
     ],
     extends: [
         "eslint:recommended",
@@ -22,26 +22,26 @@ module.exports = {
         "plugin:@blueprintjs/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:tailwindcss/recommended",
+        "plugin:tailwindcss/recommended"
     ],
     settings: {
         react: {
-            version: "^18.2.0",
-        },
+            version: "^18.2.0"
+        }
     },
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaFeatures: {
-            jsx: true,
+            jsx: true
         },
         ecmaVersion: 12,
         sourceType: "module",
         project: ["./tsconfig.eslint.json", "./packages/**/tsconfig.json"],
         allowAutomaticSingleRunInference: true,
-        tsconfigRootDir: __dirname,
+        tsconfigRootDir: __dirname
     },
     env: {
-        "jest/globals": true,
+        "jest/globals": true
     },
     ignorePatterns: ["*.js", "*.jsx"],
     rules: {
@@ -50,41 +50,41 @@ module.exports = {
             "error",
             "double",
             {
-                avoidEscape: true,
-            },
+                avoidEscape: true
+            }
         ],
         semi: ["error", "always"],
         indent: "off",
         "no-empty": [
             "error",
             {
-                allowEmptyCatch: true,
-            },
+                allowEmptyCatch: true
+            }
         ],
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
-                ignoreRestSiblings: true,
-            },
+                ignoreRestSiblings: true
+            }
         ],
         "@typescript-eslint/no-namespace": [
             "error",
             {
-                allowDeclarations: true,
-            },
+                allowDeclarations: true
+            }
         ],
         "@typescript-eslint/explicit-module-boundary-types": [
             "error",
             {
-                allowHigherOrderFunctions: false,
-            },
+                allowHigherOrderFunctions: false
+            }
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
         "@typescript-eslint/no-empty-function": [
             "error",
             {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
-            },
+                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"]
+            }
         ],
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
@@ -96,16 +96,16 @@ module.exports = {
         "import/no-internal-modules": [
             "error",
             {
-                forbid: ["@fern-api/*/**"],
-            },
+                forbid: ["@fern-api/*/**"]
+            }
         ],
         "@typescript-eslint/no-base-to-string": "error",
         eqeqeq: [
             "error",
             "always",
             {
-                null: "never",
-            },
+                null: "never"
+            }
         ],
         curly: "error",
         "no-console": "error",
@@ -115,6 +115,8 @@ module.exports = {
         "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
-        "@typescript-eslint/strict-boolean-expressions": "error",
-    },
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "no-unused-disable": "off"
+    }
 };

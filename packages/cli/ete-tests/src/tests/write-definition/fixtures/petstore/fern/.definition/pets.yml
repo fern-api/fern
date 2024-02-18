@@ -5,7 +5,7 @@ service:
   base-path: ''
   endpoints:
     listPets:
-      path: /v1/pets
+      path: /pets
       method: GET
       auth: false
       display-name: List all pets
@@ -20,16 +20,19 @@ service:
         type: root.Pets
       examples:
         - response:
-            body: []
+            body:
+              - id: 1
+                name: name
+                tag: tag
     createPets:
-      path: /v1/pets
+      path: /pets
       method: POST
       auth: false
       display-name: Create a pet
       examples:
         - {}
     showPetById:
-      path: /v1/pets/{petId}
+      path: /pets/{petId}
       method: GET
       auth: false
       path-parameters:
@@ -42,8 +45,9 @@ service:
         type: root.Pet
       examples:
         - path-parameters:
-            petId: string
+            petId: petId
           response:
             body:
               id: 1
-              name: string
+              name: name
+              tag: tag

@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ......core.datetime_utils import serialize_datetime
 from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
 from .void_function_definition import VoidFunctionDefinition
@@ -47,7 +45,7 @@ class TestCaseFunction(pydantic.BaseModel):
         if self.__root__.type == "custom":
             return custom(VoidFunctionDefinition(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom], pydantic.Field(discriminator="type")
     ]
 
@@ -66,13 +64,13 @@ class TestCaseFunction(pydantic.BaseModel):
 
 class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):
-        type: typing_extensions.Literal["withActualResult"]
+        type: typing.Literal["withActualResult"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Custom(VoidFunctionDefinition):
-        type: typing_extensions.Literal["custom"]
+        type: typing.Literal["custom"]
 
         class Config:
             allow_population_by_field_name = True

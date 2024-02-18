@@ -41,7 +41,55 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "primitive",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "active": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "inbound_agent": {
+                        "primitive": {
+                          "string": "inbound_agent",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "label",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "string": "number",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "user_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -391,7 +439,94 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "primitive",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "agent": {
+                        "primitive": {
+                          "string": "agent",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "agent_phone_number": {
+                        "primitive": {
+                          "string": "agent_phone_number",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "end_time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "error_message": {
+                        "primitive": {
+                          "string": "error_message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "from_number": {
+                        "primitive": {
+                          "string": "from_number",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "recording_available": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "start_time": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "not_started",
+                        "type": "enum",
+                      },
+                      "to_number": {
+                        "primitive": {
+                          "string": "to_number",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "transcript": {
+                        "primitive": {
+                          "string": "transcript",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "user_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -678,7 +813,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -687,7 +822,21 @@ exports[`open api parser vocode parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "key",
+                  "type": "string",
+                },
+                "value": {
+                  "primitive": {
+                    "string": "value",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            ],
             "type": "map",
           },
         },
@@ -775,7 +924,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "user_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "user_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1298,7 +1447,82 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "primitive",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "actions": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "actions",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "initial_message": {
+                        "primitive": {
+                          "string": "initial_message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "interrupt_sensitivity": {
+                        "enum": "low",
+                        "type": "enum",
+                      },
+                      "language": {
+                        "enum": "en",
+                        "type": "enum",
+                      },
+                      "prompt": {
+                        "primitive": {
+                          "string": "prompt",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "user_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "vector_database": {
+                        "primitive": {
+                          "string": "vector_database",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "voice": {
+                        "primitive": {
+                          "string": "voice",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook": {
+                        "primitive": {
+                          "string": "webhook",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -1961,7 +2185,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1973,7 +2197,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1983,19 +2207,24 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "enum",
               },
               "subscriptions": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "user_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "user_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2081,7 +2310,47 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "primitive",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "method": {
+                        "enum": "GET",
+                        "type": "enum",
+                      },
+                      "subscriptions": {
+                        "array": [
+                          {
+                            "enum": "event_message",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "user_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -2197,17 +2466,18 @@ exports[`open api parser vocode parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "method": {
-                "enum": "GET",
-                "type": "enum",
-              },
               "subscriptions": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2219,7 +2489,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2229,19 +2499,24 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "enum",
               },
               "subscriptions": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "user_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "user_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2315,7 +2590,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2323,19 +2598,14 @@ exports[`open api parser vocode parse open api 1`] = `
             },
           ],
           "request": {
-            "properties": {
-              "method": {
-                "enum": "GET",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2345,19 +2615,24 @@ exports[`open api parser vocode parse open api 1`] = `
                 "type": "enum",
               },
               "subscriptions": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "user_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "user_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2445,6 +2720,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PhoneNumberPage",
@@ -4521,24 +4797,48 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "not_started",
           "nameOverride": undefined,
           "value": "not_started",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "in_progress",
           "nameOverride": undefined,
           "value": "in_progress",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "error",
           "nameOverride": undefined,
           "value": "error",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ended",
           "nameOverride": undefined,
@@ -5713,36 +6013,72 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_message",
           "nameOverride": undefined,
           "value": "event_message",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_action",
           "nameOverride": undefined,
           "value": "event_action",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_phone_call_connected",
           "nameOverride": undefined,
           "value": "event_phone_call_connected",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_phone_call_ended",
           "nameOverride": undefined,
           "value": "event_phone_call_ended",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_transcript",
           "nameOverride": undefined,
           "value": "event_transcript",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "event_recording",
           "nameOverride": undefined,
@@ -5758,12 +6094,24 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GET",
           "nameOverride": undefined,
           "value": "GET",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "POST",
           "nameOverride": undefined,
@@ -5818,12 +6166,24 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "low",
           "nameOverride": undefined,
           "value": "low",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "high",
           "nameOverride": undefined,
@@ -5839,18 +6199,36 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "en",
           "nameOverride": undefined,
           "value": "en",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "es",
           "nameOverride": undefined,
           "value": "es",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "de",
           "nameOverride": undefined,
@@ -7071,18 +7449,36 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "plan_free",
           "nameOverride": undefined,
           "value": "plan_free",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "plan_developer",
           "nameOverride": undefined,
           "value": "plan_developer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "plan_enterprise",
           "nameOverride": undefined,
@@ -8623,6 +9019,7 @@ exports[`open api parser vocode parse open api 1`] = `
   },
   "securitySchemes": {
     "HTTPBearer": {
+      "tokenEnvVar": undefined,
       "tokenVariableName": undefined,
       "type": "bearer",
     },

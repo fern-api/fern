@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+/dist
+/Client.d.ts
+/Client.js
+/index.d.ts
+/index.js
+/api
+/core
+/errors
+/serialization

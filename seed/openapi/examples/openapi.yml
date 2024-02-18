@@ -60,12 +60,14 @@ paths:
         - BearerAuth: []
   /file/{filename}:
     get:
+      description: This endpoint returns a file by its name.
       operationId: file_service_getFile
       tags:
         - FileService
       parameters:
         - name: filename
           in: path
+          description: This is a filename
           required: true
           schema:
             type: string
@@ -92,12 +94,14 @@ paths:
         - BearerAuth: []
   /check/{id}:
     get:
+      description: This endpoint checks the health of a resource.
       operationId: health_service_check
       tags:
         - HealthService
       parameters:
         - name: id
           in: path
+          description: The id to check
           required: true
           schema:
             type: string
@@ -111,6 +115,7 @@ paths:
         - BearerAuth: []
   /ping:
     get:
+      description: This endpoint checks the health of the service.
       operationId: health_service_ping
       tags:
         - HealthService

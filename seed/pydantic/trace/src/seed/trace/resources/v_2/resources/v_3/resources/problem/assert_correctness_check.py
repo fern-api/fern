@@ -4,21 +4,19 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
-    type: typing_extensions.Literal["deepEquality"]
+    type: typing.Literal["deepEquality"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
-    type: typing_extensions.Literal["custom"]
+    type: typing.Literal["custom"]
 
     class Config:
         allow_population_by_field_name = True

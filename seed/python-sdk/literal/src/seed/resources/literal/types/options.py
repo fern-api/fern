@@ -3,8 +3,6 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -14,8 +12,8 @@ except ImportError:
 
 
 class Options(pydantic.BaseModel):
-    id: typing_extensions.Literal["options"]
-    enabled: typing_extensions.Literal[True]
+    id: typing.Literal["options"]
+    enabled: typing.Literal[True]
     values: typing.Dict[str, str]
 
     def json(self, **kwargs: typing.Any) -> str:

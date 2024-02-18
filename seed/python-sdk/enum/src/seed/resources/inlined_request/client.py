@@ -7,6 +7,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ...types.operand import Operand
 
 # this is used as the default value for optional parameters
@@ -17,10 +19,14 @@ class InlinedRequestClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, *, value: typing.Optional[Operand] = OMIT) -> None:
+    def send(
+        self, *, value: typing.Optional[Operand] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
             - value: typing.Optional[Operand].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import SeedEnum
@@ -34,9 +40,26 @@ class InlinedRequestClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined-request"),
-            json=jsonable_encoder(_request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -51,10 +74,14 @@ class AsyncInlinedRequestClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, *, value: typing.Optional[Operand] = OMIT) -> None:
+    async def send(
+        self, *, value: typing.Optional[Operand] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
             - value: typing.Optional[Operand].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import AsyncSeedEnum
@@ -68,9 +95,26 @@ class AsyncInlinedRequestClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined-request"),
-            json=jsonable_encoder(_request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

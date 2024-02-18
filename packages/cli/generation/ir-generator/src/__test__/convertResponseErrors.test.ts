@@ -7,7 +7,10 @@ import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
-        const casingsGenerator = constructCasingsGenerator({ generationLanguage: undefined, smartCasing: false });
+        const casingsGenerator = constructCasingsGenerator({
+            generationLanguage: undefined,
+            smartCasing: false
+        });
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],
             file: constructFernFileContext({

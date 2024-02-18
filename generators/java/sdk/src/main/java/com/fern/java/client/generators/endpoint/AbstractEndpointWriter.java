@@ -80,6 +80,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
+
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public abstract class AbstractEndpointWriter {
@@ -275,14 +277,30 @@ public abstract class AbstractEndpointWriter {
             boolean sendContentType);
 
     public final CodeBlock getResponseParserCodeBlock() {
+        String defaultedClientName = "client";
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 .beginControlFlow("try")
+                // Default the request client
                 .addStatement(
-                        "$T $L = $N.$N().newCall($L).execute()",
+                        "$T $L = $N.$N()",
+                        OkHttpClient.class,
+                        defaultedClientName,
+                        clientOptionsField,
+                        generatedClientOptions.httpClient())
+                .beginControlFlow("if ($L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME)
+                // Set the client's readTimeout if requestOptions overrides it has one
+                .addStatement(
+                        "$L = $L.newBuilder().readTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit()).build()",
+                        defaultedClientName,
+                        defaultedClientName,
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .endControlFlow()
+                .addStatement(
+                        "$T $L = $N.newCall($L).execute()",
                         Response.class,
                         getResponseName(),
-                        clientOptionsField,
-                        generatedClientOptions.httpClient(),
+                        defaultedClientName,
                         getOkhttpRequestName())
                 .beginControlFlow("if ($L.isSuccessful())", getResponseName());
         if (httpEndpoint.getResponse().isPresent()) {

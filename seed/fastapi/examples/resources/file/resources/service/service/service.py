@@ -27,6 +27,9 @@ class AbstractFileServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def get_file(self, *, filename: str, auth: ApiAuth) -> File:
+        """
+        This endpoint returns a file by its name.
+        """
         ...
 
     """

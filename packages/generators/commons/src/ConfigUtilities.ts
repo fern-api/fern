@@ -1,4 +1,4 @@
-import { HttpPath, IntermediateRepresentation, PathParameter } from "@fern-api/ir-sdk";
+import { HttpPath, IntermediateRepresentation, PathParameter } from "@fern-fern/ir-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { format } from "util";
 

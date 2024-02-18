@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
@@ -16,7 +14,7 @@ except ImportError:
 
 
 class CreateProblemResponse_Success(pydantic.BaseModel):
-    type: typing_extensions.Literal["success"]
+    type: typing.Literal["success"]
     value: ProblemId
 
     class Config:
@@ -25,7 +23,7 @@ class CreateProblemResponse_Success(pydantic.BaseModel):
 
 
 class CreateProblemResponse_Error(pydantic.BaseModel):
-    type: typing_extensions.Literal["error"]
+    type: typing.Literal["error"]
     value: CreateProblemError
 
     class Config:

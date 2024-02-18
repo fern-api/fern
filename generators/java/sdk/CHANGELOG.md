@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2024-02-14
+- Feature: The RequestOptions object now supports configuring an optional timeout to apply per-request.
+  ```java
+  RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
+  //  You could also specify the timeunit, similar to as if you were using OkHttp directly
+  //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
+  client.films.list(ro);
+  ```
+
+
+## [0.8.0] - 2024-02-11
+- Feature: The SDK generator now supports whitelabelling. When this is turned on, 
+  there will be no mention of Fern in the generated code. 
+
+  **Note**: You must be on the enterprise tier to enable this mode. 
+
 ## [0.7.1] - 2024-02-04
 - Chore: Bump intermediate representation to v31
 - Feature: The SDK generator now supports idempotency headers. Users 

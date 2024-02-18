@@ -35,7 +35,7 @@
     "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
   },
   "dependencies": {
-    "@fern-fern/generator-exec-client": "^0.0.6",
+    "@fern-fern/generator-exec-sdk": "0.0.571",
     "@fern-fern/ir-sdk": "0.0.2828",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.8",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",

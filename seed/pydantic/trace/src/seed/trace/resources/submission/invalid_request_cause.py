@@ -4,29 +4,27 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .custom_test_cases_unsupported import CustomTestCasesUnsupported
 from .submission_id_not_found import SubmissionIdNotFound
 from .unexpected_language_error import UnexpectedLanguageError
 
 
 class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
-    type: typing_extensions.Literal["submissionIdNotFound"]
+    type: typing.Literal["submissionIdNotFound"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
-    type: typing_extensions.Literal["customTestCasesUnsupported"]
+    type: typing.Literal["customTestCasesUnsupported"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
-    type: typing_extensions.Literal["unexpectedLanguage"]
+    type: typing.Literal["unexpectedLanguage"]
 
     class Config:
         allow_population_by_field_name = True

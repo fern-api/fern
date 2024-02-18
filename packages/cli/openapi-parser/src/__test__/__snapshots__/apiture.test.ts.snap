@@ -76,20 +76,141 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "location",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "count": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "allows": {
+                        "properties": {
+                          "billPay": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "manageCards": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "mobileCheckDeposit": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "transferFrom": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "transferTo": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "view": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "viewCards": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Checking *1008",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location": {
+                        "enum": "internal",
+                        "type": "enum",
+                      },
+                      "maskedNumber": {
+                        "primitive": {
+                          "string": "maskedNumber",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nickname": {
+                        "primitive": {
+                          "string": "Payroll Checking",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "product": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "180D_CDA",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description": {
+                            "primitive": {
+                              "string": "Certificate of Deposit with a 180 day term",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "180 Day CD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "cd",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "limit": {
@@ -102,6 +223,20 @@ Transfers support recurring schedules, such as repeating every week or every mon
               "nextPage_url": {
                 "primitive": {
                   "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primaryAccountId": {
+                "primitive": {
+                  "string": "primaryAccountId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start": {
+                "primitive": {
+                  "string": "start",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -164,12 +299,24 @@ Transfers support recurring schedules, such as repeating every week or every mon
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "internal",
                   "nameOverride": undefined,
                   "value": "internal",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "external",
                   "nameOverride": undefined,
@@ -302,7 +449,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -390,7 +537,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -408,7 +555,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "maskedNumber": {
                 "primitive": {
-                  "string": "string",
+                  "string": "maskedNumber",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -626,6 +773,53 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "available": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "current": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currentWithPending": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "incomplete": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2021-10-30T19:06:04.250Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -735,7 +929,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -747,7 +941,27 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "0399abed-fd3d",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Max Pike",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -982,7 +1196,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1122,6 +1336,13 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "type": "primitive",
               },
+              "start": {
+                "primitive": {
+                  "string": "start",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
             },
             "type": "object",
           },
@@ -1245,7 +1466,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1256,6 +1477,24 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "request": undefined,
           "response": {
             "properties": {
+              "accounts": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "key",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "string": "value",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "maximumOverdraftAccounts": {
                 "primitive": {
                   "int": 1,
@@ -1343,7 +1582,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1357,6 +1596,24 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           },
           "response": {
             "properties": {
+              "accounts": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "key",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "string": "value",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "maximumOverdraftAccounts": {
                 "primitive": {
                   "int": 1,
@@ -1457,7 +1714,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1545,6 +1802,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "sharedSecret": {
                 "primitive": {
                   "string": "obsolete obese octopus",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "taxId": {
+                "primitive": {
+                  "string": "taxId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1640,7 +1904,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "locator",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "locator",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1657,7 +1921,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "countryCode",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "countryCode",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1720,6 +1984,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                         },
                         "type": "primitive",
                       },
+                      "regionName": {
+                        "primitive": {
+                          "string": "regionName",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                     "type": "object",
                   },
@@ -1743,6 +2014,81 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   },
                 },
                 "type": "object",
+              },
+              "intermediaryInstitutions": {
+                "array": [
+                  {
+                    "properties": {
+                      "address": {
+                        "properties": {
+                          "address1": {
+                            "primitive": {
+                              "string": "239 West Princess Ave.",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "address2": {
+                            "primitive": {
+                              "string": "Building 14, Suite 1500",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "countryCode": {
+                            "primitive": {
+                              "string": "US",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "locality": {
+                            "primitive": {
+                              "string": "Andalasia",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "postalCode": {
+                            "primitive": {
+                              "string": "28407",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "regionCode": {
+                            "primitive": {
+                              "string": "NC",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "locator": {
+                        "primitive": {
+                          "string": "503000196",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "locatorType": {
+                        "enum": "abaRoutingNumber",
+                        "type": "enum",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "First Bank of Andalasia",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -2040,6 +2386,25 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "effectiveOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "scheduledOn": {
+                        "primitive": {
+                          "string": "2022-07-04",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -2291,6 +2656,22 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "time": {
+                        "primitive": {
+                          "string": "16:45",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "ach",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -2453,20 +2834,6 @@ This information provides hints to clients, allowing bank customers to select tr
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "risk",
-              "value": {
-                "enum": "early",
-                "type": "enum",
               },
             },
           ],
@@ -2962,6 +3329,36 @@ This information provides hints to clients, allowing bank customers to select tr
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "creditOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "debitOn": {
+                        "primitive": {
+                          "string": "2022-10-07",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "occursOn": {
+                        "primitive": {
+                          "string": "2022-10-10",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reason": {
+                        "enum": "holiday",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -3138,7 +3535,7 @@ The default response lists only recent transactions. Normally, this is transacti
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3178,14 +3575,14 @@ The default response lists only recent transactions. Normally, this is transacti
                         "properties": {
                           "id": {
                             "primitive": {
-                              "string": "string",
+                              "string": "id",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "label": {
                             "primitive": {
-                              "string": "string",
+                              "string": "label",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -3212,6 +3609,13 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
                           "string": "d62c0701-0d74",
@@ -3219,9 +3623,12 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
-                      "merchant": {
-                        "properties": {},
-                        "type": "object",
+                      "memo": {
+                        "primitive": {
+                          "string": "memo",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "occurredOn": {
                         "primitive": {
@@ -3323,6 +3730,13 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
                           "string": "88f5bf17-ecc4",
@@ -3366,6 +3780,153 @@ The default response lists only recent transactions. Normally, this is transacti
                       "occurredOn": {
                         "primitive": {
                           "string": "2023-06-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "posted": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "postedOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "subtype": {
+                        "enum": "check",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "enum": "debit",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "1276.21",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "balance": {
+                        "primitive": {
+                          "string": "8509.38",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "category": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "127",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Utilities",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "check": {
+                        "properties": {
+                          "imageBack_url": {
+                            "primitive": {
+                              "string": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "imageFront_url": {
+                            "primitive": {
+                              "string": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "number": {
+                            "primitive": {
+                              "int": 8412,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "createdOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "88f5bf17-ecc4",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "memo": {
+                        "primitive": {
+                          "string": "Paid electric bill",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "merchant": {
+                        "properties": {
+                          "logo_url": {
+                            "primitive": {
+                              "string": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "B&T's Excellent Electric Co.",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "website_url": {
+                            "primitive": {
+                              "string": "https://BillTedsExcellentElectricCompany.example.com/",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "occurredOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -3775,7 +4336,31 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "0399abed-fd3d",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Dining",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "debit",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3866,6 +4451,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "request": undefined,
           "response": {
             "properties": {
+              "count": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
               "items": {
                 "array": [
                   {
@@ -3930,10 +4522,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           },
                           "frequency": {
                             "enum": "once",
-                            "type": "enum",
-                          },
-                          "recurrenceType": {
-                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4011,6 +4599,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         },
                         "type": "primitive",
                       },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "updatedBy",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                     "type": "object",
                   },
@@ -4041,6 +4636,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "primitive": {
                           "string": "school expenses",
                           "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "processedAt": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4076,10 +4678,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           },
                           "frequency": {
                             "enum": "monthly",
-                            "type": "enum",
-                          },
-                          "recurrenceType": {
-                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4154,6 +4752,150 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "primitive": {
                           "datetime": "2022-04-18T07:21:35.375Z",
                           "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "updatedBy",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "275.00",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "createdAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "memo": {
+                        "primitive": {
+                          "string": "memo",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "processedAt": {
+                        "primitive": {
+                          "datetime": "2026-06-26T021:00:00.000Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "schedule": {
+                        "properties": {
+                          "amountLimit": {
+                            "primitive": {
+                              "string": "3456.78",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "creditsOn": {
+                            "primitive": {
+                              "string": "2026-06-26",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "debitsOn": {
+                            "primitive": {
+                              "string": "2026-06-24",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "once",
+                            "type": "enum",
+                          },
+                          "scheduledOn": {
+                            "primitive": {
+                              "string": "2026-06-28",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "sourceAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "bd9b7af2-6f9b",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Checking *1008",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "state": {
+                        "enum": "unscheduled",
+                        "type": "enum",
+                      },
+                      "targetAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "88b1ca3e-d0f3",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Personal Savings *4567",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "James Bond",
+                          "type": "string",
                         },
                         "type": "primitive",
                       },
@@ -4404,10 +5146,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "enum": "once",
                     "type": "enum",
                   },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
                   "scheduledOn": {
                     "primitive": {
                       "string": "2022-06-28",
@@ -4438,10 +5176,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "enum": "internal",
                     "type": "enum",
                   },
-                  "type": {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
                 },
                 "type": "object",
               },
@@ -4463,10 +5197,6 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "location": {
                     "enum": "internal",
-                    "type": "enum",
-                  },
-                  "type": {
-                    "enum": "savings",
                     "type": "enum",
                   },
                 },
@@ -4505,12 +5235,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -4524,6 +5268,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4608,6 +5359,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -4707,7 +5465,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4746,12 +5504,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -4765,6 +5537,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4849,6 +5628,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -4929,7 +5715,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5003,7 +5789,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5031,10 +5817,6 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "frequency": {
                     "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
                     "type": "enum",
                   },
                   "scheduledOn": {
@@ -5090,14 +5872,6 @@ Note: This operation requires an identity challenge if the financial institution
                     },
                     "type": "primitive",
                   },
-                  "location": {
-                    "enum": "internal",
-                    "type": "enum",
-                  },
-                  "type": {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
                 },
                 "type": "object",
               },
@@ -5134,12 +5908,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -5153,6 +5941,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -5237,6 +6032,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -5436,6 +6238,7 @@ Note: This operation requires an identity challenge if the financial institution
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "productType",
@@ -5746,42 +6549,84 @@ Note: This operation requires an identity challenge if the financial institution
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "billPay",
           "nameOverride": undefined,
           "value": "billPay",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "transferFrom",
           "nameOverride": undefined,
           "value": "transferFrom",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "transferTo",
           "nameOverride": undefined,
           "value": "transferTo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "mobileCheckDeposit",
           "nameOverride": undefined,
           "value": "mobileCheckDeposit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "view",
           "nameOverride": undefined,
           "value": "view",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "viewCards",
           "nameOverride": undefined,
           "value": "viewCards",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "manageCards",
           "nameOverride": undefined,
@@ -6360,18 +7205,36 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "internal",
           "nameOverride": undefined,
           "value": "internal",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "external",
           "nameOverride": undefined,
           "value": "external",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "outside",
           "nameOverride": undefined,
@@ -6676,24 +7539,48 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "early",
           "nameOverride": undefined,
           "value": "early",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "normal",
           "nameOverride": undefined,
           "value": "normal",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "float",
           "nameOverride": undefined,
           "value": "float",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sameDay",
           "nameOverride": undefined,
@@ -6751,60 +7638,120 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "arc",
           "nameOverride": undefined,
           "value": "arc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "boc",
           "nameOverride": undefined,
           "value": "boc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ccd",
           "nameOverride": undefined,
           "value": "ccd",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "cie",
           "nameOverride": undefined,
           "value": "cie",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ctx",
           "nameOverride": undefined,
           "value": "ctx",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pop",
           "nameOverride": undefined,
           "value": "pop",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ppd",
           "nameOverride": undefined,
           "value": "ppd",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rck",
           "nameOverride": undefined,
           "value": "rck",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tel",
           "nameOverride": undefined,
           "value": "tel",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "web",
           "nameOverride": undefined,
@@ -7388,30 +8335,60 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sms",
           "nameOverride": undefined,
           "value": "sms",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "email",
           "nameOverride": undefined,
           "value": "email",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "voice",
           "nameOverride": undefined,
           "value": "voice",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "securityQuestions",
           "nameOverride": undefined,
           "value": "securityQuestions",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "authenticatorToken",
           "nameOverride": undefined,
@@ -7624,42 +8601,84 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ach",
           "nameOverride": undefined,
           "value": "ach",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sameDayAch",
           "nameOverride": undefined,
           "value": "sameDayAch",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "domesticWireTransfer",
           "nameOverride": undefined,
           "value": "domesticWireTransfer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "internationalWireTransfer",
           "nameOverride": undefined,
           "value": "internationalWireTransfer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "internalTransfer",
           "nameOverride": undefined,
           "value": "internalTransfer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "externalTransfer",
           "nameOverride": undefined,
           "value": "externalTransfer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "billPay",
           "nameOverride": undefined,
@@ -7851,18 +8870,36 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "instant",
           "nameOverride": undefined,
           "value": "instant",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "microDeposits",
           "nameOverride": undefined,
           "value": "microDeposits",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "manual",
           "nameOverride": undefined,
@@ -8085,18 +9122,36 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "abaRoutingNumber",
           "nameOverride": undefined,
           "value": "abaRoutingNumber",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "swiftBicCode",
           "nameOverride": undefined,
           "value": "swiftBicCode",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ibanAccountNumber",
           "nameOverride": undefined,
@@ -8810,36 +9865,72 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "savings",
           "nameOverride": undefined,
           "value": "savings",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "checking",
           "nameOverride": undefined,
           "value": "checking",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "cd",
           "nameOverride": undefined,
           "value": "cd",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ira",
           "nameOverride": undefined,
           "value": "ira",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "loan",
           "nameOverride": undefined,
           "value": "loan",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "creditCard",
           "nameOverride": undefined,
@@ -9238,12 +10329,24 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "credit",
           "nameOverride": undefined,
           "value": "credit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "debit",
           "nameOverride": undefined,
@@ -9765,12 +10868,24 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "check",
           "nameOverride": undefined,
           "value": "check",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "other",
           "nameOverride": undefined,
@@ -9810,18 +10925,36 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "balance",
           "nameOverride": undefined,
           "value": "balance",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "debit",
           "nameOverride": undefined,
           "value": "debit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "credit",
           "nameOverride": undefined,
@@ -10156,36 +11289,72 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pastDate",
           "nameOverride": undefined,
           "value": "pastDate",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pastCutoffTime",
           "nameOverride": undefined,
           "value": "pastCutoffTime",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "riskRestricted",
           "nameOverride": undefined,
           "value": "riskRestricted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "holiday",
           "nameOverride": undefined,
           "value": "holiday",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "closure",
           "nameOverride": undefined,
           "value": "closure",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "other",
           "nameOverride": undefined,
@@ -10438,78 +11607,156 @@ The response may include dates prior to requested the start date, as that is use
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "once",
           "nameOverride": undefined,
           "value": "once",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "occasional",
           "nameOverride": undefined,
           "value": "occasional",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "daily",
           "nameOverride": undefined,
           "value": "daily",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "weekly",
           "nameOverride": undefined,
           "value": "weekly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "biweekly",
           "nameOverride": undefined,
           "value": "biweekly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "semimonthly",
           "nameOverride": undefined,
           "value": "semimonthly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "monthly",
           "nameOverride": undefined,
           "value": "monthly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "monthlyFirstDay",
           "nameOverride": undefined,
           "value": "monthlyFirstDay",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "monthlyLastDay",
           "nameOverride": undefined,
           "value": "monthlyLastDay",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "bimonthly",
           "nameOverride": undefined,
           "value": "bimonthly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "quarterly",
           "nameOverride": undefined,
           "value": "quarterly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "semiyearly",
           "nameOverride": undefined,
           "value": "semiyearly",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "yearly",
           "nameOverride": undefined,
@@ -10782,12 +12029,24 @@ The response may include dates prior to requested the start date, as that is use
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "fixed",
           "nameOverride": undefined,
           "value": "fixed",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "variable",
           "nameOverride": undefined,
@@ -10969,18 +12228,36 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "debit",
           "nameOverride": undefined,
           "value": "debit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "credit",
           "nameOverride": undefined,
           "value": "credit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "both",
           "nameOverride": undefined,
@@ -11124,42 +12401,84 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unscheduled",
           "nameOverride": undefined,
           "value": "unscheduled",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pendingApproval",
           "nameOverride": undefined,
           "value": "pendingApproval",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "scheduled",
           "nameOverride": undefined,
           "value": "scheduled",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "processing",
           "nameOverride": undefined,
           "value": "processing",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "processed",
           "nameOverride": undefined,
           "value": "processed",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "failed",
           "nameOverride": undefined,
           "value": "failed",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "other",
           "nameOverride": undefined,
@@ -11209,36 +12528,72 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "internal",
           "nameOverride": undefined,
           "value": "internal",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ach",
           "nameOverride": undefined,
           "value": "ach",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "achDebit",
           "nameOverride": undefined,
           "value": "achDebit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "achCredit",
           "nameOverride": undefined,
           "value": "achCredit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "domesticWireTransfer",
           "nameOverride": undefined,
           "value": "domesticWireTransfer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "internationalWireTransfer",
           "nameOverride": undefined,
@@ -11358,10 +12713,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   },
   "securitySchemes": {
     "accessToken": {
+      "tokenEnvVar": undefined,
       "tokenVariableName": undefined,
       "type": "bearer",
     },
     "apiKey": {
+      "headerEnvVar": undefined,
       "headerName": "API-Key",
       "headerVariableName": undefined,
       "prefix": undefined,

@@ -1,10 +1,9 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { ExitStatusUpdate, GeneratorConfig, GeneratorUpdate } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
-import merge from "lodash-es/merge";
 import yaml from "js-yaml";
+import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
@@ -50,7 +49,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                     yaml.dump(openApiDefinitionWithCustomOverrides)
                 );
             }
-            await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+            await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
             // eslint-disable-next-line no-console
             console.log("Encountered error", e);

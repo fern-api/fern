@@ -28,7 +28,7 @@ Fern handles transforming a Fern specification into Fern _intermediate represent
 
 ## What is Fern?
 
-Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
+Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
 Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
@@ -41,7 +41,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern) by d
   version: 0.0.28
   output:
     location: local-file-system
-    path: ../../generated/openapi
+    path: ../generated/openapi
 ```
 
 By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
@@ -77,9 +77,9 @@ When configured, the generator outputs OAS files in the specified format.
 
 When configured, the object is merged into the generated OAS file. This allows you to add custom fields to the specification.
 
-## Releases
+## Versions
 
-All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-openapi/releases). You can directly use these version numbers in your generator configuration files.
+Find the latest version number and changelog for this generator in [this Spec Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#spec-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
 
 For instance, if you want to use version `0.0.27` of the OpenAPI generator:
 
@@ -92,15 +92,7 @@ groups:
         version: 0.0.27
         output:
           location: local-file-system
-          path: ../../generated/openapi
+          path: ../generated/openapi
 ```
 
 Fern will handle the rest automatically.
-
-## Contributing
-
-We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](./CONTRIBUTING.md) on how you can contribute to Fern!
-
-<a href="https://github.com/fern-api/fern-openapi/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fern-api/fern-openapi" />
-</a>

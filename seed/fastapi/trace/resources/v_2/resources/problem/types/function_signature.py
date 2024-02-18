@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ......core.datetime_utils import serialize_datetime
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
@@ -60,7 +58,7 @@ class FunctionSignature(pydantic.BaseModel):
                 VoidFunctionSignatureThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[_FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult],
         pydantic.Field(discriminator="type"),
     ]
@@ -80,19 +78,19 @@ class FunctionSignature(pydantic.BaseModel):
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):
-        type: typing_extensions.Literal["void"]
+        type: typing.Literal["void"]
 
         class Config:
             allow_population_by_field_name = True
 
     class NonVoid(NonVoidFunctionSignature):
-        type: typing_extensions.Literal["nonVoid"]
+        type: typing.Literal["nonVoid"]
 
         class Config:
             allow_population_by_field_name = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-        type: typing_extensions.Literal["voidThatTakesActualResult"]
+        type: typing.Literal["voidThatTakesActualResult"]
 
         class Config:
             allow_population_by_field_name = True

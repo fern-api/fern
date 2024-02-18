@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
 
@@ -54,7 +52,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
 
 class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(pydantic.BaseModel):
-        type: typing_extensions.Literal["playlistId"]
+        type: typing.Literal["playlistId"]
         value: resources_playlist_types_playlist_id_PlaylistId
 
 

@@ -24,17 +24,22 @@ exports[`open api parser apiture simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "name": "Max Pike",
+                      },
+                    ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/jointOwners",
+            "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -69,7 +74,7 @@ exports[`open api parser apiture simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "response": {
                   "body": {
@@ -85,10 +90,10 @@ exports[`open api parser apiture simple 1`] = `
                       "viewCards": true,
                     },
                     "electronicStatements": true,
-                    "id": "string",
+                    "id": "id",
                     "label": "Checking *1008",
                     "location": "internal",
-                    "maskedNumber": "string",
+                    "maskedNumber": "maskedNumber",
                     "nickname": "Payroll Checking",
                     "product": {
                       "code": "180D_CDA",
@@ -101,7 +106,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}",
+            "path": "/accounts/{accountId}",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -147,13 +152,21 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "incomplete": false,
                         "updatedAt": "2022-05-02T06:51:19.375Z",
                       },
+                      {
+                        "available": "3456.78",
+                        "current": "3456.78",
+                        "currentWithPending": "3456.78",
+                        "id": "id",
+                        "incomplete": true,
+                        "updatedAt": "2021-10-30T19:06:04.250Z",
+                      },
                     ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/accountBalances",
+            "path": "/accountBalances",
             "request": {
               "name": "AccountsListAccountBalancesRequest",
               "query-parameters": {
@@ -185,20 +198,43 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "location": "internal",
-                },
                 "response": {
                   "body": {
-                    "items": [],
+                    "count": 1,
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "id",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "maskedNumber",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "180D_CDA",
+                          "description": "Certificate of Deposit with a 180 day term",
+                          "label": "180 Day CD",
+                          "type": "cd",
+                        },
+                      },
+                    ],
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                    "primaryAccountId": "primaryAccountId",
+                    "start": "start",
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts",
+            "path": "/accounts",
             "request": {
               "name": "AccountsListAccountsRequest",
               "query-parameters": {
@@ -244,7 +280,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/banking/achEligibleAccounts",
+            "path": "/achEligibleAccounts",
             "request": {
               "name": "AccountsListEligibleAchAccountsRequest",
               "query-parameters": {
@@ -332,6 +368,10 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                         "time": "16:45",
                         "type": "domesticWireTransfer",
                       },
+                      {
+                        "time": "16:45",
+                        "type": "ach",
+                      },
                     ],
                     "timeZoneId": "America/New_York",
                   },
@@ -339,7 +379,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/cutoffTimes",
+            "path": "/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -387,9 +427,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "query-parameters": {
                   "endsOn": "2022-07-04",
-                  "risk": "early",
                   "startsOn": "2022-07-04",
-                  "type": "internal",
                 },
                 "response": {
                   "body": {
@@ -491,13 +529,19 @@ This information provides hints to clients, allowing bank customers to select tr
                         "occursOn": "2022-10-30",
                         "reason": "closure",
                       },
+                      {
+                        "creditOn": "2022-07-05",
+                        "debitOn": "2022-10-07",
+                        "occursOn": "2022-10-10",
+                        "reason": "holiday",
+                      },
                     ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/transferDateRestrictions",
+            "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -579,13 +623,17 @@ This information provides hints to clients, allowing bank customers to select tr
                         "effectiveOn": "2022-07-01",
                         "scheduledOn": "2022-08-01",
                       },
+                      {
+                        "effectiveOn": "2022-07-05",
+                        "scheduledOn": "2022-07-04",
+                      },
                     ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/institutions/{institutionId}/transferSchedule",
+            "path": "/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -635,8 +683,8 @@ This information provides hints to clients, allowing bank customers to select tr
             "examples": [
               {
                 "query-parameters": {
-                  "countryCode": "string",
-                  "locator": "string",
+                  "countryCode": "countryCode",
+                  "locator": "locator",
                   "locatorType": "abaRoutingNumber",
                 },
                 "response": {
@@ -650,17 +698,33 @@ This information provides hints to clients, allowing bank customers to select tr
                         "locality": "Andalasia",
                         "postalCode": "28407",
                         "regionCode": "NC",
+                        "regionName": "regionName",
                       },
                       "locator": "503000196",
                       "locatorType": "abaRoutingNumber",
                       "name": "First Bank of Andalasia",
                     },
+                    "intermediaryInstitutions": [
+                      {
+                        "address": {
+                          "address1": "239 West Princess Ave.",
+                          "address2": "Building 14, Suite 1500",
+                          "countryCode": "US",
+                          "locality": "Andalasia",
+                          "postalCode": "28407",
+                          "regionCode": "NC",
+                        },
+                        "locator": "503000196",
+                        "locatorType": "abaRoutingNumber",
+                        "name": "First Bank of Andalasia",
+                      },
+                    ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/institutionByLocator",
+            "path": "/institutionByLocator",
             "request": {
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
               "query-parameters": {
@@ -714,7 +778,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "request": {
                   "disallowDebitCardAccess": false,
@@ -731,12 +795,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                     "id": "db4f580290d3e07bf55d",
                     "lastName": "Jones",
                     "sharedSecret": "obsolete obese octopus",
+                    "taxId": "taxId",
                   },
                 },
               },
             ],
             "method": "POST",
-            "path": "/banking/accounts/{accountId}/jointOwnerInvitations",
+            "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -783,17 +848,20 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "response": {
                   "body": {
+                    "accounts": {
+                      "key": "value",
+                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/overdraftProtection",
+            "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -823,7 +891,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "response": {
                   "body": {
@@ -842,12 +910,13 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
+                    "start": "start",
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/eligibleOverdraftAccounts",
+            "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -888,18 +957,21 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "request": {},
                 "response": {
                   "body": {
+                    "accounts": {
+                      "key": "value",
+                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
               },
             ],
             "method": "PATCH",
-            "path": "/banking/accounts/{accountId}/overdraftProtection",
+            "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -950,13 +1022,19 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               {
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "label": "Dining",
+                        "type": "debit",
+                      },
+                    ],
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/transactionCategories",
+            "path": "/transactionCategories",
             "request": {
               "headers": {
                 "If-None-Match": {
@@ -1002,7 +1080,7 @@ The default response lists only recent transactions. Normally, this is transacti
             "examples": [
               {
                 "path-parameters": {
-                  "accountId": "string",
+                  "accountId": "accountId",
                 },
                 "response": {
                   "body": {
@@ -1012,15 +1090,16 @@ The default response lists only recent transactions. Normally, this is transacti
                         "amount": "0.00",
                         "balance": "8509.38",
                         "category": {
-                          "id": "string",
-                          "label": "string",
+                          "id": "id",
+                          "label": "label",
                         },
                         "check": {
                           "number": 1,
                         },
                         "createdOn": "2023-05-18",
+                        "description": "description",
                         "id": "d62c0701-0d74",
-                        "merchant": {},
+                        "memo": "memo",
                         "occurredOn": "2023-06-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
@@ -1040,6 +1119,7 @@ The default response lists only recent transactions. Normally, this is transacti
                           "number": 8412,
                         },
                         "createdOn": "2023-05-18",
+                        "description": "description",
                         "id": "88f5bf17-ecc4",
                         "memo": "Paid electric bill",
                         "merchant": {
@@ -1048,6 +1128,33 @@ The default response lists only recent transactions. Normally, this is transacti
                           "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
                         },
                         "occurredOn": "2023-06-18",
+                        "posted": true,
+                        "postedOn": "2023-05-18",
+                        "subtype": "check",
+                        "type": "debit",
+                      },
+                      {
+                        "amount": "1276.21",
+                        "balance": "8509.38",
+                        "category": {
+                          "id": "127",
+                          "label": "Utilities",
+                        },
+                        "check": {
+                          "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                          "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                          "number": 8412,
+                        },
+                        "createdOn": "2023-05-18",
+                        "description": "description",
+                        "id": "88f5bf17-ecc4",
+                        "memo": "Paid electric bill",
+                        "merchant": {
+                          "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                          "name": "B&T's Excellent Electric Co.",
+                          "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
+                        },
+                        "occurredOn": "2023-05-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
                         "subtype": "check",
@@ -1062,7 +1169,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
             ],
             "method": "GET",
-            "path": "/banking/accounts/{accountId}/transactions",
+            "path": "/accounts/{accountId}/transactions",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -1161,20 +1268,17 @@ Note: This operation requires an identity challenge if the financial institution
                   "schedule": {
                     "amountLimit": "3456.78",
                     "frequency": "once",
-                    "recurrenceType": "fixed",
                     "scheduledOn": "2022-06-28",
                   },
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
                     "label": "Checking *1008",
                     "location": "internal",
-                    "type": "savings",
                   },
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
                     "label": "Checking *1008",
                     "location": "internal",
-                    "type": "savings",
                   },
                 },
                 "response": {
@@ -1183,10 +1287,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35.375Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
+                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
+                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
+                      "endsOn": "endsOn",
                       "frequency": "once",
                       "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
@@ -1205,12 +1312,13 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedBy": "updatedBy",
                   },
                 },
               },
             ],
             "method": "POST",
-            "path": "/banking/transfers",
+            "path": "/transfers",
             "request": {
               "body": {
                 "extends": [
@@ -1252,12 +1360,12 @@ Note: This operation requires an identity challenge if the financial institution
             "examples": [
               {
                 "path-parameters": {
-                  "transferId": "string",
+                  "transferId": "transferId",
                 },
               },
             ],
             "method": "DELETE",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -1277,7 +1385,7 @@ Note: This operation requires an identity challenge if the financial institution
             "examples": [
               {
                 "path-parameters": {
-                  "transferId": "string",
+                  "transferId": "transferId",
                 },
                 "response": {
                   "body": {
@@ -1285,10 +1393,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35.375Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
+                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
+                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
+                      "endsOn": "endsOn",
                       "frequency": "once",
                       "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
@@ -1307,12 +1418,13 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedBy": "updatedBy",
                   },
                 },
               },
             ],
             "method": "GET",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -1338,6 +1450,7 @@ Note: This operation requires an identity challenge if the financial institution
               {
                 "response": {
                   "body": {
+                    "count": 1,
                     "items": [
                       {
                         "amount": "275.00",
@@ -1350,7 +1463,6 @@ Note: This operation requires an identity challenge if the financial institution
                           "creditsOn": "2026-06-26",
                           "debitsOn": "2026-06-24",
                           "frequency": "once",
-                          "recurrenceType": "fixed",
                           "scheduledOn": "2026-06-28",
                         },
                         "sourceAccount": {
@@ -1367,19 +1479,20 @@ Note: This operation requires an identity challenge if the financial institution
                           "type": "savings",
                         },
                         "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedBy": "updatedBy",
                       },
                       {
                         "amount": "100.00",
                         "createdAt": "2022-04-18T07:21:35.375Z",
                         "id": "d62c0701-0d74",
                         "memo": "school expenses",
+                        "processedAt": "2024-01-15T09:30:00Z",
                         "schedule": {
                           "amountLimit": "3456.78",
                           "count": 9,
                           "creditsOn": "2023-08-01",
                           "debitsOn": "2026-08-01",
                           "frequency": "monthly",
-                          "recurrenceType": "fixed",
                           "scheduledOn": "2023-08-01",
                         },
                         "sourceAccount": {
@@ -1396,6 +1509,33 @@ Note: This operation requires an identity challenge if the financial institution
                           "type": "checking",
                         },
                         "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedBy": "updatedBy",
+                      },
+                      {
+                        "amount": "275.00",
+                        "createdAt": "2022-04-18T07:21:35.375Z",
+                        "id": "id",
+                        "memo": "memo",
+                        "processedAt": "2026-06-26T021:00:00.000Z",
+                        "schedule": {
+                          "amountLimit": "3456.78",
+                          "creditsOn": "2026-06-26",
+                          "debitsOn": "2026-06-24",
+                          "frequency": "once",
+                          "scheduledOn": "2026-06-28",
+                        },
+                        "sourceAccount": {
+                          "id": "bd9b7af2-6f9b",
+                          "label": "Checking *1008",
+                        },
+                        "state": "unscheduled",
+                        "targetAccount": {
+                          "id": "88b1ca3e-d0f3",
+                          "label": "Personal Savings *4567",
+                          "type": "savings",
+                        },
+                        "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedBy": "James Bond",
                       },
                     ],
                     "limit": 10,
@@ -1406,7 +1546,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
-            "path": "/banking/transfers",
+            "path": "/transfers",
             "request": {
               "name": "TransfersListTransfersRequest",
               "query-parameters": {
@@ -1457,14 +1597,13 @@ Note: This operation requires an identity challenge if the financial institution
             "examples": [
               {
                 "path-parameters": {
-                  "transferId": "string",
+                  "transferId": "transferId",
                 },
                 "request": {
                   "amount": "275.00",
                   "schedule": {
                     "amountLimit": "3456.78",
                     "frequency": "once",
-                    "recurrenceType": "fixed",
                     "scheduledOn": "2022-06-28",
                   },
                   "sourceAccount": {
@@ -1476,8 +1615,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
                     "label": "Checking *1008",
-                    "location": "internal",
-                    "type": "savings",
                   },
                 },
                 "response": {
@@ -1486,10 +1623,13 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35.375Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
+                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
+                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
+                      "endsOn": "endsOn",
                       "frequency": "once",
                       "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
@@ -1508,12 +1648,13 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedBy": "updatedBy",
                   },
                 },
               },
             ],
             "method": "PATCH",
-            "path": "/banking/transfers/{transferId}",
+            "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -3376,14 +3517,13 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "apiKey": {
         "header": "API-Key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },
     "default-environment": "Default",
     "display-name": "Apiture Digital Banking",
     "environments": {
-      "Default": "https://api.apiture.com",
+      "Default": "https://api.apiture.com/banking",
     },
     "error-discrimination": {
       "strategy": "status-code",

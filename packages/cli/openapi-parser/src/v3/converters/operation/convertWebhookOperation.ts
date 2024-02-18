@@ -12,7 +12,7 @@ export function convertWebhookOperation({
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
 }): Webhook | undefined {
-    const { document, operation, path, method, baseBreadcrumbs } = operationContext;
+    const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
 
     const convertedParameters = convertParameters({
@@ -52,6 +52,7 @@ export function convertWebhookOperation({
 
     return {
         summary: operation.summary,
+        sdkName: sdkMethodName,
         method,
         operationId: operation.operationId,
         tags: operation.tags ?? [],

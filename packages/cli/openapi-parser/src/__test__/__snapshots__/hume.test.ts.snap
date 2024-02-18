@@ -17,29 +17,7 @@ exports[`open api parser hume parse open api 1`] = `
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "when",
-              "value": {
-                "enum": "created_before",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "sort_by",
-              "value": {
-                "enum": "created",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "direction",
-              "value": {
-                "enum": "asc",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "array": [],
@@ -232,59 +210,14 @@ exports[`open api parser hume parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "models": {
-                "properties": {
-                  "face": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "language": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "ner": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "prosody": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                      "window": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "transcription": {
-                "properties": {
-                  "language": {
-                    "enum": "zh",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "job_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "job_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -355,7 +288,7 @@ exports[`open api parser hume parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -530,6 +463,7 @@ exports[`open api parser hume parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "Status",
@@ -735,174 +669,348 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "zh",
           "nameOverride": undefined,
           "value": "zh",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "da",
           "nameOverride": undefined,
           "value": "da",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "nl",
           "nameOverride": undefined,
           "value": "nl",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "en",
           "nameOverride": undefined,
           "value": "en",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "EnAu",
           "nameOverride": undefined,
           "value": "en-AU",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "EnIn",
           "nameOverride": undefined,
           "value": "en-IN",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "EnNz",
           "nameOverride": undefined,
           "value": "en-NZ",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "EnGb",
           "nameOverride": undefined,
           "value": "en-GB",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "fr",
           "nameOverride": undefined,
           "value": "fr",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FrCa",
           "nameOverride": undefined,
           "value": "fr-CA",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "de",
           "nameOverride": undefined,
           "value": "de",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "hi",
           "nameOverride": undefined,
           "value": "hi",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HiLatn",
           "nameOverride": undefined,
           "value": "hi-Latn",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "id",
           "nameOverride": undefined,
           "value": "id",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "it",
           "nameOverride": undefined,
           "value": "it",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ja",
           "nameOverride": undefined,
           "value": "ja",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ko",
           "nameOverride": undefined,
           "value": "ko",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "no",
           "nameOverride": undefined,
           "value": "no",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pl",
           "nameOverride": undefined,
           "value": "pl",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pt",
           "nameOverride": undefined,
           "value": "pt",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PtBr",
           "nameOverride": undefined,
           "value": "pt-BR",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PtPt",
           "nameOverride": undefined,
           "value": "pt-PT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ru",
           "nameOverride": undefined,
           "value": "ru",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "es",
           "nameOverride": undefined,
           "value": "es",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "Es419",
           "nameOverride": undefined,
           "value": "es-419",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sv",
           "nameOverride": undefined,
           "value": "sv",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ta",
           "nameOverride": undefined,
           "value": "ta",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tr",
           "nameOverride": undefined,
           "value": "tr",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "uk",
           "nameOverride": undefined,
@@ -1198,12 +1306,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "asc",
           "nameOverride": undefined,
           "value": "asc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "desc",
           "nameOverride": undefined,
@@ -1890,24 +2010,48 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "word",
           "nameOverride": undefined,
           "value": "word",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sentence",
           "nameOverride": undefined,
           "value": "sentence",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "utterance",
           "nameOverride": undefined,
           "value": "utterance",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "conversational_turn",
           "nameOverride": undefined,
@@ -4067,18 +4211,36 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "created",
           "nameOverride": undefined,
           "value": "created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "started",
           "nameOverride": undefined,
           "value": "started",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ended",
           "nameOverride": undefined,
@@ -4355,24 +4517,48 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "IN_PROGRESS",
           "nameOverride": undefined,
           "value": "IN_PROGRESS",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "COMPLETED",
           "nameOverride": undefined,
           "value": "COMPLETED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -4587,12 +4773,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "created_before",
           "nameOverride": undefined,
           "value": "created_before",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "created_after",
           "nameOverride": undefined,
@@ -4660,6 +4858,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   },
   "securitySchemes": {
     "Authentication": {
+      "headerEnvVar": undefined,
       "headerName": "X-Hume-Api-Key",
       "headerVariableName": undefined,
       "prefix": undefined,

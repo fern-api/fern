@@ -49,6 +49,7 @@ class AbstractGenerator(ABC):
             should_format_files=self.should_format_files(generator_config=generator_config),
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
+            whitelabel=generator_config.whitelabel,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project
@@ -140,7 +141,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -156,7 +157,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -181,7 +182,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1

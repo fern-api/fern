@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
@@ -16,19 +14,19 @@ except ImportError:
 
 
 class FieldValue_PrimitiveValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["primitive_value"]
+    type: typing.Literal["primitive_value"]
     value: PrimitiveValue
 
 
 class FieldValue_ObjectValue(ObjectValue):
-    type: typing_extensions.Literal["object_value"]
+    type: typing.Literal["object_value"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class FieldValue_ContainerValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["container_value"]
+    type: typing.Literal["container_value"]
     value: ContainerValue
 
 

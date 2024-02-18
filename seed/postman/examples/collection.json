@@ -133,7 +133,7 @@
               "_type": "endpoint",
               "name": "Get File",
               "request": {
-                "description": null,
+                "description": "This endpoint returns a file by its name.",
                 "url": {
                   "raw": "{{baseUrl}}/file/:filename",
                   "host": [
@@ -147,7 +147,7 @@
                   "variable": [
                     {
                       "key": "filename",
-                      "description": null,
+                      "description": "This is a filename",
                       "value": "file.txt"
                     }
                   ]
@@ -175,7 +175,7 @@
                   "status": "Not Found Error",
                   "code": 404,
                   "originalRequest": {
-                    "description": null,
+                    "description": "This endpoint returns a file by its name.",
                     "url": {
                       "raw": "{{baseUrl}}/file/:filename",
                       "host": [
@@ -189,7 +189,7 @@
                       "variable": [
                         {
                           "key": "filename",
-                          "description": null,
+                          "description": "This is a filename",
                           "value": "file.txt"
                         }
                       ]
@@ -235,7 +235,7 @@
               "_type": "endpoint",
               "name": "Check",
               "request": {
-                "description": null,
+                "description": "This endpoint checks the health of a resource.",
                 "url": {
                   "raw": "{{baseUrl}}/check/:id",
                   "host": [
@@ -249,7 +249,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "description": null,
+                      "description": "The id to check",
                       "value": "id-2sdx82h"
                     }
                   ]
@@ -271,7 +271,7 @@
                   "status": "OK",
                   "code": 200,
                   "originalRequest": {
-                    "description": null,
+                    "description": "This endpoint checks the health of a resource.",
                     "url": {
                       "raw": "{{baseUrl}}/check/:id",
                       "host": [
@@ -285,7 +285,7 @@
                       "variable": [
                         {
                           "key": "id",
-                          "description": null,
+                          "description": "The id to check",
                           "value": "id-2sdx82h"
                         }
                       ]
@@ -311,7 +311,7 @@
               "_type": "endpoint",
               "name": "Ping",
               "request": {
-                "description": null,
+                "description": "This endpoint checks the health of the service.",
                 "url": {
                   "raw": "{{baseUrl}}/ping",
                   "host": [
@@ -340,7 +340,7 @@
                   "status": "OK",
                   "code": 200,
                   "originalRequest": {
-                    "description": null,
+                    "description": "This endpoint checks the health of the service.",
                     "url": {
                       "raw": "{{baseUrl}}/ping",
                       "host": [

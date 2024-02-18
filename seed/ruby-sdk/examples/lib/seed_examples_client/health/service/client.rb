@@ -15,7 +15,9 @@ module SeedExamplesClient
         @request_client = request_client
       end
 
-      # @param id [String]
+      # This endpoint checks the health of a resource.
+      #
+      # @param id [String] The id to check
       # @param request_options [RequestOptions]
       # @return [Void]
       def check(id:, request_options: nil)
@@ -26,6 +28,8 @@ module SeedExamplesClient
         end
       end
 
+      # This endpoint checks the health of the service.
+      #
       # @param request_options [RequestOptions]
       # @return [Boolean]
       def ping(request_options: nil)
@@ -48,7 +52,9 @@ module SeedExamplesClient
         @request_client = request_client
       end
 
-      # @param id [String]
+      # This endpoint checks the health of a resource.
+      #
+      # @param id [String] The id to check
       # @param request_options [RequestOptions]
       # @return [Void]
       def check(id:, request_options: nil)
@@ -61,6 +67,8 @@ module SeedExamplesClient
         end
       end
 
+      # This endpoint checks the health of the service.
+      #
       # @param request_options [RequestOptions]
       # @return [Boolean]
       def ping(request_options: nil)

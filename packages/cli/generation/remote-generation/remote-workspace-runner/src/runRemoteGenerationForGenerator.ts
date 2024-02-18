@@ -4,6 +4,7 @@ import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
@@ -16,7 +17,8 @@ export async function runRemoteGenerationForGenerator({
     version,
     audiences,
     shouldLogS3Url,
-    token
+    token,
+    whitelabel
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -26,6 +28,7 @@ export async function runRemoteGenerationForGenerator({
     audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
+    whitelabel: FernFiddle.WhitelabelConfig | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -43,7 +46,8 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation,
         shouldLogS3Url,
-        token
+        token,
+        whitelabel
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

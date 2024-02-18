@@ -15,3 +15,4 @@ fixtures:
     - customConfig:
         format: json
       outputFolder: json-format
+

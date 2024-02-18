@@ -70,9 +70,9 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 [],
                 sdkVersion,
                 config.license,
-                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                 hasFileUploadEndpoints(intermediateRepresentation) ||
-                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
+                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
+                true
             )
         );
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
@@ -110,7 +110,6 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             sdkVersion,
             this.generatedClasses,
             this.flattenedProperties,
-            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
             hasFileUploadEndpoints(intermediateRepresentation) ||
                 intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
         ).generateFiles();

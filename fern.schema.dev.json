@@ -238,7 +238,17 @@
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
-                            "value": { "type": "string" }
+                            "value": { "type": "string" },
+                            "casing": {
+                              "type": "object",
+                              "properties": {
+                                "camel": { "type": "string" },
+                                "snake": { "type": "string" },
+                                "pascal": { "type": "string" },
+                                "screaming-snake": { "type": "string" }
+                              },
+                              "additionalProperties": false
+                            }
                           },
                           "required": ["value"],
                           "additionalProperties": false
@@ -692,6 +702,130 @@
             "required": ["method", "payload"],
             "additionalProperties": false
           }
+        },
+        "channel": {
+          "type": "object",
+          "properties": {
+            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+            "availability": {
+              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+            },
+            "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+            "auth": { "type": "boolean" },
+            "path": { "type": "string" },
+            "display-name": { "type": "string" },
+            "path-parameters": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/properties/service/properties/path-parameters/additionalProperties" }
+            },
+            "query-parameters": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1/properties/query-parameters/additionalProperties"
+              }
+            },
+            "messages": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "origin": { "type": "string", "enum": ["client", "server"] },
+                  "body": {
+                    "anyOf": [
+                      { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "type": { "type": "string" }
+                        },
+                        "required": ["type"],
+                        "additionalProperties": false
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "extends": {
+                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                              },
+                              "properties": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                }
+                              }
+                            },
+                            "required": ["name", "extends"],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "extends": {
+                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                              },
+                              "properties": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                }
+                              }
+                            },
+                            "required": ["name", "properties"],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": ["origin", "body"],
+                "additionalProperties": false
+              }
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                  },
+                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "path-parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                    }
+                  },
+                  "query-parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                    }
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": { "type": { "type": "string" }, "body": {} },
+                      "required": ["type"],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["messages"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["auth", "path"],
+          "additionalProperties": false
         },
         "errors": {
           "type": "object",

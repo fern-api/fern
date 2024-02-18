@@ -11,6 +11,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .types.user import User
 
 try:
@@ -33,6 +34,7 @@ class UserClient:
         bytes: str,
         optional_string: typing.Optional[str] = None,
         filter: typing.Union[str, typing.List[str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Parameters:
@@ -49,23 +51,41 @@ class UserClient:
             - optional_string: typing.Optional[str].
 
             - filter: typing.Union[str, typing.List[str]].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=remove_none_from_dict(
-                {
-                    "limit": limit,
-                    "id": jsonable_encoder(id),
-                    "date": str(date),
-                    "deadline": serialize_datetime(deadline),
-                    "bytes": jsonable_encoder(bytes),
-                    "optionalString": optional_string,
-                    "filter": filter,
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "limit": limit,
+                        "id": jsonable_encoder(id),
+                        "date": str(date),
+                        "deadline": serialize_datetime(deadline),
+                        "bytes": jsonable_encoder(bytes),
+                        "optionalString": optional_string,
+                        "filter": filter,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(User, _response.json())  # type: ignore
@@ -90,6 +110,7 @@ class AsyncUserClient:
         bytes: str,
         optional_string: typing.Optional[str] = None,
         filter: typing.Union[str, typing.List[str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Parameters:
@@ -106,23 +127,41 @@ class AsyncUserClient:
             - optional_string: typing.Optional[str].
 
             - filter: typing.Union[str, typing.List[str]].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=remove_none_from_dict(
-                {
-                    "limit": limit,
-                    "id": jsonable_encoder(id),
-                    "date": str(date),
-                    "deadline": serialize_datetime(deadline),
-                    "bytes": jsonable_encoder(bytes),
-                    "optionalString": optional_string,
-                    "filter": filter,
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "limit": limit,
+                        "id": jsonable_encoder(id),
+                        "date": str(date),
+                        "deadline": serialize_datetime(deadline),
+                        "bytes": jsonable_encoder(bytes),
+                        "optionalString": optional_string,
+                        "filter": filter,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(User, _response.json())  # type: ignore
