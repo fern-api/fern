@@ -27,7 +27,9 @@ class ServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         file: typing.IO,
+        file_list: typing.IO,
         maybe_file: typing.Optional[typing.IO] = None,
+        maybe_file_list: typing.Optional[typing.IO] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -48,7 +50,11 @@ class ServiceClient:
 
             - file: typing.IO.
 
+            - file_list: typing.IO.
+
             - maybe_file: typing.Optional[typing.IO].
+
+            - maybe_file_list: typing.Optional[typing.IO].
 
             - maybe_integer: typing.Optional[int].
 
@@ -118,7 +124,9 @@ class ServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
+            files=remove_none_from_dict(
+                {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -263,7 +271,9 @@ class AsyncServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         file: typing.IO,
+        file_list: typing.IO,
         maybe_file: typing.Optional[typing.IO] = None,
+        maybe_file_list: typing.Optional[typing.IO] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -284,7 +294,11 @@ class AsyncServiceClient:
 
             - file: typing.IO.
 
+            - file_list: typing.IO.
+
             - maybe_file: typing.Optional[typing.IO].
+
+            - maybe_file_list: typing.Optional[typing.IO].
 
             - maybe_integer: typing.Optional[int].
 
@@ -354,7 +368,9 @@ class AsyncServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file, "maybeFile": maybe_file}),
+            files=remove_none_from_dict(
+                {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
