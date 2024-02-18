@@ -513,9 +513,7 @@ class EndpointFunctionGenerator:
                 writer.write("{")
                 possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 if possible_path_part_literal is not None:
-                    writer.write_node(
-                        AST.Expression(f'"{possible_path_part_literal}"')
-                    )
+                    writer.write_node(AST.Expression(f'"{possible_path_part_literal}"'))
                 elif self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
                     writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
                 elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
@@ -627,10 +625,10 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
-        
+
         elif self._context.resolved_schema_is_enum(reference=query_parameter.value_type):
             return AST.Expression(f"{parameter_name}.value")
-        
+
         elif self._context.resolved_schema_is_optional_enum(reference=query_parameter.value_type):
             return AST.Expression(f"{parameter_name}.value if {parameter_name} is not None else None")
 
