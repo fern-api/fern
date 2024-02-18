@@ -46,8 +46,6 @@ class InlinedClient:
         )
         client.inlined.send(
             temperature=10.1,
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
@@ -117,8 +115,6 @@ class AsyncInlinedClient:
         )
         await client.inlined.send(
             temperature=10.1,
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """

@@ -986,7 +986,7 @@ class EndpointFunctionSnippetGenerator:
             property_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_property.value,
             )
-            if property_value is not None:
+            if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_property.name.name),
@@ -1032,6 +1032,17 @@ class EndpointFunctionSnippetGenerator:
         param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers))
         if param is not None:
             return self.context.get_literal_value(param.value_type) is not None
+        return False
+    
+    def _is_inlined_request_literal(self, property_wire_value: str) -> bool:
+        if self.endpoint.request_body is None: 
+            return False
+        request_body_union = self.endpoint.request_body.get_as_union()
+        if request_body_union.type == "inlinedRequestBody": 
+            param = next(filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties))
+            if param is not None:
+                return self.context.get_literal_value(param.value_type) is not None
+            return False
         return False
 
 
