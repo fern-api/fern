@@ -45,7 +45,8 @@ export async function testWorkspaceFixtures({
     scripts,
     taskContextFactory,
     numDockers,
-    keepDocker
+    keepDocker,
+    skipScripts
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
@@ -57,6 +58,7 @@ export async function testWorkspaceFixtures({
     taskContextFactory: TaskContextFactory;
     numDockers: number;
     keepDocker: boolean | undefined;
+    skipScripts: boolean;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
 
@@ -97,7 +99,8 @@ export async function testWorkspaceFixtures({
                         ),
                         outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
                         outputFolder: fixtureConfigInstance.outputFolder,
-                        keepDocker
+                        keepDocker,
+                        skipScripts
                     })
                 );
             }
@@ -118,7 +121,8 @@ export async function testWorkspaceFixtures({
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                     outputMode: workspace.workspaceConfig.defaultOutputMode,
                     outputFolder: fixture,
-                    keepDocker
+                    keepDocker,
+                    skipScripts
                 })
             );
         }
@@ -127,12 +131,6 @@ export async function testWorkspaceFixtures({
     const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.id);
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
-    } else {
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
-        );
     }
 
     const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
@@ -180,7 +178,8 @@ export async function acquireLocksAndRunTest({
     absolutePathToWorkspace,
     outputMode,
     outputFolder,
-    keepDocker
+    keepDocker,
+    skipScripts
 }: {
     id: string;
     lock: Semaphore;
@@ -197,6 +196,7 @@ export async function acquireLocksAndRunTest({
     outputMode: OutputMode;
     outputFolder: string;
     keepDocker: boolean | undefined;
+    skipScripts: boolean;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -215,7 +215,8 @@ export async function acquireLocksAndRunTest({
         absolutePathToWorkspace,
         outputMode,
         outputFolder,
-        keepDocker
+        keepDocker,
+        skipScripts
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -236,7 +237,8 @@ async function testWithWriteToDisk({
     absolutePathToWorkspace,
     outputMode,
     outputFolder,
-    keepDocker
+    keepDocker,
+    skipScripts
 }: {
     id: string;
     fixture: string;
@@ -252,6 +254,7 @@ async function testWithWriteToDisk({
     outputMode: OutputMode;
     outputFolder: string;
     keepDocker: boolean | undefined;
+    skipScripts: boolean;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -287,6 +290,9 @@ async function testWithWriteToDisk({
             fixtureName: fixture,
             keepDocker
         });
+        if (skipScripts) {
+            return { type: "success", id };
+        }
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script on ${fixture}`);
             const workDir = `${fixture}_${outputFolder}`;

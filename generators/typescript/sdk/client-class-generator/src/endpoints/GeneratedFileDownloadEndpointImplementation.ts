@@ -1,11 +1,10 @@
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, visitJavaScriptRuntime } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
-import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import {
     getMaxRetriesExpression,

@@ -452,12 +452,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
                           "value": "created_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "type",
                           "nameOverride": undefined,
@@ -526,12 +538,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -2469,12 +2493,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -3534,12 +3570,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -4807,12 +4855,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "http",
                       "nameOverride": undefined,
                       "value": "http",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "cli",
                       "nameOverride": undefined,
@@ -5727,12 +5787,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -6073,18 +6145,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "second",
                       "nameOverride": undefined,
                       "value": "second",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "minute",
                       "nameOverride": undefined,
                       "value": "minute",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "hour",
                       "nameOverride": undefined,
@@ -6405,18 +6495,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "second",
                       "nameOverride": undefined,
                       "value": "second",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "minute",
                       "nameOverride": undefined,
                       "value": "minute",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "hour",
                       "nameOverride": undefined,
@@ -6925,18 +7033,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "second",
                       "nameOverride": undefined,
                       "value": "second",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "minute",
                       "nameOverride": undefined,
                       "value": "minute",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "hour",
                       "nameOverride": undefined,
@@ -9337,18 +9463,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "last_attempt_at",
                           "nameOverride": undefined,
                           "value": "last_attempt_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "next_attempt_at",
                           "nameOverride": undefined,
                           "value": "next_attempt_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
@@ -9417,12 +9561,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -13166,18 +13322,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "enum",
                               "values": [
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "last_attempt_at",
                                   "nameOverride": undefined,
                                   "value": "last_attempt_at",
                                 },
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "next_attempt_at",
                                   "nameOverride": undefined,
                                   "value": "next_attempt_at",
                                 },
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "created_at",
                                   "nameOverride": undefined,
@@ -13247,12 +13421,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "enum",
                               "values": [
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "asc",
                                   "nameOverride": undefined,
                                   "value": "asc",
                                 },
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "desc",
                                   "nameOverride": undefined,
@@ -13496,12 +13682,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -18917,12 +19115,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -21723,18 +21933,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "delivery",
                           "nameOverride": undefined,
                           "value": "delivery",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "transformation",
                           "nameOverride": undefined,
                           "value": "transformation",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "backpressure",
                           "nameOverride": undefined,
@@ -21825,24 +22053,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "OPENED",
                           "nameOverride": undefined,
                           "value": "OPENED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "IGNORED",
                           "nameOverride": undefined,
                           "value": "IGNORED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "ACKNOWLEDGED",
                           "nameOverride": undefined,
                           "value": "ACKNOWLEDGED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "RESOLVED",
                           "nameOverride": undefined,
@@ -22958,30 +23210,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
                           "value": "created_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "first_seen_at",
                           "nameOverride": undefined,
                           "value": "first_seen_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "last_seen_at",
                           "nameOverride": undefined,
                           "value": "last_seen_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "opened_at",
                           "nameOverride": undefined,
                           "value": "opened_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "status",
                           "nameOverride": undefined,
@@ -23050,12 +23332,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -23409,18 +23703,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "delivery",
                           "nameOverride": undefined,
                           "value": "delivery",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "transformation",
                           "nameOverride": undefined,
                           "value": "transformation",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "backpressure",
                           "nameOverride": undefined,
@@ -23511,24 +23823,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "OPENED",
                           "nameOverride": undefined,
                           "value": "OPENED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "IGNORED",
                           "nameOverride": undefined,
                           "value": "IGNORED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "ACKNOWLEDGED",
                           "nameOverride": undefined,
                           "value": "ACKNOWLEDGED",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "RESOLVED",
                           "nameOverride": undefined,
@@ -24644,30 +24980,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
                           "value": "created_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "first_seen_at",
                           "nameOverride": undefined,
                           "value": "first_seen_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "last_seen_at",
                           "nameOverride": undefined,
                           "value": "last_seen_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "opened_at",
                           "nameOverride": undefined,
                           "value": "opened_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "status",
                           "nameOverride": undefined,
@@ -24736,12 +25102,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -24970,24 +25348,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "OPENED",
                     "nameOverride": undefined,
                     "value": "OPENED",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "IGNORED",
                     "nameOverride": undefined,
                     "value": "IGNORED",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "ACKNOWLEDGED",
                     "nameOverride": undefined,
                     "value": "ACKNOWLEDGED",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "RESOLVED",
                     "nameOverride": undefined,
@@ -25359,12 +25761,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "accepted",
                   "nameOverride": undefined,
                   "value": "accepted",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "rejected",
                   "nameOverride": undefined,
@@ -26650,12 +27064,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "ingested_at",
                           "nameOverride": undefined,
                           "value": "ingested_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
@@ -26724,12 +27150,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -29608,18 +30046,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "last_attempt_at",
                           "nameOverride": undefined,
                           "value": "last_attempt_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "next_attempt_at",
                           "nameOverride": undefined,
                           "value": "next_attempt_at",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "created_at",
                           "nameOverride": undefined,
@@ -29688,12 +30144,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -30131,12 +30599,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -31186,12 +31666,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "accepted",
                           "nameOverride": undefined,
                           "value": "accepted",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "rejected",
                           "nameOverride": undefined,
@@ -32498,12 +32990,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "enum",
                               "values": [
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "ingested_at",
                                   "nameOverride": undefined,
                                   "value": "ingested_at",
                                 },
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "created_at",
                                   "nameOverride": undefined,
@@ -32573,12 +33077,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "enum",
                               "values": [
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "asc",
                                   "nameOverride": undefined,
                                   "value": "asc",
                                 },
                                 {
+                                  "casing": {
+                                    "camel": undefined,
+                                    "pascal": undefined,
+                                    "screamingSnake": undefined,
+                                    "snake": undefined,
+                                  },
                                   "description": undefined,
                                   "generatedName": "desc",
                                   "nameOverride": undefined,
@@ -32800,12 +33316,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -33184,12 +33712,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "accepted",
                               "nameOverride": undefined,
                               "value": "accepted",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "rejected",
                               "nameOverride": undefined,
@@ -34597,12 +35137,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "accepted",
                           "nameOverride": undefined,
                           "value": "accepted",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "rejected",
                           "nameOverride": undefined,
@@ -37282,12 +37834,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -39493,12 +40057,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -41294,12 +41870,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -43186,30 +43774,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "debug",
                             "nameOverride": undefined,
                             "value": "debug",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "info",
                             "nameOverride": undefined,
                             "value": "info",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "warn",
                             "nameOverride": undefined,
                             "value": "warn",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "error",
                             "nameOverride": undefined,
                             "value": "error",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "fatal",
                             "nameOverride": undefined,
@@ -43602,12 +44220,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -45245,12 +45875,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "enum",
                       "values": [
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "asc",
                           "nameOverride": undefined,
                           "value": "asc",
                         },
                         {
+                          "casing": {
+                            "camel": undefined,
+                            "pascal": undefined,
+                            "screamingSnake": undefined,
+                            "snake": undefined,
+                          },
                           "description": undefined,
                           "generatedName": "desc",
                           "nameOverride": undefined,
@@ -45984,18 +46626,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "second",
                               "nameOverride": undefined,
                               "value": "second",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "minute",
                               "nameOverride": undefined,
                               "value": "minute",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "hour",
                               "nameOverride": undefined,
@@ -46909,18 +47569,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "second",
                               "nameOverride": undefined,
                               "value": "second",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "minute",
                               "nameOverride": undefined,
                               "value": "minute",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "hour",
                               "nameOverride": undefined,
@@ -50151,6 +50829,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "IssueType",
@@ -50443,12 +51122,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "each_attempt",
           "nameOverride": undefined,
           "value": "each_attempt",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "last_attempt",
           "nameOverride": undefined,
@@ -50491,114 +51182,228 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TIMEOUT",
           "nameOverride": undefined,
           "value": "TIMEOUT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NOT_FOUND",
           "nameOverride": undefined,
           "value": "NOT_FOUND",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CONNECTION_REFUSED",
           "nameOverride": undefined,
           "value": "CONNECTION_REFUSED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CONNECTION_RESET",
           "nameOverride": undefined,
           "value": "CONNECTION_RESET",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MISSING_URL",
           "nameOverride": undefined,
           "value": "MISSING_URL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CLI",
           "nameOverride": undefined,
           "value": "CLI",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CLI_UNAVAILABLE",
           "nameOverride": undefined,
           "value": "CLI_UNAVAILABLE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SELF_SIGNED_CERT",
           "nameOverride": undefined,
           "value": "SELF_SIGNED_CERT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ERR_TLS_CERT_ALTNAME_INVALID",
           "nameOverride": undefined,
           "value": "ERR_TLS_CERT_ALTNAME_INVALID",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SSL_ERROR_CA_UNKNOWN",
           "nameOverride": undefined,
           "value": "SSL_ERROR_CA_UNKNOWN",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TTL_EXPIRED",
           "nameOverride": undefined,
           "value": "TTL_EXPIRED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DATA_ARCHIVED",
           "nameOverride": undefined,
           "value": "DATA_ARCHIVED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SSL_CERT_EXPIRED",
           "nameOverride": undefined,
           "value": "SSL_CERT_EXPIRED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "BULK_RETRY_CANCELLED",
           "nameOverride": undefined,
           "value": "BULK_RETRY_CANCELLED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DNS_LOOKUP_FAILED",
           "nameOverride": undefined,
           "value": "DNS_LOOKUP_FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HOST_UNREACHABLE",
           "nameOverride": undefined,
           "value": "HOST_UNREACHABLE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROTOCOL_ERROR",
           "nameOverride": undefined,
           "value": "PROTOCOL_ERROR",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SOCKET_CLOSED",
           "nameOverride": undefined,
           "value": "SOCKET_CLOSED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -50620,30 +51425,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "DELIVERING",
             "nameOverride": undefined,
             "value": "DELIVERING",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "QUEUED",
             "nameOverride": undefined,
             "value": "QUEUED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "PENDING",
             "nameOverride": undefined,
             "value": "PENDING",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "COMPLETED",
             "nameOverride": undefined,
             "value": "COMPLETED",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "HOLD",
             "nameOverride": undefined,
@@ -50660,24 +51495,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
           "value": "FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SUCCESSFUL",
           "nameOverride": undefined,
           "value": "SUCCESSFUL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HOLD",
           "nameOverride": undefined,
@@ -50699,30 +51558,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "INITIAL",
             "nameOverride": undefined,
             "value": "INITIAL",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "MANUAL",
             "nameOverride": undefined,
             "value": "MANUAL",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "BULK_RETRY",
             "nameOverride": undefined,
             "value": "BULK_RETRY",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "UNPAUSE",
             "nameOverride": undefined,
             "value": "UNPAUSE",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "AUTOMATIC",
             "nameOverride": undefined,
@@ -52149,30 +53038,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "error",
                 "nameOverride": undefined,
                 "value": "error",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "log",
                 "nameOverride": undefined,
                 "value": "log",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "warn",
                 "nameOverride": undefined,
                 "value": "warn",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "info",
                 "nameOverride": undefined,
                 "value": "info",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "debug",
                 "nameOverride": undefined,
@@ -53504,18 +54423,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
         "type": "enum",
         "values": [
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "second",
             "nameOverride": undefined,
             "value": "second",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "minute",
             "nameOverride": undefined,
             "value": "minute",
           },
           {
+            "casing": {
+              "camel": undefined,
+              "pascal": undefined,
+              "screamingSnake": undefined,
+              "snake": undefined,
+            },
             "description": undefined,
             "generatedName": "hour",
             "nameOverride": undefined,
@@ -54993,30 +55930,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SCHEDULED",
           "nameOverride": undefined,
           "value": "SCHEDULED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HOLD",
           "nameOverride": undefined,
           "value": "HOLD",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SUCCESSFUL",
           "nameOverride": undefined,
           "value": "SUCCESSFUL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -55144,24 +56111,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "body",
           "nameOverride": undefined,
           "value": "body",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "headers",
           "nameOverride": undefined,
           "value": "headers",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "path",
           "nameOverride": undefined,
           "value": "path",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "query",
           "nameOverride": undefined,
@@ -55177,24 +56168,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "md5",
           "nameOverride": undefined,
           "value": "md5",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sha1",
           "nameOverride": undefined,
           "value": "sha1",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sha256",
           "nameOverride": undefined,
           "value": "sha256",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sha512",
           "nameOverride": undefined,
@@ -55273,12 +56288,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "base64",
                 "nameOverride": undefined,
                 "value": "base64",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "hex",
                 "nameOverride": undefined,
@@ -55504,24 +56531,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ARCHIVED",
           "nameOverride": undefined,
           "value": "ARCHIVED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FILTERED",
           "nameOverride": undefined,
           "value": "FILTERED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TRANSFORMATION_FAILED",
           "nameOverride": undefined,
           "value": "TRANSFORMATION_FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CLI_DISCONNECTED",
           "nameOverride": undefined,
@@ -55835,18 +56886,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "VERIFICATION",
           "nameOverride": undefined,
           "value": "VERIFICATION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HANDSHAKE",
           "nameOverride": undefined,
           "value": "HANDSHAKE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "POLLING",
           "nameOverride": undefined,
@@ -55945,138 +57014,276 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "twitter",
           "nameOverride": undefined,
           "value": "twitter",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "stripe",
           "nameOverride": undefined,
           "value": "stripe",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "recharge",
           "nameOverride": undefined,
           "value": "recharge",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "github",
           "nameOverride": undefined,
           "value": "github",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "shopify",
           "nameOverride": undefined,
           "value": "shopify",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "postmark",
           "nameOverride": undefined,
           "value": "postmark",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "typeform",
           "nameOverride": undefined,
           "value": "typeform",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "hmac",
           "nameOverride": undefined,
           "value": "hmac",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "basic_auth",
           "nameOverride": undefined,
           "value": "basic_auth",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "api_key",
           "nameOverride": undefined,
           "value": "api_key",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "xero",
           "nameOverride": undefined,
           "value": "xero",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "svix",
           "nameOverride": undefined,
           "value": "svix",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "zoom",
           "nameOverride": undefined,
           "value": "zoom",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "akeneo",
           "nameOverride": undefined,
           "value": "akeneo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "adyen",
           "nameOverride": undefined,
           "value": "adyen",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "gitlab",
           "nameOverride": undefined,
           "value": "gitlab",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PropertyFinder",
           "nameOverride": undefined,
           "value": "property-finder",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "woocommerce",
           "nameOverride": undefined,
           "value": "woocommerce",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oura",
           "nameOverride": undefined,
           "value": "oura",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "commercelayer",
           "nameOverride": undefined,
           "value": "commercelayer",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "mailgun",
           "nameOverride": undefined,
           "value": "mailgun",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "pipedrive",
           "nameOverride": undefined,
           "value": "pipedrive",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sendgrid",
           "nameOverride": undefined,
@@ -56149,24 +57356,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OPENED",
           "nameOverride": undefined,
           "value": "OPENED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "IGNORED",
           "nameOverride": undefined,
           "value": "IGNORED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACKNOWLEDGED",
           "nameOverride": undefined,
           "value": "ACKNOWLEDGED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "RESOLVED",
           "nameOverride": undefined,
@@ -56823,12 +58054,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "first_attempt",
           "nameOverride": undefined,
           "value": "first_attempt",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "final_attempt",
           "nameOverride": undefined,
@@ -56918,18 +58161,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "delivery",
           "nameOverride": undefined,
           "value": "delivery",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "transformation",
           "nameOverride": undefined,
           "value": "transformation",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "backpressure",
           "nameOverride": undefined,
@@ -57058,24 +58319,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "asc",
           "nameOverride": undefined,
           "value": "asc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "desc",
           "nameOverride": undefined,
           "value": "desc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ASC",
           "nameOverride": undefined,
           "value": "ASC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DESC",
           "nameOverride": undefined,
@@ -57326,12 +58611,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "NORMAL",
                     "nameOverride": undefined,
                     "value": "NORMAL",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "LOW",
                     "nameOverride": undefined,
@@ -57951,54 +59248,108 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SOURCE_ARCHIVED",
           "nameOverride": undefined,
           "value": "SOURCE_ARCHIVED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NO_WEBHOOK",
           "nameOverride": undefined,
           "value": "NO_WEBHOOK",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "VERIFICATION_FAILED",
           "nameOverride": undefined,
           "value": "VERIFICATION_FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNSUPPORTED_HTTP_METHOD",
           "nameOverride": undefined,
           "value": "UNSUPPORTED_HTTP_METHOD",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNSUPPORTED_CONTENT_TYPE",
           "nameOverride": undefined,
           "value": "UNSUPPORTED_CONTENT_TYPE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNPARSABLE_JSON",
           "nameOverride": undefined,
           "value": "UNPARSABLE_JSON",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PAYLOAD_TOO_LARGE",
           "nameOverride": undefined,
           "value": "PAYLOAD_TOO_LARGE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INGESTION_FATAL",
           "nameOverride": undefined,
           "value": "INGESTION_FATAL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -58215,12 +59566,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "linear",
           "nameOverride": undefined,
           "value": "linear",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "exponential",
           "nameOverride": undefined,
@@ -58773,12 +60136,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "minute",
                     "nameOverride": undefined,
                     "value": "minute",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "second",
                     "nameOverride": undefined,
@@ -59675,24 +61050,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "IssueOpened",
           "nameOverride": undefined,
           "value": "issue.opened",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "IssueUpdated",
           "nameOverride": undefined,
           "value": "issue.updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DeprecatedAttemptFailed",
           "nameOverride": undefined,
           "value": "deprecated.attempt-failed",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "EventSuccessful",
           "nameOverride": undefined,
@@ -60457,30 +61856,60 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "debug",
           "nameOverride": undefined,
           "value": "debug",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "info",
           "nameOverride": undefined,
           "value": "info",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "warn",
           "nameOverride": undefined,
           "value": "warn",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "error",
           "nameOverride": undefined,
           "value": "error",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "fatal",
           "nameOverride": undefined,

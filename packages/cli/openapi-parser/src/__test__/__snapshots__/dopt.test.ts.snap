@@ -460,36 +460,72 @@ exports[`open api parser dopt parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "custom",
                     "nameOverride": undefined,
                     "value": "custom",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "modal",
                     "nameOverride": undefined,
                     "value": "modal",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "checklist",
                     "nameOverride": undefined,
                     "value": "checklist",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "checklistItem",
                     "nameOverride": undefined,
                     "value": "checklistItem",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "tour",
                     "nameOverride": undefined,
                     "value": "tour",
                   },
                   {
+                    "casing": {
+                      "camel": undefined,
+                      "pascal": undefined,
+                      "screamingSnake": undefined,
+                      "snake": undefined,
+                    },
                     "description": undefined,
                     "generatedName": "tourItem",
                     "nameOverride": undefined,
@@ -1567,36 +1603,72 @@ exports[`open api parser dopt parse open api 1`] = `
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "custom",
                               "nameOverride": undefined,
                               "value": "custom",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "modal",
                               "nameOverride": undefined,
                               "value": "modal",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "checklist",
                               "nameOverride": undefined,
                               "value": "checklist",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "checklistItem",
                               "nameOverride": undefined,
                               "value": "checklistItem",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "tour",
                               "nameOverride": undefined,
                               "value": "tour",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "tourItem",
                               "nameOverride": undefined,
@@ -1905,24 +1977,48 @@ exports[`open api parser dopt parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "finish",
                 "nameOverride": undefined,
                 "value": "finish",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "stop",
                 "nameOverride": undefined,
                 "value": "stop",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "reset",
                 "nameOverride": undefined,
                 "value": "reset",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "start",
                 "nameOverride": undefined,
@@ -2044,6 +2140,7 @@ exports[`open api parser dopt parse open api 1`] = `
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {
@@ -2068,12 +2165,24 @@ exports[`open api parser dopt parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "invalid_request_error",
                 "nameOverride": undefined,
                 "value": "invalid_request_error",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "intent_request_error",
                 "nameOverride": undefined,
@@ -2336,24 +2445,48 @@ exports[`open api parser dopt parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "finish",
                 "nameOverride": undefined,
                 "value": "finish",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "stop",
                 "nameOverride": undefined,
                 "value": "stop",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "reset",
                 "nameOverride": undefined,
                 "value": "reset",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "start",
                 "nameOverride": undefined,

@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.1] - 2024-02-14
 
-- Improvement: Add support for a RequestOptions object for each generated function within Python SDKs. This parameter is an optional final parameter that allows for configuring timeout, as well as pass in arbitrary data through to the request. RequestOptions is a TypedDict, with optional fields, so there's no need to instantiate an object, just pass in the relevent keys within a dict!
+- Improvement: Add support for a RequestOptions object for each generated function within Python SDKs. This parameter is an optional final parameter that allows for configuring timeout, as well as pass in arbitrary data through to the request. RequestOptions is a TypedDict, with optional fields, so there's no need to instantiate an object, just pass in the relevant keys within a dict!
 
   - `timeout_in_seconds` overrides the timeout for this specific request
   - `additional_body_parameters` are expanded into the JSON request body

@@ -79,6 +79,10 @@ fixtures:
         includeOtherInUnionTypes: true
         timeoutInSeconds: "infinity"
       outputFolder: exhaustive
+  examples:
+    - customConfig:
+        includeApiReference: true
+      outputFolder: examples-with-api-reference
 scripts:
   - docker: node:lts-slim
     commands:

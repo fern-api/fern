@@ -1178,12 +1178,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Connections10",
                   "nameOverride": undefined,
                   "value": "connections/1.0",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Didexchange10",
                   "nameOverride": undefined,
@@ -1283,54 +1295,108 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "start",
                   "nameOverride": undefined,
                   "value": "start",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "error",
                   "nameOverride": undefined,
                   "value": "error",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "response",
                   "nameOverride": undefined,
                   "value": "response",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request",
                   "nameOverride": undefined,
                   "value": "request",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
                   "value": "abandoned",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "init",
                   "nameOverride": undefined,
                   "value": "init",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "invitation",
                   "nameOverride": undefined,
                   "value": "invitation",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "active",
                   "nameOverride": undefined,
                   "value": "active",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "completed",
                   "nameOverride": undefined,
@@ -1406,24 +1472,48 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "invitee",
                   "nameOverride": undefined,
                   "value": "invitee",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "requester",
                   "nameOverride": undefined,
                   "value": "requester",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "inviter",
                   "nameOverride": undefined,
                   "value": "inviter",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "responder",
                   "nameOverride": undefined,
@@ -15744,12 +15834,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "issuer",
                   "nameOverride": undefined,
                   "value": "issuer",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "holder",
                   "nameOverride": undefined,
@@ -15777,66 +15879,132 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalSent",
                   "nameOverride": undefined,
                   "value": "proposal-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalReceived",
                   "nameOverride": undefined,
                   "value": "proposal-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "OfferSent",
                   "nameOverride": undefined,
                   "value": "offer-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "OfferReceived",
                   "nameOverride": undefined,
                   "value": "offer-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestSent",
                   "nameOverride": undefined,
                   "value": "request-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestReceived",
                   "nameOverride": undefined,
                   "value": "request-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialIssued",
                   "nameOverride": undefined,
                   "value": "credential-issued",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialReceived",
                   "nameOverride": undefined,
                   "value": "credential-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "done",
                   "nameOverride": undefined,
                   "value": "done",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialRevoked",
                   "nameOverride": undefined,
                   "value": "credential-revoked",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
@@ -31358,12 +31526,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "issuer",
                   "nameOverride": undefined,
                   "value": "issuer",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "holder",
                   "nameOverride": undefined,
@@ -31391,66 +31571,132 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "proposal_sent",
                   "nameOverride": undefined,
                   "value": "proposal_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "proposal_received",
                   "nameOverride": undefined,
                   "value": "proposal_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "offer_sent",
                   "nameOverride": undefined,
                   "value": "offer_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "offer_received",
                   "nameOverride": undefined,
                   "value": "offer_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request_sent",
                   "nameOverride": undefined,
                   "value": "request_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request_received",
                   "nameOverride": undefined,
                   "value": "request_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "credential_issued",
                   "nameOverride": undefined,
                   "value": "credential_issued",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "credential_received",
                   "nameOverride": undefined,
                   "value": "credential_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "credential_acked",
                   "nameOverride": undefined,
                   "value": "credential_acked",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "credential_revoked",
                   "nameOverride": undefined,
                   "value": "credential_revoked",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
@@ -39013,18 +39259,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Endpoint",
                   "nameOverride": undefined,
                   "value": "Endpoint",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Profile",
                   "nameOverride": undefined,
                   "value": "Profile",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "LinkedDomains",
                   "nameOverride": undefined,
@@ -39855,30 +40119,60 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "STEWARD",
                   "nameOverride": undefined,
                   "value": "STEWARD",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRUSTEE",
                   "nameOverride": undefined,
                   "value": "TRUSTEE",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ENDORSER",
                   "nameOverride": undefined,
                   "value": "ENDORSER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "NETWORK_MONITOR",
                   "nameOverride": undefined,
                   "value": "NETWORK_MONITOR",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "reset",
                   "nameOverride": undefined,
@@ -40871,12 +41165,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "client",
                   "nameOverride": undefined,
                   "value": "client",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "server",
                   "nameOverride": undefined,
@@ -42118,18 +42424,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request",
                   "nameOverride": undefined,
                   "value": "request",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "granted",
                   "nameOverride": undefined,
                   "value": "granted",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "denied",
                   "nameOverride": undefined,
@@ -48942,12 +49266,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "prover",
                   "nameOverride": undefined,
                   "value": "prover",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "verifier",
                   "nameOverride": undefined,
@@ -48975,48 +49311,96 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalSent",
                   "nameOverride": undefined,
                   "value": "proposal-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalReceived",
                   "nameOverride": undefined,
                   "value": "proposal-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestSent",
                   "nameOverride": undefined,
                   "value": "request-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestReceived",
                   "nameOverride": undefined,
                   "value": "request-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "PresentationSent",
                   "nameOverride": undefined,
                   "value": "presentation-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "PresentationReceived",
                   "nameOverride": undefined,
                   "value": "presentation-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "done",
                   "nameOverride": undefined,
                   "value": "done",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
@@ -57369,12 +57753,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "prover",
                   "nameOverride": undefined,
                   "value": "prover",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "verifier",
                   "nameOverride": undefined,
@@ -57402,54 +57798,108 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "proposal_sent",
                   "nameOverride": undefined,
                   "value": "proposal_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "proposal_received",
                   "nameOverride": undefined,
                   "value": "proposal_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request_sent",
                   "nameOverride": undefined,
                   "value": "request_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request_received",
                   "nameOverride": undefined,
                   "value": "request_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "presentation_sent",
                   "nameOverride": undefined,
                   "value": "presentation_sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "presentation_received",
                   "nameOverride": undefined,
                   "value": "presentation_received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "verified",
                   "nameOverride": undefined,
                   "value": "verified",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "presentation_acked",
                   "nameOverride": undefined,
                   "value": "presentation_acked",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
@@ -65424,30 +65874,60 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "init",
                   "nameOverride": undefined,
                   "value": "init",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "generated",
                   "nameOverride": undefined,
                   "value": "generated",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "posted",
                   "nameOverride": undefined,
                   "value": "posted",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "active",
                   "nameOverride": undefined,
                   "value": "active",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "full",
                   "nameOverride": undefined,
@@ -67936,30 +68416,60 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "init",
                 "nameOverride": undefined,
                 "value": "init",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "generated",
                 "nameOverride": undefined,
                 "value": "generated",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "posted",
                 "nameOverride": undefined,
                 "value": "posted",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "active",
                 "nameOverride": undefined,
                 "value": "active",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "full",
                 "nameOverride": undefined,
@@ -71114,18 +71624,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_AUTHOR",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_AUTHOR",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_ENDORSER",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_ENDORSER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "reset",
                   "nameOverride": undefined,
@@ -72768,12 +73296,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ed25519",
                   "nameOverride": undefined,
                   "value": "ed25519",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "bls12381g2",
                   "nameOverride": undefined,
@@ -72801,12 +73341,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "key",
                   "nameOverride": undefined,
                   "value": "key",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "sov",
                   "nameOverride": undefined,
@@ -72834,18 +73386,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "public",
                   "nameOverride": undefined,
                   "value": "public",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "posted",
                   "nameOverride": undefined,
                   "value": "posted",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "wallet_only",
                   "nameOverride": undefined,
@@ -73657,6 +74227,7 @@ exports[`open api parser aries parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ActionMenuModulesResult",
@@ -75110,12 +75681,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialOffer",
                   "nameOverride": undefined,
                   "value": "credential-offer",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "PresentProof",
                   "nameOverride": undefined,
@@ -75459,12 +76042,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "manual",
                   "nameOverride": undefined,
                   "value": "manual",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "auto",
                   "nameOverride": undefined,
@@ -75543,12 +76138,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Connections10",
                   "nameOverride": undefined,
                   "value": "connections/1.0",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Didexchange10",
                   "nameOverride": undefined,
@@ -75677,18 +76284,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "once",
                   "nameOverride": undefined,
                   "value": "once",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "multi",
                   "nameOverride": undefined,
                   "value": "multi",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "static",
                   "nameOverride": undefined,
@@ -75817,24 +76442,48 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "none",
                   "nameOverride": undefined,
                   "value": "none",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "request",
                   "nameOverride": undefined,
                   "value": "request",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "active",
                   "nameOverride": undefined,
                   "value": "active",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "error",
                   "nameOverride": undefined,
@@ -75963,24 +76612,48 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "invitee",
                   "nameOverride": undefined,
                   "value": "invitee",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "requester",
                   "nameOverride": undefined,
                   "value": "requester",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "inviter",
                   "nameOverride": undefined,
                   "value": "inviter",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "responder",
                   "nameOverride": undefined,
@@ -76808,18 +77481,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "allowed",
                   "nameOverride": undefined,
                   "value": "allowed",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "disallowed",
                   "nameOverride": undefined,
@@ -76848,18 +77539,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "allowed",
                   "nameOverride": undefined,
                   "value": "allowed",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "disallowed",
                   "nameOverride": undefined,
@@ -76888,18 +77597,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "allowed",
                   "nameOverride": undefined,
                   "value": "allowed",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "disallowed",
                   "nameOverride": undefined,
@@ -76928,12 +77655,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "preferred",
                   "nameOverride": undefined,
@@ -77220,18 +77959,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "default",
                   "nameOverride": undefined,
                   "value": "default",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "both",
                   "nameOverride": undefined,
                   "value": "both",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "base",
                   "nameOverride": undefined,
@@ -77285,18 +78042,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ARGON2I_MOD",
                   "nameOverride": undefined,
                   "value": "ARGON2I_MOD",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ARGON2I_INT",
                   "nameOverride": undefined,
                   "value": "ARGON2I_INT",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RAW",
                   "nameOverride": undefined,
@@ -77350,18 +78125,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "askar",
                   "nameOverride": undefined,
                   "value": "askar",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "in_memory",
                   "nameOverride": undefined,
                   "value": "in_memory",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "indy",
                   "nameOverride": undefined,
@@ -77452,12 +78245,24 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "managed",
                 "nameOverride": undefined,
                 "value": "managed",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "unmanaged",
                 "nameOverride": undefined,
@@ -79563,12 +80368,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ed25519",
                   "nameOverride": undefined,
                   "value": "ed25519",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "bls12381g2",
                   "nameOverride": undefined,
@@ -79622,18 +80439,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "public",
                   "nameOverride": undefined,
                   "value": "public",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "posted",
                   "nameOverride": undefined,
                   "value": "posted",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "wallet_only",
                   "nameOverride": undefined,
@@ -79799,12 +80634,24 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "ed25519",
                 "nameOverride": undefined,
                 "value": "ed25519",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "bls12381g2",
                 "nameOverride": undefined,
@@ -79948,18 +80795,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Endpoint",
                   "nameOverride": undefined,
                   "value": "Endpoint",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "Profile",
                   "nameOverride": undefined,
                   "value": "Profile",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "LinkedDomains",
                   "nameOverride": undefined,
@@ -80281,12 +81146,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "preferred",
                   "nameOverride": undefined,
@@ -80351,12 +81228,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "required",
                   "nameOverride": undefined,
                   "value": "required",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "preferred",
                   "nameOverride": undefined,
@@ -81625,36 +82514,72 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "STEWARD",
                   "nameOverride": undefined,
                   "value": "STEWARD",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRUSTEE",
                   "nameOverride": undefined,
                   "value": "TRUSTEE",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ENDORSER",
                   "nameOverride": undefined,
                   "value": "ENDORSER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "NETWORK_MONITOR",
                   "nameOverride": undefined,
                   "value": "NETWORK_MONITOR",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "USER",
                   "nameOverride": undefined,
                   "value": "USER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ROLE_REMOVE",
                   "nameOverride": undefined,
@@ -82894,24 +83819,48 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "LT",
                   "nameOverride": undefined,
                   "value": "LT",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "LE",
                   "nameOverride": undefined,
                   "value": "LE",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "GE",
                   "nameOverride": undefined,
                   "value": "GE",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "GT",
                   "nameOverride": undefined,
@@ -83375,24 +84324,48 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "LESS_THAN",
                 "nameOverride": "LessThan",
                 "value": "<",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "LESS_THAN_OR_EQUAL_TO",
                 "nameOverride": "LessThanOrEqualTo",
                 "value": "<=",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "GREATER_THAN_OR_EQUAL_TO",
                 "nameOverride": "GreaterThanOrEqualTo",
                 "value": ">=",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "GREATER_THAN",
                 "nameOverride": "GreaterThan",
@@ -84410,24 +85383,48 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "LESS_THAN",
                 "nameOverride": "LessThan",
                 "value": "<",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "LESS_THAN_OR_EQUAL_TO",
                 "nameOverride": "LessThanOrEqualTo",
                 "value": "<=",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "GREATER_THAN_OR_EQUAL_TO",
                 "nameOverride": "GreaterThanOrEqualTo",
                 "value": ">=",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "GREATER_THAN",
                 "nameOverride": "GreaterThan",
@@ -85523,12 +86520,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ISSUANCE_ON_DEMAND",
                   "nameOverride": undefined,
                   "value": "ISSUANCE_ON_DEMAND",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ISSUANCE_BY_DEFAULT",
                   "nameOverride": undefined,
@@ -88013,12 +89022,24 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "add",
                 "nameOverride": undefined,
                 "value": "add",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "remove",
                 "nameOverride": undefined,
@@ -90160,12 +91181,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "sender",
                   "nameOverride": undefined,
                   "value": "sender",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "receiver",
                   "nameOverride": undefined,
@@ -90188,42 +91221,84 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "initial",
                 "nameOverride": undefined,
                 "value": "initial",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "PrepareResponse",
                 "nameOverride": undefined,
                 "value": "prepare-response",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "AwaitResponse",
                 "nameOverride": undefined,
                 "value": "await-response",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "ReuseNotAccepted",
                 "nameOverride": undefined,
                 "value": "reuse-not-accepted",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "ReuseAccepted",
                 "nameOverride": undefined,
                 "value": "reuse-accepted",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "done",
                 "nameOverride": undefined,
                 "value": "done",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "deleted",
                 "nameOverride": undefined,
@@ -91198,12 +92273,24 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "protocol",
                 "nameOverride": undefined,
                 "value": "protocol",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "GoalCode",
                 "nameOverride": undefined,
@@ -92056,12 +93143,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "v1_0",
                   "nameOverride": undefined,
                   "value": "v1_0",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "v2_0",
                   "nameOverride": undefined,
@@ -93461,12 +94560,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "all",
                   "nameOverride": undefined,
                   "value": "all",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "pick",
                   "nameOverride": undefined,
@@ -93902,18 +95013,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_AUTHOR",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_AUTHOR",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_ENDORSER",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_ENDORSER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "reset",
                   "nameOverride": undefined,
@@ -93942,18 +95071,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_AUTHOR",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_AUTHOR",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "TRANSACTION_ENDORSER",
                   "nameOverride": undefined,
                   "value": "TRANSACTION_ENDORSER",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "reset",
                   "nameOverride": undefined,
@@ -94816,18 +95963,36 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "default",
                   "nameOverride": undefined,
                   "value": "default",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "both",
                   "nameOverride": undefined,
                   "value": "both",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "base",
                   "nameOverride": undefined,
@@ -95683,12 +96848,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "self",
                   "nameOverride": undefined,
                   "value": "self",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "external",
                   "nameOverride": undefined,
@@ -95813,12 +96990,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "holder",
                   "nameOverride": undefined,
                   "value": "holder",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "issuer",
                   "nameOverride": undefined,
@@ -97424,12 +98613,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "self",
                   "nameOverride": undefined,
                   "value": "self",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "external",
                   "nameOverride": undefined,
@@ -97567,12 +98768,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "prover",
                   "nameOverride": undefined,
                   "value": "prover",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "verifier",
                   "nameOverride": undefined,
@@ -97699,12 +98912,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "true",
                   "nameOverride": undefined,
                   "value": "true",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "false",
                   "nameOverride": undefined,
@@ -98792,12 +100017,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "self",
                   "nameOverride": undefined,
                   "value": "self",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "external",
                   "nameOverride": undefined,
@@ -98851,12 +100088,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "issuer",
                   "nameOverride": undefined,
                   "value": "issuer",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "holder",
                   "nameOverride": undefined,
@@ -98885,72 +100134,144 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalSent",
                   "nameOverride": undefined,
                   "value": "proposal-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalReceived",
                   "nameOverride": undefined,
                   "value": "proposal-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "OfferSent",
                   "nameOverride": undefined,
                   "value": "offer-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "OfferReceived",
                   "nameOverride": undefined,
                   "value": "offer-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestSent",
                   "nameOverride": undefined,
                   "value": "request-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestReceived",
                   "nameOverride": undefined,
                   "value": "request-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialIssued",
                   "nameOverride": undefined,
                   "value": "credential-issued",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialReceived",
                   "nameOverride": undefined,
                   "value": "credential-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "done",
                   "nameOverride": undefined,
                   "value": "done",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "CredentialRevoked",
                   "nameOverride": undefined,
                   "value": "credential-revoked",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
                   "value": "abandoned",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "deleted",
                   "nameOverride": undefined,
@@ -102202,12 +103523,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "self",
                   "nameOverride": undefined,
                   "value": "self",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "external",
                   "nameOverride": undefined,
@@ -102324,12 +103657,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "prover",
                   "nameOverride": undefined,
                   "value": "prover",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "verifier",
                   "nameOverride": undefined,
@@ -102358,54 +103703,108 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalSent",
                   "nameOverride": undefined,
                   "value": "proposal-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ProposalReceived",
                   "nameOverride": undefined,
                   "value": "proposal-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestSent",
                   "nameOverride": undefined,
                   "value": "request-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "RequestReceived",
                   "nameOverride": undefined,
                   "value": "request-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "PresentationSent",
                   "nameOverride": undefined,
                   "value": "presentation-sent",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "PresentationReceived",
                   "nameOverride": undefined,
                   "value": "presentation-received",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "done",
                   "nameOverride": undefined,
                   "value": "done",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "abandoned",
                   "nameOverride": undefined,
                   "value": "abandoned",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "deleted",
                   "nameOverride": undefined,
@@ -102507,12 +103906,24 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "true",
                   "nameOverride": undefined,
                   "value": "true",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "false",
                   "nameOverride": undefined,
@@ -104475,12 +105886,24 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "managed",
                 "nameOverride": undefined,
                 "value": "managed",
               },
               {
+                "casing": {
+                  "camel": undefined,
+                  "pascal": undefined,
+                  "screamingSnake": undefined,
+                  "snake": undefined,
+                },
                 "description": undefined,
                 "generatedName": "unmanaged",
                 "nameOverride": undefined,

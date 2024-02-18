@@ -5,7 +5,7 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {
     getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
-    getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[];
+    getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     getFetcherRequestArgs: (
         context: SdkContext
     ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;

@@ -3,6 +3,7 @@ import { NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { SdkContext } from "..";
 import { GeneratedFile } from "../../commons/GeneratedFile";
+import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 
 export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
     instantiate: (args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) => ts.Expression;
@@ -14,4 +15,5 @@ export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): ts.Expression | undefined;
+    getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined;
 }

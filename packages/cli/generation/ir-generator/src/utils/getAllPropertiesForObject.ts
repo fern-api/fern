@@ -9,7 +9,10 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 
 // Note: using this exported variable is NOT recommended, but its included for convenience
 // when the call-site doesn't care about the language nor special casing convention.
-export const CASINGS_GENERATOR = constructCasingsGenerator({ generationLanguage: undefined, smartCasing: false });
+export const CASINGS_GENERATOR = constructCasingsGenerator({
+    generationLanguage: undefined,
+    smartCasing: false
+});
 
 export interface ObjectPropertyWithPath {
     wireKey: string;
@@ -67,7 +70,10 @@ export function getAllPropertiesForObject({
 
     let casingsGenerator = CASINGS_GENERATOR;
     if (smartCasing) {
-        casingsGenerator = constructCasingsGenerator({ generationLanguage: undefined, smartCasing });
+        casingsGenerator = constructCasingsGenerator({
+            generationLanguage: undefined,
+            smartCasing
+        });
     }
 
     const file = constructFernFileContext({
