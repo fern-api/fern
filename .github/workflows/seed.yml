@@ -9,6 +9,11 @@ on:
       - main
   workflow_call:
 
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -45,6 +50,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli
@@ -54,7 +62,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ruby-model --parallel 8
+          yarn seed:local test --workspace ruby-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -68,6 +76,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli
@@ -77,7 +88,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ruby-sdk --parallel 8
+          yarn seed:local test --workspace ruby-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -91,6 +102,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -104,13 +118,13 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace pydantic --parallel 8
+          yarn seed:local test --workspace pydantic --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
   python-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -118,6 +132,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -131,7 +148,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace python-sdk --parallel 8
+          yarn seed:local test --workspace python-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -145,6 +162,9 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
@@ -158,7 +178,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace fastapi --parallel 8
+          yarn seed:local test --workspace fastapi --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -172,13 +192,16 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace openapi --parallel 8
+          yarn seed:local test --workspace openapi --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -192,19 +215,22 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace postman --parallel 8
+          yarn seed:local test --workspace postman --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
   java-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -212,19 +238,22 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-sdk --parallel 8
+          yarn seed:local test --workspace java-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
   java-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -232,13 +261,16 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-model --parallel 8
+          yarn seed:local test --workspace java-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -252,19 +284,22 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace java-spring --parallel 8
+          yarn seed:local test --workspace java-spring --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
   typescript-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -272,13 +307,16 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ts-sdk --parallel 6
+          yarn seed:local test --workspace ts-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -292,13 +330,16 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
 
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ts-express --parallel 6
+          yarn seed:local test --workspace ts-express --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

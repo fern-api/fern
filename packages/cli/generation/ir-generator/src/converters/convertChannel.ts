@@ -104,6 +104,5 @@ function convertMessageSchema({
 export function isReferencedWebhookPayloadSchema(
     payload: RawSchemas.WebsocketChannelMessageBodySchema
 ): payload is RawSchemas.WebsocketChannelReferencedMessageSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (payload as RawSchemas.WebsocketChannelReferencedMessageSchema).type != null;
 }

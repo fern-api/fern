@@ -359,6 +359,5 @@ function getSharedSuffix(strings: string[]): string {
 }
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
 }

@@ -131,12 +131,6 @@ export async function testWorkspaceFixtures({
     const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.id);
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
-    } else {
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
-        );
     }
 
     const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
