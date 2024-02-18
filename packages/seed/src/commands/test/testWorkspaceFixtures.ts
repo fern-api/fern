@@ -310,11 +310,11 @@ async function testWithWriteToDisk({
             metrics
         };
     }
+    const scriptStopwatch = new Stopwatch();
+    scriptStopwatch.start();
     try {
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${fixture}`);
-            const scriptStopwatch = new Stopwatch();
-            scriptStopwatch.start();
 
             const workDir = `${fixture}_${outputFolder}`;
             const scriptFile = await tmp.file();
@@ -326,7 +326,8 @@ async function testWithWriteToDisk({
                 "docker",
                 ["exec", script.containerId, "mkdir", `/${workDir}`],
                 {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: true,
+                    reject: false
                 }
             );
             if (mkdirCommand.failed) {
@@ -340,7 +341,8 @@ async function testWithWriteToDisk({
                 "docker",
                 ["cp", scriptFile.path, `${script.containerId}:/${workDir}/test.sh`],
                 {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: true,
+                    reject: false
                 }
             );
             if (copyScriptCommand.failed) {
@@ -354,7 +356,8 @@ async function testWithWriteToDisk({
                 "docker",
                 ["cp", `${outputDir}/.`, `${script.containerId}:/${workDir}/generated/`],
                 {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: true,
+                    reject: false
                 }
             );
             if (copyCommand.failed) {
@@ -370,7 +373,8 @@ async function testWithWriteToDisk({
                 "docker",
                 ["exec", script.containerId, "/bin/bash", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
                 {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: true,
+                    reject: false
                 }
             );
             scriptStopwatch.stop();
@@ -384,6 +388,8 @@ async function testWithWriteToDisk({
         }
         return { type: "success", id, metrics };
     } catch (err) {
+        scriptStopwatch.stop();
+        metrics.verificationTime = scriptStopwatch.duration();
         return {
             type: "failure",
             cause: "verification",
