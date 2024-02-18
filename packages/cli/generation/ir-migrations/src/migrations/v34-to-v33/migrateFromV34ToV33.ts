@@ -40,7 +40,7 @@ export const V34_TO_V33_MIGRATION: IrMigration<
             unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
-    migrateBackwards: (V34): IrVersions.V33.ir.IntermediateRepresentation => {
+    migrateBackwards: (V34, context): IrVersions.V33.ir.IntermediateRepresentation => {
         return {
             ...V34,
             services: Object.fromEntries(
@@ -57,6 +57,11 @@ export const V34_TO_V33_MIGRATION: IrMigration<
                                     FernIrV33.HttpRequestBody.fileUpload({
                                         ...fileUpload,
                                         properties: fileUpload.properties.map((property) => {
+                                            if (property.type === "file" && property.value.type === "fileArray") {
+                                                context.taskContext.logger.warn(
+                                                    `${endpoint.method} ${endpoint.fullPath.head} accepts a list of files however the ${context.targetGenerator?.name}@${context.targetGenerator?.version} only supports accepting a single file. File an [issue](https://github.com/fern-api/fern/issues) to add request for file arrays in ${context.targetGenerator?.name}@${context.targetGenerator?.version}!`
+                                                );
+                                            }
                                             if (property.type === "file") {
                                                 return FernIrV33.FileUploadRequestProperty.file({
                                                     ...property.value
