@@ -7,7 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import fs from "fs";
 import { writeFile } from "fs/promises";
-import { difference, isEqual } from "lodash-es";
+import { difference } from "lodash-es";
 import path from "path";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
@@ -147,15 +147,17 @@ export async function testWorkspaceFixtures({
 
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
-    } else if (isEqual(workspace.workspaceConfig.allowedFailures ?? [], failedFixtures)) {
+    } else {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
                 results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. All were expected.`
+            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
         );
         if (unexpectedFixtures.length > 0) {
             CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
             process.exit(1);
+        } else {
+            CONSOLE_LOGGER.info(`All failures were expected.`);
         }
     }
 }
@@ -359,7 +361,7 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
-            scriptStopwatch.start();
+            scriptStopwatch.stop();
             metrics.verificationTime = scriptStopwatch.duration();
             if (command.failed) {
                 taskContext.logger.error("Failed to run script. See ouptut below");
