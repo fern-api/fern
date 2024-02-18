@@ -110,7 +110,7 @@ jobs:
           FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     strategy:
       matrix:
         shard: [1, 2, 3, 4]
