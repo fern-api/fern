@@ -18,7 +18,7 @@ service:
       request: SendRequest
       response: root.SendResponse
       examples: 
-        - query-parameters: 
+        - request: 
             prompt: "You are a helpful assistant"
             stream: false
             query: "What is the weather today"

@@ -120,9 +120,14 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 writer.write_line("{")
                 with writer.indent():
                     for required_property in required_properties:
+                        literal_value = self._context.get_literal_value(reference=required_property.value_type)
                         if self._context.resolved_schema_is_enum(reference=required_property.value_type):
                             writer.write_line(
                                 f'"{required_property.name.wire_value}": {self._get_property_name(required_property)}.value,'
+                            )
+                        elif literal_value is not None:
+                            writer.write_line(
+                                f'"{required_property.name.wire_value}": "{literal_value}",'
                             )
                         else:
                             writer.write_line(

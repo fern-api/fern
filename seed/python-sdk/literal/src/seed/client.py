@@ -5,7 +5,12 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .resources.headers.client import AsyncHeadersClient, HeadersClient
+from .resources.inlined.client import AsyncInlinedClient, InlinedClient
 from .resources.literal.client import AsyncLiteralClient, LiteralClient
+from .resources.path.client import AsyncPathClient, PathClient
+from .resources.query.client import AsyncQueryClient, QueryClient
+from .resources.reference.client import AsyncReferenceClient, ReferenceClient
 
 
 class SeedLiteral:
@@ -15,7 +20,12 @@ class SeedLiteral:
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
+        self.headers = HeadersClient(client_wrapper=self._client_wrapper)
+        self.inlined = InlinedClient(client_wrapper=self._client_wrapper)
         self.literal = LiteralClient(client_wrapper=self._client_wrapper)
+        self.path = PathClient(client_wrapper=self._client_wrapper)
+        self.query = QueryClient(client_wrapper=self._client_wrapper)
+        self.reference = ReferenceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedLiteral:
@@ -29,4 +39,9 @@ class AsyncSeedLiteral:
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
+        self.headers = AsyncHeadersClient(client_wrapper=self._client_wrapper)
+        self.inlined = AsyncInlinedClient(client_wrapper=self._client_wrapper)
         self.literal = AsyncLiteralClient(client_wrapper=self._client_wrapper)
+        self.path = AsyncPathClient(client_wrapper=self._client_wrapper)
+        self.query = AsyncQueryClient(client_wrapper=self._client_wrapper)
+        self.reference = AsyncReferenceClient(client_wrapper=self._client_wrapper)

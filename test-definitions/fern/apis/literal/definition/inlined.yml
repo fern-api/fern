@@ -13,12 +13,13 @@ service:
         body: 
           properties: 
             prompt: literal<"You are a helpful assistant">
-            query: 
-              type: string
+            query: string
+            temperature: optional<double>
             stream: literal<false>
       response: root.SendResponse
       examples: 
         - request:
+            temperature: 10.1
             prompt: "You are a helpful assistant"
             stream: false
             query: "What is the weather today"

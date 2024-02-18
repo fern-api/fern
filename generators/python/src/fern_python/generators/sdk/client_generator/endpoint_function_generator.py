@@ -510,24 +510,25 @@ class EndpointFunctionGenerator:
             writer.write(head)
             for i, part in enumerate(endpoint.full_path.parts):
                 parameter_obj = endpoint.all_path_parameters[i]
-                writer.write("{")
                 possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 if possible_path_part_literal is not None:
-                    writer.write_node(AST.Expression(f'"{possible_path_part_literal}"'))
-                elif self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
-                    writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
-                elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
-                    writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                    writer.write_node(AST.Expression(f'{possible_path_part_literal}'))
                 else:
-                    writer.write(
-                        get_parameter_name(
-                            self._get_path_parameter_from_name(
-                                endpoint=endpoint,
-                                path_parameter_name=part.path_parameter,
-                            ).name,
+                    writer.write("{")
+                    if self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
+                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                    elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
+                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                    else:
+                        writer.write(
+                            get_parameter_name(
+                                self._get_path_parameter_from_name(
+                                    endpoint=endpoint,
+                                    path_parameter_name=part.path_parameter,
+                                ).name,
+                            )
                         )
-                    )
-                writer.write("}")
+                    writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
 
