@@ -17,6 +17,6 @@ export class Stopwatch {
         if (this._start == null || this._stop == null) {
             return "N/A";
         }
-        return prettyMilliseconds(this._start - this._stop);
+        return prettyMilliseconds(this._stop - this._start);
     }
 }
