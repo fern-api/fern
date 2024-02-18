@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.file_types import FileTypes
+from ...core.file_types import FileTypes, convert_file_dict_to_httpx_tuples
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
@@ -90,7 +90,6 @@ class ServiceClient:
                     {
                         "maybeString": maybe_string,
                         "integer": integer,
-                        "maybeFileList": maybe_file_list,
                         "maybeInteger": maybe_integer,
                         "listOfStrings": list_of_strings,
                         "setOfStrings": set_of_strings,
@@ -111,7 +110,6 @@ class ServiceClient:
                         {
                             "maybeString": maybe_string,
                             "integer": integer,
-                            "maybeFileList": maybe_file_list,
                             "maybeInteger": maybe_integer,
                             "listOfStrings": list_of_strings,
                             "setOfStrings": set_of_strings,
@@ -127,7 +125,11 @@ class ServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file, "fileList": file_list, "maybeFile": maybe_file}),
+            files=convert_file_dict_to_httpx_tuples(
+                remove_none_from_dict(
+                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+                )
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -167,7 +169,7 @@ class ServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -240,7 +242,7 @@ class ServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -299,7 +301,7 @@ class AsyncServiceClient:
 
             - maybe_file: typing.Optional[FileTypes].
 
-            - maybe_file_list: typing.Optional[typing.List[File]].
+            - maybe_file_list: typing.Optional[typing.List[FileTypes]].
 
             - maybe_integer: typing.Optional[int].
 
@@ -334,7 +336,6 @@ class AsyncServiceClient:
                     {
                         "maybeString": maybe_string,
                         "integer": integer,
-                        "maybeFileList": maybe_file_list,
                         "maybeInteger": maybe_integer,
                         "listOfStrings": list_of_strings,
                         "setOfStrings": set_of_strings,
@@ -355,7 +356,6 @@ class AsyncServiceClient:
                         {
                             "maybeString": maybe_string,
                             "integer": integer,
-                            "maybeFileList": maybe_file_list,
                             "maybeInteger": maybe_integer,
                             "listOfStrings": list_of_strings,
                             "setOfStrings": set_of_strings,
@@ -371,7 +371,11 @@ class AsyncServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file, "fileList": file_list, "maybeFile": maybe_file}),
+            files=convert_file_dict_to_httpx_tuples(
+                remove_none_from_dict(
+                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+                )
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -411,7 +415,7 @@ class AsyncServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -484,7 +488,7 @@ class AsyncServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

@@ -32,10 +32,12 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
     def _get_file_property_type(self, prop: ir_types.FileProperty) -> AST.TypeHint:
         file_type_hint = self._context.core_utilities.get_type_hint_of_file_types()
-        maybe_file_array = AST.TypeHint.list(file_type_hint) if prop.get_as_union().type == "fileArray" else file_type_hint
+        maybe_file_array = (
+            AST.TypeHint.list(file_type_hint) if prop.get_as_union().type == "fileArray" else file_type_hint
+        )
         return maybe_file_array if not prop.get_as_union().is_optional else AST.TypeHint.optional(maybe_file_array)
 
-    def _get_property_type(self, property: ir_types.FileUploadRequestProperty) -> AST.TypeHint:        
+    def _get_property_type(self, property: ir_types.FileUploadRequestProperty) -> AST.TypeHint:
         return property.visit(
             file=lambda x: self._get_file_property_type(x),
             body_property=lambda body_property: self._context.pydantic_generator_context.get_type_hint_for_type_reference(

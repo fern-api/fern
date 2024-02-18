@@ -331,7 +331,9 @@ class EndpointFunctionGenerator:
                     if (method != "GET" and method != "DELETE")
                     else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
-                    files=request_body_parameters.get_files() if request_body_parameters is not None else None,
+                    files=self._context.core_utilities.httpx_tuple_converter(request_body_parameters.get_files())
+                    if request_body_parameters is not None and request_body_parameters.get_files() is not None
+                    else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(
                         service=service, endpoint=endpoint, idempotency_headers=idempotency_headers

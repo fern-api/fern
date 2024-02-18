@@ -200,7 +200,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
             ),
         )
-    
+
     def get_reference_to_file_types(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -208,6 +208,20 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "file_types"), named_import="FileTypes"
             ),
         )
-    
+
     def get_type_hint_of_file_types(self) -> AST.TypeHint:
         return AST.TypeHint(self.get_reference_to_file_types())
+
+    def httpx_tuple_converter(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "file_types"),
+                        named_import="convert_file_dict_to_httpx_tuples",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
