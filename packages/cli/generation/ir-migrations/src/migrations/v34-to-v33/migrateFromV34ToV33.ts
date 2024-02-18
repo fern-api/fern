@@ -56,10 +56,15 @@ export const V34_TO_V33_MIGRATION: IrMigration<
                                 fileUpload: (fileUpload) =>
                                     FernIrV33.HttpRequestBody.fileUpload({
                                         ...fileUpload,
-                                        properties: fileUpload.properties.map((property) => ({
-                                            ...property,
-                                            type: "file"
-                                        }))
+                                        properties: fileUpload.properties.map((property) => {
+                                            if (property.type === "file") {
+                                                return FernIrV33.FileUploadRequestProperty.file({
+                                                    ...property.value
+                                                });
+                                            } else {
+                                                return property;
+                                            }
+                                        })
                                     }),
                                 bytes: (value) => FernIrV33.HttpRequestBody.bytes(value),
                                 _other: (_) => undefined

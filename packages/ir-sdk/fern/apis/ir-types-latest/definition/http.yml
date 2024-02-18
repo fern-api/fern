@@ -117,12 +117,10 @@ types:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
-      isArray: boolean
   FilePropertyArray:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
-      isArray: boolean
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:

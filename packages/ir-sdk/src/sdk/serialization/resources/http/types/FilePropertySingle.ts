@@ -12,13 +12,11 @@ export const FilePropertySingle: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     key: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
     isOptional: core.serialization.boolean(),
-    isArray: core.serialization.boolean(),
 });
 
 export declare namespace FilePropertySingle {
     interface Raw {
         key: serializers.NameAndWireValue.Raw;
         isOptional: boolean;
-        isArray: boolean;
     }
 }
