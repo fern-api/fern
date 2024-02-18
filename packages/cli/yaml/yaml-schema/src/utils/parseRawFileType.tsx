@@ -24,7 +24,7 @@ export function parseRawFileType(typeReference: string): RawFileType | undefined
     if (optionalMatch?.[1] !== undefined) {
         if (optionalMatch[1] === FILE_TYPE) {
             return { isOptional: true, isArray: false };
-        } else if (isFileArray(typeReference)) {
+        } else if (isFileArray(optionalMatch[1])) {
             return { isOptional: true, isArray: true };
         }
     }

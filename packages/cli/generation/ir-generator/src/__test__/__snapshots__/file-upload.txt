@@ -269,6 +269,35 @@ exports[`generate IR 1`] = `
               {
                 "type": "file",
                 "value": {
+                  "isOptional": false,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "fileList",
+                        "unsafeName": "fileList",
+                      },
+                      "originalName": "fileList",
+                      "pascalCase": {
+                        "safeName": "FileList",
+                        "unsafeName": "FileList",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILE_LIST",
+                        "unsafeName": "FILE_LIST",
+                      },
+                      "snakeCase": {
+                        "safeName": "file_list",
+                        "unsafeName": "file_list",
+                      },
+                    },
+                    "wireValue": "fileList",
+                  },
+                  "type": "fileArray",
+                },
+              },
+              {
+                "type": "file",
+                "value": {
                   "isOptional": true,
                   "key": {
                     "name": {
@@ -293,6 +322,35 @@ exports[`generate IR 1`] = `
                     "wireValue": "maybeFile",
                   },
                   "type": "file",
+                },
+              },
+              {
+                "type": "file",
+                "value": {
+                  "isOptional": true,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "maybeFileList",
+                        "unsafeName": "maybeFileList",
+                      },
+                      "originalName": "maybeFileList",
+                      "pascalCase": {
+                        "safeName": "MaybeFileList",
+                        "unsafeName": "MaybeFileList",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "MAYBE_FILE_LIST",
+                        "unsafeName": "MAYBE_FILE_LIST",
+                      },
+                      "snakeCase": {
+                        "safeName": "maybe_file_list",
+                        "unsafeName": "maybe_file_list",
+                      },
+                    },
+                    "wireValue": "maybeFileList",
+                  },
+                  "type": "fileArray",
                 },
               },
               {
