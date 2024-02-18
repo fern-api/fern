@@ -43,7 +43,7 @@ jobs:
             typescript: 'generators/typescript/**'
 
   ruby-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -69,7 +69,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   ruby-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -95,7 +95,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   pydantic-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -155,7 +155,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   fastapi:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -185,7 +185,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   openapi:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -208,7 +208,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   postman:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -254,7 +254,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   java-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -277,7 +277,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   java-spring:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -323,7 +323,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   typescript-express:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
