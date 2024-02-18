@@ -14,22 +14,33 @@ import { ParsedDockerName } from "../../cli";
 import { OutputMode, ScriptConfig } from "../../config/api";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
+import { Stopwatch } from "../../Stopwatch";
+import { printTestCases } from "./printTestCases";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
 export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
 
-type TestResult = TestSuccess | TestFailure;
+export type TestResult = TestSuccess | TestFailure;
 
-interface TestSuccess {
+export interface TestSuccess {
     type: "success";
     id: string;
+    metrics: TestCaseMetrics;
 }
 
-interface TestFailure {
+export interface TestFailure {
     type: "failure";
     reason: string | undefined;
     id: string;
+    metrics: TestCaseMetrics;
+}
+
+export interface TestCaseMetrics {
+    /** The time it takes to generate code via the generator */
+    generationTime?: string;
+    /** The time it takes to verify/compile the code */
+    verificationTime?: string;
 }
 
 interface RunningScriptConfig extends ScriptConfig {
@@ -161,6 +172,8 @@ export async function testWorkspaceFixtures({
     } else {
         CONSOLE_LOGGER.info("All tests passed!");
     }
+
+    printTestCases(results);
 }
 
 export async function acquireLocksAndRunTest({
@@ -256,6 +269,7 @@ async function testWithWriteToDisk({
     keepDocker: boolean | undefined;
     skipScripts: boolean;
 }): Promise<TestResult> {
+    const metrics: TestCaseMetrics = {};
     try {
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace,
@@ -270,13 +284,17 @@ async function testWithWriteToDisk({
                 reason: Object.entries(workspace.failures)
                     .map(([file, reason]) => `${file}: ${reason.type}`)
                     .join("\n"),
-                id
+                id,
+                metrics
             };
         }
         const fernWorkspace: FernWorkspace =
             workspace.workspace.type === "fern"
                 ? workspace.workspace
                 : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext);
+
+        const generationStopwatch = new Stopwatch();
+        generationStopwatch.start();
         await runDockerForWorkspace({
             absolutePathToOutput: outputDir,
             docker,
@@ -290,11 +308,16 @@ async function testWithWriteToDisk({
             fixtureName: fixture,
             keepDocker
         });
+        generationStopwatch.stop();
+        metrics.generationTime = generationStopwatch.duration();
         if (skipScripts) {
-            return { type: "success", id };
+            return { type: "success", id, metrics };
         }
         for (const script of scripts ?? []) {
-            taskContext.logger.info(`Running script on ${fixture}`);
+            taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${fixture}`);
+            const scriptStopwatch = new Stopwatch();
+            scriptStopwatch.start();
+
             const workDir = `${fixture}_${outputFolder}`;
             const scriptFile = await tmp.file();
             await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
@@ -312,7 +335,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
                 taskContext.logger.error(mkdirCommand.stdout);
                 taskContext.logger.error(mkdirCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id };
+                return { type: "failure", reason: "Failed to run script...", id, metrics };
             }
             const copyScriptCommand = await loggingExeca(
                 undefined,
@@ -326,7 +349,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy script. See ouptut below");
                 taskContext.logger.error(copyScriptCommand.stdout);
                 taskContext.logger.error(copyScriptCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id };
+                return { type: "failure", reason: "Failed to run script...", id, metrics };
             }
             const copyCommand = await loggingExeca(
                 taskContext.logger,
@@ -340,7 +363,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy generated files. See ouptut below");
                 taskContext.logger.error(copyCommand.stdout);
                 taskContext.logger.error(copyCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", id };
+                return { type: "failure", reason: "Failed to run script...", id, metrics };
             }
 
             // Now actually run the test script
@@ -352,19 +375,22 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
+            scriptStopwatch.start();
+            metrics.verificationTime = scriptStopwatch.duration();
             if (command.failed) {
                 taskContext.logger.error("Failed to run script. See ouptut below");
                 taskContext.logger.error(command.stdout);
                 taskContext.logger.error(command.stderr);
-                return { type: "failure", reason: "Failed to run script...", id };
+                return { type: "failure", reason: "Failed to run script...", id, metrics };
             }
         }
-        return { type: "success", id };
+        return { type: "success", id, metrics };
     } catch (err) {
         return {
             type: "failure",
             reason: (err as Error).message,
-            id
+            id,
+            metrics
         };
     }
 }
