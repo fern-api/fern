@@ -238,56 +238,62 @@ exports[`generate IR 1`] = `
                 },
               },
               {
-                "isOptional": false,
-                "key": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                    "originalName": "file",
-                    "pascalCase": {
-                      "safeName": "File",
-                      "unsafeName": "File",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "FILE",
-                      "unsafeName": "FILE",
-                    },
-                    "snakeCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                  },
-                  "wireValue": "file",
-                },
                 "type": "file",
+                "value": {
+                  "isOptional": false,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                      "originalName": "file",
+                      "pascalCase": {
+                        "safeName": "File",
+                        "unsafeName": "File",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILE",
+                        "unsafeName": "FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                    },
+                    "wireValue": "file",
+                  },
+                  "type": "file",
+                },
               },
               {
-                "isOptional": true,
-                "key": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "maybeFile",
-                      "unsafeName": "maybeFile",
-                    },
-                    "originalName": "maybeFile",
-                    "pascalCase": {
-                      "safeName": "MaybeFile",
-                      "unsafeName": "MaybeFile",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "MAYBE_FILE",
-                      "unsafeName": "MAYBE_FILE",
-                    },
-                    "snakeCase": {
-                      "safeName": "maybe_file",
-                      "unsafeName": "maybe_file",
-                    },
-                  },
-                  "wireValue": "maybeFile",
-                },
                 "type": "file",
+                "value": {
+                  "isOptional": true,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "maybeFile",
+                        "unsafeName": "maybeFile",
+                      },
+                      "originalName": "maybeFile",
+                      "pascalCase": {
+                        "safeName": "MaybeFile",
+                        "unsafeName": "MaybeFile",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "MAYBE_FILE",
+                        "unsafeName": "MAYBE_FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "maybe_file",
+                        "unsafeName": "maybe_file",
+                      },
+                    },
+                    "wireValue": "maybeFile",
+                  },
+                  "type": "file",
+                },
               },
               {
                 "docs": null,
@@ -1090,30 +1096,33 @@ exports[`generate IR 1`] = `
             },
             "properties": [
               {
-                "isOptional": false,
-                "key": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                    "originalName": "file",
-                    "pascalCase": {
-                      "safeName": "File",
-                      "unsafeName": "File",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "FILE",
-                      "unsafeName": "FILE",
-                    },
-                    "snakeCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                  },
-                  "wireValue": "file",
-                },
                 "type": "file",
+                "value": {
+                  "isOptional": false,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                      "originalName": "file",
+                      "pascalCase": {
+                        "safeName": "File",
+                        "unsafeName": "File",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILE",
+                        "unsafeName": "FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                    },
+                    "wireValue": "file",
+                  },
+                  "type": "file",
+                },
               },
             ],
             "type": "fileUpload",
@@ -1420,30 +1429,33 @@ exports[`generate IR 1`] = `
             },
             "properties": [
               {
-                "isOptional": false,
-                "key": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                    "originalName": "file",
-                    "pascalCase": {
-                      "safeName": "File",
-                      "unsafeName": "File",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "FILE",
-                      "unsafeName": "FILE",
-                    },
-                    "snakeCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                  },
-                  "wireValue": "file",
-                },
                 "type": "file",
+                "value": {
+                  "isOptional": false,
+                  "key": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                      "originalName": "file",
+                      "pascalCase": {
+                        "safeName": "File",
+                        "unsafeName": "File",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILE",
+                        "unsafeName": "FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                    },
+                    "wireValue": "file",
+                  },
+                  "type": "file",
+                },
               },
             ],
             "type": "fileUpload",
