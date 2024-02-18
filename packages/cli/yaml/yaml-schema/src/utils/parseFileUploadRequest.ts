@@ -47,7 +47,13 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );
             if (maybeParsedFileType != null) {
-                acc.push({ isFile: true, key, docs, isOptional: maybeParsedFileType.isOptional });
+                acc.push({
+                    isFile: true,
+                    key,
+                    docs,
+                    isOptional: maybeParsedFileType.isOptional,
+                    isArray: maybeParsedFileType.isArray
+                });
             } else {
                 acc.push({ isFile: false, key, propertyType, docs });
             }
