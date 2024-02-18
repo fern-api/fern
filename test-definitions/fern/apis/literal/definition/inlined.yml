@@ -1,0 +1,30 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /inlined
+      method: POST
+      request:
+        name: SendLiteralsInlinedRequest
+        body: 
+          properties: 
+            prompt: literal<"You are a helpful assistant">
+            query: 
+              type: string
+            stream: literal<false>
+      response: root.SendResponse
+      examples: 
+        - request:
+            prompt: "You are a helpful assistant"
+            stream: false
+            query: "What is the weather today"
+          response: 
+            body: 
+              message: "The weather is sunny"
+              status: 200
+              success: true
+        
