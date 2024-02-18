@@ -15,9 +15,14 @@ on:
     branches:
       - main
 
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
-    runs-on: CLI
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -66,7 +71,7 @@ jobs:
         run: yarn compile
   
   eslint:
-    runs-on: CLI
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -83,7 +88,7 @@ jobs:
         run: yarn lint:eslint        
 
   check-test-definitions:
-    runs-on: CLI
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -162,9 +167,6 @@ jobs:
 
       - name: Install
         run: yarn install
-
-      - name: Install Fern
-        run: npm install -g fern-api
 
       - name: Check API definition is valid
         env:
