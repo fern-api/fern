@@ -192,14 +192,14 @@ url = "https://pypi.buildwithfern.com"
 reference = "fern-prod"
 
 [[package]]
-name = "fern-fern-ir-v31"
-version = "0.0.3293"
+name = "fern-fern-ir-v34"
+version = "0.0.3353"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_ir_v31-0.0.3293-py3-none-any.whl", hash = "sha256:25333c1f17dd7597bf08d8231f723eff186c147375805313936c515bee2f6be8"},
-    {file = "fern_fern_ir_v31-0.0.3293.tar.gz", hash = "sha256:4765ba8e96046e3e36ef36a64bd575f5f92016174712d5e6cfe76c89f5fd10ec"},
+    {file = "fern_fern_ir_v34-0.0.3353-py3-none-any.whl", hash = "sha256:ac885b6b987ea7f8c1d86d7454db2c85f40463bcb6b488e98cce6630302127ab"},
+    {file = "fern_fern_ir_v34-0.0.3353.tar.gz", hash = "sha256:818a3c54b56366969ee19a34c1add4702cdf8dc6c9f6b0736ce634988b9daf57"},
 ]
 
 [package.dependencies]
@@ -939,4 +939,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "4397b7a375f18aea472f9c6c1a59b6885a0e7373e0d510ba8af35265c7b3cc0a"
+content-hash = "a3c11ae47db84b5d9857af4ea7463d9641e152bc728e61cab65ccdbf85ced4ba"

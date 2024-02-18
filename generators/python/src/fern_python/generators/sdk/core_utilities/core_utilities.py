@@ -63,6 +63,15 @@ class CoreUtilities:
             ),
             exports={"RequestOptions"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="file_types.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="file_types"),
+            ),
+            exports={"FileTypes"},
+        )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
 
@@ -191,3 +200,14 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
             ),
         )
+    
+    def get_reference_to_file_types(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "file_types"), named_import="FileTypes"
+            ),
+        )
+    
+    def get_type_hint_of_file_types(self) -> AST.TypeHint:
+        return AST.TypeHint(self.get_reference_to_file_types())
