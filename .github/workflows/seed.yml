@@ -9,7 +9,6 @@ on:
       - main
   workflow_call:
 
-
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -254,7 +253,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   java-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -317,7 +316,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ts-sdk --parallel 6
+          yarn seed:local test --workspace ts-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -340,7 +339,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ts-express --parallel 6
+          yarn seed:local test --workspace ts-express --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
