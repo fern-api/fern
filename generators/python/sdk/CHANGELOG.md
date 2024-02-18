@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.10.2] - 2024-02-18
+
+- Fix: The SDK always sends the enum wire value instead of the name of the enum. For example, 
+  for the following enum,
+  ```python
+  class Operand(str, enum.Enum):
+    GREATER_THAN = ">"
+    EQUAL_TO = "="
+  ```
+  the SDK should always be sending `>` and `=` when making a request. 
+
+  This affected enums used in path parameters, query parameters and any request body parameters at 
+  the first level. To fix, the SDK sends the `.value` attribute of the enum. 
 
 - Fix: Revert #2719 which introduced additional issues with circular references within our Python types.
 

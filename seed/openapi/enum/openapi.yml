@@ -3,7 +3,7 @@ info:
   title: enum
   version: ''
 paths:
-  /inlined-request:
+  /inlined:
     post:
       operationId: inlinedRequest_send
       tags:
@@ -19,20 +19,20 @@ paths:
             schema:
               type: object
               properties:
-                value:
+                operand:
                   $ref: '#/components/schemas/Operand'
                   nullable: true
             examples:
               Example1:
                 value:
-                  value: '>'
-  /path-param/{value}:
+                  operand: '>'
+  /path/{operand}:
     post:
       operationId: pathParam_send
       tags:
         - PathParam
       parameters:
-        - name: value
+        - name: operand
           in: path
           required: true
           schema:
@@ -49,7 +49,7 @@ paths:
       tags:
         - QueryParam
       parameters:
-        - name: value
+        - name: operand
           in: query
           required: false
           schema:
@@ -67,7 +67,7 @@ paths:
       tags:
         - QueryParam
       parameters:
-        - name: value
+        - name: operand
           in: query
           required: false
           schema:

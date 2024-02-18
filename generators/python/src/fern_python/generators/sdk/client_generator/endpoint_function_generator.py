@@ -510,18 +510,23 @@ class EndpointFunctionGenerator:
             writer.write(head)
             for i, part in enumerate(endpoint.full_path.parts):
                 parameter_obj = endpoint.all_path_parameters[i]
-                possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 writer.write("{")
-                writer.write(
-                    get_parameter_name(
-                        self._get_path_parameter_from_name(
-                            endpoint=endpoint,
-                            path_parameter_name=part.path_parameter,
-                        ).name,
+                possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
+                if possible_path_part_literal is not None:
+                    writer.write_node(AST.Expression(f'"{possible_path_part_literal}"'))
+                elif self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
+                    writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
+                    writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                else:
+                    writer.write(
+                        get_parameter_name(
+                            self._get_path_parameter_from_name(
+                                endpoint=endpoint,
+                                path_parameter_name=part.path_parameter,
+                            ).name,
+                        )
                     )
-                ) if possible_path_part_literal is None else writer.write_node(
-                    AST.Expression(f'"{possible_path_part_literal}"')
-                )
                 writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
@@ -582,7 +587,8 @@ class EndpointFunctionGenerator:
         raise RuntimeError(f"{union.type} streaming response is unsupported")
 
     def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
-        reference = AST.Expression(get_parameter_name(query_parameter.name.name))
+        parameter_name = get_parameter_name(query_parameter.name.name)
+        reference = AST.Expression(parameter_name)
 
         if self._is_datetime(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.serialize_datetime(reference)
@@ -619,6 +625,12 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif self._context.resolved_schema_is_enum(reference=query_parameter.value_type):
+            return AST.Expression(f"{parameter_name}.value")
+
+        elif self._context.resolved_schema_is_optional_enum(reference=query_parameter.value_type):
+            return AST.Expression(f"{parameter_name}.value if {parameter_name} is not None else None")
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
@@ -707,11 +719,9 @@ class EndpointFunctionGenerator:
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
-        return (
-            self._get_reference_to_query_parameter(query_parameter)
-            if possible_query_literal is None
-            else AST.Expression(f'"{possible_query_literal}"')
-        )
+        if possible_query_literal is not None:
+            return AST.Expression(f'"{possible_query_literal}"')
+        return self._get_reference_to_query_parameter(query_parameter)
 
     def _get_query_parameters_for_endpoint(
         self,

@@ -67,7 +67,7 @@ class AbstractInlinedRequestService(AbstractFernService):
         wrapper.__globals__.update(cls.send.__globals__)
 
         router.post(
-            path="//inlined-request",
+            path="//inlined",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractInlinedRequestService.send.__doc__,

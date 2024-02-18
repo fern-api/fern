@@ -13,6 +13,6 @@ import types.Operand;
     path = "/"
 )
 public interface PathParamService {
-  @PostMapping("/path-param/{value}")
-  void send(@PathVariable("value") Operand value);
+  @PostMapping("/path/{operand}")
+  void send(@PathVariable("operand") Operand operand);
 }

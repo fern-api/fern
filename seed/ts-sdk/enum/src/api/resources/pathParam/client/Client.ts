@@ -22,11 +22,11 @@ export declare namespace PathParam {
 export class PathParam {
     constructor(protected readonly _options: PathParam.Options) {}
 
-    public async send(value: SeedEnum.Operand, requestOptions?: PathParam.RequestOptions): Promise<void> {
+    public async send(operand: SeedEnum.Operand, requestOptions?: PathParam.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path-param/${await serializers.Operand.jsonOrThrow(value)}`
+                `path/${await serializers.Operand.jsonOrThrow(operand)}`
             ),
             method: "POST",
             headers: {

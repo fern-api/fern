@@ -76,12 +76,16 @@ export async function testWorkspaceFixtures({
 
     const testCases = [];
     const runningScripts: RunningScriptConfig[] = [];
-    // Start running a docker container for each script instance
-    for (const script of scripts ?? []) {
-        // Start script runner
-        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
-        runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
+
+    if (!skipScripts) {
+        // Start running a docker container for each script instance
+        for (const script of scripts ?? []) {
+            // Start script runner
+            const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
+            runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
+        }
     }
+
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
         const absolutePathToWorkspace = AbsoluteFilePath.of(

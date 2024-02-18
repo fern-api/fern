@@ -310,11 +310,11 @@
           "idempotent": false,
           "method": "POST",
           "path": {
-            "head": "/inlined-request",
+            "head": "/inlined",
             "parts": []
           },
           "fullPath": {
-            "head": "inlined-request",
+            "head": "inlined",
             "parts": []
           },
           "pathParameters": [],
@@ -347,25 +347,25 @@
               {
                 "name": {
                   "name": {
-                    "originalName": "value",
+                    "originalName": "operand",
                     "camelCase": {
-                      "unsafeName": "value",
-                      "safeName": "value"
+                      "unsafeName": "operand",
+                      "safeName": "operand"
                     },
                     "snakeCase": {
-                      "unsafeName": "value",
-                      "safeName": "value"
+                      "unsafeName": "operand",
+                      "safeName": "operand"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "VALUE",
-                      "safeName": "VALUE"
+                      "unsafeName": "OPERAND",
+                      "safeName": "OPERAND"
                     },
                     "pascalCase": {
-                      "unsafeName": "Value",
-                      "safeName": "Value"
+                      "unsafeName": "Operand",
+                      "safeName": "Operand"
                     }
                   },
-                  "wireValue": "value"
+                  "wireValue": "operand"
                 },
                 "valueType": {
                   "container": {
@@ -468,7 +468,7 @@
           "errors": [],
           "examples": [
             {
-              "url": "/inlined-request",
+              "url": "/inlined",
               "rootPathParameters": [],
               "endpointPathParameters": [],
               "servicePathParameters": [],
@@ -481,25 +481,25 @@
                   {
                     "name": {
                       "name": {
-                        "originalName": "value",
+                        "originalName": "operand",
                         "camelCase": {
-                          "unsafeName": "value",
-                          "safeName": "value"
+                          "unsafeName": "operand",
+                          "safeName": "operand"
                         },
                         "snakeCase": {
-                          "unsafeName": "value",
-                          "safeName": "value"
+                          "unsafeName": "operand",
+                          "safeName": "operand"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "VALUE",
-                          "safeName": "VALUE"
+                          "unsafeName": "OPERAND",
+                          "safeName": "OPERAND"
                         },
                         "pascalCase": {
-                          "unsafeName": "Value",
-                          "safeName": "Value"
+                          "unsafeName": "Operand",
+                          "safeName": "Operand"
                         }
                       },
-                      "wireValue": "value"
+                      "wireValue": "operand"
                     },
                     "value": {
                       "shape": {
@@ -570,7 +570,7 @@
                   }
                 ],
                 "jsonExample": {
-                  "value": ">"
+                  "operand": ">"
                 }
               },
               "response": {
@@ -659,19 +659,19 @@
           "idempotent": false,
           "method": "POST",
           "path": {
-            "head": "/path-param/",
+            "head": "/path/",
             "parts": [
               {
-                "pathParameter": "value",
+                "pathParameter": "operand",
                 "tail": ""
               }
             ]
           },
           "fullPath": {
-            "head": "path-param/",
+            "head": "path/",
             "parts": [
               {
-                "pathParameter": "value",
+                "pathParameter": "operand",
                 "tail": ""
               }
             ]
@@ -679,22 +679,22 @@
           "pathParameters": [
             {
               "name": {
-                "originalName": "value",
+                "originalName": "operand",
                 "camelCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
+                  "unsafeName": "operand",
+                  "safeName": "operand"
                 },
                 "snakeCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
+                  "unsafeName": "operand",
+                  "safeName": "operand"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "VALUE",
-                  "safeName": "VALUE"
+                  "unsafeName": "OPERAND",
+                  "safeName": "OPERAND"
                 },
                 "pascalCase": {
-                  "unsafeName": "Value",
-                  "safeName": "Value"
+                  "unsafeName": "Operand",
+                  "safeName": "Operand"
                 }
               },
               "valueType": {
@@ -730,22 +730,22 @@
           "allPathParameters": [
             {
               "name": {
-                "originalName": "value",
+                "originalName": "operand",
                 "camelCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
+                  "unsafeName": "operand",
+                  "safeName": "operand"
                 },
                 "snakeCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
+                  "unsafeName": "operand",
+                  "safeName": "operand"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "VALUE",
-                  "safeName": "VALUE"
+                  "unsafeName": "OPERAND",
+                  "safeName": "OPERAND"
                 },
                 "pascalCase": {
-                  "unsafeName": "Value",
-                  "safeName": "Value"
+                  "unsafeName": "Operand",
+                  "safeName": "Operand"
                 }
               },
               "valueType": {
@@ -783,27 +783,27 @@
           "errors": [],
           "examples": [
             {
-              "url": "/path-param/>",
+              "url": "/path/>",
               "rootPathParameters": [],
               "endpointPathParameters": [
                 {
                   "name": {
-                    "originalName": "value",
+                    "originalName": "operand",
                     "camelCase": {
-                      "unsafeName": "value",
-                      "safeName": "value"
+                      "unsafeName": "operand",
+                      "safeName": "operand"
                     },
                     "snakeCase": {
-                      "unsafeName": "value",
-                      "safeName": "value"
+                      "unsafeName": "operand",
+                      "safeName": "operand"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "VALUE",
-                      "safeName": "VALUE"
+                      "unsafeName": "OPERAND",
+                      "safeName": "OPERAND"
                     },
                     "pascalCase": {
-                      "unsafeName": "Value",
-                      "safeName": "Value"
+                      "unsafeName": "Operand",
+                      "safeName": "Operand"
                     }
                   },
                   "value": {
@@ -968,25 +968,25 @@
             {
               "name": {
                 "name": {
-                  "originalName": "value",
+                  "originalName": "operand",
                   "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
+                    "unsafeName": "operand",
+                    "safeName": "operand"
                   },
                   "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
+                    "unsafeName": "operand",
+                    "safeName": "operand"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
+                    "unsafeName": "OPERAND",
+                    "safeName": "OPERAND"
                   },
                   "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
+                    "unsafeName": "Operand",
+                    "safeName": "Operand"
                   }
                 },
-                "wireValue": "value"
+                "wireValue": "operand"
               },
               "valueType": {
                 "container": {
@@ -1100,25 +1100,25 @@
                 {
                   "name": {
                     "name": {
-                      "originalName": "value",
+                      "originalName": "operand",
                       "camelCase": {
-                        "unsafeName": "value",
-                        "safeName": "value"
+                        "unsafeName": "operand",
+                        "safeName": "operand"
                       },
                       "snakeCase": {
-                        "unsafeName": "value",
-                        "safeName": "value"
+                        "unsafeName": "operand",
+                        "safeName": "operand"
                       },
                       "screamingSnakeCase": {
-                        "unsafeName": "VALUE",
-                        "safeName": "VALUE"
+                        "unsafeName": "OPERAND",
+                        "safeName": "OPERAND"
                       },
                       "pascalCase": {
-                        "unsafeName": "Value",
-                        "safeName": "Value"
+                        "unsafeName": "Operand",
+                        "safeName": "Operand"
                       }
                     },
-                    "wireValue": "value"
+                    "wireValue": "operand"
                   },
                   "value": {
                     "shape": {
@@ -1232,25 +1232,25 @@
             {
               "name": {
                 "name": {
-                  "originalName": "value",
+                  "originalName": "operand",
                   "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
+                    "unsafeName": "operand",
+                    "safeName": "operand"
                   },
                   "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
+                    "unsafeName": "operand",
+                    "safeName": "operand"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
+                    "unsafeName": "OPERAND",
+                    "safeName": "OPERAND"
                   },
                   "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
+                    "unsafeName": "Operand",
+                    "safeName": "Operand"
                   }
                 },
-                "wireValue": "value"
+                "wireValue": "operand"
               },
               "valueType": {
                 "container": {
@@ -1393,6 +1393,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_inlined-request": {
       "name": {
@@ -1414,6 +1415,7 @@
           "safeName": "InlinedRequest"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1483,6 +1485,7 @@
           "safeName": "PathParam"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1552,6 +1555,7 @@
           "safeName": "QueryParam"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1607,6 +1611,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:Operand"
     ],

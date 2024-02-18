@@ -124,3 +124,38 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
         return self.get_literal_value(header.value_type)
+
+    def resolved_schema_is_enum(self, reference: ir_types.TypeReference) -> bool:
+        reference_union = reference.get_as_union()
+        while reference_union.type == "named":
+            declaration = self.pydantic_generator_context.get_declaration_for_type_id(reference_union.type_id)
+            shape = declaration.shape.get_as_union()
+            if shape.type == "enum":
+                return True
+            elif shape.type == "alias":
+                reference_union = shape.alias_of.get_as_union()
+            else:
+                break
+        return False
+
+    def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
+        reference_union = reference.get_as_union()
+        is_optional = False
+        while reference_union.type == "container" or reference_union.type == "named":
+            if reference_union.type == "container":
+                container_union = reference_union.container.get_as_union()
+                if container_union.type == "optional":
+                    reference_union = container_union.optional.get_as_union()
+                    is_optional = True
+                else:
+                    break
+            elif reference_union.type == "named":
+                declaration = self.pydantic_generator_context.get_declaration_for_type_id(reference_union.type_id)
+                shape = declaration.shape.get_as_union()
+                if shape.type == "enum":
+                    return is_optional
+                elif shape.type == "alias":
+                    reference_union = shape.alias_of.get_as_union()
+                else:
+                    break
+        return False

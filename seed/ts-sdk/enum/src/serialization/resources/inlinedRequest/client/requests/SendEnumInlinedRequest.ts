@@ -10,11 +10,11 @@ export const SendEnumInlinedRequest: core.serialization.Schema<
     serializers.SendEnumInlinedRequest.Raw,
     SeedEnum.SendEnumInlinedRequest
 > = core.serialization.object({
-    value: core.serialization.lazy(async () => (await import("../../../..")).Operand).optional(),
+    operand: core.serialization.lazy(async () => (await import("../../../..")).Operand).optional(),
 });
 
 export declare namespace SendEnumInlinedRequest {
     interface Raw {
-        value?: serializers.Operand.Raw | null;
+        operand?: serializers.Operand.Raw | null;
     }
 }

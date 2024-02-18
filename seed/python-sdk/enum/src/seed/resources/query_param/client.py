@@ -17,11 +17,11 @@ class QueryParamClient:
         self._client_wrapper = client_wrapper
 
     def send(
-        self, *, value: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters:
-            - value: typing.Optional[Operand].
+            - operand: typing.Optional[Operand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -29,7 +29,7 @@ class QueryParamClient:
         from seed.client import SeedEnum
 
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send(value=Operand., )
+        client.query_param.send(operand=Operand., )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -37,7 +37,7 @@ class QueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "value": value,
+                        "operand": operand.value if operand is not None else None,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -72,12 +72,12 @@ class QueryParamClient:
     def send_list(
         self,
         *,
-        value: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -87,7 +87,7 @@ class QueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "value": value,
+                        "operand": operand.value if operand is not None else None,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -125,11 +125,11 @@ class AsyncQueryParamClient:
         self._client_wrapper = client_wrapper
 
     async def send(
-        self, *, value: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters:
-            - value: typing.Optional[Operand].
+            - operand: typing.Optional[Operand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -137,7 +137,7 @@ class AsyncQueryParamClient:
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.query_param.send(value=Operand., )
+        await client.query_param.send(operand=Operand., )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -145,7 +145,7 @@ class AsyncQueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "value": value,
+                        "operand": operand.value if operand is not None else None,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -180,12 +180,12 @@ class AsyncQueryParamClient:
     async def send_list(
         self,
         *,
-        value: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -195,7 +195,7 @@ class AsyncQueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "value": value,
+                        "operand": operand.value if operand is not None else None,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

@@ -5,23 +5,23 @@
     "endpoints": [
         {
             "id": {
-                "path": "/inlined-request",
+                "path": "/inlined",
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.inlined_request.send(value=Operand., )\n",
-                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.inlined_request.send(value=Operand., )\n",
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.inlined_request.send(operand=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.inlined_request.send(operand=Operand., )\n",
                 "type": "python"
             }
         },
         {
             "id": {
-                "path": "/path-param/{value}",
+                "path": "/path/{operand}",
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.path_param.send(value=Operand., )\n",
-                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.path_param.send(value=Operand., )\n",
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.path_param.send(operand=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.path_param.send(operand=Operand., )\n",
                 "type": "python"
             }
         },
@@ -31,8 +31,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.query_param.send(value=Operand., )\n",
-                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.query_param.send(value=Operand., )\n",
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.query_param.send(operand=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.query_param.send(operand=Operand., )\n",
                 "type": "python"
             }
         }
