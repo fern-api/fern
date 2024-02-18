@@ -27,7 +27,7 @@ export class InlinedRequest {
         requestOptions?: InlinedRequest.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "inlined-request"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

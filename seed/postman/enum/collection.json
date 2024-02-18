@@ -24,12 +24,12 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/inlined-request",
+              "raw": "{{baseUrl}}/inlined",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "inlined-request"
+                "inlined"
               ],
               "query": [],
               "variable": []
@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"value\": \">\"\n}",
+              "raw": "{\n    \"operand\": \">\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -61,12 +61,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/inlined-request",
+                  "raw": "{{baseUrl}}/inlined",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "inlined-request"
+                    "inlined"
                   ],
                   "query": [],
                   "variable": []
@@ -82,7 +82,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"value\": \">\"\n}",
+                  "raw": "{\n    \"operand\": \">\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -109,18 +109,18 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/path-param/:value",
+              "raw": "{{baseUrl}}/path/:operand",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "path-param",
-                ":value"
+                "path",
+                ":operand"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "value",
+                  "key": "operand",
                   "description": null,
                   "value": ">"
                 }
@@ -145,18 +145,18 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/path-param/:value",
+                  "raw": "{{baseUrl}}/path/:operand",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "path-param",
-                    ":value"
+                    "path",
+                    ":operand"
                   ],
                   "query": [],
                   "variable": [
                     {
-                      "key": "value",
+                      "key": "operand",
                       "description": null,
                       "value": ">"
                     }
@@ -192,7 +192,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query?value=%3E",
+              "raw": "{{baseUrl}}/query?operand=%3E",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -201,7 +201,7 @@
               ],
               "query": [
                 {
-                  "key": "value",
+                  "key": "operand",
                   "description": null,
                   "value": ">"
                 }
@@ -227,7 +227,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/query?value=%3E",
+                  "raw": "{{baseUrl}}/query?operand=%3E",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -236,7 +236,7 @@
                   ],
                   "query": [
                     {
-                      "key": "value",
+                      "key": "operand",
                       "description": null,
                       "value": ">"
                     }
@@ -266,7 +266,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?value=",
+              "raw": "{{baseUrl}}/query-list?operand=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -275,7 +275,7 @@
               ],
               "query": [
                 {
-                  "key": "value",
+                  "key": "operand",
                   "value": "",
                   "description": null
                 }

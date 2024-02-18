@@ -5,7 +5,7 @@ import * as serializers from "../../../../serialization";
 import express from "express";
 export interface PathParamServiceMethods {
     send(req: express.Request<{
-        value: serializers.Operand.Raw;
+        operand: serializers.Operand.Raw;
     }, never, never, never>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

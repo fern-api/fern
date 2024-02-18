@@ -6,10 +6,10 @@ service:
   base-path: ""
   endpoints:
     send:
-      path: /path-param/{value}
+      path: /path/{operand}
       method: POST
       path-parameters: 
-        value: root.Operand
+        operand: root.Operand
       examples: 
         - path-parameters:
-            value: $root.Operand.GreaterThan
+            operand: $root.Operand.GreaterThan

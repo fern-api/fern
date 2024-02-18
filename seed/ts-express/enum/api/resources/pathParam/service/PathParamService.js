@@ -53,7 +53,7 @@ class PathParamService {
         return this;
     }
     toRouter() {
-        this.router.post("/path-param/:value", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/path/:operand", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.send(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

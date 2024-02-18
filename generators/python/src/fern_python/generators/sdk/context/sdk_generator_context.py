@@ -102,3 +102,11 @@ class SdkGeneratorContext(ABC):
     @abstractmethod
     def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[str]:
         ...
+
+    @abstractmethod
+    def resolved_schema_is_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
+
+    @abstractmethod
+    def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
