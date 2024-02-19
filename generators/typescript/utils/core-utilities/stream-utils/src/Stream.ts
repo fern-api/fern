@@ -25,7 +25,7 @@ export class Stream<T> implements AsyncIterable<T> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let previous = "";
         for await (const chunk of stream) {
-            previous += decoder.decode(chunk.value)
+            previous += decoder.decode(chunk.value);
             let terminatorIndex: number;
 
             while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
