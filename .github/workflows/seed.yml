@@ -157,7 +157,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace python-sdk
+          yarn seed:local test --workspace python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -264,7 +264,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-sdk
+          yarn seed:local test --workspace java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -289,7 +289,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-model
+          yarn seed:local test --workspace java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
