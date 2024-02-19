@@ -56,7 +56,7 @@ export async function testCustomFixture({
     });
 
     if (result.type === "failure") {
-        taskContext.logger.error(`Encountered error with ${result.reason}`);
+        taskContext.logger.error(`Encountered error with ${result.cause}`);
     } else {
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
     }

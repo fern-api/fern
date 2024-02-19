@@ -3,5 +3,5 @@
  */
 import * as SeedEnum from "../../../..";
 export interface SendEnumInlinedRequest {
-    value?: SeedEnum.Operand;
+    operand?: SeedEnum.Operand;
 }

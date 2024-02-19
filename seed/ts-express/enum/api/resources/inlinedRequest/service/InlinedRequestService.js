@@ -54,7 +54,7 @@ class InlinedRequestService {
         return this;
     }
     toRouter() {
-        this.router.post("/inlined-request", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/inlined", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const request = yield serializers.SendEnumInlinedRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;

@@ -76,10 +76,12 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 for property in self._get_all_properties_for_inlined_request_body():
                     property_name = self._get_property_name(property)
                     possible_literal_value = self._context.get_literal_value(property.value_type)
-                    stringified_possible_literal_value = f'"{self._context.get_literal_value(property.value_type)}"'
-                    writer.write_line(
-                        f'"{property.name.wire_value}": {property_name if possible_literal_value is None else stringified_possible_literal_value},'
-                    )
+                    if possible_literal_value is not None and type(possible_literal_value) is str:
+                        writer.write_line(f'"{property.name.wire_value}": "{possible_literal_value}",')
+                    elif possible_literal_value is not None and type(possible_literal_value) is bool:
+                        writer.write_line(f'"{property.name.wire_value}": {possible_literal_value},')
+                    else:
+                        writer.write_line(f'"{property.name.wire_value}": {property_name},')
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
@@ -120,10 +122,15 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 writer.write_line("{")
                 with writer.indent():
                     for required_property in required_properties:
-                        if self.is_enum_or_optional_enum(reference=required_property.value_type):
+                        literal_value = self._context.get_literal_value(reference=required_property.value_type)
+                        if self._context.resolved_schema_is_enum(reference=required_property.value_type):
                             writer.write_line(
                                 f'"{required_property.name.wire_value}": {self._get_property_name(required_property)}.value,'
                             )
+                        elif literal_value is not None and type(literal_value) is str:
+                            writer.write_line(f'"{required_property.name.wire_value}": "{literal_value}",')
+                        elif literal_value is not None and type(literal_value) is bool:
+                            writer.write_line(f'"{required_property.name.wire_value}": {literal_value},')
                         else:
                             writer.write_line(
                                 f'"{required_property.name.wire_value}": {self._get_property_name(required_property)},'
@@ -135,9 +142,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     f"if {self._get_property_name(optional_property)} is not {DEFAULT_BODY_PARAMETER_VALUE}:"
                 )
                 with writer.indent():
-                    if self.is_enum_or_optional_enum(reference=optional_property.value_type):
+                    if self._context.resolved_schema_is_optional_enum(reference=optional_property.value_type):
                         writer.write_line(
-                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value'
+                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value if {self._get_property_name(optional_property)} is not None else None'
                         )
                     else:
                         writer.write_line(
@@ -151,25 +158,3 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_content(self) -> Optional[AST.Expression]:
         return None
-
-    def is_enum_or_optional_enum(self, *, reference: ir_types.TypeReference) -> bool:
-        reference_union = reference.get_as_union()
-        while reference_union.type == "named" or reference_union.type == "container":
-            if reference_union.type == "named":
-                declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
-                    reference_union.type_id
-                )
-                shape = declaration.shape.get_as_union()
-                if shape.type == "enum":
-                    return True
-                elif shape.type == "alias":
-                    reference_union = shape.alias_of.get_as_union()
-                else:
-                    break
-            elif reference_union.type == "container":
-                container_union = reference_union.container.get_as_union()
-                if container_union.type == "optional":
-                    reference_union = container_union.optional.get_as_union()
-                else:
-                    break
-        return False

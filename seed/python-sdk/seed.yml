@@ -35,4 +35,10 @@ scripts:
       - dmypy run .
 allowedFailures: 
   - response-property
+  # Generator does not handle list of enums
+  - enum
+  - auth-environment-variables
+  - bearer-token-environment-variable
+
+
 

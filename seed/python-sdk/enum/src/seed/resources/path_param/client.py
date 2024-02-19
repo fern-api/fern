@@ -16,10 +16,10 @@ class PathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, value: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - value: Operand.
+            - operand: Operand.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -27,11 +27,11 @@ class PathParamClient:
         from seed.client import SeedEnum
 
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.path_param.send(value=Operand., )
+        client.path_param.send(operand=Operand., )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path-param/{value}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path/{operand.value}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -63,10 +63,10 @@ class AsyncPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, value: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - value: Operand.
+            - operand: Operand.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -74,11 +74,11 @@ class AsyncPathParamClient:
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.path_param.send(value=Operand., )
+        await client.path_param.send(operand=Operand., )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path-param/{value}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path/{operand.value}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
