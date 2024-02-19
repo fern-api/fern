@@ -38,6 +38,7 @@ allowedFailures:
   # Generator does not handle list of enums
   - enum
   - auth-environment-variables
-  - auth-environment-variables, bearer-token-environment-variable
+  - bearer-token-environment-variable
+
 
 

@@ -9,11 +9,17 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
+    private final String version;
+
+    private final String auditLogging;
+
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    private RequestOptions(String version, String auditLogging, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+        this.version = version;
+        this.auditLogging = auditLogging;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
     }
@@ -28,6 +34,12 @@ public final class RequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
+        if (this.version != null) {
+            headers.put("X-API-Version", this.version);
+        }
+        if (this.auditLogging != null) {
+            headers.put("X-API-Enable-Audit-Logging", this.auditLogging);
+        }
         return headers;
     }
 
@@ -36,9 +48,23 @@ public final class RequestOptions {
     }
 
     public static final class Builder {
+        private String version = null;
+
+        private String auditLogging = null;
+
         private Optional<Integer> timeout = null;
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        public Builder version(String version) {
+            this.version = version;
+            return this;
+        }
+
+        public Builder auditLogging(String auditLogging) {
+            this.auditLogging = auditLogging;
+            return this;
+        }
 
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
@@ -52,7 +78,7 @@ public final class RequestOptions {
         }
 
         public RequestOptions build() {
-            return new RequestOptions(timeout, timeoutTimeUnit);
+            return new RequestOptions(version, auditLogging, timeout, timeoutTimeUnit);
         }
     }
 }

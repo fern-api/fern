@@ -4,8 +4,11 @@
 
 package resources.literal;
 
+import java.lang.Boolean;
+import java.lang.String;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.literal.requests.CreateOptionsRequest;
 import resources.literal.requests.GetOptionsRequest;
@@ -23,20 +26,25 @@ public interface LiteralService {
       produces = "application/json",
       consumes = "application/json"
   )
-  CreateOptionsResponse createOptions(@RequestBody CreateOptionsRequest body);
+  CreateOptionsResponse createOptions(@RequestHeader("X-API-Version") String version,
+      @RequestHeader("X-API-Enable-Audit-Logging") Boolean auditLogging,
+      @RequestBody CreateOptionsRequest body);
 
   @PostMapping(
       value = "/options",
       produces = "application/json",
       consumes = "application/json"
   )
-  Options getOptions(@RequestBody GetOptionsRequest body);
+  Options getOptions(@RequestHeader("X-API-Version") String version,
+      @RequestHeader("X-API-Enable-Audit-Logging") Boolean auditLogging,
+      @RequestBody GetOptionsRequest body);
 
   @PostMapping(
       value = "/options",
       produces = "application/json",
       consumes = "application/json"
   )
-  UndiscriminatedOptions getUndiscriminatedOptions(
+  UndiscriminatedOptions getUndiscriminatedOptions(@RequestHeader("X-API-Version") String version,
+      @RequestHeader("X-API-Enable-Audit-Logging") Boolean auditLogging,
       @RequestBody GetUndiscriminatedOptionsRequest body);
 }

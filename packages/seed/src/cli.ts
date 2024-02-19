@@ -73,6 +73,7 @@ function addTestCommand(cli: Argv) {
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
 
+            let failurePresent = false;
             for (const workspace of workspaces) {
                 if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
                     continue;
@@ -109,20 +110,26 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts
                     });
                 } else {
-                    await testWorkspaceFixtures({
-                        workspace,
-                        fixtures: argv.fixture,
-                        irVersion: workspace.workspaceConfig.irVersion,
-                        language: workspace.workspaceConfig.language,
-                        docker: parsedDockerImage,
-                        scripts: workspace.workspaceConfig.scripts,
-                        logLevel: argv["log-level"],
-                        numDockers: argv.parallel,
-                        taskContextFactory,
-                        keepDocker: argv.keepDocker,
-                        skipScripts: argv.skipScripts
-                    });
+                    failurePresent =
+                        failurePresent ||
+                        (await testWorkspaceFixtures({
+                            workspace,
+                            fixtures: argv.fixture,
+                            irVersion: workspace.workspaceConfig.irVersion,
+                            language: workspace.workspaceConfig.language,
+                            docker: parsedDockerImage,
+                            scripts: workspace.workspaceConfig.scripts,
+                            logLevel: argv["log-level"],
+                            numDockers: argv.parallel,
+                            taskContextFactory,
+                            keepDocker: argv.keepDocker,
+                            skipScripts: argv.skipScripts
+                        }));
                 }
+            }
+
+            if (failurePresent) {
+                process.exit(1);
             }
         }
     );

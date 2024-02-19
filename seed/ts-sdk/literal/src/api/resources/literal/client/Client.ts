@@ -30,6 +30,8 @@ export class Literal {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/options"),
             method: "POST",
             headers: {
+                "X-API-Version": "02-02-2024",
+                "X-API-Enable-Audit-Logging": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -80,6 +82,8 @@ export class Literal {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/options"),
             method: "POST",
             headers: {
+                "X-API-Version": "02-02-2024",
+                "X-API-Enable-Audit-Logging": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -133,6 +137,8 @@ export class Literal {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/options"),
             method: "POST",
             headers: {
+                "X-API-Version": "02-02-2024",
+                "X-API-Enable-Audit-Logging": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",

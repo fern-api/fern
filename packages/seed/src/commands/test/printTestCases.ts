@@ -7,7 +7,7 @@ export function printTestCases(result: TestResult[]): void {
             Name: r.id,
             Result: r.type,
             "Generation Time": r.metrics.generationTime,
-            "Verification Time": r.metrics.verificationTime,
+            "Compile Time": r.metrics.compileTime,
             "Failure Type": r.type === "failure" ? r.cause : ""
         };
     });

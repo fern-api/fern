@@ -23,6 +23,11 @@ module SeedLiteralClient
     def create_options(values:, request_options: nil)
       response = @request_client.conn.post("/options") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+        unless request_options&.audit_logging.nil?
+          req.headers["X-API-Enable-Audit-Logging"] =
+            request_options.audit_logging
+        end
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), values: values }.compact
       end
@@ -35,6 +40,11 @@ module SeedLiteralClient
     def get_options(dry_run:, request_options: nil)
       response = @request_client.conn.post("/options") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+        unless request_options&.audit_logging.nil?
+          req.headers["X-API-Enable-Audit-Logging"] =
+            request_options.audit_logging
+        end
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), dryRun: dry_run }.compact
       end
@@ -47,6 +57,11 @@ module SeedLiteralClient
     def get_undiscriminated_options(dry_run:, request_options: nil)
       response = @request_client.conn.post("/options") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+        unless request_options&.audit_logging.nil?
+          req.headers["X-API-Enable-Audit-Logging"] =
+            request_options.audit_logging
+        end
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), dryRun: dry_run }.compact
       end
@@ -71,6 +86,11 @@ module SeedLiteralClient
       Async do
         response = @request_client.conn.post("/options") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+          unless request_options&.audit_logging.nil?
+            req.headers["X-API-Enable-Audit-Logging"] =
+              request_options.audit_logging
+          end
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), values: values }.compact
         end
@@ -85,6 +105,11 @@ module SeedLiteralClient
       Async do
         response = @request_client.conn.post("/options") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+          unless request_options&.audit_logging.nil?
+            req.headers["X-API-Enable-Audit-Logging"] =
+              request_options.audit_logging
+          end
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), dryRun: dry_run }.compact
         end
@@ -99,6 +124,11 @@ module SeedLiteralClient
       Async do
         response = @request_client.conn.post("/options") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
+          unless request_options&.audit_logging.nil?
+            req.headers["X-API-Enable-Audit-Logging"] =
+              request_options.audit_logging
+          end
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), dryRun: dry_run }.compact
         end
