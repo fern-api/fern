@@ -5,7 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.10.4] - 2024-02-19
+
+- Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `FileTypes`:
+  ```python
+  FileContent = typing.Union[typing.IO[bytes], bytes, str]
+  FileTypes = typing.Union[
+      # file (or bytes)
+      FileContent,
+      # (filename, file (or bytes))
+      typing.Tuple[typing.Optional[str], FileContent],
+      # (filename, file (or bytes), content_type)
+      typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str]],
+      # (filename, file (or bytes), content_type, headers)
+      typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str], typing.Mapping[str, str]],
+  ]
+  ```
+- Fix: Python now supports API specifications that leverage lists for file upload. Previously, Fern incorrectly made all `list<file>` type requests simply `file`.
+
+## [0.10.3] - 2024-02-19
+
+- Fix: Several bugfixes were made to related to literal properties. If a literal is
+  used as a query parameeter, header, path parameter, or request parameter, the user
+  no longer has to explicitly pass it in.
+
+  For example, the following endpoint
+
+  ```yaml
+  endpoints:
+    chat_stream:
+      request:
+        name: ListUsersRequest
+        headers:
+          X_API_VERSION: literal<"2022-02-02">
+        body:
+          properties:
+            stream: literal<true>
+            query: string
+  ```
+
+  would generate the following signature in Python
+
+  ```python
+  class Client:
+
+    # The user does not have to pass in api version or stream since
+    # they are literals and always the same
+    def chat_stream(self, *, query: str) -> None:
+  ```
+
+## [0.10.2] - 2024-02-18
+
+- Fix: The SDK always sends the enum wire value instead of the name of the enum. For example,
+  for the following enum,
+
+  ```python
+  class Operand(str, enum.Enum):
+    GREATER_THAN = ">"
+    EQUAL_TO = "="
+  ```
+
+  the SDK should always be sending `>` and `=` when making a request.
+
+  This affected enums used in path parameters, query parameters and any request body parameters at
+  the first level. To fix, the SDK sends the `.value` attribute of the enum.
 
 - Fix: Revert #2719 which introduced additional issues with circular references within our Python types.
 

@@ -16,9 +16,15 @@ FileTypes = typing.Union[
     typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str], typing.Mapping[str, str]],
 ]
 
-# The format we use is a list of tuples, where the first element is the name of the file and the second is the file object
-# Typically HTTPX wants a dict, but to be able to send lists of files, you have to use the list approach (which also works for non-lists)
-# https://github.com/encode/httpx/pull/1032
+"""
+The format we use is a list of tuples, where the first element is the
+name of the file and the second is the file object. Typically HTTPX wants
+a dict, but to be able to send lists of files, you have to use the list 
+approach (which also works for non-lists)
+https://github.com/encode/httpx/pull/1032
+"""
+
+
 def convert_file_dict_to_httpx_tuples(
     d: typing.Dict[str, typing.Union[FileTypes, typing.List[FileTypes]]]
 ) -> typing.List[typing.Tuple[str, FileTypes]]:

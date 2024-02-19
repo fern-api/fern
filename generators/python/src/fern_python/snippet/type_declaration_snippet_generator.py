@@ -23,7 +23,7 @@ class TypeDeclarationSnippetGenerator:
         self._generate_enum = enum
         self._generate_object = object
         self._generate_discriminated_union = discriminated_union
-        # TODO: implement undiscriminated_union snippets
+        # TODO(FER-918): implement undiscriminated_union snippets
         # self._generate_undiscriminated_union = undiscriminated_union
 
     def generate_snippet(
@@ -36,7 +36,7 @@ class TypeDeclarationSnippetGenerator:
             enum=lambda enum: self._generate_enum(name, enum),
             object=lambda object_: self._generate_object(name, object_),
             union=lambda union: self._generate_discriminated_union(name, union),
-            # TODO: implement undiscriminated_union snippets
+            # TODO(FER-918): implement undiscriminated_union snippets
             # undiscriminated_union=lambda union: self._generate_undiscriminated_union(name, union),
             undiscriminated_union=lambda union: None,
         )

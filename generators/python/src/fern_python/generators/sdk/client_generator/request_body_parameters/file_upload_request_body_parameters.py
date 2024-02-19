@@ -8,6 +8,8 @@ from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 
+FILETYPE_DOCS = "See core.FileTypes for more documentation"
+
 class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def __init__(
         self,
@@ -26,6 +28,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                 AST.NamedFunctionParameter(
                     name=self._get_property_name(property),
                     type_hint=self._get_property_type(property),
+                    docs=self._get_docs(property)
                 ),
             )
         return parameters
@@ -49,6 +52,12 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         return property.visit(
             file=self._get_file_property_name,
             body_property=self._get_body_property_name,
+        )
+    
+    def _get_docs(self, property: ir_types.FileUploadRequestProperty) -> str:
+        return property.visit(
+            file=lambda _: FILETYPE_DOCS,
+            body_property=lambda body_property: body_property.docs,
         )
 
     def _get_file_property_name(self, property: ir_types.FileProperty) -> str:
