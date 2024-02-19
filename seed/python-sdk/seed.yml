@@ -27,7 +27,7 @@ fixtures:
           boto3: 1.28.57
       outputFolder: extra_dependencies
 scripts:
-  - docker: fernapi/python-seed-test
+  - docker: fernapi/python-seed
     commands:
       # The global python version is 3.8
       - mypy --cache-dir /tmp .

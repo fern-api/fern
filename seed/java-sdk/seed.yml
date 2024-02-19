@@ -23,7 +23,7 @@ fixtures:
       outputMode: local_files
       outputFolder: local-files
 scripts:
-  - docker: fernapi/java-seed-test
+  - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile 
       - ./gradlew compileJava
