@@ -7,6 +7,6 @@ import * as core from "../../../../../core";
 export declare const SendEnumInlinedRequest: core.serialization.Schema<serializers.SendEnumInlinedRequest.Raw, SeedEnum.SendEnumInlinedRequest>;
 export declare namespace SendEnumInlinedRequest {
     interface Raw {
-        value?: serializers.Operand.Raw | null;
+        operand?: serializers.Operand.Raw | null;
     }
 }

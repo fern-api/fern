@@ -1,0 +1,253 @@
+openapi: 3.0.1
+info:
+  title: literal
+  version: ''
+  description: Test definition for literal schemas.
+paths:
+  /headers:
+    post:
+      operationId: headers_send
+      tags:
+        - Headers
+      parameters:
+        - name: X-Endpoint-Version
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - 02-12-2024
+          examples:
+            Example1:
+              value: 02-12-2024
+        - name: X-Async
+          in: header
+          required: true
+          schema:
+            type: boolean
+          examples:
+            Example1:
+              value: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: What is the weather today
+              required:
+                - query
+            examples:
+              Example1:
+                value:
+                  query: What is the weather today
+  /inlined:
+    post:
+      operationId: inlined_send
+      tags:
+        - Inlined
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  enum:
+                    - You are a helpful assistant
+                query:
+                  type: string
+                  example: What is the weather today
+                temperature:
+                  type: number
+                  format: double
+                  nullable: true
+                stream:
+                  type: boolean
+                  example: false
+              required:
+                - prompt
+                - query
+                - stream
+            examples:
+              Example1:
+                value:
+                  temperature: 10.1
+                  prompt: You are a helpful assistant
+                  stream: false
+                  query: What is the weather today
+  /path/{id}:
+    post:
+      operationId: path_send
+      tags:
+        - Path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - '123'
+          examples:
+            Example1:
+              value: '123'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+  /query:
+    post:
+      operationId: query_send
+      tags:
+        - Query
+      parameters:
+        - name: prompt
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: What is the weather today
+        - name: stream
+          in: query
+          required: true
+          schema:
+            type: boolean
+          examples:
+            Example1:
+              value: false
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+  /reference:
+    post:
+      operationId: reference_send
+      tags:
+        - Reference
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendRequest'
+            examples:
+              Example1:
+                value:
+                  prompt: You are a helpful assistant
+                  stream: false
+                  query: What is the weather today
+components:
+  schemas:
+    SendResponse:
+      title: SendResponse
+      type: object
+      properties:
+        message:
+          type: string
+          example: The weather is sunny
+        status:
+          type: integer
+          example: 200
+        success:
+          type: boolean
+          example: true
+      required:
+        - message
+        - status
+        - success
+    SendRequest:
+      title: SendRequest
+      type: object
+      properties:
+        prompt:
+          type: string
+          enum:
+            - You are a helpful assistant
+        query:
+          type: string
+          example: What is the weather today
+        stream:
+          type: boolean
+          example: false
+      required:
+        - prompt
+        - query
+        - stream
+  securitySchemes: {}

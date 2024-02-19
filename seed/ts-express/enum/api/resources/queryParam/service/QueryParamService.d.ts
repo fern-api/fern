@@ -5,14 +5,14 @@ import * as SeedEnum from "../../..";
 import express from "express";
 export interface QueryParamServiceMethods {
     send(req: express.Request<never, never, never, {
-        value?: SeedEnum.Operand;
+        operand?: SeedEnum.Operand;
     }>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
     sendList(req: express.Request<never, never, never, {
-        value?: SeedEnum.Operand;
+        operand?: SeedEnum.Operand;
     }>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

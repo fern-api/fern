@@ -27,10 +27,10 @@ class ServiceClient:
         *,
         maybe_string: typing.Optional[str] = None,
         integer: int,
-        file: core.FileTypes,
-        file_list: typing.List[core.FileTypes],
-        maybe_file: typing.Optional[core.FileTypes] = None,
-        maybe_file_list: typing.Optional[typing.List[core.FileTypes]] = None,
+        file: core.File,
+        file_list: typing.List[core.File],
+        maybe_file: typing.Optional[core.File] = None,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -49,13 +49,13 @@ class ServiceClient:
 
             - integer: int.
 
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
-            - file_list: typing.List[core.FileTypes]. See core.FileTypes for more documentation
+            - file_list: typing.List[core.File]. See core.File for more documentation
 
-            - maybe_file: typing.Optional[core.FileTypes]. See core.FileTypes for more documentation
+            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - maybe_file_list: typing.Optional[typing.List[core.FileTypes]]. See core.FileTypes for more documentation
+            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
             - maybe_integer: typing.Optional[int].
 
@@ -150,10 +150,10 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def just_file(self, *, file: core.FileTypes, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -198,7 +198,7 @@ class ServiceClient:
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        file: core.FileTypes,
+        file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -213,7 +213,7 @@ class ServiceClient:
 
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -273,10 +273,10 @@ class AsyncServiceClient:
         *,
         maybe_string: typing.Optional[str] = None,
         integer: int,
-        file: core.FileTypes,
-        file_list: typing.List[core.FileTypes],
-        maybe_file: typing.Optional[core.FileTypes] = None,
-        maybe_file_list: typing.Optional[typing.List[core.FileTypes]] = None,
+        file: core.File,
+        file_list: typing.List[core.File],
+        maybe_file: typing.Optional[core.File] = None,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -295,13 +295,13 @@ class AsyncServiceClient:
 
             - integer: int.
 
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
-            - file_list: typing.List[core.FileTypes]. See core.FileTypes for more documentation
+            - file_list: typing.List[core.File]. See core.File for more documentation
 
-            - maybe_file: typing.Optional[core.FileTypes]. See core.FileTypes for more documentation
+            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - maybe_file_list: typing.Optional[typing.List[core.FileTypes]]. See core.FileTypes for more documentation
+            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
             - maybe_integer: typing.Optional[int].
 
@@ -396,10 +396,10 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def just_file(self, *, file: core.FileTypes, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -444,7 +444,7 @@ class AsyncServiceClient:
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        file: core.FileTypes,
+        file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -459,7 +459,7 @@ class AsyncServiceClient:
 
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
-            - file: core.FileTypes. See core.FileTypes for more documentation
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

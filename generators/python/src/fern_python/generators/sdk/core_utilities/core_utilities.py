@@ -72,7 +72,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"FileTypes", "convert_file_dict_to_httpx_tuples"},
+            exports={"File", "convert_file_dict_to_httpx_tuples"},
         )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
@@ -205,7 +205,7 @@ class CoreUtilities:
 
     def get_reference_to_file_types(self) -> AST.ClassReference:
         return AST.ClassReference(
-            qualified_name_excluding_import=("FileTypes",),
+            qualified_name_excluding_import=("File",),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path_unnamed), named_import="core"
             ),

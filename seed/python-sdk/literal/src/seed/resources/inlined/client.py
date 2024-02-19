@@ -46,12 +46,14 @@ class InlinedClient:
         )
         client.inlined.send(
             temperature=10.1,
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"prompt": prompt, "query": query, "stream": stream}
+        _request: typing.Dict[str, typing.Any] = {
+            "prompt": "You are a helpful assistant",
+            "query": query,
+            "stream": False,
+        }
         if temperature is not OMIT:
             _request["temperature"] = temperature
         _response = self._client_wrapper.httpx_client.request(
@@ -113,12 +115,14 @@ class AsyncInlinedClient:
         )
         await client.inlined.send(
             temperature=10.1,
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"prompt": prompt, "query": query, "stream": stream}
+        _request: typing.Dict[str, typing.Any] = {
+            "prompt": "You are a helpful assistant",
+            "query": query,
+            "stream": False,
+        }
         if temperature is not OMIT:
             _request["temperature"] = temperature
         _response = await self._client_wrapper.httpx_client.request(

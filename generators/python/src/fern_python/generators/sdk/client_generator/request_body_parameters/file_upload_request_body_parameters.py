@@ -8,7 +8,7 @@ from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 
-FILETYPE_DOCS = "See core.FileTypes for more documentation"
+FILETYPE_DOCS = "See core.File for more documentation"
 
 class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def __init__(

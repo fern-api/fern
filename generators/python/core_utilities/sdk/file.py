@@ -4,7 +4,7 @@ import typing
 # File typing inspired by the flexibility of types within the httpx library
 # https://github.com/encode/httpx/blob/master/httpx/_types.py
 FileContent = typing.Union[typing.IO[bytes], bytes, str]
-FileTypes = typing.Union[
+File = typing.Union[
     # file (or bytes)
     FileContent,
     # (filename, file (or bytes))
@@ -23,8 +23,8 @@ approach (which also works for non-lists)
 https://github.com/encode/httpx/pull/1032
 """
 def convert_file_dict_to_httpx_tuples(
-    d: typing.Dict[str, typing.Union[FileTypes, typing.List[FileTypes]]]
-) -> typing.List[typing.Tuple[str, FileTypes]]:
+    d: typing.Dict[str, typing.Union[File, typing.List[File]]]
+) -> typing.List[typing.Tuple[str, File]]:
     httpx_tuples = []
     for key, file_like in d.items():
         if isinstance(file_like, list):

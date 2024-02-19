@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.4] - 2024-02-19
 
-- Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `FileTypes`:
+- Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `File`:
   ```python
   FileContent = typing.Union[typing.IO[bytes], bytes, str]
-  FileTypes = typing.Union[
+  File = typing.Union[
       # file (or bytes)
       FileContent,
       # (filename, file (or bytes))

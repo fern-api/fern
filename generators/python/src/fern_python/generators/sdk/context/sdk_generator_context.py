@@ -1,3 +1,4 @@
+import typing
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -96,9 +97,17 @@ class SdkGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
+    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[typing.Union[str, bool]]:
         ...
 
     @abstractmethod
-    def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[str]:
+    def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
+        ...
+
+    @abstractmethod
+    def resolved_schema_is_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
+
+    @abstractmethod
+    def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
         ...

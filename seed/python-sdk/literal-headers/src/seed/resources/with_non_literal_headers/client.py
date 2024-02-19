@@ -59,10 +59,10 @@ class WithNonLiteralHeadersClient:
                         "integer": integer,
                         "maybeInteger": maybe_integer,
                         "literalServiceHeader": "service header",
-                        "trueServiceHeader": "true",
+                        "trueServiceHeader": True,
                         "nonLiteralEndpointHeader": non_literal_endpoint_header,
                         "literalEndpointHeader": "endpoint header",
-                        "trueEndpointHeader": "true",
+                        "trueEndpointHeader": True,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -128,10 +128,10 @@ class AsyncWithNonLiteralHeadersClient:
                         "integer": integer,
                         "maybeInteger": maybe_integer,
                         "literalServiceHeader": "service header",
-                        "trueServiceHeader": "true",
+                        "trueServiceHeader": True,
                         "nonLiteralEndpointHeader": non_literal_endpoint_header,
                         "literalEndpointHeader": "endpoint header",
-                        "trueEndpointHeader": "true",
+                        "trueEndpointHeader": True,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

@@ -34,8 +34,6 @@ class QueryClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.query.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
@@ -47,7 +45,7 @@ class QueryClient:
                     {
                         "prompt": "You are a helpful assistant",
                         "query": query,
-                        "stream": "false",
+                        "stream": "False",
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -97,8 +95,6 @@ class AsyncQueryClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.query.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
@@ -110,7 +106,7 @@ class AsyncQueryClient:
                     {
                         "prompt": "You are a helpful assistant",
                         "query": query,
-                        "stream": "false",
+                        "stream": "False",
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

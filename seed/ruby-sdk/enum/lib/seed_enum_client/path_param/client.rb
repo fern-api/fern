@@ -15,11 +15,11 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param value [OPERAND]
+    # @param operand [OPERAND]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(value:, request_options: nil)
-      @request_client.conn.post("/path-param/#{value}") do |req|
+    def send(operand:, request_options: nil)
+      @request_client.conn.post("/path/#{operand}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
       end
@@ -36,12 +36,12 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param value [OPERAND]
+    # @param operand [OPERAND]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(value:, request_options: nil)
+    def send(operand:, request_options: nil)
       Async do
-        @request_client.conn.post("/path-param/#{value}") do |req|
+        @request_client.conn.post("/path/#{operand}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
