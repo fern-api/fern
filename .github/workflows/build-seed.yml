@@ -1,4 +1,4 @@
-name: seed-coompile-containers
+name: Build seed containers
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
       - main
       - ab/seedspeed
   workflow_dispatch:
-
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -16,9 +15,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      python:  ${{ steps.filter.outputs.python }}
-      ts:  ${{ steps.filter.outputs.ts }}
-      java:  ${{ steps.filter.outputs.java }}
+      packages: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -35,10 +32,13 @@ jobs:
             java: 
               - 'docker/seed/Dockerfile.java'
               - '.github/workflows/build-seed.yml'
-  
-  python:
-    runs-on: Seed
-    if: ${{ needs.changes.outputs.python == 'true' }}
+  build-container:
+    strategy:
+      matrix:
+        # Parse JSON array containing names of all filters matching any of changed files
+        # e.g. ['package1', 'package2'] if both package folders contains changes
+        package: ${{ fromJSON(needs.changes.outputs.packages) }}
+    runs-on: ubuntu-latest
     needs: changes
     steps:
       - name: Checkout repo
@@ -59,94 +59,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: fernapi/python-seed
+          images: fernapi/${{ matrix.package }}-seed
           tags: |
             type=sha
             latest
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/seed/Dockerfile.python
-          platforms: linux/amd64,linux/arm64
-          push: true
-          # use short SHA if modded, or just use latest if nothing changed
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  java:
-    runs-on: Seed
-    if: ${{ needs.changes.outputs.java == 'true' }}
-    needs: changes
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: fernapi/java-seed
-          tags: |
-            type=sha
-            latest
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./docker/seed/Dockerfile.java
-          platforms: linux/amd64,linux/arm64
-          push: true
-          # use short SHA if modded, or just use latest if nothing changed
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  ts:
-    runs-on: Seed
-    if: ${{ needs.changes.outputs.ts == 'true' }}
-    needs: changes
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: fernapi/ts-seed
-          tags: |
-            type=sha
-            latest
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./docker/seed/Dockerfile.ts
+          file: ./docker/seed/Dockerfile.${{ matrix.package }}
           platforms: linux/amd64,linux/arm64
           push: true
           # use short SHA if modded, or just use latest if nothing changed
