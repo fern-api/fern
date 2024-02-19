@@ -10,9 +10,9 @@ defaultOutputMode: github
 scripts:
   - docker: fernapi/java-seed
     commands:
-      - source "$HOME/.sdkman/bin/sdkman-init.sh"
-      - sdk use java 11.0.21-zulu
-      - gradle compileJava
+      - source ~/.bash_profile 
+      - ./gradlew compileJava
+      # - jenv shell 1.8 && ./gradlew compileJava
 allowedFailures:
   - enum
   - exhaustive
