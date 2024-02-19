@@ -6,6 +6,7 @@ import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 export const ExampleWebSocketMessageQueue = WithNameAndDocsSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     "query-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
+    headers: z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     messages: z.array(ExampleWebSocketMessage)
 });
 
