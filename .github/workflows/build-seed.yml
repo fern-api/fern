@@ -7,6 +7,11 @@ on:
       - ab/seedspeed
   workflow_dispatch:
 
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -32,7 +37,7 @@ jobs:
               - '.github/workflows/build-seed.yml'
   
   python:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     if: ${{ needs.changes.outputs.python == 'true' }}
     needs: changes
     steps:
@@ -71,7 +76,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   java:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     if: ${{ needs.changes.outputs.java == 'true' }}
     needs: changes
     steps:
@@ -110,7 +115,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   ts:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     if: ${{ needs.changes.outputs.ts == 'true' }}
     needs: changes
     steps:
