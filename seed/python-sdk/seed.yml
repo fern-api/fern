@@ -29,10 +29,9 @@ fixtures:
 scripts:
   - docker: fernapi/python-seed
     commands:
-      - pyenv global 3.8
-      - dmypy run .
-      - pyenv global 3.9
-      - dmypy run .
+      # The global python version is 3.8
+      - mypy --cache-dir /tmp .
+      - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp src
 allowedFailures: 
   - response-property
 
