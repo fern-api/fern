@@ -65,12 +65,12 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="file_types.py",
+            relative_filepath_on_disk="file.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="file_types"),
+                file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"FileTypes"},
+            exports={"FileTypes", "convert_file_dict_to_httpx_tuples"},
         )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
@@ -203,9 +203,9 @@ class CoreUtilities:
 
     def get_reference_to_file_types(self) -> AST.ClassReference:
         return AST.ClassReference(
-            qualified_name_excluding_import=(),
+            qualified_name_excluding_import=("FileTypes"),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "file_types"), named_import="FileTypes"
+                module=AST.Module.local(*self._module_path), named_import="core"
             ),
         )
 
@@ -216,10 +216,9 @@ class CoreUtilities:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
-                    qualified_name_excluding_import=(),
+                    qualified_name_excluding_import=("convert_file_dict_to_httpx_tuples"),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "file_types"),
-                        named_import="convert_file_dict_to_httpx_tuples",
+                        module=AST.Module.local(*self._module_path), named_import="core"
                     ),
                 ),
                 args=[obj],
