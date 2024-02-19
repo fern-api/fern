@@ -112,7 +112,7 @@ function addTestCommand(cli: Argv) {
                 } else {
                     failurePresent =
                         failurePresent ||
-                        (await testWorkspaceFixtures({
+                        !(await testWorkspaceFixtures({
                             workspace,
                             fixtures: argv.fixture,
                             irVersion: workspace.workspaceConfig.irVersion,
