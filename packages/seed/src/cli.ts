@@ -110,21 +110,20 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts
                     });
                 } else {
-                    failurePresent =
-                        failurePresent ||
-                        !(await testWorkspaceFixtures({
-                            workspace,
-                            fixtures: argv.fixture,
-                            irVersion: workspace.workspaceConfig.irVersion,
-                            language: workspace.workspaceConfig.language,
-                            docker: parsedDockerImage,
-                            scripts: workspace.workspaceConfig.scripts,
-                            logLevel: argv["log-level"],
-                            numDockers: argv.parallel,
-                            taskContextFactory,
-                            keepDocker: argv.keepDocker,
-                            skipScripts: argv.skipScripts
-                        }));
+                    const passed = await testWorkspaceFixtures({
+                        workspace,
+                        fixtures: argv.fixture,
+                        irVersion: workspace.workspaceConfig.irVersion,
+                        language: workspace.workspaceConfig.language,
+                        docker: parsedDockerImage,
+                        scripts: workspace.workspaceConfig.scripts,
+                        logLevel: argv["log-level"],
+                        numDockers: argv.parallel,
+                        taskContextFactory,
+                        keepDocker: argv.keepDocker,
+                        skipScripts: argv.skipScripts
+                    });
+                    failurePresent = failurePresent || !passed;
                 }
             }
 
