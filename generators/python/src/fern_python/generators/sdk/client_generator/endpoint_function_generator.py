@@ -1017,19 +1017,19 @@ class EndpointFunctionSnippetGenerator:
         return self.endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
 
     def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
-        param = next(filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters))
+        param = next(filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None)
         if param is not None:
             return self.context.get_literal_value(param.value_type) is not None
         return False
     
     def _is_path_literal(self, path_parameter_original_name: str) -> bool:
-        param = next(filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters))
+        param = next(filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters), None)
         if param is not None:
             return self.context.get_literal_value(param.value_type) is not None
         return False
 
     def _is_header_literal(self, header_wire_value: str) -> bool:
-        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers))
+        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
         if param is not None:
             return self.context.get_literal_value(param.value_type) is not None
         return False
