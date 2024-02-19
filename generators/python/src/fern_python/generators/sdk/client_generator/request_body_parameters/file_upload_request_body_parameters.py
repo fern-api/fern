@@ -54,7 +54,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             body_property=self._get_body_property_name,
         )
     
-    def _get_docs(self, property: ir_types.FileUploadRequestProperty) -> str:
+    def _get_docs(self, property: ir_types.FileUploadRequestProperty) -> Optional[str]:
         return property.visit(
             file=lambda _: FILETYPE_DOCS,
             body_property=lambda body_property: body_property.docs,
