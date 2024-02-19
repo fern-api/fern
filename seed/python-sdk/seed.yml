@@ -30,14 +30,11 @@ scripts:
   - docker: fernapi/python-seed
     commands:
       # The global python version is 3.8
-      - mypy --cache-dir /tmp .
-      - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp src
+      - mypy --cache-dir /tmp . --cache-fine-grained
+      - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
 allowedFailures: 
   - response-property
   # Generator does not handle list of enums
   - enum
   - auth-environment-variables
   - bearer-token-environment-variable
-
-
-
