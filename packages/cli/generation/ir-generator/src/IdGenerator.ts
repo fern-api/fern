@@ -29,7 +29,7 @@ export const IdGenerator = {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `webhooks_${joinedFernFilePath}`;
     },
-    generateWebsocketChannelId: (fernFilepath: FernFilepath): string => {
+    generateWebSocketChannelId: (fernFilepath: FernFilepath): string => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `channel_${joinedFernFilePath}`;
     }

@@ -17,7 +17,7 @@ export function convertPackage(
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
-        websockets: websocket != null ? [convertWebsocketChannel(websocket)] : [],
+        websockets: websocket != null ? [convertWebSocketChannel(websocket)] : [],
         types: irPackage.types.map((typeId) => typeId),
         subpackages: irPackage.subpackages.map((subpackageId) => subpackageId),
         pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined
@@ -109,7 +109,7 @@ function convertService(
     );
 }
 
-function convertWebsocketChannel(channel: Ir.websocket.WebsocketChannel): APIV1Write.WebSocketDefinition {
+function convertWebSocketChannel(channel: Ir.websocket.WebSocketChannel): APIV1Write.WebSocketDefinition {
     const publish = Object.values(channel.messages).find((message) => message.origin === "client");
     const subscribe = Object.values(channel.messages).find((message) => message.origin === "server");
     return {
@@ -510,14 +510,14 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): AP
     }
 }
 
-function convertMessageBody(irWebsocketBody: Ir.websocket.WebsocketMessageBody): APIV1Write.WebSocketPayload {
-    switch (irWebsocketBody.type) {
+function convertMessageBody(irWebSocketBody: Ir.websocket.WebSocketMessageBody): APIV1Write.WebSocketPayload {
+    switch (irWebSocketBody.type) {
         case "inlinedBody":
             return {
                 type: {
                     type: "object",
-                    extends: irWebsocketBody.extends.map((extension) => extension.typeId),
-                    properties: irWebsocketBody.properties.map(
+                    extends: irWebSocketBody.extends.map((extension) => extension.typeId),
+                    properties: irWebSocketBody.properties.map(
                         (property): APIV1Write.ObjectProperty => ({
                             description: property.docs ?? undefined,
                             key: property.name.wireValue,
@@ -530,10 +530,10 @@ function convertMessageBody(irWebsocketBody: Ir.websocket.WebsocketMessageBody):
             return {
                 type: {
                     type: "reference",
-                    value: convertTypeReference(irWebsocketBody.bodyType)
+                    value: convertTypeReference(irWebSocketBody.bodyType)
                 }
             };
         default:
-            assertNever(irWebsocketBody);
+            assertNever(irWebSocketBody);
     }
 }

@@ -1,9 +1,9 @@
 import {
     PathParameterLocation,
-    WebsocketChannel,
-    WebsocketMessage,
-    WebsocketMessageBody,
-    WebsocketMessageId
+    WebSocketChannel,
+    WebSocketMessage,
+    WebSocketMessageBody,
+    WebSocketMessageId
 } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
@@ -19,11 +19,11 @@ export async function convertChannel({
     variableResolver,
     file
 }: {
-    channel: RawSchemas.WebsocketChannelSchema;
+    channel: RawSchemas.WebSocketChannelSchema;
     variableResolver: VariableResolver;
     file: FernFileContext;
-}): Promise<WebsocketChannel> {
-    const messages: Record<WebsocketMessageId, WebsocketMessage> = {};
+}): Promise<WebSocketChannel> {
+    const messages: Record<WebSocketMessageId, WebSocketMessage> = {};
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
         messages[messageId] = {
             availability: undefined,
@@ -77,21 +77,21 @@ function convertMessageSchema({
     body,
     file
 }: {
-    body: RawSchemas.WebsocketChannelMessageBodySchema;
+    body: RawSchemas.WebSocketChannelMessageBodySchema;
     file: FernFileContext;
-}): WebsocketMessageBody {
+}): WebSocketMessageBody {
     if (typeof body === "string") {
-        return WebsocketMessageBody.reference({
+        return WebSocketMessageBody.reference({
             docs: undefined,
             bodyType: file.parseTypeReference(body)
         });
     } else if (isReferencedWebhookPayloadSchema(body)) {
-        return WebsocketMessageBody.reference({
+        return WebSocketMessageBody.reference({
             docs: undefined,
             bodyType: file.parseTypeReference(body.type)
         });
     } else {
-        return WebsocketMessageBody.inlinedBody({
+        return WebSocketMessageBody.inlinedBody({
             name: file.casingsGenerator.generateName(body.name),
             extends: getExtensionsAsList(body.extends ?? []).map((extended) =>
                 parseTypeName({ typeName: extended, file })
@@ -102,7 +102,7 @@ function convertMessageSchema({
 }
 
 export function isReferencedWebhookPayloadSchema(
-    payload: RawSchemas.WebsocketChannelMessageBodySchema
-): payload is RawSchemas.WebsocketChannelReferencedMessageSchema {
-    return (payload as RawSchemas.WebsocketChannelReferencedMessageSchema).type != null;
+    payload: RawSchemas.WebSocketChannelMessageBodySchema
+): payload is RawSchemas.WebSocketChannelReferencedMessageSchema {
+    return (payload as RawSchemas.WebSocketChannelReferencedMessageSchema).type != null;
 }

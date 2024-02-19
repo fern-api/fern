@@ -271,11 +271,11 @@ export async function generateIntermediateRepresentation({
                 if (channel == null) {
                     return;
                 }
-                const websocketChannelId = IdGenerator.generateWebsocketChannelId(file.fernFilepath);
+                const websocketChannelId = IdGenerator.generateWebSocketChannelId(file.fernFilepath);
                 const websocketChannel = await convertChannel({ channel, file, variableResolver });
                 if (intermediateRepresentation.websocketChannels != null) {
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
-                    packageTreeGenerator.addWebsocketChannel(websocketChannelId, file.fernFilepath);
+                    packageTreeGenerator.addWebSocketChannel(websocketChannelId, file.fernFilepath);
                 }
             }
         });
