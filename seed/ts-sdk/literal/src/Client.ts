@@ -5,7 +5,6 @@
 import * as core from "./core";
 import { Headers } from "./api/resources/headers/client/Client";
 import { Inlined } from "./api/resources/inlined/client/Client";
-import { Literal } from "./api/resources/literal/client/Client";
 import { Path } from "./api/resources/path/client/Client";
 import { Query } from "./api/resources/query/client/Client";
 import { Reference } from "./api/resources/reference/client/Client";
@@ -34,12 +33,6 @@ export class SeedLiteralClient {
 
     public get inlined(): Inlined {
         return (this._inlined ??= new Inlined(this._options));
-    }
-
-    protected _literal: Literal | undefined;
-
-    public get literal(): Literal {
-        return (this._literal ??= new Literal(this._options));
     }
 
     protected _path: Path | undefined;

@@ -7,7 +7,6 @@ import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Suppliers;
 import com.seed.literal.resources.headers.HeadersClient;
 import com.seed.literal.resources.inlined.InlinedClient;
-import com.seed.literal.resources.literal.LiteralClient;
 import com.seed.literal.resources.path.PathClient;
 import com.seed.literal.resources.query.QueryClient;
 import com.seed.literal.resources.reference.ReferenceClient;
@@ -20,8 +19,6 @@ public class SeedLiteralClient {
 
     protected final Supplier<InlinedClient> inlinedClient;
 
-    protected final Supplier<LiteralClient> literalClient;
-
     protected final Supplier<PathClient> pathClient;
 
     protected final Supplier<QueryClient> queryClient;
@@ -32,7 +29,6 @@ public class SeedLiteralClient {
         this.clientOptions = clientOptions;
         this.headersClient = Suppliers.memoize(() -> new HeadersClient(clientOptions));
         this.inlinedClient = Suppliers.memoize(() -> new InlinedClient(clientOptions));
-        this.literalClient = Suppliers.memoize(() -> new LiteralClient(clientOptions));
         this.pathClient = Suppliers.memoize(() -> new PathClient(clientOptions));
         this.queryClient = Suppliers.memoize(() -> new QueryClient(clientOptions));
         this.referenceClient = Suppliers.memoize(() -> new ReferenceClient(clientOptions));
@@ -44,10 +40,6 @@ public class SeedLiteralClient {
 
     public InlinedClient inlined() {
         return this.inlinedClient.get();
-    }
-
-    public LiteralClient literal() {
-        return this.literalClient.get();
     }
 
     public PathClient path() {

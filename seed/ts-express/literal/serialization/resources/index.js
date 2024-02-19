@@ -26,13 +26,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.inlined = exports.headers = exports.reference = exports.literal = void 0;
-exports.literal = __importStar(require("./literal"));
-__exportStar(require("./literal/types"), exports);
+exports.inlined = exports.headers = exports.reference = void 0;
 exports.reference = __importStar(require("./reference"));
 __exportStar(require("./reference/types"), exports);
 exports.headers = __importStar(require("./headers"));
 __exportStar(require("./headers/service/requests"), exports);
 exports.inlined = __importStar(require("./inlined"));
 __exportStar(require("./inlined/service/requests"), exports);
-__exportStar(require("./literal/service/requests"), exports);
