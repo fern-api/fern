@@ -7,8 +7,8 @@ from fern_python.codegen import AST
 from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
-
 FILETYPE_DOCS = "See core.File for more documentation"
+
 
 class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def __init__(
@@ -28,7 +28,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                 AST.NamedFunctionParameter(
                     name=self._get_property_name(property),
                     type_hint=self._get_property_type(property),
-                    docs=self._get_docs(property)
+                    docs=self._get_docs(property),
                 ),
             )
         return parameters
@@ -53,7 +53,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             file=self._get_file_property_name,
             body_property=self._get_body_property_name,
         )
-    
+
     def _get_docs(self, property: ir_types.FileUploadRequestProperty) -> Optional[str]:
         return property.visit(
             file=lambda _: FILETYPE_DOCS,

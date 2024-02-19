@@ -320,7 +320,11 @@ class EndpointFunctionGenerator:
             timeout = AST.Expression(
                 f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else {timeout_default}"
             )
-            files = request_body_parameters.get_files() if request_body_parameters is not None and request_body_parameters.get_files() is not None else None
+            files = (
+                request_body_parameters.get_files()
+                if request_body_parameters is not None and request_body_parameters.get_files() is not None
+                else None
+            )
             writer.write_node(
                 HttpX.make_request(
                     is_streaming=is_streaming,

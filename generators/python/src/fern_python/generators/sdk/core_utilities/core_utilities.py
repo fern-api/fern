@@ -17,7 +17,7 @@ class CoreUtilities:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
-        self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1]) # type: ignore
+        self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -206,9 +206,7 @@ class CoreUtilities:
     def get_reference_to_file_types(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=("File",),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path_unnamed), named_import="core"
-            ),
+            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path_unnamed), named_import="core"),
         )
 
     def get_type_hint_of_file_types(self) -> AST.TypeHint:

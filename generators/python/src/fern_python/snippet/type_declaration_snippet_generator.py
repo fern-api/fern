@@ -8,7 +8,9 @@ AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType], Optional[AST.Expre
 EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType], AST.Expression]
 ObjectSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleObjectType], AST.Expression]
 DiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUnionType], AST.Expression]
-UndiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType], AST.Expression]
+UndiscriminatedUnionGenerator = Callable[
+    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType], AST.Expression
+]
 
 
 class TypeDeclarationSnippetGenerator:
