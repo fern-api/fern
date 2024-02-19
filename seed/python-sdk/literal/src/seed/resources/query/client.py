@@ -45,7 +45,7 @@ class QueryClient:
                     {
                         "prompt": "You are a helpful assistant",
                         "query": query,
-                        "stream": "false",
+                        "stream": "False",
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -106,7 +106,7 @@ class AsyncQueryClient:
                     {
                         "prompt": "You are a helpful assistant",
                         "query": query,
-                        "stream": "false",
+                        "stream": "False",
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

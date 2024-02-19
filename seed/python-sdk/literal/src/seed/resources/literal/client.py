@@ -78,10 +78,10 @@ class LiteralClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": "true"})
+            json=jsonable_encoder({"dryRun": True})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"dryRun": "true"}),
+                **jsonable_encoder({"dryRun": True}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -117,10 +117,10 @@ class LiteralClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": "true"})
+            json=jsonable_encoder({"dryRun": True})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"dryRun": "true"}),
+                **jsonable_encoder({"dryRun": True}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -200,10 +200,10 @@ class AsyncLiteralClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": "true"})
+            json=jsonable_encoder({"dryRun": True})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"dryRun": "true"}),
+                **jsonable_encoder({"dryRun": True}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -239,10 +239,10 @@ class AsyncLiteralClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"dryRun": "true"})
+            json=jsonable_encoder({"dryRun": True})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"dryRun": "true"}),
+                **jsonable_encoder({"dryRun": True}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
