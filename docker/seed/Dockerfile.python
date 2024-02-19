@@ -32,4 +32,4 @@ RUN pip install poetry  &&\
 RUN pip install mypy --no-binary=mypy
 
 # We don't care if this fails, we just want to start the mypy cache
-RUN dmypy --cache-dir /tmp src || true
+RUN dmypy --cache-dir /tmp run src || true
