@@ -1,5 +1,5 @@
-from typing import Optional
 import typing
+from typing import Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -112,7 +112,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         if type.type == "container":
             return self._get_literal_value(type.container)
         return None
-    
+
     def _get_literal_value(self, container_type: ir_types.ContainerType) -> Optional[typing.Union[str, bool]]:
         container_union = container_type.get_as_union()
         if container_union.type == "literal":

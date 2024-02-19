@@ -1,6 +1,6 @@
+import typing
 from abc import ABC, abstractmethod
 from typing import Optional
-import typing
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
