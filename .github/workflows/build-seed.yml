@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ab/seedspeed
   workflow_dispatch:
 
 jobs:
