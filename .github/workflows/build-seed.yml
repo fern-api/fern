@@ -36,6 +36,11 @@ jobs:
     if: ${{ needs.changes.outputs.python == 'true' }}
     needs: changes
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -70,6 +75,11 @@ jobs:
     if: ${{ needs.changes.outputs.java == 'true' }}
     needs: changes
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -104,6 +114,11 @@ jobs:
     if: ${{ needs.changes.outputs.ts == 'true' }}
     needs: changes
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
