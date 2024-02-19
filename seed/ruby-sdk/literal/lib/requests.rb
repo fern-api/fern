@@ -10,9 +10,13 @@ module SeedLiteralClient
 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param version [String]
+    # @param audit_logging [Boolean]
     # @return [RequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil)
+    def initialize(version:, audit_logging:, max_retries: nil, timeout_in_seconds: nil)
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralClient", "X-Fern-SDK-Version": "0.0.1" }
+      @headers["X-API-Version"] = version unless version.nil?
+      @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -27,9 +31,13 @@ module SeedLiteralClient
 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param version [String]
+    # @param audit_logging [Boolean]
     # @return [AsyncRequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil)
+    def initialize(version:, audit_logging:, max_retries: nil, timeout_in_seconds: nil)
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralClient", "X-Fern-SDK-Version": "0.0.1" }
+      @headers["X-API-Version"] = version unless version.nil?
+      @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -42,15 +50,22 @@ module SeedLiteralClient
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :additional_headers, :additional_query_parameters, :additional_body_parameters, :timeout_in_seconds
+    attr_reader :version, :audit_logging, :additional_headers, :additional_query_parameters,
+                :additional_body_parameters, :timeout_in_seconds
 
+    # @param version [String]
+    # @param audit_logging [Boolean]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [RequestOptions]
-    def initialize(additional_headers: nil, additional_query_parameters: nil, additional_body_parameters: nil,
-                   timeout_in_seconds: nil)
+    def initialize(version: nil, audit_logging: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @version = version
+      # @type [Boolean]
+      @audit_logging = audit_logging
       # @type [Hash{String => Object}]
       @additional_headers = additional_headers
       # @type [Hash{String => Object}]

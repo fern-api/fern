@@ -31,7 +31,7 @@ export interface TestSuccess {
 
 export interface TestFailure {
     type: "failure";
-    cause: "invalid-fixture" | "generation" | "verification";
+    cause: "invalid-fixture" | "generation" | "compile";
     message?: string;
     id: string;
     metrics: TestCaseMetrics;
@@ -41,7 +41,7 @@ export interface TestCaseMetrics {
     /** The time it takes to generate code via the generator */
     generationTime?: string;
     /** The time it takes to verify/compile the code */
-    verificationTime?: string;
+    compileTime?: string;
 }
 
 interface RunningScriptConfig extends ScriptConfig {
@@ -71,98 +71,113 @@ export async function testWorkspaceFixtures({
     numDockers: number;
     keepDocker: boolean | undefined;
     skipScripts: boolean;
-}): Promise<void> {
+}): Promise<boolean> {
     const lock = new Semaphore(numDockers);
 
     const testCases = [];
     const runningScripts: RunningScriptConfig[] = [];
 
-    if (!skipScripts) {
-        // Start running a docker container for each script instance
-        for (const script of scripts ?? []) {
-            // Start script runner
-            const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
-            runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
+    const containerIdsToShutdown: string[] = [];
+    try {
+        if (!skipScripts) {
+            // Start running a docker container for each script instance
+            for (const script of scripts ?? []) {
+                // Start script runner
+                const startSeedCommand = await loggingExeca(undefined, "docker", [
+                    "run",
+                    "-dit",
+                    script.docker,
+                    "/bin/sh"
+                ]);
+                const containerId = startSeedCommand.stdout;
+                containerIdsToShutdown.push(containerId);
+                runningScripts.push({ ...script, containerId });
+            }
         }
-    }
 
-    for (const fixture of fixtures) {
-        const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
-        const absolutePathToWorkspace = AbsoluteFilePath.of(
-            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
-        );
-        if (fixtureConfig != null) {
-            for (const fixtureConfigInstance of fixtureConfig) {
+        for (const fixture of fixtures) {
+            const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
+            const absolutePathToWorkspace = AbsoluteFilePath.of(
+                path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+            );
+            if (fixtureConfig != null) {
+                for (const fixtureConfigInstance of fixtureConfig) {
+                    testCases.push(
+                        acquireLocksAndRunTest({
+                            id: `${fixture}:${fixtureConfigInstance.outputFolder}`,
+                            absolutePathToWorkspace,
+                            lock,
+                            irVersion,
+                            outputVersion: fixtureConfigInstance.outputVersion,
+                            language,
+                            fixture,
+                            docker,
+                            scripts: runningScripts,
+                            customConfig: fixtureConfigInstance.customConfig,
+                            taskContext: taskContextFactory.create(
+                                `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
+                            ),
+                            outputDir: join(
+                                workspace.absolutePathToWorkspace,
+                                RelativeFilePath.of(fixture),
+                                RelativeFilePath.of(fixtureConfigInstance.outputFolder)
+                            ),
+                            outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
+                            outputFolder: fixtureConfigInstance.outputFolder,
+                            keepDocker,
+                            skipScripts
+                        })
+                    );
+                }
+            } else {
                 testCases.push(
                     acquireLocksAndRunTest({
-                        id: `${fixture}:${fixtureConfigInstance.outputFolder}`,
+                        id: `${fixture}`,
                         absolutePathToWorkspace,
                         lock,
                         irVersion,
-                        outputVersion: fixtureConfigInstance.outputVersion,
+                        outputVersion: undefined,
                         language,
                         fixture,
                         docker,
                         scripts: runningScripts,
-                        customConfig: fixtureConfigInstance.customConfig,
-                        taskContext: taskContextFactory.create(
-                            `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
-                        ),
-                        outputDir: join(
-                            workspace.absolutePathToWorkspace,
-                            RelativeFilePath.of(fixture),
-                            RelativeFilePath.of(fixtureConfigInstance.outputFolder)
-                        ),
-                        outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
-                        outputFolder: fixtureConfigInstance.outputFolder,
+                        customConfig: undefined,
+                        taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
+                        outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
+                        outputMode: workspace.workspaceConfig.defaultOutputMode,
+                        outputFolder: fixture,
                         keepDocker,
                         skipScripts
                     })
                 );
             }
-        } else {
-            testCases.push(
-                acquireLocksAndRunTest({
-                    id: `${fixture}`,
-                    absolutePathToWorkspace,
-                    lock,
-                    irVersion,
-                    outputVersion: undefined,
-                    language,
-                    fixture,
-                    docker,
-                    scripts: runningScripts,
-                    customConfig: undefined,
-                    taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
-                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
-                    outputMode: workspace.workspaceConfig.defaultOutputMode,
-                    outputFolder: fixture,
-                    keepDocker,
-                    skipScripts
-                })
-            );
         }
-    }
-    const results = await Promise.all(testCases);
+        const results = await Promise.all(testCases);
 
-    printTestCases(results);
+        printTestCases(results);
 
-    const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.id);
-    const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
+        const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.id);
+        const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
 
-    if (failedFixtures.length === 0) {
-        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
-    } else {
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
-        );
-        if (unexpectedFixtures.length > 0) {
-            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
-            process.exit(1);
+        if (failedFixtures.length === 0) {
+            CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
         } else {
-            CONSOLE_LOGGER.info(`All failures were expected.`);
+            CONSOLE_LOGGER.info(
+                `${failedFixtures.length}/${
+                    results.length
+                } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
+            );
+            if (unexpectedFixtures.length > 0) {
+                CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
+                return false;
+            } else {
+                CONSOLE_LOGGER.info(`All failures were expected.`);
+            }
+        }
+        return true;
+    } finally {
+        for (const containerId of containerIdsToShutdown) {
+            await loggingExeca(undefined, "docker", ["stop", containerId]);
         }
     }
 }
@@ -338,7 +353,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
                 taskContext.logger.error(mkdirCommand.stdout);
                 taskContext.logger.error(mkdirCommand.stderr);
-                return { type: "failure", cause: "verification", message: mkdirCommand.stdout, id, metrics };
+                return { type: "failure", cause: "compile", message: mkdirCommand.stdout, id, metrics };
             }
             const copyScriptCommand = await loggingExeca(
                 undefined,
@@ -353,7 +368,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy script. See ouptut below");
                 taskContext.logger.error(copyScriptCommand.stdout);
                 taskContext.logger.error(copyScriptCommand.stderr);
-                return { type: "failure", cause: "verification", message: copyScriptCommand.stdout, id, metrics };
+                return { type: "failure", cause: "compile", message: copyScriptCommand.stdout, id, metrics };
             }
             const copyCommand = await loggingExeca(
                 taskContext.logger,
@@ -368,7 +383,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy generated files. See ouptut below");
                 taskContext.logger.error(copyCommand.stdout);
                 taskContext.logger.error(copyCommand.stderr);
-                return { type: "failure", cause: "verification", message: copyCommand.stdout, id, metrics };
+                return { type: "failure", cause: "compile", message: copyCommand.stdout, id, metrics };
             }
 
             // Now actually run the test script
@@ -382,21 +397,21 @@ async function testWithWriteToDisk({
                 }
             );
             scriptStopwatch.stop();
-            metrics.verificationTime = scriptStopwatch.duration();
+            metrics.compileTime = scriptStopwatch.duration();
             if (command.failed) {
                 taskContext.logger.error("Failed to run script. See ouptut below");
                 taskContext.logger.error(command.stdout);
                 taskContext.logger.error(command.stderr);
-                return { type: "failure", cause: "verification", message: command.stdout, id, metrics };
+                return { type: "failure", cause: "compile", message: command.stdout, id, metrics };
             }
         }
         return { type: "success", id, metrics };
     } catch (err) {
         scriptStopwatch.stop();
-        metrics.verificationTime = scriptStopwatch.duration();
+        metrics.compileTime = scriptStopwatch.duration();
         return {
             type: "failure",
-            cause: "verification",
+            cause: "compile",
             message: (err as Error).message,
             id,
             metrics

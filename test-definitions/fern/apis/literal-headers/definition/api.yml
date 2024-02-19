@@ -1,9 +1,0 @@
-name: literal-headers
-
-headers:
-  X-API-Header:
-    name: apiHeader
-    type: literal<"api header value">
-  X-API-Test:
-    name: apiTest
-    type: literal<false>
