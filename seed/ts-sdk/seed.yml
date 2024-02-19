@@ -86,8 +86,7 @@ fixtures:
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - yarn install
-      - yarn build
+      - yarn install && yarn build
 allowedFailures: 
   - bytes
   - plain-text
