@@ -2636,12 +2636,14 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:Type",
       "type_:Name"

@@ -621,6 +621,7 @@
     "sharedTypes": []
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_ec2": {
       "name": {
@@ -642,6 +643,7 @@
           "safeName": "Ec2"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -711,6 +713,7 @@
           "safeName": "S3"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -766,6 +769,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

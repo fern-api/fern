@@ -22,11 +22,11 @@ RUN pyenv global 3.9
 RUN pip install poetry  &&\
   poetry config virtualenvs.create false &&\
   poetry install
-RUN pip install mypy --no-binary=mypy
+RUN pip install mypy==1.8.0
 
 # Setup poetry
 RUN pyenv global 3.8
 RUN pip install poetry  &&\
   poetry config virtualenvs.create false &&\
   poetry install
-RUN pip install mypy --no-binary=mypy
+RUN pip install mypy==1.8.0

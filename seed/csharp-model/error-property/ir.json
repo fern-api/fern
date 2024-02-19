@@ -542,6 +542,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_errors": {
       "name": {
@@ -563,6 +564,7 @@
           "safeName": "Errors"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -635,6 +637,7 @@
           "safeName": "PropertyBasedError"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -690,6 +693,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [
