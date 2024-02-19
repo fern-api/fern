@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints, it's documentation, code snippet, and parameters.
+- Fix: Previously `core.Stream` would not work in the Browser. Now the generated Fern SDK 
+  includes a polyfill for `ReadableStream` and uses `TextDecoder` instead of `Buffer`. 
+
+- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints, 
+  it's documentation, code snippet, and parameters.
+
+  This feature is currently behind a feature flag called `includeApiReference` and can be used 
+  ```yaml
+  config: 
+    includeApiReference: true
+  ```
 
 ## [0.11.4] - 2024-02-15
 
