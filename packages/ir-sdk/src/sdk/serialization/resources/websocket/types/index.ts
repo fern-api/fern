@@ -6,6 +6,6 @@ export * from "./WebSocketMessageBody";
 export * from "./InlinedWebSocketMessageBody";
 export * from "./InlinedWebSocketMessageBodyProperty";
 export * from "./WebSocketMessageBodyReference";
-export * from "./ExampleWebSocketQueue";
+export * from "./ExampleWebSocketSession";
 export * from "./ExampleWebSocketMessage";
 export * from "./ExampleWebSocketMessageBody";

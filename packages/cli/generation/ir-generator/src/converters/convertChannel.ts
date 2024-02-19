@@ -1,27 +1,53 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import {
+    ExampleHeader,
+    ExampleInlinedRequestBodyProperty,
+    ExamplePathParameter,
+    ExampleWebSocketMessage,
+    ExampleWebSocketMessageBody,
+    ExampleWebSocketSession,
+    Name,
     PathParameterLocation,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody,
     WebSocketMessageId
 } from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
 import { VariableResolver } from "../resolvers/VariableResolver";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
 import { constructHttpPath } from "./services/constructHttpPath";
-import { convertPathParameters, getQueryParameterName } from "./services/convertHttpService";
-import { getExtensionsAsList } from "./type-declarations/convertObjectTypeDeclaration";
+import {
+    convertPathParameters,
+    getQueryParameterName,
+    resolvePathParameterOrThrow
+} from "./services/convertHttpService";
+import {
+    convertTypeReferenceExample,
+    getOriginalTypeDeclarationForPropertyFromExtensions
+} from "./type-declarations/convertExampleType";
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
 export async function convertChannel({
     channel,
+    typeResolver,
+    exampleResolver,
     variableResolver,
-    file
+    file,
+    workspace
 }: {
     channel: RawSchemas.WebSocketChannelSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): Promise<WebSocketChannel> {
     const messages: Record<WebSocketMessageId, WebSocketMessage> = {};
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
@@ -69,8 +95,169 @@ export async function convertChannel({
                       })
                   )
                 : [],
-        messages
+        messages,
+        examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {
+            const convertedPathParameters = convertChannelPathParameters({
+                channel,
+                example,
+                typeResolver,
+                exampleResolver,
+                variableResolver,
+                file,
+                workspace
+            });
+            return {
+                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                docs: example.docs,
+                url: buildUrl({ channel, example, pathParams: convertedPathParameters }),
+                ...convertedPathParameters,
+                ...convertHeaders({ channel, example, typeResolver, exampleResolver, file, workspace }),
+                queryParameters:
+                    example["query-parameters"] != null
+                        ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
+                              const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
+                              if (queryParameterDeclaration == null) {
+                                  throw new Error(`Query parameter ${wireKey} does not exist`);
+                              }
+                              return {
+                                  name: file.casingsGenerator.generateNameAndWireValue({
+                                      name: getQueryParameterName({
+                                          queryParameterKey: wireKey,
+                                          queryParameter: queryParameterDeclaration
+                                      }).name,
+                                      wireValue: wireKey
+                                  }),
+                                  value: convertTypeReferenceExample({
+                                      example: value,
+                                      rawTypeBeingExemplified:
+                                          typeof queryParameterDeclaration === "string"
+                                              ? queryParameterDeclaration
+                                              : queryParameterDeclaration.type,
+                                      typeResolver,
+                                      exampleResolver,
+                                      fileContainingRawTypeReference: file,
+                                      fileContainingExample: file,
+                                      workspace
+                                  })
+                              };
+                          })
+                        : [],
+                messages: example.messages.map((messageExample): ExampleWebSocketMessage => {
+                    const message = channel.messages?.[messageExample.type];
+                    if (message == null) {
+                        throw new Error(`Message ${messageExample.type} does not exist`);
+                    }
+                    return {
+                        type: messageExample.type,
+                        body: convertExampleWebSocketMessageBody({
+                            message,
+                            example: messageExample.body,
+                            typeResolver,
+                            exampleResolver,
+                            file,
+                            workspace
+                        })
+                    };
+                })
+            };
+        })
     };
+}
+
+function convertExampleWebSocketMessageBody({
+    message,
+    example,
+    typeResolver,
+    exampleResolver,
+    file,
+    workspace
+}: {
+    message: RawSchemas.WebSocketChannelMessageSchema;
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    file: FernFileContext;
+    workspace: FernWorkspace;
+}): ExampleWebSocketMessageBody {
+    if (!isInlineMessageBody(message.body)) {
+        return ExampleWebSocketMessageBody.reference(
+            convertTypeReferenceExample({
+                example,
+                rawTypeBeingExemplified: typeof message.body !== "string" ? message.body.type : message.body,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                workspace
+            })
+        );
+    }
+
+    if (!isPlainObject(example)) {
+        throw new Error("Example must be an object");
+    }
+
+    const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
+    for (const [wireKey, propertyExample] of Object.entries(example)) {
+        const inlinedRequestPropertyDeclaration = message.body.properties?.[wireKey];
+        if (inlinedRequestPropertyDeclaration != null) {
+            exampleProperties.push({
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
+                    wireValue: wireKey
+                }),
+                value: convertTypeReferenceExample({
+                    example: propertyExample,
+                    rawTypeBeingExemplified:
+                        typeof inlinedRequestPropertyDeclaration !== "string"
+                            ? inlinedRequestPropertyDeclaration.type
+                            : inlinedRequestPropertyDeclaration,
+                    typeResolver,
+                    exampleResolver,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    workspace
+                }),
+                originalTypeDeclaration: undefined
+            });
+        } else {
+            const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
+                extends_: message.body.extends,
+                wirePropertyKey: wireKey,
+                typeResolver,
+                file
+            });
+            if (originalTypeDeclaration == null) {
+                throw new Error("Could not find original type declaration for property: " + wireKey);
+            }
+            exampleProperties.push({
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
+                        .name,
+                    wireValue: wireKey
+                }),
+                value: convertTypeReferenceExample({
+                    example: propertyExample,
+                    rawTypeBeingExemplified:
+                        typeof originalTypeDeclaration.rawPropertyType === "string"
+                            ? originalTypeDeclaration.rawPropertyType
+                            : originalTypeDeclaration.rawPropertyType.type,
+                    typeResolver,
+                    exampleResolver,
+                    fileContainingRawTypeReference: originalTypeDeclaration.file,
+                    fileContainingExample: file,
+                    workspace
+                }),
+                originalTypeDeclaration: originalTypeDeclaration.typeName
+            });
+        }
+    }
+
+    return ExampleWebSocketMessageBody.inlinedBody({
+        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
+            .resolvedExample,
+        properties: exampleProperties
+    });
 }
 
 function convertMessageSchema({
@@ -105,4 +292,151 @@ export function isReferencedWebhookPayloadSchema(
     payload: RawSchemas.WebSocketChannelMessageBodySchema
 ): payload is RawSchemas.WebSocketChannelReferencedMessageSchema {
     return (payload as RawSchemas.WebSocketChannelReferencedMessageSchema).type != null;
+}
+
+function convertChannelPathParameters({
+    channel,
+    example,
+    typeResolver,
+    exampleResolver,
+    variableResolver,
+    file,
+    workspace
+}: {
+    channel: RawSchemas.WebSocketChannelSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    variableResolver: VariableResolver;
+    file: FernFileContext;
+    workspace: FernWorkspace;
+}): Pick<ExampleWebSocketSession, "pathParameters"> {
+    const pathParameters: ExamplePathParameter[] = [];
+
+    const buildExamplePathParameter = ({
+        name,
+        pathParameterDeclaration,
+        examplePathParameter
+    }: {
+        name: Name;
+        pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
+        examplePathParameter: unknown;
+    }) => {
+        const resolvedPathParameter = resolvePathParameterOrThrow({
+            parameter: pathParameterDeclaration,
+            variableResolver,
+            file
+        });
+        return {
+            name,
+            value: convertTypeReferenceExample({
+                example: examplePathParameter,
+                rawTypeBeingExemplified: resolvedPathParameter.rawType,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: resolvedPathParameter.file,
+                fileContainingExample: file,
+                workspace
+            })
+        };
+    };
+
+    if (example["path-parameters"] != null) {
+        for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
+            // const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key];
+            const pathParameterDeclaration = channel["path-parameters"]?.[key];
+
+            if (pathParameterDeclaration != null) {
+                pathParameters.push(
+                    buildExamplePathParameter({
+                        name: file.casingsGenerator.generateName(key),
+                        pathParameterDeclaration,
+                        examplePathParameter
+                    })
+                );
+            } else {
+                throw new Error(`Path parameter ${key} does not exist`);
+            }
+        }
+    }
+
+    return { pathParameters };
+}
+
+function convertHeaders({
+    channel,
+    example,
+    typeResolver,
+    exampleResolver,
+    file,
+    workspace
+}: {
+    channel: RawSchemas.WebSocketChannelSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    file: FernFileContext;
+    workspace: FernWorkspace;
+}): Pick<ExampleWebSocketSession, "headers"> {
+    const headers: ExampleHeader[] = [];
+
+    if (example.headers != null) {
+        for (const [wireKey, exampleHeader] of Object.entries(example.headers)) {
+            const headerDeclaration = channel.headers?.[wireKey];
+            if (headerDeclaration != null) {
+                headers.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
+                        wireValue: wireKey
+                    }),
+                    value: convertTypeReferenceExample({
+                        example: exampleHeader,
+                        rawTypeBeingExemplified:
+                            typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,
+                        typeResolver,
+                        exampleResolver,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
+                        workspace
+                    })
+                });
+            } else {
+                throw new Error(`Heder ${wireKey} does not exist`);
+            }
+        }
+    }
+
+    return { headers };
+}
+
+function buildUrl({
+    channel,
+    example,
+    pathParams
+}: {
+    channel: RawSchemas.WebSocketChannelSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+    pathParams: Pick<ExampleWebSocketSession, "pathParameters">;
+}): string {
+    let url = channel.path;
+    if (example["path-parameters"] != null) {
+        for (const parameter of [...pathParams.pathParameters]) {
+            // TODO: should we URL encode the value?
+            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
+        }
+    }
+    return url;
+}
+
+function isInlineMessageBody(
+    messageBody: RawSchemas.WebSocketChannelMessageBodySchema
+): messageBody is RawSchemas.WebSocketChannelInlinedMessageSchema {
+    if (typeof messageBody === "string") {
+        return false;
+    }
+
+    return (
+        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema)?.extends != null ||
+        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema)?.properties != null
+    );
 }

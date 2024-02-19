@@ -272,7 +272,14 @@ export async function generateIntermediateRepresentation({
                     return;
                 }
                 const websocketChannelId = IdGenerator.generateWebSocketChannelId(file.fernFilepath);
-                const websocketChannel = await convertChannel({ channel, file, variableResolver });
+                const websocketChannel = await convertChannel({
+                    channel,
+                    file,
+                    variableResolver,
+                    typeResolver,
+                    exampleResolver,
+                    workspace
+                });
                 if (intermediateRepresentation.websocketChannels != null) {
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
                     packageTreeGenerator.addWebSocketChannel(websocketChannelId, file.fernFilepath);

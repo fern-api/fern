@@ -6,26 +6,17 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const ExampleWebSocketQueue: core.serialization.ObjectSchema<
-    serializers.ExampleWebSocketQueue.Raw,
-    FernIr.ExampleWebSocketQueue
+export const ExampleWebSocketSession: core.serialization.ObjectSchema<
+    serializers.ExampleWebSocketSession.Raw,
+    FernIr.ExampleWebSocketSession
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.lazyObject(async () => (await import("../../..")).Name).optional(),
         url: core.serialization.string(),
-        rootPathParameters: core.serialization.list(
+        pathParameters: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).ExamplePathParameter)
         ),
-        servicePathParameters: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).ExamplePathParameter)
-        ),
-        endpointPathParameters: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).ExamplePathParameter)
-        ),
-        serviceHeaders: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).ExampleHeader)
-        ),
-        endpointHeaders: core.serialization.list(
+        headers: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).ExampleHeader)
         ),
         queryParameters: core.serialization.list(
@@ -37,15 +28,12 @@ export const ExampleWebSocketQueue: core.serialization.ObjectSchema<
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
 
-export declare namespace ExampleWebSocketQueue {
+export declare namespace ExampleWebSocketSession {
     interface Raw extends serializers.WithDocs.Raw {
         name?: serializers.Name.Raw | null;
         url: string;
-        rootPathParameters: serializers.ExamplePathParameter.Raw[];
-        servicePathParameters: serializers.ExamplePathParameter.Raw[];
-        endpointPathParameters: serializers.ExamplePathParameter.Raw[];
-        serviceHeaders: serializers.ExampleHeader.Raw[];
-        endpointHeaders: serializers.ExampleHeader.Raw[];
+        pathParameters: serializers.ExamplePathParameter.Raw[];
+        headers: serializers.ExampleHeader.Raw[];
         queryParameters: serializers.ExampleQueryParameter.Raw[];
         messages: serializers.ExampleWebSocketMessage.Raw[];
     }

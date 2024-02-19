@@ -5,12 +5,12 @@
 import * as FernIr from "../../..";
 
 export type ExampleWebSocketMessageBody =
-    | FernIr.ExampleWebSocketMessageBody.InlinedRequestBody
+    | FernIr.ExampleWebSocketMessageBody.InlinedBody
     | FernIr.ExampleWebSocketMessageBody.Reference;
 
 export declare namespace ExampleWebSocketMessageBody {
-    interface InlinedRequestBody extends FernIr.ExampleInlinedRequestBody, _Utils {
-        type: "inlinedRequestBody";
+    interface InlinedBody extends FernIr.ExampleInlinedRequestBody, _Utils {
+        type: "inlinedBody";
     }
 
     interface Reference extends FernIr.ExampleTypeReference, _Utils {
@@ -22,21 +22,19 @@ export declare namespace ExampleWebSocketMessageBody {
     }
 
     interface _Visitor<_Result> {
-        inlinedRequestBody: (value: FernIr.ExampleInlinedRequestBody) => _Result;
+        inlinedBody: (value: FernIr.ExampleInlinedRequestBody) => _Result;
         reference: (value: FernIr.ExampleTypeReference) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const ExampleWebSocketMessageBody = {
-    inlinedRequestBody: (
-        value: FernIr.ExampleInlinedRequestBody
-    ): FernIr.ExampleWebSocketMessageBody.InlinedRequestBody => {
+    inlinedBody: (value: FernIr.ExampleInlinedRequestBody): FernIr.ExampleWebSocketMessageBody.InlinedBody => {
         return {
             ...value,
-            type: "inlinedRequestBody",
+            type: "inlinedBody",
             _visit: function <_Result>(
-                this: FernIr.ExampleWebSocketMessageBody.InlinedRequestBody,
+                this: FernIr.ExampleWebSocketMessageBody.InlinedBody,
                 visitor: FernIr.ExampleWebSocketMessageBody._Visitor<_Result>
             ) {
                 return FernIr.ExampleWebSocketMessageBody._visit(this, visitor);
@@ -62,8 +60,8 @@ export const ExampleWebSocketMessageBody = {
         visitor: FernIr.ExampleWebSocketMessageBody._Visitor<_Result>
     ): _Result => {
         switch (value.type) {
-            case "inlinedRequestBody":
-                return visitor.inlinedRequestBody(value);
+            case "inlinedBody":
+                return visitor.inlinedBody(value);
             case "reference":
                 return visitor.reference(value);
             default:

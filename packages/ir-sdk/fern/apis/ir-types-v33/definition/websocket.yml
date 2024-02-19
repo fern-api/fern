@@ -17,7 +17,7 @@ types:
       messages:
         docs: "The messages that can be sent and received on this channel"
         type: map<WebSocketMessageId, WebSocketMessage>
-      examples: list<ExampleWebSocketQueue>
+      examples: list<ExampleWebSocketSession>
 
   WebSocketMessage:
     extends: commons.Declaration
@@ -53,16 +53,13 @@ types:
     properties:
       bodyType: types.TypeReference
 
-  ExampleWebSocketQueue:
+  ExampleWebSocketSession:
     extends: commons.WithDocs
     properties:
       name: optional<commons.Name>
       url: string
-      rootPathParameters: list<http.ExamplePathParameter>
-      servicePathParameters: list<http.ExamplePathParameter>
-      endpointPathParameters: list<http.ExamplePathParameter>
-      serviceHeaders: list<http.ExampleHeader>
-      endpointHeaders: list<http.ExampleHeader>
+      pathParameters: list<http.ExamplePathParameter>
+      headers: list<http.ExampleHeader>
       queryParameters: list<http.ExampleQueryParameter>
       messages: list<ExampleWebSocketMessage>
 
@@ -73,5 +70,5 @@ types:
 
   ExampleWebSocketMessageBody:
     union:
-      inlinedRequestBody: http.ExampleInlinedRequestBody
+      inlinedBody: http.ExampleInlinedRequestBody
       reference: types.ExampleTypeReference

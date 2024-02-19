@@ -11,16 +11,14 @@ export const ExampleWebSocketMessageBody: core.serialization.Schema<
     FernIr.ExampleWebSocketMessageBody
 > = core.serialization
     .union("type", {
-        inlinedRequestBody: core.serialization.lazyObject(
-            async () => (await import("../../..")).ExampleInlinedRequestBody
-        ),
+        inlinedBody: core.serialization.lazyObject(async () => (await import("../../..")).ExampleInlinedRequestBody),
         reference: core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference),
     })
     .transform<FernIr.ExampleWebSocketMessageBody>({
         transform: (value) => {
             switch (value.type) {
-                case "inlinedRequestBody":
-                    return FernIr.ExampleWebSocketMessageBody.inlinedRequestBody(value);
+                case "inlinedBody":
+                    return FernIr.ExampleWebSocketMessageBody.inlinedBody(value);
                 case "reference":
                     return FernIr.ExampleWebSocketMessageBody.reference(value);
                 default:
@@ -31,10 +29,10 @@ export const ExampleWebSocketMessageBody: core.serialization.Schema<
     });
 
 export declare namespace ExampleWebSocketMessageBody {
-    type Raw = ExampleWebSocketMessageBody.InlinedRequestBody | ExampleWebSocketMessageBody.Reference;
+    type Raw = ExampleWebSocketMessageBody.InlinedBody | ExampleWebSocketMessageBody.Reference;
 
-    interface InlinedRequestBody extends serializers.ExampleInlinedRequestBody.Raw {
-        type: "inlinedRequestBody";
+    interface InlinedBody extends serializers.ExampleInlinedRequestBody.Raw {
+        type: "inlinedBody";
     }
 
     interface Reference extends serializers.ExampleTypeReference.Raw {
