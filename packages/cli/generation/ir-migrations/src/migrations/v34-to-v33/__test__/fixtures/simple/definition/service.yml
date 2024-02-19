@@ -1,0 +1,17 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    check:
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: string
+      request:
+        name: CheckRequest
+        body:
+          properties:
+            file: file
+            fileList: list<file>
+            maybeFile: optional<file>
+            maybeFileList: optional<list<file>>

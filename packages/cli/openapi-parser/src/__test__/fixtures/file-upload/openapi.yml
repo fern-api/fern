@@ -21,4 +21,16 @@ paths:
                   type: string
                   format: binary
                   description: An optional file to upload
-              required: [file]
+                file_list:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: The list of files to upload
+                maybe_file_list:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: An optional list of files to upload
+              required: [file, file_list]

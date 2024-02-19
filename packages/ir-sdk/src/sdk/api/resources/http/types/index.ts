@@ -16,6 +16,8 @@ export * from "./FileUploadRequest";
 export * from "./BytesRequest";
 export * from "./FileUploadRequestProperty";
 export * from "./FileProperty";
+export * from "./FilePropertySingle";
+export * from "./FilePropertyArray";
 export * from "./HttpRequestBodyReference";
 export * from "./SdkRequestBodyType";
 export * from "./SdkRequest";

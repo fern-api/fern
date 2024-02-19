@@ -11,14 +11,16 @@ export const FileUploadRequestProperty: core.serialization.Schema<
     FernIr.FileUploadRequestProperty
 > = core.serialization
     .union("type", {
-        file: core.serialization.lazyObject(async () => (await import("../../..")).FileProperty),
+        file: core.serialization.object({
+            value: core.serialization.lazy(async () => (await import("../../..")).FileProperty),
+        }),
         bodyProperty: core.serialization.lazyObject(async () => (await import("../../..")).InlinedRequestBodyProperty),
     })
     .transform<FernIr.FileUploadRequestProperty>({
         transform: (value) => {
             switch (value.type) {
                 case "file":
-                    return FernIr.FileUploadRequestProperty.file(value);
+                    return FernIr.FileUploadRequestProperty.file(value.value);
                 case "bodyProperty":
                     return FernIr.FileUploadRequestProperty.bodyProperty(value);
                 default:
@@ -31,8 +33,9 @@ export const FileUploadRequestProperty: core.serialization.Schema<
 export declare namespace FileUploadRequestProperty {
     type Raw = FileUploadRequestProperty.File | FileUploadRequestProperty.BodyProperty;
 
-    interface File extends serializers.FileProperty.Raw {
+    interface File {
         type: "file";
+        value: serializers.FileProperty.Raw;
     }
 
     interface BodyProperty extends serializers.InlinedRequestBodyProperty.Raw {

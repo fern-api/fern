@@ -27,7 +27,13 @@ paths:
                 file:
                   type: string
                   format: binary
+                fileList:
+                  type: string
+                  format: binary
                 maybeFile:
+                  type: string
+                  format: binary
+                maybeFileList:
                   type: string
                   format: binary
                 maybeInteger:
