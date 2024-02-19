@@ -33,7 +33,7 @@ jobs:
   
   python:
     runs-on: ubuntu-latest
-    if: ${{ needs.versions-changed.outputs.python == 'true' }}
+    if: ${{ needs.changes.outputs.python == 'true' }}
     needs: changes
     steps:
       - name: Set up Docker Buildx
@@ -67,7 +67,7 @@ jobs:
 
   java:
     runs-on: ubuntu-latest
-    if: ${{ needs.versions-changed.outputs.java == 'true' }}
+    if: ${{ needs.changes.outputs.java == 'true' }}
     needs: changes
     steps:
       - name: Set up Docker Buildx
@@ -101,7 +101,7 @@ jobs:
 
   ts:
     runs-on: ubuntu-latest
-    if: ${{ needs.versions-changed.outputs.ts == 'true' }}
+    if: ${{ needs.changes.outputs.ts == 'true' }}
     needs: changes
     steps:
       - name: Set up Docker Buildx
