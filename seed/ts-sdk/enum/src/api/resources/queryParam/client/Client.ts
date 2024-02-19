@@ -25,10 +25,10 @@ export class QueryParam {
         request: SeedEnum.SendEnumAsQueryParamRequest = {},
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { value } = request;
+        const { operand } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (value != null) {
-            _queryParams["value"] = value;
+        if (operand != null) {
+            _queryParams["operand"] = operand;
         }
 
         const _response = await core.fetcher({
@@ -76,13 +76,13 @@ export class QueryParam {
         request: SeedEnum.SendEnumListAsQueryParamRequest = {},
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { value } = request;
+        const { operand } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (value != null) {
-            if (Array.isArray(value)) {
-                _queryParams["value"] = value.map((item) => item);
+        if (operand != null) {
+            if (Array.isArray(operand)) {
+                _queryParams["operand"] = operand.map((item) => item);
             } else {
-                _queryParams["value"] = value;
+                _queryParams["operand"] = operand;
             }
         }
 

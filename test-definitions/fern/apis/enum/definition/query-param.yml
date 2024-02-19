@@ -11,11 +11,11 @@ service:
       request:
         name: SendEnumAsQueryParamRequest
         query-parameters:
-          value:
+          operand:
             type: optional<root.Operand>
       examples: 
         - query-parameters:
-            value: $root.Operand.GreaterThan
+            operand: $root.Operand.GreaterThan
     
     sendList:
       path: /query-list
@@ -23,6 +23,6 @@ service:
       request:
         name: SendEnumListAsQueryParamRequest
         query-parameters:
-          value:
+          operand:
             type: optional<root.Operand>
             allow-multiple: true

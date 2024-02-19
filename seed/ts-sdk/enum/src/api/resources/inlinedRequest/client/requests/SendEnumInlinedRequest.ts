@@ -7,9 +7,9 @@ import * as SeedEnum from "../../../..";
 /**
  * @example
  *     {
- *         value: SeedEnum.Operand.GreaterThan
+ *         operand: SeedEnum.Operand.GreaterThan
  *     }
  */
 export interface SendEnumInlinedRequest {
-    value?: SeedEnum.Operand;
+    operand?: SeedEnum.Operand;
 }
