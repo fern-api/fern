@@ -714,6 +714,12 @@
             "auth": { "type": "boolean" },
             "path": { "type": "string" },
             "display-name": { "type": "string" },
+            "headers": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+              }
+            },
             "path-parameters": {
               "type": "object",
               "additionalProperties": { "$ref": "#/properties/service/properties/path-parameters/additionalProperties" }
@@ -730,6 +736,12 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                  },
                   "origin": { "type": "string", "enum": ["client", "server"] },
                   "body": {
                     "anyOf": [
@@ -782,7 +794,8 @@
                         ]
                       }
                     ]
-                  }
+                  },
+                  "display-name": { "type": "string" }
                 },
                 "required": ["origin", "body"],
                 "additionalProperties": false
@@ -804,6 +817,12 @@
                     }
                   },
                   "query-parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                    }
+                  },
+                  "headers": {
                     "type": "object",
                     "additionalProperties": {
                       "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
