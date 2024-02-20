@@ -2,9 +2,9 @@
 FROM redhat/ubi9:latest
 
 # Setup the environment, can run pytest, poetry install, etc.
-COPY generators/python/pyproject.toml ./pyproject.toml
-COPY generators/python/poetry.lock ./poetry.lock
-COPY generators/python/src ./src
+COPY seed/python-sdk/imdb/pyproject.toml ./pyproject.toml
+COPY seed/python-sdk/imdb/poetry.lock ./poetry.lock
+COPY seed/python-sdk/imdb/src ./src
 
 # Setup pyenv
 RUN yum update -y
