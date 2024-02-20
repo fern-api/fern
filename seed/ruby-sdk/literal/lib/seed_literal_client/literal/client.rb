@@ -53,7 +53,7 @@ module SeedLiteralClient
 
     # @param dry_run [Boolean]
     # @param request_options [RequestOptions]
-    # @return [Literal::UndiscriminatedOptions]
+    # @return [String, Boolean, Hash{String => String}]
     def get_undiscriminated_options(dry_run:, request_options: nil)
       response = @request_client.conn.post("/options") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -119,7 +119,7 @@ module SeedLiteralClient
 
     # @param dry_run [Boolean]
     # @param request_options [RequestOptions]
-    # @return [Literal::UndiscriminatedOptions]
+    # @return [String, Boolean, Hash{String => String}]
     def get_undiscriminated_options(dry_run:, request_options: nil)
       Async do
         response = @request_client.conn.post("/options") do |req|
