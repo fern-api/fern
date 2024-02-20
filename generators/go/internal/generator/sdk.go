@@ -10,6 +10,7 @@ import (
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"github.com/fern-api/fern-go/internal/gospec"
+	generatorexec "github.com/fern-api/generator-exec-go"
 )
 
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
@@ -662,12 +663,12 @@ func (f *fileWriter) WriteRequestOptions(
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
-					ast.NewImportedObject(
+					ast.NewImportedReference(
 						optionName,
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewLocalObject(`"<YOUR_AUTH_TOKEN>"`),
+						ast.NewBasicLit(`"<YOUR_AUTH_TOKEN>"`),
 					},
 				)
 			}
@@ -687,13 +688,13 @@ func (f *fileWriter) WriteRequestOptions(
 		if authScheme.Basic != nil {
 			if i == 0 {
 				option = ast.NewCallExpr(
-					ast.NewImportedObject(
+					ast.NewImportedReference(
 						"WithBasicAuth",
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewLocalObject(`"<YOUR_USERNAME>"`),
-						ast.NewLocalObject(`"<YOUR_PASSWORD>"`),
+						ast.NewBasicLit(`"<YOUR_USERNAME>"`),
+						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
 					},
 				)
 			}
@@ -725,12 +726,12 @@ func (f *fileWriter) WriteRequestOptions(
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
-					ast.NewImportedObject(
+					ast.NewImportedReference(
 						optionName,
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewLocalObject(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
 					},
 				)
 			}
@@ -786,6 +787,12 @@ func (f *fileWriter) WriteRequestOptions(
 
 type GeneratedClient struct {
 	Instantiation *ast.AssignStmt
+	Endpoints     map[ir.EndpointId]*GeneratedEndpoint
+}
+
+type GeneratedEndpoint struct {
+	Identifier *generatorexec.EndpointIdentifier
+	Snippet    ast.Expr
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -1122,6 +1129,264 @@ func (f *fileWriter) WriteClient(
 			f.P()
 		}
 	}
+	return NewGeneratedClient(
+		f,
+		fernFilepath,
+		irEndpoints,
+		generatedAuth,
+		generatedEnvironment,
+	)
+}
+
+// NewGeneratedClient constructs the snippets associated with the client's
+// endpoints.
+func NewGeneratedClient(
+	f *fileWriter,
+	fernFilepath *ir.FernFilepath,
+	endpoints []*ir.HttpEndpoint,
+	generatedAuth *GeneratedAuth,
+	generatedEnvironment *GeneratedEnvironment,
+) (*GeneratedClient, error) {
+	clientInstantiation := generatedClientInstantiation(
+		f,
+		fernFilepath,
+		generatedAuth,
+		generatedEnvironment,
+	)
+	generatedEndpoints := make(map[ir.EndpointId]*GeneratedEndpoint)
+	for _, endpoint := range endpoints {
+		if len(endpoint.Examples) == 0 {
+			continue
+		}
+		generatedEndpoints[endpoint.Id] = newGeneratedEndpoint(
+			f,
+			fernFilepath,
+			clientInstantiation,
+			endpoint,
+			endpoint.Examples[0],
+		)
+	}
+	return &GeneratedClient{
+		Instantiation: clientInstantiation,
+		Endpoints:     generatedEndpoints,
+	}, nil
+}
+
+func newGeneratedEndpoint(
+	f *fileWriter,
+	fernFilepath *ir.FernFilepath,
+	clientInstantiation *ast.AssignStmt,
+	endpoint *ir.HttpEndpoint,
+	example *ir.ExampleEndpointCall,
+) *GeneratedEndpoint {
+	return &GeneratedEndpoint{
+		Identifier: endpointToIdentifier(endpoint),
+		Snippet: newEndpointSnippet(
+			f,
+			fernFilepath,
+			clientInstantiation,
+			endpoint,
+			example,
+		),
+	}
+}
+
+func endpointToIdentifier(endpoint *ir.HttpEndpoint) *generatorexec.EndpointIdentifier {
+	return &generatorexec.EndpointIdentifier{
+		Path:   fullPathForEndpoint(endpoint),
+		Method: irMethodToGeneratorExecMethod(endpoint.Method),
+	}
+}
+
+func fullPathForEndpoint(endpoint *ir.HttpEndpoint) string {
+	var components []string
+	if head := strings.Trim(endpoint.FullPath.Head, "/"); len(head) > 0 {
+		components = append(components, head)
+	}
+	for _, part := range endpoint.FullPath.Parts {
+		components = append(components, fmt.Sprintf("{%s}", part.PathParameter))
+		if tail := strings.Trim(part.Tail, "/"); len(tail) > 0 {
+			components = append(components, tail)
+		}
+	}
+	return fmt.Sprintf("/%s", strings.Join(components, "/"))
+}
+
+func irMethodToGeneratorExecMethod(method ir.HttpMethod) generatorexec.EndpointMethod {
+	switch method {
+	case ir.HttpMethodGet:
+		return generatorexec.EndpointMethodGet
+	case ir.HttpMethodPost:
+		return generatorexec.EndpointMethodPost
+	case ir.HttpMethodPut:
+		return generatorexec.EndpointMethodPut
+	case ir.HttpMethodPatch:
+		return generatorexec.EndpointMethodPatch
+	case ir.HttpMethodDelete:
+		return generatorexec.EndpointMethodDelete
+	}
+	return 0
+}
+
+func newEndpointSnippet(
+	f *fileWriter, // TODO: See if we can remove this parameter entirely.
+	fernFilepath *ir.FernFilepath,
+	clientInstantiation *ast.AssignStmt,
+	endpoint *ir.HttpEndpoint,
+	example *ir.ExampleEndpointCall,
+) *ast.Block {
+	methodName := getEndpointMethodName(fernFilepath, endpoint)
+	parameters := getEndpointParameters(
+		f,
+		fernFilepath,
+		endpoint,
+		example,
+	)
+	call := &ast.CallExpr{
+		FunctionName: &ast.LocalReference{
+			Name: fmt.Sprintf("client.%s", methodName),
+		},
+		Parameters: parameters,
+	}
+	return &ast.Block{
+		Exprs: []ast.Expr{
+			clientInstantiation,
+			call,
+		},
+	}
+}
+
+func getEndpointMethodName(
+	fernFilepath *ir.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+) string {
+	var packageElements []string
+	for _, packageElem := range fernFilepath.PackagePath {
+		packageElements = append(packageElements, packageElem.PascalCase.UnsafeName)
+	}
+	if fernFilepath.File != nil {
+		packageElements = append(packageElements, fernFilepath.File.PascalCase.UnsafeName)
+	}
+	methodName := endpoint.Name.PascalCase.UnsafeName
+	if len(packageElements) == 0 {
+		return methodName
+	}
+	return fmt.Sprintf("%s.%s", strings.Join(packageElements, "."), methodName)
+}
+
+func getEndpointParameters(
+	f *fileWriter,
+	fernFilepath *ir.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+	example *ir.ExampleEndpointCall,
+) []ast.Expr {
+	parameters := []ast.Expr{
+		&ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "TODO",
+				ImportPath: "context",
+			},
+		},
+	}
+
+	allPathParameters := example.RootPathParameters
+	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
+	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
+	for _, pathParameter := range allPathParameters {
+		parameters = append(
+			parameters,
+			f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+		)
+	}
+
+	var fields []*ast.Field
+	for _, header := range append(example.ServiceHeaders, example.EndpointHeaders...) {
+		// TODO: We need to filter out the literal parameters.
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   header.Name.Name.PascalCase.UnsafeName,
+				Value: f.snippetWriter.GetSnippetForExampleTypeReference(header.Value),
+			},
+		)
+	}
+
+	for _, queryParameter := range example.QueryParameters {
+		// TODO: We need to filter out the literal parameters.
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   queryParameter.Name.Name.PascalCase.UnsafeName,
+				Value: f.snippetWriter.GetSnippetForExampleTypeReference(queryParameter.Value),
+			},
+		)
+	}
+
+	if !shouldSkipRequestType(endpoint) {
+		fields = append(
+			fields,
+			exampleRequestBodyToFields(f, endpoint, example.Request)...,
+		)
+		parameters = append(
+			parameters,
+			&ast.StructType{
+				Name: &ast.ImportedReference{
+					Name:       endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName,
+					ImportPath: fernFilepathToImportPath(f.baseImportPath, fernFilepath),
+				},
+				Fields: fields,
+			},
+		)
+		return parameters
+	}
+	if example.Request.Reference != nil {
+		// Include the body as an ordinary parameter alongside the rest.
+		parameters = append(
+			parameters,
+			f.snippetWriter.GetSnippetForExampleTypeReference(example.Request.Reference),
+		)
+	}
+	return parameters
+}
+
+func exampleRequestBodyToFields(
+	f *fileWriter,
+	endpoint *ir.HttpEndpoint,
+	exampleRequestBody *ir.ExampleRequestBody,
+) []*ast.Field {
+	var fields []*ast.Field
+	switch exampleRequestBody.Type {
+	case "inlinedRequestBody":
+		for _, property := range exampleRequestBody.InlinedRequestBody.Properties {
+			fields = append(
+				fields,
+				&ast.Field{
+					Key:   property.Name.Name.PascalCase.UnsafeName,
+					Value: f.snippetWriter.GetSnippetForExampleTypeReference(property.Value),
+				},
+			)
+		}
+		return fields
+	case "reference":
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+				Value: f.snippetWriter.GetSnippetForExampleTypeReference(exampleRequestBody.Reference),
+			},
+		)
+	}
+	return fields
+}
+
+// generatedClientInstantiation returns the AST expression associated with
+// the client construction (including import statements and client options).
+func generatedClientInstantiation(
+	f *fileWriter,
+	fernFilepath *ir.FernFilepath,
+	generatedAuth *GeneratedAuth,
+	generatedEnvironment *GeneratedEnvironment,
+) *ast.AssignStmt {
 	var parameters []ast.Expr
 	if generatedAuth != nil {
 		parameters = append(parameters, generatedAuth.Option)
@@ -1129,22 +1394,20 @@ func (f *fileWriter) WriteClient(
 	if generatedEnvironment != nil {
 		parameters = append(parameters, generatedEnvironment.Example)
 	}
-	return &GeneratedClient{
-		Instantiation: &ast.AssignStmt{
-			Left: []ast.Expr{
-				ast.NewLocalObject("client"),
-			},
-			Right: []ast.Expr{
-				ast.NewCallExpr(
-					ast.NewImportedObject(
-						"NewClient",
-						packagePathToImportPath(f.baseImportPath, packagePathForClient(fernFilepath)),
-					),
-					parameters,
-				),
-			},
+	return &ast.AssignStmt{
+		Left: []ast.Expr{
+			ast.NewLocalReference("client"),
 		},
-	}, nil
+		Right: []ast.Expr{
+			ast.NewCallExpr(
+				ast.NewImportedReference(
+					"NewClient",
+					packagePathToImportPath(f.baseImportPath, packagePathForClient(fernFilepath)),
+				),
+				parameters,
+			),
+		},
+	}
 }
 
 // endpoint holds the fields required to generate a client endpoint.
@@ -1824,7 +2087,7 @@ type environmentsDeclarationVisitor struct {
 func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
 	for i, environment := range url.Environments {
 		if i == 0 {
-			e.value = ast.NewImportedObject(
+			e.value = ast.NewImportedReference(
 				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
 				e.importPath,
 			)
@@ -1842,7 +2105,7 @@ func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *ir.MultipleB
 	}
 	for i, environment := range url.Environments {
 		if i == 0 {
-			e.value = ast.NewImportedObject(
+			e.value = ast.NewImportedReference(
 				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
 				e.importPath,
 			)
@@ -2174,6 +2437,9 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 		return false
 	}
 	if len(endpoint.QueryParameters) > 0 {
+		return true
+	}
+	if len(endpoint.Headers) > 0 {
 		return true
 	}
 	if endpoint.RequestBody != nil {

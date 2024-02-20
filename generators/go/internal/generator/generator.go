@@ -18,6 +18,9 @@ import (
 const (
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
+
+	// snippetFilename represents the snippet output filename.
+	snippetFilename = "snippet.json"
 )
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
@@ -537,6 +540,14 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 	}
+	// Write the snippets, if any.
+	if g.config.SnippetFilepath != "" {
+		file, err := writeSnippets(g.coordinator, generatedClient, g.config.SnippetFilepath)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
 	// Finally, generate the go.mod file, if needed.
 	//
 	// The go.sum file will be generated after the
@@ -557,6 +568,50 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 	return files, nil
+}
+
+func writeSnippets(
+	coordinator *coordinator.Client,
+	generatedClient *GeneratedClient,
+	snippetFilepath string,
+) (*File, error) {
+	if len(generatedClient.Endpoints) == 0 {
+		return NewFile(
+			coordinator,
+			snippetFilename,
+			nil,
+		), nil
+	}
+	var endpoints []*generatorexec.Endpoint
+	for _, generatedEndpoint := range generatedClient.Endpoints {
+		client, err := ast.NewSourceCodeBuilder(generatedEndpoint.Snippet).BuildSnippet()
+		if err != nil {
+			return nil, err
+		}
+		endpoints = append(
+			endpoints,
+			&generatorexec.Endpoint{
+				Id: generatedEndpoint.Identifier,
+				Snippet: generatorexec.NewEndpointSnippetFromGo(
+					&generatorexec.GoEndpointSnippet{
+						Client: client,
+					},
+				),
+			},
+		)
+	}
+	snippets := &generatorexec.Snippets{
+		Endpoints: endpoints,
+	}
+	bytes, err := json.MarshalIndent(snippets, "", "    ")
+	if err != nil {
+		return nil, err
+	}
+	return NewFile(
+		coordinator,
+		snippetFilename,
+		bytes,
+	), nil
 }
 
 // generateReadme generates a README.md file for a generated Go module, called

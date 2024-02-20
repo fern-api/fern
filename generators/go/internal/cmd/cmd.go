@@ -60,6 +60,7 @@ type Config struct {
 	CoordinatorTaskID          string
 	Version                    string
 	IrFilepath                 string
+	SnippetFilepath            string
 	ImportPath                 string
 	PackageName                string
 	Module                     *generator.ModuleConfig
@@ -188,6 +189,12 @@ func newConfig(configFilename string) (*Config, error) {
 		coordinatorURL = config.Environment.Remote.CoordinatorUrlV2
 		coordinatorTaskID = config.Environment.Remote.Id
 	}
+
+	var snippetFilepath string
+	if config.Output != nil && config.Output.SnippetFilepath != nil {
+		snippetFilepath = *config.Output.SnippetFilepath
+	}
+
 	return &Config{
 		DryRun:                     config.DryRun,
 		IncludeLegacyClientOptions: customConfig.IncludeLegacyClientOptions,
@@ -198,6 +205,7 @@ func newConfig(configFilename string) (*Config, error) {
 		CoordinatorTaskID:          coordinatorTaskID,
 		Version:                    outputVersionFromGeneratorConfig(config),
 		IrFilepath:                 config.IrFilepath,
+		SnippetFilepath:            snippetFilepath,
 		ImportPath:                 customConfig.ImportPath,
 		PackageName:                customConfig.PackageName,
 		Module:                     moduleConfig,
