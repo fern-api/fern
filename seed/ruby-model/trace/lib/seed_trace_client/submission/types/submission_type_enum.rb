@@ -2,7 +2,9 @@
 
 module SeedTraceClient
   class Submission
-    # @type [SUBMISSION_TYPE_ENUM]
-    SUBMISSION_TYPE_ENUM = { test: "TEST" }.freeze
+    # Keep in sync with SubmissionType.
+    class SubmissionTypeEnum
+      TEST = "TEST"
+    end
   end
 end

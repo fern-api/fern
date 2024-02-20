@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "object_value"
-require_relative "container_value"
-require_relative "primitive_value"
+require_relative "options"
 
-module SeedApiClient
-  class Ast
-    class FieldValue
+module SeedLiteralClient
+  class Literal
+    class CreateOptionsResponse
       attr_reader :member, :discriminant
 
       private_class_method :new
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Ast::FieldValue]
+      # @return [Literal::CreateOptionsResponse]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -22,19 +20,17 @@ module SeedApiClient
         @discriminant = discriminant
       end
 
-      # Deserialize a JSON object to an instance of FieldValue
+      # Deserialize a JSON object to an instance of CreateOptionsResponse
       #
       # @param json_object [JSON]
-      # @return [Ast::FieldValue]
+      # @return [Literal::CreateOptionsResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
-                 when "primitive_value"
+                 when "ok"
                    json_object.value
-                 when "object_value"
-                   Ast::ObjectValue.from_json(json_object: json_object)
-                 when "container_value"
-                   Ast::ContainerValue.from_json(json_object: json_object.value)
+                 when "options"
+                   Literal::Options.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -46,12 +42,10 @@ module SeedApiClient
       # @return [JSON]
       def to_json(*_args)
         case @discriminant
-        when "primitive_value"
+        when "ok"
           { "type": @discriminant, "value": @member }.to_json
-        when "object_value"
+        when "options"
           { **@member.to_json, type: @discriminant }.to_json
-        when "container_value"
-          { "type": @discriminant, "value": @member }.to_json
         else
           { "type": @discriminant, value: @member }.to_json
         end
@@ -64,12 +58,10 @@ module SeedApiClient
       # @return [Void]
       def self.validate_raw(obj:)
         case obj.type
-        when "primitive_value"
-          obj.is_a?(Ast::PrimitiveValue) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "object_value"
-          Ast::ObjectValue.validate_raw(obj: obj)
-        when "container_value"
-          Ast::ContainerValue.validate_raw(obj: obj)
+        when "ok"
+          obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        when "options"
+          Literal::Options.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -83,22 +75,16 @@ module SeedApiClient
         @member.is_a?(obj)
       end
 
-      # @param member [Ast::PrimitiveValue]
-      # @return [Ast::FieldValue]
-      def self.primitive_value(member:)
-        new(member: member, discriminant: "primitive_value")
+      # @param member [Boolean]
+      # @return [Literal::CreateOptionsResponse]
+      def self.ok(member:)
+        new(member: member, discriminant: "ok")
       end
 
-      # @param member [Ast::ObjectValue]
-      # @return [Ast::FieldValue]
-      def self.object_value(member:)
-        new(member: member, discriminant: "object_value")
-      end
-
-      # @param member [Ast::ContainerValue]
-      # @return [Ast::FieldValue]
-      def self.container_value(member:)
-        new(member: member, discriminant: "container_value")
+      # @param member [Literal::Options]
+      # @return [Literal::CreateOptionsResponse]
+      def self.options(member:)
+        new(member: member, discriminant: "options")
       end
     end
   end

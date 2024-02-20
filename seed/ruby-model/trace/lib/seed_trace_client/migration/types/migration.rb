@@ -9,13 +9,13 @@ module SeedTraceClient
       attr_reader :name, :status, :additional_properties
 
       # @param name [String]
-      # @param status [MIGRATION_STATUS]
+      # @param status [Migration::MigrationStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Migration::Migration]
       def initialize(name:, status:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [MIGRATION_STATUS]
+        # @type [Migration::MigrationStatus]
         @status = status
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,9 @@ module SeedTraceClient
       # @return [Migration::Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        parsed_json = JSON.parse(json_object)
+        JSON.parse(json_object)
         name = struct.name
-        status = Migration::MIGRATION_STATUS.key(parsed_json["status"]) || parsed_json["status"]
+        status = struct.status
         new(name: name, status: status, additional_properties: struct)
       end
 
@@ -37,7 +37,7 @@ module SeedTraceClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "name": @name, "status": Migration::MIGRATION_STATUS[@status] || @status }.to_json
+        { "name": @name, "status": @status }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -46,7 +46,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        obj.status.is_a?(Migration::MIGRATION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.status.is_a?(Migration::MigrationStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end
