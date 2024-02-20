@@ -17,7 +17,7 @@ export function convertPackage(
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
-        websockets: websocket != null ? [convertWebSocketChannel(websocket)] : [],
+        websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
         types: irPackage.types.map((typeId) => typeId),
         subpackages: irPackage.subpackages.map((subpackageId) => subpackageId),
         pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined
@@ -98,15 +98,21 @@ function convertService(
     );
 }
 
-function convertWebSocketChannel(channel: Ir.websocket.WebSocketChannel): APIV1Write.WebSocketChannel {
-    const publish = Object.values(channel.messages).find((message) => message.origin === "client");
-    const subscribe = Object.values(channel.messages).find((message) => message.origin === "server");
+function convertWebSocketChannel(
+    channel: Ir.websocket.WebSocketChannel,
+    ir: Ir.ir.IntermediateRepresentation
+): APIV1Write.WebSocketChannel {
     return {
         auth: channel.auth,
-        environments: [],
         description: channel.docs ?? undefined,
-        id: "Realtime",
-        name: "Realtime Channel",
+        defaultEnvironment:
+            ir.environments?.defaultEnvironment != null ? ir.environments.defaultEnvironment : undefined,
+        environments:
+            ir.environments != null
+                ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
+                : [],
+        id: channel.name.originalName,
+        name: channel.displayName ?? startCase(channel.name.originalName),
         path: {
             pathParameters: channel.pathParameters.map(
                 (pathParameter): APIV1Write.PathParameter => ({
@@ -145,18 +151,29 @@ function convertWebSocketChannel(channel: Ir.websocket.WebSocketChannel): APIV1W
                 name: example.name?.originalName,
                 description: example.docs,
                 path: example.url,
-                pathParameters: example.pathParameters.reduce((pathParameters, irPathParameterExample) => {
-                    pathParameters[irPathParameterExample.name.originalName] = irPathParameterExample.value.jsonExample;
-                    return pathParameters;
-                }, {} as APIV1Write.ExampleWebSocketQueue["pathParameters"]),
-                queryParameters: example.queryParameters.reduce((queryParameters, irQueryParameterExample) => {
-                    queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
-                    return queryParameters;
-                }, {} as APIV1Write.ExampleWebSocketQueue["queryParameters"]),
-                headers: example.headers.reduce((headers, irHeaderExample) => {
-                    headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
-                    return headers;
-                }, {} as APIV1Write.ExampleWebSocketQueue["headers"]),
+                pathParameters: example.pathParameters.reduce<APIV1Write.ExampleWebSocketQueue["pathParameters"]>(
+                    (pathParameters, irPathParameterExample) => {
+                        pathParameters[irPathParameterExample.name.originalName] =
+                            irPathParameterExample.value.jsonExample;
+                        return pathParameters;
+                    },
+                    {}
+                ),
+                queryParameters: example.queryParameters.reduce<APIV1Write.ExampleWebSocketQueue["queryParameters"]>(
+                    (queryParameters, irQueryParameterExample) => {
+                        queryParameters[irQueryParameterExample.name.wireValue] =
+                            irQueryParameterExample.value.jsonExample;
+                        return queryParameters;
+                    },
+                    {}
+                ),
+                headers: example.headers.reduce<APIV1Write.ExampleWebSocketQueue["headers"]>(
+                    (headers, irHeaderExample) => {
+                        headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
+                        return headers;
+                    },
+                    {}
+                ),
                 messages: example.messages.map(
                     (message): APIV1Write.ExampleWebSocketMessage => ({
                         type: message.type,
@@ -222,6 +239,33 @@ function convertIrEnvironments({
         default:
             assertNever(environmentsConfigValue);
     }
+}
+
+function convertIrWebSocketEnvironments({
+    environmentsConfig,
+    channel
+}: {
+    environmentsConfig: Ir.environment.EnvironmentsConfig;
+    channel: Ir.websocket.WebSocketChannel;
+}): APIV1Write.Environment[] {
+    const environmentsConfigValue = environmentsConfig.environments;
+    switch (environmentsConfigValue.type) {
+        case "singleBaseUrl":
+            return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                return {
+                    id: singleBaseUrlEnvironment.id,
+                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss")
+                };
+            });
+        case "multipleBaseUrls":
+            throw new Error(`Multiple base URLs are not supported for WebSocket "${channel.name.originalName}"`);
+        default:
+            assertNever(environmentsConfigValue);
+    }
+}
+
+function replaceProtocol(url: string, protocol: string): string {
+    return url.replace(/^[^:]+/, protocol);
 }
 
 function convertHttpMethod(method: Ir.http.HttpMethod): APIV1Write.HttpMethod {

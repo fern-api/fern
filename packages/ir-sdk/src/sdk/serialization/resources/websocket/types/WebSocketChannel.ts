@@ -11,6 +11,8 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
     FernIr.WebSocketChannel
 > = core.serialization
     .objectWithoutOptionalProperties({
+        name: core.serialization.lazyObject(async () => (await import("../../..")).WebSocketName),
+        displayName: core.serialization.string().optional(),
         path: core.serialization.lazyObject(async () => (await import("../../..")).HttpPath),
         auth: core.serialization.boolean(),
         headers: core.serialization.list(
@@ -33,6 +35,8 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
 
 export declare namespace WebSocketChannel {
     interface Raw extends serializers.Declaration.Raw {
+        name: serializers.WebSocketName.Raw;
+        displayName?: string | null;
         path: serializers.HttpPath.Raw;
         auth: boolean;
         headers: serializers.HttpHeader.Raw[];

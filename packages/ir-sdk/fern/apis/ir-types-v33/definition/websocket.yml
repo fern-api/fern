@@ -9,6 +9,8 @@ types:
   WebSocketChannel:
     extends: commons.Declaration
     properties:
+      name: WebSocketName
+      displayName: optional<string>
       path: http.HttpPath
       auth: boolean
       headers: list<http.HttpHeader>
@@ -18,6 +20,8 @@ types:
         docs: "The messages that can be sent and received on this channel"
         type: list<WebSocketMessage>
       examples: list<ExampleWebSocketSession>
+
+  WebSocketName: commons.Name
 
   WebSocketMessage:
     extends: commons.Declaration

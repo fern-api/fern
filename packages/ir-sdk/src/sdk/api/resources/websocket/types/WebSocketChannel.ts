@@ -5,6 +5,8 @@
 import * as FernIr from "../../..";
 
 export interface WebSocketChannel extends FernIr.Declaration {
+    name: FernIr.WebSocketName;
+    displayName: string | undefined;
     path: FernIr.HttpPath;
     auth: boolean;
     headers: FernIr.HttpHeader[];

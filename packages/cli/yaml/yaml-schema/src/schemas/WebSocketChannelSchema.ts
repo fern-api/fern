@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
-import { ExampleWebSocketMessageQueue } from "./ExampleWebSocketMessageQueue";
+import { ExampleWebSocketSession } from "./ExampleWebSocketSession";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
@@ -14,7 +14,7 @@ export const WebSocketChannelSchema = DeclarationSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), HttpPathParameterSchema)),
     "query-parameters": z.optional(z.record(z.string(), HttpQueryParameterSchema)),
     messages: z.optional(z.record(z.string(), WebSocketChannelMessageSchema)),
-    examples: z.optional(z.array(ExampleWebSocketMessageQueue))
+    examples: z.optional(z.array(ExampleWebSocketSession))
 });
 
 export type WebSocketChannelSchema = z.infer<typeof WebSocketChannelSchema>;

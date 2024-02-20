@@ -23,6 +23,7 @@ import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
 import { constructHttpPath } from "./services/constructHttpPath";
 import {
+    convertHttpHeader,
     convertPathParameters,
     getQueryParameterName,
     resolvePathParameterOrThrow
@@ -63,7 +64,17 @@ export async function convertChannel({
         availability: convertAvailability(channel.availability),
         path: constructHttpPath(channel.path),
         auth: channel.auth,
-        headers: [],
+        // since there's only 1 channel per file, we can use the file name as the channel's name
+        name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),
+        displayName: channel["display-name"],
+        headers:
+            channel.headers != null
+                ? await Promise.all(
+                      Object.entries(channel.headers).map(([headerKey, header]) =>
+                          convertHttpHeader({ headerKey, header, file })
+                      )
+                  )
+                : [],
         docs: channel.docs,
         pathParameters:
             channel["path-parameters"] != null
@@ -436,7 +447,7 @@ function isInlineMessageBody(
     }
 
     return (
-        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema)?.extends != null ||
-        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema)?.properties != null
+        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema).extends != null ||
+        (messageBody as RawSchemas.WebSocketChannelInlinedMessageSchema).properties != null
     );
 }
