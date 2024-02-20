@@ -11,10 +11,12 @@
     "form-data",
     "js-base64",
     "node-fetch",
+    "url-join",
     "qs",
     "@types/node",
     "@types/node-fetch",
-    "@types/qs"
+    "@types/qs",
+    "@types/url-join"
   ],
   "ignore-patterns": ["lib", "lib", "docker/bundle.js"]
 }
