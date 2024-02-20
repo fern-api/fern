@@ -1,4 +1,22 @@
 {
   "type": "vite-app",
-  "private": true
+  "private": true,
+  "rules": {
+    "depcheck": {
+      "ignores": [
+        "@types/jest",
+        "@types/node",
+        "vite",
+        "@types/react",
+        "form-data",
+        "js-base64",
+        "node-fetch",
+        "qs",
+        "@types/node",
+        "@types/node-fetch",
+        "@types/qs"
+      ],
+      "ignore-patterns": ["lib", "docker/bundle.js"]
+    }
+  }
 }

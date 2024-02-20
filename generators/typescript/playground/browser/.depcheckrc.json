@@ -4,6 +4,10 @@
     "@types/node",
     "vite",
     "@types/react",
+    "@types/jest",
+    "@types/node",
+    "vite",
+    "@types/react",
     "form-data",
     "js-base64",
     "node-fetch",
@@ -12,5 +16,5 @@
     "@types/node-fetch",
     "@types/qs"
   ],
-  "ignore-patterns": ["lib"]
+  "ignore-patterns": ["lib", "lib", "docker/bundle.js"]
 }
