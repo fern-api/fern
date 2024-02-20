@@ -1,4 +1,5 @@
-from typing import Optional, Sequence, Tuple
+from math import exp
+from typing import List, Optional, Sequence, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -7,6 +8,7 @@ from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeReques
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
+from fern_python.codegen.module_manager import ModuleExportsLine
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -74,6 +76,10 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
+
+        # Export from root init
+        if custom_config.additional_init_exports is not None:
+            project.add_init_exports(path=(), exports=custom_config.additional_init_exports)
 
         self._pydantic_model_custom_config = custom_config.pydantic_config
 
@@ -344,3 +350,11 @@ pip install --upgrade {project._project_config.package_name}
     ) -> bool:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         return custom_config.flat_layout
+    
+    def get_init_additions(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> List[ModuleExportsLine]:
+        custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        return map(lambda export: ModuleExportsLine(export.from_, export.imports), custom_config.additional_init_exports) if custom_config.additional_init_exports is not None else []

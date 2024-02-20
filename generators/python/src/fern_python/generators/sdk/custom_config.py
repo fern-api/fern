@@ -1,4 +1,5 @@
-from typing import Dict, Literal, Optional, Union
+from typing import Dict, Literal, Optional, Union, List
+from fern_python.codegen.module_manager import ModuleExport
 
 import pydantic
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
@@ -23,6 +24,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
+    additional_init_exports: Optional[List[ModuleExport]] = None
 
     class Config:
         extra = pydantic.Extra.forbid

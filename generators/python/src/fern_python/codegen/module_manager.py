@@ -4,12 +4,18 @@ from dataclasses import dataclass
 from functools import cmp_to_key
 from typing import DefaultDict, List, Optional, Sequence, Set, Tuple
 
+import pydantic
+
 from . import AST
 from .filepath import ExportStrategy, Filepath
 from .writer_impl import WriterImpl
 
 RelativeModulePath = Tuple[str, ...]
 
+
+class ModuleExport(pydantic.BaseModel):
+    from_: str = pydantic.Field(alias="from")
+    imports: List[str]
 
 @dataclass
 class ModuleInfo:
@@ -37,6 +43,10 @@ class ModuleManager:
         self._module_infos = defaultdict(create_empty_module_info)
         self._should_format = should_format
         self._sorted_modules = sorted_modules or []
+
+    def register_additional_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
+        for export in exports:
+            self._module_infos[path].exports[(export.from_,)].update(export.imports)
 
     def register_exports(self, filepath: Filepath, exports: Set[str]) -> None:
         module_being_exported_from: AST.ModulePath = tuple(

@@ -15,6 +15,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ConstructorParameter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
@@ -148,6 +149,9 @@ class RootClientGenerator:
                 )
         return generated_root_client
 
+    def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.")
+
     def _create_class_declaration(
         self,
         *,
@@ -165,6 +169,8 @@ class RootClientGenerator:
             for param in constructor_parameters
         ]
 
+        snippet = SourceFileFactory.create_snippet()
+        snippet.add_arbitrary_code(generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation)
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
@@ -175,6 +181,8 @@ class RootClientGenerator:
                     self._get_write_constructor_body(is_async=is_async, constructor_parameters=constructor_parameters)
                 ),
             ),
+            docstring=AST.Docstring(self._write_root_class_docstring),
+            snippet=snippet.to_str()
         )
 
         if self._package.service is not None:

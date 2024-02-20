@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.1] - 2024-02-20
+
+- Improvement: Python now supports specifying files to auto-export from the root `__init__.py` file, this means you can export custom classes and functions from your package for users to access like so:
+
+  ```python
+  from my_package import custom_function
+  ```
+
+  the configuration for this is:
+
+  ```yaml
+  # generators.yml
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.11.1
+        config:
+          additional_init_exports:
+            - from: file_with_custom_function
+              imports:
+                - custom_function
+  ```
+
+- Chore: Add a docstring for base clients to explain usage.
+
 ## [0.11.0] - 2024-02-19
 
 - Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `File`:

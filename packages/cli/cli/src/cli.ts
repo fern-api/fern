@@ -720,20 +720,32 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
     cli.command(
         "write-overrides",
         "Generate a basic openapi overrides file.",
-        (yargs) =>
+        (yargs) => [
             yargs.option("api", {
                 string: true,
                 description: "Only run the command on the provided API"
             }),
+            yargs.option("include-models", {
+                boolean: true,
+                description:
+                    "When generating the initial overrides, also stub the models (in addition to the endpoints)"
+            }),
+            yargs.option("existing-overrides", {
+                string: true,
+                description: "The existing overrides file to add on to instead of writing a new one."
+            })
+        ],
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern generate-overrides"
             });
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
+                    commandLineApiWorkspace: argv.api as string,
                     defaultToAllApiWorkspaces: true
                 }),
+                includeModels: argv.includeModels as boolean,
+                overridesFilepath: argv.existingOverrides as string,
                 cliContext
             });
         }

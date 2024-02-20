@@ -13,6 +13,17 @@ from .resources.req_with_headers.client import AsyncReqWithHeadersClient, ReqWit
 
 
 class SeedExhaustive:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedExhaustive
+
+    client = SeedExhaustive(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -34,6 +45,17 @@ class SeedExhaustive:
 
 
 class AsyncSeedExhaustive:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedExhaustive
+
+    client = AsyncSeedExhaustive(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
