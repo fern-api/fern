@@ -2,7 +2,9 @@
 
 module SeedTraceClient
   class Playlist
-    # @type [RESERVED_KEYWORD_ENUM]
-    RESERVED_KEYWORD_ENUM = { is: "is", as: "as" }.freeze
+    class ReservedKeywordEnum
+      IS = "is"
+      AS = "as"
+    end
   end
 end

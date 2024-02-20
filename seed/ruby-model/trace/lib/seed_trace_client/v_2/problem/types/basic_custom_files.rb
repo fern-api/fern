@@ -3,7 +3,6 @@
 require_relative "non_void_function_signature"
 require_relative "basic_test_case_template"
 require "json"
-require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
@@ -13,7 +12,7 @@ module SeedTraceClient
 
         # @param method_name [String]
         # @param signature [V2::Problem::NonVoidFunctionSignature]
-        # @param additional_files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+        # @param additional_files [Hash{Commons::Language => Commons::Language}]
         # @param basic_test_case_template [V2::Problem::BasicTestCaseTemplate]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::BasicCustomFiles]
@@ -23,7 +22,7 @@ module SeedTraceClient
           @method_name = method_name
           # @type [V2::Problem::NonVoidFunctionSignature]
           @signature = signature
-          # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+          # @type [Hash{Commons::Language => Commons::Language}]
           @additional_files = additional_files
           # @type [V2::Problem::BasicTestCaseTemplate]
           @basic_test_case_template = basic_test_case_template
@@ -45,10 +44,7 @@ module SeedTraceClient
             signature = parsed_json["signature"].to_json
             signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
           end
-          additional_files = parsed_json["additionalFiles"]&.transform_values do |_k, v|
-            v = v.to_json
-            Commons::LANGUAGE.key(v) || v
-          end
+          additional_files = struct.additionalFiles
           if parsed_json["basicTestCaseTemplate"].nil?
             basic_test_case_template = nil
           else

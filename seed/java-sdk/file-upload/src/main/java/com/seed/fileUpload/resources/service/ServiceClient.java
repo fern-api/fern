@@ -30,11 +30,18 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void post(File file, Optional<File> maybeFile, MyRequest request) {
-        post(file, maybeFile, request, null);
+    public void post(
+            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
+        post(file, fileList, maybeFile, maybeFileList, request, null);
     }
 
-    public void post(File file, Optional<File> maybeFile, MyRequest request, RequestOptions requestOptions) {
+    public void post(
+            File file,
+            File fileList,
+            Optional<File> maybeFile,
+            Optional<File> maybeFileList,
+            MyRequest request,
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -48,11 +55,22 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
+            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            MediaType fileListMediaType = fileListMimeType != null ? MediaType.parse(mimeType) : null;
+            body.addFormDataPart("fileList", fileList.getName(), RequestBody.create(fileListMediaType, fileList));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType = Files.probeContentType(maybeFile.toPath());
                 MediaType maybeFileMediaType = maybeFileMimeType != null ? MediaType.parse(mimeType) : null;
                 body.addFormDataPart(
                         "maybeFile", maybeFile.getName(), RequestBody.create(maybeFileMediaType, maybeFile.get()));
+            }
+            if (maybeFileList.isPresent()) {
+                String maybeFileListMimeType = Files.probeContentType(maybeFileList.toPath());
+                MediaType maybeFileListMediaType = maybeFileListMimeType != null ? MediaType.parse(mimeType) : null;
+                body.addFormDataPart(
+                        "maybeFileList",
+                        maybeFileList.getName(),
+                        RequestBody.create(maybeFileListMediaType, maybeFileList.get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(

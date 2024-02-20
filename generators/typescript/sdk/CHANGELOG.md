@@ -5,9 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.11.5] - 2024-02-15
 
-- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints, it's documentation, code snippet, and parameters.
+- Fix: Previously `core.Stream` would not work in the Browser. Now the generated Fern SDK 
+  includes a polyfill for `ReadableStream` and uses `TextDecoder` instead of `Buffer`. 
+
+- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints, 
+  it's documentation, code snippet, and parameters.
+
+  This feature is currently behind a feature flag called `includeApiReference` and can be used 
+  ```yaml
+  config: 
+    includeApiReference: true
+  ```
 
 ## [0.11.4] - 2024-02-15
 

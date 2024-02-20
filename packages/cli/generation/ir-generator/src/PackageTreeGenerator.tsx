@@ -11,7 +11,7 @@ import {
     TypeDeclaration,
     TypeId,
     WebhookGroupId,
-    WebsocketChannelId
+    WebSocketChannelId
 } from "@fern-api/ir-sdk";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -84,7 +84,7 @@ export class PackageTreeGenerator {
         package_.webhooks = webhookGroupId;
     }
 
-    public addWebsocketChannel(websocketChannelId: WebsocketChannelId, fernFilepath: FernFilepath): void {
+    public addWebSocketChannel(websocketChannelId: WebSocketChannelId, fernFilepath: FernFilepath): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath);
         if (package_.webhooks != null) {
             throw new Error("Found duplicate webhook group for " + websocketChannelId);

@@ -12,7 +12,9 @@ service:
             maybeString: optional<string>
             integer: integer
             file: file
+            fileList: list<file>
             maybeFile: optional<file>
+            maybeFileList: optional<list<file>>
             maybeInteger: optional<integer>
             listOfStrings: list<string>
             setOfStrings: set<string>

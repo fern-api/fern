@@ -3,6 +3,10 @@
 from .api_error import ApiError
 from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
 from .datetime_utils import serialize_datetime
+<<<<<<< HEAD
+=======
+from .file import File, convert_file_dict_to_httpx_tuples
+>>>>>>> 7ef44666d6b7ec8a03df992a4d0522c741b0f67c
 from .jsonable_encoder import jsonable_encoder
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
@@ -11,8 +15,15 @@ __all__ = [
     "ApiError",
     "AsyncClientWrapper",
     "BaseClientWrapper",
+<<<<<<< HEAD
     "RequestOptions",
     "SyncClientWrapper",
+=======
+    "File",
+    "RequestOptions",
+    "SyncClientWrapper",
+    "convert_file_dict_to_httpx_tuples",
+>>>>>>> 7ef44666d6b7ec8a03df992a4d0522c741b0f67c
     "jsonable_encoder",
     "remove_none_from_dict",
     "serialize_datetime",

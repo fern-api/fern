@@ -17,7 +17,7 @@ export function convertPackage(
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
-        websockets: websocket != null ? [convertWebsocketChannel(websocket)] : [],
+        websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
         types: irPackage.types.map((typeId) => typeId),
         subpackages: irPackage.subpackages.map((subpackageId) => subpackageId),
         pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined
@@ -51,12 +51,7 @@ function convertService(
 ): APIV1Write.EndpointDefinition[] {
     return irService.endpoints.map(
         (irEndpoint): APIV1Write.EndpointDefinition => ({
-            availability:
-                irEndpoint.availability != null
-                    ? convertIrAvailability({ availability: irEndpoint.availability })
-                    : irService.availability != null
-                    ? convertIrAvailability({ availability: irService.availability })
-                    : undefined,
+            availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
@@ -83,10 +78,7 @@ function convertService(
                     description: queryParameter.docs ?? undefined,
                     key: queryParameter.name.wireValue,
                     type: convertTypeReference(queryParameter.valueType),
-                    availability:
-                        queryParameter.availability != null
-                            ? convertIrAvailability({ availability: queryParameter.availability })
-                            : undefined
+                    availability: convertIrAvailability(queryParameter.availability)
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
@@ -94,10 +86,7 @@ function convertService(
                     description: header.docs ?? undefined,
                     key: header.name.wireValue,
                     type: convertTypeReference(header.valueType),
-                    availability:
-                        header.availability != null
-                            ? convertIrAvailability({ availability: header.availability })
-                            : undefined
+                    availability: convertIrAvailability(header.availability)
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
@@ -109,14 +98,21 @@ function convertService(
     );
 }
 
-function convertWebsocketChannel(channel: Ir.websocket.WebsocketChannel): APIV1Write.WebSocketDefinition {
-    const publish = Object.values(channel.messages).find((message) => message.origin === "client");
-    const subscribe = Object.values(channel.messages).find((message) => message.origin === "server");
+function convertWebSocketChannel(
+    channel: Ir.websocket.WebSocketChannel,
+    ir: Ir.ir.IntermediateRepresentation
+): APIV1Write.WebSocketChannel {
     return {
-        environments: [],
+        auth: channel.auth,
         description: channel.docs ?? undefined,
-        id: "Realtime",
-        name: "Realtime Channel",
+        defaultEnvironment:
+            ir.environments?.defaultEnvironment != null ? ir.environments.defaultEnvironment : undefined,
+        environments:
+            ir.environments != null
+                ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
+                : [],
+        id: channel.name.originalName,
+        name: channel.displayName ?? startCase(channel.name.originalName),
         path: {
             pathParameters: channel.pathParameters.map(
                 (pathParameter): APIV1Write.PathParameter => ({
@@ -125,8 +121,14 @@ function convertWebsocketChannel(channel: Ir.websocket.WebsocketChannel): APIV1W
                     type: convertTypeReference(pathParameter.valueType)
                 })
             ),
-            parts: [...convertHttpPath(channel.path), ...convertHttpPath(channel.path)]
+            parts: convertHttpPath(channel.path)
         },
+        headers: channel.headers.map(
+            (header): APIV1Write.Header => ({
+                key: header.name.wireValue,
+                type: convertTypeReference(header.valueType)
+            })
+        ),
         queryParameters: channel.queryParameters.map(
             (queryParameter): APIV1Write.QueryParameter => ({
                 description: queryParameter.docs ?? undefined,
@@ -134,35 +136,59 @@ function convertWebsocketChannel(channel: Ir.websocket.WebsocketChannel): APIV1W
                 type: convertTypeReference(queryParameter.valueType)
             })
         ),
-        publish:
-            publish != null
-                ? convertMessageBody(publish.body)
-                : {
-                      type: {
-                          type: "object",
-                          extends: [],
-                          properties: []
-                      }
-                  },
-        subscribe:
-            subscribe != null
-                ? convertMessageBody(subscribe.body)
-                : {
-                      type: {
-                          type: "object",
-                          extends: [],
-                          properties: []
-                      }
-                  },
-        examples: []
+        messages: channel.messages.map(
+            (message): APIV1Write.WebSocketMessage => ({
+                type: message.type,
+                displayName: message.displayName,
+                origin: message.origin,
+                body: convertMessageBody(message.body),
+                description: message.docs,
+                availability: convertIrAvailability(message.availability)
+            })
+        ),
+        examples: channel.examples.map(
+            (example): APIV1Write.ExampleWebSocketQueue => ({
+                name: example.name?.originalName,
+                description: example.docs,
+                path: example.url,
+                pathParameters: example.pathParameters.reduce<APIV1Write.ExampleWebSocketQueue["pathParameters"]>(
+                    (pathParameters, irPathParameterExample) => {
+                        pathParameters[irPathParameterExample.name.originalName] =
+                            irPathParameterExample.value.jsonExample;
+                        return pathParameters;
+                    },
+                    {}
+                ),
+                queryParameters: example.queryParameters.reduce<APIV1Write.ExampleWebSocketQueue["queryParameters"]>(
+                    (queryParameters, irQueryParameterExample) => {
+                        queryParameters[irQueryParameterExample.name.wireValue] =
+                            irQueryParameterExample.value.jsonExample;
+                        return queryParameters;
+                    },
+                    {}
+                ),
+                headers: example.headers.reduce<APIV1Write.ExampleWebSocketQueue["headers"]>(
+                    (headers, irHeaderExample) => {
+                        headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
+                        return headers;
+                    },
+                    {}
+                ),
+                messages: example.messages.map(
+                    (message): APIV1Write.ExampleWebSocketMessage => ({
+                        type: message.type,
+                        body: message.body.jsonExample
+                    })
+                )
+            })
+        )
     };
 }
 
-export function convertIrAvailability({
-    availability
-}: {
-    availability: Ir.Availability;
-}): APIV1Write.Availability | undefined {
+export function convertIrAvailability(availability: Ir.Availability | undefined): APIV1Write.Availability | undefined {
+    if (availability == null) {
+        return undefined;
+    }
     switch (availability.status) {
         case "DEPRECATED":
             return APIV1Write.Availability.Deprecated;
@@ -213,6 +239,33 @@ function convertIrEnvironments({
         default:
             assertNever(environmentsConfigValue);
     }
+}
+
+function convertIrWebSocketEnvironments({
+    environmentsConfig,
+    channel
+}: {
+    environmentsConfig: Ir.environment.EnvironmentsConfig;
+    channel: Ir.websocket.WebSocketChannel;
+}): APIV1Write.Environment[] {
+    const environmentsConfigValue = environmentsConfig.environments;
+    switch (environmentsConfigValue.type) {
+        case "singleBaseUrl":
+            return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                return {
+                    id: singleBaseUrlEnvironment.id,
+                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss")
+                };
+            });
+        case "multipleBaseUrls":
+            throw new Error(`Multiple base URLs are not supported for WebSocket "${channel.name.originalName}"`);
+        default:
+            assertNever(environmentsConfigValue);
+    }
+}
+
+function replaceProtocol(url: string, protocol: string): string {
+    return url.replace(/^[^:]+/, protocol);
 }
 
 function convertHttpMethod(method: Ir.http.HttpMethod): APIV1Write.HttpMethod {
@@ -510,30 +563,26 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): AP
     }
 }
 
-function convertMessageBody(irWebsocketBody: Ir.websocket.WebsocketMessageBody): APIV1Write.WebSocketPayload {
-    switch (irWebsocketBody.type) {
+function convertMessageBody(irWebSocketBody: Ir.websocket.WebSocketMessageBody): APIV1Write.WebSocketMessageBodyShape {
+    switch (irWebSocketBody.type) {
         case "inlinedBody":
             return {
-                type: {
-                    type: "object",
-                    extends: irWebsocketBody.extends.map((extension) => extension.typeId),
-                    properties: irWebsocketBody.properties.map(
-                        (property): APIV1Write.ObjectProperty => ({
-                            description: property.docs ?? undefined,
-                            key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType)
-                        })
-                    )
-                }
+                type: "object",
+                extends: irWebSocketBody.extends.map((extension) => extension.typeId),
+                properties: irWebSocketBody.properties.map(
+                    (property): APIV1Write.ObjectProperty => ({
+                        description: property.docs ?? undefined,
+                        key: property.name.wireValue,
+                        valueType: convertTypeReference(property.valueType)
+                    })
+                )
             };
         case "reference":
             return {
-                type: {
-                    type: "reference",
-                    value: convertTypeReference(irWebsocketBody.bodyType)
-                }
+                type: "reference",
+                value: convertTypeReference(irWebSocketBody.bodyType)
             };
         default:
-            assertNever(irWebsocketBody);
+            assertNever(irWebSocketBody);
     }
 }

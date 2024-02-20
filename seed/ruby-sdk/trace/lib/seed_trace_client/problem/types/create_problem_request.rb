@@ -5,7 +5,6 @@ require_relative "variable_type_and_name"
 require_relative "../../commons/types/variable_type"
 require_relative "../../commons/types/test_case_with_expected_result"
 require "json"
-require_relative "../../commons/types/language"
 
 module SeedTraceClient
   class Problem
@@ -15,7 +14,7 @@ module SeedTraceClient
 
       # @param problem_name [String]
       # @param problem_description [Problem::ProblemDescription]
-      # @param files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+      # @param files [Hash{Commons::Language => Commons::Language}]
       # @param input_params [Array<Problem::VariableTypeAndName>]
       # @param output_type [Commons::VariableType]
       # @param testcases [Array<Commons::TestCaseWithExpectedResult>]
@@ -28,7 +27,7 @@ module SeedTraceClient
         @problem_name = problem_name
         # @type [Problem::ProblemDescription]
         @problem_description = problem_description
-        # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+        # @type [Hash{Commons::Language => Commons::Language}]
         @files = files
         # @type [Array<Problem::VariableTypeAndName>]
         @input_params = input_params
@@ -56,10 +55,7 @@ module SeedTraceClient
           problem_description = parsed_json["problemDescription"].to_json
           problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
         end
-        files = parsed_json["files"]&.transform_values do |_k, v|
-          v = v.to_json
-          Commons::LANGUAGE.key(v) || v
-        end
+        files = struct.files
         input_params = parsed_json["inputParams"]&.map do |v|
           v = v.to_json
           Problem::VariableTypeAndName.from_json(json_object: v)

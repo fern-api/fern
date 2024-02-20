@@ -2,7 +2,9 @@
 
 module SeedObjectsWithImportsClient
   class File
-    # @type [FILE_INFO]
-    FILE_INFO = { regular: "REGULAR", directory: "DIRECTORY" }.freeze
+    class FileInfo
+      REGULAR = "REGULAR"
+      DIRECTORY = "DIRECTORY"
+    end
   end
 end

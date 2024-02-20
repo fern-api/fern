@@ -16,6 +16,8 @@ class CoreUtilities:
     def __init__(self) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
+        # Promotes usage of `from ... import core`
+        self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -62,6 +64,15 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="request_options"),
             ),
             exports={"RequestOptions"},
+        )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="file.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="file"),
+            ),
+            exports={"File", "convert_file_dict_to_httpx_tuples"},
         )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
@@ -190,4 +201,26 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
             ),
+        )
+
+    def get_reference_to_file_types(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("File",),
+            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path_unnamed), named_import="core"),
+        )
+
+    def get_type_hint_of_file_types(self) -> AST.TypeHint:
+        return AST.TypeHint(self.get_reference_to_file_types())
+
+    def httpx_tuple_converter(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=("convert_file_dict_to_httpx_tuples",),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path_unnamed), named_import="core"
+                    ),
+                ),
+                args=[obj],
+            )
         )

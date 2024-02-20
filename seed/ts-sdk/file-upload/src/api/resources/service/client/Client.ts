@@ -25,7 +25,9 @@ export class Service {
 
     public async post(
         file: File | fs.ReadStream,
+        fileList: File | fs.ReadStream,
         maybeFile: File | fs.ReadStream | undefined,
+        maybeFileList: File | fs.ReadStream | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
@@ -36,8 +38,13 @@ export class Service {
 
         _request.append("integer", request.integer.toString());
         _request.append("file", file);
+        _request.append("fileList", fileList);
         if (maybeFile != null) {
             _request.append("maybeFile", maybeFile);
+        }
+
+        if (maybeFileList != null) {
+            _request.append("maybeFileList", maybeFileList);
         }
 
         if (request.maybeInteger != null) {

@@ -27,6 +27,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             "description": undefined,
             "key": "file",
             "schema": {
+              "isArray": false,
               "isOptional": false,
               "type": "file",
             },
@@ -35,6 +36,25 @@ exports[`file-upload file-upload parse open api 1`] = `
             "description": undefined,
             "key": "maybe_file",
             "schema": {
+              "isArray": false,
+              "isOptional": true,
+              "type": "file",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "file_list",
+            "schema": {
+              "isArray": true,
+              "isOptional": false,
+              "type": "file",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "maybe_file_list",
+            "schema": {
+              "isArray": true,
               "isOptional": true,
               "type": "file",
             },
