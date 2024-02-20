@@ -4,14 +4,13 @@ require_relative "types_export"
 require_relative "requests"
 require_relative "seed_literal_client/headers/client"
 require_relative "seed_literal_client/inlined/client"
-require_relative "seed_literal_client/literal/client"
 require_relative "seed_literal_client/path/client"
 require_relative "seed_literal_client/query/client"
 require_relative "seed_literal_client/reference/client"
 
 module SeedLiteralClient
   class Client
-    attr_reader :headers, :inlined, :literal, :path, :query, :reference
+    attr_reader :headers, :inlined, :path, :query, :reference
 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
@@ -23,7 +22,6 @@ module SeedLiteralClient
                                           version: version, audit_logging: audit_logging)
       @headers = HeadersClient.new(request_client: @request_client)
       @inlined = InlinedClient.new(request_client: @request_client)
-      @literal = LiteralClient.new(request_client: @request_client)
       @path = PathClient.new(request_client: @request_client)
       @query = QueryClient.new(request_client: @request_client)
       @reference = ReferenceClient.new(request_client: @request_client)
@@ -31,7 +29,7 @@ module SeedLiteralClient
   end
 
   class AsyncClient
-    attr_reader :headers, :inlined, :literal, :path, :query, :reference
+    attr_reader :headers, :inlined, :path, :query, :reference
 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
@@ -43,7 +41,6 @@ module SeedLiteralClient
                                                      version: version, audit_logging: audit_logging)
       @headers = AsyncHeadersClient.new(request_client: @async_request_client)
       @inlined = AsyncInlinedClient.new(request_client: @async_request_client)
-      @literal = AsyncLiteralClient.new(request_client: @async_request_client)
       @path = AsyncPathClient.new(request_client: @async_request_client)
       @query = AsyncQueryClient.new(request_client: @async_request_client)
       @reference = AsyncReferenceClient.new(request_client: @async_request_client)
