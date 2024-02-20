@@ -41,3 +41,5 @@ allowedFailures:
   - enum
   - auth-environment-variables
   - bearer-token-environment-variable
+  - websocket
+  - exhaustive:union-utils

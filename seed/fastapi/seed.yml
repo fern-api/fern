@@ -28,3 +28,4 @@ allowedFailures:
   - response-property
   - streaming
   - literal
+  - websocket

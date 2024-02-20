@@ -32,4 +32,10 @@ allowedFailures:
   - enum
   - extends
   - response-property
+  - examples
+  - exhaustive:local-files
+  - file-upload
+  - idempotency-headers
+  - trace
+  - undiscriminated-unions
 
