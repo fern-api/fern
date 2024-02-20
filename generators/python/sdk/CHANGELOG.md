@@ -5,10 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.10.4] - 2024-02-19
+## [0.11.0] - 2024-02-19
 
 - Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `File`:
+
   ```python
+  # core/file.py
   FileContent = typing.Union[typing.IO[bytes], bytes, str]
   File = typing.Union[
       # file (or bytes)
@@ -20,8 +22,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       # (filename, file (or bytes), content_type, headers)
       typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str], typing.Mapping[str, str]],
   ]
+
+  ...
+
+  # service.py
+  def post(
+      self,
+      *,
+      file: core.File,
+      request_options: typing.Optional[RequestOptions] = None,
+  ) -> None:
+      """
+      Parameters:
+          - file: core.File. See core.File for more documentation
+          - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+      """
+  ...
+
+  # main.py
+  f = open('report.xls', 'rb')
+  service.post(file=f)
   ```
+
 - Fix: Python now supports API specifications that leverage lists for file upload. Previously, Fern incorrectly made all `list<file>` type requests simply `file`.
+
+  ```python
+  # service.py
+  def post(
+      self,
+      *,
+      file_list: typing.List[core.File],
+      request_options: typing.Optional[RequestOptions] = None,
+  ) -> None:
+      """
+      Parameters:
+          - file_list: typing.List[core.File]. See core.File for more documentation
+          - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+      """
+  ...
+
+  # main.py
+  f1 = open('report.xls', 'rb')
+  f2 = open('page.docx', 'rb')
+  service.post(file_list=[f1, f2])
+  ```
 
 ## [0.10.3] - 2024-02-19
 
