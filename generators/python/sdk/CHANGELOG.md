@@ -42,6 +42,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   # main.py
   f = open('report.xls', 'rb')
   service.post(file=f)
+
+  # Or leveraging a tuple
+  with open('largefile.zip', 'rb') as f:
+    service.post(file=('largefile.zip', f))
+  ...
   ```
 
 - Fix: Python now supports API specifications that leverage lists for file upload. Previously, Fern incorrectly made all `list<file>` type requests simply `file`.
