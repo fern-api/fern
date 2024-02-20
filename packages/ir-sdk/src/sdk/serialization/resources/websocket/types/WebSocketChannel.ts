@@ -22,8 +22,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
         pathParameters: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).PathParameter)
         ),
-        messages: core.serialization.record(
-            core.serialization.lazy(async () => (await import("../../..")).WebSocketMessageId),
+        messages: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).WebSocketMessage)
         ),
         examples: core.serialization.list(
@@ -39,7 +38,7 @@ export declare namespace WebSocketChannel {
         headers: serializers.HttpHeader.Raw[];
         queryParameters: serializers.QueryParameter.Raw[];
         pathParameters: serializers.PathParameter.Raw[];
-        messages: Record<serializers.WebSocketMessageId.Raw, serializers.WebSocketMessage.Raw>;
+        messages: serializers.WebSocketMessage.Raw[];
         examples: serializers.ExampleWebSocketSession.Raw[];
     }
 }

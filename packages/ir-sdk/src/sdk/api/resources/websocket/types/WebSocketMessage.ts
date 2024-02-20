@@ -5,6 +5,7 @@
 import * as FernIr from "../../..";
 
 export interface WebSocketMessage extends FernIr.Declaration {
+    type: FernIr.WebSocketMessageId;
     displayName: string | undefined;
     origin: FernIr.WebSocketMessageOrigin;
     body: FernIr.WebSocketMessageBody;

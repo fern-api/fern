@@ -11,6 +11,7 @@ export const WebSocketMessage: core.serialization.ObjectSchema<
     FernIr.WebSocketMessage
 > = core.serialization
     .objectWithoutOptionalProperties({
+        type: core.serialization.lazy(async () => (await import("../../..")).WebSocketMessageId),
         displayName: core.serialization.string().optional(),
         origin: core.serialization.lazy(async () => (await import("../../..")).WebSocketMessageOrigin),
         body: core.serialization.lazy(async () => (await import("../../..")).WebSocketMessageBody),
@@ -19,6 +20,7 @@ export const WebSocketMessage: core.serialization.ObjectSchema<
 
 export declare namespace WebSocketMessage {
     interface Raw extends serializers.Declaration.Raw {
+        type: serializers.WebSocketMessageId.Raw;
         displayName?: string | null;
         origin: serializers.WebSocketMessageOrigin.Raw;
         body: serializers.WebSocketMessageBody.Raw;

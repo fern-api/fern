@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { DeclarationSchema } from "./DeclarationSchema";
 import { WebSocketChannelMessageBodySchema } from "./WebSocketChannelMessageBodySchema";
-import { WithDocsSchema } from "./WithDocsSchema";
 
-export const WebSocketChannelMessageSchema = WithDocsSchema.extend({
+export const WebSocketChannelMessageSchema = DeclarationSchema.extend({
     origin: z.enum(["client", "server"]),
-    body: WebSocketChannelMessageBodySchema
+    body: WebSocketChannelMessageBodySchema,
+    "display-name": z.string().optional()
 });
 
 export type WebSocketChannelMessageSchema = z.infer<typeof WebSocketChannelMessageSchema>;

@@ -10,8 +10,7 @@ import {
     PathParameterLocation,
     WebSocketChannel,
     WebSocketMessage,
-    WebSocketMessageBody,
-    WebSocketMessageId
+    WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
@@ -49,15 +48,16 @@ export async function convertChannel({
     file: FernFileContext;
     workspace: FernWorkspace;
 }): Promise<WebSocketChannel> {
-    const messages: Record<WebSocketMessageId, WebSocketMessage> = {};
+    const messages: WebSocketMessage[] = [];
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
-        messages[messageId] = {
-            availability: undefined,
+        messages.push({
+            type: messageId,
+            availability: convertAvailability(message.availability),
             docs: message.docs,
             origin: message.origin,
             body: convertMessageSchema({ body: message.body, file }),
-            displayName: undefined
-        };
+            displayName: message["display-name"]
+        });
     }
     return {
         availability: convertAvailability(channel.availability),
@@ -95,7 +95,7 @@ export async function convertChannel({
                       })
                   )
                 : [],
-        messages,
+        messages: Object.values(messages),
         examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {
             const convertedPathParameters = convertChannelPathParameters({
                 channel,

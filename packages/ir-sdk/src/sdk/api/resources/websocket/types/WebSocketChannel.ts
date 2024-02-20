@@ -11,6 +11,6 @@ export interface WebSocketChannel extends FernIr.Declaration {
     queryParameters: FernIr.QueryParameter[];
     pathParameters: FernIr.PathParameter[];
     /** The messages that can be sent and received on this channel */
-    messages: Record<FernIr.WebSocketMessageId, FernIr.WebSocketMessage>;
+    messages: FernIr.WebSocketMessage[];
     examples: FernIr.ExampleWebSocketSession[];
 }
