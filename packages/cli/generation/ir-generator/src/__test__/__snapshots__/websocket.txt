@@ -176,6 +176,7 @@ exports[`generate IR 1`] = `
     "channel_realtime": {
       "auth": true,
       "availability": null,
+      "displayName": null,
       "docs": null,
       "examples": [
         {
@@ -368,6 +369,25 @@ exports[`generate IR 1`] = `
           "type": "receive",
         },
       ],
+      "name": {
+        "camelCase": {
+          "safeName": "realtime",
+          "unsafeName": "realtime",
+        },
+        "originalName": "realtime",
+        "pascalCase": {
+          "safeName": "Realtime",
+          "unsafeName": "Realtime",
+        },
+        "screamingSnakeCase": {
+          "safeName": "REALTIME",
+          "unsafeName": "REALTIME",
+        },
+        "snakeCase": {
+          "safeName": "realtime",
+          "unsafeName": "realtime",
+        },
+      },
       "path": {
         "head": "/realtime/",
         "parts": [
