@@ -9,6 +9,16 @@ from .resources.unknown.client import AsyncUnknownClient, UnknownClient
 
 
 class SeedUnknownAsAny:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedUnknownAsAny
+
+    client = SeedUnknownAsAny(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -19,6 +29,16 @@ class SeedUnknownAsAny:
 
 
 class AsyncSeedUnknownAsAny:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedUnknownAsAny
+
+    client = AsyncSeedUnknownAsAny(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

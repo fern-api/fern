@@ -10,6 +10,18 @@ from .resources.dummy.client import AsyncDummyClient, DummyClient
 
 
 class SeedSingleUrlEnvironmentNoDefault:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedSingleUrlEnvironmentNoDefault
+    from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+    client = SeedSingleUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -28,6 +40,18 @@ class SeedSingleUrlEnvironmentNoDefault:
 
 
 class AsyncSeedSingleUrlEnvironmentNoDefault:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
+    from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+    client = AsyncSeedSingleUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
+    """
+
     def __init__(
         self,
         *,

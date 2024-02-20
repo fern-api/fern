@@ -17,6 +17,17 @@ from .resources.v_2.client import AsyncV2Client, V2Client
 
 
 class SeedTrace:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedTrace
+
+    client = SeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -44,6 +55,17 @@ class SeedTrace:
 
 
 class AsyncSeedTrace:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedTrace
+
+    client = AsyncSeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,
