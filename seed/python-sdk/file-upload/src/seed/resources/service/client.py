@@ -4,6 +4,7 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
+from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
@@ -26,10 +27,10 @@ class ServiceClient:
         *,
         maybe_string: typing.Optional[str] = None,
         integer: int,
-        file: typing.IO,
-        file_list: typing.IO,
-        maybe_file: typing.Optional[typing.IO] = None,
-        maybe_file_list: typing.Optional[typing.IO] = None,
+        file: core.File,
+        file_list: typing.List[core.File],
+        maybe_file: typing.Optional[core.File] = None,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -48,13 +49,13 @@ class ServiceClient:
 
             - integer: int.
 
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
-            - file_list: typing.IO.
+            - file_list: typing.List[core.File]. See core.File for more documentation
 
-            - maybe_file: typing.Optional[typing.IO].
+            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - maybe_file_list: typing.Optional[typing.IO].
+            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
             - maybe_integer: typing.Optional[int].
 
@@ -124,8 +125,10 @@ class ServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict(
-                {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+            files=core.convert_file_dict_to_httpx_tuples(
+                remove_none_from_dict(
+                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -147,10 +150,10 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def just_file(self, *, file: typing.IO, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -166,7 +169,7 @@ class ServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -195,7 +198,7 @@ class ServiceClient:
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        file: typing.IO,
+        file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -210,7 +213,7 @@ class ServiceClient:
 
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -239,7 +242,7 @@ class ServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -270,10 +273,10 @@ class AsyncServiceClient:
         *,
         maybe_string: typing.Optional[str] = None,
         integer: int,
-        file: typing.IO,
-        file_list: typing.IO,
-        maybe_file: typing.Optional[typing.IO] = None,
-        maybe_file_list: typing.Optional[typing.IO] = None,
+        file: core.File,
+        file_list: typing.List[core.File],
+        maybe_file: typing.Optional[core.File] = None,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
         set_of_strings: typing.Set[str],
@@ -292,13 +295,13 @@ class AsyncServiceClient:
 
             - integer: int.
 
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
-            - file_list: typing.IO.
+            - file_list: typing.List[core.File]. See core.File for more documentation
 
-            - maybe_file: typing.Optional[typing.IO].
+            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - maybe_file_list: typing.Optional[typing.IO].
+            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
             - maybe_integer: typing.Optional[int].
 
@@ -368,8 +371,10 @@ class AsyncServiceClient:
                 ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict(
-                {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+            files=core.convert_file_dict_to_httpx_tuples(
+                remove_none_from_dict(
+                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -391,10 +396,10 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def just_file(self, *, file: typing.IO, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -410,7 +415,7 @@ class AsyncServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -439,7 +444,7 @@ class AsyncServiceClient:
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        file: typing.IO,
+        file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -454,7 +459,7 @@ class AsyncServiceClient:
 
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
-            - file: typing.IO.
+            - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -483,7 +488,7 @@ class AsyncServiceClient:
                 **jsonable_encoder(remove_none_from_dict({})),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=remove_none_from_dict({"file": file}),
+            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
