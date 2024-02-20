@@ -9,6 +9,17 @@ from .resources.dummy.client import AsyncDummyClient, DummyClient
 
 
 class SeedNoEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedNoEnvironment
+
+    client = SeedNoEnvironment(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -26,6 +37,17 @@ class SeedNoEnvironment:
 
 
 class AsyncSeedNoEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedNoEnvironment
+
+    client = AsyncSeedNoEnvironment(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

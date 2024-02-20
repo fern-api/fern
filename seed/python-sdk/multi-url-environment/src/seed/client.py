@@ -11,6 +11,16 @@ from .resources.s_3.client import AsyncS3Client, S3Client
 
 
 class SeedMultiUrlEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedMultiUrlEnvironment
+
+    client = SeedMultiUrlEnvironment(
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -29,6 +39,16 @@ class SeedMultiUrlEnvironment:
 
 
 class AsyncSeedMultiUrlEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedMultiUrlEnvironment
+
+    client = AsyncSeedMultiUrlEnvironment(
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,

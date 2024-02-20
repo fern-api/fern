@@ -9,6 +9,17 @@ from .resources.custom_auth.client import AsyncCustomAuthClient, CustomAuthClien
 
 
 class SeedCustomAuth:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedCustomAuth
+
+    client = SeedCustomAuth(
+        custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -26,6 +37,17 @@ class SeedCustomAuth:
 
 
 class AsyncSeedCustomAuth:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedCustomAuth
+
+    client = AsyncSeedCustomAuth(
+        custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

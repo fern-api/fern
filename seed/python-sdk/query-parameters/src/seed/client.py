@@ -9,6 +9,16 @@ from .resources.user.client import AsyncUserClient, UserClient
 
 
 class SeedQueryParameters:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedQueryParameters
+
+    client = SeedQueryParameters(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -19,6 +29,16 @@ class SeedQueryParameters:
 
 
 class AsyncSeedQueryParameters:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedQueryParameters
+
+    client = AsyncSeedQueryParameters(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

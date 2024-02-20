@@ -9,6 +9,18 @@ from .resources.basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
 
 
 class SeedBasicAuth:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedBasicAuth
+
+    client = SeedBasicAuth(
+        username="YOUR_USERNAME",
+        password="YOUR_PASSWORD",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -28,6 +40,18 @@ class SeedBasicAuth:
 
 
 class AsyncSeedBasicAuth:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedBasicAuth
+
+    client = AsyncSeedBasicAuth(
+        username="YOUR_USERNAME",
+        password="YOUR_PASSWORD",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

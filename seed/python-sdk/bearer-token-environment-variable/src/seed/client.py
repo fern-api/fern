@@ -11,6 +11,17 @@ from .resources.service.client import AsyncServiceClient, ServiceClient
 
 
 class SeedBearerTokenEnvironmentVariable:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedBearerTokenEnvironmentVariable
+
+    client = SeedBearerTokenEnvironmentVariable(
+        api_key="YOUR_API_KEY",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -32,6 +43,17 @@ class SeedBearerTokenEnvironmentVariable:
 
 
 class AsyncSeedBearerTokenEnvironmentVariable:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedBearerTokenEnvironmentVariable
+
+    client = AsyncSeedBearerTokenEnvironmentVariable(
+        api_key="YOUR_API_KEY",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

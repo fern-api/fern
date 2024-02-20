@@ -9,6 +9,16 @@ from .resources.service.client import AsyncServiceClient, ServiceClient
 
 
 class SeedApiWideBasePath:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedApiWideBasePath
+
+    client = SeedApiWideBasePath(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -19,6 +29,16 @@ class SeedApiWideBasePath:
 
 
 class AsyncSeedApiWideBasePath:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedApiWideBasePath
+
+    client = AsyncSeedApiWideBasePath(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

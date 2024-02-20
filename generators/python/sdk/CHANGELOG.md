@@ -28,7 +28,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
                 - custom_function
   ```
 
-- Chore: Add a docstring for base clients to explain usage.
+- Chore: Add a docstring for base clients to explain usage, example:
+
+  ```python
+  class SeedTest:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedTest
+
+    client = SeedTest(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+  ```
 
 ## [0.11.0] - 2024-02-19
 

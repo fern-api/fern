@@ -9,6 +9,17 @@ from .resources.payment.client import AsyncPaymentClient, PaymentClient
 
 
 class SeedIdempotencyHeaders:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedIdempotencyHeaders
+
+    client = SeedIdempotencyHeaders(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -26,6 +37,17 @@ class SeedIdempotencyHeaders:
 
 
 class AsyncSeedIdempotencyHeaders:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedIdempotencyHeaders
+
+    client = AsyncSeedIdempotencyHeaders(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

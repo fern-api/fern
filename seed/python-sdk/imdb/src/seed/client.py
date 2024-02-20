@@ -9,6 +9,17 @@ from .resources.imdb.client import AsyncImdbClient, ImdbClient
 
 
 class SeedApi:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedApi
+
+    client = SeedApi(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -26,6 +37,17 @@ class SeedApi:
 
 
 class AsyncSeedApi:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedApi
+
+    client = AsyncSeedApi(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,

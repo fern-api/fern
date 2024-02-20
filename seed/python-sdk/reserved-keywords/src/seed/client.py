@@ -9,6 +9,16 @@ from .resources.package.client import AsyncPackageClient, PackageClient
 
 
 class SeedNurseryApi:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedNurseryApi
+
+    client = SeedNurseryApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -19,6 +29,16 @@ class SeedNurseryApi:
 
 
 class AsyncSeedNurseryApi:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import AsyncSeedNurseryApi
+
+    client = AsyncSeedNurseryApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
