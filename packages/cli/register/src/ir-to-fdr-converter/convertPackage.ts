@@ -121,7 +121,7 @@ function convertWebSocketChannel(
                     type: convertTypeReference(pathParameter.valueType)
                 })
             ),
-            parts: [...convertHttpPath(channel.path), ...convertHttpPath(channel.path)]
+            parts: convertHttpPath(channel.path)
         },
         headers: channel.headers.map(
             (header): APIV1Write.Header => ({

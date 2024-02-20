@@ -265,8 +265,7 @@ function convertExampleWebSocketMessageBody({
     }
 
     return ExampleWebSocketMessageBody.inlinedBody({
-        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
-            .resolvedExample,
+        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example, file }).resolvedExample,
         properties: exampleProperties
     });
 }

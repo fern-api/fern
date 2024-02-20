@@ -201,7 +201,9 @@ exports[`generate IR 1`] = `
             },
             {
               "body": {
-                "jsonExample": undefined,
+                "jsonExample": {
+                  "text": "The weather for today...",
+                },
                 "properties": [
                   {
                     "name": {
