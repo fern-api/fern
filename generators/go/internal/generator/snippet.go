@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -249,6 +250,9 @@ func (s *SnippetWriter) getSnippetForContainer(
 		if exampleContainer.Optional == nil {
 			return nil
 		}
+		if primitive := exampleContainer.Optional.Shape.Primitive; primitive != nil {
+			return s.getSnippetForOptionalPrimitive(primitive)
+		}
 		return s.GetSnippetForExampleTypeReference(exampleContainer.Optional)
 	case "map":
 		return s.getSnippetForMap(exampleContainer.Map)
@@ -259,11 +263,15 @@ func (s *SnippetWriter) getSnippetForContainer(
 func (s *SnippetWriter) getSnippetForListOrSet(
 	exampleTypeReferences []*ir.ExampleTypeReference,
 ) ast.Expr {
+	index := -1
 	var expressions []ast.Expr
-	for _, exampleTypeReference := range exampleTypeReferences {
+	for i, exampleTypeReference := range exampleTypeReferences {
 		expr := s.GetSnippetForExampleTypeReference(exampleTypeReference)
 		if expr == nil {
 			continue
+		}
+		if index == -1 {
+			index = i
 		}
 		expressions = append(expressions, expr)
 	}
@@ -271,6 +279,13 @@ func (s *SnippetWriter) getSnippetForListOrSet(
 		return nil
 	}
 	return &ast.ArrayLit{
+		Type: &ast.ArrayType{
+			Expr: exampleTypeReferenceShapeToGoType(
+				exampleTypeReferences[index].Shape,
+				s.types,
+				s.baseImportPath,
+			),
+		},
 		Values: expressions,
 	}
 }
@@ -297,7 +312,20 @@ func (s *SnippetWriter) getSnippetForMap(
 	if len(keys) == 0 {
 		return nil
 	}
+
+	visitor := &exampleContainerVisitor{
+		baseImportPath: s.baseImportPath,
+		types:          s.types,
+	}
+	_ = visitor.VisitMap(exampleKeyValuePairs)
+	mapType, ok := visitor.value.(*ast.MapType)
+	if !ok {
+		// This should be unreachable.
+		return nil
+	}
+
 	return &ast.MapLit{
+		Type:   mapType,
 		Keys:   keys,
 		Values: values,
 	}
@@ -306,12 +334,32 @@ func (s *SnippetWriter) getSnippetForMap(
 func (s *SnippetWriter) getSnippetForUnknown(
 	unknownExample interface{},
 ) ast.Expr {
-	// TODO: Add better support for unknown examples.
-	//
-	// nil is still a valid value, but it's
-	// not the example provided by the user.
+	// Serialize the unknown as a JSON object, and simply
+	// specify the object literal in-line.
+	bytes, err := json.Marshal(unknownExample)
+	if err != nil {
+		// If we fail to serialize as JSON, we can still use 'nil'
+		// as a valid example.
+		return &ast.BasicLit{
+			Value: "nil",
+		}
+	}
 	return &ast.BasicLit{
-		Value: "nil",
+		Value: fmt.Sprintf("%q", string(bytes)),
+	}
+}
+
+func (s *SnippetWriter) getSnippetForOptionalPrimitive(
+	examplePrimitive *ir.ExamplePrimitive,
+) ast.Expr {
+	return &ast.CallExpr{
+		FunctionName: &ast.ImportedReference{
+			Name:       examplePrimitiveToPointerConstructorName(examplePrimitive),
+			ImportPath: s.baseImportPath,
+		},
+		Parameters: []ast.Expr{
+			s.getSnippetForPrimitive(examplePrimitive),
+		},
 	}
 }
 
@@ -330,7 +378,7 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 	case "string":
 		value := fmt.Sprintf("%q", exampleTypeReference.String.Original)
 		if strings.Contains(exampleTypeReference.String.Original, `"`) {
-			value = fmt.Sprintf("`%s`", exampleTypeReference.String)
+			value = fmt.Sprintf("`%s`", exampleTypeReference.String.Original)
 		}
 		return &ast.BasicLit{
 			Value: value,
@@ -344,16 +392,40 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 			Value: strconv.FormatInt(exampleTypeReference.Long, 64),
 		}
 	case "datetime":
-		return &ast.BasicLit{
-			Value: fmt.Sprintf("%q", exampleTypeReference.Datetime.Format(time.RFC3339)),
+		return &ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "MustParseDateTime",
+				ImportPath: s.baseImportPath,
+			},
+			Parameters: []ast.Expr{
+				&ast.BasicLit{
+					Value: fmt.Sprintf("%q", exampleTypeReference.Datetime.Format(time.RFC3339)),
+				},
+			},
 		}
 	case "date":
-		return &ast.BasicLit{
-			Value: fmt.Sprintf("%q", exampleTypeReference.Date.Format("2006-01-02")),
+		return &ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "MustParseDate",
+				ImportPath: s.baseImportPath,
+			},
+			Parameters: []ast.Expr{
+				&ast.BasicLit{
+					Value: fmt.Sprintf("%q", exampleTypeReference.Date.Format("2006-01-02")),
+				},
+			},
 		}
 	case "uuid":
-		return &ast.BasicLit{
-			Value: fmt.Sprintf("%q", exampleTypeReference.Uuid.String()),
+		return &ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "MustParse",
+				ImportPath: "github.com/google/uuid",
+			},
+			Parameters: []ast.Expr{
+				&ast.BasicLit{
+					Value: fmt.Sprintf("%q", exampleTypeReference.Uuid.String()),
+				},
+			},
 		}
 	}
 	return nil
@@ -438,12 +510,216 @@ func (s *SnippetWriter) declaredTypeNameToImportedReference(
 	}
 }
 
+func examplePrimitiveToPointerConstructorName(
+	examplePrimitive *ir.ExamplePrimitive,
+) string {
+	switch examplePrimitive.Type {
+	case "integer":
+		return "Int"
+	case "double":
+		return "Float64"
+	case "string":
+		return "String"
+	case "boolean":
+		return "Bool"
+	case "long":
+		return "Int64"
+	case "datetime":
+		return "Time"
+	case "date":
+		return "Time"
+	case "uuid":
+		return "UUID"
+	}
+	return "Unknown"
+}
+
 func isTypeReferenceLiteral(typeReference *ir.TypeReference) bool {
 	if typeReference.Container != nil {
 		if typeReference.Container.Optional != nil {
-			return isTypeReferenceLiteral(typeReference)
+			return isTypeReferenceLiteral(typeReference.Container.Optional)
 		}
 		return typeReference.Container.Literal != nil
 	}
 	return false
+}
+
+// typeReferenceVisitor retrieves the string representation of type references
+// (e.g. containers, primitives, etc).
+type exampleTypeReferenceShapeVisitor struct {
+	value ast.Expr
+
+	baseImportPath string
+	types          map[ir.TypeId]*ir.TypeDeclaration
+}
+
+// exampleTypeReferenceToGoType maps the given type reference into its Go-equivalent.
+func exampleTypeReferenceShapeToGoType(
+	exampleTypeReferenceShape *ir.ExampleTypeReferenceShape,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	baseImportPath string,
+) ast.Expr {
+	visitor := &exampleTypeReferenceShapeVisitor{
+		baseImportPath: baseImportPath,
+		types:          types,
+	}
+	_ = exampleTypeReferenceShape.Accept(visitor)
+	return visitor.value
+}
+
+// Compile-time assertion.
+var _ ir.ExampleTypeReferenceShapeVisitor = (*exampleTypeReferenceShapeVisitor)(nil)
+
+func (e *exampleTypeReferenceShapeVisitor) VisitContainer(container *ir.ExampleContainer) error {
+	e.value = exampleContainerTypeToGoType(
+		container,
+		e.types,
+		e.baseImportPath,
+	)
+	return nil
+}
+
+func (e *exampleTypeReferenceShapeVisitor) VisitNamed(named *ir.ExampleNamedType) error {
+	e.value = &ast.ImportedReference{
+		Name:       named.TypeName.Name.PascalCase.UnsafeName,
+		ImportPath: fernFilepathToImportPath(e.baseImportPath, named.TypeName.FernFilepath),
+	}
+	if isPointer(e.types[named.TypeName.TypeId]) {
+		e.value = &ast.Optional{
+			Expr: e.value,
+		}
+	}
+	return nil
+}
+
+func (e *exampleTypeReferenceShapeVisitor) VisitPrimitive(primitive *ir.ExamplePrimitive) error {
+	var primitiveType ir.PrimitiveType
+	switch primitive.Type {
+	case "integer":
+		primitiveType = ir.PrimitiveTypeInteger
+	case "double":
+		primitiveType = ir.PrimitiveTypeDouble
+	case "string":
+		primitiveType = ir.PrimitiveTypeString
+	case "boolean":
+		primitiveType = ir.PrimitiveTypeBoolean
+	case "long":
+		primitiveType = ir.PrimitiveTypeLong
+	case "datetime":
+		primitiveType = ir.PrimitiveTypeDateTime
+	case "date":
+		primitiveType = ir.PrimitiveTypeDate
+	case "uuid":
+		primitiveType = ir.PrimitiveTypeUuid
+	}
+	e.value = &ast.BasicLit{
+		Value: primitiveToGoType(primitiveType),
+	}
+	return nil
+}
+
+func (e *exampleTypeReferenceShapeVisitor) VisitUnknown(unknown any) error {
+	e.value = &ast.BasicLit{
+		Value: unknownToGoType(unknown),
+	}
+	return nil
+}
+
+type exampleContainerVisitor struct {
+	value ast.Expr
+
+	baseImportPath string
+	types          map[ir.TypeId]*ir.TypeDeclaration
+}
+
+func exampleContainerTypeToGoType(
+	exampleContainer *ir.ExampleContainer,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	baseImportPath string,
+) ast.Expr {
+	visitor := &exampleContainerVisitor{
+		baseImportPath: baseImportPath,
+		types:          types,
+	}
+	_ = exampleContainer.Accept(visitor)
+	return visitor.value
+}
+
+// Compile-time assertion.
+var _ ir.ExampleContainerVisitor = (*exampleContainerVisitor)(nil)
+
+func (e *exampleContainerVisitor) VisitList(list []*ir.ExampleTypeReference) error {
+	if len(list) == 0 {
+		// The example doesn't have enough information on its own.
+		e.value = &ast.ArrayType{
+			Expr: &ast.LocalReference{
+				Name: "interface{}",
+			},
+		}
+		return nil
+	}
+	e.value = exampleTypeReferenceShapeToGoType(
+		list[0].Shape,
+		e.types,
+		e.baseImportPath,
+	)
+	return nil
+}
+
+func (e *exampleContainerVisitor) VisitSet(set []*ir.ExampleTypeReference) error {
+	if len(set) == 0 {
+		// The example doesn't have enough information on its own.
+		e.value = &ast.ArrayType{
+			Expr: &ast.LocalReference{
+				Name: "interface{}",
+			},
+		}
+		return nil
+	}
+	e.value = exampleTypeReferenceShapeToGoType(
+		set[0].Shape,
+		e.types,
+		e.baseImportPath,
+	)
+	return nil
+}
+
+func (e *exampleContainerVisitor) VisitMap(pairs []*ir.ExampleKeyValuePair) error {
+	if len(pairs) == 0 {
+		// The example doesn't have enough information on its own.
+		e.value = &ast.MapType{
+			Key: &ast.LocalReference{
+				Name: "string",
+			},
+			Value: &ast.LocalReference{
+				Name: "interface{}",
+			},
+		}
+		return nil
+	}
+	pair := pairs[0]
+	e.value = &ast.MapType{
+		Key: exampleTypeReferenceShapeToGoType(
+			pair.Key.Shape,
+			e.types,
+			e.baseImportPath,
+		),
+		Value: exampleTypeReferenceShapeToGoType(
+			pair.Value.Shape,
+			e.types,
+			e.baseImportPath,
+		),
+	}
+	return nil
+}
+
+func (e *exampleContainerVisitor) VisitOptional(optional *ir.ExampleTypeReference) error {
+	e.value = &ast.Optional{
+		Expr: exampleTypeReferenceShapeToGoType(
+			optional.Shape,
+			e.types,
+			e.baseImportPath,
+		),
+	}
+	return nil
 }

@@ -99,17 +99,6 @@ func (c *CallExpr) WriteTo(w *Writer) {
 		return
 	}
 
-	// TODO: Consider changing this.
-	if len(c.Parameters) == 1 {
-		// A single parameter can be written in one line, e.g. acme.Call("one")
-		w.Write("(")
-		for _, param := range c.Parameters {
-			w.WriteExpr(param)
-		}
-		w.Write(")")
-		return
-	}
-
 	w.WriteLine("(")
 	for _, param := range c.Parameters {
 		w.WriteExpr(param)
@@ -124,6 +113,48 @@ type Reference interface {
 	Expr
 
 	isReference()
+}
+
+// MapType is a simple map type AST node, which does not include the
+// map's values.
+type MapType struct {
+	Key   Expr
+	Value Expr
+}
+
+func NewMapType(key Reference, value Reference) *MapType {
+	return &MapType{
+		Key:   key,
+		Value: value,
+	}
+}
+
+func (m *MapType) isExpr() {}
+
+func (m *MapType) WriteTo(w *Writer) {
+	w.Write("map[")
+	w.WriteExpr(m.Key)
+	w.Write("]")
+	w.WriteExpr(m.Value)
+}
+
+// ArrayType is a simple array type AST node, which does not include the
+// array's values.
+type ArrayType struct {
+	Expr Expr
+}
+
+func NewArrayType(expr Expr) *ArrayType {
+	return &ArrayType{
+		Expr: expr,
+	}
+}
+
+func (a *ArrayType) isExpr() {}
+
+func (a *ArrayType) WriteTo(w *Writer) {
+	w.Write("[]")
+	w.WriteExpr(a.Expr)
 }
 
 // ImportedReference is a named language entity imported from another package,
@@ -168,6 +199,24 @@ func (l *LocalReference) isReference() {}
 
 func (l LocalReference) WriteTo(w *Writer) {
 	w.Write(l.Name)
+}
+
+// Optional is an optional type, such that it needs a pointer in its declaration.
+type Optional struct {
+	Expr Expr
+}
+
+func NewOptional(expr Expr) *Optional {
+	return &Optional{
+		Expr: expr,
+	}
+}
+
+func (o *Optional) isExpr() {}
+
+func (o *Optional) WriteTo(w *Writer) {
+	w.Write("*")
+	w.WriteExpr(o.Expr)
 }
 
 // Field is an individual struct field.
@@ -218,34 +267,41 @@ func (s *StructType) WriteTo(w *Writer) {
 }
 
 type ArrayLit struct {
+	Type   *ArrayType
 	Values []Expr
 }
 
 func (a *ArrayLit) isExpr() {}
 
 func (a *ArrayLit) WriteTo(w *Writer) {
-	w.WriteLine("[")
+	if len(a.Values) == 0 {
+		w.Write("nil")
+		return
+	}
+
+	w.WriteExpr(a.Type)
+	w.WriteLine("{")
 	for _, value := range a.Values {
 		w.WriteExpr(value)
 		w.WriteLine(",")
 	}
-	w.Write("]")
+	w.Write("}")
 }
 
 type MapLit struct {
-	KeyType   Expr
-	ValueType Expr
-	Keys      []Expr
-	Values    []Expr
+	Type   *MapType
+	Keys   []Expr
+	Values []Expr
 }
 
 func (m *MapLit) isExpr() {}
 
 func (m *MapLit) WriteTo(w *Writer) {
-	w.Write("map[")
-	w.WriteExpr(m.KeyType)
-	w.Write("]")
-	w.WriteExpr(m.ValueType)
+	if len(m.Keys) == 0 {
+		w.Write("nil")
+		return
+	}
+	w.WriteExpr(m.Type)
 	w.WriteLine("{")
 	for i, key := range m.Keys {
 		w.WriteExpr(key)

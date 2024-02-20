@@ -375,7 +375,7 @@ async function testWithWriteToDisk({
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
-                ["exec", script.containerId, "/bin/bash", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
+                ["exec", script.containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
                 {
                     doNotPipeOutput: true,
                     reject: false
