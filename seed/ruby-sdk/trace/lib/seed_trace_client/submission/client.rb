@@ -19,7 +19,7 @@ module SeedTraceClient
 
     # Returns sessionId and execution server URL for session. Spins up server.
     #
-    # @param language [LANGUAGE]
+    # @param language [Commons::Language]
     # @param request_options [RequestOptions]
     # @return [Submission::ExecutionSessionResponse]
     def create_execution_session(language:, request_options: nil)
@@ -86,7 +86,7 @@ module SeedTraceClient
 
     # Returns sessionId and execution server URL for session. Spins up server.
     #
-    # @param language [LANGUAGE]
+    # @param language [Commons::Language]
     # @param request_options [RequestOptions]
     # @return [Submission::ExecutionSessionResponse]
     def create_execution_session(language:, request_options: nil)

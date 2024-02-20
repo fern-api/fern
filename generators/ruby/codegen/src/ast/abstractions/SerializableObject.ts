@@ -3,7 +3,6 @@ import {
     ArrayReference,
     ClassReference,
     DateReference,
-    EnumReference,
     GenericClassReference,
     HashInstance,
     HashReference,
@@ -178,9 +177,6 @@ export class SerializableObject extends Class_ {
                 onObject: new HashInstance({
                     contents: new Map(
                         properties?.map((prop) => {
-                            if (prop.type[0] instanceof EnumReference) {
-                                return [`"${prop.wireValue ?? prop.name}"`, prop.type[0].toJson(prop.toVariable())];
-                            }
                             // TODO: confirm enums are the only special case here
                             return [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()];
                         })

@@ -431,45 +431,15 @@ export class HashInstance extends AstNode {
     }
 }
 
-export declare namespace Enum {
-    export interface ReferenceInit extends ClassReference.Init {
+export declare namespace EnumReference {
+    export interface Init extends ClassReference.Init {
         name: string;
     }
-    export interface InstanceInit extends ClassReference.Init {
-        contents: Map<string, string>;
-    }
 }
 
-// TODO: allow for per-enum documentation
-export class Enum extends HashInstance {
-    constructor({ contents, documentation }: Enum.InstanceInit) {
-        super({ contents, isFrozen: true, documentation });
-    }
-}
-
-export class EnumReference extends HashReference {
-    constructor({ name, ...rest }: Enum.ReferenceInit) {
-        super({ name, ...rest, typeHint: name, keyType: "String", valueType: "String" });
-    }
-
-    public fromJson(variable: Variable | string): AstNode | undefined {
-        return new Expression({
-            leftSide: new FunctionInvocation({
-                baseFunction: new Function_({ name: "key", functionBody: [] }),
-                onObject: this,
-                arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
-            }),
-            rightSide: variable,
-            operation: "||"
-        });
-    }
-
-    public toJson(variable: Variable | string): AstNode {
-        return new Expression({
-            leftSide: `${this.qualifiedName}[${variable instanceof AstNode ? variable.write({}) : variable}]`,
-            rightSide: variable,
-            operation: "||"
-        });
+export class EnumReference extends ClassReference {
+    constructor({ name, ...rest }: ClassReference.Init) {
+        super({ name, ...rest });
     }
 
     static fromDeclaredTypeName(
@@ -479,7 +449,7 @@ export class EnumReference extends HashReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new EnumReference({
-            name: declaredTypeName.name.screamingSnakeCase.safeName,
+            name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs
         });

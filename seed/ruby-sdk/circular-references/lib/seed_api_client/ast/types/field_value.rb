@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "primitive_value"
 require_relative "object_value"
 require_relative "container_value"
+require_relative "primitive_value"
 
 module SeedApiClient
   class Ast
@@ -30,13 +30,13 @@ module SeedApiClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "primitive_value"
-                   Ast::PRIMITIVE_VALUE.key(json_object.value) || json_object.value
+                   json_object.value
                  when "object_value"
                    Ast::ObjectValue.from_json(json_object: json_object)
                  when "container_value"
                    Ast::ContainerValue.from_json(json_object: json_object.value)
                  else
-                   Ast::PRIMITIVE_VALUE.key(json_object) || json_object
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -65,7 +65,7 @@ module SeedApiClient
       def self.validate_raw(obj:)
         case obj.type
         when "primitive_value"
-          obj.is_a?(Ast::PRIMITIVE_VALUE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(Ast::PrimitiveValue) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "object_value"
           Ast::ObjectValue.validate_raw(obj: obj)
         when "container_value"
@@ -83,7 +83,7 @@ module SeedApiClient
         @member.is_a?(obj)
       end
 
-      # @param member [PRIMITIVE_VALUE]
+      # @param member [Ast::PrimitiveValue]
       # @return [Ast::FieldValue]
       def self.primitive_value(member:)
         new(member: member, discriminant: "primitive_value")

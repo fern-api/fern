@@ -160,7 +160,11 @@ export class TypesGenerator {
         enumTypeDeclaration: EnumTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
-        const enumExpression = generateEnumDefinitionFromTypeDeclaration(enumTypeDeclaration, typeDeclaration);
+        const enumExpression = generateEnumDefinitionFromTypeDeclaration(
+            this.classReferenceFactory,
+            enumTypeDeclaration,
+            typeDeclaration
+        );
         const rootNode = Module_.wrapInModules(this.clientName, enumExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
