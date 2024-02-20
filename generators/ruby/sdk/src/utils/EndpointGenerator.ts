@@ -34,6 +34,7 @@ import {
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { FileUploadUtility } from "./FileUploadUtility";
+import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
@@ -54,7 +55,7 @@ export class EndpointGenerator {
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
-        requestOptions: RequestOptions,
+        requestOptions: RequestOptions | IdempotencyRequestOptions,
         crf: ClassReferenceFactory,
         generatedClasses: Map<TypeId, Class_>,
         fileUploadUtility: FileUploadUtility
@@ -205,25 +206,38 @@ export class EndpointGenerator {
         return params;
     }
 
-    public getFaradayHeaders(): Expression {
+    public getFaradayHeaders(): AstNode[] {
+        const headerArg = `${this.blockArg}.headers`;
         const additionalHeadersProperty = this.requestOptions.getAdditionalHeaderProperties(
             this.requestOptionsVariable
         );
-        return new Expression({
-            leftSide: `${this.blockArg}.headers`,
-            rightSide: new HashInstance({
-                contents: new Map(
-                    this.headersAsProperties.map((header) => [
-                        `"${header.wireValue}"`,
-                        header.toVariable(VariableType.LOCAL)
-                    ])
-                ),
-                // Expand the existing headers hash, then the additionalheaders params
-                additionalHashes: [{ value: "req.headers" }, { value: additionalHeadersProperty, defaultValue: "{}" }],
-                shouldCompact: true
-            }),
-            isAssignment: true
-        });
+        const idempotencyHeaders = [];
+        if (this.requestOptions instanceof IdempotencyRequestOptions) {
+            idempotencyHeaders.push(
+                ...this.requestOptions.getIdempotencyHeadersProperties(this.requestOptionsVariable, headerArg)
+            );
+        }
+        return [
+            ...idempotencyHeaders,
+            new Expression({
+                leftSide: headerArg,
+                rightSide: new HashInstance({
+                    contents: new Map(
+                        this.headersAsProperties.map((header) => [
+                            `"${header.wireValue}"`,
+                            header.toVariable(VariableType.LOCAL)
+                        ])
+                    ),
+                    // Expand the existing headers hash, then the additionalheaders params
+                    additionalHashes: [
+                        { value: "req.headers" },
+                        { value: additionalHeadersProperty, defaultValue: "{}" }
+                    ],
+                    shouldCompact: true
+                }),
+                isAssignment: true
+            })
+        ];
     }
 
     public getFaradayParameters(): Expression | undefined {
@@ -390,7 +404,7 @@ export class EndpointGenerator {
                         }
                     })
             ),
-            this.getFaradayHeaders()
+            ...this.getFaradayHeaders()
         ];
 
         if (this.isStreamingResponse() && this.streamProcessingBlock !== undefined) {

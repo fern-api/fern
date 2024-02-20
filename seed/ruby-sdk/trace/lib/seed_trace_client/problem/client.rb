@@ -27,7 +27,7 @@ module SeedTraceClient
     #   * :problem_name (String)
     #   * :problem_description (Hash)
     #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::LANGUAGE => Commons::LANGUAGE})
+    #   * :files (Hash{Commons::Language => Commons::Language})
     #   * :input_params (Array<Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
     #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
@@ -52,7 +52,7 @@ module SeedTraceClient
     #   * :problem_name (String)
     #   * :problem_description (Hash)
     #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::LANGUAGE => Commons::LANGUAGE})
+    #   * :files (Hash{Commons::Language => Commons::Language})
     #   * :input_params (Array<Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
     #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
@@ -89,7 +89,7 @@ module SeedTraceClient
     # @param input_params [Array<Hash>] Request of type Array<Problem::VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [Hash] Request of type Commons::VariableType, as a Hash
+    # @param output_type [Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #   The method name cannot include the following characters:
     #   - Greater Than `>`
@@ -131,7 +131,7 @@ module SeedTraceClient
     #   * :problem_name (String)
     #   * :problem_description (Hash)
     #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::LANGUAGE => Commons::LANGUAGE})
+    #   * :files (Hash{Commons::Language => Commons::Language})
     #   * :input_params (Array<Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
     #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
@@ -158,7 +158,7 @@ module SeedTraceClient
     #   * :problem_name (String)
     #   * :problem_description (Hash)
     #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::LANGUAGE => Commons::LANGUAGE})
+    #   * :files (Hash{Commons::Language => Commons::Language})
     #   * :input_params (Array<Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
     #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
@@ -199,7 +199,7 @@ module SeedTraceClient
     # @param input_params [Array<Hash>] Request of type Array<Problem::VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [Hash] Request of type Commons::VariableType, as a Hash
+    # @param output_type [Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #   The method name cannot include the following characters:
     #   - Greater Than `>`

@@ -93,4 +93,33 @@ module SeedTraceClient
       @timeout_in_seconds = timeout_in_seconds
     end
   end
+
+  # Additional options for request-specific configuration when calling APIs via the SDK.
+  class IdempotencyRequestOptions
+    attr_reader :token, :x_random_header, :additional_headers, :additional_query_parameters,
+                :additional_body_parameters, :timeout_in_seconds
+
+    # @param token [String]
+    # @param x_random_header [String]
+    # @param additional_headers [Hash{String => Object}]
+    # @param additional_query_parameters [Hash{String => Object}]
+    # @param additional_body_parameters [Hash{String => Object}]
+    # @param timeout_in_seconds [Long]
+    # @return [IdempotencyRequestOptions]
+    def initialize(token: nil, x_random_header: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @token = token
+      # @type [String]
+      @x_random_header = x_random_header
+      # @type [Hash{String => Object}]
+      @additional_headers = additional_headers
+      # @type [Hash{String => Object}]
+      @additional_query_parameters = additional_query_parameters
+      # @type [Hash{String => Object}]
+      @additional_body_parameters = additional_body_parameters
+      # @type [Long]
+      @timeout_in_seconds = timeout_in_seconds
+    end
+  end
 end

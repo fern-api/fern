@@ -30,10 +30,10 @@ module SeedFileUploadClient
     # @param set_of_strings [Set<String>]
     # @param optional_list_of_strings [Array<String>]
     # @param optional_set_of_strings [Set<String>]
-    # @param maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param optional_maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
-    # @param optional_maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
+    # @param maybe_list [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param optional_maybe_list [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param maybe_list_or_set [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
+    # @param optional_maybe_list_or_set [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param list_of_objects [Array<Hash>] Request of type Array<Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [RequestOptions]
@@ -129,10 +129,10 @@ module SeedFileUploadClient
     # @param set_of_strings [Set<String>]
     # @param optional_list_of_strings [Array<String>]
     # @param optional_set_of_strings [Set<String>]
-    # @param maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param optional_maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
-    # @param optional_maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
+    # @param maybe_list [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param optional_maybe_list [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param maybe_list_or_set [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
+    # @param optional_maybe_list_or_set [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param list_of_objects [Array<Hash>] Request of type Array<Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [RequestOptions]

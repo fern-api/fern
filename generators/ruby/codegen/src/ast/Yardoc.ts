@@ -1,5 +1,10 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
-import { ArrayReference, ClassReference, ClassReferenceFactory } from "./classes/ClassReference";
+import {
+    ArrayReference,
+    ClassReference,
+    ClassReferenceFactory,
+    DiscriminatedUnionClassReference
+} from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Parameter } from "./Parameter";
 import { Property } from "./Property";
@@ -57,7 +62,7 @@ export class Yardoc extends AstNode {
                 const classReference = classFactory.fromTypeReference(prop.valueType);
                 this.writeHashContents(
                     prop.name.name.snakeCase.safeName,
-                    classReference.typeHint,
+                    this.getTypeHint(classReference),
                     classReference.resolvedTypeId,
                     startingTabSpaces,
                     nestedLayer + 1
@@ -81,8 +86,12 @@ export class Yardoc extends AstNode {
     }
 
     private writeParameterAsHash(parameter: Parameter, startingTabSpaces: number): void {
-        // TODO: handle multitype better with hashes
-        if (parameter.type.length > 1) {
+        if (
+            parameter.type.length > 1 ||
+            parameter.type[0] instanceof DiscriminatedUnionClassReference ||
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            (parameter.type.length === 1 && this.isUnion(parameter.type[0]!))
+        ) {
             return this.writeParameterAsClass(parameter, startingTabSpaces);
         }
 
@@ -106,13 +115,13 @@ export class Yardoc extends AstNode {
             });
             this.writeMultilineYardocComment(
                 parameter.documentation,
-                `Request of type ${parameter.type.map((param) => param.typeHint).join(", ")}, as a Hash`
+                `Request of type ${parameter.type.map((param) => this.getTypeHint(param)).join(", ")}, as a Hash`
             );
             properties.forEach((prop) => {
                 const classReference = classFactory.fromTypeReference(prop.valueType);
                 this.writeHashContents(
                     prop.name.name.snakeCase.safeName,
-                    classReference.typeHint,
+                    this.getTypeHint(classReference),
                     classReference.resolvedTypeId,
                     startingTabSpaces,
                     0
@@ -128,7 +137,7 @@ export class Yardoc extends AstNode {
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
             this.addText({
-                stringContent: parameter.type.map((param) => param.typeHint).join(", "),
+                stringContent: parameter.type.map((param) => this.getTypeHint(param)).join(", "),
                 templateString: " [%s] ",
                 appendToLastString: true
             });
@@ -136,14 +145,29 @@ export class Yardoc extends AstNode {
         }
     }
 
+    private getTypeHint(cr: ClassReference): string {
+        return this.crf !== undefined
+            ? this.crf.resolvedReferences
+                  .get(cr.resolvedTypeId ?? "")
+                  ?.map((innerCr) => innerCr.typeHint)
+                  ?.join(", ") ?? cr.typeHint
+            : cr.typeHint;
+    }
+
+    private isUnion(cr: ClassReference): boolean {
+        return this.crf !== undefined
+            ? (this.crf.resolvedReferences.get(cr.resolvedTypeId ?? "") ?? []).length > 1
+            : false;
+    }
+
     public writeInternal(startingTabSpaces: number): void {
         if (this.reference !== undefined) {
             if (this.reference.name === "typeReference") {
                 const typeName =
                     this.reference.type instanceof Property
-                        ? this.reference.type.type.map((prop) => prop.typeHint).join(", ")
+                        ? this.reference.type.type.flatMap((prop) => this.getTypeHint(prop)).join(", ")
                         : this.reference.type instanceof ClassReference
-                        ? this.reference.type.typeHint
+                        ? this.getTypeHint(this.reference.type)
                         : this.reference.type;
                 this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
                 this.writeMultilineYardocComment(
@@ -159,7 +183,7 @@ export class Yardoc extends AstNode {
                 });
                 if (this.reference.returnValue !== undefined) {
                     this.addText({
-                        stringContent: this.reference.returnValue.map((rv) => rv.typeHint).join(", "),
+                        stringContent: this.reference.returnValue.map((rv) => this.getTypeHint(rv)).join(", "),
                         templateString: "# @return [%s]",
                         startingTabSpaces
                     });

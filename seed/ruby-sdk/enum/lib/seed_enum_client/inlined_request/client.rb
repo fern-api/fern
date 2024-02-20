@@ -15,7 +15,7 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param operand [OPERAND]
+    # @param operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
     def send(operand: nil, request_options: nil)
@@ -37,7 +37,7 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param operand [OPERAND]
+    # @param operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
     def send(operand: nil, request_options: nil)
