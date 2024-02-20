@@ -4435,19 +4435,27 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/browser-playground", "workspace:generators/typescript/playground/browser"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/node-fetch", "npm:2.6.9"],\
+            ["@types/qs", "npm:6.9.8"],\
             ["@types/react", "npm:18.2.57"],\
             ["@types/react-dom", "npm:18.2.19"],\
+            ["@types/url-join", "npm:4.0.1"],\
             ["@vitejs/plugin-react", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
+            ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["js-base64", "npm:3.7.6"],\
+            ["node-fetch", "npm:3.3.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["qs", "npm:6.11.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:18.2.0"],\
             ["sass", "npm:1.71.0"],\
             ["stylelint", "npm:16.2.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["url-join", "npm:5.0.0"],\
             ["vite", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:5.1.3"],\
             ["vite-plugin-checker", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:0.6.4"]\
           ],\
@@ -5257,7 +5265,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/inquirer", "npm:9.0.3"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/qs", "npm:6.9.11"],\
+            ["@types/qs", "npm:6.9.8"],\
             ["axios", "npm:0.27.2"],\
             ["boxen", "npm:7.0.0"],\
             ["chalk", "npm:5.0.1"],\
@@ -5306,7 +5314,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/qs", "npm:6.9.11"],\
+            ["@types/qs", "npm:6.9.8"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6771,8 +6779,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/fetcher", "workspace:generators/typescript/utils/core-utilities/fetcher"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/node-fetch", "npm:2.6.11"],\
-            ["@types/qs", "npm:6.9.11"],\
+            ["@types/node-fetch", "npm:2.6.9"],\
+            ["@types/qs", "npm:6.9.8"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
@@ -8857,10 +8865,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node-fetch", [\
-        ["npm:2.6.11", {\
-          "packageLocation": "./.yarn/cache/@types-node-fetch-npm-2.6.11-55289bb1a8-180e4d44c4.zip/node_modules/@types/node-fetch/",\
+        ["npm:2.6.9", {\
+          "packageLocation": "./.yarn/cache/@types-node-fetch-npm-2.6.9-435765ff6f-212269aff4.zip/node_modules/@types/node-fetch/",\
           "packageDependencies": [\
-            ["@types/node-fetch", "npm:2.6.11"],\
+            ["@types/node-fetch", "npm:2.6.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["form-data", "npm:4.0.0"]\
           ],\
@@ -8914,17 +8922,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/qs", [\
-        ["npm:6.9.11", {\
-          "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.11-e12802ac61-620ca1628b.zip/node_modules/@types/qs/",\
-          "packageDependencies": [\
-            ["@types/qs", "npm:6.9.11"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:6.9.7", {\
           "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.7-4a3e6ca0d0-7fd6f9c250.zip/node_modules/@types/qs/",\
           "packageDependencies": [\
             ["@types/qs", "npm:6.9.7"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.9.8", {\
+          "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.8-34e5143bd2-c28e07d00d.zip/node_modules/@types/qs/",\
+          "packageDependencies": [\
+            ["@types/qs", "npm:6.9.8"]\
           ],\
           "linkType": "HARD"\
         }]\
