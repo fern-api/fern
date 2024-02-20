@@ -44,7 +44,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/docs-config": "0.0.75",
     "@fern-fern/fiddle-sdk": "^0.0.411",
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",
     "form-data": "4.0.0",
