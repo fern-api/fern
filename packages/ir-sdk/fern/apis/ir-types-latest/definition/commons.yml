@@ -55,7 +55,7 @@ types:
   TypeId: string
   ErrorId: string
   WebhookGroupId: string
-  WebsocketChannelId: string
+  WebSocketChannelId: string
 
   # declarations
 

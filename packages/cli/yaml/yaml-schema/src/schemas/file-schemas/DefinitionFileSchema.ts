@@ -3,7 +3,7 @@ import { ErrorDeclarationSchema } from "../ErrorDeclarationSchema";
 import { HttpServiceSchema } from "../HttpServiceSchema";
 import { TypeDeclarationSchema } from "../TypeDeclarationSchema";
 import { WebhookSchema } from "../WebhookSchema";
-import { WebsocketChannelSchema } from "../WebsocketChannelSchema";
+import { WebSocketChannelSchema } from "../WebSocketChannelSchema";
 
 export const DefinitionFileSchema = z.strictObject({
     docs: z.optional(z.string()),
@@ -11,7 +11,7 @@ export const DefinitionFileSchema = z.strictObject({
     types: z.optional(z.record(TypeDeclarationSchema)),
     service: z.optional(HttpServiceSchema),
     webhooks: z.optional(z.record(WebhookSchema)),
-    channel: z.optional(WebsocketChannelSchema),
+    channel: z.optional(WebSocketChannelSchema),
     errors: z.optional(z.record(ErrorDeclarationSchema))
 });
 

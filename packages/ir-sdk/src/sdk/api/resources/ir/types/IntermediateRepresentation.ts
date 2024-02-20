@@ -24,7 +24,7 @@ export interface IntermediateRepresentation {
     /** The webhooks sent by this API */
     webhookGroups: Record<FernIr.WebhookGroupId, FernIr.WebhookGroup>;
     /** The websocket channels served by this API */
-    websocketChannels: Record<FernIr.WebsocketChannelId, FernIr.WebsocketChannel> | undefined;
+    websocketChannels: Record<FernIr.WebSocketChannelId, FernIr.WebSocketChannel> | undefined;
     errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     subpackages: Record<FernIr.SubpackageId, FernIr.Subpackage>;
     rootPackage: FernIr.Package;

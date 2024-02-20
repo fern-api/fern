@@ -5,10 +5,10 @@ groups:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
         output:
-          location: local-file-system
-          path: ../../../src/sdk
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/ir-v33-sdk"
         config:
-          outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
   sdks:
@@ -18,7 +18,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-v33-sdk'
+          package-name: "@fern-fern/ir-v33-sdk"
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true

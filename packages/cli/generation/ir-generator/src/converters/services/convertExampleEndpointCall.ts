@@ -514,6 +514,7 @@ function buildUrl({
             ...pathParams.servicePathParameters,
             ...pathParams.rootPathParameters
         ]) {
+            // TODO: should we URL encode the value?
             url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
     }

@@ -38,7 +38,7 @@ types:
         type: map<commons.WebhookGroupId, webhooks.WebhookGroup>
       websocketChannels:
         docs: "The websocket channels served by this API"
-        type: optional<map<commons.WebsocketChannelId, websocket.WebsocketChannel>>
+        type: optional<map<commons.WebSocketChannelId, websocket.WebSocketChannel>>
       errors: map<commons.ErrorId, errors.ErrorDeclaration>
       subpackages: map<commons.SubpackageId, Subpackage>
       rootPackage: Package
@@ -77,7 +77,7 @@ types:
       types: list<commons.TypeId>
       errors: list<commons.ErrorId>
       webhooks: optional<commons.WebhookGroupId>
-      websocket: optional<commons.WebsocketChannelId>
+      websocket: optional<commons.WebSocketChannelId>
       subpackages: list<commons.SubpackageId>
       hasEndpointsInTree: boolean
       navigationConfig: optional<PackageNavigationConfig>
