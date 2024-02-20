@@ -1,0 +1,8 @@
+openapi: 3.0.1
+info:
+  title: websocket
+  version: ''
+paths: {}
+components:
+  schemas: {}
+  securitySchemes: {}
