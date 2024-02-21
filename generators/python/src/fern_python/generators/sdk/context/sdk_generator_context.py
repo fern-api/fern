@@ -29,9 +29,7 @@ class SdkGeneratorContext(ABC):
         self.generator_config = generator_config
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(
-                skip_resources_module=custom_config.improved_imports
-            ),
+            type_declaration_referencer=TypeDeclarationReferencer(skip_resources_module=custom_config.improved_imports),
             generator_config=generator_config,
             project_module_path=project_module_path,
         )

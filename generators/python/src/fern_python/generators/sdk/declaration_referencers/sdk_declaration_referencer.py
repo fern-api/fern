@@ -9,7 +9,6 @@ T = TypeVar("T")
 
 
 class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
-
     def __init__(self, *, skip_resources_module: bool) -> None:
         self.skip_resources_module = skip_resources_module
 

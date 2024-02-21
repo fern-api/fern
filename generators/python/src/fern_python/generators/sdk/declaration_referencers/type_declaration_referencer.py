@@ -6,7 +6,6 @@ from .sdk_declaration_referencer import SdkDeclarationReferencer
 
 
 class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeName]):
-
     def get_filepath(self, *, name: ir_types.DeclaredTypeName) -> Filepath:
         return Filepath(
             directories=self._get_directories_for_fern_filepath(
