@@ -22,7 +22,13 @@ export async function writeOverridesForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "openapi") {
-                    await writeDefinitionForOpenAPIWorkspace({ workspace, context, includeModels, overridesFilepath });
+                    await writeDefinitionForOpenAPIWorkspace({
+                        workspace,
+                        context,
+                        includeModels,
+                        overridesFilepath:
+                            overridesFilepath ?? workspace.generatorsConfiguration?.absolutePathToOpenAPIOverrides
+                    });
                 } else {
                     context.logger.warn("Skipping fern workspace definition generation");
                 }

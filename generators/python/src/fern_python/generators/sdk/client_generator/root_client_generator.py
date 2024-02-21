@@ -36,6 +36,7 @@ class RootClientConstructorParameter:
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
+    docs: Optional[str] = None
 
 
 class RootClientGenerator:
@@ -43,6 +44,7 @@ class RootClientGenerator:
     ENVIRONMENT_MEMBER_NAME = "_environment"
 
     BASE_URL_CONSTRUCTOR_PARAMETER_NAME = "base_url"
+    BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
     BASE_URL_MEMBER_NAME = "_base_url"
 
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
@@ -131,6 +133,7 @@ class RootClientGenerator:
                                 AST.NamedFunctionParameter(
                                     name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
                                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
                                 ),
                                 AST.NamedFunctionParameter(
                                     name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
@@ -139,6 +142,7 @@ class RootClientGenerator:
                                     else AST.TypeHint.optional(
                                         AST.TypeHint(self._context.get_reference_to_environments_class())
                                     ),
+                                    docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
                                 ),
                             ],
                             return_type=AST.TypeHint.str_(),
@@ -165,12 +169,13 @@ class RootClientGenerator:
                 name=param.constructor_parameter_name,
                 type_hint=param.type_hint,
                 initializer=param.initializer,
+                docs=param.docs,
             )
             for param in constructor_parameters
         ]
 
         snippet = SourceFileFactory.create_snippet()
-        snippet.add_arbitrary_code(generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation)
+        snippet.add_expression(generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation)
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
@@ -182,7 +187,8 @@ class RootClientGenerator:
                 ),
             ),
             docstring=AST.Docstring(self._write_root_class_docstring),
-            snippet=snippet.to_str()
+            snippet=snippet.to_str(),
+            write_parameter_docstring=True
         )
 
         if self._package.service is not None:
@@ -231,6 +237,7 @@ class RootClientGenerator:
                     type_hint=AST.TypeHint.str_(),
                     private_member_name=None,
                     initializer=None,
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS
                 )
             )
         # If single url environment present, client should provide both base_url and environment arguments
@@ -242,6 +249,7 @@ class RootClientGenerator:
                     private_member_name=None,
                     initializer=AST.Expression("None"),
                     exclude_from_wrapper_construction=True,
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS
                 )
             )
             parameters.append(
@@ -335,6 +343,7 @@ class RootClientGenerator:
                 initializer=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
                 if isinstance(self._context.custom_config.timeout_in_seconds, int)
                 else AST.Expression(AST.TypeHint.none()),
+                docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.",
             )
         )
         parameters.append(
@@ -345,6 +354,7 @@ class RootClientGenerator:
                 else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT)),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
+                docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
             )
         )
         return parameters

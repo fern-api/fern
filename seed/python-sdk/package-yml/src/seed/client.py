@@ -25,6 +25,13 @@ OMIT = typing.cast(typing.Any, ...)
 class SeedPackageYml:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: str. The base url to use for requests from the client.
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedPackageYml
 
@@ -91,6 +98,13 @@ class SeedPackageYml:
 class AsyncSeedPackageYml:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: str. The base url to use for requests from the client.
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedPackageYml
 

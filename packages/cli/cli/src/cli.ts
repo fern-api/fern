@@ -725,14 +725,16 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 string: true,
                 description: "Only run the command on the provided API"
             }),
-            yargs.option("include-models", {
+            yargs.option("exclude-models", {
                 boolean: true,
                 description:
-                    "When generating the initial overrides, also stub the models (in addition to the endpoints)"
+                    "When generating the initial overrides, also stub the models (in addition to the endpoints)",
+                default: false
             }),
             yargs.option("existing-overrides", {
                 string: true,
-                description: "The existing overrides file to add on to instead of writing a new one."
+                description:
+                    "The existing overrides file to add on to instead of writing a new one, we will default to the one specified in generators.yml."
             })
         ],
         async (argv) => {
@@ -744,7 +746,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     commandLineApiWorkspace: argv.api as string,
                     defaultToAllApiWorkspaces: true
                 }),
-                includeModels: argv.includeModels as boolean,
+                includeModels: !(argv.excludeModels as boolean),
                 overridesFilepath: argv.existingOverrides as string,
                 cliContext
             });

@@ -350,11 +350,3 @@ pip install --upgrade {project._project_config.package_name}
     ) -> bool:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         return custom_config.flat_layout
-    
-    def get_init_additions(
-        self,
-        *,
-        generator_config: GeneratorConfig,
-    ) -> List[ModuleExportsLine]:
-        custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
-        return map(lambda export: ModuleExportsLine(export.from_, export.imports), custom_config.additional_init_exports) if custom_config.additional_init_exports is not None else []

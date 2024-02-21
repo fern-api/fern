@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
-from typing import Optional, Sequence, Set, Type
+from typing import List, Optional, Sequence, Set, Type
 from uu import Error
 
 from fern_python.codegen import AST
@@ -60,7 +60,7 @@ class Project:
         self._should_format_files = should_format_files
         self._whitelabel = whitelabel
 
-    def add_init_exports(self, path: AST.ModulePath, exports: ModuleExport) -> None:
+    def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
 
     def add_dependency(self, dependency: AST.Dependency) -> None:

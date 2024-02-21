@@ -25,6 +25,7 @@ class ClassDeclaration(AstNode):
         constructor: ClassConstructor = None,
         docstring: Docstring = None,
         snippet: Optional[str] = None,
+        write_parameter_docstring: bool = False,
     ):
         self.name = name
         self.extends = list(extends or [])
@@ -42,6 +43,7 @@ class ClassDeclaration(AstNode):
         self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
         self.ghost_references: OrderedSet[Reference] = OrderedSet()
+        self.write_parameter_docstring = write_parameter_docstring
 
     def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
         self.class_vars.append(variable_declaration)
@@ -157,18 +159,74 @@ class ClassDeclaration(AstNode):
         writer.write_line(":")
 
         with writer.indent():
-            if self.docstring is not None:
+            parameters = self.constructor.function_declaration.signature.named_parameters if self.constructor is not None else []
+            if self.docstring is not None or self.snippet is not None or (len(parameters) > 0 and self.write_parameter_docstring):
                 writer.write_line('"""')
+
+            if self.docstring is not None:
                 writer.write_node(self.docstring)
                 writer.write_newline_if_last_line_not()
+                if self.snippet is None and len(parameters) == 0:
+                    writer.write_line('"""')
+                elif len(parameters) == 0:
+                    writer.write_line("---")
+
+            if len(parameters) > 0 and self.write_parameter_docstring:
+                if self.docstring is not None:
+                    # Include a line between the endpoint docs and field docs.
+                    writer.write_line()
+                writer.write_line("Parameters:")
+                with writer.indent():
+                    for i, param in enumerate(parameters):
+                        if i > 0:
+                            writer.write_line()
+
+                        if param.docs is None:
+                            writer.write(f"- {param.name}: ")
+                            if param.type_hint is not None:
+                                writer.write_node(param.type_hint)
+                            writer.write_line(".")
+                            continue
+
+                        split = param.docs.split("\n")
+                        if len(split) == 1:
+                            writer.write(f"- {param.name}: ")
+                            if param.type_hint is not None:
+                                writer.write_node(param.type_hint)
+                            writer.write_line(f". {param.docs}")
+                            continue
+
+                        # Handle multi-line comments at the same level of indentation for the same field,
+                        # e.g.
+                        #
+                        #  - userId: str. This is a multi-line comment.
+                        #                 This one has three lines
+                        #                 in total.
+                        #
+                        #  - request: Request. The request body.
+                        #
+                        indent = ""
+                        for i, line in enumerate(split):
+                            if i == 0:
+                                # Determine the level of indentation we need by capturing the length
+                                # before and after we write the type hint.
+                                writer.write(f"- {param.name}: ")
+                                before = writer.size()
+                                if param.type_hint is not None:
+                                    writer.write_node(param.type_hint)
+                                after = writer.size()
+                                writer.write_line(f". {line}")
+                                indent = " " * (len(param.name) + (after - before) + 4)
+                                continue
+                            writer.write(f" {indent} {line}")
+                            if i < len(split) - 1:
+                                writer.write_line()
                 if self.snippet is None:
                     writer.write_line('"""')
                 else:
                     writer.write_line("---")
 
             if self.snippet is not None:
-                if self.docstring is None:
-                    writer.write_line('"""')
                 writer.write(self.snippet)
                 writer.write_newline_if_last_line_not()
                 writer.write_line('"""')

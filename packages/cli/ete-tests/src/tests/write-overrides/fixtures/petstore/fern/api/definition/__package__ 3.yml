@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Pet:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      tag:
+        type: optional<string>
+
+  Pets:
+    type: list<Pet>
+
+  Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+
+errors: {}
