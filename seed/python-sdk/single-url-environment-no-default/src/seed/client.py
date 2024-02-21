@@ -16,7 +16,7 @@ class SeedSingleUrlEnvironmentNoDefault:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment].
+        - environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment]. The environment to use for requests from the client.
 
         - token: typing.Union[str, typing.Callable[[], str]].
 
@@ -57,7 +57,7 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment].
+        - environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment]. The environment to use for requests from the client.
 
         - token: typing.Union[str, typing.Callable[[], str]].
 

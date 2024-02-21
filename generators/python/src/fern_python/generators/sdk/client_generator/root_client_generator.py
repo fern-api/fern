@@ -42,6 +42,7 @@ class RootClientConstructorParameter:
 class RootClientGenerator:
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
     ENVIRONMENT_MEMBER_NAME = "_environment"
+    ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS = "The environment to use for requests from the client."
 
     BASE_URL_CONSTRUCTOR_PARAMETER_NAME = "base_url"
     BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
@@ -256,6 +257,30 @@ class RootClientGenerator:
                     docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
                 )
             )
+            default_environment = (
+                AST.Expression(
+                    environments_config.environments.visit(
+                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                            context=self._context, environments=single_base_url_environments
+                        ).get_reference_to_default_environment(),
+                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                            context=self._context, environments=multiple_base_urls_environments
+                        ).get_reference_to_default_environment(),
+                    )
+                )
+                if environments_config.default_environment is not None
+                else None
+            )
+            environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
+            if default_environment is not None:
+                snippet = SourceFileFactory.create_snippet()
+
+                def write_default_environment(writer: AST.NodeWriter) -> None:
+                    writer.write("Defaults to ")
+                    writer.write_node(default_environment)
+
+                snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
+                environment_docs += f" {snippet.to_str()}"
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
@@ -263,23 +288,37 @@ class RootClientGenerator:
                     if environments_config.default_environment is not None
                     else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
                     private_member_name=None,
-                    initializer=AST.Expression(
-                        environments_config.environments.visit(
-                            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                                context=self._context, environments=single_base_url_environments
-                            ).get_reference_to_default_environment(),
-                            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                                context=self._context, environments=multiple_base_urls_environments
-                            ).get_reference_to_default_environment(),
-                        )
-                    )
-                    if environments_config.default_environment is not None
-                    else None,
+                    initializer=default_environment if default_environment is not None else None,
                     exclude_from_wrapper_construction=True,
+                    docs=environment_docs,
                 ),
             )
         # If mutli url environment present, client should provide only environment argument
         elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
+            default_environment = (
+                AST.Expression(
+                    environments_config.environments.visit(
+                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                            context=self._context, environments=single_base_url_environments
+                        ).get_reference_to_default_environment(),
+                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                            context=self._context, environments=multiple_base_urls_environments
+                        ).get_reference_to_default_environment(),
+                    )
+                )
+                if environments_config.default_environment is not None
+                else None
+            )
+            environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
+            if default_environment is not None:
+                snippet = SourceFileFactory.create_snippet()
+
+                def write_default_environment(writer: AST.NodeWriter) -> None:
+                    writer.write("Defaults to ")
+                    writer.write_node(default_environment)
+
+                snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
+                environment_docs += f" {snippet.to_str()}"
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
@@ -287,18 +326,8 @@ class RootClientGenerator:
                     if environments_config.default_environment is not None
                     else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
                     private_member_name=None,
-                    initializer=AST.Expression(
-                        environments_config.environments.visit(
-                            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                                context=self._context, environments=single_base_url_environments
-                            ).get_reference_to_default_environment(),
-                            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                                context=self._context, environments=multiple_base_urls_environments
-                            ).get_reference_to_default_environment(),
-                        )
-                    )
-                    if environments_config.default_environment is not None
-                    else None,
+                    initializer=default_environment if default_environment is not None else None,
+                    docs=environment_docs,
                 ),
             )
 

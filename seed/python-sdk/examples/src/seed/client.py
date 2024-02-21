@@ -31,7 +31,7 @@ class SeedExamples:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedExamplesEnvironment].
+        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
 
         - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
 
@@ -119,7 +119,7 @@ class AsyncSeedExamples:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedExamplesEnvironment].
+        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
 
         - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
 

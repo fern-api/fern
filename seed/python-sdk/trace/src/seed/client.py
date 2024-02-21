@@ -23,7 +23,9 @@ class SeedTrace:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: SeedTraceEnvironment.
+        - environment: SeedTraceEnvironment. The environment to use for requests from the client. from .environment import SeedTraceEnvironment
+
+                                             Defaults to SeedTraceEnvironment.PROD
 
         - x_random_header: typing.Optional[str].
 
@@ -74,7 +76,9 @@ class AsyncSeedTrace:
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
-        - environment: SeedTraceEnvironment.
+        - environment: SeedTraceEnvironment. The environment to use for requests from the client. from .environment import SeedTraceEnvironment
+
+                                             Defaults to SeedTraceEnvironment.PROD
 
         - x_random_header: typing.Optional[str].
 

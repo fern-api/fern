@@ -15,7 +15,9 @@ class SeedMultiUrlEnvironment:
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
 
     Parameters:
-        - environment: SeedMultiUrlEnvironmentEnvironment.
+        - environment: SeedMultiUrlEnvironmentEnvironment. The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
+
+                                                           Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
 
         - token: typing.Union[str, typing.Callable[[], str]].
 
@@ -52,7 +54,9 @@ class AsyncSeedMultiUrlEnvironment:
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
 
     Parameters:
-        - environment: SeedMultiUrlEnvironmentEnvironment.
+        - environment: SeedMultiUrlEnvironmentEnvironment. The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
+
+                                                           Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
 
         - token: typing.Union[str, typing.Callable[[], str]].
 
