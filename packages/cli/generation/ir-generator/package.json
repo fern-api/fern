@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",

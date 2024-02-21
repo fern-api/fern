@@ -4404,6 +4404,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@faker-js/faker", [\
+        ["npm:8.4.1", {\
+          "packageLocation": "./.yarn/cache/@faker-js-faker-npm-8.4.1-dde75d9856-d802d531f8.zip/node_modules/@faker-js/faker/",\
+          "packageDependencies": [\
+            ["@faker-js/faker", "npm:8.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@fern-api/auth", [\
         ["workspace:packages/cli/auth", {\
           "packageLocation": "./packages/cli/auth/",\
@@ -5033,6 +5042,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/generation/ir-generator/",\
           "packageDependencies": [\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
+            ["@faker-js/faker", "npm:8.4.1"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -5103,6 +5113,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v31-sdk", "npm:0.0.5"],\
             ["@fern-fern/ir-v32-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v33-sdk", "npm:0.0.15"],\
+            ["@fern-fern/ir-v34-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v4-model", "npm:0.0.4"],\
             ["@fern-fern/ir-v5-model", "npm:0.0.3"],\
             ["@fern-fern/ir-v6-model", "npm:0.0.33"],\
@@ -6236,6 +6247,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-v33-sdk-npm-0.0.15-c0a2a48c8b-1ac9219315.zip/node_modules/@fern-fern/ir-v33-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/ir-v33-sdk", "npm:0.0.15"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/ir-v34-sdk", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v34-sdk-npm-0.0.1-f2de3c99be-55071da5d0.zip/node_modules/@fern-fern/ir-v34-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/ir-v34-sdk", "npm:0.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

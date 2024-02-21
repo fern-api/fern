@@ -5,10 +5,10 @@ groups:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
         output:
-          location: local-file-system
-          path: ../../../src/sdk
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: '@fern-fern/ir-v34-sdk'
         config:
-          outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
   sdks:
@@ -18,7 +18,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-sdk'
+          package-name: '@fern-fern/ir-v34-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
@@ -27,7 +27,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV35
+          coordinate: com.fern.fern:irV34
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -36,7 +36,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v35
+          package-name: fern_fern_ir_v34
         config:
           wrapped_aliases: true
           include_union_utils: true

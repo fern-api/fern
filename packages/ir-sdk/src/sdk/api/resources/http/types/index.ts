@@ -33,6 +33,7 @@ export * from "./StreamingResponse";
 export * from "./StreamingResponseChunkType";
 export * from "./ResponseErrors";
 export * from "./ResponseError";
+export * from "./HttpEndpointExample";
 export * from "./ExampleEndpointCall";
 export * from "./ExampleCodeSample";
 export * from "./ExampleCodeSampleLanguage";

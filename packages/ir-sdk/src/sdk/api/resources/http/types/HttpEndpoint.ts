@@ -22,5 +22,5 @@ export interface HttpEndpoint extends FernIr.Declaration {
     errors: FernIr.ResponseErrors;
     auth: boolean;
     idempotent: boolean;
-    examples: FernIr.ExampleEndpointCall[];
+    examples: FernIr.HttpEndpointExample[];
 }

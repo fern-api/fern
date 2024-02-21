@@ -40,7 +40,7 @@ types:
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
-      examples: list<HttpEndpointExample>
+      examples: list<ExampleEndpointCall>
   EndpointName: commons.Name
   HttpPath:
     properties:
@@ -199,11 +199,6 @@ types:
       error: errors.DeclaredErrorName
 
   # examples
-
-  HttpEndpointExample:
-    union:
-      provided: ExampleEndpointCall
-      generated: ExampleEndpointCall
 
   ExampleEndpointCall:
     extends: commons.WithDocs

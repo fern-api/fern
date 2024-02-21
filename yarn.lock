@@ -2275,6 +2275,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^8.4.1":
+  version: 8.4.1
+  resolution: "@faker-js/faker@npm:8.4.1"
+  checksum: d802d531f8929562715adc279cfec763c9a4bc596ec67b0ce43fd0ae61b285d2b0eec6f1f4aa852452a63721a842fe7e81926dce7bd92acca94b01e2a1f55f5a
+  languageName: node
+  linkType: hard
+
 "@fern-api/auth@workspace:*, @fern-api/auth@workspace:packages/cli/auth":
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
@@ -2869,6 +2876,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-generator@workspace:packages/cli/generation/ir-generator"
   dependencies:
+    "@faker-js/faker": ^8.4.1
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -2937,6 +2945,7 @@ __metadata:
     "@fern-fern/ir-v31-sdk": 0.0.5
     "@fern-fern/ir-v32-sdk": 0.0.1
     "@fern-fern/ir-v33-sdk": 0.0.15
+    "@fern-fern/ir-v34-sdk": 0.0.1
     "@fern-fern/ir-v4-model": 0.0.4
     "@fern-fern/ir-v5-model": 0.0.3
     "@fern-fern/ir-v6-model": 0.0.33
@@ -3958,6 +3967,13 @@ __metadata:
   version: 0.0.15
   resolution: "@fern-fern/ir-v33-sdk@npm:0.0.15"
   checksum: 1ac92193159fee4ccb0efe59c81ac6a5f7e042a5f976d9cb00a57028ff469f3806e4ba59eb9d018bd30d20b2d37d54b2f9c4efca6138fa35a7a1144e45896ca8
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v34-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v34-sdk@npm:0.0.1"
+  checksum: 55071da5d0f181188c58ed5a10106869e55f639fbdb7d51a453ea129524f34a6ddeab71dd8633eda099a43094ac9f5c0101cd8b2a5140bc77fafaf9ce65869ac
   languageName: node
   linkType: hard
 
