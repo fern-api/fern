@@ -94,5 +94,5 @@ allowedFailures:
   - api-wide-base-path
   - auth-environment-variables
   - exhaustive:bundle
-  - exhaustive:dev-dependencie
+  - exhaustive:dev-dependencies
 
