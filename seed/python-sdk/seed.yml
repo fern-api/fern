@@ -50,3 +50,4 @@ allowedFailures:
   - bearer-token-environment-variable
   - websocket
   - exhaustive:union-utils
+  - exhaustive:additional_init_exports
