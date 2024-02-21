@@ -66,7 +66,7 @@ async function writeDefinitionForOpenAPIWorkspace({
     const openApiIr = await getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let existingOverrides: Record<string, any> = {};
+    let existingOverrides: any = {};
     if (overridesFilepath !== undefined) {
         existingOverrides = await readExistingOverrides(overridesFilepath, context);
     }
@@ -92,7 +92,7 @@ async function writeDefinitionForOpenAPIWorkspace({
             }
             sdkMethodNameExtensions["x-fern-sdk-method-name"] = endpointLocation.endpointId;
             pathItem[endpoint.method.toLowerCase()] = sdkMethodNameExtensions;
-        } else if (existingOverrides === undefined) {
+        } else if (existingOverrides == null) {
             context.logger.warn(`Endpoint ${endpoint.path} ${endpoint.method} is defined multiple times`);
         }
     }
