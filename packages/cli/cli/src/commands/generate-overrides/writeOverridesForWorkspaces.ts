@@ -65,7 +65,8 @@ async function writeDefinitionForOpenAPIWorkspace({
 }): Promise<void> {
     const openApiIr = await getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
 
-    let existingOverrides: any = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let existingOverrides: Record<string, any> = {};
     if (overridesFilepath !== undefined) {
         existingOverrides = await readExistingOverrides(overridesFilepath, context);
     }
@@ -103,6 +104,7 @@ async function writeDefinitionForOpenAPIWorkspace({
             if (schemaId in schemas) {
                 continue;
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const typeNameOverride: Record<string, any> = {};
             typeNameOverride["x-fern-type-name"] =
                 "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
