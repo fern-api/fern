@@ -34,7 +34,6 @@ allowedFailures:
   - response-property
   - examples
   - exhaustive:local-files
-  - file-upload
   - idempotency-headers
   - trace
   - undiscriminated-unions

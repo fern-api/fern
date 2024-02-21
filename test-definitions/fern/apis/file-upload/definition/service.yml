@@ -16,15 +16,9 @@ service:
             maybeFile: optional<file>
             maybeFileList: optional<list<file>>
             maybeInteger: optional<integer>
-            listOfStrings: list<string>
-            setOfStrings: set<string>
             optionalListOfStrings: optional<list<string>>
-            optionalSetOfStrings: optional<set<string>>
-            maybeList: MaybeList
-            optionalMaybeList: optional<MaybeList>
-            maybeListOrSet: MaybeListOrSet
-            optionalMaybeListOrSet: optional<MaybeListOrSet>
             listOfObjects: list<MyObject>
+    
     justFile:
       path: /just-file
       method: POST
@@ -33,6 +27,7 @@ service:
         body:
           properties:
             file: file
+    
     justFileWithQueryParams:
       path: /just-file-with-query-params
       method: POST
@@ -53,23 +48,7 @@ service:
             file: file
 
 types:
-  MaybeList:
-    discriminated: false
-    union:
-      - string
-      - list<string>
-      - integer
-      - list<integer>
-      - list<list<integer>>
-  MaybeListOrSet:
-    discriminated: false
-    union:
-      - string
-      - list<string>
-      - integer
-      - list<integer>
-      - list<list<integer>>
-      - set<string>
+
   MyObject:
     properties:
       foo: string
