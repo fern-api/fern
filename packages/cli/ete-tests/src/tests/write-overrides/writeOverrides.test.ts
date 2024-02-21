@@ -14,7 +14,7 @@ function itFixture(fixtureName: string) {
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const outputPath = path.join(fixturePath, "openapi", "openapi-overrides.yml");
+            const outputPath = path.join(fixturePath, "fern", "openapi", "openapi-overrides.yml");
 
             await runFernCli(["write-overrides"], {
                 cwd: fixturePath
