@@ -66,6 +66,7 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
             context=context,
+            improved_imports=False,
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,

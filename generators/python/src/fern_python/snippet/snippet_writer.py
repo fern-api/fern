@@ -14,9 +14,11 @@ class SnippetWriter:
         self,
         context: PydanticGeneratorContext,
         type_declaration_snippet_generator: Optional[TypeDeclarationSnippetGenerator] = None,
+        improved_imports: bool = False,
     ):
         self._context = context
         self._type_declaration_snippet_generator = type_declaration_snippet_generator
+        self._improved_imports = improved_imports
 
     def get_snippet_for_example_type_shape(
         self,
@@ -52,7 +54,7 @@ class SnippetWriter:
         name: ir_types.DeclaredTypeName,
     ) -> AST.ModulePath:
         module_path = tuple([directory.snake_case.unsafe_name for directory in name.fern_filepath.package_path])
-        if len(module_path) > 0:
+        if len(module_path) > 0 and not self._improved_imports:
             # If the type is defined in a subpackage, it needs to be imported with the 'resources'
             # intermediary key. Otherwise the types can be imported from the root package.
             module_path = ("resources",) + module_path
