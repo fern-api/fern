@@ -77,6 +77,7 @@ class FastApiGenerator(AbstractGenerator):
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
+            improved_imports=False,
         )
 
         PydanticModelGenerator().generate_types(

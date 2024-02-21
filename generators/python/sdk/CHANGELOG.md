@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.2] - 2024-02-21
+- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable 
+  this configuration, just add the following to your generators.yml 
+
+  ```yaml
+  generators: 
+    - name: fernapi/fern-python-sdk
+      ...
+      config: 
+        improved_imports: true
+  ```
+
+  Enabling improved imports will remove the verbose `resources` directory in the SDK and make the imports
+  shorter. This will also improve the imports from Pylance and Pyright that are automaticaly generated
+
+  ```python
+  # Before
+  from sdk.resources.fhir import Paient
+
+  # After
+  from sdk.fhir import Patient
+  ```
+
 ## [0.11.1] - 2024-02-20
 
 - Improvement: Python now supports specifying files to auto-export from the root `__init__.py` file, this means you can export custom classes and functions from your package for users to access like so:
