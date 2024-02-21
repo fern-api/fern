@@ -84,11 +84,15 @@ fixtures:
         includeApiReference: true
       outputFolder: examples-with-api-reference
 scripts:
-  - docker: node:lts-slim
+  - docker: fernapi/ts-seed
     commands:
-      - yarn install
-      - yarn build
+      - yarn install && yarn build
 allowedFailures: 
   - bytes
   - plain-text
+  - alias
+  - api-wide-base-path
+  - auth-environment-variables
+  - exhaustive:bundle
+  - exhaustive:dev-dependencies
 

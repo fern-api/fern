@@ -540,6 +540,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_package": {
       "name": {
@@ -561,6 +562,7 @@
           "safeName": "Package"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -619,6 +621,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

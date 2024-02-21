@@ -1378,6 +1378,7 @@
     "sharedTypes": []
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_imdb": {
       "name": {
@@ -1399,6 +1400,7 @@
           "safeName": "Imdb"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1460,6 +1462,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

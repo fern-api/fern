@@ -81219,6 +81219,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_v2": {
       "name": {
@@ -81240,6 +81241,7 @@
           "safeName": "V2"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81313,6 +81315,7 @@
           "safeName": "Admin"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81384,6 +81387,7 @@
           "safeName": "Commons"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81479,6 +81483,7 @@
           "safeName": "Homepage"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81548,6 +81553,7 @@
           "safeName": "LangServer"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81619,6 +81625,7 @@
           "safeName": "Migration"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81691,6 +81698,7 @@
           "safeName": "Playlist"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81770,6 +81778,7 @@
           "safeName": "Problem"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -81851,6 +81860,7 @@
           "safeName": "Submission"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -82002,6 +82012,7 @@
           "safeName": "Sysprop"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -82071,6 +82082,7 @@
           "safeName": "Problem"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -82221,6 +82233,7 @@
           "safeName": "V3"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -82330,6 +82343,7 @@
           "safeName": "Problem"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -82504,6 +82518,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

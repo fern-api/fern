@@ -1024,12 +1024,14 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:ExampleType",
       "type_:NestedType",

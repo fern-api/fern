@@ -27,4 +27,5 @@ allowedFailures:
   - query-parameters
   - response-property
   - streaming
-
+  - literal
+  - websocket

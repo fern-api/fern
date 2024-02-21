@@ -2,6 +2,7 @@
 ../packages/seed/src/config/**
 ../scripts/**
 ../seed/**
+../docker/seed/**
 
 **/*.yaml
 **/*.yml

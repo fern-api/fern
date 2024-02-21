@@ -839,6 +839,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_custom-auth": {
       "name": {
@@ -860,6 +861,7 @@
           "safeName": "CustomAuth"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -929,6 +931,7 @@
           "safeName": "Errors"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -988,6 +991,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

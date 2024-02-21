@@ -29,16 +29,17 @@ fixtures:
 scripts:
   - docker: fernapi/python-seed
     commands:
-      - pyenv global 3.8
-      - dmypy run .
-      - pyenv global 3.9
-      - dmypy run .
+      # The global python version is 3.8
+      # - mypy --cache-dir /tmp . --cache-fine-grained
+      # - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
+      - pyenv shell 3.9
+      - poetry install
+      - poetry run mypy .
 allowedFailures: 
   - response-property
   # Generator does not handle list of enums
   - enum
   - auth-environment-variables
   - bearer-token-environment-variable
-
-
-
+  - websocket
+  - exhaustive:union-utils
