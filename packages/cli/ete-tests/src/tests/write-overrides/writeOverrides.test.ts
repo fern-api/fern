@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../../utils/runFernCli";
 
@@ -19,8 +20,15 @@ function itFixture(fixtureName: string) {
             await runFernCli(["write-overrides"], {
                 cwd: fixturePath
             });
-            expect(await getDirectoryContents(AbsoluteFilePath.of(outputPath))).toMatchSnapshot();
+
+            await sleep(5000);
+
+            expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
         },
         90_000
     );
+}
+
+function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
