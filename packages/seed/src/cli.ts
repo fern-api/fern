@@ -127,7 +127,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         keepDocker: argv.keepDocker,
                         skipScripts: argv.skipScripts,
-                        outputFolder: argv.outputFolder,
+                        outputFolder: argv.outputFolder
                     });
                     failurePresent = failurePresent || !passed;
                 }
