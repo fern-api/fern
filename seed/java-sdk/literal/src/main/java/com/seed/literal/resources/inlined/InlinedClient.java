@@ -11,6 +11,7 @@ import com.seed.literal.core.RequestOptions;
 import com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;
 import com.seed.literal.types.SendResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -51,7 +52,10 @@ public class InlinedClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();

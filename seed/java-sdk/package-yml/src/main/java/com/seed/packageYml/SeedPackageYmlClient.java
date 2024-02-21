@@ -11,6 +11,7 @@ import com.seed.packageYml.core.RequestOptions;
 import com.seed.packageYml.core.Suppliers;
 import com.seed.packageYml.resources.service.ServiceClient;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -54,7 +55,10 @@ public class SeedPackageYmlClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();

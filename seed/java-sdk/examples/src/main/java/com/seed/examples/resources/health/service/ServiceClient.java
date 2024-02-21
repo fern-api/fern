@@ -8,6 +8,7 @@ import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -46,7 +47,10 @@ public class ServiceClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();
@@ -86,7 +90,10 @@ public class ServiceClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();

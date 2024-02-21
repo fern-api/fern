@@ -14,6 +14,7 @@ import com.seed.trace.resources.problem.types.CreateProblemResponse;
 import com.seed.trace.resources.problem.types.GetDefaultStarterFilesResponse;
 import com.seed.trace.resources.problem.types.UpdateProblemResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -61,7 +62,10 @@ public class ProblemClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();
@@ -111,7 +115,10 @@ public class ProblemClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();
@@ -152,7 +159,10 @@ public class ProblemClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();
@@ -201,7 +211,10 @@ public class ProblemClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();

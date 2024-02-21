@@ -9,6 +9,7 @@ import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.RequestOptions;
 import com.seed.audiences.resources.foldera.service.types.Response;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -39,7 +40,10 @@ public class ServiceClient {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             okhttp3.Response response = client.newCall(okhttpRequest).execute();

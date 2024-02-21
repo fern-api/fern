@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
@@ -288,13 +289,19 @@ public abstract class AbstractEndpointWriter {
                         clientOptionsField,
                         generatedClientOptions.httpClient())
                 .beginControlFlow("if ($L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME)
-                // Set the client's readTimeout if requestOptions overrides it has one
+                // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
-                        "$L = $L.newBuilder().readTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit()).build()",
+                        "$L = $L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
+                                ".connectTimeout(0, $T.SECONDS)" +
+                                ".writeTimeout(0, $T.SECONDS)" +
+                                ".readTimeout(0, $T.SECONDS).build()",
                         defaultedClientName,
                         defaultedClientName,
                         REQUEST_OPTIONS_PARAMETER_NAME,
-                        REQUEST_OPTIONS_PARAMETER_NAME)
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class)
                 .endControlFlow()
                 .addStatement(
                         "$T $L = $N.newCall($L).execute()",

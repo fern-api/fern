@@ -10,6 +10,7 @@ import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
 import com.seed.multiUrlEnvironment.resources.s3.requests.GetPresignedUrlRequest;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -51,7 +52,10 @@ public class S3Client {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
                 client = client.newBuilder()
-                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
                         .build();
             }
             Response response = client.newCall(okhttpRequest).execute();
