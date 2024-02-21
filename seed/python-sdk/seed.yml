@@ -26,6 +26,13 @@ fixtures:
         extra_dependencies:
           boto3: 1.28.57
       outputFolder: extra_dependencies
+    - customConfig:
+        additional_init_exports:
+          - from: client_additions
+            imports:
+              - myCustomFunction
+              - AnotherCustomClient
+      outputFolder: additional_init_exports
 scripts:
   - docker: fernapi/python-seed
     commands:
@@ -43,3 +50,4 @@ allowedFailures:
   - bearer-token-environment-variable
   - websocket
   - exhaustive:union-utils
+  - exhaustive:additional_init_exports

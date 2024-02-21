@@ -4,14 +4,14 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
-from typing import Optional, Sequence, Set, Type
+from typing import List, Optional, Sequence, Set, Type
 
 from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
-from .module_manager import ModuleManager
+from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
@@ -58,6 +58,9 @@ class Project:
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
         self._whitelabel = whitelabel
+
+    def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
+        self._module_manager.register_additional_exports(path, exports)
 
     def add_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dependency(dependency)
