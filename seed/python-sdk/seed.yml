@@ -33,6 +33,9 @@ fixtures:
               - myCustomFunction
               - AnotherCustomClient
       outputFolder: additional_init_exports
+    - customConfig:
+        improved_imports: true
+      outputFolder: improved_imports
 scripts:
   - docker: fernapi/python-seed
     commands:

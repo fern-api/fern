@@ -58,7 +58,8 @@ export async function testWorkspaceFixtures({
     taskContextFactory,
     numDockers,
     keepDocker,
-    skipScripts
+    skipScripts,
+    outputFolder
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
@@ -71,6 +72,7 @@ export async function testWorkspaceFixtures({
     numDockers: number;
     keepDocker: boolean | undefined;
     skipScripts: boolean;
+    outputFolder: string | undefined;
 }): Promise<boolean> {
     const lock = new Semaphore(numDockers);
 
@@ -102,6 +104,9 @@ export async function testWorkspaceFixtures({
             );
             if (fixtureConfig != null) {
                 for (const fixtureConfigInstance of fixtureConfig) {
+                    if (outputFolder != null && fixtureConfigInstance.outputFolder !== outputFolder) {
+                        continue;
+                    }
                     testCases.push(
                         acquireLocksAndRunTest({
                             id: `${fixture}:${fixtureConfigInstance.outputFolder}`,
