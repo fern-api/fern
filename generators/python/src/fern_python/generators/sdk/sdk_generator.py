@@ -1,5 +1,4 @@
-from math import exp
-from typing import List, Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -8,7 +7,6 @@ from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeReques
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
-from fern_python.codegen.module_manager import ModuleExportsLine
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext

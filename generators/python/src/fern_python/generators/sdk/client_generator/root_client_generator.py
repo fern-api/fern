@@ -154,7 +154,9 @@ class RootClientGenerator:
         return generated_root_client
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
-        writer.write_line("Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.")
+        writer.write_line(
+            "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions."
+        )
 
     def _create_class_declaration(
         self,
@@ -175,7 +177,9 @@ class RootClientGenerator:
         ]
 
         snippet = SourceFileFactory.create_snippet()
-        snippet.add_expression(generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation)
+        snippet.add_expression(
+            generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation
+        )
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
@@ -188,7 +192,7 @@ class RootClientGenerator:
             ),
             docstring=AST.Docstring(self._write_root_class_docstring),
             snippet=snippet.to_str(),
-            write_parameter_docstring=True
+            write_parameter_docstring=True,
         )
 
         if self._package.service is not None:
@@ -237,7 +241,7 @@ class RootClientGenerator:
                     type_hint=AST.TypeHint.str_(),
                     private_member_name=None,
                     initializer=None,
-                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
                 )
             )
         # If single url environment present, client should provide both base_url and environment arguments
@@ -249,7 +253,7 @@ class RootClientGenerator:
                     private_member_name=None,
                     initializer=AST.Expression("None"),
                     exclude_from_wrapper_construction=True,
-                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
                 )
             )
             parameters.append(

@@ -5,14 +5,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
-from uu import Error
 
 from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
-from .module_manager import ModuleManager, ModuleExport
+from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl

@@ -159,8 +159,14 @@ class ClassDeclaration(AstNode):
         writer.write_line(":")
 
         with writer.indent():
-            parameters = self.constructor.function_declaration.signature.named_parameters if self.constructor is not None else []
-            if self.docstring is not None or self.snippet is not None or (len(parameters) > 0 and self.write_parameter_docstring):
+            parameters = (
+                self.constructor.function_declaration.signature.named_parameters if self.constructor is not None else []
+            )
+            if (
+                self.docstring is not None
+                or self.snippet is not None
+                or (len(parameters) > 0 and self.write_parameter_docstring)
+            ):
                 writer.write_line('"""')
 
             if self.docstring is not None:

@@ -1,7 +1,7 @@
-from typing import Dict, Literal, Optional, Union, List
-from fern_python.codegen.module_manager import ModuleExport
+from typing import Dict, List, Literal, Optional, Union
 
 import pydantic
+from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
 
 

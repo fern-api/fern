@@ -13,11 +13,3 @@ paths:
       x-fern-sdk-group-name:
         - pets
       x-fern-sdk-method-name: showPetById
-components:
-  schemas:
-    Pet:
-      x-fern-type-name: Pet
-    Pets:
-      x-fern-type-name: Pets
-    Error:
-      x-fern-type-name: Error
