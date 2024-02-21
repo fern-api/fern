@@ -51,51 +51,10 @@ export class Service {
             _request.append("maybeInteger", request.maybeInteger.toString());
         }
 
-        for (const _item of request.listOfStrings) {
-            _request.append("listOfStrings", _item);
-        }
-
-        for (const _item of request.setOfStrings) {
-            _request.append("setOfStrings", _item);
-        }
-
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
                 _request.append("optionalListOfStrings", _item);
             }
-        }
-
-        if (request.optionalSetOfStrings != null) {
-            for (const _item of request.optionalSetOfStrings) {
-                _request.append("optionalSetOfStrings", _item);
-            }
-        }
-
-        if (Array.isArray(request.maybeList))
-            for (const _item of request.maybeList) {
-                _request.append("maybeList", typeof _item === "string" ? _item : JSON.stringify(_item));
-            }
-
-        if (request.optionalMaybeList != null) {
-            if (Array.isArray(request.optionalMaybeList))
-                for (const _item of request.optionalMaybeList) {
-                    _request.append("optionalMaybeList", typeof _item === "string" ? _item : JSON.stringify(_item));
-                }
-        }
-
-        if (Array.isArray(request.maybeListOrSet) || request.maybeListOrSet instanceof Set)
-            for (const _item of request.maybeListOrSet) {
-                _request.append("maybeListOrSet", typeof _item === "string" ? _item : JSON.stringify(_item));
-            }
-
-        if (request.optionalMaybeListOrSet != null) {
-            if (Array.isArray(request.optionalMaybeListOrSet) || request.optionalMaybeListOrSet instanceof Set)
-                for (const _item of request.optionalMaybeListOrSet) {
-                    _request.append(
-                        "optionalMaybeListOrSet",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
-                    );
-                }
         }
 
         for (const _item of request.listOfObjects) {

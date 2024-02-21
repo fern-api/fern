@@ -19,5 +19,4 @@ allowedFailures:
   - extends
   - reserved-keywords
   - trace
-  - file-upload
-  - undiscriminated-unions.
+  - undiscriminated-unions

@@ -345,18 +345,19 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     requestBodyCodeBlock
                             .beginControlFlow("if ($N.isPresent())", getFilePropertyParameterName(fileProperty))
                             .addStatement(
-                                    "String $L = $T.probeContentType($L.toPath())",
+                                    "String $L = $T.probeContentType($L.get().toPath())",
                                     mimeTypeVariableName,
                                     Files.class,
                                     filePropertyParameterName)
                             .addStatement(
-                                    "$T $L = $L != null ? $T.parse(mimeType) : null",
+                                    "$T $L = $L != null ? $T.parse($L) : null",
                                     MediaType.class,
                                     mediaTypeVariableName,
                                     mimeTypeVariableName,
-                                    MediaType.class)
+                                    MediaType.class,
+                                    mimeTypeVariableName)
                             .addStatement(
-                                    "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L.get()))",
+                                    "$L.addFormDataPart($S, $L.get().getName(), $T.create($L, $L.get()))",
                                     getMultipartBodyPropertiesName(),
                                     fileProperty.getKey().getWireValue(),
                                     filePropertyParameterName,
@@ -372,11 +373,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     Files.class,
                                     filePropertyParameterName)
                             .addStatement(
-                                    "$T $L = $L != null ? $T.parse(mimeType) : null",
+                                    "$T $L = $L != null ? $T.parse($L) : null",
                                     MediaType.class,
                                     mediaTypeVariableName,
                                     mimeTypeVariableName,
-                                    MediaType.class)
+                                    MediaType.class,
+                                    mimeTypeVariableName)
                             .addStatement(
                                     "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L))",
                                     getMultipartBodyPropertiesName(),

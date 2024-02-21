@@ -10,8 +10,6 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
-from .types.maybe_list import MaybeList
-from .types.maybe_list_or_set import MaybeListOrSet
 from .types.my_object import MyObject
 
 # this is used as the default value for optional parameters
@@ -32,14 +30,7 @@ class ServiceClient:
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.List[str],
-        set_of_strings: typing.Set[str],
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        optional_set_of_strings: typing.Optional[typing.Set[str]] = None,
-        maybe_list: MaybeList,
-        optional_maybe_list: typing.Optional[MaybeList] = None,
-        maybe_list_or_set: MaybeListOrSet,
-        optional_maybe_list_or_set: typing.Optional[MaybeListOrSet] = None,
         list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -59,21 +50,7 @@ class ServiceClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - list_of_strings: typing.List[str].
-
-            - set_of_strings: typing.Set[str].
-
             - optional_list_of_strings: typing.Optional[typing.List[str]].
-
-            - optional_set_of_strings: typing.Optional[typing.Set[str]].
-
-            - maybe_list: MaybeList.
-
-            - optional_maybe_list: typing.Optional[MaybeList].
-
-            - maybe_list_or_set: MaybeListOrSet.
-
-            - optional_maybe_list_or_set: typing.Optional[MaybeListOrSet].
 
             - list_of_objects: typing.List[MyObject].
 
@@ -91,14 +68,7 @@ class ServiceClient:
                         "maybeString": maybe_string,
                         "integer": integer,
                         "maybeInteger": maybe_integer,
-                        "listOfStrings": list_of_strings,
-                        "setOfStrings": set_of_strings,
                         "optionalListOfStrings": optional_list_of_strings,
-                        "optionalSetOfStrings": optional_set_of_strings,
-                        "maybeList": maybe_list,
-                        "optionalMaybeList": optional_maybe_list,
-                        "maybeListOrSet": maybe_list_or_set,
-                        "optionalMaybeListOrSet": optional_maybe_list_or_set,
                         "listOfObjects": list_of_objects,
                     }
                 )
@@ -111,14 +81,7 @@ class ServiceClient:
                             "maybeString": maybe_string,
                             "integer": integer,
                             "maybeInteger": maybe_integer,
-                            "listOfStrings": list_of_strings,
-                            "setOfStrings": set_of_strings,
                             "optionalListOfStrings": optional_list_of_strings,
-                            "optionalSetOfStrings": optional_set_of_strings,
-                            "maybeList": maybe_list,
-                            "optionalMaybeList": optional_maybe_list,
-                            "maybeListOrSet": maybe_list_or_set,
-                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
                             "listOfObjects": list_of_objects,
                         }
                     )
@@ -278,14 +241,7 @@ class AsyncServiceClient:
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.List[str],
-        set_of_strings: typing.Set[str],
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        optional_set_of_strings: typing.Optional[typing.Set[str]] = None,
-        maybe_list: MaybeList,
-        optional_maybe_list: typing.Optional[MaybeList] = None,
-        maybe_list_or_set: MaybeListOrSet,
-        optional_maybe_list_or_set: typing.Optional[MaybeListOrSet] = None,
         list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -305,21 +261,7 @@ class AsyncServiceClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - list_of_strings: typing.List[str].
-
-            - set_of_strings: typing.Set[str].
-
             - optional_list_of_strings: typing.Optional[typing.List[str]].
-
-            - optional_set_of_strings: typing.Optional[typing.Set[str]].
-
-            - maybe_list: MaybeList.
-
-            - optional_maybe_list: typing.Optional[MaybeList].
-
-            - maybe_list_or_set: MaybeListOrSet.
-
-            - optional_maybe_list_or_set: typing.Optional[MaybeListOrSet].
 
             - list_of_objects: typing.List[MyObject].
 
@@ -337,14 +279,7 @@ class AsyncServiceClient:
                         "maybeString": maybe_string,
                         "integer": integer,
                         "maybeInteger": maybe_integer,
-                        "listOfStrings": list_of_strings,
-                        "setOfStrings": set_of_strings,
                         "optionalListOfStrings": optional_list_of_strings,
-                        "optionalSetOfStrings": optional_set_of_strings,
-                        "maybeList": maybe_list,
-                        "optionalMaybeList": optional_maybe_list,
-                        "maybeListOrSet": maybe_list_or_set,
-                        "optionalMaybeListOrSet": optional_maybe_list_or_set,
                         "listOfObjects": list_of_objects,
                     }
                 )
@@ -357,14 +292,7 @@ class AsyncServiceClient:
                             "maybeString": maybe_string,
                             "integer": integer,
                             "maybeInteger": maybe_integer,
-                            "listOfStrings": list_of_strings,
-                            "setOfStrings": set_of_strings,
                             "optionalListOfStrings": optional_list_of_strings,
-                            "optionalSetOfStrings": optional_set_of_strings,
-                            "maybeList": maybe_list,
-                            "optionalMaybeList": optional_maybe_list,
-                            "maybeListOrSet": maybe_list_or_set,
-                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
                             "listOfObjects": list_of_objects,
                         }
                     )
