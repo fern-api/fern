@@ -4,7 +4,7 @@ require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient
-  module Playlist
+  class Playlist
     class UpdatePlaylistRequest
       attr_reader :name, :problems, :additional_properties
 
@@ -27,6 +27,7 @@ module SeedTraceClient
       # @return [Playlist::UpdatePlaylistRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         name = struct.name
         problems = struct.problems
         new(name: name, problems: problems, additional_properties: struct)

@@ -6,7 +6,9 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ...types.operand import Operand
 
 
@@ -14,23 +16,50 @@ class QueryParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, *, value: typing.Optional[Operand] = None) -> None:
+    def send(
+        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
-            - value: typing.Optional[Operand].
+            - operand: typing.Optional[Operand].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import SeedEnum
 
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send(value=Operand., )
+        client.query_param.send(operand=Operand., )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
-            params=remove_none_from_dict({"value": value}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "operand": operand.value if operand is not None else None,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -40,17 +69,47 @@ class QueryParamClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def send_list(self, *, value: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None) -> None:
+    def send_list(
+        self,
+        *,
+        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
-            - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
-            params=remove_none_from_dict({"value": value}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "operand": operand.value if operand is not None else None,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -65,23 +124,50 @@ class AsyncQueryParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, *, value: typing.Optional[Operand] = None) -> None:
+    async def send(
+        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
-            - value: typing.Optional[Operand].
+            - operand: typing.Optional[Operand].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed import Operand
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.query_param.send(value=Operand., )
+        await client.query_param.send(operand=Operand., )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
-            params=remove_none_from_dict({"value": value}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "operand": operand.value if operand is not None else None,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -91,17 +177,47 @@ class AsyncQueryParamClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def send_list(self, *, value: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None) -> None:
+    async def send_list(
+        self,
+        *,
+        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
-            - value: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
-            params=remove_none_from_dict({"value": value}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "operand": operand.value if operand is not None else None,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

@@ -1,0 +1,1 @@
+export { SdkInlinedRequestBodySchemaGenerator } from "./SdkInlinedRequestBodySchemaGenerator";

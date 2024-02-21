@@ -15,6 +15,8 @@ class BaseClientWrapper:
             "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.0",
         }
+        headers["X-API-Version"] = "02-02-2024"
+        headers["X-API-Enable-Audit-Logging"] = "True"
         return headers
 
     def get_base_url(self) -> str:

@@ -4,7 +4,7 @@ require "json"
 
 module SeedObjectsWithImportsClient
   module Commons
-    module Metadata
+    class Metadata
       class Metadata
         attr_reader :id, :data, :additional_properties
 
@@ -27,6 +27,7 @@ module SeedObjectsWithImportsClient
         # @return [Commons::Metadata::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          JSON.parse(json_object)
           id = struct.id
           data = struct.data
           new(id: id, data: data, additional_properties: struct)

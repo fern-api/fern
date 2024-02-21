@@ -19,6 +19,13 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
+      globalHeaders: optional<list<GlobalHeader>>
+
+  GlobalHeader:
+    properties:
+      header: string
+      name: optional<string>
+      optional: optional<boolean>
 
   Tags:
     properties:
@@ -35,6 +42,7 @@ types:
   Webhook:
     extends: commons.WithDescription
     properties:
+      sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
       summary: optional<string>
       operationId: string
@@ -93,41 +101,64 @@ types:
 
   CustomCodeSample:
     availability: in-development
+    union:
+      language: CustomCodeSampleLanguage
+      sdk: CustomCodeSampleSdk
+
+  CustomCodeSampleLanguage:
+    docs: |
+      This is intended to co-exist with the auto-generated code samples.
     extends: commons.WithDescription
     properties:
-      language: SupportedLanguage
-      code:
-        type: string
-        docs: |
-          The code sample. 
-          This is a string because we want to support code samples that are not valid JSON.
-      name: optional<string>
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      language: string
+      code: string
       install:
         type: optional<string>
         docs: |
           The command to install the dependencies for the code sample.
           For example, `npm install` or `pip install -r requirements.txt`.
 
-  SupportedLanguage:
-    docs: Syntax highlighting.
+  CustomCodeSampleSdk:
+    docs: |
+      This will be used to replace the auto-generated code samples.
+    extends: commons.WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      sdk: SupportedSdkLanguage
+      code: string
+
+  # be sure to keep this in sync with the SupportedSdkLanguage enum
+  SupportedSdkLanguage:
     enum:
       - curl
       - python
       - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
       - js # alias to javascript
       - node # alias to javascript
-      - typescript
       - ts # alias to typescript
-      - go
+      - nodets # alias to typescript
+      - golang # alias to go
+      - dotnet # alias to csharp
+      - jvm # alias to java
 
   EndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
       PartialObjectExamples).
+    extends: commons.WithDescription
     properties:
       name: optional<string>
-      docs: optional<string>
       pathParameters: optional<list<PathParameterExample>>
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
@@ -227,9 +258,14 @@ types:
       key: string
       schema: MultipartSchema
 
+  FileSchema:
+    properties:
+      isOptional: boolean
+      isArray: boolean
+
   MultipartSchema:
     union:
-      file: {}
+      file: FileSchema
       json: Schema
 
   Response:
@@ -400,6 +436,14 @@ types:
       value:
         type: string
         docs: Value of the enum
+      casing: optional<CasingOverrides>
+  
+  CasingOverrides: 
+    properties: 
+      snake: optional<string>
+      camel: optional<string>
+      screamingSnake: optional<string>
+      pascal: optional<string>
 
   ReferencedSchema:
     extends:

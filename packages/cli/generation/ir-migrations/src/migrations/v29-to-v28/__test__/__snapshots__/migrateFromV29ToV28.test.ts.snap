@@ -78,6 +78,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
     ],
     "types": [],
     "webhooks": undefined,
+    "websocket": undefined,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -479,6 +480,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
         "type_service:UnauthorizedUser",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types": {
       "docs": undefined,
@@ -554,6 +556,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
         "type_types:Wheel",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
   },
   "types": {

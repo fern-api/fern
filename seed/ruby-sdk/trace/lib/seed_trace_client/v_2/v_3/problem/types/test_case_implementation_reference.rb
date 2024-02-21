@@ -7,7 +7,7 @@ require_relative "test_case_template_id"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class TestCaseImplementationReference
           attr_reader :member, :discriminant
 

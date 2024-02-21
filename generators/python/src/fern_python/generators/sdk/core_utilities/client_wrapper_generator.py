@@ -25,6 +25,7 @@ class ConstructorParameter:
     header_prefix: typing.Optional[str] = None
     environment_variable: typing.Optional[str] = None
     is_basic: bool = False
+    docs: typing.Optional[str] = None
 
 
 @dataclass

@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "../../../../commons/types/variable_type"
-
 require_relative "parameter"
+require_relative "../../../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class NonVoidFunctionSignature
           attr_reader :parameters, :return_type, :additional_properties
 
@@ -31,8 +30,17 @@ module SeedTraceClient
           # @return [V2::V3::Problem::NonVoidFunctionSignature]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters = struct.parameters
-            return_type = struct.returnType
+            parsed_json = JSON.parse(json_object)
+            parameters = parsed_json["parameters"]&.map do |v|
+              v = v.to_json
+              V2::V3::Problem::Parameter.from_json(json_object: v)
+            end
+            if parsed_json["returnType"].nil?
+              return_type = nil
+            else
+              return_type = parsed_json["returnType"].to_json
+              return_type = Commons::VariableType.from_json(json_object: return_type)
+            end
             new(parameters: parameters, return_type: return_type, additional_properties: struct)
           end
 

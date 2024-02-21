@@ -4,7 +4,7 @@ require_relative "submission_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class RecordedResponseNotification
       attr_reader :submission_id, :trace_responses_size, :test_case_id, :additional_properties
 
@@ -30,6 +30,7 @@ module SeedTraceClient
       # @return [Submission::RecordedResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         submission_id = struct.submissionId
         trace_responses_size = struct.traceResponsesSize
         test_case_id = struct.testCaseId

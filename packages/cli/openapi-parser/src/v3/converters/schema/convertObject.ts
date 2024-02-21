@@ -7,6 +7,7 @@ import {
 import { NamedFullExample, ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExtension } from "../../extensions/getExtension";
 import { getGeneratedPropertyName } from "../../utils/getSchemaName";
@@ -53,11 +54,51 @@ export function convertObject({
     const parents: ReferencedAllOfInfo[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
-            // if allOf element is a union, then don't inherit from it
+            // if allOf element is a discriminated union, then don't inherit from it
             const resolvedReference = context.resolveSchemaReference(allOfElement);
             if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
                 continue;
             }
+
+            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf schemas
+            if (resolvedReference.oneOf != null) {
+                // try to grab all properties from the oneOf schemas
+                for (const oneOfSchema of resolvedReference.oneOf) {
+                    const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
+                        ? context.resolveSchemaReference(oneOfSchema)
+                        : oneOfSchema;
+                    const convertedOneOfSchema = convertSchema(
+                        resolvedOneOfSchema,
+                        false,
+                        new DummyOpenAPIV3ParserContext({
+                            document: context.document,
+                            taskContext: context.taskContext
+                        }),
+                        breadcrumbs
+                    );
+                    if (convertedOneOfSchema.type === "object") {
+                        inlinedParentProperties.push(
+                            ...convertedOneOfSchema.properties.map((property) => {
+                                if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
+                                    return {
+                                        ...property,
+                                        schema: SchemaWithExample.optional({
+                                            nameOverride: undefined,
+                                            generatedName: "",
+                                            value: property.schema,
+                                            description: undefined,
+                                            groupName: undefined
+                                        })
+                                    };
+                                }
+                                return property;
+                            })
+                        );
+                    }
+                }
+                continue;
+            }
+
             const schemaId = getSchemaIdFromReference(allOfElement);
             parents.push({
                 schemaId,

@@ -1,0 +1,35 @@
+{
+  "type": "library",
+  "private": false,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "dockerTagLocal:node": "./node-docker/create_docker.sh local",
+        "dockerTagVersion:node": "./node-docker/create_docker.sh",
+        "dockerTagLocal:browser": "./browser-docker/create_docker.sh local",
+        "dockerTagVersion:browser": "./browser-docker/create_docker.sh"
+      }
+    },
+    "depcheck": {
+      "ignores": [
+        "webpack",
+        "webpack-cli",
+        "@fern-api/umd-compat-loader",
+        "@ts-morph/common",
+        "ts-loader",
+        "ts-node",
+        "webpack-bundle-analyzer",
+        "@types/webpack-bundle-analyzer",
+        "simple-progress-webpack-plugin",
+        "@types/tmp"
+      ],
+      "ignore-patterns": ["docker/bundle.js"]
+    },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    },
+    "ts-config": {
+      "exclude": ["./src/**/__test__/**/generated"]
+    }
+  }
+}

@@ -6,7 +6,7 @@ require_relative "tag"
 
 module SeedExamplesClient
   module Commons
-    module Types
+    class Types
       class EventInfo
         attr_reader :member, :discriminant
 

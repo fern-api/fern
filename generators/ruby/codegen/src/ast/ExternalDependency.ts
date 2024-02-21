@@ -1,28 +1,52 @@
 import { AstNode } from "./core/AstNode";
 
+interface Version {
+    version: string;
+    specifier: string;
+}
 export declare namespace ExternalDependency {
     export interface Init extends AstNode.Init {
-        version: string;
-        specifier: string;
+        lowerBound?: Version;
+        upperBound?: Version;
         packageName: string;
     }
 }
 export class ExternalDependency extends AstNode {
-    public version: string;
-    public specifier: string;
+    public lowerBound: Version | undefined;
+    public upperBound: Version | undefined;
     public packageName: string;
 
-    constructor({ version, specifier, packageName, ...rest }: ExternalDependency.Init) {
+    constructor({ lowerBound, upperBound, packageName, ...rest }: ExternalDependency.Init) {
         super(rest);
-        this.version = version;
-        this.specifier = specifier;
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
         this.packageName = packageName;
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
-            stringContent: `spec.add_dependency "${this.packageName}", "${this.specifier} ${this.version}"`,
+            stringContent: `spec.add_dependency "${this.packageName}"`,
             startingTabSpaces
+        });
+        this.addText({
+            stringContent: this.lowerBound?.specifier,
+            templateString: ', "%s',
+            appendToLastString: true
+        });
+        this.addText({
+            stringContent: this.lowerBound?.version,
+            templateString: ' %s"',
+            appendToLastString: true
+        });
+        this.addText({
+            stringContent: this.upperBound?.specifier,
+            templateString: ', "%s',
+            appendToLastString: true
+        });
+        this.addText({
+            stringContent: this.upperBound?.version,
+            templateString: ' %s"',
+            appendToLastString: true
         });
     }
 }

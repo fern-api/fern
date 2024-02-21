@@ -4,7 +4,7 @@ require_relative "debug_key_value_pairs"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DebugMapValue
       attr_reader :key_value_pairs, :additional_properties
 
@@ -24,7 +24,11 @@ module SeedTraceClient
       # @return [Commons::DebugMapValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key_value_pairs = struct.keyValuePairs
+        parsed_json = JSON.parse(json_object)
+        key_value_pairs = parsed_json["keyValuePairs"]&.map do |v|
+          v = v.to_json
+          Commons::DebugKeyValuePairs.from_json(json_object: v)
+        end
         new(key_value_pairs: key_value_pairs, additional_properties: struct)
       end
 

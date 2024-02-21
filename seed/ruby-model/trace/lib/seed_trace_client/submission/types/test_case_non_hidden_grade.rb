@@ -5,7 +5,7 @@ require_relative "exception_v_2"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseNonHiddenGrade
       attr_reader :passed, :actual_result, :exception, :stdout, :additional_properties
 
@@ -34,9 +34,20 @@ module SeedTraceClient
       # @return [Submission::TestCaseNonHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         passed = struct.passed
-        actual_result = struct.actualResult
-        exception = struct.exception
+        if parsed_json["actualResult"].nil?
+          actual_result = nil
+        else
+          actual_result = parsed_json["actualResult"].to_json
+          actual_result = Commons::VariableValue.from_json(json_object: actual_result)
+        end
+        if parsed_json["exception"].nil?
+          exception = nil
+        else
+          exception = parsed_json["exception"].to_json
+          exception = Submission::ExceptionV2.from_json(json_object: exception)
+        end
         stdout = struct.stdout
         new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
             additional_properties: struct)

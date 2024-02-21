@@ -75,6 +75,10 @@ class SdkGenerator(AbstractGenerator):
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
 
+        # Export from root init
+        if custom_config.additional_init_exports is not None:
+            project.add_init_exports(path=(), exports=custom_config.additional_init_exports)
+
         self._pydantic_model_custom_config = custom_config.pydantic_config
 
         context = SdkGeneratorContextImpl(

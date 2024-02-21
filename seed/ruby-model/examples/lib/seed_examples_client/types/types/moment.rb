@@ -4,7 +4,7 @@ require "date"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Moment
       attr_reader :id, :date, :datetime, :additional_properties
 
@@ -30,9 +30,10 @@ module SeedExamplesClient
       # @return [Types::Moment]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         id = struct.id
-        date = struct.date
-        datetime = struct.datetime
+        date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
+        datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 

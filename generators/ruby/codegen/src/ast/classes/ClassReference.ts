@@ -10,10 +10,12 @@ import {
     SingleUnionTypeProperty,
     TypeDeclaration,
     TypeId,
-    TypeReference
+    TypeReference,
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
-import { getLocationForTypeDeclaration } from "../../utils/RubyUtilities";
+import { LocationGenerator } from "../../utils/LocationGenerator";
+import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
@@ -80,7 +82,7 @@ export class ClassReference extends AstNode {
         this.addText({ stringContent: this.qualifiedName, startingTabSpaces });
     }
 
-    public fromJson(_variable: Variable | string): FunctionInvocation | undefined {
+    public fromJson(_variable: Variable | string): AstNode | undefined {
         return;
     }
 
@@ -135,7 +137,7 @@ export class SerializableObjectReference extends ClassReference {
         super({ ...init });
     }
 
-    public fromJson(variable: string | Variable): FunctionInvocation | undefined {
+    public fromJson(variable: string | Variable): AstNode | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "from_json", functionBody: [] }),
             onObject: this.qualifiedName,
@@ -168,10 +170,36 @@ export class SerializableObjectReference extends ClassReference {
               });
     }
 
-    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+    static fromDeclaredTypeName(
+        declaredTypeName: DeclaredTypeName,
+        locationGenerator: LocationGenerator
+    ): ClassReference {
+        const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new SerializableObjectReference({
+            name: declaredTypeName.name.pascalCase.safeName,
+            import_: new Import({ from: location }),
+            moduleBreadcrumbs,
+            resolvedTypeId: declaredTypeName.typeId
+        });
+    }
+}
+
+export declare namespace DiscriminatedUnionClassReference {
+    export type InitReference = SerializableObjectReference.InitReference;
+}
+export class DiscriminatedUnionClassReference extends SerializableObjectReference {
+    constructor(init: DiscriminatedUnionClassReference.InitReference) {
+        super({ ...init });
+    }
+
+    static fromDeclaredTypeName(
+        declaredTypeName: DeclaredTypeName,
+        locationGenerator: LocationGenerator
+    ): ClassReference {
+        const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        return new DiscriminatedUnionClassReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs,
@@ -192,7 +220,7 @@ export class AliasReference extends ClassReference {
         this.aliasOf = aliasOf;
     }
 
-    public fromJson(variable: string | Variable): FunctionInvocation | undefined {
+    public fromJson(variable: string | Variable): AstNode | undefined {
         return this.aliasOf.fromJson(variable);
     }
 
@@ -203,10 +231,11 @@ export class AliasReference extends ClassReference {
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
         aliasOf: ClassReference,
-        resolvedTypeId: string | undefined
+        resolvedTypeId: string | undefined,
+        locationGenerator: LocationGenerator
     ): ClassReference {
-        const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+        const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -226,9 +255,9 @@ export declare namespace ArrayReference {
     }
 }
 export class ArrayReference extends ClassReference {
-    private innerType: ClassReference | string;
+    public innerType: ClassReference | string;
     constructor({ innerType, ...rest }: ArrayReference.InitReference) {
-        const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
+        const typeName = innerType instanceof ClassReference ? innerType.typeHint : innerType;
         super({
             name: "Array",
             typeHint: `Array<${typeName}>`,
@@ -239,27 +268,40 @@ export class ArrayReference extends ClassReference {
         this.innerType = innerType;
     }
 
-    public fromJson(variable: string | Variable): FunctionInvocation | undefined {
+    public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
             this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "map", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "v",
+            ? new ConditionalStatement({
+                  if_: {
+                      rightSide: new FunctionInvocation({
+                          // TODO: Do this field access on the client better
+                          onObject: variable,
+                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                      }),
+                      operation: "!",
                       expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                          new FunctionInvocation({
+                              baseFunction: new Function_({ name: "map", functionBody: [] }),
+                              onObject: variable,
+                              block: {
+                                  arguments: "v",
+                                  expressions: [
+                                      new Expression({
+                                          leftSide: "v",
+                                          rightSide: new FunctionInvocation({
+                                              onObject: "v",
+                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                                          }),
+                                          isAssignment: true
+                                      }),
+                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                                  ]
+                              }
+                          })
                       ]
-                  }
+                  },
+                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
               })
             : undefined;
     }
@@ -283,57 +325,76 @@ export class ArrayInstance extends AstNode {
 export declare namespace Hash_ {
     export interface InitReference extends Omit<ClassReference.Init, "name" | "typeHint"> {
         name?: string;
+        typeHint?: string;
         keyType: ClassReference | string;
         valueType: ClassReference | string;
     }
     export interface InitInstance extends AstNode.Init {
         contents?: Map<string, string | AstNode>;
         // allow for spreading additional hashes into this hash.
-        additionalHashes?: (AstNode | string)[];
+        additionalHashes?: DefaultingExpandableHash[];
         isFrozen?: boolean;
         shouldCompact?: boolean;
     }
 }
 export class HashReference extends ClassReference {
     valueType: ClassReference | string;
-    constructor({ name, keyType, valueType, ...rest }: Hash_.InitReference) {
+    constructor({ name, typeHint, keyType, valueType, ...rest }: Hash_.InitReference) {
         const keyTypeName = keyType instanceof ClassReference ? keyType.qualifiedName : keyType;
         const valueTypeName = valueType instanceof ClassReference ? valueType.qualifiedName : valueType;
-        const typeHint = `Hash{${keyTypeName} => ${valueTypeName}}`;
+        const typeHintDefaulted = typeHint ?? `Hash{${keyTypeName} => ${valueTypeName}}`;
         const nameDefaulted = name ?? "Hash";
-        super({ name: nameDefaulted, typeHint, ...rest });
+        super({ name: nameDefaulted, typeHint: typeHintDefaulted, ...rest });
 
         this.valueType = valueType;
     }
-    public fromJson(variable: string | Variable): FunctionInvocation | undefined {
+    public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
             this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "k, v",
+            ? new ConditionalStatement({
+                  if_: {
+                      rightSide: new FunctionInvocation({
+                          // TODO: Do this field access on the client better
+                          onObject: variable,
+                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                      }),
+                      operation: "!",
                       expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                          new FunctionInvocation({
+                              baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                              onObject: variable,
+                              block: {
+                                  arguments: "k, v",
+                                  expressions: [
+                                      new Expression({
+                                          leftSide: "v",
+                                          rightSide: new FunctionInvocation({
+                                              onObject: "v",
+                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                                          }),
+                                          isAssignment: true
+                                      }),
+                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                                  ]
+                              }
+                          })
                       ]
-                  }
+                  },
+                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
               })
             : undefined;
     }
 }
 
+interface DefaultingExpandableHash {
+    value: AstNode | string;
+    defaultValue?: AstNode | string;
+}
+
 export class HashInstance extends AstNode {
     public contents: Map<string, string | AstNode>;
-    public additionalHashes: (AstNode | string)[];
+    public additionalHashes: DefaultingExpandableHash[];
     public shouldCompact: boolean;
     public isFrozen: boolean;
 
@@ -354,52 +415,65 @@ export class HashInstance extends AstNode {
 
     public writeInternal(): void {
         const hashContents = Array.from(this.contents.entries());
+        const expandingHashes = this.additionalHashes
+            .map((ah) => {
+                const hashString = ah.value instanceof AstNode ? ah.value.write({}) : ah.value;
+                return ah.defaultValue !== undefined
+                    ? format(
+                          "**(%s || %s)",
+                          hashString,
+                          ah.defaultValue instanceof AstNode ? ah.defaultValue.write({}) : ah.defaultValue
+                      )
+                    : format("**%s", hashString);
+            })
+            .join(", ");
         this.addText({
-            stringContent: `{ ${this.additionalHashes
-                .map((ah) => format("**%s", ah instanceof AstNode ? ah.write({}) : ah))
-                .join(", ")}${hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""}${hashContents
-                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : `'${v}'`))
-                .join(", ")} }`
+            stringContent: `{ ${expandingHashes}${
+                hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""
+            }${hashContents.map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : `'${v}'`)).join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
-        this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
+        this.addText({ stringContent: this.isFrozen ? ".freeze" : undefined, appendToLastString: true });
+    }
+
+    public getImports(): Set<Import> {
+        let imports = new Set<Import>();
+        Array.from(this.contents.values()).forEach((param) => {
+            if (param instanceof AstNode) {
+                imports = new Set([...imports, ...param.getImports()]);
+            }
+        });
+        this.additionalHashes.forEach((ah) => {
+            if (ah.value instanceof AstNode) {
+                imports = new Set([...imports, ...ah.value.getImports()]);
+            }
+            if (ah.defaultValue instanceof AstNode) {
+                imports = new Set([...imports, ...ah.defaultValue.getImports()]);
+            }
+        });
+        return imports;
     }
 }
 
-export declare namespace Enum {
-    export interface ReferenceInit extends ClassReference.Init {
+export declare namespace EnumReference {
+    export interface Init extends ClassReference.Init {
         name: string;
     }
-    export interface InstanceInit extends ClassReference.Init {
-        contents: Map<string, string>;
-    }
 }
 
-// TODO: allow for per-enum documentation
-export class Enum extends HashInstance {
-    constructor({ contents, documentation }: Enum.InstanceInit) {
-        super({ contents, isFrozen: true, documentation });
-    }
-}
-
-export class EnumReference extends HashReference {
-    constructor({ name }: Enum.ReferenceInit) {
-        super({ name, keyType: "String", valueType: "String" });
+export class EnumReference extends ClassReference {
+    constructor({ name, ...rest }: ClassReference.Init) {
+        super({ name, ...rest });
     }
 
-    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "key", functionBody: [] }),
-            onObject: this,
-            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
-        });
-    }
-
-    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): EnumReference {
-        const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+    static fromDeclaredTypeName(
+        declaredTypeName: DeclaredTypeName,
+        locationGenerator: LocationGenerator
+    ): EnumReference {
+        const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new EnumReference({
-            name: declaredTypeName.name.screamingSnakeCase.safeName,
+            name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs
         });
@@ -425,7 +499,7 @@ export class SetReference extends ClassReference {
         });
     }
 
-    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
+    public fromJson(variable: Variable | string): AstNode | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
             onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
@@ -466,22 +540,40 @@ export class DateReference extends ClassReference {
         });
     }
 
-    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-            onObject: this,
-            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+    public fromJson(variable: Variable | string): AstNode | undefined {
+        return new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: variable,
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new FunctionInvocation({
+                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                        onObject: this,
+                        arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+                    })
+                ]
+            },
+            else_: [new Expression({ rightSide: "nil", isAssignment: false })]
         });
     }
 }
 
 export class ClassReferenceFactory {
+    private locationGenerator: LocationGenerator;
     private typeDeclarations: Map<TypeId, TypeDeclaration>;
     public generatedReferences: Map<TypeId, ClassReference>;
 
-    constructor(typeDeclarations: Map<TypeId, TypeDeclaration>) {
+    public resolvedReferences: Map<TypeId, ClassReference[]>;
+
+    constructor(typeDeclarations: Map<TypeId, TypeDeclaration>, locationGenerator: LocationGenerator) {
+        this.locationGenerator = locationGenerator;
         this.typeDeclarations = typeDeclarations;
         this.generatedReferences = new Map();
+        this.resolvedReferences = new Map();
         for (const [_, type] of typeDeclarations) {
             this.fromTypeDeclaration(type);
         }
@@ -501,12 +593,23 @@ export class ClassReferenceFactory {
                         unknown: () => undefined,
                         _other: () => undefined
                     });
-                    return AliasReference.fromDeclaredTypeName(type.name, aliasOfCr, resolvedTypeId);
+                    return AliasReference.fromDeclaredTypeName(
+                        type.name,
+                        aliasOfCr,
+                        resolvedTypeId,
+                        this.locationGenerator
+                    );
                 },
-                enum: () => EnumReference.fromDeclaredTypeName(type.name),
-                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
-                union: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
-                undiscriminatedUnion: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                enum: () => EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                union: () => DiscriminatedUnionClassReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => {
+                    this.resolvedReferences.set(
+                        typeId,
+                        uutd.members.map((member) => this.fromTypeReference(member.type))
+                    );
+                    return SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator);
+                },
                 _other: () => {
                     throw new Error("Attempting to generate a class reference for an unknown type.");
                 }

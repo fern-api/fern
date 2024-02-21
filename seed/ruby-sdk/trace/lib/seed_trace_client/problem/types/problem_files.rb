@@ -4,7 +4,7 @@ require_relative "../../commons/types/file_info"
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class ProblemFiles
       attr_reader :solution_file, :read_only_files, :additional_properties
 
@@ -27,8 +27,17 @@ module SeedTraceClient
       # @return [Problem::ProblemFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        solution_file = struct.solutionFile
-        read_only_files = struct.readOnlyFiles
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["solutionFile"].nil?
+          solution_file = nil
+        else
+          solution_file = parsed_json["solutionFile"].to_json
+          solution_file = Commons::FileInfo.from_json(json_object: solution_file)
+        end
+        read_only_files = parsed_json["readOnlyFiles"]&.map do |v|
+          v = v.to_json
+          Commons::FileInfo.from_json(json_object: v)
+        end
         new(solution_file: solution_file, read_only_files: read_only_files, additional_properties: struct)
       end
 

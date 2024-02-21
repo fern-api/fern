@@ -5,7 +5,7 @@ require_relative "test_submission_update_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionUpdate
       attr_reader :update_time, :update_info, :additional_properties
 
@@ -28,8 +28,14 @@ module SeedTraceClient
       # @return [Submission::TestSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time = struct.updateTime
-        update_info = struct.updateInfo
+        parsed_json = JSON.parse(json_object)
+        update_time = (DateTime.parse(parsed_json["updateTime"]) unless parsed_json["updateTime"].nil?)
+        if parsed_json["updateInfo"].nil?
+          update_info = nil
+        else
+          update_info = parsed_json["updateInfo"].to_json
+          update_info = Submission::TestSubmissionUpdateInfo.from_json(json_object: update_info)
+        end
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 

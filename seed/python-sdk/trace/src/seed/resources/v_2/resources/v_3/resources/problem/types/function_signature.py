@@ -4,15 +4,13 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
 
 
 class FunctionSignature_Void(VoidFunctionSignature):
-    type: typing_extensions.Literal["void"]
+    type: typing.Literal["void"]
 
     class Config:
         frozen = True
@@ -21,7 +19,7 @@ class FunctionSignature_Void(VoidFunctionSignature):
 
 
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
-    type: typing_extensions.Literal["nonVoid"]
+    type: typing.Literal["nonVoid"]
 
     class Config:
         frozen = True
@@ -30,7 +28,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
 
 
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-    type: typing_extensions.Literal["voidThatTakesActualResult"]
+    type: typing.Literal["voidThatTakesActualResult"]
 
     class Config:
         frozen = True

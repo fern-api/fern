@@ -4,7 +4,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class TestCaseExpects
         attr_reader :expected_stdout, :additional_properties
 
@@ -24,6 +24,7 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseExpects]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          JSON.parse(json_object)
           expected_stdout = struct.expectedStdout
           new(expected_stdout: expected_stdout, additional_properties: struct)
         end

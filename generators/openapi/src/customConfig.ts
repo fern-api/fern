@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/api";
 
 export interface FernOpenapiCustomConfig {
     format: "yaml" | "json";

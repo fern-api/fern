@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class FileInfo
       attr_reader :filename, :contents, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedTraceClient
       # @return [Commons::FileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         filename = struct.filename
         contents = struct.contents
         new(filename: filename, contents: contents, additional_properties: struct)

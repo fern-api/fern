@@ -15,8 +15,8 @@ import types.Operand;
 )
 public interface QueryParamService {
   @PostMapping("/query")
-  void send(@RequestParam("value") Optional<Operand> value);
+  void send(@RequestParam("operand") Optional<Operand> operand);
 
   @PostMapping("/query-list")
-  void sendList(@RequestParam("value") Optional<Operand> value);
+  void sendList(@RequestParam("operand") Optional<Operand> operand);
 }

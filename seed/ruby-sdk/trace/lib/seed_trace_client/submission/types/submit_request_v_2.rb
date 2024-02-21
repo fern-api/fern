@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require_relative "submission_file_info"
-
-require_relative "../../commons/types/problem_id"
 require_relative "submission_id"
+require_relative "../../commons/types/language"
+require_relative "submission_file_info"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmitRequestV2
       attr_reader :submission_id, :language, :submission_files, :problem_id, :problem_version, :user_id,
                   :additional_properties
 
       # @param submission_id [Submission::SUBMISSION_ID]
-      # @param language [Hash{String => String}]
+      # @param language [Commons::Language]
       # @param submission_files [Array<Submission::SubmissionFileInfo>]
       # @param problem_id [Commons::PROBLEM_ID]
       # @param problem_version [Integer]
@@ -24,7 +24,7 @@ module SeedTraceClient
                      additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Hash{String => String}]
+        # @type [Commons::Language]
         @language = language
         # @type [Array<Submission::SubmissionFileInfo>]
         @submission_files = submission_files
@@ -44,9 +44,13 @@ module SeedTraceClient
       # @return [Submission::SubmitRequestV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         language = struct.language
-        submission_files = struct.submissionFiles
+        submission_files = parsed_json["submissionFiles"]&.map do |v|
+          v = v.to_json
+          Submission::SubmissionFileInfo.from_json(json_object: v)
+        end
         problem_id = struct.problemId
         problem_version = struct.problemVersion
         user_id = struct.userId
@@ -74,7 +78,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
         obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.problem_version&.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")

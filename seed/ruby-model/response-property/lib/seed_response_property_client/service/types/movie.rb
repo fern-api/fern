@@ -3,7 +3,7 @@
 require "json"
 
 module SeedResponsePropertyClient
-  module Service
+  class Service
     class Movie
       attr_reader :id, :name, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedResponsePropertyClient
       # @return [Service::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         id = struct.id
         name = struct.name
         new(id: id, name: name, additional_properties: struct)

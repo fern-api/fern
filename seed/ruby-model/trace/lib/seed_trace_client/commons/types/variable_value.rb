@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "binary_tree_value"
-require_relative "doubly_linked_list_value"
 require_relative "map_value"
+require_relative "binary_tree_value"
 require_relative "singly_linked_list_value"
+require_relative "doubly_linked_list_value"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class VariableValue
       attr_reader :member, :discriminant
 
@@ -43,8 +43,8 @@ module SeedTraceClient
                  when "mapValue"
                    Commons::MapValue.from_json(json_object: json_object)
                  when "listValue"
-                   json_object.value.map do |v|
-                     v = v.to_h.to_json
+                   json_object.value&.map do |v|
+                     v = v.to_json
                      Commons::VariableValue.from_json(json_object: v)
                    end
                  when "binaryTreeValue"

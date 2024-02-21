@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "test_case_implementation"
-
 require_relative "test_case_template_id"
+require_relative "test_case_implementation"
 require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class TestCaseTemplate
         attr_reader :template_id, :name, :implementation, :additional_properties
 
@@ -33,9 +32,15 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseTemplate]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           template_id = struct.templateId
           name = struct.name
-          implementation = struct.implementation
+          if parsed_json["implementation"].nil?
+            implementation = nil
+          else
+            implementation = parsed_json["implementation"].to_json
+            implementation = V2::Problem::TestCaseImplementation.from_json(json_object: implementation)
+          end
           new(template_id: template_id, name: name, implementation: implementation, additional_properties: struct)
         end
 

@@ -30,8 +30,7 @@ function addTestCommand(cli: Argv) {
                 .option("workspace", {
                     type: "array",
                     string: true,
-                    default: undefined,
-                    demandOption: true,
+                    demandOption: false,
                     description: "The workspace to run tests on"
                 })
                 .option("parallel", {
@@ -41,7 +40,7 @@ function addTestCommand(cli: Argv) {
                 .option("custom-fixture", {
                     type: "string",
                     demandOption: false,
-                    description: "Path to the api directory"
+                    description: "Path to the API directory"
                 })
                 .option("fixture", {
                     type: "array",
@@ -62,6 +61,11 @@ function addTestCommand(cli: Argv) {
                     description: "Determines whether or not snapshots are written to disk",
                     default: false
                 })
+                .option("skip-scripts", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -69,8 +73,9 @@ function addTestCommand(cli: Argv) {
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
 
+            let failurePresent = false;
             for (const workspace of workspaces) {
-                if (!argv.workspace.includes(workspace.workspaceName)) {
+                if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
                     continue;
                 }
 
@@ -101,10 +106,11 @@ function addTestCommand(cli: Argv) {
                         docker: parsedDockerImage,
                         logLevel: argv["log-level"],
                         numDockers: argv.parallel,
-                        keepDocker: argv.keepDocker
+                        keepDocker: argv.keepDocker,
+                        skipScripts: argv.skipScripts
                     });
                 } else {
-                    await testWorkspaceFixtures({
+                    const passed = await testWorkspaceFixtures({
                         workspace,
                         fixtures: argv.fixture,
                         irVersion: workspace.workspaceConfig.irVersion,
@@ -114,9 +120,15 @@ function addTestCommand(cli: Argv) {
                         logLevel: argv["log-level"],
                         numDockers: argv.parallel,
                         taskContextFactory,
-                        keepDocker: argv.keepDocker
+                        keepDocker: argv.keepDocker,
+                        skipScripts: argv.skipScripts
                     });
+                    failurePresent = failurePresent || !passed;
                 }
+            }
+
+            if (failurePresent) {
+                process.exit(1);
             }
         }
     );

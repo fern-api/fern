@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -33,15 +31,15 @@ class ContainerValue(pydantic.BaseModel):
 
     def visit(
         self,
-        list: typing.Callable[[typing.List["FieldValue"]], T_Result],
-        optional: typing.Callable[[typing.Optional["FieldValue"]], T_Result],
+        list: typing.Callable[[typing.List[FieldValue]], T_Result],
+        optional: typing.Callable[[typing.Optional[FieldValue]], T_Result],
     ) -> T_Result:
         if self.__root__.type == "list":
             return list(self.__root__.value)
         if self.__root__.type == "optional":
             return optional(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic.Field(discriminator="type")
     ]
 
@@ -63,14 +61,14 @@ from .field_value import FieldValue  # noqa: E402
 
 class _ContainerValue:
     class List(pydantic.BaseModel):
-        type: typing_extensions.Literal["list"]
+        type: typing.Literal["list"]
         value: typing.List[FieldValue]
 
     class Optional(pydantic.BaseModel):
-        type: typing_extensions.Literal["optional"]
+        type: typing.Literal["optional"]
         value: typing.Optional[FieldValue]
 
 
 _ContainerValue.List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
 _ContainerValue.Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
-ContainerValue.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+ContainerValue.update_forward_refs()

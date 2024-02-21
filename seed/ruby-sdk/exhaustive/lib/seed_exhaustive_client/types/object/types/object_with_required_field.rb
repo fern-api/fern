@@ -4,7 +4,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Object
+    class Object
       class ObjectWithRequiredField
         attr_reader :string, :additional_properties
 
@@ -24,6 +24,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::ObjectWithRequiredField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          JSON.parse(json_object)
           string = struct.string
           new(string: string, additional_properties: struct)
         end

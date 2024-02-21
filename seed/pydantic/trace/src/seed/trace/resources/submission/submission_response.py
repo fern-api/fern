@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from ..commons.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 from .exception_info import ExceptionInfo
@@ -18,32 +16,32 @@ except ImportError:
 
 
 class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["serverInitialized"]
+    type: typing.Literal["serverInitialized"]
 
 
 class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["problemInitialized"]
+    type: typing.Literal["problemInitialized"]
     value: ProblemId
 
 
 class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
-    type: typing_extensions.Literal["workspaceInitialized"]
+    type: typing.Literal["workspaceInitialized"]
 
 
 class SubmissionResponse_ServerErrored(ExceptionInfo):
-    type: typing_extensions.Literal["serverErrored"]
+    type: typing.Literal["serverErrored"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
-    type: typing_extensions.Literal["codeExecutionUpdate"]
+    type: typing.Literal["codeExecutionUpdate"]
     value: CodeExecutionUpdate
 
 
 class SubmissionResponse_Terminated(TerminatedResponse):
-    type: typing_extensions.Literal["terminated"]
+    type: typing.Literal["terminated"]
 
     class Config:
         allow_population_by_field_name = True

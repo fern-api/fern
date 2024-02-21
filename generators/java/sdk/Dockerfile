@@ -1,5 +1,5 @@
 # Apple Silicon: FROM bitnami/gradle:latest
-FROM bitnami/gradle:8.5.0
+FROM bitnami/gradle:latest
 
 COPY build/distributions/sdk.tar init.sh /
 RUN cd / \

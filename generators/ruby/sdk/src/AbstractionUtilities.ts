@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { generatePathTemplate } from "@fern-api/generator-commons";
 import {
     Argument,
@@ -12,11 +11,11 @@ import {
     Function_,
     GeneratedRubyFile,
     GenericClassReference,
-    getLocationForServiceDeclaration,
-    getLocationFromFernFilepath,
+    getBreadcrumbsFromFilepath,
     HashInstance,
     HashReference,
     Import,
+    LocationGenerator,
     LongClassReference,
     Module_,
     Parameter,
@@ -38,15 +37,18 @@ import {
     PathParameter,
     SdkConfig,
     SingleBaseUrlEnvironments,
+    Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
+    subpackageName: string;
     syncClientClass: Class_;
     asyncClientClass: Class_;
 }
@@ -61,6 +63,7 @@ export function generateEndpoints(
     requestClientVariable: Variable,
     endpoints: HttpEndpoint[],
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     isAsync: boolean,
     irBasePath: string,
     serviceBasePath: string,
@@ -73,7 +76,6 @@ export function generateEndpoints(
             if (EndpointGenerator.isStreamingResponse(endpoint)) {
                 return;
             }
-            // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
             const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
                 .filter((pathPart) => pathPart !== "")
                 .join("/");
@@ -82,20 +84,23 @@ export function generateEndpoints(
                 type: GenericClassReference,
                 variableType: VariableType.LOCAL
             });
+
+            const endpointRequestOptions = endpoint.idempotent ? idempotencyRequestOptions : requestOptions;
             const requestOptionsVariable = new Variable({
                 name: "request_options",
-                type: requestOptions.classReference,
+                type: endpointRequestOptions.classReference,
                 variableType: VariableType.LOCAL
             });
             const generator = new EndpointGenerator(
                 endpoint,
                 requestOptionsVariable,
-                requestOptions,
+                endpointRequestOptions,
                 crf,
                 generatedClasses,
                 fileUploadUtility
             );
 
+            const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
             const functionCore: AstNode[] = [
                 new Expression({
                     leftSide: responseVariable,
@@ -103,8 +108,10 @@ export function generateEndpoints(
                         // TODO: Do this field access on the client better
                         onObject: `${requestClientVariable.write({})}.conn`,
                         baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                        arguments_: [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
-                        block: generator.getFaradayBlock(requestClientVariable)
+                        arguments_: shouldOverwriteUrl
+                            ? []
+                            : [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
+                        block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
                     }),
                     isAssignment: true
                 }),
@@ -114,15 +121,7 @@ export function generateEndpoints(
 
             return new Function_({
                 name: endpoint.name.snakeCase.safeName,
-                parameters: [
-                    ...generator.getEndpointParameters(),
-                    // Optional request_options, e.g. the per-request customizer, optional
-                    new Parameter({
-                        name: requestOptionsVariable.name,
-                        type: requestOptionsVariable.type,
-                        isOptional: true
-                    })
-                ],
+                parameters: generator.getEndpointParameters(),
                 functionBody: isAsync
                     ? [
                           new FunctionInvocation({
@@ -136,7 +135,8 @@ export function generateEndpoints(
                     : functionCore,
                 returnValue: generator.getResponseType(),
                 crf,
-                flattenedProperties
+                flattenedProperties,
+                documentation: endpoint.docs
             });
         })
         .filter((fun) => fun !== undefined) as Function_[];
@@ -148,13 +148,16 @@ export function generateRootPackage(
     requestClient: Class_,
     asyncRequestClient: Class_,
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     crf: ClassReferenceFactory,
-    syncSubpackages: Class_[],
-    asyncSubpackages: Class_[],
+    syncSubpackages: Map<string, Class_>,
+    asyncSubpackages: Map<string, Class_>,
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
+    typeExporterLocation: string,
+    environmentClass?: ClassReference,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -166,16 +169,20 @@ export function generateRootPackage(
     const requestClientVariable = new Variable({
         name: "request_client",
         type: requestClient.classReference,
-        variableType: VariableType.LOCAL
+        variableType: VariableType.INSTANCE
     });
     const clientClass = new Class_({
         classReference,
+        properties: Array.from(syncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         functions: rootService
             ? generateEndpoints(
                   crf,
                   requestClientVariable,
                   rootService.endpoints,
                   requestOptions,
+                  idempotencyRequestOptions,
                   false,
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
@@ -187,19 +194,20 @@ export function generateRootPackage(
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             functionBody: [
                 new Expression({
                     leftSide: requestClientVariable,
                     rightSide: new FunctionInvocation({
                         onObject: requestClient.classReference,
                         baseFunction: requestClient.initializer,
-                        arguments_: requestClient.properties.map((prop) => prop.toArgument(prop.name, true))
+                        arguments_: requestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
                     }),
                     isAssignment: true
                 }),
-                ...syncSubpackages.map((sp) => {
+                ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
                     const spInstanceVar = new Variable({
-                        name: snakeCase(sp.classReference.name),
+                        name: snakeCase(spName),
                         type: sp.classReference,
                         variableType: VariableType.INSTANCE
                     });
@@ -208,13 +216,16 @@ export function generateRootPackage(
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
                             baseFunction: sp.initializer,
-                            arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
+                            arguments_: sp.initializer?.parameters.map((param) =>
+                                param.toArgument(requestClientVariable)
+                            )
                         }),
                         isAssignment: true
                     });
                 })
             ],
-            parameters: requestClient.initializer?.parameters
+            parameters: requestClient.initializer?.parameters,
+            returnValue: classReference
         })
     });
 
@@ -222,19 +233,24 @@ export function generateRootPackage(
     const asyncRequestClientVariable = new Variable({
         name: "async_request_client",
         type: asyncRequestClient.classReference,
-        variableType: VariableType.LOCAL
+        variableType: VariableType.INSTANCE
+    });
+    const asyncClassReference = new ClassReference({
+        name: "AsyncClient",
+        import_: new Import({ from: gemName, isExternal: false })
     });
     const asyncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "AsyncClient",
-            import_: new Import({ from: gemName, isExternal: false })
-        }),
+        classReference: asyncClassReference,
+        properties: Array.from(asyncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         functions: rootService
             ? generateEndpoints(
                   crf,
-                  requestClientVariable,
+                  asyncRequestClientVariable,
                   rootService.endpoints,
                   requestOptions,
+                  idempotencyRequestOptions,
                   false,
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
@@ -246,19 +262,22 @@ export function generateRootPackage(
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             functionBody: [
                 new Expression({
                     leftSide: asyncRequestClientVariable,
                     rightSide: new FunctionInvocation({
                         onObject: asyncRequestClient.classReference,
                         baseFunction: asyncRequestClient.initializer,
-                        arguments_: asyncRequestClient.properties.map((prop) => prop.toArgument(prop.name, true))
+                        arguments_: asyncRequestClient.initializer?.parameters.map((param) =>
+                            param.toArgument(param.name)
+                        )
                     }),
                     isAssignment: true
                 }),
-                ...asyncSubpackages.map((sp) => {
+                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
                     const spInstanceVar = new Variable({
-                        name: snakeCase(sp.classReference.name),
+                        name: snakeCase(spName),
                         type: sp.classReference,
                         variableType: VariableType.INSTANCE
                     });
@@ -267,58 +286,66 @@ export function generateRootPackage(
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
                             baseFunction: sp.initializer,
-                            arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
+                            arguments_: sp.initializer?.parameters.map((param) =>
+                                param.toArgument(asyncRequestClientVariable)
+                            )
                         }),
                         isAssignment: true
                     });
                 })
             ],
-            parameters: asyncRequestClient.initializer?.parameters
+            parameters: asyncRequestClient.initializer?.parameters,
+            returnValue: asyncClassReference
         })
     });
 
-    const allTypeImports = Array.from(crf.generatedReferences.entries())
-        .map(([_, cr]) => cr.import_)
-        .filter((i) => i !== undefined) as Import[];
+    const maybeEnvironmentImport = environmentClass?.import_;
+    const typeExporterImport = new Import({ from: typeExporterLocation, isExternal: false });
     const rootNode = Module_.wrapInModules(
         clientName,
         [clientClass, asyncClientClass],
         undefined,
-        true,
-        allTypeImports
+        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport],
+        true
     );
     return new GeneratedRubyFile({
         rootNode,
-        directoryPrefix: RelativeFilePath.of("."),
-        nestImportsInDirectory: RelativeFilePath.of(gemName),
-        name: `${gemName}`
+        fullPath: `${gemName}`
     });
 }
 
 export function generateSubpackage(
+    subpackageName: Name,
     package_: Package,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
-    subpackages: Class_[] = [],
-    asyncSubpackages: Class_[] = []
+    locationGenerator: LocationGenerator,
+    subpackages: Map<string, Class_> = new Map(),
+    asyncSubpackages: Map<string, Class_> = new Map()
 ): ClientClassPair {
-    const location = getLocationFromFernFilepath(package_.fernFilepath) + "client";
+    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client");
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath);
 
     // Add Client class
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
+    const syncClassReference = new ClassReference({
+        name: "Client",
+        import_: new Import({ from: location, isExternal: false }),
+        moduleBreadcrumbs
+    });
     const syncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "Client",
-            import_: new Import({ from: location, isExternal: false })
-        }),
-        properties: [requestClientProperty],
+        classReference: syncClassReference,
         includeInitializer: false,
+        properties: Array.from(subpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
-            functionBody: subpackages.map((sp) => {
+            functionBody: Array.from(subpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
-                    name: snakeCase(sp.classReference.name),
+                    name: snakeCase(spName),
                     type: sp.classReference,
                     variableType: VariableType.INSTANCE
                 });
@@ -329,33 +356,40 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(requestClientProperty.toVariable(), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: requestClientCr })]
+            parameters: [requestClientProperty.toParameter({})],
+            returnValue: syncClassReference,
+            documentation: package_.docs
         })
     });
 
     // Add Async Client class
     const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr });
+    const asyncClassReference = new ClassReference({
+        name: "AsyncClient",
+        import_: new Import({ from: location, isExternal: false }),
+        moduleBreadcrumbs
+    });
     const asyncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "AsyncClient",
-            import_: new Import({ from: location, isExternal: false })
-        }),
-        properties: [new Property({ name: "client", type: asyncRequestClientCr })],
+        classReference: asyncClassReference,
         includeInitializer: false,
+        properties: Array.from(asyncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
-            functionBody: asyncSubpackages.map((sp) => {
+            functionBody: Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
-                    name: snakeCase(sp.classReference.name),
+                    name: snakeCase(spName),
                     type: sp.classReference,
                     variableType: VariableType.INSTANCE
                 });
@@ -366,34 +400,41 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(asyncRequestClientProperty.toVariable(), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: asyncRequestClientCr })]
+            parameters: [requestClientProperty.toParameter({})],
+            returnValue: asyncClassReference
         })
     });
-
-    return { syncClientClass, asyncClientClass };
+    return { subpackageName: subpackageName.pascalCase.safeName, syncClientClass, asyncClientClass };
 }
 
 export function generateService(
     service: HttpService,
+    subpackage: Subpackage,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
-    fileUploadUtility: FileUploadUtility
+    fileUploadUtility: FileUploadUtility,
+    locationGenerator: LocationGenerator
 ): ClientClassPair {
-    const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
-    const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
+    const serviceName = subpackage.name.pascalCase.safeName;
+    const import_ = new Import({
+        from: locationGenerator.getLocationForServiceDeclaration(service.name),
+        isExternal: false
+    });
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(service.name.fernFilepath);
 
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath);
@@ -401,7 +442,8 @@ export function generateService(
     const syncClientClass = new Class_({
         classReference: new ClassReference({
             name: `${serviceName}Client`,
-            import_
+            import_,
+            moduleBreadcrumbs
         }),
         properties: [requestClientProperty],
         includeInitializer: true,
@@ -410,6 +452,7 @@ export function generateService(
             requestClientProperty.toVariable(),
             service.endpoints,
             requestOptions,
+            idempotencyRequestOptions,
             false,
             irBasePath,
             serviceBasePath,
@@ -424,7 +467,8 @@ export function generateService(
     const asyncClientClass = new Class_({
         classReference: new ClassReference({
             name: `Async${serviceName}Client`,
-            import_
+            import_,
+            moduleBreadcrumbs
         }),
         properties: [asyncRequestClientProperty],
         includeInitializer: true,
@@ -433,6 +477,7 @@ export function generateService(
             asyncRequestClientProperty.toVariable(),
             service.endpoints,
             requestOptions,
+            idempotencyRequestOptions,
             true,
             irBasePath,
             serviceBasePath,
@@ -442,7 +487,7 @@ export function generateService(
         )
     });
 
-    return { syncClientClass, asyncClientClass };
+    return { subpackageName: serviceName, syncClientClass, asyncClientClass };
 }
 
 // Need to create the environment file and then reference back to them via default_env@specified_url
@@ -470,7 +515,10 @@ export function getDefaultEnvironmentUrl(environmentsConfig?: EnvironmentsConfig
 // Actually might just be: be able to reference the default + create the files, it looks like endpoints
 export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig): Class_ {
     return new Class_({
-        classReference: new ClassReference({ name: "Environment", location: "environment" }),
+        classReference: new ClassReference({
+            name: "Environment",
+            import_: new Import({ from: "environment", isExternal: false })
+        }),
         expressions: environmentsConfig.environments._visit<Expression[]>({
             singleBaseUrl: (sbue: SingleBaseUrlEnvironments) =>
                 sbue.environments.map(
@@ -516,97 +564,56 @@ function generateRequestClientInitializer(
     const allHeaders = new Map([
         // SDK Default Headers
         [`"${sdkConfig.platformHeaders.language}"`, "Ruby"],
-        [`"${sdkConfig.platformHeaders.sdkName}"`, clientName],
-        // Auth Default Headers
-        ...headersGenerator.getAuthHeaders()
+        [`"${sdkConfig.platformHeaders.sdkName}"`, clientName]
     ]);
     if (sdkVersion !== undefined) {
-        allHeaders.set(sdkConfig.platformHeaders.sdkVersion, sdkVersion);
+        allHeaders.set(`"${sdkConfig.platformHeaders.sdkVersion}"`, sdkVersion);
     }
 
     // If "all" then require the param and always put it in, if optional
     // just add the header if it's there headers["name"] = value if value
     let authHeaders = new Map();
-    const authHeaderSetters: Expression[] = [];
-
-    const authHeaderProperties = headersGenerator.getAuthHeadersAsProperties();
-
+    const authHeaderSetters: AstNode[] = [];
+    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
     if (headersGenerator.isAuthRequired) {
         authHeaders = new Map(headersGenerator.getAuthHeaders());
     } else {
-        // Make an if statement for each auth scheme that adds the header if present
-        authHeaderProperties.forEach(
-            (prop) =>
-                new ConditionalStatement({
-                    if_: {
-                        rightSide: new FunctionInvocation({
-                            onObject: prop.name,
-                            baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                        }),
-                        operation: "!",
-                        expressions: [
-                            new FunctionInvocation({
-                                onObject: "@headers",
-                                baseFunction: new Function_({ name: "store", functionBody: [] }),
-                                arguments_: [
-                                    new Argument({
-                                        isNamed: false,
-                                        value: prop.wireValue ?? prop.name,
-                                        type: StringClassReference
-                                    }),
-                                    new Argument({ isNamed: false, value: prop.name, type: StringClassReference })
-                                ]
-                            })
-                        ]
-                    }
-                })
-        );
+        headersToSet = [...headersGenerator.getAuthHeadersAsProperties(), ...headersToSet];
     }
+    // Make an if statement for each auth scheme that adds the header if present
+    headersToSet.forEach((prop) =>
+        authHeaderSetters.push(
+            new ConditionalStatement({
+                if_: {
+                    rightSide: new FunctionInvocation({
+                        onObject: prop.name,
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                    }),
+                    operation: "!",
+                    expressions: [
+                        new Expression({
+                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: prop.name,
+                            isAssignment: true
+                        })
+                    ]
+                }
+            })
+        )
+    );
 
-    const retriesVariable = new Variable({
+    const retriesProperty = new Property({
         name: "max_retries",
         type: LongClassReference,
         isOptional: true,
-        variableType: VariableType.LOCAL
+        documentation: "The number of times to retry a failed request, defaults to 2."
     });
+    const timeoutProperty = new Property({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true });
 
-    const retryOptions = new HashInstance({ contents: new Map([["max", retriesVariable]]) });
-    const faradayConfiguration = [
-        new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
-        new Expression({
-            leftSide: "faraday.request",
-            rightSide: new Expression({
-                leftSide: new ClassReference({
-                    name: ":retry",
-                    import_: new Import({ from: "faraday/retry", isExternal: true })
-                }),
-                rightSide: retryOptions,
-                operation: ", "
-            }),
-            isAssignment: false
-        }),
-        // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
-        new Expression({
-            leftSide: "faraday.response",
-            rightSide: ":raise_error, include_request: true",
-            isAssignment: false
-        }),
-        new Expression({ leftSide: "faraday.options.timeout", rightSide: "timeout_in_seconds", isAssignment: true })
-    ];
-
-    if (isAsync) {
-        faradayConfiguration.push(
-            new Expression({
-                leftSide: "faraday.adapter",
-                rightSide: new ClassReference({
-                    name: ":async_http",
-                    import_: new Import({ from: "async/http/faraday", isExternal: true })
-                }),
-                isAssignment: true
-            })
-        );
-    }
-
+    const retryOptions = new HashInstance({
+        contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
+    });
+    const faradayConfiguration = [];
     if (hasFileBasedDependencies) {
         faradayConfiguration.push(
             new Expression({
@@ -621,6 +628,77 @@ function generateRequestClientInitializer(
             })
         );
     }
+    faradayConfiguration.push(
+        ...[
+            new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
+            // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
+            new Expression({
+                leftSide: "faraday.response",
+                rightSide: ":raise_error, include_request: true",
+                isAssignment: false
+            })
+        ]
+    );
+
+    if (isAsync) {
+        faradayConfiguration.push(
+            new Expression({
+                leftSide: "faraday.adapter",
+                rightSide: new ClassReference({
+                    name: ":async_http",
+                    import_: new Import({ from: "async/http/faraday", isExternal: true })
+                }),
+                isAssignment: false
+            })
+        );
+    }
+
+    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
+    faradayConfiguration.push(
+        new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: retriesProperty.toVariable(VariableType.LOCAL).write({}),
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new Expression({
+                        leftSide: "faraday.request",
+                        rightSide: new Expression({
+                            leftSide: new ClassReference({
+                                name: ":retry",
+                                import_: new Import({ from: "faraday/retry", isExternal: true })
+                            }),
+                            rightSide: retryOptions,
+                            operation: ", "
+                        }),
+                        isAssignment: false
+                    })
+                ]
+            }
+        })
+    );
+    faradayConfiguration.push(
+        new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new Expression({
+                        leftSide: "faraday.options.timeout",
+                        rightSide: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
+                        isAssignment: true
+                    })
+                ]
+            }
+        })
+    );
 
     const functionParams = [];
     const functionBody = [];
@@ -657,16 +735,11 @@ function generateRequestClientInitializer(
 
     return new Function_({
         name: "initialize",
+        invocationName: "new",
         parameters: [
             ...functionParams,
             // Select sample of the request overrides object properties
-            new Parameter({
-                name: "max_retries",
-                type: LongClassReference,
-                isOptional: true,
-                documentation: "The number of times to retry a failed request, defaults to 2."
-            }),
-            new Parameter({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true }),
+            ...initialRequestOverrides.map((prop) => prop.toParameter({})),
             // Auth headers
             ...headersGenerator.getAuthHeadersAsParameters(),
             // Global headers
@@ -728,11 +801,17 @@ export function generateRequestClients(
             name: "headers",
             type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         }),
-        new Property({ name: "base_url", type: StringClassReference }),
+        new Property({
+            name: isMultiBaseUrlEnvironments ? "default_environment" : "base_url",
+            type: StringClassReference
+        }),
         new Property({ name: "conn", type: faradayReference })
     ];
     // Add Client class
-    const clientClassReference = new ClassReference({ name: "RequestClient", location: "requests" });
+    const clientClassReference = new ClassReference({
+        name: "RequestClient",
+        import_: new Import({ from: "requests", isExternal: false })
+    });
     const clientClass = new Class_({
         classReference: clientClassReference,
         properties: clientProperties,
@@ -752,7 +831,10 @@ export function generateRequestClients(
     });
 
     // Add Async Client class
-    const asyncClientClassReference = new ClassReference({ name: "AsyncRequestClient", location: "requests" });
+    const asyncClientClassReference = new ClassReference({
+        name: "AsyncRequestClient",
+        import_: new Import({ from: "requests", isExternal: false })
+    });
     const asyncClientClass = new Class_({
         classReference: asyncClientClassReference,
         properties: clientProperties,

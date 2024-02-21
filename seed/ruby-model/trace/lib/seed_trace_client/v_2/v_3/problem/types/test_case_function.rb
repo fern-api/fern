@@ -7,7 +7,7 @@ require_relative "void_function_definition"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class TestCaseFunction
           attr_reader :member, :discriminant
 

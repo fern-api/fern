@@ -53,6 +53,17 @@ function getWebhookLocation({
     webhook: Webhook;
     context: OpenApiIrConverterContext;
 }): WebhookLocation | undefined {
+    if (webhook.sdkName != null) {
+        const filename =
+            webhook.sdkName.groupName.length === 0
+                ? "__package__.yml"
+                : `${webhook.sdkName.groupName.map((part) => camelCase(part)).join("/")}.yml`;
+        return {
+            file: RelativeFilePath.of(filename),
+            endpointId: webhook.sdkName.methodName
+        };
+    }
+
     const tag = webhook.tags[0];
     const operationId = webhook.operationId;
 

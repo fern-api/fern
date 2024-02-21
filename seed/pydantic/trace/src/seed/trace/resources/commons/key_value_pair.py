@@ -14,8 +14,8 @@ except ImportError:
 
 
 class KeyValuePair(pydantic.BaseModel):
-    key: "VariableValue"
-    value: "VariableValue"
+    key: VariableValue
+    value: VariableValue
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -29,7 +29,6 @@ class KeyValuePair(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-from .map_value import MapValue  # noqa: E402
 from .variable_value import VariableValue  # noqa: E402
 
-KeyValuePair.update_forward_refs(VariableValue=VariableValue)
+KeyValuePair.update_forward_refs()

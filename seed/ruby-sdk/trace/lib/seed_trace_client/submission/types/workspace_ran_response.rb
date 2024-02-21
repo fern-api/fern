@@ -5,7 +5,7 @@ require_relative "workspace_run_details"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceRanResponse
       attr_reader :submission_id, :run_details, :additional_properties
 
@@ -28,8 +28,14 @@ module SeedTraceClient
       # @return [Submission::WorkspaceRanResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        run_details = struct.runDetails
+        if parsed_json["runDetails"].nil?
+          run_details = nil
+        else
+          run_details = parsed_json["runDetails"].to_json
+          run_details = Submission::WorkspaceRunDetails.from_json(json_object: run_details)
+        end
         new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
       end
 

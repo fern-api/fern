@@ -3,7 +3,7 @@
 require "json"
 
 module SeedFileUploadClient
-  module Service
+  class Service
     class MyObject
       attr_reader :foo, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedFileUploadClient
       # @return [Service::MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         foo = struct.foo
         new(foo: foo, additional_properties: struct)
       end

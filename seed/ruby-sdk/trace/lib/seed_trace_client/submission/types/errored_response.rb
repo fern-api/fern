@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "error_info"
-
 require_relative "submission_id"
+require_relative "error_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ErroredResponse
       attr_reader :submission_id, :error_info, :additional_properties
 
@@ -29,8 +28,14 @@ module SeedTraceClient
       # @return [Submission::ErroredResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        error_info = struct.errorInfo
+        if parsed_json["errorInfo"].nil?
+          error_info = nil
+        else
+          error_info = parsed_json["errorInfo"].to_json
+          error_info = Submission::ErrorInfo.from_json(json_object: error_info)
+        end
         new(submission_id: submission_id, error_info: error_info, additional_properties: struct)
       end
 

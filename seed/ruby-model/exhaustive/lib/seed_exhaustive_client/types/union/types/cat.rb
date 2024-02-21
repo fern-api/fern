@@ -4,7 +4,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Union
+    class Union
       class Cat
         attr_reader :name, :likes_to_meow, :additional_properties
 
@@ -27,6 +27,7 @@ module SeedExhaustiveClient
         # @return [Types::Union::Cat]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          JSON.parse(json_object)
           name = struct.name
           likes_to_meow = struct.likesToMeow
           new(name: name, likes_to_meow: likes_to_meow, additional_properties: struct)

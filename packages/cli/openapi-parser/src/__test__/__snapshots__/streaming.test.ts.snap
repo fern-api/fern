@@ -8,7 +8,6 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -102,13 +101,12 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -126,7 +124,15 @@ exports[`open api parser streaming parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
         },
@@ -222,7 +228,6 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -316,13 +321,12 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -341,6 +345,20 @@ exports[`open api parser streaming parse open api 1`] = `
           },
           "response": {
             "properties": {
+              "id": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "streamed": {
                 "literal": {
                   "boolean": false,
@@ -444,7 +462,6 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -612,13 +629,12 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -636,7 +652,22 @@ exports[`open api parser streaming parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "inline": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
         },
@@ -781,6 +812,7 @@ exports[`open api parser streaming parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "BaseStreamUser",

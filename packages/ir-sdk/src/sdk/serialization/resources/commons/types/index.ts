@@ -11,6 +11,7 @@ export * from "./EndpointId";
 export * from "./TypeId";
 export * from "./ErrorId";
 export * from "./WebhookGroupId";
+export * from "./WebSocketChannelId";
 export * from "./Declaration";
 export * from "./Availability";
 export * from "./AvailabilityStatus";

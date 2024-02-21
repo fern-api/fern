@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
@@ -58,7 +56,7 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         if self.__root__.type == "traced":
             return traced(TracedTestCase(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _SubmissionStatusForTestCase.Graded,
             _SubmissionStatusForTestCase.GradedV2,
@@ -82,17 +80,17 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
 
 class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):
-        type: typing_extensions.Literal["graded"]
+        type: typing.Literal["graded"]
 
         class Config:
             allow_population_by_field_name = True
 
     class GradedV2(pydantic.BaseModel):
-        type: typing_extensions.Literal["gradedV2"]
+        type: typing.Literal["gradedV2"]
         value: TestCaseGrade
 
     class Traced(TracedTestCase):
-        type: typing_extensions.Literal["traced"]
+        type: typing.Literal["traced"]
 
         class Config:
             allow_population_by_field_name = True

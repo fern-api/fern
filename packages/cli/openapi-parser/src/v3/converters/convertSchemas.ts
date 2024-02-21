@@ -75,6 +75,20 @@ export function convertReferenceObject(
     }
 }
 
+// Returns a Schema Title if it's suitable as a code generated name
+function getTitleAsName(title: string | undefined): string | undefined {
+    if (title == null) {
+        return undefined;
+    }
+    if (title.includes(" ")) {
+        return undefined;
+    }
+    if (!/^[a-zA-Z]+$/.test(title)) {
+        return undefined;
+    }
+    return title;
+}
+
 export function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsNullable: boolean,
@@ -83,7 +97,7 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
@@ -130,7 +144,9 @@ export function convertSchemaObject(
             });
         }
 
-        if (schema.enum.length === 1 && schema.enum[0] != null) {
+        const fernEnum = getFernEnum(schema);
+
+        if (schema.enum.length === 1 && schema.enum[0] != null && fernEnum == null) {
             return convertLiteral({
                 nameOverride,
                 generatedName,
@@ -144,7 +160,7 @@ export function convertSchemaObject(
         return convertEnum({
             nameOverride,
             generatedName,
-            fernEnum: getFernEnum(schema),
+            fernEnum,
             enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
             description,

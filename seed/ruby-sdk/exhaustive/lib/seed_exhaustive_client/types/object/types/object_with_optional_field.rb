@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require "date"
-require "json"
 require "set"
+require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Object
+    class Object
       class ObjectWithOptionalField
         attr_reader :string, :integer, :long, :double, :bool, :datetime, :date, :uuid, :base_64, :list, :set, :map,
                     :additional_properties
@@ -61,17 +61,23 @@ module SeedExhaustiveClient
         # @return [Types::Object::ObjectWithOptionalField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           string = struct.string
           integer = struct.integer
           long = struct.long
           double = struct.double
           bool = struct.bool
-          datetime = struct.datetime
-          date = struct.date
+          datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
+          date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
           uuid = struct.uuid
           base_64 = struct.base64
           list = struct.list
-          set = struct.set
+          if parsed_json["set"].nil?
+            set = nil
+          else
+            set = parsed_json["set"].to_json
+            set = Set.new(set)
+          end
           map = struct.map
           new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
               uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)

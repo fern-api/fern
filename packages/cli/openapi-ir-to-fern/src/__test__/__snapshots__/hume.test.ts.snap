@@ -56,7 +56,7 @@ exports[`open api parser hume simple 1`] = `
           "examples": [
             {
               "path-parameters": {
-                "id": "string",
+                "id": "id",
               },
               "response": {
                 "body": [],
@@ -79,11 +79,6 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Sort and filter jobs.",
           "examples": [
             {
-              "query-parameters": {
-                "direction": "asc",
-                "sort_by": "created",
-                "when": "created_before",
-              },
               "response": {
                 "body": [],
               },
@@ -132,25 +127,10 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Start a new batch job.",
           "examples": [
             {
-              "request": {
-                "models": {
-                  "face": {},
-                  "language": {
-                    "granularity": "word",
-                  },
-                  "ner": {},
-                  "prosody": {
-                    "granularity": "word",
-                    "window": {},
-                  },
-                },
-                "transcription": {
-                  "language": "zh",
-                },
-              },
+              "request": {},
               "response": {
                 "body": {
-                  "job_id": "string",
+                  "job_id": "job_id",
                 },
               },
             },
@@ -1016,7 +996,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Authentication": {
         "header": "X-Hume-Api-Key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

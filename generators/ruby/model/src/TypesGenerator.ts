@@ -1,6 +1,5 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, Class_, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
+import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -33,6 +32,7 @@ export class TypesGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private gc: GeneratorContext;
     private classReferenceFactory: ClassReferenceFactory;
+    private locationGenerator: LocationGenerator;
     private gemName: string;
     private clientName: string;
 
@@ -61,7 +61,8 @@ export class TypesGenerator {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
 
-        this.classReferenceFactory = new ClassReferenceFactory(this.types);
+        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 
     // We pull all inherited properties onto the object because Ruby
@@ -117,9 +118,7 @@ export class TypesGenerator {
     private generateRootFile(): GeneratedRubyFile {
         return new GeneratedRubyFile({
             rootNode: new RootFile(Array.from(this.classReferenceFactory.generatedReferences.values())),
-            directoryPrefix: RelativeFilePath.of("."),
-            nestImportsInDirectory: RelativeFilePath.of(this.gemName),
-            name: this.gemName
+            fullPath: this.gemName
         });
     }
 
@@ -154,20 +153,22 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateEnumFile(
         enumTypeDeclaration: EnumTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
-        const enumExpression = generateEnumDefinitionFromTypeDeclaration(enumTypeDeclaration, typeDeclaration);
+        const enumExpression = generateEnumDefinitionFromTypeDeclaration(
+            this.classReferenceFactory,
+            enumTypeDeclaration,
+            typeDeclaration
+        );
         const rootNode = Module_.wrapInModules(this.clientName, enumExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateObjectFile(
@@ -186,8 +187,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, serializableObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUnionFile(
@@ -206,8 +206,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUndiscriminatedUnionFile(
@@ -225,8 +224,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {

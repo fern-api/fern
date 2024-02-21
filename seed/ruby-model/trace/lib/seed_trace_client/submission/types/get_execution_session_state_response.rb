@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GetExecutionSessionStateResponse
       attr_reader :states, :num_warming_instances, :warming_session_ids, :additional_properties
 
@@ -29,6 +29,7 @@ module SeedTraceClient
       # @return [Submission::GetExecutionSessionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         states = struct.states
         num_warming_instances = struct.numWarmingInstances
         warming_session_ids = struct.warmingSessionIds

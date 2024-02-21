@@ -3,15 +3,15 @@
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class GetDefaultStarterFilesResponse
       attr_reader :files, :additional_properties
 
-      # @param files [Hash{LANGUAGE => LANGUAGE}]
+      # @param files [Hash{Commons::Language => Commons::Language}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::GetDefaultStarterFilesResponse]
       def initialize(files:, additional_properties: nil)
-        # @type [Hash{LANGUAGE => LANGUAGE}]
+        # @type [Hash{Commons::Language => Commons::Language}]
         @files = files
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,6 +23,7 @@ module SeedTraceClient
       # @return [Problem::GetDefaultStarterFilesResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         files = struct.files
         new(files: files, additional_properties: struct)
       end

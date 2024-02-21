@@ -32,7 +32,8 @@ exports[`open api parser devrev simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "url": "string",
+                    "expires_at": "2024-01-15T09:30:00Z",
+                    "url": "url",
                   },
                 },
               },
@@ -68,13 +69,18 @@ exports[`open api parser devrev simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "file_name": "string",
+                  "file_name": "file_name",
                 },
                 "response": {
                   "body": {
-                    "form_data": [],
+                    "form_data": [
+                      {
+                        "key": "key",
+                        "value": "value",
+                      },
+                    ],
                     "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
-                    "url": "string",
+                    "url": "url",
                   },
                 },
               },
@@ -157,7 +163,7 @@ connections can not be deleted using this method.
             "examples": [
               {
                 "request": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -256,8 +262,7 @@ disabled.
             "examples": [
               {
                 "request": {
-                  "id": "string",
-                  "toggle": "disable",
+                  "id": "id",
                 },
               },
             ],
@@ -328,20 +333,14 @@ authenticated user.
             ],
             "examples": [
               {
-                "request": {
-                  "grant_type": "urn:devrev:params:oauth:grant-type:token-issue",
-                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                  "rev_info": {
-                    "org_traits": {},
-                    "user_ref": "string",
-                    "user_traits": {},
-                  },
-                  "subject_token_type": "urn:devrev:params:oauth:token-type:jwt:auth0",
-                },
+                "request": {},
                 "response": {
                   "body": {
-                    "access_token": "string",
+                    "access_token": "access_token",
+                    "client_id": "client_id",
                     "expires_in": 1,
+                    "refresh_token": "refresh_token",
+                    "scope": "scope",
                     "token_type": "bearer",
                   },
                 },
@@ -456,14 +455,25 @@ given Dev organization.
             "examples": [
               {
                 "query-parameters": {
-                  "token_id": "string",
+                  "token_id": "token_id",
                 },
                 "response": {
                   "body": {
                     "token": {
-                      "id": "string",
+                      "client_id": "client_id",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "expires_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "scopes",
+                      ],
                       "status": "active",
+                      "subject": "subject",
+                      "token_hint": "token_hint",
                     },
                   },
                 },
@@ -502,12 +512,26 @@ token type issued for a given subject.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                },
                 "response": {
                   "body": {
-                    "tokens": [],
+                    "tokens": [
+                      {
+                        "client_id": "client_id",
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "expires_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "issued_at": "2024-01-15T09:30:00Z",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                        "scopes": [
+                          "scopes",
+                        ],
+                        "status": "active",
+                        "subject": "subject",
+                        "token_hint": "token_hint",
+                      },
+                    ],
                   },
                 },
               },
@@ -559,9 +583,7 @@ authenticated user.
             ],
             "examples": [
               {
-                "request": {
-                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                },
+                "request": {},
               },
             ],
             "method": "POST",
@@ -594,15 +616,26 @@ organization.
             "examples": [
               {
                 "request": {
-                  "token_hint": "string",
-                  "token_id": "string",
+                  "token_hint": "token_hint",
+                  "token_id": "token_id",
                 },
                 "response": {
                   "body": {
                     "token": {
-                      "id": "string",
+                      "client_id": "client_id",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "expires_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "scopes",
+                      ],
                       "status": "active",
+                      "subject": "subject",
+                      "token_hint": "token_hint",
                     },
                   },
                 },
@@ -659,12 +692,31 @@ organization.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "mode": "after",
-                },
                 "response": {
                   "body": {
-                    "dev_users": [],
+                    "dev_users": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "display_name": "display_name",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "email",
+                        "external_identities": [
+                          {},
+                        ],
+                        "full_name": "full_name",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "phone_numbers": [
+                          "phone_numbers",
+                        ],
+                        "state": "active",
+                      },
+                    ],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -730,10 +782,23 @@ used.
                 "response": {
                   "body": {
                     "dev_user": {
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
                       "display_picture": {
-                        "id": "string",
+                        "display_id": "display_id",
+                        "id": "id",
                       },
-                      "id": "string",
+                      "email": "email",
+                      "external_identities": [
+                        {},
+                      ],
+                      "full_name": "full_name",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "phone_numbers": [
+                        "phone_numbers",
+                      ],
                       "state": "active",
                     },
                   },
@@ -800,7 +865,9 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": {
+                      "key": "value",
+                    },
                   },
                 },
               },
@@ -868,12 +935,11 @@ used.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "mode": "after",
-                },
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
                     "parts": [],
+                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -979,13 +1045,19 @@ organization.
             "examples": [
               {
                 "request": {
-                  "display_name": "string",
-                  "environment": "production",
+                  "display_name": "display_name",
                 },
                 "response": {
                   "body": {
                     "rev_org": {
-                      "id": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1050,7 +1122,9 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": {
+                      "key": "value",
+                    },
                   },
                 },
               },
@@ -1095,7 +1169,14 @@ records.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "id": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1134,12 +1215,22 @@ to access.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "mode": "after",
-                },
                 "response": {
                   "body": {
-                    "rev_orgs": [],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
+                    "rev_orgs": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "display_name": "display_name",
+                        "domain": "domain",
+                        "external_ref": "external_ref",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                      },
+                    ],
                   },
                 },
               },
@@ -1227,13 +1318,19 @@ them.
             "examples": [
               {
                 "request": {
-                  "environment": "production",
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
                   "body": {
                     "rev_org": {
-                      "id": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "display_name": "display_name",
+                      "domain": "domain",
+                      "external_ref": "external_ref",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1312,13 +1409,20 @@ and a logical concept denoted by the tag's name.
             "examples": [
               {
                 "request": {
-                  "name": "string",
+                  "name": "name",
                 },
                 "response": {
                   "body": {
                     "tag": {
-                      "id": "string",
-                      "name": "string",
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
                     },
                   },
                 },
@@ -1374,7 +1478,9 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": {
+                      "key": "value",
+                    },
                   },
                 },
               },
@@ -1419,8 +1525,15 @@ permitted.
                 "response": {
                   "body": {
                     "tag": {
-                      "id": "string",
-                      "name": "string",
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
                     },
                   },
                 },
@@ -1455,12 +1568,23 @@ permitted.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "mode": "after",
-                },
                 "response": {
                   "body": {
-                    "tags": [],
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
+                    "tags": [
+                      {
+                        "allowed_values": [
+                          "allowed_values",
+                        ],
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                      },
+                    ],
                   },
                 },
               },
@@ -1508,14 +1632,20 @@ used.
             "examples": [
               {
                 "request": {
-                  "allowed_values": {},
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
                 "response": {
                   "body": {
                     "tag": {
-                      "id": "string",
-                      "name": "string",
+                      "allowed_values": [
+                        "allowed_values",
+                      ],
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "display_id": "display_id",
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "name",
                     },
                   },
                 },
@@ -1629,11 +1759,12 @@ tags.
             "examples": [
               {
                 "query-parameters": {
-                  "mode": "after",
                   "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                     "timeline_entries": [],
                   },
                 },
@@ -1721,15 +1852,21 @@ used.
             "examples": [
               {
                 "request": {
-                  "url": "string",
+                  "url": "url",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "id": "string",
-                      "secret": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
                       "status": "active",
-                      "url": "string",
+                      "url": "url",
                     },
                   },
                 },
@@ -1786,7 +1923,9 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": {
+                      "key": "value",
+                    },
                   },
                 },
               },
@@ -1831,10 +1970,16 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "id": "string",
-                      "secret": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
                       "status": "active",
-                      "url": "string",
+                      "url": "url",
                     },
                   },
                 },
@@ -1871,7 +2016,20 @@ response.
               {
                 "response": {
                   "body": {
-                    "webhooks": [],
+                    "webhooks": [
+                      {
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "display_id",
+                        "event_types": [
+                          "part_created",
+                        ],
+                        "id": "id",
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "secret": "secret",
+                        "status": "active",
+                        "url": "url",
+                      },
+                    ],
                   },
                 },
               },
@@ -1898,17 +2056,21 @@ response.
             "examples": [
               {
                 "request": {
-                  "action": "activate",
-                  "event_types": {},
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "id": "string",
-                      "secret": "string",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "display_id",
+                      "event_types": [
+                        "part_created",
+                      ],
+                      "id": "id",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "secret": "secret",
                       "status": "active",
-                      "url": "string",
+                      "url": "url",
                     },
                   },
                 },
@@ -2007,7 +2169,9 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": {
+                      "key": "value",
+                    },
                   },
                 },
               },
@@ -2159,11 +2323,10 @@ organizations.
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "mode": "after",
-                },
                 "response": {
                   "body": {
+                    "next_cursor": "next_cursor",
+                    "prev_cursor": "prev_cursor",
                     "works": [],
                   },
                 },
@@ -2838,7 +3001,7 @@ organization.
 ",
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
-          "none": "Empty",
+          "none": "empty",
           "oidc": "AuthConnectionOptionsOidc",
           "samlp": "AuthConnectionOptionsSaml",
           "waad": "AuthConnectionOptionsAzureAd",
@@ -2904,19 +3067,6 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": "DevUser",
-        },
-      },
-      "Empty": "map<string, unknown>",
-      "Enhancement": {
-        "docs": undefined,
-        "extends": [
-          "PartBase",
-        ],
-        "properties": {
-          "target_close_date": {
-            "docs": "Timestamp when the enhancement is expected to be closed.",
-            "type": "optional<datetime>",
-          },
         },
       },
       "EnhancementSummary": "PartBaseSummary",
@@ -3043,7 +3193,7 @@ sort order. If not set, then no prior elements exist.
       "EventPartCreated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventPartDeleted": {
@@ -3058,7 +3208,7 @@ sort order. If not set, then no prior elements exist.
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventRevOrgCreated": {
@@ -3085,7 +3235,7 @@ sort order. If not set, then no prior elements exist.
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTagDeleted": {
@@ -3100,7 +3250,7 @@ sort order. If not set, then no prior elements exist.
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTimelineEntryCreated": {
@@ -3127,7 +3277,7 @@ sort order. If not set, then no prior elements exist.
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWebhookDeleted": {
@@ -3142,13 +3292,13 @@ sort order. If not set, then no prior elements exist.
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "EventWorkDeleted": {
@@ -3163,7 +3313,7 @@ sort order. If not set, then no prior elements exist.
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "ExternalIdentity": {
@@ -3173,15 +3323,6 @@ sort order. If not set, then no prior elements exist.
       "Feature": "PartBase",
       "FeatureSummary": "PartBaseSummary",
       "GroupSummary": "AtomBaseSummary",
-      "Issue": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "priority": "optional<IssuePriority>",
-        },
-      },
       "IssuePriority": {
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
@@ -3245,17 +3386,6 @@ always be returned in the specified sort-by order.
         },
       },
       "OrgType": "literal<"rev_org">",
-      "Part": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "capability": "Capability",
-          "enhancement": "Enhancement",
-          "feature": "Feature",
-          "product": "Product",
-        },
-      },
       "PartBase": {
         "docs": undefined,
         "extends": [
@@ -3376,14 +3506,14 @@ always be returned in the specified sort-by order.
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "PartsDeleteResponse": "map<string, unknown>",
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "PartsListResponse": {
@@ -3397,7 +3527,7 @@ sort order. If not set, then no later elements exist.
           },
           "parts": {
             "docs": "The list of parts.",
-            "type": "list<Part>",
+            "type": "list<part>",
           },
           "prev_cursor": {
             "docs": "The cursor used to iterate preceding results in accordance to the
@@ -3429,7 +3559,7 @@ sort order. If not set, then no prior elements exist.
           "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
           "feature": "PartsUpdateRequestFeature",
-          "none": "Empty",
+          "none": "empty",
           "product": "PartsUpdateRequestProduct",
         },
       },
@@ -3459,7 +3589,7 @@ empty.
       "PartsUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "Product": "PartBase",
@@ -3567,15 +3697,6 @@ the value must be one that's specified in the tag's allowed values.
           },
         },
       },
-      "Stage": {
-        "docs": "Describes the current stage of a work item.",
-        "properties": {
-          "name": {
-            "docs": "Current stage name of the work item.",
-            "type": "string",
-          },
-        },
-      },
       "StageInit": {
         "docs": "Sets an object's initial stage.",
         "properties": {
@@ -3596,34 +3717,6 @@ the value must be one that's specified in the tag's allowed values.
         },
       },
       "SysUserSummary": "UserBaseSummary",
-      "Tag": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "allowed_values": {
-            "docs": "The allowed values for the tag, where a value is provided when a
-tag is associated with an object. If empty, then no value should be
-provided when the association is made.
-",
-            "type": "optional<list<string>>",
-          },
-          "description": {
-            "docs": "An informative description for the tag that should provide context
-on the tag's purpose and usage.
-",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the tag, which denotes the logical concept by which all
-tagged objects will be associated. The name is guaranteed to be
-unique.
-",
-            "type": "string",
-          },
-        },
-      },
       "TagSummary": {
         "docs": undefined,
         "extends": [
@@ -3652,7 +3745,7 @@ unique.
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "TagsDeleteResponse": {
@@ -3662,7 +3755,7 @@ unique.
       "TagsGetResponse": {
         "docs": "The response to getting a tag's information.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "TagsListResponse": {
@@ -3682,7 +3775,7 @@ sort order. If not set, then no prior elements exist.
           },
           "tags": {
             "docs": "The list of tags.",
-            "type": "list<Tag>",
+            "type": "list<tag>",
           },
         },
       },
@@ -3698,18 +3791,7 @@ sort order. If not set, then no prior elements exist.
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
-          "tag": "Tag",
-        },
-      },
-      "Ticket": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "group": "optional<GroupSummary>",
-          "rev_org": "optional<OrgSummary>",
-          "severity": "optional<TicketSeverity>",
+          "tag": "tag",
         },
       },
       "TicketSeverity": {
@@ -3962,27 +4044,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "sys_user",
         ],
       },
-      "Webhook": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "event_types": {
-            "docs": "The event types that the webhook will receive.",
-            "type": "optional<list<WebhookEventType>>",
-          },
-          "secret": {
-            "docs": "The secret to use for verifying webhook events.",
-            "type": "string",
-          },
-          "status": "WebhookStatus",
-          "url": {
-            "docs": "The URL of the webhook endpoint.",
-            "type": "string",
-          },
-        },
-      },
       "WebhookEventRequest": {
         "docs": undefined,
         "properties": {
@@ -4079,7 +4140,7 @@ be set for other request types.
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "WebhooksDeleteResponse": {
@@ -4089,7 +4150,7 @@ be set for other request types.
       "WebhooksGetResponse": {
         "docs": "The response to getting the information for the webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "WebhooksListResponse": {
@@ -4097,7 +4158,7 @@ be set for other request types.
         "properties": {
           "webhooks": {
             "docs": "The list of webhooks.",
-            "type": "list<Webhook>",
+            "type": "list<webhook>",
           },
         },
       },
@@ -4137,16 +4198,7 @@ event types. Note this is mutually exclusive with 'add' and
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
-          "webhook": "Webhook",
-        },
-      },
-      "Work": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "issue": "Issue",
-          "ticket": "Ticket",
+          "webhook": "webhook",
         },
       },
       "WorkBase": {
@@ -4172,7 +4224,7 @@ event types. Note this is mutually exclusive with 'add' and
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
           },
-          "stage": "optional<Stage>",
+          "stage": "optional<stage>",
           "tags": {
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
@@ -4267,7 +4319,7 @@ issues.
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "WorksDeleteResponse": "map<string, unknown>",
@@ -4276,14 +4328,14 @@ issues.
         "properties": {
           "works": {
             "docs": "The resulting collection of work items.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "WorksListResponse": {
@@ -4303,7 +4355,7 @@ sort order. If not set, then no prior elements exist.
           },
           "works": {
             "docs": "The list of works.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
@@ -4342,7 +4394,7 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "union": {
           "issue": "WorksUpdateRequestIssue",
-          "none": "Empty",
+          "none": "empty",
           "ticket": "WorksUpdateRequestTicket",
         },
       },
@@ -4413,7 +4465,118 @@ empty.
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
+        },
+      },
+      "empty": "map<string, unknown>",
+      "enhancement": {
+        "docs": undefined,
+        "extends": [
+          "PartBase",
+        ],
+        "properties": {
+          "target_close_date": {
+            "docs": "Timestamp when the enhancement is expected to be closed.",
+            "type": "optional<datetime>",
+          },
+        },
+      },
+      "issue": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "priority": "optional<IssuePriority>",
+        },
+      },
+      "part": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "capability": "Capability",
+          "enhancement": "enhancement",
+          "feature": "Feature",
+          "product": "Product",
+        },
+      },
+      "stage": {
+        "docs": "Describes the current stage of a work item.",
+        "properties": {
+          "name": {
+            "docs": "Current stage name of the work item.",
+            "type": "string",
+          },
+        },
+      },
+      "tag": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "allowed_values": {
+            "docs": "The allowed values for the tag, where a value is provided when a
+tag is associated with an object. If empty, then no value should be
+provided when the association is made.
+",
+            "type": "optional<list<string>>",
+          },
+          "description": {
+            "docs": "An informative description for the tag that should provide context
+on the tag's purpose and usage.
+",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+            "type": "string",
+          },
+        },
+      },
+      "ticket": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "group": "optional<GroupSummary>",
+          "rev_org": "optional<OrgSummary>",
+          "severity": "optional<TicketSeverity>",
+        },
+      },
+      "webhook": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "event_types": {
+            "docs": "The event types that the webhook will receive.",
+            "type": "optional<list<WebhookEventType>>",
+          },
+          "secret": {
+            "docs": "The secret to use for verifying webhook events.",
+            "type": "string",
+          },
+          "status": "WebhookStatus",
+          "url": {
+            "docs": "The URL of the webhook endpoint.",
+            "type": "string",
+          },
+        },
+      },
+      "work": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "issue": "issue",
+          "ticket": "ticket",
         },
       },
     },
@@ -4424,7 +4587,6 @@ empty.
       "auth-token": {
         "header": "Authorization",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

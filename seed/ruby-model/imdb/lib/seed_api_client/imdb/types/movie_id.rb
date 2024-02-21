@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedApiClient
-  module Imdb
+  class Imdb
     MOVIE_ID = String
   end
 end

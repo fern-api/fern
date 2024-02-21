@@ -4,7 +4,7 @@ require_relative "test_case_result_with_stdout"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TracedTestCase
       attr_reader :result, :trace_responses_size, :additional_properties
 
@@ -27,7 +27,13 @@ module SeedTraceClient
       # @return [Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result = struct.result
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["result"].nil?
+          result = nil
+        else
+          result = parsed_json["result"].to_json
+          result = Submission::TestCaseResultWithStdout.from_json(json_object: result)
+        end
         trace_responses_size = struct.traceResponsesSize
         new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
       end

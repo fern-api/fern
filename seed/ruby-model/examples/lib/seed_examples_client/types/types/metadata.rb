@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
+require "set"
 require "json"
 
-require "set"
-
 module SeedExamplesClient
-  module Types
+  class Types
     class Metadata
       attr_reader :member, :discriminant, :extra, :tags
 

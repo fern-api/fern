@@ -3,7 +3,7 @@
 require "json"
 
 module SeedBasicAuthClient
-  module Errors
+  class Errors
     class UnauthorizedRequestErrorBody
       attr_reader :message, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedBasicAuthClient
       # @return [Errors::UnauthorizedRequestErrorBody]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         message = struct.message
         new(message: message, additional_properties: struct)
       end

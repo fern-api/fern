@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       PARAMETER_ID = String
     end
   end

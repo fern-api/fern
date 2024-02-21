@@ -3,7 +3,7 @@
 require "json"
 
 module SeedResponsePropertyClient
-  module Service
+  class Service
     class WithDocs
       attr_reader :docs, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedResponsePropertyClient
       # @return [Service::WithDocs]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         docs = struct.docs
         new(docs: docs, additional_properties: struct)
       end

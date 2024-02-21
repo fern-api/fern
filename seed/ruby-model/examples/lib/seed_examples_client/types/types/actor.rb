@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Actor
       attr_reader :name, :id, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedExamplesClient
       # @return [Types::Actor]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         name = struct.name
         id = struct.id
         new(name: name, id: id, additional_properties: struct)

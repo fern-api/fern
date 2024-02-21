@@ -294,6 +294,7 @@ exports[`fdr {"name":"simple"} 1`] = `
             "name": "commons",
             "endpoints": [],
             "webhooks": [],
+            "websockets": [],
             "types": [
                 "type_commons:UndiscriminatedUnion"
             ],
@@ -304,6 +305,7 @@ exports[`fdr {"name":"simple"} 1`] = `
             "name": "director",
             "endpoints": [],
             "webhooks": [],
+            "websockets": [],
             "types": [
                 "type_director:Director",
                 "type_director:Age",
@@ -383,8 +385,24 @@ exports[`fdr {"name":"simple"} 1`] = `
                                     10
                                 ]
                             },
+                            "requestBodyV3": {
+                                "type": "json",
+                                "value": {
+                                    "title": "Shrek",
+                                    "ratings": [
+                                        10,
+                                        10,
+                                        10,
+                                        10
+                                    ]
+                                }
+                            },
                             "responseStatusCode": 200,
-                            "responseBody": "shrek-123"
+                            "responseBody": "shrek-123",
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": "shrek-123"
+                            }
                         },
                         {
                             "path": "/movies",
@@ -399,8 +417,23 @@ exports[`fdr {"name":"simple"} 1`] = `
                                     3
                                 ]
                             },
+                            "requestBodyV3": {
+                                "type": "json",
+                                "value": {
+                                    "title": "Winnie the Pooh",
+                                    "ratings": [
+                                        1,
+                                        2,
+                                        3
+                                    ]
+                                }
+                            },
                             "responseStatusCode": 200,
-                            "responseBody": "shrek-123"
+                            "responseBody": "shrek-123",
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": "shrek-123"
+                            }
                         }
                     ]
                 },
@@ -523,6 +556,14 @@ exports[`fdr {"name":"simple"} 1`] = `
                                 "id": "id-123",
                                 "title": "Shrek",
                                 "rating": 10
+                            },
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": {
+                                    "id": "id-123",
+                                    "title": "Shrek",
+                                    "rating": 10
+                                }
                             }
                         },
                         {
@@ -535,7 +576,11 @@ exports[`fdr {"name":"simple"} 1`] = `
                             },
                             "headers": {},
                             "responseStatusCode": 404,
-                            "responseBody": "id-123"
+                            "responseBody": "id-123",
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": "id-123"
+                            }
                         }
                     ]
                 },
@@ -639,6 +684,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                 }
             ],
             "webhooks": [],
+            "websockets": [],
             "types": [
                 "type_imdb:CurrencyAmount",
                 "type_imdb:MovieId",
@@ -655,6 +701,7 @@ exports[`fdr {"name":"simple"} 1`] = `
     "rootPackage": {
         "endpoints": [],
         "webhooks": [],
+        "websockets": [],
         "types": [],
         "subpackages": [
             "subpackage_commons",

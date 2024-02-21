@@ -2,12 +2,13 @@
 
 module SeedApiClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = "https://github.com/REPO/URL"
-    SOURCE_CODE_URI = "https://github.com/REPO/URL"
-    CHANGELOG_URI = "https://github.com/REPO/URL/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/folders/fern"
+    SOURCE_CODE_URI = "https://github.com/folders/fern"
+    CHANGELOG_URI = "https://github.com/folders/fern/blob/master/CHANGELOG.md"
   end
 end

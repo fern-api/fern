@@ -61,7 +61,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenAPIIntermediateRepresentation) {
+    public constructor(ir: OpenAPIIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -221,33 +221,15 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public build(): FernDefinition {
-        const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
+        if (this.modifyBasePaths) {
+            const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
 
-        // substitute package marker file
-        if (this.packageMarkerFile.service != null) {
-            this.packageMarkerFile.service = {
-                ...this.packageMarkerFile.service,
-                endpoints: Object.fromEntries(
-                    Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
-                        return [
-                            id,
-                            {
-                                ...endpoint,
-                                path: `${basePath}${endpoint.path}`
-                            }
-                        ];
-                    })
-                )
-            };
-        }
-
-        // subsitute definition files
-        for (const [_, file] of Object.entries(this.definitionFiles)) {
-            if (file.service != null) {
-                file.service = {
-                    ...file.service,
+            // substitute package marker file
+            if (this.packageMarkerFile.service != null) {
+                this.packageMarkerFile.service = {
+                    ...this.packageMarkerFile.service,
                     endpoints: Object.fromEntries(
-                        Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                        Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
                             return [
                                 id,
                                 {
@@ -259,36 +241,56 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                     )
                 };
             }
-        }
 
-        if (this.rootApiFile.environments != null) {
-            this.rootApiFile.environments = {
-                ...Object.fromEntries(
-                    Object.entries(this.rootApiFile.environments).map(([env, url]) => {
-                        if (typeof url === "string") {
-                            return [env, url.substring(0, url.length - basePath.length)];
-                        } else if (isSingleBaseUrl(url)) {
-                            return [
-                                env,
-                                {
-                                    url: url.url.substring(0, url.url.length - basePath.length)
-                                }
-                            ];
-                        } else {
-                            return [
-                                env,
-                                {
-                                    urls: Object.fromEntries(
-                                        Object.entries(url.urls).map(([name, url]) => {
-                                            return [name, url.substring(0, url.length - basePath.length)];
-                                        })
-                                    )
-                                }
-                            ];
-                        }
-                    })
-                )
-            };
+            // subsitute definition files
+            for (const [_, file] of Object.entries(this.definitionFiles)) {
+                if (file.service != null) {
+                    file.service = {
+                        ...file.service,
+                        endpoints: Object.fromEntries(
+                            Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                                return [
+                                    id,
+                                    {
+                                        ...endpoint,
+                                        path: `${basePath}${endpoint.path}`
+                                    }
+                                ];
+                            })
+                        )
+                    };
+                }
+            }
+
+            if (this.rootApiFile.environments != null) {
+                this.rootApiFile.environments = {
+                    ...Object.fromEntries(
+                        Object.entries(this.rootApiFile.environments).map(([env, url]) => {
+                            if (typeof url === "string") {
+                                return [env, url.substring(0, url.length - basePath.length)];
+                            } else if (isSingleBaseUrl(url)) {
+                                return [
+                                    env,
+                                    {
+                                        url: url.url.substring(0, url.url.length - basePath.length)
+                                    }
+                                ];
+                            } else {
+                                return [
+                                    env,
+                                    {
+                                        urls: Object.fromEntries(
+                                            Object.entries(url.urls).map(([name, url]) => {
+                                                return [name, url.substring(0, url.length - basePath.length)];
+                                            })
+                                        )
+                                    }
+                                ];
+                            }
+                        })
+                    )
+                };
+            }
         }
 
         const definition: FernDefinition = {
@@ -357,6 +359,5 @@ function getSharedSuffix(strings: string[]): string {
 }
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
 }

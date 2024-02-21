@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+require_relative "submission_id"
+require_relative "traced_file"
 require_relative "../../commons/types/debug_variable_value"
 require_relative "expression_location"
 require_relative "stack_information"
-require_relative "submission_id"
-require_relative "traced_file"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TraceResponseV2
       attr_reader :submission_id, :line_number, :file, :return_value, :expression_location, :stack, :stdout,
                   :additional_properties
@@ -48,12 +48,33 @@ module SeedTraceClient
       # @return [Submission::TraceResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         line_number = struct.lineNumber
-        file = struct.file
-        return_value = struct.returnValue
-        expression_location = struct.expressionLocation
-        stack = struct.stack
+        if parsed_json["file"].nil?
+          file = nil
+        else
+          file = parsed_json["file"].to_json
+          file = Submission::TracedFile.from_json(json_object: file)
+        end
+        if parsed_json["returnValue"].nil?
+          return_value = nil
+        else
+          return_value = parsed_json["returnValue"].to_json
+          return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
+        end
+        if parsed_json["expressionLocation"].nil?
+          expression_location = nil
+        else
+          expression_location = parsed_json["expressionLocation"].to_json
+          expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
+        end
+        if parsed_json["stack"].nil?
+          stack = nil
+        else
+          stack = parsed_json["stack"].to_json
+          stack = Submission::StackInformation.from_json(json_object: stack)
+        end
         stdout = struct.stdout
         new(submission_id: submission_id, line_number: line_number, file: file, return_value: return_value,
             expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)

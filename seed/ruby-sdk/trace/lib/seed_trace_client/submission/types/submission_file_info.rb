@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionFileInfo
       attr_reader :directory, :filename, :contents, :additional_properties
 
@@ -29,6 +29,7 @@ module SeedTraceClient
       # @return [Submission::SubmissionFileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         directory = struct.directory
         filename = struct.filename
         contents = struct.contents

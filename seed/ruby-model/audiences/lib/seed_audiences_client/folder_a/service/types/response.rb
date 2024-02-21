@@ -5,7 +5,7 @@ require "json"
 
 module SeedAudiencesClient
   module FolderA
-    module Service
+    class Service
       class Response
         attr_reader :foo, :additional_properties
 
@@ -25,7 +25,13 @@ module SeedAudiencesClient
         # @return [FolderA::Service::Response]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          foo = struct.foo
+          parsed_json = JSON.parse(json_object)
+          if parsed_json["foo"].nil?
+            foo = nil
+          else
+            foo = parsed_json["foo"].to_json
+            foo = FolderB::Common::Foo.from_json(json_object: foo)
+          end
           new(foo: foo, additional_properties: struct)
         end
 

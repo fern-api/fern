@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
-require_relative "basic_test_case_template"
-
 require_relative "non_void_function_signature"
+require_relative "basic_test_case_template"
 require "json"
 
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class BasicCustomFiles
           attr_reader :method_name, :signature, :additional_files, :basic_test_case_template, :additional_properties
 
           # @param method_name [String]
           # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
-          # @param additional_files [Hash{LANGUAGE => LANGUAGE}]
+          # @param additional_files [Hash{Commons::Language => Commons::Language}]
           # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
@@ -24,7 +23,7 @@ module SeedTraceClient
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
             @signature = signature
-            # @type [Hash{LANGUAGE => LANGUAGE}]
+            # @type [Hash{Commons::Language => Commons::Language}]
             @additional_files = additional_files
             # @type [V2::V3::Problem::BasicTestCaseTemplate]
             @basic_test_case_template = basic_test_case_template
@@ -38,10 +37,21 @@ module SeedTraceClient
           # @return [V2::V3::Problem::BasicCustomFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             method_name = struct.methodName
-            signature = struct.signature
+            if parsed_json["signature"].nil?
+              signature = nil
+            else
+              signature = parsed_json["signature"].to_json
+              signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+            end
             additional_files = struct.additionalFiles
-            basic_test_case_template = struct.basicTestCaseTemplate
+            if parsed_json["basicTestCaseTemplate"].nil?
+              basic_test_case_template = nil
+            else
+              basic_test_case_template = parsed_json["basicTestCaseTemplate"].to_json
+              basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
+            end
             new(method_name: method_name, signature: signature, additional_files: additional_files,
                 basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end

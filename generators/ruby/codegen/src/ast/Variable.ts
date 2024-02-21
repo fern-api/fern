@@ -1,6 +1,5 @@
 import { ClassReference } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
-import { FunctionInvocation } from "./functions/FunctionInvocation";
 
 export enum VariableType {
     CLASS,
@@ -45,10 +44,10 @@ export class Variable extends AstNode {
         this.addText({ stringContent: this.name, templateString, startingTabSpaces });
     }
 
-    public fromJson(): FunctionInvocation | undefined {
+    public fromJson(): AstNode | undefined {
         const classReferences = this.type;
         // Do not support calling fromJson when there are multiple class references
-        if (classReferences.length === 0) {
+        if (classReferences.length <= 1) {
             const classReference = classReferences.at(0);
             return classReference !== undefined ? classReference.fromJson(this) : undefined;
         }

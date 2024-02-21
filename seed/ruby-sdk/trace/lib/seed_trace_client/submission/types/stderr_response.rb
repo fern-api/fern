@@ -4,7 +4,7 @@ require_relative "submission_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class StderrResponse
       attr_reader :submission_id, :stderr, :additional_properties
 
@@ -27,6 +27,7 @@ module SeedTraceClient
       # @return [Submission::StderrResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         submission_id = struct.submissionId
         stderr = struct.stderr
         new(submission_id: submission_id, stderr: stderr, additional_properties: struct)

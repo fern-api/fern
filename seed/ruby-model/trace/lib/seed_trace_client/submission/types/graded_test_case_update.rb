@@ -5,7 +5,7 @@ require_relative "test_case_grade"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GradedTestCaseUpdate
       attr_reader :test_case_id, :grade, :additional_properties
 
@@ -28,8 +28,14 @@ module SeedTraceClient
       # @return [Submission::GradedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         test_case_id = struct.testCaseId
-        grade = struct.grade
+        if parsed_json["grade"].nil?
+          grade = nil
+        else
+          grade = parsed_json["grade"].to_json
+          grade = Submission::TestCaseGrade.from_json(json_object: grade)
+        end
         new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
       end
 

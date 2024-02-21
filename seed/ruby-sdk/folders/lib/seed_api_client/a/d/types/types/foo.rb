@@ -3,7 +3,7 @@
 module SeedApiClient
   module A
     module D
-      module Types
+      class Types
         FOO = String
       end
     end

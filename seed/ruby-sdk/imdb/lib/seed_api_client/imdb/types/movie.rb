@@ -4,7 +4,7 @@ require_relative "movie_id"
 require "json"
 
 module SeedApiClient
-  module Imdb
+  class Imdb
     class Movie
       attr_reader :id, :title, :rating, :additional_properties
 
@@ -30,6 +30,7 @@ module SeedApiClient
       # @return [Imdb::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         id = struct.id
         title = struct.title
         rating = struct.rating

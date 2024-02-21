@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module SeedApiClient
-  module Ast
-    # @type [Hash{String => String}]
-    PRIMITIVE_VALUE = { string: "STRING", number: "NUMBER" }.frozen
+  class Ast
+    class PrimitiveValue
+      STRING = "STRING"
+      NUMBER = "NUMBER"
+    end
   end
 end

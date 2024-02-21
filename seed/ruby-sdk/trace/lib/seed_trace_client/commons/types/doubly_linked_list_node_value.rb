@@ -4,7 +4,7 @@ require_relative "node_id"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DoublyLinkedListNodeValue
       attr_reader :node_id, :val, :next_, :prev, :additional_properties
 
@@ -33,6 +33,7 @@ module SeedTraceClient
       # @return [Commons::DoublyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         node_id = struct.nodeId
         val = struct.val
         next_ = struct.next

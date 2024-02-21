@@ -11,6 +11,7 @@ import com.seed.audiences.resources.foldera.service.types.Response;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 public class ServiceClient {
@@ -35,8 +36,13 @@ public class ServiceClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            okhttp3.Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            okhttp3.Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Response.class);
             }

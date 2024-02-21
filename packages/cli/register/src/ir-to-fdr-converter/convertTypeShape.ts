@@ -17,10 +17,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
                         value: value.name.wireValue,
-                        availability:
-                            value.availability != null
-                                ? convertIrAvailability({ availability: value.availability })
-                                : undefined
+                        availability: convertIrAvailability(value.availability)
                     })
                 )
             };
@@ -34,10 +31,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
                         valueType: convertTypeReference(property.valueType),
-                        availability:
-                            property.availability != null
-                                ? convertIrAvailability({ availability: property.availability })
-                                : undefined
+                        availability: convertIrAvailability(property.availability)
                     })
                 )
             };
@@ -48,10 +42,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     return {
                         key: baseProperty.name.wireValue,
                         valueType: convertTypeReference(baseProperty.valueType),
-                        availability:
-                            baseProperty.availability != null
-                                ? convertIrAvailability({ availability: baseProperty.availability })
-                                : undefined,
+                        availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs
                     };
                 }

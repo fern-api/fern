@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Playlist
-    # @type [Hash{String => String}]
-    RESERVED_KEYWORD_ENUM = { is: "is", as: "as" }.frozen
+  class Playlist
+    class ReservedKeywordEnum
+      IS = "is"
+      AS = "as"
+    end
   end
 end

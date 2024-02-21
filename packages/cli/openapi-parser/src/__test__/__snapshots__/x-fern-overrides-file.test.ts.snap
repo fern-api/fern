@@ -8,7 +8,6 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve a list of users from the system.",
       "errorStatusCode": [
         500,
@@ -16,7 +15,7 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -62,6 +61,7 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {
@@ -160,12 +160,24 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "admin",
                   "nameOverride": undefined,
                   "value": "admin",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "user",
                   "nameOverride": undefined,

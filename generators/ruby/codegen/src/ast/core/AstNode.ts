@@ -9,7 +9,7 @@ export enum NewLinePlacement {
 }
 export declare namespace AstNode {
     export interface Init {
-        documentation?: string;
+        documentation?: string[] | string;
         contentOverride?: string;
         writeImports?: boolean;
         // Where is this node, since any node can be written loose to a file
@@ -26,7 +26,7 @@ export declare namespace AstNode {
 export abstract class AstNode {
     // We could also track line length, but we'd likely be better off running Rubocop to format the code after it's written
     public tabSizeSpaces = 2;
-    public documentation: string | undefined;
+    public documentation: string[] | undefined;
     // This field takes precedence over the node's write function, this
     // should be used if you know exactly the content you'd like to generate
     public contentOverride: string | undefined;
@@ -38,7 +38,7 @@ export abstract class AstNode {
 
     constructor({ documentation, contentOverride, writeImports = false }: AstNode.Init) {
         // TODO: Make documentation a list of strings split by returns then make them multi-line comments
-        this.documentation = documentation?.replace("\n", " ");
+        this.documentation = documentation instanceof Array ? documentation : documentation?.split("\n");
         this.contentOverride = contentOverride;
         this.writeImports = writeImports;
     }

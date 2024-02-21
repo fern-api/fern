@@ -1,5 +1,6 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
+import { MINIMUM_RUBY_VERSION } from "../../utils/RubyUtilities";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
 import { ExternalDependency } from "../ExternalDependency";
@@ -14,20 +15,56 @@ export declare namespace Gemspec {
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
         hasFileBasedDependencies?: boolean;
+        hasEndpoints?: boolean;
+        license?: { licenseFilePath: string; licenseType?: string };
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ clientName, gemName, dependencies, sdkVersion, hasFileBasedDependencies = false }: Gemspec.Init) {
-        const globalDependencies: ExternalDependency[] = [
-            new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
-            new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
-            new ExternalDependency({ packageName: "async-http-faraday", specifier: "~>", version: "0.12" })
-        ];
+    constructor({
+        clientName,
+        gemName,
+        dependencies,
+        sdkVersion,
+        license,
+        hasFileBasedDependencies = false,
+        hasEndpoints = false
+    }: Gemspec.Init) {
+        const globalDependencies: ExternalDependency[] = [];
+        if (hasEndpoints) {
+            globalDependencies.push(
+                ...[
+                    new ExternalDependency({
+                        packageName: "faraday",
+                        lowerBound: { specifier: ">=", version: "1.10" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-net_http",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "4.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-retry",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "async-http-faraday",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "1.0" }
+                    })
+                ]
+            );
+        }
         if (hasFileBasedDependencies) {
             globalDependencies.push(
                 ...[
-                    new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
-                    new ExternalDependency({ packageName: "farady-multipart", specifier: "~>", version: "1.0" })
+                    new ExternalDependency({ packageName: "mini_mime" }),
+                    new ExternalDependency({
+                        packageName: "faraday-multipart",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "2.0" }
+                    })
                 ]
             );
         }
@@ -50,6 +87,27 @@ export class Gemspec extends FunctionInvocation {
                         name: `"${sdkVersion}"`,
                         import_: new Import({ from: "lib/gemconfig" })
                     }),
+                    isAssignment: true
+                })
+            );
+        } else {
+            // Allow for people to use the gemconfig if no version is found
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.version",
+                    rightSide: new ClassReference({
+                        name: `${clientName}::Gemconfig::VERSION`,
+                        import_: new Import({ from: "lib/gemconfig" })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+        if (license !== undefined && license.licenseType !== undefined) {
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.licenses",
+                    rightSide: `["${license.licenseType}"]`,
                     isAssignment: true
                 })
             );
@@ -104,7 +162,7 @@ export class Gemspec extends FunctionInvocation {
                     }),
                     new Expression({
                         leftSide: "spec.required_ruby_version",
-                        rightSide: '">= 2.7.0"',
+                        rightSide: `">= ${MINIMUM_RUBY_VERSION}.0"`,
                         isAssignment: true
                     }),
                     new Expression({
@@ -128,10 +186,11 @@ export class Gemspec extends FunctionInvocation {
                         }),
                         isAssignment: true
                     }),
-                    // TODO: add  `<< "LICENSE.md"` if a license file is added through config
                     new Expression({
                         leftSide: "spec.files",
-                        rightSide: 'Dir.glob("lib/**/*")',
+                        rightSide: `Dir.glob("lib/**/*")${
+                            license !== undefined ? ' << "' + license.licenseFilePath + '"' : ""
+                        }`,
                         isAssignment: true
                     }),
                     new Expression({ leftSide: "spec.bindir", rightSide: '"exe"', isAssignment: true }),

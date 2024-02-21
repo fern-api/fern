@@ -61,6 +61,8 @@
     "@fern-fern/ir-v3-model": "0.0.4",
     "@fern-fern/ir-v30-sdk": "0.0.1",
     "@fern-fern/ir-v31-sdk": "0.0.5",
+    "@fern-fern/ir-v32-sdk": "0.0.1",
+    "@fern-fern/ir-v33-sdk": "0.0.15",
     "@fern-fern/ir-v4-model": "0.0.4",
     "@fern-fern/ir-v5-model": "0.0.3",
     "@fern-fern/ir-v6-model": "0.0.33",
@@ -71,7 +73,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

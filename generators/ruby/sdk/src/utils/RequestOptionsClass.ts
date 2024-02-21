@@ -17,6 +17,8 @@ import { HeadersGenerator } from "./HeadersGenerator";
 export declare namespace RequestOptions {
     export interface Init {
         headersGenerator: HeadersGenerator;
+        nameOverride?: string;
+        additionalProperties?: Property[];
     }
 }
 
@@ -27,7 +29,7 @@ export class RequestOptions extends Class_ {
     public additionalQueryProperty: Property;
     public additionalBodyProperty: Property;
 
-    constructor({ headersGenerator }: RequestOptions.Init) {
+    constructor({ nameOverride, headersGenerator, additionalProperties }: RequestOptions.Init) {
         const timeoutProperty = new Property({
             name: "timeout_in_seconds",
             type: LongClassReference,
@@ -35,9 +37,9 @@ export class RequestOptions extends Class_ {
         });
         const headerProperties = [
             // Auth headers
-            ...headersGenerator.getAuthHeadersAsProperties(false),
+            ...headersGenerator.getAuthHeadersAsProperties(true),
             // Global headers
-            ...headersGenerator.getAdditionalHeadersAsProperties(false)
+            ...headersGenerator.getAdditionalHeadersAsProperties(true)
         ];
         // Generic overrides
         const additionalHeaderProperty = new Property({
@@ -57,14 +59,15 @@ export class RequestOptions extends Class_ {
         });
 
         super({
-            classReference: new ClassReference({ name: "RequestOptions", location: "requests" }),
+            classReference: new ClassReference({ name: nameOverride ?? "RequestOptions", location: "requests" }),
             includeInitializer: true,
             properties: [
-                timeoutProperty,
                 ...headerProperties,
                 additionalHeaderProperty,
                 additionalQueryProperty,
-                additionalBodyProperty
+                additionalBodyProperty,
+                timeoutProperty,
+                ...(additionalProperties ?? [])
             ],
             documentation: "Additional options for request-specific configuration when calling APIs via the SDK."
         });
@@ -86,7 +89,7 @@ export class RequestOptions extends Class_ {
                 if_: {
                     rightSide: new FunctionInvocation({
                         // TODO: Do this field access on the client better
-                        onObject: `${requestOptionsVariable.write({})}.${this.timeoutProperty.name}`,
+                        onObject: `${requestOptionsVariable.write({})}&.${this.timeoutProperty.name}`,
                         baseFunction: new Function_({ name: "nil?", functionBody: [] })
                     }),
                     operation: "!",

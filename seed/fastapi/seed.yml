@@ -1,4 +1,4 @@
-irVersion: v31
+irVersion: v34
 docker: fernapi/fern-fastapi-server:latest
 dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python
@@ -24,5 +24,8 @@ allowedFailures:
   - file-download
   - file-upload
   - literal-headers
+  - query-parameters
   - response-property
   - streaming
+  - literal
+  - websocket

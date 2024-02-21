@@ -8,7 +8,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the download URL for the artifact.",
       "errorStatusCode": [
         400,
@@ -22,7 +21,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -41,9 +40,16 @@ exports[`open api parser devrev parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
+              "expires_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -106,7 +112,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates an artifact and generates an upload URL for its data.
 ",
       "errorStatusCode": [
@@ -120,7 +125,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -129,7 +134,7 @@ exports[`open api parser devrev parse open api 1`] = `
             "properties": {
               "file_name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "file_name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -140,7 +145,27 @@ exports[`open api parser devrev parse open api 1`] = `
           "response": {
             "properties": {
               "form_data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -152,7 +177,7 @@ exports[`open api parser devrev parse open api 1`] = `
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -210,7 +235,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
@@ -225,53 +249,27 @@ authenticated user.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "grant_type": {
-                "enum": "urn:devrev:params:oauth:grant-type:token-issue",
-                "type": "enum",
-              },
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-              "rev_info": {
-                "properties": {
-                  "org_traits": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "user_ref": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "user_traits": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "subject_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:jwt:auth0",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "access_token": {
                 "primitive": {
-                  "string": "string",
+                  "string": "access_token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "client_id": {
+                "primitive": {
+                  "string": "client_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -280,6 +278,20 @@ authenticated user.
                 "primitive": {
                   "int": 1,
                   "type": "int",
+                },
+                "type": "primitive",
+              },
+              "refresh_token": {
+                "primitive": {
+                  "string": "refresh_token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "scope": {
+                "primitive": {
+                  "string": "scope",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -343,7 +355,6 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
@@ -359,7 +370,7 @@ given Dev organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -406,7 +417,6 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
@@ -422,7 +432,7 @@ given Dev organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -431,7 +441,7 @@ given Dev organization.
               "name": "token_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -443,10 +453,52 @@ given Dev organization.
             "properties": {
               "token": {
                 "properties": {
+                  "client_id": {
+                    "primitive": {
+                      "string": "client_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "issued_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -454,9 +506,35 @@ given Dev organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
+                  },
+                  "subject": {
+                    "primitive": {
+                      "string": "subject",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "token_hint": {
+                    "primitive": {
+                      "string": "token_hint",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                 },
                 "type": "object",
@@ -520,7 +598,6 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
@@ -536,24 +613,105 @@ token type issued for a given subject.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "requested_token_type",
-              "value": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
               "tokens": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "client_id": {
+                        "primitive": {
+                          "string": "client_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "expires_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "issued_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "scopes": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "scopes",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "subject": {
+                        "primitive": {
+                          "string": "subject",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "token_hint": {
+                        "primitive": {
+                          "string": "token_hint",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -672,7 +830,6 @@ subject.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
@@ -688,18 +845,13 @@ authenticated user.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -740,7 +892,6 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
@@ -756,7 +907,7 @@ organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -765,14 +916,14 @@ organization.
             "properties": {
               "token_hint": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_hint",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "token_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -784,10 +935,52 @@ organization.
             "properties": {
               "token": {
                 "properties": {
+                  "client_id": {
+                    "primitive": {
+                      "string": "client_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "issued_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -795,9 +988,35 @@ organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
+                  },
+                  "subject": {
+                    "primitive": {
+                      "string": "subject",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "token_hint": {
+                    "primitive": {
+                      "string": "token_hint",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                 },
                 "type": "object",
@@ -855,7 +1074,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
@@ -921,7 +1139,6 @@ enterprise connections can be created by an organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
@@ -938,7 +1155,7 @@ connections can not be deleted using this method.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -947,7 +1164,7 @@ connections can not be deleted using this method.
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -994,7 +1211,6 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details for an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1060,7 +1276,6 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
@@ -1077,7 +1292,7 @@ created by the user.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1130,7 +1345,6 @@ created by the user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
@@ -1149,7 +1363,7 @@ disabled.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1158,14 +1372,10 @@ disabled.
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "toggle": {
-                "enum": "disable",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -1209,7 +1419,6 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1270,7 +1479,6 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists users within your organization.",
       "errorStatusCode": [
         400,
@@ -1283,25 +1491,123 @@ disabled.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
               "dev_users": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_picture": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "email": {
+                        "primitive": {
+                          "string": "email",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_identities": {
+                        "array": [
+                          {
+                            "map": [],
+                            "type": "map",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "full_name": {
+                        "primitive": {
+                          "string": "full_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone_numbers": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "phone_numbers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
+              },
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -1505,7 +1811,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the authenticated user's information.",
       "errorStatusCode": [
         400,
@@ -1518,7 +1823,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1528,11 +1833,39 @@ used.
             "properties": {
               "dev_user": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "display_picture": {
                     "properties": {
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
-                          "string": "string",
+                          "string": "id",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1540,12 +1873,54 @@ used.
                     },
                     "type": "object",
                   },
-                  "id": {
+                  "email": {
                     "primitive": {
-                      "string": "string",
+                      "string": "email",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "external_identities": {
+                    "array": [
+                      {
+                        "map": [],
+                        "type": "map",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "full_name": {
+                    "primitive": {
+                      "string": "full_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "phone_numbers": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "phone_numbers",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "state": {
                     "enum": "active",
@@ -1594,7 +1969,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1653,7 +2027,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1667,7 +2040,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1692,7 +2065,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -1749,7 +2136,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -1815,7 +2201,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
       "errorStatusCode": [
@@ -1829,25 +2214,31 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "parts": {
                 "array": [],
                 "type": "array",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -2081,7 +2472,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -2142,7 +2532,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
@@ -2157,7 +2546,7 @@ organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2166,14 +2555,10 @@ organization.
             "properties": {
               "display_name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "display_name",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "environment": {
-                "enum": "production",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -2182,10 +2567,59 @@ organization.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2245,7 +2679,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes the Rev organization.",
       "errorStatusCode": [
         400,
@@ -2259,7 +2692,7 @@ organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2284,7 +2717,21 @@ organization.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -2341,7 +2788,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2355,7 +2801,7 @@ organization.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2376,10 +2822,59 @@ organization.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2444,7 +2939,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
 to access.
@@ -2461,24 +2955,92 @@ to access.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "rev_orgs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "domain": {
+                        "primitive": {
+                          "string": "domain",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_ref": {
+                        "primitive": {
+                          "string": "external_ref",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2782,7 +3344,6 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2796,17 +3357,13 @@ them.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "environment": {
-                "enum": "production",
-                "type": "enum",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
@@ -2821,10 +3378,59 @@ them.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2884,7 +3490,6 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
@@ -2899,7 +3504,7 @@ and a logical concept denoted by the tag's name.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2908,7 +3513,7 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2920,16 +3525,56 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2990,7 +3635,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a tag.",
       "errorStatusCode": [
         400,
@@ -3004,7 +3648,7 @@ and a logical concept denoted by the tag's name.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3029,7 +3673,21 @@ and a logical concept denoted by the tag's name.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -3086,7 +3744,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a tag's information.",
       "errorStatusCode": [
         400,
@@ -3100,7 +3757,7 @@ and a logical concept denoted by the tag's name.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3121,16 +3778,56 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3196,7 +3893,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the available tags.",
       "errorStatusCode": [
         400,
@@ -3209,24 +3905,90 @@ and a logical concept denoted by the tag's name.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "tags": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "allowed_values": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "allowed_values",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3340,7 +4102,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a tag's information.",
       "errorStatusCode": [
         400,
@@ -3354,17 +4115,13 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "allowed_values": {
-                "properties": {},
-                "type": "object",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
@@ -3379,16 +4136,56 @@ used.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3449,7 +4246,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3508,7 +4304,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3573,7 +4368,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the timeline entries for an object.",
       "errorStatusCode": [
         400,
@@ -3587,7 +4381,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3602,17 +4396,24 @@ used.
                 "type": "primitive",
               },
             },
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
           ],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "timeline_entries": {
                 "array": [],
                 "type": "array",
@@ -3747,7 +4548,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3806,7 +4606,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new webhook target.",
       "errorStatusCode": [
         400,
@@ -3819,7 +4618,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3828,7 +4627,7 @@ used.
             "properties": {
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3840,16 +4639,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3860,7 +4689,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3921,7 +4750,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes the requested webhook.",
       "errorStatusCode": [
         400,
@@ -3935,7 +4763,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3960,7 +4788,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -4017,7 +4859,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the requested webhook's information.",
       "errorStatusCode": [
         400,
@@ -4031,7 +4872,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4052,16 +4893,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4072,7 +4943,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4138,7 +5009,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the webhooks.",
       "errorStatusCode": [
         400,
@@ -4151,7 +5021,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4160,7 +5030,68 @@ used.
           "response": {
             "properties": {
               "webhooks": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_types": {
+                        "array": [
+                          {
+                            "enum": "part_created",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "secret": {
+                        "primitive": {
+                          "string": "secret",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -4203,7 +5134,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates the requested webhook.",
       "errorStatusCode": [
         400,
@@ -4217,21 +5147,13 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "action": {
-                "enum": "activate",
-                "type": "enum",
-              },
-              "event_types": {
-                "properties": {},
-                "type": "object",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
@@ -4246,16 +5168,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4266,7 +5218,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4327,7 +5279,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
@@ -4388,7 +5339,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a work item.",
       "errorStatusCode": [
         400,
@@ -4402,7 +5352,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4427,7 +5377,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -4484,7 +5448,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Exports a collection of work items.",
       "errorStatusCode": [
         400,
@@ -4497,7 +5460,7 @@ used.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4844,7 +5807,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a work item's information.",
       "errorStatusCode": [
         400,
@@ -4909,7 +5871,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists a collection of work items.",
       "errorStatusCode": [
         400,
@@ -4922,22 +5883,28 @@ organizations.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "works": {
                 "array": [],
                 "type": "array",
@@ -5324,7 +6291,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a work item's information.",
       "errorStatusCode": [
         400,
@@ -5474,6 +6440,7 @@ organizations.
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "artifacts-locate-response",
@@ -6498,12 +7465,24 @@ authentication connection.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "disable",
           "nameOverride": undefined,
           "value": "disable",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "enable",
           "nameOverride": undefined,
@@ -6521,30 +7500,60 @@ for each authentication connection will depend on the type value.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "social",
           "nameOverride": undefined,
           "value": "social",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -6777,12 +7786,24 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:grant-type:token-issue",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthGrantTypeTokenExchange",
           "nameOverride": undefined,
@@ -6798,54 +7819,108 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeAat",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:aat",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeAatPublic",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:aat:public",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeDev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:dev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypePat",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:pat",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeRev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:rev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSession",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:session",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSessionDev0",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:session:dev0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSys",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:sys",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
           "nameOverride": undefined,
@@ -6861,18 +7936,36 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "expired",
           "nameOverride": undefined,
           "value": "expired",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "revoked",
           "nameOverride": undefined,
@@ -6888,42 +7981,84 @@ token. Only applicable for application access tokens.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeJwtDev",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:jwt:dev",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeRevinfo",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:revinfo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeSysu",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:sysu",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfo",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:userinfo",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
           "nameOverride": undefined,
           "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
           "nameOverride": undefined,
@@ -7927,24 +9062,48 @@ authentication connections have different configuration parameters.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -8240,30 +9399,60 @@ that can be updated.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "google_apps",
           "nameOverride": undefined,
           "value": "google_apps",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "none",
           "nameOverride": undefined,
           "value": "none",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "oidc",
           "nameOverride": undefined,
           "value": "oidc",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "samlp",
           "nameOverride": undefined,
           "value": "samlp",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "waad",
           "nameOverride": undefined,
@@ -8482,7 +9671,7 @@ sort order. If not set, then no prior elements exist.
         },
         "type": "primitive",
       },
-      "nameOverride": undefined,
+      "nameOverride": "empty",
       "type": "map",
       "value": {
         "generatedName": "EmptyValue",
@@ -8505,7 +9694,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "Enhancement",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "enhancement",
       "properties": [
         {
           "audiences": [],
@@ -8717,30 +9906,60 @@ sort order. If not set, then no prior elements exist.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "bad_request",
           "nameOverride": undefined,
           "value": "bad_request",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "invalid_enum_value",
           "nameOverride": undefined,
           "value": "invalid_enum_value",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "missing_required_field",
           "nameOverride": undefined,
           "value": "missing_required_field",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "parse_error",
           "nameOverride": undefined,
           "value": "parse_error",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "value_not_permitted",
           "nameOverride": undefined,
@@ -9699,7 +10918,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "Issue",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "issue",
       "properties": [
         {
           "audiences": [],
@@ -9733,24 +10952,48 @@ sort order. If not set, then no prior elements exist.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p0",
           "nameOverride": undefined,
           "value": "p0",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p1",
           "nameOverride": undefined,
           "value": "p1",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p2",
           "nameOverride": undefined,
           "value": "p2",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "p3",
           "nameOverride": undefined,
@@ -9771,12 +11014,24 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "after",
           "nameOverride": undefined,
           "value": "after",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "before",
           "nameOverride": undefined,
@@ -9883,18 +11138,36 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "production",
           "nameOverride": undefined,
           "value": "production",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "staging",
           "nameOverride": undefined,
           "value": "staging",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "test",
           "nameOverride": undefined,
@@ -9942,7 +11215,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "Part",
         "groupName": undefined,
-        "nameOverride": undefined,
+        "nameOverride": "part",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -10213,24 +11486,48 @@ always be returned in the specified sort-by order.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "capability",
           "nameOverride": undefined,
           "value": "capability",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "enhancement",
           "nameOverride": undefined,
           "value": "enhancement",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "feature",
           "nameOverride": undefined,
           "value": "feature",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "product",
           "nameOverride": undefined,
@@ -11804,7 +13101,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": "Describes the current stage of a work item.",
       "generatedName": "Stage",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "stage",
       "properties": [
         {
           "audiences": [],
@@ -11923,7 +13220,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": undefined,
       "generatedName": "Tag",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "tag",
       "properties": [
         {
           "audiences": [],
@@ -12565,7 +13862,7 @@ tags.
       "description": undefined,
       "generatedName": "Ticket",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ticket",
       "properties": [
         {
           "audiences": [],
@@ -12641,24 +13938,48 @@ tags.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "blocker",
           "nameOverride": undefined,
           "value": "blocker",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "high",
           "nameOverride": undefined,
           "value": "high",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "low",
           "nameOverride": undefined,
           "value": "low",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "medium",
           "nameOverride": undefined,
@@ -12807,12 +14128,24 @@ will appear in the response.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "snap_kit",
           "nameOverride": undefined,
           "value": "snap_kit",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "text",
           "nameOverride": undefined,
@@ -13821,30 +15154,60 @@ default visibility.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "deactivated",
           "nameOverride": undefined,
           "value": "deactivated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "locked",
           "nameOverride": undefined,
           "value": "locked",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "shadow",
           "nameOverride": undefined,
           "value": "shadow",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unassigned",
           "nameOverride": undefined,
@@ -13898,18 +15261,36 @@ default visibility.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "dev_user",
           "nameOverride": undefined,
           "value": "dev_user",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_user",
           "nameOverride": undefined,
           "value": "rev_user",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "sys_user",
           "nameOverride": undefined,
@@ -13932,7 +15313,7 @@ default visibility.
       "description": undefined,
       "generatedName": "Webhook",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "webhook",
       "properties": [
         {
           "audiences": [],
@@ -14555,114 +15936,228 @@ be set for other request types.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_created",
           "nameOverride": undefined,
           "value": "part_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_deleted",
           "nameOverride": undefined,
           "value": "part_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "part_updated",
           "nameOverride": undefined,
           "value": "part_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_created",
           "nameOverride": undefined,
           "value": "rev_org_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_deleted",
           "nameOverride": undefined,
           "value": "rev_org_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "rev_org_updated",
           "nameOverride": undefined,
           "value": "rev_org_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_created",
           "nameOverride": undefined,
           "value": "tag_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_deleted",
           "nameOverride": undefined,
           "value": "tag_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "tag_updated",
           "nameOverride": undefined,
           "value": "tag_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_created",
           "nameOverride": undefined,
           "value": "timeline_entry_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_deleted",
           "nameOverride": undefined,
           "value": "timeline_entry_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "timeline_entry_updated",
           "nameOverride": undefined,
           "value": "timeline_entry_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "verify",
           "nameOverride": undefined,
           "value": "verify",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_created",
           "nameOverride": undefined,
           "value": "webhook_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_deleted",
           "nameOverride": undefined,
           "value": "webhook_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "webhook_updated",
           "nameOverride": undefined,
           "value": "webhook_updated",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_created",
           "nameOverride": undefined,
           "value": "work_created",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_deleted",
           "nameOverride": undefined,
           "value": "work_deleted",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "work_updated",
           "nameOverride": undefined,
@@ -14707,18 +16202,36 @@ be set for other request types.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "active",
           "nameOverride": undefined,
           "value": "active",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "inactive",
           "nameOverride": undefined,
           "value": "inactive",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "unverified",
           "nameOverride": undefined,
@@ -14955,12 +16468,24 @@ response.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "activate",
           "nameOverride": undefined,
           "value": "activate",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "deactivate",
           "nameOverride": undefined,
@@ -15233,7 +16758,7 @@ event types. Note this is mutually exclusive with 'add' and
         "discriminantProperty": "type",
         "generatedName": "Work",
         "groupName": undefined,
-        "nameOverride": undefined,
+        "nameOverride": "work",
         "schemas": {
           "issue": {
             "description": undefined,
@@ -15497,12 +17022,24 @@ event types. Note this is mutually exclusive with 'add' and
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "issue",
           "nameOverride": undefined,
           "value": "issue",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ticket",
           "nameOverride": undefined,
@@ -16691,6 +18228,7 @@ empty.
   },
   "securitySchemes": {
     "auth-token": {
+      "headerEnvVar": undefined,
       "headerName": "Authorization",
       "headerVariableName": undefined,
       "prefix": undefined,

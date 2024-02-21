@@ -1,7 +1,8 @@
+import { Argument } from "./Argument";
 import { ClassReference, NilValue } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
-import { Variable } from "./Variable";
+import { Variable, VariableType } from "./Variable";
 
 export declare namespace Parameter {
     export interface Init extends AstNode.Init {
@@ -57,5 +58,24 @@ export class Parameter extends AstNode {
         let imports = new Set<Import>();
         this.type.forEach((cr) => (imports = new Set([...imports, ...cr.getImports()])));
         return imports;
+    }
+
+    public toArgument(value: Variable | string): Argument {
+        return new Argument({
+            name: this.name,
+            type: this.type,
+            value,
+            isNamed: this.isNamed,
+            documentation: this.documentation
+        });
+    }
+
+    public toVariable(): Variable {
+        return new Variable({
+            name: this.name,
+            type: this.type,
+            documentation: this.documentation,
+            variableType: VariableType.LOCAL
+        });
     }
 }

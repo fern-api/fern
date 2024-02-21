@@ -381,7 +381,8 @@ function getRequest({
         const properties = Object.fromEntries(
             request.properties.map((property) => {
                 if (property.schema.type === "file") {
-                    return [property.key, "file"];
+                    const fileType = property.schema.isArray ? "list<file>" : "file";
+                    return [property.key, property.schema.isOptional ? `optional<${fileType}>` : fileType];
                 } else {
                     const propertyTypeReference = buildTypeReference({
                         schema: property.schema.json,

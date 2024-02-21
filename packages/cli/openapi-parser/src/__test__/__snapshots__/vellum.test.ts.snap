@@ -36,7 +36,6 @@ with all stable endpoints. You can find them here:
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -46,7 +45,7 @@ Used to retrieve a deployment given its ID or name.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -54,7 +53,7 @@ Used to retrieve a deployment given its ID or name.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -66,7 +65,15 @@ Used to retrieve a deployment given its ID or name.
           "response": {
             "properties": {
               "active_model_version_ids": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "active_model_version_ids",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
               "created": {
@@ -82,14 +89,14 @@ Used to retrieve a deployment given its ID or name.
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -107,7 +114,7 @@ Used to retrieve a deployment given its ID or name.
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -174,7 +181,6 @@ Used to retrieve a deployment given its ID or name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
@@ -182,17 +188,13 @@ Creates a new document index.",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": "Index Using Instructor Model",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "environment": {
-                "enum": "DEVELOPMENT",
-                "type": "enum",
-              },
               "indexing_config": {
                 "map": [
                   {
@@ -353,10 +355,6 @@ Creates a new document index.",
                 },
                 "type": "primitive",
               },
-              "status": {
-                "enum": "ACTIVE",
-                "type": "enum",
-              },
             },
             "type": "object",
           },
@@ -375,7 +373,7 @@ Creates a new document index.",
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -384,11 +382,25 @@ Creates a new document index.",
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "indexing_config",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
                       "type": "map",
                     },
                   },
@@ -397,14 +409,14 @@ Creates a new document index.",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -536,7 +548,6 @@ Creates a new document index.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -546,7 +557,7 @@ Used to list documents. Optionally filter on supported fields.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -574,6 +585,98 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "document_to_document_indexes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "document_index_id": {
+                                "primitive": {
+                                  "string": "document_index_id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "external_id": {
+                        "primitive": {
+                          "string": "external_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "keywords": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "keywords",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "label",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_uploaded_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "processing_failure_reason": {
+                        "literal": {
+                          "string": "EXCEEDED_CHARACTER_LIMIT",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "processing_state": {
+                        "enum": "QUEUED",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "literal": {
+                          "string": "ACTIVE",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -708,7 +811,6 @@ Used to list documents. Optionally filter on supported fields.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
@@ -767,7 +869,6 @@ Executes a deployed Workflow and streams back its results.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -782,24 +883,25 @@ Generate a completion using a previously defined deployment.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "options": {
-                "properties": {
-                  "logprobs": {
-                    "enum": "ALL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
               "requests": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -808,7 +910,61 @@ Generate a completion using a previously defined deployment.
           "response": {
             "properties": {
               "results": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "data": {
+                        "properties": {
+                          "completions": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "id": {
+                                    "primitive": {
+                                      "string": "id",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "model_version_id": {
+                                    "primitive": {
+                                      "string": "model_version_id",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "text": {
+                                    "primitive": {
+                                      "string": "text",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "error": {
+                        "properties": {
+                          "message": {
+                            "primitive": {
+                              "string": "message",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -870,7 +1026,6 @@ Generate a completion using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a stream of completions using a previously defined deployment.
@@ -936,7 +1091,6 @@ Generate a stream of completions using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -946,7 +1100,7 @@ Used to retrieve a model version given its ID.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -954,7 +1108,7 @@ Used to retrieve a model version given its ID.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -969,7 +1123,7 @@ Used to retrieve a model version given its ID.
                 "properties": {
                   "base_model": {
                     "primitive": {
-                      "string": "string",
+                      "string": "base_model",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -978,7 +1132,28 @@ Used to retrieve a model version given its ID.
                     "properties": {
                       "id": {
                         "primitive": {
-                          "string": "string",
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "prompt_id": {
+                        "primitive": {
+                          "string": "prompt_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "prompt_index": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "sandbox_id": {
+                        "primitive": {
+                          "string": "sandbox_id",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -999,7 +1174,20 @@ Used to retrieve a model version given its ID.
               "exec_config": {
                 "properties": {
                   "input_variables": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "parameters": {
@@ -1025,7 +1213,26 @@ Used to retrieve a model version given its ID.
                         },
                         "type": "primitive",
                       },
+                      "stop": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "stop",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "temperature": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "top_k": {
                         "primitive": {
                           "double": 1.1,
                           "type": "double",
@@ -1045,7 +1252,28 @@ Used to retrieve a model version given its ID.
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "version": {
@@ -1058,26 +1286,40 @@ Used to retrieve a model version given its ID.
                     },
                     "type": "object",
                   },
+                  "prompt_syntax_version": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "prompt_template": {
+                    "primitive": {
+                      "string": "prompt_template",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                 },
                 "type": "object",
               },
               "external_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "external_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1152,7 +1394,6 @@ Used to retrieve a model version given its ID.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
@@ -1160,7 +1401,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -1168,7 +1409,7 @@ Compiles the prompt backing the model version using the provided input values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1179,18 +1420,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "request": {
             "properties": {
               "input_values": {
-                "map": [
-                  {
-                    "key": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "value": {
-                      "map": [],
-                      "type": "map",
-                    },
-                  },
-                ],
+                "map": [],
                 "type": "map",
               },
             },
@@ -1209,7 +1439,7 @@ Compiles the prompt backing the model version using the provided input values.",
                   },
                   "text": {
                     "primitive": {
-                      "string": "string",
+                      "string": "text",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1288,7 +1518,6 @@ Compiles the prompt backing the model version using the provided input values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration
@@ -1301,7 +1530,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1310,21 +1539,21 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "properties": {
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "model",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1372,13 +1601,47 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "prompt": {
                 "properties": {
                   "input_variables": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "version": {
@@ -1407,21 +1670,21 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1433,14 +1696,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1452,14 +1715,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1471,14 +1734,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1490,7 +1753,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1551,7 +1814,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
@@ -1565,7 +1827,7 @@ or overwritten with default values.",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": "Basic Example",
           "pathParameters": [
@@ -1573,7 +1835,7 @@ or overwritten with default values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1631,6 +1893,18 @@ or overwritten with default values.",
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -1641,15 +1915,6 @@ or overwritten with default values.",
                 },
                 "type": "primitive",
               },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
             },
             "type": "object",
           },
@@ -1657,19 +1922,79 @@ or overwritten with default values.",
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "inputs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "array": [
+                          {
+                            "properties": {
+                              "role": {
+                                "enum": "SYSTEM",
+                                "type": "enum",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "text",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
+              },
+              "label": {
+                "primitive": {
+                  "string": "label",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "metric_input_params": {
                 "properties": {
                   "params": {
-                    "properties": {},
+                    "properties": {
+                      "target": {
+                        "primitive": {
+                          "string": "target",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
                     "type": "object",
                   },
                 },
@@ -1795,7 +2120,6 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
@@ -1803,7 +2127,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -1811,7 +2135,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1821,7 +2145,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "scenario_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "scenario_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1890,7 +2214,6 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Perform a search against a document index.
@@ -1904,56 +2227,16 @@ Perform a search against a document index.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "options": {
-                "properties": {
-                  "filters": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "result_merging": {
-                    "properties": {
-                      "enabled": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "weights": {
-                    "properties": {
-                      "keywords": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "semantic_similarity": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "query": {
                 "primitive": {
-                  "string": "string",
+                  "string": "query",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1964,7 +2247,58 @@ Perform a search against a document index.
           "response": {
             "properties": {
               "results": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "document": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "label",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "keywords": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "keywords",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "score": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2026,7 +2360,6 @@ Perform a search against a document index.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -2040,7 +2373,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2048,7 +2381,12 @@ Used to submit feedback regarding the quality of previously generated completion
           "request": {
             "properties": {
               "actuals": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2098,7 +2436,6 @@ Used to submit feedback regarding the quality of previously generated completion
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
@@ -2112,7 +2449,7 @@ or overwritten with default values.",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2120,7 +2457,7 @@ or overwritten with default values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2135,18 +2472,7 @@ or overwritten with default values.",
                 "type": "object",
               },
               "input_values": {
-                "map": [
-                  {
-                    "key": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "value": {
-                      "map": [],
-                      "type": "map",
-                    },
-                  },
-                ],
+                "map": [],
                 "type": "map",
               },
             },
@@ -2155,23 +2481,59 @@ or overwritten with default values.",
           "response": {
             "properties": {
               "evaluation_params": {
-                "properties": {},
+                "properties": {
+                  "target": {
+                    "primitive": {
+                      "string": "target",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
               "input_values": {
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "input_values",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
                       "type": "map",
                     },
                   },
                 ],
                 "type": "map",
+              },
+              "label": {
+                "primitive": {
+                  "string": "label",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "test_case_id": {
+                "primitive": {
+                  "string": "test_case_id",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -2244,7 +2606,6 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
@@ -2252,7 +2613,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2260,7 +2621,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2270,7 +2631,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "test_case_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "test_case_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2339,7 +2700,6 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Upload a document to be indexed and used for search.
@@ -2448,6 +2808,8 @@ Upload a document to be indexed and used for search.
             "description": undefined,
             "key": "contents",
             "schema": {
+              "isArray": false,
+              "isOptional": false,
               "type": "file",
             },
           },
@@ -2575,6 +2937,7 @@ Upload a document to be indexed and used for search.
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "DeploymentRead",
@@ -2683,24 +3046,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_MESSAGE",
           "nameOverride": undefined,
           "value": "CHAT_MESSAGE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_HISTORY",
           "nameOverride": undefined,
           "value": "CHAT_HISTORY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "JINJA",
           "nameOverride": undefined,
           "value": "JINJA",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FUNCTION_DEFINITION",
           "nameOverride": undefined,
@@ -2805,24 +3192,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "SYSTEM",
           "nameOverride": undefined,
           "value": "SYSTEM",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ASSISTANT",
           "nameOverride": undefined,
           "value": "ASSISTANT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "USER",
           "nameOverride": undefined,
           "value": "USER",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FUNCTION",
           "nameOverride": undefined,
@@ -2907,12 +3318,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STRING",
           "nameOverride": undefined,
           "value": "STRING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "JSON",
           "nameOverride": undefined,
@@ -3237,18 +3660,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACTIVE",
           "nameOverride": undefined,
           "value": "ACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INACTIVE",
           "nameOverride": undefined,
           "value": "INACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ARCHIVED",
           "nameOverride": undefined,
@@ -3729,12 +4170,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ACTIVE",
           "nameOverride": undefined,
           "value": "ACTIVE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ARCHIVED",
           "nameOverride": undefined,
@@ -3923,18 +4376,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DEVELOPMENT",
           "nameOverride": undefined,
           "value": "DEVELOPMENT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STAGING",
           "nameOverride": undefined,
           "value": "STAGING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PRODUCTION",
           "nameOverride": undefined,
@@ -4184,18 +4655,36 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "LENGTH",
           "nameOverride": undefined,
           "value": "LENGTH",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STOP",
           "nameOverride": undefined,
           "value": "STOP",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "UNKNOWN",
           "nameOverride": undefined,
@@ -4916,30 +5405,60 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "AWAITING_PROCESSING",
           "nameOverride": undefined,
           "value": "AWAITING_PROCESSING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDEXING",
           "nameOverride": undefined,
           "value": "INDEXING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INDEXED",
           "nameOverride": undefined,
           "value": "INDEXED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -4956,12 +5475,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ALL",
           "nameOverride": undefined,
           "value": "ALL",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NONE",
           "nameOverride": undefined,
@@ -4978,12 +5509,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GENERATE",
           "nameOverride": undefined,
           "value": "GENERATE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CLASSIFY",
           "nameOverride": undefined,
@@ -5664,24 +6207,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CREATING",
           "nameOverride": undefined,
           "value": "CREATING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "READY",
           "nameOverride": undefined,
           "value": "READY",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CREATION_FAILED",
           "nameOverride": undefined,
           "value": "CREATION_FAILED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "DISABLED",
           "nameOverride": undefined,
@@ -6111,24 +6678,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "QUEUED",
           "nameOverride": undefined,
           "value": "QUEUED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROCESSING",
           "nameOverride": undefined,
           "value": "PROCESSING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PROCESSED",
           "nameOverride": undefined,
           "value": "PROCESSED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FAILED",
           "nameOverride": undefined,
@@ -7067,48 +7658,96 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "ANTHROPIC",
           "nameOverride": undefined,
           "value": "ANTHROPIC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "COHERE",
           "nameOverride": undefined,
           "value": "COHERE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "GOOGLE",
           "nameOverride": undefined,
           "value": "GOOGLE",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "HOSTED",
           "nameOverride": undefined,
           "value": "HOSTED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MOSAICML",
           "nameOverride": undefined,
           "value": "MOSAICML",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "MYSTIC",
           "nameOverride": undefined,
           "value": "MYSTIC",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "OPENAI",
           "nameOverride": undefined,
           "value": "OPENAI",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "PYQ",
           "nameOverride": undefined,
@@ -8399,12 +9038,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "TEXT",
           "nameOverride": undefined,
           "value": "TEXT",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "CHAT_HISTORY",
           "nameOverride": undefined,
@@ -10446,12 +11097,24 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "WORKFLOW_INITIALIZATION",
           "nameOverride": undefined,
           "value": "WORKFLOW_INITIALIZATION",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "NODE_EXECUTION",
           "nameOverride": undefined,
@@ -10840,24 +11503,48 @@ Upload a document to be indexed and used for search.
       "type": "enum",
       "values": [
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "INITIATED",
           "nameOverride": undefined,
           "value": "INITIATED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "STREAMING",
           "nameOverride": undefined,
           "value": "STREAMING",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "FULFILLED",
           "nameOverride": undefined,
           "value": "FULFILLED",
         },
         {
+          "casing": {
+            "camel": undefined,
+            "pascal": undefined,
+            "screamingSnake": undefined,
+            "snake": undefined,
+          },
           "description": undefined,
           "generatedName": "REJECTED",
           "nameOverride": undefined,
@@ -11593,6 +12280,7 @@ Upload a document to be indexed and used for search.
   },
   "securitySchemes": {
     "apiKeyAuth": {
+      "headerEnvVar": undefined,
       "headerName": "X_API_KEY",
       "headerVariableName": undefined,
       "prefix": undefined,

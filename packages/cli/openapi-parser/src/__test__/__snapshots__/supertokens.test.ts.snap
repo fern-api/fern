@@ -8,7 +8,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Add a TOTP device for a user and enable TOTP if not already enabled.
 ",
       "errorStatusCode": [
@@ -20,7 +19,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -322,7 +321,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update the name of a TOTP device for a user.
 ",
       "errorStatusCode": [
@@ -334,7 +332,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -602,7 +600,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve a list of TOTP devices for a user.
 ",
       "errorStatusCode": [
@@ -614,7 +611,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -623,7 +620,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "name": "userId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "userId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -634,6 +631,44 @@ exports[`open api parser supertokens parse open api 1`] = `
           "response": {
             "oneOf": {
               "discriminated": {
+                "devices": {
+                  "array": [
+                    {
+                      "properties": {
+                        "name": {
+                          "primitive": {
+                            "string": "name",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                        "period": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                        "skew": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                        "verified": {
+                          "primitive": {
+                            "boolean": true,
+                            "type": "boolean",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                      "type": "object",
+                    },
+                  ],
+                  "type": "array",
+                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -926,7 +961,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Remove a TOTP device for a user. If all devices are removed, TOTP is disabled for the user.
 ",
       "errorStatusCode": [
@@ -938,7 +972,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1192,7 +1226,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Check if a TOTP code is valid against any of the TOTP devices for a user.
 ",
       "errorStatusCode": [
@@ -1204,7 +1237,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1494,7 +1527,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Mark a TOTP device as verified if the given TOTP code is valid for that device.
 ",
       "errorStatusCode": [
@@ -1506,7 +1538,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1839,7 +1871,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve a UserIdMapping
 ",
       "errorStatusCode": [
@@ -1851,7 +1882,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1860,17 +1891,10 @@ exports[`open api parser supertokens parse open api 1`] = `
               "name": "userId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "userId",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "userIdType",
-              "value": {
-                "enum": "SUPERTOKENS",
-                "type": "enum",
               },
             },
           ],
@@ -2029,18 +2053,36 @@ exports[`open api parser supertokens parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "SUPERTOKENS",
                   "nameOverride": undefined,
                   "value": "SUPERTOKENS",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "EXTERNAL",
                   "nameOverride": undefined,
                   "value": "EXTERNAL",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ANY",
                   "nameOverride": undefined,
@@ -2162,7 +2204,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a mapping between a SuperTokens userId and an external userId.
 ",
       "errorStatusCode": [
@@ -2174,7 +2215,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2509,7 +2550,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete a mapping between a SuperTokens userId and an external userId.
 ",
       "errorStatusCode": [
@@ -2521,7 +2561,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2535,15 +2575,18 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "userIdType": {
-                "enum": "SUPERTOKENS",
-                "type": "enum",
-              },
             },
             "type": "object",
           },
           "response": {
             "properties": {
+              "didMappingExist": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -2682,18 +2725,36 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "SUPERTOKENS",
                       "nameOverride": undefined,
                       "value": "SUPERTOKENS",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EXTERNAL",
                       "nameOverride": undefined,
                       "value": "EXTERNAL",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "ANY",
                       "nameOverride": undefined,
@@ -2804,7 +2865,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update or delete externalUserIdInfo
 ",
       "errorStatusCode": [
@@ -2816,7 +2876,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2836,10 +2896,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "userIdType": {
-                "enum": "SUPERTOKENS",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -2987,18 +3043,36 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "SUPERTOKENS",
                       "nameOverride": undefined,
                       "value": "SUPERTOKENS",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EXTERNAL",
                       "nameOverride": undefined,
                       "value": "EXTERNAL",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "ANY",
                       "nameOverride": undefined,
@@ -3090,7 +3164,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Tries to consume the passed userInputCode+deviceId combo or the linkCode to sign the user in
 ",
       "errorStatusCode": [
@@ -3102,7 +3175,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3486,12 +3559,24 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "INCORRECT_USER_INPUT_CODE_ERROR",
                             "nameOverride": undefined,
                             "value": "INCORRECT_USER_INPUT_CODE_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "EXPIRED_USER_INPUT_CODE_ERROR",
                             "nameOverride": undefined,
@@ -3603,7 +3688,6 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Starts a sign in process by requesting a linkCode and a deviceId + userInputCode combination the user can use to sign in.
 Passing the optional deviceId signifies a resend code flow.
 ",
@@ -3616,7 +3700,7 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -3681,6 +3765,13 @@ Passing the optional deviceId signifies a resend code flow.
                 "primitive": {
                   "double": 1637262633029,
                   "type": "double",
+                },
+                "type": "primitive",
+              },
+              "userInputCode": {
+                "primitive": {
+                  "string": "userInputCode",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -4144,12 +4235,24 @@ Passing the optional deviceId signifies a resend code flow.
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "RESTART_FLOW_ERROR",
                             "nameOverride": undefined,
                             "value": "RESTART_FLOW_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "USER_INPUT_CODE_ALREADY_USED_ERROR",
                             "nameOverride": undefined,
@@ -4180,7 +4283,6 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes a code by id
 ",
       "errorStatusCode": [
@@ -4192,7 +4294,7 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4385,7 +4487,6 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists all active passwordless codes of the user
 ",
       "errorStatusCode": [
@@ -4397,7 +4498,7 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4436,6 +4537,75 @@ Passing the optional deviceId signifies a resend code flow.
           "request": undefined,
           "response": {
             "properties": {
+              "devices": {
+                "array": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "codeId": {
+                                "primitive": {
+                                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "codeLifetime": {
+                                "primitive": {
+                                  "double": 900000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "timeCreated": {
+                                "primitive": {
+                                  "double": 1637262633029,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "failedCodeInputAttemptCount": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "phoneNumber": {
+                        "primitive": {
+                          "string": "+14155552671",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "preAuthSessionId": {
+                        "primitive": {
+                          "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -4876,7 +5046,6 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes all codes issued for the user
 ",
       "errorStatusCode": [
@@ -4888,7 +5057,7 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -5118,7 +5287,6 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -5131,7 +5299,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -5454,18 +5622,36 @@ Note that there is an invisible character at the end of the path, this was to av
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_EMAIL_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_EMAIL_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_PHONE_NUMBER_ERROR",
                             "nameOverride": undefined,
@@ -5496,7 +5682,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update a user's information. 
 If the email or phoneNumber is set to null the previous value will be deleted. If they are not set (i.e., undefined/missing from the request), they are left as-is.
 ",
@@ -5509,21 +5694,13 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "email": {
-                "properties": {},
-                "type": "object",
-              },
-              "phoneNumber": {
-                "properties": {},
-                "type": "object",
-              },
               "userId": {
                 "primitive": {
                   "string": "fa7a0841-b533-4478-95533-0fde890c3483",
@@ -5753,24 +5930,48 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "OK",
                       "nameOverride": undefined,
                       "value": "OK",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "UNKNOWN_USER_ID_ERROR",
                       "nameOverride": undefined,
                       "value": "UNKNOWN_USER_ID_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EMAIL_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
                       "value": "EMAIL_ALREADY_EXISTS_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "PHONE_NUMBER_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
@@ -5796,7 +5997,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Signin a user with email ID and password
 ",
       "errorStatusCode": [
@@ -5808,7 +6008,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6087,7 +6287,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Signup a user with email ID and password
 ",
       "errorStatusCode": [
@@ -6099,7 +6298,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6380,7 +6579,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a user's information
 ",
       "errorStatusCode": [
@@ -6392,7 +6590,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6674,12 +6872,24 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_EMAIL_ERROR",
                             "nameOverride": undefined,
@@ -6710,7 +6920,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update a user's information
 ",
       "errorStatusCode": [
@@ -6722,7 +6931,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6957,18 +7166,36 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "OK",
                       "nameOverride": undefined,
                       "value": "OK",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "UNKNOWN_USER_ID_ERROR",
                       "nameOverride": undefined,
                       "value": "UNKNOWN_USER_ID_ERROR",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "EMAIL_ALREADY_EXISTS_ERROR",
                       "nameOverride": undefined,
@@ -6994,7 +7221,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Generate a new reset password token for this user
 ",
       "errorStatusCode": [
@@ -7006,7 +7232,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -7238,7 +7464,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "User Pagination API
 ",
       "errorStatusCode": [
@@ -7250,19 +7475,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -7279,6 +7496,37 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -7430,12 +7678,24 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -7546,7 +7806,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Reset a password using password reset token
 ",
       "errorStatusCode": [
@@ -7558,20 +7817,13 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "method": {
-                "literal": {
-                  "string": "token",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
               "newPassword": {
                 "primitive": {
                   "string": "newpassword123",
@@ -7855,7 +8107,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get number of users
 ",
       "errorStatusCode": [
@@ -7867,7 +8118,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8049,7 +8300,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Import a user with email ID and password hash
 ",
       "errorStatusCode": [
@@ -8061,7 +8311,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8075,10 +8325,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 "type": "primitive",
               },
-              "hashingAlgorithm": {
-                "enum": "argon2",
-                "type": "enum",
-              },
               "passwordHash": {
                 "primitive": {
                   "string": "passwordHash",
@@ -8091,6 +8337,13 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           },
           "response": {
             "properties": {
+              "didUserAlreadyExist": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -8287,18 +8540,36 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "enum",
                   "values": [
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "argon2",
                       "nameOverride": undefined,
                       "value": "argon2",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "bcrypt",
                       "nameOverride": undefined,
                       "value": "bcrypt",
                     },
                     {
+                      "casing": {
+                        "camel": undefined,
+                        "pascal": undefined,
+                        "screamingSnake": undefined,
+                        "snake": undefined,
+                      },
                       "description": undefined,
                       "generatedName": "firebase_scrypt",
                       "nameOverride": undefined,
@@ -8407,7 +8678,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Signin/up a user
 ",
       "errorStatusCode": [
@@ -8419,25 +8689,13 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "email": {
-                "properties": {
-                  "id": {
-                    "primitive": {
-                      "string": "johndoe@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
               "thirdPartyId": {
                 "primitive": {
                   "string": "google",
@@ -8485,6 +8743,13 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "id": {
                         "primitive": {
                           "string": "google",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "userId",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8762,7 +9027,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -8775,7 +9039,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8832,6 +9096,13 @@ Note that there is an invisible character at the end of the path, this was to av
                       "id": {
                         "primitive": {
                           "string": "google",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "userId",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -9093,12 +9364,24 @@ Note that there is an invisible character at the end of the path, this was to av
                         "type": "enum",
                         "values": [
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_USER_ID_ERROR",
                             "nameOverride": undefined,
                             "value": "UNKNOWN_USER_ID_ERROR",
                           },
                           {
+                            "casing": {
+                              "camel": undefined,
+                              "pascal": undefined,
+                              "screamingSnake": undefined,
+                              "snake": undefined,
+                            },
                             "description": undefined,
                             "generatedName": "UNKNOWN_THIRD_PARTY_USER_ERROR",
                             "nameOverride": undefined,
@@ -9129,7 +9412,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get all users accounts associated with given email
 ",
       "errorStatusCode": [
@@ -9140,7 +9422,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -9165,6 +9447,49 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "thirdParty": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "google",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -9349,7 +9674,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get User Pagination data.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -9362,19 +9686,11 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -9391,6 +9707,49 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "user": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "thirdParty": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "google",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -9520,12 +9879,24 @@ Note that there is an invisible character at the end of the path, this was to av
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -9658,7 +10029,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get number of users.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
 ",
@@ -9671,7 +10041,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -9853,7 +10223,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Generate a new email verification token for this user
 ",
       "errorStatusCode": [
@@ -9865,7 +10234,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -10082,7 +10451,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Remove all unused email verification tokens for this user
 ",
       "errorStatusCode": [
@@ -10094,7 +10462,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -10280,7 +10648,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Check if an email is verified
 ",
       "errorStatusCode": [
@@ -10292,7 +10659,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -10542,7 +10909,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Verify an email
 ",
       "errorStatusCode": [
@@ -10554,20 +10920,13 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "method": {
-                "literal": {
-                  "string": "token",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
               "token": {
                 "primitive": {
                   "string": "ZTRiOTBjNz...jI5MTZlODkxw",
@@ -10847,7 +11206,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Unverify an email
 ",
       "errorStatusCode": [
@@ -10859,7 +11217,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11045,7 +11403,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the stored metadata object of the user
 ",
       "errorStatusCode": [
@@ -11057,7 +11414,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11076,6 +11433,35 @@ Note that there is an invisible character at the end of the path, this was to av
           "request": undefined,
           "response": {
             "properties": {
+              "metadata": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "metadata",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -11259,7 +11645,6 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates the metadata object stored about the user by doing a shallow merge of the stored and the update JSONs
 and removing properties set to null on the root level of the update object. The merged object is then reserialized and stored.
 
@@ -11279,7 +11664,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11298,6 +11683,35 @@ e.g.:
           },
           "response": {
             "properties": {
+              "metadata": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "metadata",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -11521,7 +11935,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Removes the entire metadata JSON stored about the user.
 ",
       "errorStatusCode": [
@@ -11533,7 +11946,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11733,7 +12146,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a User Role mapping
 ",
       "errorStatusCode": [
@@ -11745,7 +12157,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11993,7 +12405,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Removes a User Role mapping
 ",
       "errorStatusCode": [
@@ -12005,7 +12416,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -12253,7 +12664,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrive the roles associated with the user.
 ",
       "errorStatusCode": [
@@ -12265,7 +12675,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -12284,6 +12694,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -12474,7 +12896,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrive the users associated with the role.
 ",
       "errorStatusCode": [
@@ -12486,7 +12907,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -12512,6 +12933,18 @@ e.g.:
                     "type": "string",
                   },
                   "type": "primitive",
+                },
+                "users": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
                 },
               },
               "type": "discriminated",
@@ -12699,7 +13132,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a role with permissions, can also be used to add permissions to a role
 ",
       "errorStatusCode": [
@@ -12711,13 +13143,25 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -12966,7 +13410,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrive the permissions associated with a role
 ",
       "errorStatusCode": [
@@ -12978,7 +13421,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -12998,6 +13441,18 @@ e.g.:
           "response": {
             "oneOf": {
               "discriminated": {
+                "permissions": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "permission",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
+                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -13195,7 +13650,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Removes permissions mapped to a role, if no permissions are passed all permissions mapped to the role are removed
 ",
       "errorStatusCode": [
@@ -13207,13 +13661,25 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -13435,7 +13901,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrive the roles associated with the permission
 ",
       "errorStatusCode": [
@@ -13447,7 +13912,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -13466,6 +13931,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -13660,7 +14137,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a role
 ",
       "errorStatusCode": [
@@ -13672,7 +14148,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -13895,7 +14371,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrive all created roles
 ",
       "errorStatusCode": [
@@ -13907,7 +14382,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -13915,6 +14390,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -14091,7 +14578,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get user and session information for a given session handle
 ",
       "errorStatusCode": [
@@ -14103,7 +14589,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -14150,6 +14636,64 @@ e.g.:
                     "type": "double",
                   },
                   "type": "primitive",
+                },
+                "userDataInDatabase": {
+                  "map": [
+                    {
+                      "key": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "value": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "value",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                    },
+                  ],
+                  "type": "map",
+                },
+                "userDataInJWT": {
+                  "map": [
+                    {
+                      "key": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "value": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "value",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                    },
+                  ],
+                  "type": "map",
                 },
                 "userId": {
                   "primitive": {
@@ -14445,7 +14989,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a new Session
 ",
       "errorStatusCode": [
@@ -14457,7 +15000,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -14557,6 +15100,35 @@ e.g.:
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "userDataInJWT": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "userDataInJWT",
+                          "type": "string",
+                        },
+                        "value": {
+                          "map": [
+                            {
+                              "key": {
+                                "string": "key",
+                                "type": "string",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "string": "value",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          ],
+                          "type": "map",
+                        },
+                      },
+                    ],
+                    "type": "map",
                   },
                   "userId": {
                     "primitive": {
@@ -14919,7 +15491,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete a sesion
 ",
       "errorStatusCode": [
@@ -14931,17 +15502,42 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "sessionHandles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
           "response": {
             "properties": {
+              "sessionHandlesRevoked": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -15188,7 +15784,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Verify a Session
 ",
       "errorStatusCode": [
@@ -15200,7 +15795,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -15282,6 +15877,35 @@ e.g.:
                         "type": "string",
                       },
                       "type": "primitive",
+                    },
+                    "userDataInJWT": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "userDataInJWT",
+                            "type": "string",
+                          },
+                          "value": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "key",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "string": "value",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                        },
+                      ],
+                      "type": "map",
                     },
                     "userId": {
                       "primitive": {
@@ -15639,7 +16263,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Refresh a Session
 ",
       "errorStatusCode": [
@@ -15651,7 +16274,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -15752,6 +16375,35 @@ e.g.:
                         "type": "string",
                       },
                       "type": "primitive",
+                    },
+                    "userDataInJWT": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "userDataInJWT",
+                            "type": "string",
+                          },
+                          "value": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "key",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "string": "value",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                        },
+                      ],
+                      "type": "map",
                     },
                     "userId": {
                       "primitive": {
@@ -16136,7 +16788,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get session handles for a user
 ",
       "errorStatusCode": [
@@ -16148,7 +16799,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16167,6 +16818,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "sessionHandles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -16357,7 +17020,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Regenerate a session
 ",
       "errorStatusCode": [
@@ -16369,7 +17031,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16423,6 +17085,35 @@ e.g.:
                         "type": "string",
                       },
                       "type": "primitive",
+                    },
+                    "userDataInJWT": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "userDataInJWT",
+                            "type": "string",
+                          },
+                          "value": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "key",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "string": "value",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                        },
+                      ],
+                      "type": "map",
                     },
                     "userId": {
                       "primitive": {
@@ -16681,7 +17372,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get session data
 ",
       "errorStatusCode": [
@@ -16693,7 +17383,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16719,6 +17409,35 @@ e.g.:
                     "type": "string",
                   },
                   "type": "primitive",
+                },
+                "userDataInDatabase": {
+                  "map": [
+                    {
+                      "key": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "value": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "value",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                    },
+                  ],
+                  "type": "map",
                 },
               },
               "type": "discriminated",
@@ -16902,7 +17621,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Change session data
 ",
       "errorStatusCode": [
@@ -17100,7 +17818,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a signed JWT
 ",
       "errorStatusCode": [
@@ -17111,20 +17828,13 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "algorithm": {
-                "literal": {
-                  "string": "RS256",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
               "jwksDomain": {
                 "primitive": {
                   "string": "https://api.test.com/",
@@ -17456,7 +18166,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.
 ",
       "errorStatusCode": [
@@ -17467,14 +18176,65 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "keys": {
+                "array": [
+                  {
+                    "properties": {
+                      "alg": {
+                        "literal": {
+                          "string": "RS256",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "kid": {
+                        "primitive": {
+                          "string": "kid",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "kty": {
+                        "primitive": {
+                          "string": "RSA",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "use": {
+                        "primitive": {
+                          "string": "sig",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "x5c": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "x5c",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -17545,7 +18305,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get JWT data for a session
 ",
       "errorStatusCode": [
@@ -17557,7 +18316,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -17583,6 +18342,35 @@ e.g.:
                     "type": "string",
                   },
                   "type": "primitive",
+                },
+                "userDataInJWT": {
+                  "map": [
+                    {
+                      "key": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "value": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "value",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                    },
+                  ],
+                  "type": "map",
                 },
               },
               "type": "discriminated",
@@ -17766,7 +18554,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Change JWT data for a session
 ",
       "errorStatusCode": [
@@ -17964,7 +18751,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a dashboard user
 ",
       "errorStatusCode": [
@@ -17977,7 +18763,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -18388,7 +19174,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update a user's email or password
 ",
       "errorStatusCode": [
@@ -18400,7 +19185,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -18951,7 +19736,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete a dashboard user with their userId or email
 ",
       "errorStatusCode": [
@@ -18963,7 +19747,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -18992,6 +19776,13 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "didUserExist": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -19208,7 +19999,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a list of call the dashboard users
 ",
       "errorStatusCode": [
@@ -19220,7 +20010,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -19234,6 +20024,44 @@ e.g.:
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "test@example.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "isSuspended": {
+                        "primitive": {
+                          "boolean": false,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeCreated": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "uf2323-f223r233-f23-f23-f2f32",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -19502,7 +20330,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Verify a Dashboard user's sessionId
 ",
       "errorStatusCode": [
@@ -19514,7 +20341,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -19759,7 +20586,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revoke a Dashboard user's session
 ",
       "errorStatusCode": [
@@ -19771,7 +20597,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -19959,7 +20785,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Signin a Dashboard user
 ",
       "errorStatusCode": [
@@ -19971,7 +20796,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -19998,6 +20823,13 @@ e.g.:
           "response": {
             "oneOf": {
               "discriminated": {
+                "sessionId": {
+                  "primitive": {
+                    "string": "string",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -20274,7 +21106,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a list of the sessions for the dashboard user
 ",
       "errorStatusCode": [
@@ -20286,7 +21117,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -20304,7 +21135,46 @@ e.g.:
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "sessions": {
+                "array": [
+                  {
+                    "properties": {
+                      "expiry": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "sessionId": {
+                        "primitive": {
+                          "string": "fni29f-f23f23-f2fq32qt-h35evf",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeCreated": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -20568,7 +21438,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a list of compatible CDI versions
 ",
       "errorStatusCode": [
@@ -20580,14 +21449,27 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "versions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "versions",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -20687,7 +21569,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get path to the loaded config file
 ",
       "errorStatusCode": [
@@ -20699,7 +21580,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -20890,7 +21771,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -20899,7 +21779,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -20949,7 +21829,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -20958,7 +21837,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21008,7 +21887,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21017,7 +21895,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21067,7 +21945,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21076,7 +21953,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21126,7 +22003,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21135,7 +22011,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21185,7 +22061,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns the telemetryID if it exists
 ",
       "errorStatusCode": [
@@ -21197,7 +22072,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21205,6 +22080,13 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "exists": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "telemetryId": {
                 "primitive": {
                   "string": "99c87c72-1807-22d-9b39-7a88f95re56c",
@@ -21398,7 +22280,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get number of users.
 ",
       "errorStatusCode": [
@@ -21410,7 +22291,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21604,7 +22485,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get number of active users.
 ",
       "errorStatusCode": [
@@ -21616,7 +22496,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21801,7 +22681,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "User Pagination
 ",
       "errorStatusCode": [
@@ -21813,7 +22692,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21826,13 +22705,6 @@ e.g.:
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
               },
             },
             {
@@ -21892,6 +22764,46 @@ e.g.:
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "recipeId": {
+                        "enum": "emailpassword",
+                        "type": "enum",
+                      },
+                      "user": {
+                        "properties": {
+                          "email": {
+                            "primitive": {
+                              "string": "johndoe@gmail.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timeJoined": {
+                            "primitive": {
+                              "double": 1623918032231,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -22043,12 +22955,24 @@ e.g.:
               "type": "enum",
               "values": [
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "ASC",
                   "nameOverride": undefined,
                   "value": "ASC",
                 },
                 {
+                  "casing": {
+                    "camel": undefined,
+                    "pascal": undefined,
+                    "screamingSnake": undefined,
+                    "snake": undefined,
+                  },
                   "description": undefined,
                   "generatedName": "DESC",
                   "nameOverride": undefined,
@@ -22226,18 +23150,36 @@ e.g.:
                           "type": "enum",
                           "values": [
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "emailpassword",
                               "nameOverride": undefined,
                               "value": "emailpassword",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "thirdparty",
                               "nameOverride": undefined,
                               "value": "thirdparty",
                             },
                             {
+                              "casing": {
+                                "camel": undefined,
+                                "pascal": undefined,
+                                "screamingSnake": undefined,
+                                "snake": undefined,
+                              },
                               "description": undefined,
                               "generatedName": "passwordless",
                               "nameOverride": undefined,
@@ -22331,7 +23273,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete user
 ",
       "errorStatusCode": [
@@ -22342,7 +23283,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -22518,7 +23459,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve available tags for search
 ",
       "errorStatusCode": [
@@ -22530,7 +23470,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -22544,6 +23484,18 @@ e.g.:
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "tags": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "tags",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -22690,7 +23642,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a list of the enabled enterprise features
 ",
       "errorStatusCode": [
@@ -22702,7 +23653,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -22710,12 +23661,53 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "features": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "features",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "usageStats": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "usageStats",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
               },
             },
             "type": "object",
@@ -22899,7 +23891,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieve license key
 ",
       "errorStatusCode": [
@@ -22910,7 +23901,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -23076,7 +24067,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Set or sync license key
 ",
       "errorStatusCode": [
@@ -23087,7 +24077,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -23282,7 +24272,6 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete license key
 ",
       "errorStatusCode": [
@@ -23293,7 +24282,7 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -23472,6 +24461,7 @@ e.g.:
       },
     },
   },
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "userId",

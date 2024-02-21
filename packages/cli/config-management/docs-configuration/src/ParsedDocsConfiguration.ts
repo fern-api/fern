@@ -3,6 +3,10 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsInstances, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 
+export declare type WithoutQuestionMarks<T> = {
+    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
+};
+
 export interface ParsedDocsConfiguration {
     absoluteFilepath: AbsoluteFilePath;
     instances: DocsInstances[];
@@ -12,11 +16,24 @@ export interface ParsedDocsConfiguration {
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: ImageReference | undefined;
-    colors: DocsColorsConfiguration | undefined;
+    colors: DocsV1Write.ColorsConfigV3 | undefined;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
+    layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
+    css: DocsV1Write.CssConfig | undefined;
+    js: JavascriptConfig | undefined;
+}
+
+export interface AbsoluteJsFileConfig {
+    absolutePath: AbsoluteFilePath;
+    strategy?: DocsV1Write.JsScriptStrategy;
+}
+
+export interface JavascriptConfig {
+    remote?: DocsV1Write.JsRemoteConfig[];
+    files: AbsoluteJsFileConfig[];
 }
 
 export interface DocsColorsConfiguration {
@@ -44,7 +61,16 @@ export interface Logo {
 
 export interface FontConfig {
     name: string | undefined;
+    variants: FontVariant[];
+    display: DocsV1Write.FontDisplay | undefined;
+    fallback: string[] | undefined;
+    fontVariationSettings: string | undefined;
+}
+
+export interface FontVariant {
     absolutePath: AbsoluteFilePath;
+    weight: string[] | undefined;
+    style: DocsV1Write.FontStyle | undefined;
 }
 
 export interface TypographyConfig {

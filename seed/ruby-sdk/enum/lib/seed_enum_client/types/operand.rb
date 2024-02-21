@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module SeedEnumClient
-  # @type [Hash{String => String}]
-  OPERAND = { greater_than: ">", equal_to: "=", less_than: "less_than" }.frozen
+  # Tests enum name and value can be
+  # different.
+  class Operand
+    GREATER_THAN = ">"
+    EQUAL_TO = "="
+    LESS_THAN = "less_than"
+  end
 end

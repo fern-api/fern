@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
 require_relative "submission_id"
+require_relative "execution_session_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class BuildingExecutorResponse
       attr_reader :submission_id, :status, :additional_properties
 
       # @param submission_id [Submission::SUBMISSION_ID]
-      # @param status [Hash{String => String}]
+      # @param status [Submission::ExecutionSessionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::BuildingExecutorResponse]
       def initialize(submission_id:, status:, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Hash{String => String}]
+        # @type [Submission::ExecutionSessionStatus]
         @status = status
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,6 +28,7 @@ module SeedTraceClient
       # @return [Submission::BuildingExecutorResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         submission_id = struct.submissionId
         status = struct.status
         new(submission_id: submission_id, status: status, additional_properties: struct)
@@ -45,7 +47,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.status.is_a?(EXECUTION_SESSION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.status.is_a?(Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

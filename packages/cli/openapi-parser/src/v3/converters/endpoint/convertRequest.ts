@@ -90,10 +90,19 @@ export function convertRequest({
                     : undefined,
             description: undefined,
             properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
-                if (!isReferenceObject(definition) && definition.type === "string" && definition.format === "binary") {
+                if (
+                    !isReferenceObject(definition) &&
+                    ((definition.type === "string" && definition.format === "binary") ||
+                        (definition.type === "array" &&
+                            !isReferenceObject(definition.items) &&
+                            definition.items.type === "string" &&
+                            definition.items.format === "binary"))
+                ) {
+                    const required: string[] | undefined = resolvedMultipartSchema.schema.required;
+                    const isRequired = required !== undefined && required.includes(key);
                     return {
                         key,
-                        schema: MultipartSchema.file(),
+                        schema: MultipartSchema.file({ isOptional: !isRequired, isArray: definition.type === "array" }),
                         description: undefined
                     };
                 }

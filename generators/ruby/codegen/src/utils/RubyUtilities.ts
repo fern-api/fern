@@ -1,5 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
 import { ExternalDependency } from "../ast/ExternalDependency";
@@ -7,7 +9,8 @@ import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
-import { TYPES_DIRECTORY } from "./RubyConstants";
+
+export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
     return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
@@ -17,27 +20,36 @@ export function getClientName(organization: string, apiName: string, clientClass
     return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
-export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
-    return [
-        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        TYPES_DIRECTORY,
-        declaredTypeName.name.snakeCase.safeName
-    ].join("/");
+export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFullPath?: boolean): string[] {
+    return (includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
+        (pathPart) => pathPart.pascalCase.safeName
+    );
 }
 
-export function getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
-    return [
-        ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
-        declaredServiceName.fernFilepath.file?.snakeCase.safeName,
-        "client"
-    ]
-        .filter((p) => p !== undefined)
-        .join("/");
-}
+// These tests are so static + basic that I didn't go through the trouble of leveraging the AST
+export function generateBasicTests(gemName: string, clientName: string): GeneratedFile[] {
+    const helperContent = `# frozen_string_literal: true
 
-// Note: this assumes the file is in a directory of the same name
-export function getLocationFromFernFilepath(fernFilepath: FernFilepath): string {
-    return [...fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName)].join("/");
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+
+require "minitest/autorun"
+require "${gemName}"
+`;
+    const helperFile = new GeneratedFile("test_helper.rb", RelativeFilePath.of("test/"), helperContent);
+
+    const testContent = `# frozen_string_literal: true
+require_relative "test_helper"
+require "${gemName}"
+
+# Basic ${clientName} tests
+class Test${clientName} < Minitest::Test
+  def test_function
+    ${clientName}::Client.new
+  end
+end`;
+    const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent);
+
+    return [helperFile, testFile];
 }
 
 export function generateGemspec(
@@ -45,19 +57,33 @@ export function generateGemspec(
     gemName: string,
     extraDependencies: ExternalDependency[],
     sdkVersion?: string,
-    hasFileBasedDependencies = false
+    licenseConfig?: FernGeneratorExec.LicenseConfig,
+    hasFileBasedDependencies = false,
+    hasEndpoints = false
 ): GeneratedRubyFile {
+    const license = licenseConfig?._visit({
+        basic: (l: BasicLicense) => {
+            return { licenseType: l.id, licenseFilePath: "LICENSE" };
+        },
+        custom: (l: CustomLicense) => {
+            return { licenseFilePath: l.filename };
+        },
+        _other: () => {
+            throw new Error("Unknown license configuration provided.");
+        }
+    });
     const gemspec = new Gemspec({
         clientName,
         gemName,
         dependencies: extraDependencies,
         sdkVersion,
-        hasFileBasedDependencies
+        license,
+        hasFileBasedDependencies,
+        hasEndpoints
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        directoryPrefix: RelativeFilePath.of("."),
-        name: `${gemName}`,
+        fullPath: `${gemName}`,
         fileExtension: "gemspec",
         isConfigurationFile: true
     });
@@ -65,12 +91,13 @@ export function generateGemspec(
 
 // To ensure configuration may be managed independently from dependenies, we introduce a new config file that
 // users are encouraged to fernignore and update, while allowing the traditional gemspec to remain generated
-export function generateGemConfig(clientName: string): GeneratedRubyFile {
+export function generateGemConfig(clientName: string, repoUrl?: string): GeneratedRubyFile {
     const gemspec = new Module_({
         name: clientName,
         child: new Module_({
             name: "Gemconfig",
             child: [
+                new Expression({ leftSide: "VERSION", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze', isAssignment: true }),
                 new Expression({ leftSide: "EMAIL", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "SUMMARY", rightSide: '""', isAssignment: true }),
@@ -78,17 +105,17 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
                 // Input some placeholders for installation to work
                 new Expression({
                     leftSide: "HOMEPAGE",
-                    rightSide: '"https://github.com/REPO/URL"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "SOURCE_CODE_URI",
-                    rightSide: '"https://github.com/REPO/URL"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "CHANGELOG_URI",
-                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}/blob/master/CHANGELOG.md"`,
                     isAssignment: true
                 })
             ]
@@ -96,8 +123,7 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        directoryPrefix: RelativeFilePath.of("."),
-        name: "gemconfig"
+        fullPath: "gemconfig"
     });
 }
 
@@ -116,16 +142,41 @@ export function generateGitignore(): GeneratedFile {
     return new GeneratedFile(".gitignore", RelativeFilePath.of("."), content);
 }
 
+export function generateGithubWorkflow(gemName: string, registryUrl: string, apiKeyEnvVar: string): GeneratedFile {
+    const content = `name: Publish
+
+on: [push]
+jobs:
+    publish:
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+
+          - uses: ruby/setup-ruby@v1
+            with:
+              ruby-version: 2.7
+              bundler-cache: true
+              
+          - name: Build and Push Gem
+            env:
+              GEM_HOST_API_KEY: \${{ secrets.${apiKeyEnvVar} }}
+            run: |
+              gem build ${gemName}.gemspec
+
+              gem push ${gemName}-*.gem --host ${registryUrl}
+`;
+    return new GeneratedFile("publish.yml", RelativeFilePath.of(".github/workflows"), content);
+}
+
 export function generateRubocopConfig(): GeneratedFile {
     const content = `AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: ${MINIMUM_RUBY_VERSION}
   
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
-
-Style/RequireOrder:
-  Enabled: true
   
 Style/StringLiteralsInInterpolation:
   Enabled: true

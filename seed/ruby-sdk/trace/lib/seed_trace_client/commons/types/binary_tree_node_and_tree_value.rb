@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "binary_tree_value"
-
 require_relative "node_id"
+require_relative "binary_tree_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class BinaryTreeNodeAndTreeValue
       attr_reader :node_id, :full_tree, :additional_properties
 
@@ -29,8 +28,14 @@ module SeedTraceClient
       # @return [Commons::BinaryTreeNodeAndTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         node_id = struct.nodeId
-        full_tree = struct.fullTree
+        if parsed_json["fullTree"].nil?
+          full_tree = nil
+        else
+          full_tree = parsed_json["fullTree"].to_json
+          full_tree = Commons::BinaryTreeValue.from_json(json_object: full_tree)
+        end
         new(node_id: node_id, full_tree: full_tree, additional_properties: struct)
       end
 

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "../../../../commons/types/problem_id"
-require "json"
 require "set"
+require "json"
 
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class LightweightProblemInfoV2
           attr_reader :problem_id, :problem_name, :problem_version, :variable_types, :additional_properties
 
@@ -36,10 +36,16 @@ module SeedTraceClient
           # @return [V2::V3::Problem::LightweightProblemInfoV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             problem_id = struct.problemId
             problem_name = struct.problemName
             problem_version = struct.problemVersion
-            variable_types = struct.variableTypes
+            if parsed_json["variableTypes"].nil?
+              variable_types = nil
+            else
+              variable_types = parsed_json["variableTypes"].to_json
+              variable_types = Set.new(variable_types)
+            end
             new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
                 variable_types: variable_types, additional_properties: struct)
           end

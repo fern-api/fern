@@ -3,7 +3,7 @@
 require "json"
 
 module SeedApiClient
-  module Imdb
+  class Imdb
     class CreateMovieRequest
       attr_reader :title, :rating, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedApiClient
       # @return [Imdb::CreateMovieRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         title = struct.title
         rating = struct.rating
         new(title: title, rating: rating, additional_properties: struct)

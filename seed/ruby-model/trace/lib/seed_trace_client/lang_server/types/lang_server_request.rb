@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module LangServer
+  class LangServer
     class LangServerRequest
       attr_reader :request, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedTraceClient
       # @return [LangServer::LangServerRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         request = struct.request
         new(request: request, additional_properties: struct)
       end

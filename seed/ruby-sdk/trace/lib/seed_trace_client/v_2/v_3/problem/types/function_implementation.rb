@@ -5,7 +5,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class FunctionImplementation
           attr_reader :impl, :imports, :additional_properties
 
@@ -28,6 +28,7 @@ module SeedTraceClient
           # @return [V2::V3::Problem::FunctionImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            JSON.parse(json_object)
             impl = struct.impl
             imports = struct.imports
             new(impl: impl, imports: imports, additional_properties: struct)

@@ -7,10 +7,18 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      # Add any generators that are written in TypeScript
       - "generators/openapi/**"
       - "generators/postman/**"
+      - "generators/ruby/**"
+      - "generators/typescript/**"
     branches:
       - main
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -46,7 +54,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   compile:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -61,6 +69,20 @@ jobs:
 
       - name: compile
         run: yarn compile
+
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
 
       - name: lint:eslint
         run: yarn lint:eslint
@@ -88,7 +110,10 @@ jobs:
           FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: CLI
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -102,13 +127,13 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn test --ci
+        run: yarn test --maxWorkers 15 --shard=${{ matrix.shard }}/${{ strategy.job-total }} --ci
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
   ete-tests:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -145,9 +170,6 @@ jobs:
 
       - name: Install
         run: yarn install
-
-      - name: Install Fern
-        run: npm install -g fern-api
 
       - name: Check API definition is valid
         env:

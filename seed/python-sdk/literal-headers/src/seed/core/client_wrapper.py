@@ -16,7 +16,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.0",
         }
         headers["X-API-Header"] = "api header value"
-        headers["X-API-Test"] = "false"
+        headers["X-API-Test"] = "False"
         return headers
 
     def get_base_url(self) -> str:

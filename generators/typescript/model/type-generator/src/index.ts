@@ -1,0 +1,1 @@
+export { TypeGenerator } from "./TypeGenerator";

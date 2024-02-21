@@ -4,7 +4,7 @@ require_relative "tree"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Node
       attr_reader :name, :nodes, :trees, :additional_properties
 
@@ -30,9 +30,16 @@ module SeedExamplesClient
       # @return [Types::Node]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = struct.name
-        nodes = struct.nodes
-        trees = struct.trees
+        nodes = parsed_json["nodes"]&.map do |v|
+          v = v.to_json
+          Types::Node.from_json(json_object: v)
+        end
+        trees = parsed_json["trees"]&.map do |v|
+          v = v.to_json
+          Types::Tree.from_json(json_object: v)
+        end
         new(name: name, nodes: nodes, trees: trees, additional_properties: struct)
       end
 

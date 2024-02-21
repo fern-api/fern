@@ -4,7 +4,7 @@ require_relative "debug_variable_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DebugKeyValuePairs
       attr_reader :key, :value, :additional_properties
 
@@ -27,8 +27,19 @@ module SeedTraceClient
       # @return [Commons::DebugKeyValuePairs]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key = struct.key
-        value = struct.value
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["key"].nil?
+          key = nil
+        else
+          key = parsed_json["key"].to_json
+          key = Commons::DebugVariableValue.from_json(json_object: key)
+        end
+        if parsed_json["value"].nil?
+          value = nil
+        else
+          value = parsed_json["value"].to_json
+          value = Commons::DebugVariableValue.from_json(json_object: value)
+        end
         new(key: key, value: value, additional_properties: struct)
       end
 

@@ -11,7 +11,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class ProblemInfoV2
         attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :supported_languages,
                     :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties
@@ -20,7 +20,7 @@ module SeedTraceClient
         # @param problem_description [Problem::ProblemDescription]
         # @param problem_name [String]
         # @param problem_version [Integer]
-        # @param supported_languages [Set<LANGUAGE>]
+        # @param supported_languages [Set<Commons::Language>]
         # @param custom_files [V2::Problem::CustomFiles]
         # @param generated_files [V2::Problem::GeneratedFiles]
         # @param custom_test_case_templates [Array<V2::Problem::TestCaseTemplate>]
@@ -38,7 +38,7 @@ module SeedTraceClient
           @problem_name = problem_name
           # @type [Integer]
           @problem_version = problem_version
-          # @type [Set<LANGUAGE>]
+          # @type [Set<Commons::Language>]
           @supported_languages = supported_languages
           # @type [V2::Problem::CustomFiles]
           @custom_files = custom_files
@@ -60,15 +60,42 @@ module SeedTraceClient
         # @return [V2::Problem::ProblemInfoV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           problem_id = struct.problemId
-          problem_description = struct.problemDescription
+          if parsed_json["problemDescription"].nil?
+            problem_description = nil
+          else
+            problem_description = parsed_json["problemDescription"].to_json
+            problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+          end
           problem_name = struct.problemName
           problem_version = struct.problemVersion
-          supported_languages = struct.supportedLanguages
-          custom_files = struct.customFiles
-          generated_files = struct.generatedFiles
-          custom_test_case_templates = struct.customTestCaseTemplates
-          testcases = struct.testcases
+          if parsed_json["supportedLanguages"].nil?
+            supported_languages = nil
+          else
+            supported_languages = parsed_json["supportedLanguages"].to_json
+            supported_languages = Set.new(supported_languages)
+          end
+          if parsed_json["customFiles"].nil?
+            custom_files = nil
+          else
+            custom_files = parsed_json["customFiles"].to_json
+            custom_files = V2::Problem::CustomFiles.from_json(json_object: custom_files)
+          end
+          if parsed_json["generatedFiles"].nil?
+            generated_files = nil
+          else
+            generated_files = parsed_json["generatedFiles"].to_json
+            generated_files = V2::Problem::GeneratedFiles.from_json(json_object: generated_files)
+          end
+          custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
+            v = v.to_json
+            V2::Problem::TestCaseTemplate.from_json(json_object: v)
+          end
+          testcases = parsed_json["testcases"]&.map do |v|
+            v = v.to_json
+            V2::Problem::TestCaseV2.from_json(json_object: v)
+          end
           is_public = struct.isPublic
           new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name,
               problem_version: problem_version, supported_languages: supported_languages, custom_files: custom_files, generated_files: generated_files, custom_test_case_templates: custom_test_case_templates, testcases: testcases, is_public: is_public, additional_properties: struct)

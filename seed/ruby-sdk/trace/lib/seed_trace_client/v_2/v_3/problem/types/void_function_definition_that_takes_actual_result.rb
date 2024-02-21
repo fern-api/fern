@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "function_implementation_for_multiple_languages"
-
 require_relative "parameter"
+require_relative "function_implementation_for_multiple_languages"
 require "json"
 
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         # The generated signature will include an additional param, actualResult
         class VoidFunctionDefinitionThatTakesActualResult
           attr_reader :additional_parameters, :code, :additional_properties
@@ -32,8 +31,17 @@ module SeedTraceClient
           # @return [V2::V3::Problem::VoidFunctionDefinitionThatTakesActualResult]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            additional_parameters = struct.additionalParameters
-            code = struct.code
+            parsed_json = JSON.parse(json_object)
+            additional_parameters = parsed_json["additionalParameters"]&.map do |v|
+              v = v.to_json
+              V2::V3::Problem::Parameter.from_json(json_object: v)
+            end
+            if parsed_json["code"].nil?
+              code = nil
+            else
+              code = parsed_json["code"].to_json
+              code = V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
+            end
             new(additional_parameters: additional_parameters, code: code, additional_properties: struct)
           end
 

@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
@@ -13,7 +11,7 @@ except ImportError:
 
 
 class ProblemDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing_extensions.Literal["html"]
+    type: typing.Literal["html"]
     value: str
 
     class Config:
@@ -22,7 +20,7 @@ class ProblemDescriptionBoard_Html(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
-    type: typing_extensions.Literal["variable"]
+    type: typing.Literal["variable"]
     value: VariableValue
 
     class Config:
@@ -31,7 +29,7 @@ class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
-    type: typing_extensions.Literal["testCaseId"]
+    type: typing.Literal["testCaseId"]
     value: str
 
     class Config:

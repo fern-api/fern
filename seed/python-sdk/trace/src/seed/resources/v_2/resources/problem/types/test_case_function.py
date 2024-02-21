@@ -4,14 +4,12 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
 from .void_function_definition import VoidFunctionDefinition
 
 
 class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
-    type: typing_extensions.Literal["withActualResult"]
+    type: typing.Literal["withActualResult"]
 
     class Config:
         frozen = True
@@ -20,7 +18,7 @@ class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
 
 
 class TestCaseFunction_Custom(VoidFunctionDefinition):
-    type: typing_extensions.Literal["custom"]
+    type: typing.Literal["custom"]
 
     class Config:
         frozen = True

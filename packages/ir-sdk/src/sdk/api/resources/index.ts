@@ -18,3 +18,5 @@ export * as variables from "./variables";
 export * from "./variables/types";
 export * as webhooks from "./webhooks";
 export * from "./webhooks/types";
+export * as websocket from "./websocket";
+export * from "./websocket/types";

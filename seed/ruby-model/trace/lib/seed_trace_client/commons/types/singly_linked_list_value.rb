@@ -4,7 +4,7 @@ require_relative "node_id"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class SinglyLinkedListValue
       attr_reader :head, :nodes, :additional_properties
 
@@ -27,6 +27,7 @@ module SeedTraceClient
       # @return [Commons::SinglyLinkedListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         head = struct.head
         nodes = struct.nodes
         new(head: head, nodes: nodes, additional_properties: struct)

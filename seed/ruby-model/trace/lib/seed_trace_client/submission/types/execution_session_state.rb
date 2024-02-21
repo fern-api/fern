@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "../../commons/types/language"
+require_relative "execution_session_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExecutionSessionState
       attr_reader :last_time_contacted, :session_id, :is_warm_instance, :aws_task_id, :language, :status,
                   :additional_properties
@@ -12,8 +14,8 @@ module SeedTraceClient
       # @param session_id [String] The auto-generated session id. Formatted as a uuid.
       # @param is_warm_instance [Boolean]
       # @param aws_task_id [String]
-      # @param language [Hash{String => String}]
-      # @param status [Hash{String => String}]
+      # @param language [Commons::Language]
+      # @param status [Submission::ExecutionSessionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ExecutionSessionState]
       def initialize(session_id:, is_warm_instance:, language:, status:, last_time_contacted: nil, aws_task_id: nil,
@@ -26,9 +28,9 @@ module SeedTraceClient
         @is_warm_instance = is_warm_instance
         # @type [String]
         @aws_task_id = aws_task_id
-        # @type [Hash{String => String}]
+        # @type [Commons::Language]
         @language = language
-        # @type [Hash{String => String}]
+        # @type [Submission::ExecutionSessionStatus]
         @status = status
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -40,6 +42,7 @@ module SeedTraceClient
       # @return [Submission::ExecutionSessionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         last_time_contacted = struct.lastTimeContacted
         session_id = struct.sessionId
         is_warm_instance = struct.isWarmInstance
@@ -73,8 +76,8 @@ module SeedTraceClient
         obj.session_id.is_a?(String) != false || raise("Passed value for field obj.session_id is not the expected type, validation failed.")
         obj.is_warm_instance.is_a?(Boolean) != false || raise("Passed value for field obj.is_warm_instance is not the expected type, validation failed.")
         obj.aws_task_id&.is_a?(String) != false || raise("Passed value for field obj.aws_task_id is not the expected type, validation failed.")
-        obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
-        obj.status.is_a?(EXECUTION_SESSION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.status.is_a?(Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

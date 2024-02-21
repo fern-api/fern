@@ -2,7 +2,7 @@
 require "json"
 
 module SeedNurseryApiClient
-  module Package
+  class Package
     class Record
       attr_reader :foo, :_3_d, :additional_properties
       # @param foo [Hash{String => String}] 
@@ -23,6 +23,7 @@ module SeedNurseryApiClient
       # @return [Package::Record]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         foo = struct.foo
         _3_d = struct.3d
         new(foo: foo, _3_d: _3_d, additional_properties: struct)
@@ -31,7 +32,7 @@ module SeedNurseryApiClient
       #
       # @return [JSON]
       def to_json
-        { "foo": @foo, "3d": @_3_d }.to_json()
+        { "foo": @foo, "3d": @_3_d }.to_json
       end
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
       #

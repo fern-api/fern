@@ -14,7 +14,6 @@ import {
     GenericClassReference,
     HashInstance,
     JsonClassReference,
-    OpenStructClassReference,
     Parameter,
     Property,
     StringClassReference,
@@ -35,6 +34,7 @@ import {
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { FileUploadUtility } from "./FileUploadUtility";
+import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
@@ -55,7 +55,7 @@ export class EndpointGenerator {
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
-        requestOptions: RequestOptions,
+        requestOptions: RequestOptions | IdempotencyRequestOptions,
         crf: ClassReferenceFactory,
         generatedClasses: Map<TypeId, Class_>,
         fileUploadUtility: FileUploadUtility
@@ -112,7 +112,7 @@ export class EndpointGenerator {
                                 wireValue: prop.name.wireValue,
                                 type: crf.fromTypeReference(prop.valueType),
                                 isOptional: isTypeOptional(prop.valueType),
-                                documentation: prop instanceof Property ? prop.documentation : undefined
+                                documentation: prop instanceof Property ? prop.documentation : prop.docs
                             });
                         })
                     ];
@@ -185,10 +185,20 @@ export class EndpointGenerator {
 
     public getEndpointParameters(): Parameter[] {
         const params = [
-            ...this.pathParametersAsProperties.map((pathProp) => pathProp.toParameter({})),
-            ...this.queryParametersAsProperties.map((queryProp) => queryProp.toParameter({})),
-            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({})),
-            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true }))
+            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({ describeAsHashInYardoc: true })),
+            ...this.pathParametersAsProperties.map((pathProp) =>
+                pathProp.toParameter({ describeAsHashInYardoc: true })
+            ),
+            ...this.queryParametersAsProperties.map((queryProp) =>
+                queryProp.toParameter({ describeAsHashInYardoc: true })
+            ),
+            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true })),
+            // Optional request_options, e.g. the per-request customizer, optional
+            new Parameter({
+                name: this.requestOptionsVariable.name,
+                type: this.requestOptionsVariable.type,
+                isOptional: true
+            })
         ];
         if (this.streamProcessingBlock !== undefined) {
             params.push(this.streamProcessingBlock);
@@ -196,25 +206,38 @@ export class EndpointGenerator {
         return params;
     }
 
-    public getFaradayHeaders(): Expression {
+    public getFaradayHeaders(): AstNode[] {
+        const headerArg = `${this.blockArg}.headers`;
         const additionalHeadersProperty = this.requestOptions.getAdditionalHeaderProperties(
             this.requestOptionsVariable
         );
-        return new Expression({
-            leftSide: `${this.blockArg}.headers`,
-            rightSide: new HashInstance({
-                contents: new Map(
-                    this.headersAsProperties.map((header) => [
-                        `"${header.wireValue}"`,
-                        header.toVariable(VariableType.LOCAL)
-                    ])
-                ),
-                // Expand the existing headers hash, then the additionalheaders params
-                additionalHashes: ["req.headers", additionalHeadersProperty],
-                shouldCompact: true
-            }),
-            isAssignment: true
-        });
+        const idempotencyHeaders = [];
+        if (this.requestOptions instanceof IdempotencyRequestOptions) {
+            idempotencyHeaders.push(
+                ...this.requestOptions.getIdempotencyHeadersProperties(this.requestOptionsVariable, headerArg)
+            );
+        }
+        return [
+            ...idempotencyHeaders,
+            new Expression({
+                leftSide: headerArg,
+                rightSide: new HashInstance({
+                    contents: new Map(
+                        this.headersAsProperties.map((header) => [
+                            `"${header.wireValue}"`,
+                            header.toVariable(VariableType.LOCAL)
+                        ])
+                    ),
+                    // Expand the existing headers hash, then the additionalheaders params
+                    additionalHashes: [
+                        { value: "req.headers" },
+                        { value: additionalHeadersProperty, defaultValue: "{}" }
+                    ],
+                    shouldCompact: true
+                }),
+                isAssignment: true
+            })
+        ];
     }
 
     public getFaradayParameters(): Expression | undefined {
@@ -229,7 +252,7 @@ export class EndpointGenerator {
                               qp.toVariable(VariableType.LOCAL)
                           ])
                       ),
-                      additionalHashes: [additionalQueryProperty],
+                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
                       shouldCompact: true
                   }),
                   isAssignment: true
@@ -244,7 +267,10 @@ export class EndpointGenerator {
         }
 
         const referenceBodyHash = new HashInstance({
-            additionalHashes: [prop.name, additionalBodyProperty],
+            additionalHashes: [
+                { value: prop.name, defaultValue: "{}" },
+                { value: additionalBodyProperty, defaultValue: "{}" }
+            ],
             shouldCompact: true
         });
         return [
@@ -267,7 +293,7 @@ export class EndpointGenerator {
                                 prop.toVariable(VariableType.LOCAL)
                             ])
                         ),
-                        additionalHashes: [additionalBodyProperty],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
                     return [
@@ -297,11 +323,9 @@ export class EndpointGenerator {
                                     ]
                                 });
                                 const isFileReference = prop.type.some((cr) => cr === FileClassReference);
-                                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                                 if (isFileReference) {
                                     return [
                                         prop.wireValue ?? prop.name,
-                                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                                         prop.isOptional
                                             ? new ConditionalStatement({
                                                   if_: {
@@ -323,7 +347,7 @@ export class EndpointGenerator {
                                 return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)];
                             })
                         ),
-                        additionalHashes: [additionalBodyProperty],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
 
@@ -353,37 +377,41 @@ export class EndpointGenerator {
         return;
     }
 
-    public getFaradayBlock(requestClientVariable: Variable): BlockConfiguration {
+    public getFaradayBlock(
+        requestClientVariable: Variable,
+        path: string,
+        shouldOverwriteUrl: boolean
+    ): BlockConfiguration {
         const expressions: AstNode[] = [
             ...this.requestOptions.getAdditionalRequestOverrides(this.requestOptionsVariable, this.blockArg),
             ...this.requestOptions.headerProperties.map(
                 (prop) =>
                     new ConditionalStatement({
                         if_: {
-                            leftSide: new FunctionInvocation({
+                            rightSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
-                                onObject: `${requestClientVariable.write({})}.${prop.name}`,
+                                onObject: `${this.requestOptionsVariable.write({})}&.${prop.name}`,
                                 baseFunction: new Function_({ name: "nil?", functionBody: [] })
                             }),
                             operation: "!",
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
-                                    rightSide: `${requestClientVariable.write({})}.${prop.name}`,
+                                    rightSide: `${this.requestOptionsVariable.write({})}.${prop.name}`,
                                     isAssignment: true
                                 })
                             ]
                         }
                     })
             ),
-            this.getFaradayHeaders()
+            ...this.getFaradayHeaders()
         ];
 
         if (this.isStreamingResponse() && this.streamProcessingBlock !== undefined) {
             expressions.push(
                 new Expression({
                     leftSide: `${this.blockArg}.options.on_data`,
-                    rightSide: this.streamProcessingBlock.write({}),
+                    rightSide: this.streamProcessingBlock.toVariable().write({}),
                     isAssignment: true
                 })
             );
@@ -398,14 +426,15 @@ export class EndpointGenerator {
         if (body !== undefined) {
             expressions.push(...body);
         }
-        const url =
-            this.endpoint.baseUrl !== undefined
-                ? new Expression({
-                      leftSide: `${this.blockArg}.url`,
-                      rightSide: `${requestClientVariable.write({})}.default_environment[${this.endpoint.baseUrl}]`,
-                      isAssignment: true
-                  })
-                : undefined;
+        const url = shouldOverwriteUrl
+            ? new Expression({
+                  leftSide: `${this.blockArg}.url`,
+                  rightSide: `"#{${requestClientVariable.write({})}.default_environment[:${
+                      this.endpoint.baseUrl
+                  }]}/${path}"`,
+                  isAssignment: false
+              })
+            : undefined;
         if (url !== undefined) {
             expressions.push(url);
         }
@@ -444,14 +473,19 @@ export class EndpointGenerator {
     }
 
     public getResponseExpressions(responseVariable: Variable): AstNode[] | undefined {
+        const responseVariableBody = new Variable({
+            name: `${responseVariable.name}.body`,
+            type: GenericClassReference,
+            variableType: VariableType.LOCAL
+        });
         return this.endpoint.response?._visit<AstNode[]>({
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariable) ?? responseVariable],
+                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
-                            // Turn to struct, then get the field, then reconvert to JSON (to_h.to_json)
+                            // Turn to struct, then get the field, then reconvert to JSON (to_json)
                             const nestedResponseValueVariable = new Variable({
                                 name: "nested_response_json",
                                 type: GenericClassReference,
@@ -459,35 +493,27 @@ export class EndpointGenerator {
                             });
                             return [
                                 new Expression({
-                                    leftSide: nestedResponseValueVariable,
+                                    leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
-                                        onObject: new FunctionInvocation({
-                                            onObject: JsonClassReference,
-                                            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                                            arguments_: [
-                                                new Argument({
-                                                    value: "json_object",
-                                                    type: GenericClassReference,
-                                                    isNamed: false
-                                                }),
-                                                new Argument({
-                                                    name: "object_class",
-                                                    value: "OpenStruct",
-                                                    type: OpenStructClassReference,
-                                                    isNamed: true
-                                                })
-                                            ]
-                                        }),
-                                        baseFunction: new Function_({
-                                            name: `${jrbwp.responseProperty.name.wireValue}.to_h.to_json`,
-                                            functionBody: []
-                                        })
+                                        onObject: JsonClassReference,
+                                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                        arguments_: [
+                                            new Argument({
+                                                value: responseVariableBody,
+                                                type: GenericClassReference,
+                                                isNamed: false
+                                            })
+                                        ]
                                     })
+                                }),
+                                new Expression({
+                                    leftSide: nestedResponseValueVariable,
+                                    rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`
                                 }),
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
                         } else {
-                            return [responseCr.fromJson(responseVariable) ?? responseVariable];
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
                         }
                     },
                     _other: () => {
@@ -499,7 +525,7 @@ export class EndpointGenerator {
             streaming: () => {
                 throw new Error("Streaming not yet supported.");
             },
-            text: () => [responseVariable],
+            text: () => [responseVariableBody],
             _other: () => {
                 throw new Error("Unknown response type.");
             }

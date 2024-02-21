@@ -5,7 +5,7 @@ require_relative "variable_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class TestCaseWithExpectedResult
       attr_reader :test_case, :expected_result, :additional_properties
 
@@ -28,8 +28,19 @@ module SeedTraceClient
       # @return [Commons::TestCaseWithExpectedResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case = struct.testCase
-        expected_result = struct.expectedResult
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["testCase"].nil?
+          test_case = nil
+        else
+          test_case = parsed_json["testCase"].to_json
+          test_case = Commons::TestCase.from_json(json_object: test_case)
+        end
+        if parsed_json["expectedResult"].nil?
+          expected_result = nil
+        else
+          expected_result = parsed_json["expectedResult"].to_json
+          expected_result = Commons::VariableValue.from_json(json_object: expected_result)
+        end
         new(test_case: test_case, expected_result: expected_result, additional_properties: struct)
       end
 

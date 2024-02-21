@@ -4,7 +4,7 @@ require_relative "../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class VariableTypeAndName
       attr_reader :variable_type, :name, :additional_properties
 
@@ -27,7 +27,13 @@ module SeedTraceClient
       # @return [Problem::VariableTypeAndName]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        variable_type = struct.variableType
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["variableType"].nil?
+          variable_type = nil
+        else
+          variable_type = parsed_json["variableType"].to_json
+          variable_type = Commons::VariableType.from_json(json_object: variable_type)
+        end
         name = struct.name
         new(variable_type: variable_type, name: name, additional_properties: struct)
       end

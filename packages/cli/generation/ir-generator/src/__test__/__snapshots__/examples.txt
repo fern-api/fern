@@ -257,6 +257,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -1273,7 +1274,7 @@ exports[`generate IR 1`] = `
         {
           "allPathParameters": [
             {
-              "docs": null,
+              "docs": "This is a filename",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1305,7 +1306,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint returns a file by its name.",
           "errors": [
             {
               "docs": null,
@@ -1585,7 +1586,7 @@ exports[`generate IR 1`] = `
           },
           "pathParameters": [
             {
-              "docs": null,
+              "docs": "This is a filename",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1881,7 +1882,7 @@ exports[`generate IR 1`] = `
         {
           "allPathParameters": [
             {
-              "docs": null,
+              "docs": "The id to check",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1913,7 +1914,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint checks the health of a resource.",
           "errors": [],
           "examples": [
             {
@@ -2011,7 +2012,7 @@ exports[`generate IR 1`] = `
           },
           "pathParameters": [
             {
-              "docs": null,
+              "docs": "The id to check",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2050,7 +2051,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint checks the health of the service.",
           "errors": [],
           "examples": [
             {
@@ -5489,6 +5490,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_commons/types": {
       "docs": null,
@@ -5605,6 +5607,7 @@ exports[`generate IR 1`] = `
         "type_commons/types:Data",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file": {
       "docs": null,
@@ -5682,6 +5685,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification": {
       "docs": null,
@@ -5796,6 +5800,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification/service": {
       "docs": null,
@@ -5945,6 +5950,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/service": {
       "docs": null,
@@ -6058,6 +6064,7 @@ exports[`generate IR 1`] = `
         "type_file/service:Filename",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health": {
       "docs": null,
@@ -6134,6 +6141,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health/service": {
       "docs": null,
@@ -6245,6 +6253,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_service": {
       "docs": null,
@@ -6317,6 +6326,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types": {
       "docs": null,
@@ -6412,6 +6422,7 @@ exports[`generate IR 1`] = `
         "type_types:Test",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -6707,12 +6718,12 @@ exports[`generate IR 1`] = `
                   "unsafeName": "Base64",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "BASE_64",
-                  "unsafeName": "BASE_64",
+                  "safeName": "BASE64",
+                  "unsafeName": "BASE64",
                 },
                 "snakeCase": {
-                  "safeName": "base_64",
-                  "unsafeName": "base_64",
+                  "safeName": "base64",
+                  "unsafeName": "base64",
                 },
               },
               "wireValue": "base64",
@@ -8670,12 +8681,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -8970,12 +8981,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -9341,12 +9352,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -9652,12 +9663,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example1",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_1",
-              "unsafeName": "EXAMPLE_1",
+              "safeName": "EXAMPLE1",
+              "unsafeName": "EXAMPLE1",
             },
             "snakeCase": {
-              "safeName": "example_1",
-              "unsafeName": "example_1",
+              "safeName": "example1",
+              "unsafeName": "example1",
             },
           },
           "shape": {
@@ -21305,5 +21316,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

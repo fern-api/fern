@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Request
       attr_reader :request, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedExamplesClient
       # @return [Types::Request]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         request = struct.request
         new(request: request, additional_properties: struct)
       end

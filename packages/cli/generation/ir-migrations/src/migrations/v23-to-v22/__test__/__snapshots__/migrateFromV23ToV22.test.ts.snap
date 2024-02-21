@@ -1692,6 +1692,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
     ],
     "types": [],
     "webhooks": undefined,
+    "websocket": undefined,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -9131,12 +9132,12 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "unsafeName": "GetAndReturnBase64",
             },
             "screamingSnakeCase": {
-              "safeName": "GET_AND_RETURN_BASE_64",
-              "unsafeName": "GET_AND_RETURN_BASE_64",
+              "safeName": "GET_AND_RETURN_BASE64",
+              "unsafeName": "GET_AND_RETURN_BASE64",
             },
             "snakeCase": {
-              "safeName": "get_and_return_base_64",
-              "unsafeName": "get_and_return_base_64",
+              "safeName": "get_and_return_base64",
+              "unsafeName": "get_and_return_base64",
             },
           },
           "path": {
@@ -11124,6 +11125,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       ],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/container": {
       "docs": undefined,
@@ -11235,6 +11237,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/enum": {
       "docs": undefined,
@@ -11346,6 +11349,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/http-methods": {
       "docs": undefined,
@@ -11457,6 +11461,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/object": {
       "docs": undefined,
@@ -11568,6 +11573,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/params": {
       "docs": undefined,
@@ -11679,6 +11685,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/primitive": {
       "docs": undefined,
@@ -11790,6 +11797,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_endpoints/union": {
       "docs": undefined,
@@ -11901,6 +11909,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_general-errors": {
       "docs": undefined,
@@ -11977,6 +11986,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "type_general-errors:BadObjectRequestInfo",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_inlined-requests": {
       "docs": undefined,
@@ -12049,6 +12059,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_no-auth": {
       "docs": undefined,
@@ -12121,6 +12132,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_no-req-body": {
       "docs": undefined,
@@ -12193,6 +12205,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_req-with-headers": {
       "docs": undefined,
@@ -12265,6 +12278,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types": {
       "docs": undefined,
@@ -12343,6 +12357,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       ],
       "types": [],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types/enum": {
       "docs": undefined,
@@ -12458,6 +12473,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "type_types/enum:WeatherReport",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types/object": {
       "docs": undefined,
@@ -12579,6 +12595,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "type_types/object:NestedObjectWithRequiredField",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
     "subpackage_types/union": {
       "docs": undefined,
@@ -12696,6 +12713,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "type_types/union:Cat",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
   },
   "types": {
@@ -14299,12 +14317,12 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   "unsafeName": "Base64",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "BASE_64",
-                  "unsafeName": "BASE_64",
+                  "safeName": "BASE64",
+                  "unsafeName": "BASE64",
                 },
                 "snakeCase": {
-                  "safeName": "base_64",
-                  "unsafeName": "base_64",
+                  "safeName": "base64",
+                  "unsafeName": "base64",
                 },
               },
               "wireValue": "base64",

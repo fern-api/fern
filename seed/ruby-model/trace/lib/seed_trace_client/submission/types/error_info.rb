@@ -2,11 +2,11 @@
 
 require "json"
 require_relative "compile_error"
-require_relative "internal_error"
 require_relative "runtime_error"
+require_relative "internal_error"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ErrorInfo
       attr_reader :member, :discriminant
 

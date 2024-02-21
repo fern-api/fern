@@ -27,39 +27,22 @@ paths:
                 file:
                   type: string
                   format: binary
+                fileList:
+                  type: string
+                  format: binary
                 maybeFile:
+                  type: string
+                  format: binary
+                maybeFileList:
                   type: string
                   format: binary
                 maybeInteger:
                   type: integer
                   nullable: true
-                listOfStrings:
-                  type: array
-                  items:
-                    type: string
-                setOfStrings:
-                  type: array
-                  items:
-                    type: string
                 optionalListOfStrings:
                   type: array
                   items:
                     type: string
-                  nullable: true
-                optionalSetOfStrings:
-                  type: array
-                  items:
-                    type: string
-                  nullable: true
-                maybeList:
-                  $ref: '#/components/schemas/MaybeList'
-                optionalMaybeList:
-                  $ref: '#/components/schemas/MaybeList'
-                  nullable: true
-                maybeListOrSet:
-                  $ref: '#/components/schemas/MaybeListOrSet'
-                optionalMaybeListOrSet:
-                  $ref: '#/components/schemas/MaybeListOrSet'
                   nullable: true
                 listOfObjects:
                   type: array
@@ -137,41 +120,6 @@ paths:
                   format: binary
 components:
   schemas:
-    MaybeList:
-      title: MaybeList
-      oneOf:
-        - type: string
-        - type: array
-          items:
-            type: string
-        - type: integer
-        - type: array
-          items:
-            type: integer
-        - type: array
-          items:
-            type: array
-            items:
-              type: integer
-    MaybeListOrSet:
-      title: MaybeListOrSet
-      oneOf:
-        - type: string
-        - type: array
-          items:
-            type: string
-        - type: integer
-        - type: array
-          items:
-            type: integer
-        - type: array
-          items:
-            type: array
-            items:
-              type: integer
-        - type: array
-          items:
-            type: string
     MyObject:
       title: MyObject
       type: object

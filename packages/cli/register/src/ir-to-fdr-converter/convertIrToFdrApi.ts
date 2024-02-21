@@ -29,8 +29,7 @@ export function convertIrToFdrApi(
             description: type.docs ?? undefined,
             name: type.name.name.originalName,
             shape: convertTypeShape(type.shape),
-            availability:
-                type.availability != null ? convertIrAvailability({ availability: type.availability }) : undefined
+            availability: convertIrAvailability(type.availability)
         };
     }
 

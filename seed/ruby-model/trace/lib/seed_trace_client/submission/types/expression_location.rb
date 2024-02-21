@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExpressionLocation
       attr_reader :start, :offset, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedTraceClient
       # @return [Submission::ExpressionLocation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         start = struct.start
         offset = struct.offset
         new(start: start, offset: offset, additional_properties: struct)

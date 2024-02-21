@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Submission
-    # @type [Hash{String => String}]
-    EXECUTION_SESSION_STATUS = {
-      creating_container: "CREATING_CONTAINER",
-      provisioning_container: "PROVISIONING_CONTAINER",
-      pending_container: "PENDING_CONTAINER",
-      running_container: "RUNNING_CONTAINER",
-      live_container: "LIVE_CONTAINER",
-      failed_to_launch: "FAILED_TO_LAUNCH"
-    }.frozen
+  class Submission
+    class ExecutionSessionStatus
+      CREATING_CONTAINER = "CREATING_CONTAINER"
+      PROVISIONING_CONTAINER = "PROVISIONING_CONTAINER"
+      PENDING_CONTAINER = "PENDING_CONTAINER"
+      RUNNING_CONTAINER = "RUNNING_CONTAINER"
+      LIVE_CONTAINER = "LIVE_CONTAINER"
+      FAILED_TO_LAUNCH = "FAILED_TO_LAUNCH"
+    end
   end
 end

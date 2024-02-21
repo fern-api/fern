@@ -2,7 +2,10 @@ import { Name } from "@fern-api/ir-sdk";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 
 describe("casingsGenerator", () => {
-    const casingsGenerator = constructCasingsGenerator({ generationLanguage: undefined, smartCasing: true });
+    const casingsGenerator = constructCasingsGenerator({
+        generationLanguage: undefined,
+        smartCasing: true
+    });
     it("simple", () => {
         const expected: Name = {
             originalName: "hello",
@@ -189,6 +192,30 @@ describe("casingsGenerator", () => {
             screamingSnakeCase: {
                 safeName: "GET_USER_IDS",
                 unsafeName: "GET_USER_IDS"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+
+    it("alphanumeric snake casing", () => {
+        const expected: Name = {
+            originalName: "application v1",
+            camelCase: {
+                safeName: "applicationV1",
+                unsafeName: "applicationV1"
+            },
+            pascalCase: {
+                safeName: "ApplicationV1",
+                unsafeName: "ApplicationV1"
+            },
+            snakeCase: {
+                safeName: "application_v1",
+                unsafeName: "application_v1"
+            },
+            screamingSnakeCase: {
+                safeName: "APPLICATION_V1",
+                unsafeName: "APPLICATION_V1"
             }
         };
         const actual = casingsGenerator.generateName(expected.originalName);

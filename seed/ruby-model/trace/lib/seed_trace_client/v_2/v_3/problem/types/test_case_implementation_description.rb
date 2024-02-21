@@ -6,7 +6,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class TestCaseImplementationDescription
           attr_reader :boards, :additional_properties
 
@@ -26,7 +26,11 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseImplementationDescription]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            boards = struct.boards
+            parsed_json = JSON.parse(json_object)
+            boards = parsed_json["boards"]&.map do |v|
+              v = v.to_json
+              V2::V3::Problem::TestCaseImplementationDescriptionBoard.from_json(json_object: v)
+            end
             new(boards: boards, additional_properties: struct)
           end
 

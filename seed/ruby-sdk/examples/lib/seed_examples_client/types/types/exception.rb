@@ -4,7 +4,7 @@ require "json"
 require_relative "exception_info"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Exception
       attr_reader :member, :discriminant
 

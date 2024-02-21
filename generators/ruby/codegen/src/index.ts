@@ -1,6 +1,7 @@
 export { CaseStatement } from "./ast/abstractions/CaseStatement";
 export * from "./ast/abstractions/ConditionalStatement";
 export { DiscriminatedUnion } from "./ast/abstractions/DiscriminatedUnion";
+export { Enum } from "./ast/abstractions/Enum";
 export { RescueStatement } from "./ast/abstractions/RescueStatement";
 export { SerializableObject } from "./ast/abstractions/SerializableObject";
 export { UndiscriminatedUnion } from "./ast/abstractions/UndiscriminatedUnion";
@@ -23,5 +24,6 @@ export * from "./ast/Variable";
 export { Yardoc } from "./ast/Yardoc";
 export * from "./utils/GeneratedFile";
 export * from "./utils/GeneratedRubyFile";
+export * from "./utils/LocationGenerator";
 export * from "./utils/RubyConstants";
 export * from "./utils/RubyUtilities";

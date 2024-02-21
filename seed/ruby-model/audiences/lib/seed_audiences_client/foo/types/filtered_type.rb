@@ -3,7 +3,7 @@
 require "json"
 
 module SeedAudiencesClient
-  module Foo
+  class Foo
     class FilteredType
       attr_reader :public_property, :private_property, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedAudiencesClient
       # @return [Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         public_property = struct.public_property
         private_property = struct.private_property
         new(public_property: public_property, private_property: private_property, additional_properties: struct)

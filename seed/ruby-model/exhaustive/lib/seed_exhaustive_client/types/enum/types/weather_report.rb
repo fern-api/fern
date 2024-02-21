@@ -2,9 +2,13 @@
 
 module SeedExhaustiveClient
   module Types
-    module Enum
-      # @type [Hash{String => String}]
-      WEATHER_REPORT = { sunny: "SUNNY", cloudy: "CLOUDY", raining: "RAINING", snowing: "SNOWING" }.frozen
+    class Enum
+      class WeatherReport
+        SUNNY = "SUNNY"
+        CLOUDY = "CLOUDY"
+        RAINING = "RAINING"
+        SNOWING = "SNOWING"
+      end
     end
   end
 end

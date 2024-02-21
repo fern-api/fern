@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class LightweightStackframeInformation
       attr_reader :num_stack_frames, :top_stack_frame_method_name, :additional_properties
 
@@ -26,6 +26,7 @@ module SeedTraceClient
       # @return [Submission::LightweightStackframeInformation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         num_stack_frames = struct.numStackFrames
         top_stack_frame_method_name = struct.topStackFrameMethodName
         new(num_stack_frames: num_stack_frames, top_stack_frame_method_name: top_stack_frame_method_name,

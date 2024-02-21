@@ -8,13 +8,12 @@ exports[`examples examples parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -36,6 +35,13 @@ exports[`examples examples parse open api 1`] = `
                       {
                         "primitive": {
                           "string": "Main Building",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      {
+                        "primitive": {
+                          "string": "building_name_alias",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -78,6 +84,13 @@ exports[`examples examples parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "score": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
                   "state": {
                     "primitive": {
                       "string": "CA",
@@ -101,6 +114,13 @@ exports[`examples examples parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      {
+                        "primitive": {
+                          "string": "street_address_alias",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     ],
                     "type": "array",
                   },
@@ -114,6 +134,112 @@ exports[`examples examples parse open api 1`] = `
                   "zip_code": {
                     "primitive": {
                       "string": "94105",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              {
+                "properties": {
+                  "building_name": {
+                    "primitive": {
+                      "string": "building_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "building_name_alias": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "building_name_alias",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "city": {
+                    "primitive": {
+                      "string": "city",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "lat": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "lon": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "number_units": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "score": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "state",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "street_address",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address_alias": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "street_address_alias",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "year_built": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip_code": {
+                    "primitive": {
+                      "string": "zip_code",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -188,6 +314,7 @@ exports[`examples examples parse open api 1`] = `
     },
   ],
   "errors": {},
+  "globalHeaders": undefined,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PropertySearchResponse",

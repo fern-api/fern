@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -43,7 +41,7 @@ class Test(pydantic.BaseModel):
         if self.__root__.type == "or":
             return or_(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")]
+    __root__: typing.Annotated[typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -60,11 +58,11 @@ class Test(pydantic.BaseModel):
 
 class _Test:
     class And(pydantic.BaseModel):
-        type: typing_extensions.Literal["and"]
+        type: typing.Literal["and"]
         value: bool
 
     class Or(pydantic.BaseModel):
-        type: typing_extensions.Literal["or"]
+        type: typing.Literal["or"]
         value: bool
 
 

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseHiddenGrade
       attr_reader :passed, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedTraceClient
       # @return [Submission::TestCaseHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         passed = struct.passed
         new(passed: passed, additional_properties: struct)
       end

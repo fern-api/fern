@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExhaustiveClient
-  module GeneralErrors
+  class GeneralErrors
     class BadObjectRequestInfo
       attr_reader :message, :additional_properties
 
@@ -23,6 +23,7 @@ module SeedExhaustiveClient
       # @return [GeneralErrors::BadObjectRequestInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         message = struct.message
         new(message: message, additional_properties: struct)
       end

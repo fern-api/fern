@@ -35,19 +35,17 @@
     "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:${0} ."
   },
   "dependencies": {
-    "@fern-fern/generator-exec-sdk": "^0.0.538",
+    "@fern-fern/generator-exec-sdk": "0.0.571",
     "@fern-fern/ir-sdk": "0.0.2828",
     "@fern-fern/postman-sdk": "0.0.46",
     "@types/lodash": "^4.14.199",
     "endent": "^2.1.0",
     "lodash": "^4.17.21",
-    "postman-collection": "^4.3.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
-    "@types/postman-collection": "^3.5.7",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "env-cmd": "toddbluhm/env-cmd",

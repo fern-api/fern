@@ -25,8 +25,8 @@ module SeedObjectClient
     # @param twelve [Hash{String => String}]
     # @param thirteen [Long]
     # @param fourteen [Object]
-    # @param fifteen [Array<Array>]
-    # @param sixteen [Array<Hash>]
+    # @param fifteen [Array<Array<Integer>>]
+    # @param sixteen [Array<Hash{String => String}>]
     # @param seventeen [Array<UUID>]
     # @param eighteen [String]
     # @param nineteen [Name]
@@ -62,9 +62,9 @@ module SeedObjectClient
       @thirteen = thirteen
       # @type [Object]
       @fourteen = fourteen
-      # @type [Array<Array>]
+      # @type [Array<Array<Integer>>]
       @fifteen = fifteen
-      # @type [Array<Hash>]
+      # @type [Array<Hash{String => String}>]
       @sixteen = sixteen
       # @type [Array<UUID>]
       @seventeen = seventeen
@@ -82,17 +82,23 @@ module SeedObjectClient
     # @return [Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
+      parsed_json = JSON.parse(json_object)
       one = struct.one
       two = struct.two
       three = struct.three
       four = struct.four
       five = struct.five
-      six = struct.six
-      seven = struct.seven
+      six = (DateTime.parse(parsed_json["six"]) unless parsed_json["six"].nil?)
+      seven = (Date.parse(parsed_json["seven"]) unless parsed_json["seven"].nil?)
       eight = struct.eight
       nine = struct.nine
       ten = struct.ten
-      eleven = struct.eleven
+      if parsed_json["eleven"].nil?
+        eleven = nil
+      else
+        eleven = parsed_json["eleven"].to_json
+        eleven = Set.new(eleven)
+      end
       twelve = struct.twelve
       thirteen = struct.thirteen
       fourteen = struct.fourteen
@@ -100,7 +106,12 @@ module SeedObjectClient
       sixteen = struct.sixteen
       seventeen = struct.seventeen
       eighteen = struct.eighteen
-      nineteen = struct.nineteen
+      if parsed_json["nineteen"].nil?
+        nineteen = nil
+      else
+        nineteen = parsed_json["nineteen"].to_json
+        nineteen = Name.from_json(json_object: nineteen)
+      end
       new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
           ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
     end

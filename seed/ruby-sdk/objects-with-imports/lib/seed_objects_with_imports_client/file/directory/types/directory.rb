@@ -5,7 +5,7 @@ require "json"
 
 module SeedObjectsWithImportsClient
   module File
-    module Directory
+    class Directory
       class Directory
         attr_reader :name, :files, :directories, :additional_properties
 
@@ -31,9 +31,16 @@ module SeedObjectsWithImportsClient
         # @return [File::Directory::Directory]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           name = struct.name
-          files = struct.files
-          directories = struct.directories
+          files = parsed_json["files"]&.map do |v|
+            v = v.to_json
+            File::File.from_json(json_object: v)
+          end
+          directories = parsed_json["directories"]&.map do |v|
+            v = v.to_json
+            File::Directory::Directory.from_json(json_object: v)
+          end
           new(name: name, files: files, directories: directories, additional_properties: struct)
         end
 

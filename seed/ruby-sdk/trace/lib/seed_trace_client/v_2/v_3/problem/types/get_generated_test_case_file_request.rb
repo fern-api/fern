@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class GetGeneratedTestCaseFileRequest
           attr_reader :template, :test_case, :additional_properties
 
@@ -30,8 +30,19 @@ module SeedTraceClient
           # @return [V2::V3::Problem::GetGeneratedTestCaseFileRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            template = struct.template
-            test_case = struct.testCase
+            parsed_json = JSON.parse(json_object)
+            if parsed_json["template"].nil?
+              template = nil
+            else
+              template = parsed_json["template"].to_json
+              template = V2::V3::Problem::TestCaseTemplate.from_json(json_object: template)
+            end
+            if parsed_json["testCase"].nil?
+              test_case = nil
+            else
+              test_case = parsed_json["testCase"].to_json
+              test_case = V2::V3::Problem::TestCaseV2.from_json(json_object: test_case)
+            end
             new(template: template, test_case: test_case, additional_properties: struct)
           end
 

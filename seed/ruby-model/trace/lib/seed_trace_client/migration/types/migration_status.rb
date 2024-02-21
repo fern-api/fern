@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Migration
-    # @type [Hash{String => String}]
-    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.frozen
+  class Migration
+    class MigrationStatus
+      RUNNING = "RUNNING"
+      FAILED = "FAILED"
+      FINISHED = "FINISHED"
+    end
   end
 end

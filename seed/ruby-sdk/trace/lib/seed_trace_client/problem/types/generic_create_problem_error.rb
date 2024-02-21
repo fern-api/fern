@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class GenericCreateProblemError
       attr_reader :message, :type, :stacktrace, :additional_properties
 
@@ -29,6 +29,7 @@ module SeedTraceClient
       # @return [Problem::GenericCreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         message = struct.message
         type = struct.type
         stacktrace = struct.stacktrace

@@ -6,7 +6,7 @@ require_relative "parameter_id"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class TestCaseImplementationDescriptionBoard
           attr_reader :member, :discriminant
 

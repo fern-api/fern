@@ -4,7 +4,63 @@
 
 import * as FernIr from "../../..";
 
-export interface FileProperty {
-    key: FernIr.NameAndWireValue;
-    isOptional: boolean;
+export type FileProperty = FernIr.FileProperty.File_ | FernIr.FileProperty.FileArray;
+
+export declare namespace FileProperty {
+    interface File_ extends FernIr.FilePropertySingle, _Utils {
+        type: "file";
+    }
+
+    interface FileArray extends FernIr.FilePropertyArray, _Utils {
+        type: "fileArray";
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: FernIr.FileProperty._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        file: (value: FernIr.FilePropertySingle) => _Result;
+        fileArray: (value: FernIr.FilePropertyArray) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const FileProperty = {
+    file: (value: FernIr.FilePropertySingle): FernIr.FileProperty.File_ => {
+        return {
+            ...value,
+            type: "file",
+            _visit: function <_Result>(
+                this: FernIr.FileProperty.File_,
+                visitor: FernIr.FileProperty._Visitor<_Result>
+            ) {
+                return FernIr.FileProperty._visit(this, visitor);
+            },
+        };
+    },
+
+    fileArray: (value: FernIr.FilePropertyArray): FernIr.FileProperty.FileArray => {
+        return {
+            ...value,
+            type: "fileArray",
+            _visit: function <_Result>(
+                this: FernIr.FileProperty.FileArray,
+                visitor: FernIr.FileProperty._Visitor<_Result>
+            ) {
+                return FernIr.FileProperty._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(value: FernIr.FileProperty, visitor: FernIr.FileProperty._Visitor<_Result>): _Result => {
+        switch (value.type) {
+            case "file":
+                return visitor.file(value);
+            case "fileArray":
+                return visitor.fileArray(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

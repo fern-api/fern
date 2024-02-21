@@ -6,7 +6,7 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExtension } from "../../extensions/getExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { getFernCodeSamples, getReadmeCodeSamples } from "../../extensions/getFernCodeSamples";
+import { getFernExamples } from "../../extensions/getFernExamples";
 import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
@@ -89,6 +89,21 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
+    const examples = [...getFernExamples(operation)];
+    // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
+    // const readmeCodeSamples = getReadmeCodeSamples(operation);
+    // if (readmeCodeSamples.length > 0) {
+    //     examples.push({
+    //         codeSamples: readmeCodeSamples,
+    //         name: undefined,
+    //         description: undefined,
+    //         pathParameters: undefined,
+    //         queryParameters: undefined,
+    //         headers: undefined,
+    //         request: undefined,
+    //         response: undefined
+    //     });
+    // }
 
     return {
         summary: operation.summary,
@@ -114,7 +129,7 @@ export function convertHttpOperation({
         availability,
         method,
         path,
-        customCodeSamples: [...getFernCodeSamples(operation), ...getReadmeCodeSamples(operation)]
+        examples
     };
 }
 
