@@ -3,6 +3,7 @@
 package core
 
 import (
+	fmt "fmt"
 	http "net/http"
 )
 
@@ -38,7 +39,12 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	header.Set("X-API-Version", fmt.Sprintf("%v", "02-02-2024"))
+	header.Set("X-API-Enable-Audit-Logging", fmt.Sprintf("%v", true))
+	return header
+}
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()

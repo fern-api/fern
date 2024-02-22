@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix: Package documentation is now generated into the correct package's `doc.go`.
 - Feature: Add support for generated endpoint snippets.
+  - The snippets will be available in the API reference documentation, as well as the
+    snippets API.
+  - The snippets are _not_ embedded in the SDK itself (yet).
 
 ```go
 import (

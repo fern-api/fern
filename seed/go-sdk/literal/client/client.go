@@ -4,8 +4,12 @@ package client
 
 import (
 	core "github.com/literal/fern/core"
-	literal "github.com/literal/fern/literal"
+	headers "github.com/literal/fern/headers"
+	inlined "github.com/literal/fern/inlined"
 	option "github.com/literal/fern/option"
+	path "github.com/literal/fern/path"
+	query "github.com/literal/fern/query"
+	reference "github.com/literal/fern/reference"
 	http "net/http"
 )
 
@@ -14,7 +18,11 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	Literal *literal.Client
+	Headers   *headers.Client
+	Inlined   *inlined.Client
+	Path      *path.Client
+	Query     *query.Client
+	Reference *reference.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -27,7 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		Literal: literal.NewClient(opts...),
+		header:    options.ToHeader(),
+		Headers:   headers.NewClient(opts...),
+		Inlined:   inlined.NewClient(opts...),
+		Path:      path.NewClient(opts...),
+		Query:     query.NewClient(opts...),
+		Reference: reference.NewClient(opts...),
 	}
 }

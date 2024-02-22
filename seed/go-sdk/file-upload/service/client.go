@@ -37,7 +37,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Post(
 	ctx context.Context,
 	file io.Reader,
+	fileList io.Reader,
 	maybeFile io.Reader,
+	maybeFileList io.Reader,
 	request *fern.MyRequest,
 	opts ...option.RequestOption,
 ) error {
@@ -67,6 +69,17 @@ func (c *Client) Post(
 	if _, err := io.Copy(filePart, file); err != nil {
 		return err
 	}
+	fileListFilename := "fileList_filename"
+	if named, ok := fileList.(interface{ Name() string }); ok {
+		fileListFilename = named.Name()
+	}
+	fileListPart, err := writer.CreateFormFile("fileList", fileListFilename)
+	if err != nil {
+		return err
+	}
+	if _, err := io.Copy(fileListPart, fileList); err != nil {
+		return err
+	}
 	if maybeFile != nil {
 		maybeFileFilename := "maybeFile_filename"
 		if named, ok := maybeFile.(interface{ Name() string }); ok {
@@ -77,6 +90,19 @@ func (c *Client) Post(
 			return err
 		}
 		if _, err := io.Copy(maybeFilePart, maybeFile); err != nil {
+			return err
+		}
+	}
+	if maybeFileList != nil {
+		maybeFileListFilename := "maybeFileList_filename"
+		if named, ok := maybeFileList.(interface{ Name() string }); ok {
+			maybeFileListFilename = named.Name()
+		}
+		maybeFileListPart, err := writer.CreateFormFile("maybeFileList", maybeFileListFilename)
+		if err != nil {
+			return err
+		}
+		if _, err := io.Copy(maybeFileListPart, maybeFileList); err != nil {
 			return err
 		}
 	}
@@ -93,35 +119,8 @@ func (c *Client) Post(
 			return err
 		}
 	}
-	if err := core.WriteMultipartJSON(writer, "listOfStrings", request.ListOfStrings); err != nil {
-		return err
-	}
-	if err := core.WriteMultipartJSON(writer, "setOfStrings", request.SetOfStrings); err != nil {
-		return err
-	}
 	if request.OptionalListOfStrings != nil {
 		if err := core.WriteMultipartJSON(writer, "optionalListOfStrings", request.OptionalListOfStrings); err != nil {
-			return err
-		}
-	}
-	if request.OptionalSetOfStrings != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalSetOfStrings", request.OptionalSetOfStrings); err != nil {
-			return err
-		}
-	}
-	if err := core.WriteMultipartJSON(writer, "maybeList", request.MaybeList); err != nil {
-		return err
-	}
-	if request.OptionalMaybeList != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalMaybeList", *request.OptionalMaybeList); err != nil {
-			return err
-		}
-	}
-	if err := core.WriteMultipartJSON(writer, "maybeListOrSet", request.MaybeListOrSet); err != nil {
-		return err
-	}
-	if request.OptionalMaybeListOrSet != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalMaybeListOrSet", *request.OptionalMaybeListOrSet); err != nil {
 			return err
 		}
 	}
