@@ -28,11 +28,11 @@ Used to retrieve a deployment given its ID or name.
                     "active_model_version_ids": [
                       "active_model_version_ids",
                     ],
-                    "created": "2024-01-15T09:30:00.000Z",
+                    "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "label": "label",
-                    "last_deployed_on": "2024-01-15T09:30:00.000Z",
+                    "last_deployed_on": "2024-01-15T09:30:00Z",
                     "model_type": "GENERATE",
                     "name": "name",
                     "status": "ACTIVE",
@@ -96,7 +96,7 @@ Creates a new document index.",
                 },
                 "response": {
                   "body": {
-                    "created": "2024-01-15T09:30:00.000Z",
+                    "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
@@ -198,7 +198,7 @@ Used to list documents. Optionally filter on supported fields.
                           "keywords",
                         ],
                         "label": "label",
-                        "last_uploaded_at": "2024-01-15T09:30:00.000Z",
+                        "last_uploaded_at": "2024-01-15T09:30:00Z",
                         "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
                         "processing_state": "QUEUED",
                         "status": "ACTIVE",
@@ -367,7 +367,7 @@ Used to retrieve a model version given its ID.
                         "sandbox_id": "sandbox_id",
                       },
                     },
-                    "created": "2024-01-15T09:30:00.000Z",
+                    "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
                       "input_variables": [
                         {

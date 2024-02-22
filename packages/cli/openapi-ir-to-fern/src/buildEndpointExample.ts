@@ -167,7 +167,8 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.value;
         }
         case "datetime":
-            return primitiveExample.value.toISOString();
+            // remove milliseconds from the datetime
+            return primitiveExample.value.toISOString().replace(/\.\d{3}Z$/, "Z");
         case "date":
             return primitiveExample.value;
         case "base64":

@@ -1183,8 +1183,8 @@ The LLM response data, as well as any context provided in the original request w
                     "transcripts": [
                       {
                         "audio_url": "audio_url",
-                        "completed": "2024-01-15T09:30:00.000Z",
-                        "created": "2024-01-15T09:30:00.000Z",
+                        "completed": "2024-01-15T09:30:00Z",
+                        "created": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "resource_url": "resource_url",
                         "status": "queued",
