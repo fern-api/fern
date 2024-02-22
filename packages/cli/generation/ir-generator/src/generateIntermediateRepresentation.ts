@@ -27,6 +27,7 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { ExampleGenerator } from "./examples/ExampleGenerator";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
@@ -360,7 +361,7 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.type === "fileDownload");
     });
 
-    return {
+    const intermediateRepresentationWithoutGeneratedExamples = {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
@@ -374,6 +375,8 @@ export async function generateIntermediateRepresentation({
             }
         }
     };
+
+    return ExampleGenerator.enrichWithExamples(intermediateRepresentationWithoutGeneratedExamples);
 }
 
 function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {
