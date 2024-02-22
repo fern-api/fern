@@ -139,6 +139,9 @@ function convertMessageToSchema({
             } else {
                 resolvedSchema = convertSchema(schema, true, context, []);
             }
+            if (resolvedSchema != null) {
+                subtypes.push(resolvedSchema);
+            }
         }
         return SchemaWithExample.oneOf(
             OneOfSchemaWithExample.undisciminated({
