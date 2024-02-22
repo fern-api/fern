@@ -3,6 +3,7 @@ import { WebsocketChannel } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { buildQueryParameter } from "./buildQueryParameter";
+import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export function buildChannel({
@@ -53,4 +54,32 @@ export function buildChannel({
     context.builder.addChannel(declarationFile, {
         channel: convertedChannel
     });
+
+    if (channel.subscribe != null) {
+        context.builder.addChannelMessage(declarationFile, {
+            messageId: "subscribe",
+            message: {
+                origin: "server",
+                body: buildTypeReference({
+                    schema: channel.subscribe,
+                    context,
+                    fileContainingReference: declarationFile
+                })
+            }
+        });
+    }
+
+    if (channel.publish != null) {
+        context.builder.addChannelMessage(declarationFile, {
+            messageId: "publish",
+            message: {
+                origin: "client",
+                body: buildTypeReference({
+                    schema: channel.publish,
+                    context,
+                    fileContainingReference: declarationFile
+                })
+            }
+        });
+    }
 }

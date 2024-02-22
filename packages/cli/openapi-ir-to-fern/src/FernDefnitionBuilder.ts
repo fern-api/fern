@@ -47,6 +47,11 @@ export interface FernDefinitionBuilder {
 
     addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
 
+    addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void;
+
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
     build(): FernDefinition;
@@ -226,6 +231,23 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void {
         const fernFile = this.getOrCreateFile(file);
         fernFile.channel = channel;
+    }
+
+    public addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.channel == null) {
+            fernFile.channel = {
+                path: "",
+                auth: false
+            };
+        }
+        if (fernFile.channel.messages == null) {
+            fernFile.channel.messages = {};
+        }
+        fernFile.channel.messages[messageId] = message;
     }
 
     public build(): FernDefinition {

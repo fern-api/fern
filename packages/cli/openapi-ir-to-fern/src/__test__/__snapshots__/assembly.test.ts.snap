@@ -298,6 +298,22 @@ The LLM response data, as well as any context provided in the original request w
             "type": "optional<string>",
           },
         },
+        "messages": {
+          "publish": {
+            "body": {
+              "docs": "Send messages to the WebSocket",
+              "type": "sendMessage",
+            },
+            "origin": "client",
+          },
+          "subscribe": {
+            "body": {
+              "docs": "Receive messages from the WebSocket",
+              "type": "receiveMessage",
+            },
+            "origin": "server",
+          },
+        },
         "path": "/",
         "query-parameters": {
           "sample_rate": {
@@ -367,6 +383,27 @@ The parameter should map to a JSON encoded list of strings.
               "type": "root.RealtimeTemporaryTokenResponse",
             },
           },
+        },
+      },
+      "types": {
+        "receiveMessage": {
+          "discriminated": false,
+          "docs": "Receive messages from the WebSocket",
+          "union": [
+            "optional<root.>",
+            "optional<root.>",
+            "optional<root.>",
+            "optional<root.>",
+            "optional<root.>",
+          ],
+        },
+        "sendMessage": {
+          "discriminated": false,
+          "docs": "Send messages to the WebSocket",
+          "union": [
+            "optional<root.>",
+            "optional<root.>",
+          ],
         },
       },
     },
