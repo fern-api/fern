@@ -16,8 +16,8 @@ declare namespace Raw {
     }
 }
 
-export function getFernPaginationExtension(operation: OpenAPIV3.OperationObject): FernPaginationExtension | undefined {
-    const pagination = getExtension<Raw.PaginationExtensionSchema>(operation, FernOpenAPIExtension.PAGINATION);
+export function getFernPaginationExtension(node: OpenAPIV3.Document | OpenAPIV3.OperationObject): FernPaginationExtension | undefined {
+    const pagination = getExtension<Raw.PaginationExtensionSchema>(node, FernOpenAPIExtension.PAGINATION);
     if (pagination == null) {
         return undefined;
     }
