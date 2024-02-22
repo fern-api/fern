@@ -8,11 +8,7 @@ import {
 } from "@fern-api/openapi-ir-sdk";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import {
-    getExampleAsBoolean,
-    getExampleAsNumber,
-    getExamplesString
-} from "../openapi/v3/converters/example/getExample";
+import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { getExtension } from "../openapi/v3/extensions/getExtension";

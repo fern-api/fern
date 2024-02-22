@@ -12,8 +12,8 @@ import {
     ResponseWithExample,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
-import { isSchemaRequired } from "../../../../schema/utils/isSchemaRequired";
-import { ExampleTypeFactory } from "./ExampleTypeFactory";
+import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
+import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
@@ -201,7 +201,7 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     return { type: "present", schema: response.schema, example: response.fullExamples?.[0] ?? undefined };
 }
 
-function isExamplePrimitive(example: FullExample): boolean {
+export function isExamplePrimitive(example: FullExample): boolean {
     switch (example.type) {
         case "primitive":
         case "enum":
@@ -227,7 +227,7 @@ function isExamplePrimitive(example: FullExample): boolean {
     }
 }
 
-function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {
+export function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {
     switch (schema.type) {
         case "primitive":
         case "enum":

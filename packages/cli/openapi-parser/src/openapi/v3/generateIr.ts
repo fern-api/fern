@@ -21,7 +21,7 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
-import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
+import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getExtension } from "./extensions/getExtension";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";

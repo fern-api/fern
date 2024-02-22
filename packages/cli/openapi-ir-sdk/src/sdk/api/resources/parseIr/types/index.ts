@@ -1,4 +1,5 @@
 export * from "./NamedFullExample";
+export * from "./WebsocketHandshakeWithExample";
 export * from "./EndpointWithExample";
 export * from "./RequestWithExample";
 export * from "./JsonRequestWithExample";

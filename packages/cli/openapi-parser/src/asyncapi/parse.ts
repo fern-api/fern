@@ -1,6 +1,6 @@
 import {
-    Header,
-    QueryParameter,
+    HeaderWithExample,
+    QueryParameterWithExample,
     Schema,
     SchemaId,
     SchemaWithExample,
@@ -13,6 +13,7 @@ import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOne
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
+import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
@@ -36,8 +37,15 @@ export function parseAsyncAPI({
 
     const context = new AsyncAPIV2ParserContext({ document, taskContext });
 
-    const schemas: Record<SchemaId, Schema> = {};
+    const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
+
+    for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
+        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
+        schemas[schemaId] = convertedSchema;
+    }
+
+    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, taskContext.logger);
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
         if (channel.bindings?.ws == null) {
@@ -45,7 +53,7 @@ export function parseAsyncAPI({
             continue;
         }
 
-        const headers: Header[] = [];
+        const headers: HeaderWithExample[] = [];
         if (channel.bindings.ws.headers != null) {
             const required = channel.bindings.ws.headers.required ?? [];
             for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
@@ -59,7 +67,7 @@ export function parseAsyncAPI({
             }
         }
 
-        const queryParameters: QueryParameter[] = [];
+        const queryParameters: QueryParameterWithExample[] = [];
         if (channel.bindings.ws.query != null) {
             const required = channel.bindings.ws.query.required ?? [];
             for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
@@ -96,11 +104,30 @@ export function parseAsyncAPI({
         }
 
         if (headers.length > 0 || queryParameters.length > 0 || publishSchema != null || subscribeSchema != null) {
-            const tag = document.tags?.[0];
-            parsedChannel = {
+            const example = exampleFactory.buildWebsocketSessionExample({
                 handshake: {
                     headers,
                     queryParameters
+                },
+                publish: publishSchema,
+                subscribe: subscribeSchema
+            });
+
+            const tag = document.tags?.[0];
+            parsedChannel = {
+                handshake: {
+                    headers: headers.map((header) => {
+                        return {
+                            ...header,
+                            schema: convertSchemaWithExampleToSchema(header.schema)
+                        };
+                    }),
+                    queryParameters: queryParameters.map((param) => {
+                        return {
+                            ...param,
+                            schema: convertSchemaWithExampleToSchema(param.schema)
+                        };
+                    })
                 },
                 groupName: tag?.name != null ? [tag.name] : ["Websocket"],
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
@@ -108,19 +135,17 @@ export function parseAsyncAPI({
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
                 summary: undefined,
                 path: channelPath,
-                description: undefined
+                description: undefined,
+                examples: example != null ? [example] : []
             };
             break;
         }
     }
 
-    for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
-        schemas[schemaId] = convertedSchema;
-    }
-
     return {
-        schemas,
+        schemas: Object.fromEntries(
+            Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
+        ),
         channel: parsedChannel
     };
 }

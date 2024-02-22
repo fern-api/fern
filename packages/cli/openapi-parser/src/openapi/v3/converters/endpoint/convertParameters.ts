@@ -14,7 +14,7 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
-import { getExamplesString } from "../example/getExample";
+import { getExamplesString } from "../../../../schema/examples/getExample";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];

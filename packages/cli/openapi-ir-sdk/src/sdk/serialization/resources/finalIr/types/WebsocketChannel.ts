@@ -19,6 +19,9 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
         handshake: core.serialization.lazyObject(async () => (await import("../../..")).WebsocketHandshake),
         publish: core.serialization.lazy(async () => (await import("../../..")).Schema).optional(),
         subscribe: core.serialization.lazy(async () => (await import("../../..")).Schema).optional(),
+        examples: core.serialization.list(
+            core.serialization.lazyObject(async () => (await import("../../..")).WebsocketSessionExample)
+        ),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -30,5 +33,6 @@ export declare namespace WebsocketChannel {
         handshake: serializers.WebsocketHandshake.Raw;
         publish?: serializers.Schema.Raw | null;
         subscribe?: serializers.Schema.Raw | null;
+        examples: serializers.WebsocketSessionExample.Raw[];
     }
 }

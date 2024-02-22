@@ -7,6 +7,11 @@ types:
     properties:
       name: optional<string>
       value: unknown
+    
+  WebsocketHandshakeWithExample: 
+    properties: 
+      queryParameters: list<QueryParameterWithExample>
+      headers: list<HeaderWithExample>
 
   EndpointWithExample:
     extends: commons.WithDescription
