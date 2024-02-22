@@ -13,7 +13,7 @@ except ImportError:
 
 
 class ImportingA(pydantic.BaseModel):
-    a: typing.Optional[A]
+    a: typing.Optional[A] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

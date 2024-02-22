@@ -33,7 +33,7 @@ class Movie(pydantic.BaseModel):
     rating: float = pydantic.Field(description="The rating scale is one to five stars")
     type: typing.Literal["movie"]
     tag: Tag
-    book: typing.Optional[str]
+    book: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
