@@ -2,6 +2,202 @@
 
 exports[`open api parser assembly parse open api 1`] = `
 {
+  "channel": [
+    {
+      "description": null,
+      "groupName": [
+        "realtime",
+      ],
+      "handshake": {
+        "headers": [
+          {
+            "description": "Authenticate using your AssemblyAI API key.",
+            "name": "Authentication",
+            "parameterNameOverride": null,
+            "schema": {
+              "description": "Authenticate using your AssemblyAI API key.",
+              "generatedName": "Realtime",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "description": "Authenticate using your AssemblyAI API key.",
+                "generatedName": "Realtime",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "maxLength": null,
+                  "minLength": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        ],
+        "queryParameters": [
+          {
+            "description": "The sample rate of the streamed audio.",
+            "name": "sample_rate",
+            "parameterNameOverride": null,
+            "schema": {
+              "description": "The sample rate of the streamed audio.",
+              "generatedName": "Realtime",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "description": "The sample rate of the streamed audio.",
+                "generatedName": "Realtime",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+          {
+            "description": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+            "name": "word_boost",
+            "parameterNameOverride": null,
+            "schema": {
+              "description": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+              "generatedName": "Realtime",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "description": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+                "generatedName": "Realtime",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "maxLength": null,
+                  "minLength": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+          {
+            "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+            "name": "token",
+            "parameterNameOverride": null,
+            "schema": {
+              "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+              "generatedName": "Realtime",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+                "generatedName": "Realtime",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "maxLength": null,
+                  "minLength": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        ],
+      },
+      "path": "/",
+      "publish": {
+        "type": "oneOf",
+        "value": {
+          "description": "Send messages to the WebSocket",
+          "generatedName": "sendMessage",
+          "groupName": null,
+          "nameOverride": "sendMessage",
+          "schemas": [
+            {
+              "description": null,
+              "generatedName": "RealtimeZero",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "AudioData",
+              "type": "reference",
+            },
+            {
+              "description": null,
+              "generatedName": "RealtimeOne",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "TerminateSession",
+              "type": "reference",
+            },
+          ],
+          "type": "undisciminated",
+        },
+      },
+      "subscribe": {
+        "type": "oneOf",
+        "value": {
+          "description": "Receive messages from the WebSocket",
+          "generatedName": "receiveMessage",
+          "groupName": null,
+          "nameOverride": "receiveMessage",
+          "schemas": [
+            {
+              "description": null,
+              "generatedName": "RealtimeZero",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "SessionBegins",
+              "type": "reference",
+            },
+            {
+              "description": null,
+              "generatedName": "RealtimeOne",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "PartialTranscript",
+              "type": "reference",
+            },
+            {
+              "description": null,
+              "generatedName": "RealtimeTwo",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "FinalTranscript",
+              "type": "reference",
+            },
+            {
+              "description": null,
+              "generatedName": "RealtimeThree",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "SessionTerminated",
+              "type": "reference",
+            },
+            {
+              "description": null,
+              "generatedName": "RealtimeFour",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "RealtimeError",
+              "type": "reference",
+            },
+          ],
+          "type": "undisciminated",
+        },
+      },
+      "summary": null,
+    },
+  ],
   "description": "AssemblyAI API",
   "endpoints": [
     {

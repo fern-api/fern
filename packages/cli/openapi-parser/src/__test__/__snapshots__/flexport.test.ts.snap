@@ -2,6 +2,7 @@
 
 exports[`open api parser flexport parse open api 1`] = `
 {
+  "channel": [],
   "description": "The Flexport API enables you to programmatically interact with Flexport's freight data.
 
 The API follows modern RESTful conventions and speaks JSON in both directions. As the API uses JSON for both

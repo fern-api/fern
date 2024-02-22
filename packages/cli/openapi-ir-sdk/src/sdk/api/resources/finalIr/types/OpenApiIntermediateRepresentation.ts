@@ -12,6 +12,7 @@ export interface OpenApiIntermediateRepresentation {
     hasEndpointsMarkedInternal: boolean;
     endpoints: FernOpenapiIr.Endpoint[];
     webhooks: FernOpenapiIr.Webhook[];
+    channel: FernOpenapiIr.WebsocketChannel[];
     schemas: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.Schema>;
     errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;

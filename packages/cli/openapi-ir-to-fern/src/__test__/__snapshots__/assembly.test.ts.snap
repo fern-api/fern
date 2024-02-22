@@ -289,6 +289,49 @@ The LLM response data, as well as any context provided in the original request w
       },
     },
     "realtime.yml": {
+      "channel": {
+        "auth": false,
+        "headers": {
+          "Authentication": {
+            "docs": "Authenticate using your AssemblyAI API key.",
+            "name": "authentication",
+            "type": "optional<string>",
+          },
+        },
+        "messages": {
+          "publish": {
+            "body": {
+              "docs": "Send messages to the WebSocket",
+              "type": "sendMessage",
+            },
+            "origin": "client",
+          },
+          "subscribe": {
+            "body": {
+              "docs": "Receive messages from the WebSocket",
+              "type": "receiveMessage",
+            },
+            "origin": "server",
+          },
+        },
+        "path": "/",
+        "query-parameters": {
+          "sample_rate": {
+            "docs": "The sample rate of the streamed audio.",
+            "type": "optional<integer>",
+          },
+          "token": {
+            "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+            "type": "optional<string>",
+          },
+          "word_boost": {
+            "docs": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+            "type": "optional<string>",
+          },
+        },
+      },
       "imports": {
         "root": "__package__.yml",
       },
@@ -340,6 +383,27 @@ The LLM response data, as well as any context provided in the original request w
               "type": "root.RealtimeTemporaryTokenResponse",
             },
           },
+        },
+      },
+      "types": {
+        "receiveMessage": {
+          "discriminated": false,
+          "docs": "Receive messages from the WebSocket",
+          "union": [
+            "root.SessionBegins",
+            "root.PartialTranscript",
+            "root.FinalTranscript",
+            "root.SessionTerminated",
+            "root.RealtimeError",
+          ],
+        },
+        "sendMessage": {
+          "discriminated": false,
+          "docs": "Send messages to the WebSocket",
+          "union": [
+            "root.AudioData",
+            "root.TerminateSession",
+          ],
         },
       },
     },
@@ -1320,6 +1384,15 @@ The LLM response data, as well as any context provided in the original request w
       },
     },
     "types": {
+      "AudioData": {
+        "docs": undefined,
+        "properties": {
+          "audio_data": {
+            "docs": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
+            "type": "string",
+          },
+        },
+      },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
         "enum": [
@@ -1734,6 +1807,23 @@ Valid values are in the range [0, 1] inclusive.
           "status": "optional<literal<"error">>",
         },
       },
+      "FinalTranscript": {
+        "docs": undefined,
+        "extends": [
+          "RealtimeBaseTranscript",
+        ],
+        "properties": {
+          "message_type": "literal<"FinalTranscript">",
+          "punctuated": {
+            "docs": "Whether the text has been punctuated and cased.",
+            "type": "boolean",
+          },
+          "text_formatted": {
+            "docs": "Whether the text has been formatted (e.g. Dollar -> $)",
+            "type": "boolean",
+          },
+        },
+      },
       "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
         "docs": undefined,
@@ -1877,6 +1967,14 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
+      "MessageType": {
+        "enum": [
+          "SessionBegins",
+          "PartialTranscript",
+          "FinalTranscript",
+          "SessionTerminated",
+        ],
+      },
       "PageDetails": {
         "docs": undefined,
         "properties": {
@@ -1894,6 +1992,15 @@ Can be any value between 0.0 and 1.0 inclusive.
           "confidence": "double",
           "id": "string",
           "paragraphs": "list<TranscriptParagraph>",
+        },
+      },
+      "PartialTranscript": {
+        "docs": undefined,
+        "extends": [
+          "RealtimeBaseTranscript",
+        ],
+        "properties": {
+          "message_type": "literal<"PartialTranscript">",
         },
       },
       "PiiPolicy": {
@@ -1944,6 +2051,61 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
+      "RealtimeBaseMessage": {
+        "docs": undefined,
+        "properties": {
+          "message_type": {
+            "docs": "Describes the type of the message.",
+            "type": "MessageType",
+          },
+        },
+      },
+      "RealtimeBaseTranscript": {
+        "docs": undefined,
+        "properties": {
+          "audio_end": {
+            "docs": "End time of audio sample relative to session start, in milliseconds.",
+            "type": "integer",
+          },
+          "audio_start": {
+            "docs": "Start time of audio sample relative to session start, in milliseconds.",
+            "type": "integer",
+          },
+          "confidence": {
+            "docs": "The confidence score of the entire transcription, between 0 and 1.",
+            "type": "double",
+          },
+          "created": {
+            "docs": "The timestamp for the partial transcript.",
+            "type": "datetime",
+          },
+          "text": {
+            "docs": "The partial transcript for your audio.",
+            "type": "string",
+          },
+          "words": {
+            "docs": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
+            "type": "list<Word>",
+          },
+        },
+      },
+      "RealtimeError": {
+        "docs": undefined,
+        "properties": {
+          "error": "string",
+        },
+      },
+      "RealtimeMessage": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "SessionBegins",
+          "PartialTranscript",
+          "FinalTranscript",
+          "SessionTerminated",
+          "RealtimeError",
+        ],
+      },
       "RealtimeTemporaryTokenResponse": {
         "docs": undefined,
         "properties": {
@@ -1952,6 +2114,20 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+      },
+      "RealtimeTranscript": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "PartialTranscript",
+          "FinalTranscript",
+        ],
+      },
+      "RealtimeTranscriptType": {
+        "enum": [
+          "PartialTranscript",
+          "FinalTranscript",
+        ],
       },
       "RedactedAudioResponse": {
         "docs": undefined,
@@ -2012,6 +2188,26 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
+      "SessionBegins": {
+        "docs": undefined,
+        "properties": {
+          "expires_at": {
+            "docs": "Timestamp when this session will expire.",
+            "type": "datetime",
+          },
+          "message_type": "literal<"SessionBegins">",
+          "session_id": {
+            "docs": "Unique identifier for the established session.",
+            "type": "string",
+          },
+        },
+      },
+      "SessionTerminated": {
+        "docs": undefined,
+        "properties": {
+          "message_type": "literal<"SessionTerminated">",
+        },
+      },
       "SeverityScoreSummary": {
         "docs": undefined,
         "properties": {
@@ -2051,6 +2247,18 @@ Can be any value between 0.0 and 1.0 inclusive.
           "headline",
           "paragraph",
         ],
+      },
+      "TerminateSession": {
+        "docs": undefined,
+        "extends": [
+          "RealtimeBaseMessage",
+        ],
+        "properties": {
+          "terminate_session": {
+            "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
+            "type": "boolean",
+          },
+        },
       },
       "Timestamp": {
         "docs": "Timestamp containing a start and end property in milliseconds.",
@@ -2534,6 +2742,27 @@ The default value is 'en_us'.
         "properties": {
           "upload_url": {
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
+            "type": "string",
+          },
+        },
+      },
+      "Word": {
+        "docs": undefined,
+        "properties": {
+          "confidence": {
+            "docs": "Confidence score of the word",
+            "type": "double",
+          },
+          "end": {
+            "docs": "End time of the word in milliseconds",
+            "type": "integer",
+          },
+          "start": {
+            "docs": "Start time of the word in milliseconds",
+            "type": "integer",
+          },
+          "text": {
+            "docs": "The word itself",
             "type": "string",
           },
         },

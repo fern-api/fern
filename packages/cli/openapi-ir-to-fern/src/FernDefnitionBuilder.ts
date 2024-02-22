@@ -45,6 +45,13 @@ export interface FernDefinitionBuilder {
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
+    addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
+
+    addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void;
+
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
     build(): FernDefinition;
@@ -72,6 +79,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile["display-name"] = ir.title;
         }
     }
+
     setServiceInfo(
         file: RelativeFilePath,
         { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
@@ -218,6 +226,28 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.webhooks = {};
         }
         fernFile.webhooks[name] = schema;
+    }
+
+    public addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void {
+        const fernFile = this.getOrCreateFile(file);
+        fernFile.channel = channel;
+    }
+
+    public addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.channel == null) {
+            fernFile.channel = {
+                path: "",
+                auth: false
+            };
+        }
+        if (fernFile.channel.messages == null) {
+            fernFile.channel.messages = {};
+        }
+        fernFile.channel.messages[messageId] = message;
     }
 
     public build(): FernDefinition {

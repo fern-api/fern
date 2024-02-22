@@ -23,7 +23,7 @@ export async function generateOpenAPIIrForWorkspaces({
                     return;
                 }
 
-                const openAPIIr = getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
+                const openAPIIr = await getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
 
                 const irOutputFilePath = path.resolve(irFilepath);
                 const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {

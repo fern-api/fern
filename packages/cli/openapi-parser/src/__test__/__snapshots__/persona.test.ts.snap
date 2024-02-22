@@ -2,6 +2,7 @@
 
 exports[`open api parser persona parse open api 1`] = `
 {
+  "channel": [],
   "description": null,
   "endpoints": [
     {
