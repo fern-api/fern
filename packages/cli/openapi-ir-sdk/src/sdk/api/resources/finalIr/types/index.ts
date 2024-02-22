@@ -5,6 +5,8 @@ export * from "./HttpError";
 export * from "./Webhook";
 export * from "./WebsocketChannel";
 export * from "./WebsocketHandshake";
+export * from "./WebsocketSessionExample";
+export * from "./WebsocketMessageExample";
 export * from "./WebhookHttpMethod";
 export * from "./EndpointAvailability";
 export * from "./Endpoint";
