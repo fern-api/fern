@@ -13,6 +13,6 @@ import * as FernIr from "../../..";
  */
 export interface Pagination {
     page: FernIr.QueryParameter;
-    next: FernIr.ObjectProperty;
-    results: FernIr.ObjectProperty;
+    next: FernIr.PaginationProperty;
+    results: FernIr.PaginationProperty;
 }

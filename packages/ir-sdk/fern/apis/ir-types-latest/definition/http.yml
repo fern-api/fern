@@ -208,8 +208,20 @@ types:
       on the response.
     properties:
       page: QueryParameter
-      next: types.ObjectProperty
-      results: types.ObjectProperty
+      next: PaginationProperty
+      results: PaginationProperty
+
+  PaginationProperty:
+    docs: |
+      A property associated with a paginated endpoint's request or response.
+    properties:
+      propertyPath:
+        docs: |
+          If empty, the property is defined at the top-level.
+          Otherwise, the property is defined on the nested object identified
+          by the path.
+        type: optional<list<commons.Name>>
+      property: types.ObjectProperty
 
   # examples
 

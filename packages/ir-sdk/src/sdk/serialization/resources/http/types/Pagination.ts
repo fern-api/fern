@@ -9,14 +9,14 @@ import * as core from "../../../../core";
 export const Pagination: core.serialization.ObjectSchema<serializers.Pagination.Raw, FernIr.Pagination> =
     core.serialization.objectWithoutOptionalProperties({
         page: core.serialization.lazyObject(async () => (await import("../../..")).QueryParameter),
-        next: core.serialization.lazyObject(async () => (await import("../../..")).ObjectProperty),
-        results: core.serialization.lazyObject(async () => (await import("../../..")).ObjectProperty),
+        next: core.serialization.lazyObject(async () => (await import("../../..")).PaginationProperty),
+        results: core.serialization.lazyObject(async () => (await import("../../..")).PaginationProperty),
     });
 
 export declare namespace Pagination {
     interface Raw {
         page: serializers.QueryParameter.Raw;
-        next: serializers.ObjectProperty.Raw;
-        results: serializers.ObjectProperty.Raw;
+        next: serializers.PaginationProperty.Raw;
+        results: serializers.PaginationProperty.Raw;
     }
 }
