@@ -64,11 +64,28 @@ types:
       handshake: WebsocketHandshake
       publish: optional<Schema>
       subscribe: optional<Schema>
+      examples: list<WebsocketSessionExample>
     
   WebsocketHandshake: 
     properties: 
       queryParameters: list<QueryParameter>
       headers: list<Header>
+  
+  WebsocketSessionExample:
+    docs: |
+      A complete example associated with the websocket channel.
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      queryParameters: optional<list<QueryParameterExample>>
+      headers: optional<list<HeaderExample>>
+      messages: list<WebsocketMessageExample>
+  
+  WebsocketMessageExample: 
+    extends: commons.WithDescription
+    properties: 
+      messageType: string
+      payload: example.FullExample
 
   WebhookHttpMethod:
     enum:

@@ -291,6 +291,26 @@ The LLM response data, as well as any context provided in the original request w
     "realtime.yml": {
       "channel": {
         "auth": false,
+        "examples": [
+          {
+            "messages": [
+              {
+                "body": {
+                  "audio_data": "audio_data",
+                },
+                "type": "publish",
+              },
+              {
+                "body": {
+                  "expires_at": "2024-01-15T09:30:00Z",
+                  "message_type": "SessionBegins",
+                  "session_id": "session_id",
+                },
+                "type": "subscribe",
+              },
+            ],
+          },
+        ],
         "headers": {
           "Authentication": {
             "docs": "Authenticate using your AssemblyAI API key.",

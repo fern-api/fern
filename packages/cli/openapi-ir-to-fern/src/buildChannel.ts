@@ -4,6 +4,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
+import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export function buildChannel({
@@ -22,7 +23,7 @@ export function buildChannel({
     };
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
-    if (channel.handshake != null && channel.handshake.queryParameters.length > 0) {
+    if (channel.handshake.queryParameters.length > 0) {
         for (const queryParameter of channel.handshake.queryParameters) {
             const convertedQueryParameter = buildQueryParameter({
                 queryParameter,
@@ -41,7 +42,7 @@ export function buildChannel({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    if (channel.handshake != null && channel.handshake.headers.length > 0) {
+    if (channel.handshake.headers.length > 0) {
         for (const header of channel.handshake.headers) {
             const headerSchema = buildHeader({ header, context, fileContainingReference: declarationFile });
             headers[header.name] = headerSchema;
@@ -80,6 +81,13 @@ export function buildChannel({
                     fileContainingReference: declarationFile
                 })
             }
+        });
+    }
+
+    for (const example of channel.examples) {
+        const websocketExample = buildWebsocketSessionExample({ context, websocketExample: example });
+        context.builder.addChannelExample(declarationFile, {
+            example: websocketExample
         });
     }
 }

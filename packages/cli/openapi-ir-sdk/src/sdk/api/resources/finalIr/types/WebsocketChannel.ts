@@ -11,4 +11,5 @@ export interface WebsocketChannel extends FernOpenapiIr.WithDescription {
     handshake: FernOpenapiIr.WebsocketHandshake;
     publish: FernOpenapiIr.Schema | undefined;
     subscribe: FernOpenapiIr.Schema | undefined;
+    examples: FernOpenapiIr.WebsocketSessionExample[];
 }

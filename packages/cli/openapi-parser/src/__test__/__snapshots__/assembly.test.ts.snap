@@ -5,6 +5,62 @@ exports[`open api parser assembly parse open api 1`] = `
   "channel": [
     {
       "description": null,
+      "examples": [
+        {
+          "description": null,
+          "headers": [],
+          "messages": [
+            {
+              "description": null,
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "audio_data": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "audio_data",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            },
+            {
+              "description": null,
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {
+                  "expires_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00.000Z",
+                    },
+                  },
+                  "message_type": {
+                    "type": "literal",
+                    "value": {
+                      "type": "string",
+                      "value": "SessionBegins",
+                    },
+                  },
+                  "session_id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "session_id",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            },
+          ],
+          "name": null,
+          "queryParameters": [],
+        },
+      ],
       "groupName": [
         "realtime",
       ],
