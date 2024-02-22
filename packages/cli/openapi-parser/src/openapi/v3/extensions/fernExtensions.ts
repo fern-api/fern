@@ -63,6 +63,20 @@ export const FernOpenAPIExtension = {
     STREAMING: "x-fern-streaming",
 
     /**
+     * Used to specify if an endpoint should be generated
+     * as a paginated endpoint.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-pagination:
+     *         page: $request.page
+     *         next: $response.next
+     *         results: $response.results
+     */
+    PAGINATION: "x-fern-pagination",
+
+    /**
      * Used to specify if an endpoint is actually
      * representing a webhook
      * Example usage:

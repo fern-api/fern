@@ -39,6 +39,7 @@ export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
+export { PaginationSchema } from "./PaginationSchema";
 export { PropertyErrorDiscriminationSchema } from "./PropertyErrorDiscriminationSchema";
 export { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema";
