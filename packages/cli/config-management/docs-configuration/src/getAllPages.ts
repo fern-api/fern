@@ -64,6 +64,7 @@ export async function getAllPagesFromNavigationItem({
 }): Promise<Record<RelativeFilePath, string>> {
     switch (item.type) {
         case "apiSection":
+        case "link":
             return {};
         case "page":
             return {

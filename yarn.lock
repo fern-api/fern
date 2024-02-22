@@ -2447,7 +2447,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fiddle-sdk": ^0.0.411
     "@types/jest": ^29.0.3
@@ -2547,10 +2547,10 @@ __metadata:
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2572,13 +2572,13 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@types/cors": ^2.8.13
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
@@ -2643,9 +2643,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.50.1-1-g1f0f637":
-  version: 0.50.1-1-g1f0f637
-  resolution: "@fern-api/fdr-sdk@npm:0.50.1-1-g1f0f637"
+"@fern-api/fdr-sdk@npm:0.50.8-1-gace1ff5":
+  version: 0.50.8-1-gace1ff5
+  resolution: "@fern-api/fdr-sdk@npm:0.50.8-1-gace1ff5"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2653,7 +2653,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 32eb06bac67af64021cb208d300e557e60c04f77f1465b63aa41cc04956caf2a85f88edfce46cf3d0cb678166ba54241ad210597ab23451565f06ec7cb9125ea
+  checksum: 32de6d37ef8116a59e94dfd053eb954f6f53e12fd40110974c7eb51dfdc3531b7dc445a2e435a68e2e16c889563c66bdbacbba8c8f3a510568e2d96536732971
   languageName: node
   linkType: hard
 
@@ -2845,7 +2845,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@types/fs-extra": ^11.0.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3346,7 +3346,7 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3373,7 +3373,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -3383,7 +3383,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@fern-fern/fiddle-sdk": ^0.0.411
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
@@ -3624,7 +3624,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@fern-fern/fiddle-sdk": ^0.0.411
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3679,7 +3679,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@fern-fern/legacy-docs-config": 0.0.58
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
@@ -3710,7 +3710,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
-    "@fern-fern/docs-config": 0.0.75
+    "@fern-fern/docs-config": 0.0.76
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -3725,10 +3725,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.75":
-  version: 0.0.75
-  resolution: "@fern-fern/docs-config@npm:0.0.75"
-  checksum: 3629548884475e16a9de875659deae54b8574f4af61ecb315b5dcc0cd953fa0256a1004810e459a9f6bf73ef734a36a2d3075a5779e43371cfe56e1d782ed16c
+"@fern-fern/docs-config@npm:0.0.76":
+  version: 0.0.76
+  resolution: "@fern-fern/docs-config@npm:0.0.76"
+  checksum: 97fbaacd7ac1fc32de42b73781a07a8b44fb8a3756cad7ed07143e20e2f9ddff12532f633e0e7d008e887bd2bc9fd449edd6927774327a5609afa8fee6f08286
   languageName: node
   linkType: hard
 
