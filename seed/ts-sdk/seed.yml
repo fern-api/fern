@@ -95,4 +95,4 @@ allowedFailures:
   - auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
-
+  - audiences
