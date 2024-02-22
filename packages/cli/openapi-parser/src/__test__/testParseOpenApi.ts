@@ -28,7 +28,7 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
-                skipValidation: true
+                skipValidation: true,
             });
             expect(openApiIrJson).toMatchSnapshot();
         });

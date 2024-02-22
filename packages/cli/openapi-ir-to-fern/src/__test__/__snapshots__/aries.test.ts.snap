@@ -2664,7 +2664,7 @@ exports[`open api parser aries simple 1`] = `
                   "tran_id": "tran_id",
                 },
                 "request": {
-                  "expires_time": 2021-03-29T05:22:19.000Z,
+                  "expires_time": "2021-03-29T05:22:19.000Z",
                 },
                 "response": {
                   "body": {

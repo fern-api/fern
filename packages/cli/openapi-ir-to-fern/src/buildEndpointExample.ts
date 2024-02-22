@@ -167,7 +167,7 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.value;
         }
         case "datetime":
-            return primitiveExample.value;
+            return primitiveExample.value.toISOString();
         case "date":
             return primitiveExample.value;
         case "base64":
