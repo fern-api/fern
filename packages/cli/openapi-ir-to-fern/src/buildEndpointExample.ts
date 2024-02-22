@@ -167,12 +167,15 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.value;
         }
         case "datetime":
-            // remove milliseconds from the datetime
-            return primitiveExample.value.toISOString().replace(/\.\d{3}Z$/, "Z");
+            try {
+                // remove milliseconds from the datetime
+                return primitiveExample.value.toISOString().replace(/\.\d{3}Z$/, "Z");
+            } catch (e) {
+                return "2024-01-15T09:30:00Z";
+            }
         case "date":
             return primitiveExample.value;
         case "base64":
-            return primitiveExample.value;
         case "boolean":
             return primitiveExample.value;
         default:
