@@ -27,7 +27,7 @@ class TypeReferenceToTypeHintConverter:
             container=lambda container: self._get_type_hint_for_container(
                 container=container,
                 must_import_after_current_declaration=must_import_after_current_declaration,
-                in_endpoint=in_endpoint
+                in_endpoint=in_endpoint,
             ),
             named=lambda type_name: self._get_type_hint_for_named(
                 type_name=type_name,
@@ -75,7 +75,9 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     in_endpoint=in_endpoint,
                 )
-            ) if in_endpoint else AST.TypeHint.list(
+            )
+            if in_endpoint
+            else AST.TypeHint.list(
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
@@ -102,7 +104,9 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                         in_endpoint=in_endpoint,
                     )
-                ) if in_endpoint else AST.TypeHint.list(
+                )
+                if in_endpoint
+                else AST.TypeHint.list(
                     self._get_type_hint_for_container(
                         container=type_reference,
                         must_import_after_current_declaration=must_import_after_current_declaration,
