@@ -2,6 +2,7 @@
 
 exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] = `
 {
+  "channel": [],
   "description": null,
   "endpoints": [
     {

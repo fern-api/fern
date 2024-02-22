@@ -1,10 +1,10 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { parseAsyncAPI } from "../asyncapi/parse";
+import { AsyncAPIIntermediateRepresentation, parseAsyncAPI } from "../asyncapi/parse";
 import { AsyncAPIV2 } from "../asyncapi/v2";
 import { loadOpenAPI } from "../loadOpenAPI";
 import { generateIr as generateIrFromV2 } from "./v2/generateIr";
@@ -31,11 +31,13 @@ export async function parse({
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     taskContext: TaskContext;
 }): Promise<OpenApiIntermediateRepresentation> {
-    let asyncAPISchemas: Record<SchemaId, Schema> = {};
+    let parsedAsyncAPI: AsyncAPIIntermediateRepresentation = {
+        schemas: {},
+        channel: undefined
+    };
     if (absolutePathToAsyncAPI != null) {
         const asyncAPI = await loadAsyncAPI(absolutePathToAsyncAPI);
-        const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
-        asyncAPISchemas = parsedAsyncAPI.schemas;
+        parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
     }
 
     const openApiDocument = await loadOpenAPI({
@@ -53,9 +55,10 @@ export async function parse({
     if (openApiIr != null) {
         return {
             ...openApiIr,
+            channel: parsedAsyncAPI.channel != null ? [parsedAsyncAPI.channel] : [],
             schemas: {
                 ...openApiIr.schemas,
-                ...asyncAPISchemas
+                ...parsedAsyncAPI.schemas
             }
         };
     }

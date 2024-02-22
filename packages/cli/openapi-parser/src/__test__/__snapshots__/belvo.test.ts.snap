@@ -2,6 +2,7 @@
 
 exports[`open api parser belvo parse open api 1`] = `
 {
+  "channel": [],
   "description": "# Introduction
 
 Belvo is an open banking API for Latin America that allows companies to access banking and fiscal information in a secure as well as agile way.

@@ -2,6 +2,7 @@
 
 exports[`open api parser devrev parse open api 1`] = `
 {
+  "channel": [],
   "description": "DevRev's REST API.",
   "endpoints": [
     {
