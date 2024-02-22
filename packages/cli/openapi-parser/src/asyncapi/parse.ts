@@ -1,6 +1,5 @@
 import {
     Header,
-    OneOfSchemaWithExample,
     QueryParameter,
     Schema,
     SchemaId,
@@ -8,7 +7,10 @@ import {
     WebsocketChannel
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "../schema/convertSchemas";
+import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
+import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { AsyncAPIV2 } from "./v2";
@@ -78,6 +80,7 @@ export function parseAsyncAPI({
             publishSchema = convertMessageToSchema({
                 generatedName: channel.publish.operationId ?? "PublishEvent",
                 event: channel.publish,
+                breadcrumbs,
                 context
             });
         }
@@ -87,6 +90,7 @@ export function parseAsyncAPI({
             subscribeSchema = convertMessageToSchema({
                 generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
                 event: channel.subscribe,
+                breadcrumbs,
                 context
             });
         }
@@ -99,8 +103,9 @@ export function parseAsyncAPI({
                     queryParameters
                 },
                 groupName: tag?.name != null ? [tag.name] : ["Websocket"],
-                publish: publishSchema,
-                subscribe: subscribeSchema,
+                publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
+                subscribe:
+                    subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
                 summary: undefined,
                 path: channelPath,
                 description: undefined
@@ -110,7 +115,7 @@ export function parseAsyncAPI({
     }
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, true, context, []);
+        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -123,35 +128,35 @@ export function parseAsyncAPI({
 function convertMessageToSchema({
     generatedName,
     event,
-    context
+    context,
+    breadcrumbs
 }: {
+    breadcrumbs: string[];
     generatedName: string;
     event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
     context: AsyncAPIV2ParserContext;
 }): SchemaWithExample | undefined {
     if (event.message.oneOf != null) {
-        const subtypes: SchemaWithExample[] = [];
+        const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
         for (const schema of event.message.oneOf) {
-            let resolvedSchema;
+            let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
             if (isReferenceObject(schema)) {
-                const messageValue = context.resolveMessageReference(schema);
-                resolvedSchema = convertSchema(messageValue.payload, true, context, []);
+                resolvedSchema = context.resolveMessageReference(schema).payload;
             } else {
-                resolvedSchema = convertSchema(schema, true, context, []);
+                resolvedSchema = schema;
             }
-            if (resolvedSchema != null) {
-                subtypes.push(resolvedSchema);
-            }
+            subtypes.push(resolvedSchema);
         }
-        return SchemaWithExample.oneOf(
-            OneOfSchemaWithExample.undisciminated({
-                description: event.description ?? event.message.description,
-                schemas: subtypes,
-                nameOverride: undefined,
-                generatedName: event.operationId ?? generatedName,
-                groupName: undefined
-            })
-        );
+        return convertUndiscriminatedOneOf({
+            description: event.description ?? event.message.description,
+            subtypes,
+            nameOverride: event.operationId,
+            generatedName,
+            groupName: undefined,
+            wrapAsNullable: false,
+            breadcrumbs,
+            context
+        });
     }
     return undefined;
 }

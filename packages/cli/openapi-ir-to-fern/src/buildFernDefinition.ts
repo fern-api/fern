@@ -39,6 +39,8 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     // Add Schemas
     for (const [id, schema] of Object.entries(context.ir.schemas)) {
+        console.log(`Processing schema ${id}`);
+
         if (schemaIdsToExclude.includes(id)) {
             continue;
         }
