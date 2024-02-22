@@ -1,4 +1,4 @@
-import { EndpointSdkName, HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
+import { EndpointSdkName, HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
 export interface OpenAPIDocumentContext {

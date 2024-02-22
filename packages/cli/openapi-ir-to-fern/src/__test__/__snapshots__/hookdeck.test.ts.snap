@@ -4700,7 +4700,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "count": 1,
+                    "count": 5,
                   },
                 },
               },

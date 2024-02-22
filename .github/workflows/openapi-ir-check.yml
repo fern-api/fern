@@ -1,0 +1,39 @@
+name: OpenAPI IR Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/cli/openapi-ir-sdk/fern/**"
+    branches:
+      - main
+  push:
+    paths:
+      - "packages/cli/openapi-ir-sdk/fern/**"
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Check IR Definitions
+        run: |
+          cd packages/cli/openapi-ir-sdk
+          fern check
+
+      - name: Check IR Definitions
+        env:
+          FERN_TOKEN: dummy
+        run: |
+          cd packages/cli/openapi-ir-sdk
+          yarn generate
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code

@@ -1,4 +1,4 @@
-import { NamedFullExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { NamedFullExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../../extensions/extensions";
 import { getExtension } from "../../extensions/getExtension";

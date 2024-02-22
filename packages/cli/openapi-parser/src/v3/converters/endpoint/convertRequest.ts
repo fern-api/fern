@@ -1,5 +1,4 @@
-import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/finalIr";
-import { RequestWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -66,7 +65,7 @@ export function convertRequest({
 
     // convert as application/octet-stream
     if (octetStreamSchema != null) {
-        return Request.octetStream({
+        return RequestWithExample.octetStream({
             description: undefined
         });
     }
@@ -83,7 +82,7 @@ export function convertRequest({
                   schema: multipartSchema
               };
 
-        return Request.multipart({
+        return RequestWithExample.multipart({
             name:
                 isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
                     ? resolvedMultipartSchema.id

@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
+import { LiteralSchemaValue, PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
 import { recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
-import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { FernOpenAPIExtension } from "./fernExtensions";
 import { getExtension } from "./getExtension";
@@ -165,7 +165,13 @@ export function getFernTypeExtension({
             SchemaWithExample.literal({
                 nameOverride,
                 generatedName,
-                value: literal,
+                value: literal._visit<LiteralSchemaValue>({
+                    string: (value) => LiteralSchemaValue.string(value),
+                    boolean: (value) => LiteralSchemaValue.boolean(value),
+                    _other: () => {
+                        throw new Error("Unexpected literal type");
+                    }
+                }),
                 description,
                 groupName
             }),

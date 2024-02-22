@@ -1,7 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { RawSchemas } from "@fern-api/yaml-schema";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     CasingOverrides,
@@ -14,8 +12,10 @@ import {
     OptionalSchema,
     PrimitiveSchema,
     ReferencedSchema,
-    Schema
-} from "@fern-fern/openapi-ir-model/finalIr";
+    Schema,
+    SchemaId
+} from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -65,7 +65,7 @@ export function buildTypeDeclaration({
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
-            return buildOneOfTypeDeclaration({ schema: schema.oneOf, context, declarationFile });
+            return buildOneOfTypeDeclaration({ schema: schema.value, context, declarationFile });
         default:
             assertNever(schema);
     }
