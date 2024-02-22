@@ -142,7 +142,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "currentWithPending": "3448.72",
                         "id": "05d00d7d-d630",
                         "incomplete": false,
-                        "updatedAt": "2022-05-02T06:51:19.375Z",
+                        "updatedAt": 2022-05-02T06:51:19.375Z,
                       },
                       {
                         "available": "1750.80",
@@ -150,7 +150,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "currentWithPending": "1956.19",
                         "id": "cb5d67ea-a5c3",
                         "incomplete": false,
-                        "updatedAt": "2022-05-02T06:51:19.375Z",
+                        "updatedAt": 2022-05-02T06:51:19.375Z,
                       },
                       {
                         "available": "3456.78",
@@ -158,7 +158,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "currentWithPending": "3456.78",
                         "id": "id",
                         "incomplete": true,
-                        "updatedAt": "2021-10-30T19:06:04.250Z",
+                        "updatedAt": 2021-10-30T19:06:04.250Z,
                       },
                     ],
                   },
@@ -1284,10 +1284,10 @@ Note: This operation requires an identity challenge if the financial institution
                 "response": {
                   "body": {
                     "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "createdAt": 2022-04-18T07:21:35.375Z,
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
+                    "processedAt": 2024-01-15T09:30:00.000Z,
                     "schedule": {
                       "amountLimit": "3456.78",
                       "count": 1,
@@ -1311,7 +1311,7 @@ Note: This operation requires an identity challenge if the financial institution
                       "location": "internal",
                       "type": "savings",
                     },
-                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedAt": 2022-04-18T07:21:35.375Z,
                     "updatedBy": "updatedBy",
                   },
                 },
@@ -1390,10 +1390,10 @@ Note: This operation requires an identity challenge if the financial institution
                 "response": {
                   "body": {
                     "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "createdAt": 2022-04-18T07:21:35.375Z,
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
+                    "processedAt": 2024-01-15T09:30:00.000Z,
                     "schedule": {
                       "amountLimit": "3456.78",
                       "count": 1,
@@ -1417,7 +1417,7 @@ Note: This operation requires an identity challenge if the financial institution
                       "location": "internal",
                       "type": "savings",
                     },
-                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedAt": 2022-04-18T07:21:35.375Z,
                     "updatedBy": "updatedBy",
                   },
                 },
@@ -1454,10 +1454,10 @@ Note: This operation requires an identity challenge if the financial institution
                     "items": [
                       {
                         "amount": "275.00",
-                        "createdAt": "2022-04-18T07:21:35.375Z",
+                        "createdAt": 2022-04-18T07:21:35.375Z,
                         "id": "0399abed-fd3d",
                         "memo": "Cover check for car repair",
-                        "processedAt": "2022-06-28T021:00:00.000Z",
+                        "processedAt": Date { NaN },
                         "schedule": {
                           "amountLimit": "3456.78",
                           "creditsOn": "2026-06-26",
@@ -1478,15 +1478,15 @@ Note: This operation requires an identity challenge if the financial institution
                           "location": "internal",
                           "type": "savings",
                         },
-                        "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedAt": 2022-04-18T07:21:35.375Z,
                         "updatedBy": "updatedBy",
                       },
                       {
                         "amount": "100.00",
-                        "createdAt": "2022-04-18T07:21:35.375Z",
+                        "createdAt": 2022-04-18T07:21:35.375Z,
                         "id": "d62c0701-0d74",
                         "memo": "school expenses",
-                        "processedAt": "2024-01-15T09:30:00Z",
+                        "processedAt": 2024-01-15T09:30:00.000Z,
                         "schedule": {
                           "amountLimit": "3456.78",
                           "count": 9,
@@ -1508,15 +1508,15 @@ Note: This operation requires an identity challenge if the financial institution
                           "location": "internal",
                           "type": "checking",
                         },
-                        "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedAt": 2022-04-18T07:21:35.375Z,
                         "updatedBy": "updatedBy",
                       },
                       {
                         "amount": "275.00",
-                        "createdAt": "2022-04-18T07:21:35.375Z",
+                        "createdAt": 2022-04-18T07:21:35.375Z,
                         "id": "id",
                         "memo": "memo",
-                        "processedAt": "2026-06-26T021:00:00.000Z",
+                        "processedAt": Date { NaN },
                         "schedule": {
                           "amountLimit": "3456.78",
                           "creditsOn": "2026-06-26",
@@ -1534,7 +1534,7 @@ Note: This operation requires an identity challenge if the financial institution
                           "label": "Personal Savings *4567",
                           "type": "savings",
                         },
-                        "updatedAt": "2022-04-18T07:21:35.375Z",
+                        "updatedAt": 2022-04-18T07:21:35.375Z,
                         "updatedBy": "James Bond",
                       },
                     ],
@@ -1620,10 +1620,10 @@ Note: This operation requires an identity challenge if the financial institution
                 "response": {
                   "body": {
                     "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "createdAt": 2022-04-18T07:21:35.375Z,
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
+                    "processedAt": 2024-01-15T09:30:00.000Z,
                     "schedule": {
                       "amountLimit": "3456.78",
                       "count": 1,
@@ -1647,7 +1647,7 @@ Note: This operation requires an identity challenge if the financial institution
                       "location": "internal",
                       "type": "savings",
                     },
-                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                    "updatedAt": 2022-04-18T07:21:35.375Z,
                     "updatedBy": "updatedBy",
                   },
                 },

@@ -32,7 +32,7 @@ exports[`open api parser devrev simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "expires_at": "2024-01-15T09:30:00Z",
+                    "expires_at": 2024-01-15T09:30:00.000Z,
                     "url": "url",
                   },
                 },
@@ -461,12 +461,12 @@ given Dev organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
-                      "expires_at": "2024-01-15T09:30:00Z",
+                      "expires_at": 2024-01-15T09:30:00.000Z,
                       "id": "id",
-                      "issued_at": "2024-01-15T09:30:00Z",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "issued_at": 2024-01-15T09:30:00.000Z,
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
                         "scopes",
@@ -517,12 +517,12 @@ token type issued for a given subject.
                     "tokens": [
                       {
                         "client_id": "client_id",
-                        "created_date": "2024-01-15T09:30:00Z",
+                        "created_date": 2024-01-15T09:30:00.000Z,
                         "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
+                        "expires_at": 2024-01-15T09:30:00.000Z,
                         "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_date": "2024-01-15T09:30:00Z",
+                        "issued_at": 2024-01-15T09:30:00.000Z,
+                        "modified_date": 2024-01-15T09:30:00.000Z,
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                         "scopes": [
                           "scopes",
@@ -623,12 +623,12 @@ organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
-                      "expires_at": "2024-01-15T09:30:00Z",
+                      "expires_at": 2024-01-15T09:30:00.000Z,
                       "id": "id",
-                      "issued_at": "2024-01-15T09:30:00Z",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "issued_at": 2024-01-15T09:30:00.000Z,
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
                         "scopes",
@@ -696,7 +696,7 @@ organization.
                   "body": {
                     "dev_users": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
+                        "created_date": 2024-01-15T09:30:00.000Z,
                         "display_id": "display_id",
                         "display_name": "display_name",
                         "display_picture": {
@@ -708,7 +708,7 @@ organization.
                         ],
                         "full_name": "full_name",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
+                        "modified_date": 2024-01-15T09:30:00.000Z,
                         "phone_numbers": [
                           "phone_numbers",
                         ],
@@ -782,7 +782,7 @@ used.
                 "response": {
                   "body": {
                     "dev_user": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
                       "display_name": "display_name",
                       "display_picture": {
@@ -795,7 +795,7 @@ used.
                       ],
                       "full_name": "full_name",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "phone_numbers": [
                         "phone_numbers",
                       ],
@@ -1050,14 +1050,14 @@ organization.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "display_name": "display_name",
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                     },
                   },
                 },
@@ -1169,14 +1169,14 @@ records.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "display_name": "display_name",
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                     },
                   },
                 },
@@ -1221,14 +1221,14 @@ to access.
                     "prev_cursor": "prev_cursor",
                     "rev_orgs": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
+                        "created_date": 2024-01-15T09:30:00.000Z,
                         "description": "description",
                         "display_id": "display_id",
                         "display_name": "display_name",
                         "domain": "domain",
                         "external_ref": "external_ref",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
+                        "modified_date": 2024-01-15T09:30:00.000Z,
                       },
                     ],
                   },
@@ -1323,14 +1323,14 @@ them.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "display_name": "display_name",
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                     },
                   },
                 },
@@ -1417,11 +1417,11 @@ and a logical concept denoted by the tag's name.
                       "allowed_values": [
                         "allowed_values",
                       ],
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                     },
                   },
@@ -1528,11 +1528,11 @@ permitted.
                       "allowed_values": [
                         "allowed_values",
                       ],
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                     },
                   },
@@ -1577,11 +1577,11 @@ permitted.
                         "allowed_values": [
                           "allowed_values",
                         ],
-                        "created_date": "2024-01-15T09:30:00Z",
+                        "created_date": 2024-01-15T09:30:00.000Z,
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
+                        "modified_date": 2024-01-15T09:30:00.000Z,
                         "name": "name",
                       },
                     ],
@@ -1640,11 +1640,11 @@ used.
                       "allowed_values": [
                         "allowed_values",
                       ],
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                     },
                   },
@@ -1857,13 +1857,13 @@ used.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "secret": "secret",
                       "status": "active",
                       "url": "url",
@@ -1970,13 +1970,13 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "secret": "secret",
                       "status": "active",
                       "url": "url",
@@ -2018,13 +2018,13 @@ response.
                   "body": {
                     "webhooks": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
+                        "created_date": 2024-01-15T09:30:00.000Z,
                         "display_id": "display_id",
                         "event_types": [
                           "part_created",
                         ],
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
+                        "modified_date": 2024-01-15T09:30:00.000Z,
                         "secret": "secret",
                         "status": "active",
                         "url": "url",
@@ -2061,13 +2061,13 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
+                      "created_date": 2024-01-15T09:30:00.000Z,
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
+                      "modified_date": 2024-01-15T09:30:00.000Z,
                       "secret": "secret",
                       "status": "active",
                       "url": "url",

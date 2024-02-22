@@ -85,7 +85,7 @@ exports[`open api parser suger simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "description": "description",
                     "externalID": "externalID",
                     "id": "id",
@@ -107,7 +107,7 @@ exports[`open api parser suger simple 1`] = `
                         "approvals": [
                           {},
                         ],
-                        "createTime": "2024-01-15T09:30:00Z",
+                        "createTime": 2024-01-15T09:30:00.000Z,
                         "id": "id",
                         "inputProperties": [
                           1,
@@ -115,11 +115,11 @@ exports[`open api parser suger simple 1`] = `
                         "name": "name",
                         "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
-                        "updateTime": "2024-01-15T09:30:00Z",
+                        "updateTime": 2024-01-15T09:30:00.000Z,
                       },
                       "invoicedAmount": 1.1,
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "name": "name",
                     "organizationID": "organizationID",
                     "partner": "AWS",
@@ -159,7 +159,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": [
                     {
-                      "creationTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
                       "description": "description",
                       "externalID": "externalID",
                       "id": "id",
@@ -168,7 +168,7 @@ exports[`open api parser suger simple 1`] = `
                         "disbursedAmount": 1.1,
                         "invoicedAmount": 1.1,
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "organizationID": "organizationID",
                       "partner": "AWS",
@@ -206,7 +206,7 @@ exports[`open api parser suger simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "description": "description",
                     "externalID": "externalID",
                     "id": "id",
@@ -228,7 +228,7 @@ exports[`open api parser suger simple 1`] = `
                         "approvals": [
                           {},
                         ],
-                        "createTime": "2024-01-15T09:30:00Z",
+                        "createTime": 2024-01-15T09:30:00.000Z,
                         "id": "id",
                         "inputProperties": [
                           1,
@@ -236,11 +236,11 @@ exports[`open api parser suger simple 1`] = `
                         "name": "name",
                         "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
-                        "updateTime": "2024-01-15T09:30:00Z",
+                        "updateTime": 2024-01-15T09:30:00.000Z,
                       },
                       "invoicedAmount": 1.1,
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "name": "name",
                     "organizationID": "organizationID",
                     "partner": "AWS",
@@ -367,8 +367,8 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "buyerID": "buyerID",
-                    "creationTime": "2024-01-15T09:30:00Z",
-                    "endTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
+                    "endTime": 2024-01-15T09:30:00.000Z,
                     "entitlementTermID": "entitlementTermID",
                     "externalBuyerID": "externalBuyerID",
                     "externalID": "externalID",
@@ -408,14 +408,14 @@ exports[`open api parser suger simple 1`] = `
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "name": "name",
                     "offerID": "offerID",
                     "organizationID": "organizationID",
                     "partner": "AWS",
                     "productID": "productID",
                     "service": "MARKETPLACE",
-                    "startTime": "2024-01-15T09:30:00Z",
+                    "startTime": 2024-01-15T09:30:00.000Z,
                     "status": "ACTIVE",
                     "type": "type",
                   },
@@ -455,8 +455,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementTermID": "entitlementTermID",
                       "externalBuyerID": "externalBuyerID",
                       "externalID": "externalID",
@@ -496,14 +496,14 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "offerID": "offerID",
                       "organizationID": "organizationID",
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "ACTIVE",
                       "type": "type",
                     },
@@ -541,8 +541,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementTermID": "entitlementTermID",
                       "externalBuyerID": "externalBuyerID",
                       "externalID": "externalID",
@@ -582,14 +582,14 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "offerID": "offerID",
                       "organizationID": "organizationID",
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "ACTIVE",
                       "type": "type",
                     },
@@ -631,8 +631,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementTermID": "entitlementTermID",
                       "externalBuyerID": "externalBuyerID",
                       "externalID": "externalID",
@@ -672,14 +672,14 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "offerID": "offerID",
                       "organizationID": "organizationID",
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "ACTIVE",
                       "type": "type",
                     },
@@ -721,8 +721,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementTermID": "entitlementTermID",
                       "externalBuyerID": "externalBuyerID",
                       "externalID": "externalID",
@@ -762,14 +762,14 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "offerID": "offerID",
                       "organizationID": "organizationID",
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "ACTIVE",
                       "type": "type",
                     },
@@ -811,8 +811,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementTermID": "entitlementTermID",
                       "externalBuyerID": "externalBuyerID",
                       "externalID": "externalID",
@@ -852,14 +852,14 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "name": "name",
                       "offerID": "offerID",
                       "organizationID": "organizationID",
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "ACTIVE",
                       "type": "type",
                     },
@@ -901,8 +901,8 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "buyerID": "buyerID",
-                    "creationTime": "2024-01-15T09:30:00Z",
-                    "endTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
+                    "endTime": 2024-01-15T09:30:00.000Z,
                     "entitlementTermID": "entitlementTermID",
                     "externalBuyerID": "externalBuyerID",
                     "externalID": "externalID",
@@ -942,14 +942,14 @@ exports[`open api parser suger simple 1`] = `
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "name": "name",
                     "offerID": "offerID",
                     "organizationID": "organizationID",
                     "partner": "AWS",
                     "productID": "productID",
                     "service": "MARKETPLACE",
-                    "startTime": "2024-01-15T09:30:00Z",
+                    "startTime": 2024-01-15T09:30:00.000Z,
                     "status": "ACTIVE",
                     "type": "type",
                   },
@@ -1024,7 +1024,7 @@ exports[`open api parser suger simple 1`] = `
                     "buyerID": "buyerID",
                     "commitAmount": 1.1,
                     "creditAmount": 1.1,
-                    "endTime": "2024-01-15T09:30:00Z",
+                    "endTime": 2024-01-15T09:30:00.000Z,
                     "entitlementID": "entitlementID",
                     "entitlementInfo": {
                       "autoRenew": true,
@@ -1070,7 +1070,7 @@ exports[`open api parser suger simple 1`] = `
                     "partner": "AWS",
                     "productID": "productID",
                     "service": "MARKETPLACE",
-                    "startTime": "2024-01-15T09:30:00Z",
+                    "startTime": 2024-01-15T09:30:00.000Z,
                     "usedCommitAmount": 1.1,
                     "usedCreditAmount": 1.1,
                   },
@@ -1117,7 +1117,7 @@ exports[`open api parser suger simple 1`] = `
                       "buyerID": "buyerID",
                       "commitAmount": 1.1,
                       "creditAmount": 1.1,
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "entitlementID": "entitlementID",
                       "entitlementInfo": {
                         "autoRenew": true,
@@ -1163,7 +1163,7 @@ exports[`open api parser suger simple 1`] = `
                       "partner": "AWS",
                       "productID": "productID",
                       "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "usedCommitAmount": 1.1,
                       "usedCreditAmount": 1.1,
                     },
@@ -1221,7 +1221,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "info": {
                       "awsAceIntegration": {
                         "partnerId": "partnerId",
@@ -1232,7 +1232,7 @@ exports[`open api parser suger simple 1`] = `
                       "awsIntegration": {
                         "externalID": "externalID",
                         "iamRoleArn": "iamRoleArn",
-                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "marketplaceStartDate": 2024-01-15T09:30:00.000Z,
                         "mcasFullSyncDone": true,
                         "mcasIamRoleArn": "mcasIamRoleArn",
                         "mcasS3Bucket": "mcasS3Bucket",
@@ -1257,7 +1257,7 @@ exports[`open api parser suger simple 1`] = `
                         "pubsubTopic": "pubsubTopic",
                         "reportBucket": "reportBucket",
                         "reportFullSyncDone": true,
-                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "reportStartDate": 2024-01-15T09:30:00.000Z,
                         "serviceAccountEmail": "serviceAccountEmail",
                         "serviceNames": [
                           "serviceNames",
@@ -1288,7 +1288,7 @@ exports[`open api parser suger simple 1`] = `
                         "tokenType": "tokenType",
                       },
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "organizationID": "organizationID",
                     "partner": "AWS",
@@ -1383,7 +1383,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "info": {
                       "awsAceIntegration": {
                         "partnerId": "partnerId",
@@ -1394,7 +1394,7 @@ exports[`open api parser suger simple 1`] = `
                       "awsIntegration": {
                         "externalID": "externalID",
                         "iamRoleArn": "iamRoleArn",
-                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "marketplaceStartDate": 2024-01-15T09:30:00.000Z,
                         "mcasFullSyncDone": true,
                         "mcasIamRoleArn": "mcasIamRoleArn",
                         "mcasS3Bucket": "mcasS3Bucket",
@@ -1419,7 +1419,7 @@ exports[`open api parser suger simple 1`] = `
                         "pubsubTopic": "pubsubTopic",
                         "reportBucket": "reportBucket",
                         "reportFullSyncDone": true,
-                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "reportStartDate": 2024-01-15T09:30:00.000Z,
                         "serviceAccountEmail": "serviceAccountEmail",
                         "serviceNames": [
                           "serviceNames",
@@ -1450,7 +1450,7 @@ exports[`open api parser suger simple 1`] = `
                         "tokenType": "tokenType",
                       },
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "organizationID": "organizationID",
                     "partner": "AWS",
@@ -1497,8 +1497,8 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "organizationID": "organizationID",
                       "partner": "AWS",
@@ -1546,7 +1546,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "info": {
                       "awsAceIntegration": {
                         "partnerId": "partnerId",
@@ -1557,7 +1557,7 @@ exports[`open api parser suger simple 1`] = `
                       "awsIntegration": {
                         "externalID": "externalID",
                         "iamRoleArn": "iamRoleArn",
-                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "marketplaceStartDate": 2024-01-15T09:30:00.000Z,
                         "mcasFullSyncDone": true,
                         "mcasIamRoleArn": "mcasIamRoleArn",
                         "mcasS3Bucket": "mcasS3Bucket",
@@ -1582,7 +1582,7 @@ exports[`open api parser suger simple 1`] = `
                         "pubsubTopic": "pubsubTopic",
                         "reportBucket": "reportBucket",
                         "reportFullSyncDone": true,
-                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "reportStartDate": 2024-01-15T09:30:00.000Z,
                         "serviceAccountEmail": "serviceAccountEmail",
                         "serviceNames": [
                           "serviceNames",
@@ -1613,7 +1613,7 @@ exports[`open api parser suger simple 1`] = `
                         "tokenType": "tokenType",
                       },
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "organizationID": "organizationID",
                     "partner": "AWS",
@@ -1799,10 +1799,10 @@ exports[`open api parser suger simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "entitlementID": "entitlementID",
                     "id": "id",
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "metaInfo": {
                       "originRecords": {
                         "originRecords": 1.1,
@@ -1851,7 +1851,7 @@ exports[`open api parser suger simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "entitlementID": "entitlementID",
                     "entitlementTermID": "entitlementTermID",
                     "id": "id",
@@ -1878,7 +1878,7 @@ exports[`open api parser suger simple 1`] = `
                       "dimensionUnitPrice": {
                         "dimensionUnitPrice": 1.1,
                       },
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "gcpMeteringResponse": {
                         "reportErrors": [
                           {},
@@ -1892,7 +1892,7 @@ exports[`open api parser suger simple 1`] = `
                       "reportedRecords": {
                         "reportedRecords": 1.1,
                       },
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "usageRecordGroupIds": [
                         "usageRecordGroupIds",
                       ],
@@ -1943,10 +1943,10 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordGroups": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "id": "id",
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                         "organizationID": "organizationID",
                         "records": {
                           "records": 1.1,
@@ -2016,10 +2016,10 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordGroups": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "id": "id",
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                         "organizationID": "organizationID",
                         "records": {
                           "records": 1.1,
@@ -2086,10 +2086,10 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordGroups": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "id": "id",
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                         "organizationID": "organizationID",
                         "records": {
                           "records": 1.1,
@@ -2160,7 +2160,7 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordReports": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "entitlementTermID": "entitlementTermID",
                         "id": "id",
@@ -2232,7 +2232,7 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordReports": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "entitlementTermID": "entitlementTermID",
                         "id": "id",
@@ -2297,7 +2297,7 @@ exports[`open api parser suger simple 1`] = `
                     "nextOffset": 1,
                     "usageRecordReports": [
                       {
-                        "creationTime": "2024-01-15T09:30:00Z",
+                        "creationTime": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "entitlementTermID": "entitlementTermID",
                         "id": "id",
@@ -2371,10 +2371,10 @@ exports[`open api parser suger simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "entitlementID": "entitlementID",
                     "id": "id",
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "metaInfo": {
                       "originRecords": {
                         "originRecords": 1.1,
@@ -2492,9 +2492,9 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
-                    "endTime": "2024-01-15T09:30:00Z",
-                    "expireTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
+                    "endTime": 2024-01-15T09:30:00.000Z,
+                    "expireTime": 2024-01-15T09:30:00.000Z,
                     "externalID": "externalID",
                     "id": "id",
                     "info": {
@@ -2510,7 +2510,7 @@ exports[`open api parser suger simple 1`] = `
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
-                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptBy": 2024-01-15T09:30:00.000Z,
                         "acceptanceLinks": [
                           {},
                         ],
@@ -2518,9 +2518,9 @@ exports[`open api parser suger simple 1`] = `
                           {},
                         ],
                         "eTag": "eTag",
-                        "end": "2024-01-15T09:30:00Z",
+                        "end": 2024-01-15T09:30:00.000Z,
                         "id": "id",
-                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModified": 2024-01-15T09:30:00.000Z,
                         "name": "name",
                         "notificationContacts": [
                           "notificationContacts",
@@ -2531,7 +2531,7 @@ exports[`open api parser suger simple 1`] = `
                         ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
-                        "start": "2024-01-15T09:30:00Z",
+                        "start": 2024-01-15T09:30:00.000Z,
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
@@ -2592,7 +2592,7 @@ exports[`open api parser suger simple 1`] = `
                       "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
@@ -2649,9 +2649,9 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
-                    "endTime": "2024-01-15T09:30:00Z",
-                    "expireTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
+                    "endTime": 2024-01-15T09:30:00.000Z,
+                    "expireTime": 2024-01-15T09:30:00.000Z,
                     "externalID": "externalID",
                     "id": "id",
                     "info": {
@@ -2667,7 +2667,7 @@ exports[`open api parser suger simple 1`] = `
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
-                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptBy": 2024-01-15T09:30:00.000Z,
                         "acceptanceLinks": [
                           {},
                         ],
@@ -2675,9 +2675,9 @@ exports[`open api parser suger simple 1`] = `
                           {},
                         ],
                         "eTag": "eTag",
-                        "end": "2024-01-15T09:30:00Z",
+                        "end": 2024-01-15T09:30:00.000Z,
                         "id": "id",
-                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModified": 2024-01-15T09:30:00.000Z,
                         "name": "name",
                         "notificationContacts": [
                           "notificationContacts",
@@ -2688,7 +2688,7 @@ exports[`open api parser suger simple 1`] = `
                         ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
-                        "start": "2024-01-15T09:30:00Z",
+                        "start": 2024-01-15T09:30:00.000Z,
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
@@ -2749,7 +2749,7 @@ exports[`open api parser suger simple 1`] = `
                       "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
@@ -2840,9 +2840,9 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
-                    "endTime": "2024-01-15T09:30:00Z",
-                    "expireTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
+                    "endTime": 2024-01-15T09:30:00.000Z,
+                    "expireTime": 2024-01-15T09:30:00.000Z,
                     "externalID": "externalID",
                     "id": "id",
                     "info": {
@@ -2858,7 +2858,7 @@ exports[`open api parser suger simple 1`] = `
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
-                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptBy": 2024-01-15T09:30:00.000Z,
                         "acceptanceLinks": [
                           {},
                         ],
@@ -2866,9 +2866,9 @@ exports[`open api parser suger simple 1`] = `
                           {},
                         ],
                         "eTag": "eTag",
-                        "end": "2024-01-15T09:30:00Z",
+                        "end": 2024-01-15T09:30:00.000Z,
                         "id": "id",
-                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModified": 2024-01-15T09:30:00.000Z,
                         "name": "name",
                         "notificationContacts": [
                           "notificationContacts",
@@ -2879,7 +2879,7 @@ exports[`open api parser suger simple 1`] = `
                         ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
-                        "start": "2024-01-15T09:30:00Z",
+                        "start": 2024-01-15T09:30:00.000Z,
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
@@ -2940,7 +2940,7 @@ exports[`open api parser suger simple 1`] = `
                       "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
@@ -2997,9 +2997,9 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
+                      "expireTime": 2024-01-15T09:30:00.000Z,
                       "externalID": "externalID",
                       "id": "id",
                       "info": {
@@ -3033,7 +3033,7 @@ exports[`open api parser suger simple 1`] = `
                         "sellerNotes": "sellerNotes",
                         "visibility": "PRIVATE",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "metaInfo": {
                         "baseAgreementId": "baseAgreementId",
@@ -3091,9 +3091,9 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
+                      "expireTime": 2024-01-15T09:30:00.000Z,
                       "externalID": "externalID",
                       "id": "id",
                       "info": {
@@ -3127,7 +3127,7 @@ exports[`open api parser suger simple 1`] = `
                         "sellerNotes": "sellerNotes",
                         "visibility": "PRIVATE",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "metaInfo": {
                         "baseAgreementId": "baseAgreementId",
@@ -3196,9 +3196,9 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
+                      "endTime": 2024-01-15T09:30:00.000Z,
+                      "expireTime": 2024-01-15T09:30:00.000Z,
                       "externalID": "externalID",
                       "id": "id",
                       "info": {
@@ -3232,7 +3232,7 @@ exports[`open api parser suger simple 1`] = `
                         "sellerNotes": "sellerNotes",
                         "visibility": "PRIVATE",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "metaInfo": {
                         "baseAgreementId": "baseAgreementId",
@@ -3309,11 +3309,11 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": [
                     {
-                      "endTime": "2024-01-15T09:30:00Z",
+                      "endTime": 2024-01-15T09:30:00.000Z,
                       "id": "id",
                       "message": "message",
                       "name": "name",
-                      "startTime": "2024-01-15T09:30:00Z",
+                      "startTime": 2024-01-15T09:30:00.000Z,
                       "status": "status",
                       "type": "TemporalWorkflow",
                     },
@@ -3417,7 +3417,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "externalID": "externalID",
                     "fulfillmentUrl": "fulfillmentUrl",
                     "id": "id",
@@ -3477,7 +3477,7 @@ exports[`open api parser suger simple 1`] = `
                       ],
                       "eulaUrl": "eulaUrl",
                       "gcpProduct": {
-                        "createTime": "2024-01-15T09:30:00Z",
+                        "createTime": 2024-01-15T09:30:00.000Z,
                         "id": "id",
                         "marketplace": "marketplaces/google-cloud",
                         "name": "name",
@@ -3486,7 +3486,7 @@ exports[`open api parser suger simple 1`] = `
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "name": "name",
                     "organizationID": "organizationID",
@@ -3576,7 +3576,7 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
                       "externalID": "externalID",
                       "fulfillmentUrl": "fulfillmentUrl",
                       "id": "id",
@@ -3598,7 +3598,7 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "name": "name",
                       "organizationID": "organizationID",
@@ -3641,7 +3641,7 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
+                      "creationTime": 2024-01-15T09:30:00.000Z,
                       "externalID": "externalID",
                       "fulfillmentUrl": "fulfillmentUrl",
                       "id": "id",
@@ -3663,7 +3663,7 @@ exports[`open api parser suger simple 1`] = `
                         "refundCancelationPolicy": "refundCancelationPolicy",
                         "sellerNotes": "sellerNotes",
                       },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                       "lastUpdatedBy": "lastUpdatedBy",
                       "name": "name",
                       "organizationID": "organizationID",
@@ -3714,7 +3714,7 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "createdBy": "createdBy",
-                    "creationTime": "2024-01-15T09:30:00Z",
+                    "creationTime": 2024-01-15T09:30:00.000Z,
                     "externalID": "externalID",
                     "fulfillmentUrl": "fulfillmentUrl",
                     "id": "id",
@@ -3774,7 +3774,7 @@ exports[`open api parser suger simple 1`] = `
                       ],
                       "eulaUrl": "eulaUrl",
                       "gcpProduct": {
-                        "createTime": "2024-01-15T09:30:00Z",
+                        "createTime": 2024-01-15T09:30:00.000Z,
                         "id": "id",
                         "marketplace": "marketplaces/google-cloud",
                         "name": "name",
@@ -3783,7 +3783,7 @@ exports[`open api parser suger simple 1`] = `
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
-                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdateTime": 2024-01-15T09:30:00.000Z,
                     "lastUpdatedBy": "lastUpdatedBy",
                     "name": "name",
                     "organizationID": "organizationID",
@@ -3870,7 +3870,7 @@ exports[`open api parser suger simple 1`] = `
                     "organizationID": "organizationID",
                     "partner": "partner",
                     "productID": "productID",
-                    "reportDate": "2024-01-15T09:30:00Z",
+                    "reportDate": 2024-01-15T09:30:00.000Z,
                     "reportType": "InvoicedAmount",
                     "revenueRecords": [
                       {
@@ -3878,21 +3878,21 @@ exports[`open api parser suger simple 1`] = `
                         "buyerID": "buyerID",
                         "collectableAmount": 1.1,
                         "currency": "currency",
-                        "date": "2024-01-15T09:30:00Z",
+                        "date": 2024-01-15T09:30:00.000Z,
                         "disburseAmount": 1.1,
-                        "disburseDate": "2024-01-15T09:30:00Z",
+                        "disburseDate": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "id": "id",
                         "invoiceAmount": 1.1,
-                        "invoiceDate": "2024-01-15T09:30:00Z",
+                        "invoiceDate": 2024-01-15T09:30:00.000Z,
                         "organizationID": "organizationID",
                         "partner": "partner",
-                        "paymentDueDate": "2024-01-15T09:30:00Z",
+                        "paymentDueDate": 2024-01-15T09:30:00.000Z,
                         "productID": "productID",
                         "refundDisburseAmount": 1.1,
-                        "refundDisburseDate": "2024-01-15T09:30:00Z",
+                        "refundDisburseDate": 2024-01-15T09:30:00.000Z,
                         "refundInvoiceAmount": 1.1,
-                        "refundInvoiceDate": "2024-01-15T09:30:00Z",
+                        "refundInvoiceDate": 2024-01-15T09:30:00.000Z,
                         "taxAmount": 1.1,
                       },
                     ],
@@ -3966,13 +3966,13 @@ exports[`open api parser suger simple 1`] = `
                   "body": {
                     "entitlementID": "entitlementID",
                     "organizationID": "organizationID",
-                    "reportDate": "2024-01-15T09:30:00Z",
+                    "reportDate": 2024-01-15T09:30:00.000Z,
                     "usageRecords": [
                       {
                         "amounts": [
                           1.1,
                         ],
-                        "date": "2024-01-15T09:30:00Z",
+                        "date": 2024-01-15T09:30:00.000Z,
                         "keys": [
                           "keys",
                         ],
@@ -4106,21 +4106,21 @@ exports[`open api parser suger simple 1`] = `
                         "buyerID": "buyerID",
                         "collectableAmount": 1.1,
                         "currency": "currency",
-                        "date": "2024-01-15T09:30:00Z",
+                        "date": 2024-01-15T09:30:00.000Z,
                         "disburseAmount": 1.1,
-                        "disburseDate": "2024-01-15T09:30:00Z",
+                        "disburseDate": 2024-01-15T09:30:00.000Z,
                         "entitlementID": "entitlementID",
                         "id": "id",
                         "invoiceAmount": 1.1,
-                        "invoiceDate": "2024-01-15T09:30:00Z",
+                        "invoiceDate": 2024-01-15T09:30:00.000Z,
                         "organizationID": "organizationID",
                         "partner": "partner",
-                        "paymentDueDate": "2024-01-15T09:30:00Z",
+                        "paymentDueDate": 2024-01-15T09:30:00.000Z,
                         "productID": "productID",
                         "refundDisburseAmount": 1.1,
-                        "refundDisburseDate": "2024-01-15T09:30:00Z",
+                        "refundDisburseDate": 2024-01-15T09:30:00.000Z,
                         "refundInvoiceAmount": 1.1,
-                        "refundInvoiceDate": "2024-01-15T09:30:00Z",
+                        "refundInvoiceDate": 2024-01-15T09:30:00.000Z,
                         "taxAmount": 1.1,
                       },
                     ],

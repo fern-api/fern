@@ -26,7 +26,9 @@ export async function generateOpenAPIIrForWorkspaces({
                 const openAPIIr = getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
 
                 const irOutputFilePath = path.resolve(irFilepath);
-                const openApiIrJson = serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr);
+                const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {
+                    skipValidation: true
+                });
                 await writeFile(irOutputFilePath, await stringifyLargeObject(openApiIrJson, { pretty: true }));
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
