@@ -40,7 +40,6 @@ types:
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
-      pagination: optional<Pagination>
       examples: list<ExampleEndpointCall>
   EndpointName: commons.Name
   HttpPath:
@@ -198,18 +197,6 @@ types:
     extends: commons.WithDocs
     properties:
       error: errors.DeclaredErrorName
-
-  Pagination:
-    docs: |
-      If set, the endpoint will be generated with auto-pagination features.
-
-      The page must be defined as a query parameter included in the request,
-      whereas the next page and results are resolved from properties defined
-      on the response.
-    properties:
-      page: QueryParameter
-      next: types.ObjectProperty
-      results: types.ObjectProperty
 
   # examples
 
