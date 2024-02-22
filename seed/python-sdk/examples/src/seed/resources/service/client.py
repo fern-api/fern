@@ -132,7 +132,7 @@ class ServiceClient:
         self,
         *,
         shallow: typing.Optional[bool] = None,
-        tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         x_api_version: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
@@ -140,7 +140,7 @@ class ServiceClient:
         Parameters:
             - shallow: typing.Optional[bool].
 
-            - tag: typing.Optional[typing.Union[str, typing.List[str]]].
+            - tag: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
             - x_api_version: str.
 
@@ -307,7 +307,7 @@ class AsyncServiceClient:
         self,
         *,
         shallow: typing.Optional[bool] = None,
-        tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         x_api_version: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
@@ -315,7 +315,7 @@ class AsyncServiceClient:
         Parameters:
             - shallow: typing.Optional[bool].
 
-            - tag: typing.Optional[typing.Union[str, typing.List[str]]].
+            - tag: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
             - x_api_version: str.
 

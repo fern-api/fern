@@ -5,15 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Fix: Transition from lists to sequences within function calls, this is a fix as a result of how mypy handles type variance.
+  This fix is only for function calls as testing shows that we do not hit the same issue within mypy with list[union[*]] fields on pydantic objects.
+  This issue outlines it well: https://stackoverflow.com/questions/76138438/incompatible-types-in-assignment-expression-has-type-liststr-variable-has
+
 ## [0.11.2] - 2024-02-21
-- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable 
-  this configuration, just add the following to your generators.yml 
+
+- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable
+  this configuration, just add the following to your generators.yml
 
   ```yaml
-  generators: 
+  generators:
     - name: fernapi/fern-python-sdk
       ...
-      config: 
+      config:
         improved_imports: true
   ```
 

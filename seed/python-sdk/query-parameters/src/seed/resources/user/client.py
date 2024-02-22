@@ -37,8 +37,8 @@ class UserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.List[User]],
-        filter: typing.Union[str, typing.List[str]],
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -61,9 +61,9 @@ class UserClient:
 
             - nested_user: NestedUser.
 
-            - exclude_user: typing.Union[User, typing.List[User]].
+            - exclude_user: typing.Union[User, typing.Sequence[User]].
 
-            - filter: typing.Union[str, typing.List[str]].
+            - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -129,8 +129,8 @@ class AsyncUserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.List[User]],
-        filter: typing.Union[str, typing.List[str]],
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -153,9 +153,9 @@ class AsyncUserClient:
 
             - nested_user: NestedUser.
 
-            - exclude_user: typing.Union[User, typing.List[User]].
+            - exclude_user: typing.Union[User, typing.Sequence[User]].
 
-            - filter: typing.Union[str, typing.List[str]].
+            - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
