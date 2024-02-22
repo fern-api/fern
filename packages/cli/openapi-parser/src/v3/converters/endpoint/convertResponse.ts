@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { StatusCode } from "@fern-fern/openapi-ir-model/commons";
-import { ResponseWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { ResponseWithExample, StatusCode } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -106,66 +105,46 @@ function convertResolvedResponse({
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
     if (jsonMediaObject != null) {
         if (isStreaming) {
-            return {
-                type: "streamingJson",
+            return ResponseWithExample.streamingJson({
                 description: resolvedResponse.description,
                 responseProperty: undefined,
                 schema: convertSchemaWithExampleToSchema(
                     convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
                 )
-            };
+            });
         }
-        return {
-            type: "json",
+        return ResponseWithExample.json({
             description: resolvedResponse.description,
             schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             fullExamples: jsonMediaObject.examples
-        };
+        });
     }
 
     if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
-        return {
-            type: "file",
-            description: resolvedResponse.description
-        };
+        return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
     if (resolvedResponse.content?.[APPLICATION_PDF]?.schema != null) {
-        return {
-            type: "file",
-            description: resolvedResponse.description
-        };
+        return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
     if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
         const textPlainSchema = resolvedResponse.content[TEXT_PLAIN_CONTENT]?.schema;
         if (textPlainSchema == null) {
-            return {
-                type: "text",
-                description: resolvedResponse.description
-            };
+            return ResponseWithExample.text({ description: resolvedResponse.description });
         }
         const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
             ? context.resolveSchemaReference(textPlainSchema)
             : textPlainSchema;
         if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
-            return {
-                type: "streamingText",
-                description: resolvedResponse.description
-            };
+            return;
         }
-        return {
-            type: "text",
-            description: resolvedResponse.description
-        };
+        return ResponseWithExample.text({ description: resolvedResponse.description });
     }
 
     if (resolvedResponse.content?.[AUDIO_MPEG] != null) {
-        return {
-            type: "file",
-            description: resolvedResponse.description
-        };
+        return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
     return undefined;

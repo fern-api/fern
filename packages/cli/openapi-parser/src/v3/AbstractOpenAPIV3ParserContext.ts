@@ -1,7 +1,6 @@
 import { Logger } from "@fern-api/logger";
+import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
-import { HttpError } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";

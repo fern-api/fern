@@ -1,17 +1,16 @@
 import { Logger } from "@fern-api/logger";
+import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import { OpenAPIIntermediateRepresentation, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "./FernDefnitionBuilder";
 
 export class OpenApiIrConverterContext {
     public logger: Logger;
     public taskContext: TaskContext;
-    public ir: OpenAPIIntermediateRepresentation;
+    public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
     private defaultServerName: string | undefined = undefined;
 
-    constructor({ taskContext, ir }: { taskContext: TaskContext; ir: OpenAPIIntermediateRepresentation }) {
+    constructor({ taskContext, ir }: { taskContext: TaskContext; ir: OpenApiIntermediateRepresentation }) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;

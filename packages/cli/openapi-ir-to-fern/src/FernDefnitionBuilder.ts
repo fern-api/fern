@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
 
@@ -61,7 +61,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenAPIIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
+    public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {

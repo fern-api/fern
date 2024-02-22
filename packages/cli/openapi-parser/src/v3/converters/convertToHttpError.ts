@@ -1,4 +1,4 @@
-import { HttpError, Schema } from "@fern-fern/openapi-ir-model/finalIr";
+import { HttpError, Schema } from "@fern-api/openapi-ir-sdk";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { ErrorBodyCollector } from "../ErrorBodyCollector";
 import { convertSchema } from "./convertSchemas";
@@ -40,14 +40,14 @@ export function convertToError({
         const schema = convertSchema(schemas[0], false, context, [errorName, "Body"]);
         return {
             generatedName: errorName,
-            nameOverride: null,
+            nameOverride: undefined,
             schema,
             description: undefined
         };
     }
     return {
         generatedName: errorName,
-        nameOverride: null,
+        nameOverride: undefined,
         schema: Schema.unknown({ nameOverride: undefined, generatedName: errorName }),
         description: undefined
     };

@@ -1,6 +1,4 @@
-import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
-import { EnumValue } from "@fern-fern/openapi-ir-model/finalIr";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { EnumValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
 import { replaceStartingNumber } from "../../utils/replaceStartingNumber";

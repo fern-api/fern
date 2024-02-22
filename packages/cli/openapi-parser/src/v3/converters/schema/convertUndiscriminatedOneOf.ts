@@ -1,5 +1,4 @@
-import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { LiteralSchemaValue, OneOfSchemaWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -37,10 +36,7 @@ export function convertUndiscriminatedOneOf({
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
                     generatedName: getGeneratedTypeName([generatedName, enumValue]),
-                    value: {
-                        type: "string",
-                        string: enumValue
-                    },
+                    value: LiteralSchemaValue.string(enumValue),
                     groupName: undefined,
                     description: undefined
                 });
@@ -73,9 +69,9 @@ export function convertUndiscriminatedOneOf({
         const enumValues: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal" && schema.value.type === "string") {
-                enumValues.push(schema.value.string);
+                enumValues.push(schema.value.value);
                 if (schema.description != null) {
-                    enumDescriptions[schema.value.string] = {
+                    enumDescriptions[schema.value.value] = {
                         description: schema.description
                     };
                 }
@@ -184,24 +180,26 @@ export function wrapUndiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
-            value: SchemaWithExample.oneOf({
-                type: "undisciminated",
-                description,
-                nameOverride,
-                generatedName,
-                schemas: subtypes,
-                groupName
-            }),
+            value: SchemaWithExample.oneOf(
+                OneOfSchemaWithExample.undisciminated({
+                    description,
+                    nameOverride,
+                    generatedName,
+                    schemas: subtypes,
+                    groupName
+                })
+            ),
             description,
             groupName
         });
     }
-    return SchemaWithExample.oneOf({
-        type: "undisciminated",
-        description,
-        nameOverride,
-        generatedName,
-        schemas: subtypes,
-        groupName
-    });
+    return SchemaWithExample.oneOf(
+        OneOfSchemaWithExample.undisciminated({
+            description,
+            nameOverride,
+            generatedName,
+            schemas: subtypes,
+            groupName
+        })
+    );
 }

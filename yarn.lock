@@ -2351,6 +2351,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/mock": "workspace:*"
+    "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -3174,6 +3175,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/openapi-ir-sdk@workspace:*, @fern-api/openapi-ir-sdk@workspace:packages/cli/openapi-ir-sdk":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/openapi-ir-sdk@workspace:packages/cli/openapi-ir-sdk"
+  dependencies:
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/openapi-ir-to-fern@workspace:*, @fern-api/openapi-ir-to-fern@workspace:packages/cli/openapi-ir-to-fern":
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-ir-to-fern@workspace:packages/cli/openapi-ir-to-fern"
@@ -3181,11 +3197,11 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.181
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
@@ -3207,9 +3223,9 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.181
     "@redocly/openapi-core": ^1.4.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3601,6 +3617,7 @@ __metadata:
     "@fern-api/dependencies-configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -3609,7 +3626,6 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.75
     "@fern-fern/fiddle-sdk": ^0.0.411
-    "@fern-fern/openapi-ir-model": 0.0.181
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.9
@@ -4007,13 +4023,6 @@ __metadata:
   version: 0.0.58
   resolution: "@fern-fern/legacy-docs-config@npm:0.0.58"
   checksum: 976d56d4b82e981034c8425d04345fbb4db707af8e1742b76cb1325600407945abb3a92639a9b952652131ebab27bc35186588d044c24cc77d5d240dd4d92ef0
-  languageName: node
-  linkType: hard
-
-"@fern-fern/openapi-ir-model@npm:0.0.181":
-  version: 0.0.181
-  resolution: "@fern-fern/openapi-ir-model@npm:0.0.181"
-  checksum: cace05705600896267b0bbe031ce187a417598b0444db17fce50aa590c0bad081824702373e82c3c9c01798569387b8f5348e0850421f4014fd1ca6a126fbbcc
   languageName: node
   linkType: hard
 
@@ -11372,6 +11381,7 @@ env-cmd@toddbluhm/env-cmd:
     terminal-link: ^3.0.0
     ts-node: ^10.9.2
     typescript: 4.6.4
+    workspace: ^0.0.1-preview.1
   dependenciesMeta:
     jsonc-parser@2.2.1:
       unplugged: true
@@ -22139,6 +22149,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     errno: ~0.1.7
   checksum: eab917530e1feddf157ec749e9c91b73a886142daa7fdf3490bccbf7b548b2576c43ab8d0a98e72ac755cbc101ca8647a7b1ff2485fddb9e8f53c40c77f5a719
+  languageName: node
+  linkType: hard
+
+"workspace@npm:^0.0.1-preview.1":
+  version: 0.0.1-preview.1
+  resolution: "workspace@npm:0.0.1-preview.1"
+  checksum: 0d3a1ed8a5735bd3295f2685a92cfd59a53d9386d6177e3dc036416e0b200729632a3760d9b34d75597b826e30620d7b02d9852c9bc2e0028c64436c9c5cda2e
   languageName: node
   linkType: hard
 

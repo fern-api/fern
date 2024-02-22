@@ -1,15 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { SchemaId, SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import {
     Endpoint,
     EndpointExample,
+    EndpointWithExample,
     ObjectSchema,
-    OpenAPIIntermediateRepresentation,
+    OpenApiIntermediateRepresentation,
     Schema,
+    SchemaId,
+    SchemaWithExample,
+    SecurityScheme,
     Webhook
-} from "@fern-fern/openapi-ir-model/finalIr";
-import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -27,7 +29,7 @@ import { runResolutions } from "./runResolutions";
 import { convertSchemaWithExampleToSchema } from "./utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
-export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
+export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
@@ -178,7 +180,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         })
     );
 
-    const ir: OpenAPIIntermediateRepresentation = {
+    const ir: OpenApiIntermediateRepresentation = {
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
@@ -196,7 +198,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
-        nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
+        nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
         globalHeaders
     };
@@ -223,15 +225,16 @@ function maybeRemoveDiscriminantsFromSchemas(
             continue;
         }
 
-        const schemaWithoutDiscriminants = Schema.object({
+        const schemaWithoutDiscriminants: Schema.Object_ = {
             ...schema,
+            type: "object",
             properties: schema.properties.filter((objectProperty) => {
                 return !discriminatedUnionReference.discriminants.has(objectProperty.key);
             }),
             allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                 return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
             })
-        });
+        };
         result[schemaId] = schemaWithoutDiscriminants;
 
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
@@ -240,15 +243,16 @@ function maybeRemoveDiscriminantsFromSchemas(
             if (parentSchema == null || parentSchema.type !== "object") {
                 continue;
             }
-            result[parentSchemaId] = Schema.object({
+            result[parentSchemaId] = {
                 ...parentSchema,
+                type: "object",
                 properties: parentSchema.properties.filter((objectProperty) => {
                     return !discriminatedUnionReference.discriminants.has(objectProperty.key);
                 }),
                 allOfPropertyConflicts: parentSchema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                     return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
                 })
-            });
+            };
         }
     }
     return result;

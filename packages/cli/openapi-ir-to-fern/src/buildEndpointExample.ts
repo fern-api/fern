@@ -1,13 +1,13 @@
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/yaml-schema";
 import {
+    EndpointExample,
     FullExample,
     FullOneOfExample,
     KeyValuePair,
     LiteralExample,
     PrimitiveExample
-} from "@fern-fern/openapi-ir-model/example";
-import { EndpointExample } from "@fern-fern/openapi-ir-model/finalIr";
+} from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export function buildEndpointExample({
@@ -130,21 +130,21 @@ function convertHeaderExamples({
 function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {
         case "primitive":
-            return convertPrimitive(fullExample.primitive);
+            return convertPrimitive(fullExample.value);
         case "object":
             return convertObject(fullExample.properties);
         case "array":
-            return convertArrayExample(fullExample.array);
+            return convertArrayExample(fullExample.value);
         case "map":
-            return convertMapExample(fullExample.map);
+            return convertMapExample(fullExample.value);
         case "oneOf":
-            return convertOneOfExample(fullExample.oneOf);
+            return convertOneOfExample(fullExample.value);
         case "enum":
-            return fullExample.enum;
+            return fullExample.value;
         case "literal":
-            return convertLiteralExample(fullExample.literal);
+            return convertLiteralExample(fullExample.value);
         case "unknown":
-            return convertFullExample(fullExample.unknown);
+            return convertFullExample(fullExample.value);
         default:
             assertNever(fullExample);
     }
@@ -153,27 +153,27 @@ function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeRef
 function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (primitiveExample.type) {
         case "int":
-            return primitiveExample.int;
+            return primitiveExample.value;
         case "int64":
-            return primitiveExample.int64;
+            return primitiveExample.value;
         case "float":
-            return primitiveExample.float;
+            return primitiveExample.value;
         case "double":
-            return primitiveExample.double;
+            return primitiveExample.value;
         case "string": {
-            if (primitiveExample.string.startsWith("$")) {
-                return `${primitiveExample.string.slice(1)}`;
+            if (primitiveExample.value.startsWith("$")) {
+                return `${primitiveExample.value.slice(1)}`;
             }
-            return primitiveExample.string;
+            return primitiveExample.value;
         }
         case "datetime":
-            return primitiveExample.datetime;
+            return primitiveExample.value;
         case "date":
-            return primitiveExample.date;
+            return primitiveExample.value;
         case "base64":
-            return primitiveExample.base64;
+            return primitiveExample.value;
         case "boolean":
-            return primitiveExample.boolean;
+            return primitiveExample.value;
         default:
             assertNever(primitiveExample);
     }
@@ -203,16 +203,16 @@ function convertMapExample(pairs: KeyValuePair[]): RawSchemas.ExampleTypeReferen
 
 function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeReferenceSchema {
     if (oneOf.type === "discriminated") {
-        return convertObject(oneOf.discriminated);
+        return convertObject(oneOf.value);
     }
-    return convertFullExample(oneOf.undisciminated);
+    return convertFullExample(oneOf.value);
 }
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
         case "string":
-            return literal.string;
+            return literal.value;
         case "boolean":
-            return literal.boolean;
+            return literal.value;
         default:
             assertNever(literal);
     }

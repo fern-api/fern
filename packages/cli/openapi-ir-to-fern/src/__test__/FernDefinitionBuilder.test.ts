@@ -18,7 +18,7 @@ describe("Fern Definition Builder", () => {
                 schemas: {},
                 errors: {},
                 variables: {},
-                nonRequestReferencedSchemas: [],
+                nonRequestReferencedSchemas: new Set(),
                 securitySchemes: {},
                 globalHeaders: []
             },

@@ -1,11 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ObjectProperty, OneOfSchema, PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import {
+    ObjectProperty,
     ObjectPropertyWithExample,
+    OneOfSchema,
     OneOfSchemaWithExample,
+    PrimitiveSchemaValue,
     PrimitiveSchemaValueWithExample,
+    Schema,
     SchemaWithExample
-} from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
 
 export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Schema {
     switch (schema.type) {
@@ -91,7 +94,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName
             });
         case "oneOf":
-            return Schema.oneOf(convertToOneOf(schema.oneOf));
+            return Schema.oneOf(convertToOneOf(schema.value));
         case "unknown":
             return Schema.unknown({ nameOverride: schema.nameOverride, generatedName: schema.generatedName });
         default:
@@ -102,8 +105,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
 function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
     switch (oneOfSchema.type) {
         case "discriminated":
-            return {
-                type: "discriminated",
+            return OneOfSchema.discriminated({
                 commonProperties: oneOfSchema.commonProperties.map((commonProperty) => {
                     return {
                         key: commonProperty.key,
@@ -120,16 +122,15 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     })
                 ),
                 groupName: oneOfSchema.groupName
-            };
+            });
         case "undisciminated":
-            return {
-                type: "undisciminated",
+            return OneOfSchema.undisciminated({
                 description: oneOfSchema.description,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
                 groupName: oneOfSchema.groupName
-            };
+            });
         default:
             assertNever(oneOfSchema);
     }

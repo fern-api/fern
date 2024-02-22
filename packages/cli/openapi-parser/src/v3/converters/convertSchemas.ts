@@ -1,9 +1,11 @@
-import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import {
+    LiteralSchemaValue,
     NamedFullExample,
     PrimitiveSchemaValueWithExample,
+    ReferencedSchema,
+    Schema,
     SchemaWithExample
-} from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -644,7 +646,7 @@ function maybeInjectDescriptionOrGroupName(
     groupName: string | undefined
 ): SchemaWithExample {
     if (schema.type === "reference") {
-        return Schema.reference({
+        return SchemaWithExample.reference({
             ...schema,
             description,
             groupName
@@ -653,7 +655,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: Schema.reference({
+            value: SchemaWithExample.reference({
                 ...schema.value
             }),
             description,
@@ -663,7 +665,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: Schema.reference({
+            value: SchemaWithExample.reference({
                 ...schema.value
             }),
             description,

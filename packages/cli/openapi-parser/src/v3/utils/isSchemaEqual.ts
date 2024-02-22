@@ -3,9 +3,9 @@ import {
     ObjectSchema,
     OneOfSchema,
     PrimitiveSchemaValue,
-    Schema
-} from "@fern-fern/openapi-ir-model/finalIr";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+    Schema,
+    SchemaWithExample
+} from "@fern-api/openapi-ir-sdk";
 import { isEqual } from "lodash-es";
 import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSchema";
 
@@ -28,7 +28,7 @@ export function isSchemaEqual(a: Schema, b: Schema): boolean {
     } else if (a.type === "optional" && b.type === "optional") {
         return isSchemaEqual(a.value, b.value);
     } else if (a.type === "oneOf" && b.type === "oneOf") {
-        return isOneOfEqual(a.oneOf, b.oneOf);
+        return isOneOfEqual(a.value, b.value);
     } else if (a.type === "object" && b.type === "object") {
         return isObjectEqual(a, b);
     } else if (a.type === "map" && b.type === "map") {

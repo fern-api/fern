@@ -1,5 +1,4 @@
-import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";

@@ -1,4 +1,4 @@
-import { HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
+import { HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { PathItemContext } from "./contexts";
