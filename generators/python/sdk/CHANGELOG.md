@@ -5,15 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Improvement: The Python SDK generator now defaults to `require_optional_fields = False`. This means that any requests that have optional fields no longer require a user to input data (or a `None` value) in.
+  Example:
+
+  ```python
+  # Previously:
+  def my_function(my_parameter: typing.Optional[str]):
+    pass
+
+  my_function()  # <--- This fails mypy
+  my_function(None)  # <--- This is necessary
+  my_function("I work in both cases!")
+  ...
+  # Now:
+  def my_function():
+    pass
+
+  my_function()  # <--- I no longer fail mypy
+  my_function(None)  # <--- I still work
+  my_function("I work in both cases!")
+  ```
+
 ## [0.11.2] - 2024-02-21
-- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable 
-  this configuration, just add the following to your generators.yml 
+
+- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable
+  this configuration, just add the following to your generators.yml
 
   ```yaml
-  generators: 
+  generators:
     - name: fernapi/fern-python-sdk
       ...
-      config: 
+      config:
         improved_imports: true
   ```
 

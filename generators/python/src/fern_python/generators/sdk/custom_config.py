@@ -11,6 +11,7 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     smart_union: bool = True
     include_union_utils: bool = False
     wrapped_aliases: bool = False
+    require_optional_fields: bool = False
 
 
 class SDKCustomConfig(pydantic.BaseModel):

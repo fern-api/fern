@@ -14,7 +14,7 @@ except ImportError:
 
 
 class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
-    template: typing.Optional[TestCaseTemplate]
+    template: typing.Optional[TestCaseTemplate] = None
     test_case: TestCaseV2 = pydantic.Field(alias="testCase")
 
     def json(self, **kwargs: typing.Any) -> str:
