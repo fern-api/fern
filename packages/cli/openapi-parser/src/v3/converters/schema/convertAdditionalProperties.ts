@@ -1,4 +1,9 @@
-import { PrimitiveSchemaValueWithExample, PrimitiveSchemaWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import {
+    PrimitiveSchemaValueWithExample,
+    PrimitiveSchemaWithExample,
+    SchemaWithExample,
+    SdkGroupName
+} from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
