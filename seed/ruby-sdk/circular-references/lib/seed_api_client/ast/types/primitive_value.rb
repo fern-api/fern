@@ -2,7 +2,9 @@
 
 module SeedApiClient
   class Ast
-    # @type [PRIMITIVE_VALUE]
-    PRIMITIVE_VALUE = { string: "STRING", number: "NUMBER" }.freeze
+    class PrimitiveValue
+      STRING = "STRING"
+      NUMBER = "NUMBER"
+    end
   end
 end

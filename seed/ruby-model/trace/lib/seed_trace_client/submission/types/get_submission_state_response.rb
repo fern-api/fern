@@ -12,7 +12,7 @@ module SeedTraceClient
 
       # @param time_submitted [DateTime]
       # @param submission [String]
-      # @param language [LANGUAGE]
+      # @param language [Commons::Language]
       # @param submission_type_state [Submission::SubmissionTypeState]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GetSubmissionStateResponse]
@@ -21,7 +21,7 @@ module SeedTraceClient
         @time_submitted = time_submitted
         # @type [String]
         @submission = submission
-        # @type [LANGUAGE]
+        # @type [Commons::Language]
         @language = language
         # @type [Submission::SubmissionTypeState]
         @submission_type_state = submission_type_state
@@ -38,7 +38,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         time_submitted = (DateTime.parse(parsed_json["timeSubmitted"]) unless parsed_json["timeSubmitted"].nil?)
         submission = struct.submission
-        language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
+        language = struct.language
         if parsed_json["submissionTypeState"].nil?
           submission_type_state = nil
         else
@@ -56,7 +56,7 @@ module SeedTraceClient
         {
           "timeSubmitted": @time_submitted,
           "submission": @submission,
-          "language": Commons::LANGUAGE[@language] || @language,
+          "language": @language,
           "submissionTypeState": @submission_type_state
         }.to_json
       end
@@ -68,7 +68,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         obj.time_submitted&.is_a?(DateTime) != false || raise("Passed value for field obj.time_submitted is not the expected type, validation failed.")
         obj.submission.is_a?(String) != false || raise("Passed value for field obj.submission is not the expected type, validation failed.")
-        obj.language.is_a?(Commons::LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         Submission::SubmissionTypeState.validate_raw(obj: obj.submission_type_state)
       end
     end

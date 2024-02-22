@@ -11,7 +11,7 @@ module SeedTraceClient
       attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties
 
       # @param submission_id [Submission::SUBMISSION_ID]
-      # @param language [LANGUAGE]
+      # @param language [Commons::Language]
       # @param submission_files [Array<Submission::SubmissionFileInfo>]
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -19,7 +19,7 @@ module SeedTraceClient
       def initialize(submission_id:, language:, submission_files:, user_id: nil, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [LANGUAGE]
+        # @type [Commons::Language]
         @language = language
         # @type [Array<Submission::SubmissionFileInfo>]
         @submission_files = submission_files
@@ -37,7 +37,7 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
+        language = struct.language
         submission_files = parsed_json["submissionFiles"]&.map do |v|
           v = v.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
@@ -53,7 +53,7 @@ module SeedTraceClient
       def to_json(*_args)
         {
           "submissionId": @submission_id,
-          "language": Commons::LANGUAGE[@language] || @language,
+          "language": @language,
           "submissionFiles": @submission_files,
           "userId": @user_id
         }.to_json
@@ -65,7 +65,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.language.is_a?(Commons::LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
         obj.user_id&.is_a?(String) != false || raise("Passed value for field obj.user_id is not the expected type, validation failed.")
       end

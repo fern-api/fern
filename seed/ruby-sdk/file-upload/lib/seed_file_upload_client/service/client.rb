@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require "set"
-require_relative "types/maybe_list"
-require_relative "types/maybe_list_or_set"
 require_relative "types/my_object"
 require_relative "../../core/file_utilities"
 require "async"
@@ -22,22 +19,17 @@ module SeedFileUploadClient
     # @param maybe_string [String]
     # @param integer [Integer]
     # @param file [String, IO]
+    # @param file_list [String, IO]
     # @param maybe_file [String, IO]
+    # @param maybe_file_list [String, IO]
     # @param maybe_integer [Integer]
-    # @param list_of_strings [Array<String>]
-    # @param set_of_strings [Set<String>]
     # @param optional_list_of_strings [Array<String>]
-    # @param optional_set_of_strings [Set<String>]
-    # @param maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param optional_maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
-    # @param optional_maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
     # @param list_of_objects [Array<Hash>] Request of type Array<Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [RequestOptions]
     # @return [Void]
-    def post(integer:, file:, list_of_strings:, set_of_strings:, maybe_list:, maybe_list_or_set:, list_of_objects:,
-             maybe_string: nil, maybe_file: nil, maybe_integer: nil, optional_list_of_strings: nil, optional_set_of_strings: nil, optional_maybe_list: nil, optional_maybe_list_or_set: nil, request_options: nil)
+    def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
+             optional_list_of_strings: nil, request_options: nil)
       @request_client.conn.post("/") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -46,16 +38,11 @@ module SeedFileUploadClient
           maybeString: maybe_string,
           integer: integer,
           file: FileUtilities.as_faraday_multipart(file_like: file),
+          fileList: FileUtilities.as_faraday_multipart(file_like: file_list),
           maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) unless maybe_file.nil?),
+          maybeFileList: (FileUtilities.as_faraday_multipart(file_like: maybe_file_list) unless maybe_file_list.nil?),
           maybeInteger: maybe_integer,
-          listOfStrings: list_of_strings,
-          setOfStrings: set_of_strings,
           optionalListOfStrings: optional_list_of_strings,
-          optionalSetOfStrings: optional_set_of_strings,
-          maybeList: maybe_list,
-          optionalMaybeList: optional_maybe_list,
-          maybeListOrSet: maybe_list_or_set,
-          optionalMaybeListOrSet: optional_maybe_list_or_set,
           listOfObjects: list_of_objects
         }.compact
       end
@@ -117,22 +104,17 @@ module SeedFileUploadClient
     # @param maybe_string [String]
     # @param integer [Integer]
     # @param file [String, IO]
+    # @param file_list [String, IO]
     # @param maybe_file [String, IO]
+    # @param maybe_file_list [String, IO]
     # @param maybe_integer [Integer]
-    # @param list_of_strings [Array<String>]
-    # @param set_of_strings [Set<String>]
     # @param optional_list_of_strings [Array<String>]
-    # @param optional_set_of_strings [Set<String>]
-    # @param maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param optional_maybe_list [Hash] Request of type Service::MaybeList, as a Hash
-    # @param maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
-    # @param optional_maybe_list_or_set [Hash] Request of type Service::MaybeListOrSet, as a Hash
     # @param list_of_objects [Array<Hash>] Request of type Array<Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [RequestOptions]
     # @return [Void]
-    def post(integer:, file:, list_of_strings:, set_of_strings:, maybe_list:, maybe_list_or_set:, list_of_objects:,
-             maybe_string: nil, maybe_file: nil, maybe_integer: nil, optional_list_of_strings: nil, optional_set_of_strings: nil, optional_maybe_list: nil, optional_maybe_list_or_set: nil, request_options: nil)
+    def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
+             optional_list_of_strings: nil, request_options: nil)
       Async do
         @request_client.conn.post("/") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -142,16 +124,11 @@ module SeedFileUploadClient
             maybeString: maybe_string,
             integer: integer,
             file: FileUtilities.as_faraday_multipart(file_like: file),
+            fileList: FileUtilities.as_faraday_multipart(file_like: file_list),
             maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) unless maybe_file.nil?),
+            maybeFileList: (FileUtilities.as_faraday_multipart(file_like: maybe_file_list) unless maybe_file_list.nil?),
             maybeInteger: maybe_integer,
-            listOfStrings: list_of_strings,
-            setOfStrings: set_of_strings,
             optionalListOfStrings: optional_list_of_strings,
-            optionalSetOfStrings: optional_set_of_strings,
-            maybeList: maybe_list,
-            optionalMaybeList: optional_maybe_list,
-            maybeListOrSet: maybe_list_or_set,
-            optionalMaybeListOrSet: optional_maybe_list_or_set,
             listOfObjects: list_of_objects
           }.compact
         end

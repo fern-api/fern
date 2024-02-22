@@ -1,19 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
-import { FullExample } from "@fern-fern/openapi-ir-model/example";
 import {
     EndpointExample,
-    HeaderExample,
-    PathParameterExample,
-    QueryParameterExample
-} from "@fern-fern/openapi-ir-model/finalIr";
-import {
     EndpointWithExample,
+    FullExample,
+    HeaderExample,
     NamedFullExample,
+    PathParameterExample,
+    QueryParameterExample,
     RequestWithExample,
     ResponseWithExample,
     SchemaWithExample
-} from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
 import { isSchemaRequired } from "../../utils/isSchemaRequired";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
@@ -210,17 +208,17 @@ function isExamplePrimitive(example: FullExample): boolean {
         case "literal":
             return true;
         case "unknown":
-            return isExamplePrimitive(example.unknown);
+            return isExamplePrimitive(example);
         case "array":
         case "object":
         case "map":
             return false;
         case "oneOf":
-            switch (example.oneOf.type) {
+            switch (example.value.type) {
                 case "discriminated":
                     return false;
                 case "undisciminated":
-                    return isExamplePrimitive(example.oneOf.undisciminated);
+                    return isExamplePrimitive(example.value.value);
                 default:
                     return false;
             }
@@ -244,7 +242,7 @@ function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undef
         case "object":
             return schema.fullExamples?.[0]?.name ?? undefined;
         case "oneOf":
-            switch (schema.oneOf.type) {
+            switch (schema.value.type) {
                 case "discriminated":
                     return undefined;
                 case "undisciminated":

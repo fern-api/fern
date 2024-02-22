@@ -11,6 +11,27 @@ from .resources.s_3.client import AsyncS3Client, S3Client
 
 
 class SeedMultiUrlEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - environment: SeedMultiUrlEnvironmentEnvironment. The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
+
+                                                           Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
+
+        - token: typing.Union[str, typing.Callable[[], str]].
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import SeedMultiUrlEnvironment
+
+    client = SeedMultiUrlEnvironment(
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -29,6 +50,27 @@ class SeedMultiUrlEnvironment:
 
 
 class AsyncSeedMultiUrlEnvironment:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - environment: SeedMultiUrlEnvironmentEnvironment. The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
+
+                                                           Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
+
+        - token: typing.Union[str, typing.Callable[[], str]].
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import AsyncSeedMultiUrlEnvironment
+
+    client = AsyncSeedMultiUrlEnvironment(
+        token="YOUR_TOKEN",
+    )
+    """
+
     def __init__(
         self,
         *,

@@ -1,7 +1,9 @@
 ../packages/ir-sdk/**
+../packages/cli/openapi-ir-sdk/**
 ../packages/seed/src/config/**
 ../scripts/**
 ../seed/**
+../docker/seed/**
 
 **/*.yaml
 **/*.yml

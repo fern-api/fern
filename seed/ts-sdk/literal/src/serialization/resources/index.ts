@@ -1,3 +1,6 @@
-export * as literal from "./literal";
-export * from "./literal/types";
-export * from "./literal/client/requests";
+export * as reference from "./reference";
+export * from "./reference/types";
+export * as headers from "./headers";
+export * from "./headers/client/requests";
+export * as inlined from "./inlined";
+export * from "./inlined/client/requests";

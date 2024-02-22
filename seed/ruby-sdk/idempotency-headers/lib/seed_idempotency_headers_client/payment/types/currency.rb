@@ -2,7 +2,9 @@
 
 module SeedIdempotencyHeadersClient
   class Payment
-    # @type [CURRENCY]
-    CURRENCY = { usd: "USD", yen: "YEN" }.freeze
+    class Currency
+      USD = "USD"
+      YEN = "YEN"
+    end
   end
 end

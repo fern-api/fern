@@ -2,141 +2,142 @@
 
 exports[`examples examples parse open api 1`] = `
 {
-  "description": undefined,
+  "description": null,
   "endpoints": [
     {
       "audiences": [],
       "authed": false,
-      "availability": undefined,
-      "description": undefined,
+      "availability": null,
+      "description": null,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "description": undefined,
+          "description": null,
           "headers": [],
-          "name": undefined,
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": null,
           "response": {
-            "array": [
+            "type": "array",
+            "value": [
               {
                 "properties": {
                   "building_name": {
-                    "primitive": {
-                      "string": "The Main Building",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "The Main Building",
+                    },
                   },
                   "building_name_alias": {
-                    "array": [
+                    "type": "array",
+                    "value": [
                       {
-                        "primitive": {
-                          "string": "Main Building",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Main Building",
+                        },
                       },
                       {
-                        "primitive": {
-                          "string": "building_name_alias",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "building_name_alias",
+                        },
                       },
                     ],
-                    "type": "array",
                   },
                   "city": {
-                    "primitive": {
-                      "string": "San Francisco",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "San Francisco",
+                    },
                   },
                   "id": {
-                    "primitive": {
-                      "string": "123",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "123",
+                    },
                   },
                   "lat": {
-                    "primitive": {
-                      "double": 37.789,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 37.789,
+                    },
                   },
                   "lon": {
-                    "primitive": {
-                      "double": -122.395,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": -122.395,
+                    },
                   },
                   "number_units": {
-                    "primitive": {
-                      "double": 100,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 100,
+                    },
                   },
                   "score": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "state": {
-                    "primitive": {
-                      "string": "CA",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "CA",
+                    },
                   },
                   "street_address": {
-                    "primitive": {
-                      "string": "123 Main St",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "123 Main St",
+                    },
                   },
                   "street_address_alias": {
-                    "array": [
+                    "type": "array",
+                    "value": [
                       {
-                        "primitive": {
-                          "string": "123 Main Street",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "123 Main Street",
+                        },
                       },
                       {
-                        "primitive": {
-                          "string": "street_address_alias",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "street_address_alias",
+                        },
                       },
                     ],
-                    "type": "array",
                   },
                   "year_built": {
-                    "primitive": {
-                      "double": 2010,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 2010,
+                    },
                   },
                   "zip_code": {
-                    "primitive": {
-                      "string": "94105",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "94105",
+                    },
                   },
                 },
                 "type": "object",
@@ -144,177 +145,151 @@ exports[`examples examples parse open api 1`] = `
               {
                 "properties": {
                   "building_name": {
-                    "primitive": {
-                      "string": "building_name",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "building_name",
+                    },
                   },
                   "building_name_alias": {
-                    "array": [
+                    "type": "array",
+                    "value": [
                       {
-                        "primitive": {
-                          "string": "building_name_alias",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "building_name_alias",
+                        },
                       },
                     ],
-                    "type": "array",
                   },
                   "city": {
-                    "primitive": {
-                      "string": "city",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "city",
+                    },
                   },
                   "id": {
-                    "primitive": {
-                      "string": "id",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "id",
+                    },
                   },
                   "lat": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "lon": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "number_units": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "score": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "state": {
-                    "primitive": {
-                      "string": "state",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "state",
+                    },
                   },
                   "street_address": {
-                    "primitive": {
-                      "string": "street_address",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "street_address",
+                    },
                   },
                   "street_address_alias": {
-                    "array": [
+                    "type": "array",
+                    "value": [
                       {
-                        "primitive": {
-                          "string": "street_address_alias",
-                          "type": "string",
-                        },
                         "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "street_address_alias",
+                        },
                       },
                     ],
-                    "type": "array",
                   },
                   "year_built": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
                   },
                   "zip_code": {
-                    "primitive": {
-                      "string": "zip_code",
-                      "type": "string",
-                    },
                     "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "zip_code",
+                    },
                   },
                 },
                 "type": "object",
               },
             ],
-            "type": "array",
           },
         },
       ],
       "generatedRequestName": "SearchRequest",
       "headers": [],
-      "internal": undefined,
+      "internal": null,
       "method": "GET",
       "operationId": "Search",
       "path": "/property/search",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
+      "request": null,
+      "requestNameOverride": null,
       "response": {
         "description": "A simplified list of properties.",
-        "fullExamples": [
-          {
-            "name": "Example 1",
-            "value": [
-              {
-                "building_name": "The Main Building",
-                "building_name_alias": [
-                  "Main Building",
-                ],
-                "city": "San Francisco",
-                "id": "123",
-                "lat": 37.789,
-                "lon": -122.395,
-                "number_units": 100,
-                "state": "CA",
-                "street_address": "123 Main St",
-                "street_address_alias": [
-                  "123 Main Street",
-                ],
-                "year_built": 2010,
-                "zip_code": "94105",
-              },
-            ],
-          },
-        ],
-        "responseProperty": undefined,
+        "responseProperty": null,
         "schema": {
-          "description": undefined,
+          "description": null,
           "generatedName": "SearchResponse",
-          "groupName": undefined,
-          "nameOverride": undefined,
+          "groupName": null,
+          "nameOverride": null,
           "type": "array",
           "value": {
-            "description": undefined,
+            "description": null,
             "generatedName": "SearchResponseItem",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": "PropertySearchResponse",
             "type": "reference",
           },
         },
         "type": "json",
       },
-      "sdkName": undefined,
+      "sdkName": null,
       "server": [],
-      "summary": undefined,
+      "summary": null,
       "tags": [],
     },
   ],
   "errors": {},
-  "globalHeaders": undefined,
+  "globalHeaders": null,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PropertySearchResponse",
@@ -326,8 +301,8 @@ exports[`examples examples parse open api 1`] = `
       "description": "The PropertySearchResponse object is returned by the /properties/search endpoint.
 It is a very simple property object that can then be used to query the /properties/:id endpoint",
       "generatedName": "PropertySearchResponse",
-      "groupName": undefined,
-      "nameOverride": undefined,
+      "groupName": null,
+      "nameOverride": null,
       "properties": [
         {
           "audiences": [],
@@ -335,13 +310,13 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseId",
           "key": "id",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseId",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
+              "maxLength": null,
+              "minLength": null,
               "type": "string",
             },
             "type": "primitive",
@@ -353,16 +328,16 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseLat",
           "key": "lat",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "propertySearchResponseLat",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseLat",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
                 "type": "double",
               },
@@ -376,16 +351,16 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseLon",
           "key": "lon",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "propertySearchResponseLon",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseLon",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
                 "type": "double",
               },
@@ -399,19 +374,19 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseBuildingName",
           "key": "building_name",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseBuildingName",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "nullable",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseBuildingName",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
+                "maxLength": null,
+                "minLength": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -424,19 +399,19 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseBuildingNameAlias",
           "key": "building_name_alias",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseBuildingNameAlias",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "array",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseBuildingNameAliasItem",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
+                "maxLength": null,
+                "minLength": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -449,13 +424,13 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseStreetAddress",
           "key": "street_address",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseStreetAddress",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
+              "maxLength": null,
+              "minLength": null,
               "type": "string",
             },
             "type": "primitive",
@@ -467,19 +442,19 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseStreetAddressAlias",
           "key": "street_address_alias",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseStreetAddressAlias",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "array",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseStreetAddressAliasItem",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
+                "maxLength": null,
+                "minLength": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -492,13 +467,13 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseCity",
           "key": "city",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseCity",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
+              "maxLength": null,
+              "minLength": null,
               "type": "string",
             },
             "type": "primitive",
@@ -510,13 +485,13 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseState",
           "key": "state",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseState",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
+              "maxLength": null,
+              "minLength": null,
               "type": "string",
             },
             "type": "primitive",
@@ -528,13 +503,13 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseZipCode",
           "key": "zip_code",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "PropertySearchResponseZipCode",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
+              "maxLength": null,
+              "minLength": null,
               "type": "string",
             },
             "type": "primitive",
@@ -546,22 +521,22 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseNumberUnits",
           "key": "number_units",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "propertySearchResponseNumberUnits",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseNumberUnits",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "type": "nullable",
               "value": {
-                "description": undefined,
+                "description": null,
                 "generatedName": "PropertySearchResponseNumberUnits",
-                "groupName": undefined,
-                "nameOverride": undefined,
+                "groupName": null,
+                "nameOverride": null,
                 "schema": {
                   "type": "double",
                 },
@@ -576,22 +551,22 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseYearBuilt",
           "key": "year_built",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "propertySearchResponseYearBuilt",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseYearBuilt",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "type": "nullable",
               "value": {
-                "description": undefined,
+                "description": null,
                 "generatedName": "PropertySearchResponseYearBuilt",
-                "groupName": undefined,
-                "nameOverride": undefined,
+                "groupName": null,
+                "nameOverride": null,
                 "schema": {
                   "type": "double",
                 },
@@ -606,16 +581,16 @@ It is a very simple property object that can then be used to query the /properti
           "generatedName": "propertySearchResponseScore",
           "key": "score",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "propertySearchResponseScore",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "PropertySearchResponseScore",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
                 "type": "double",
               },
@@ -630,7 +605,7 @@ It is a very simple property object that can then be used to query the /properti
   "securitySchemes": {},
   "servers": [],
   "tags": {
-    "orderedTagIds": undefined,
+    "orderedTagIds": null,
     "tagsById": {},
   },
   "title": "Test spec for \`examples\` keys",

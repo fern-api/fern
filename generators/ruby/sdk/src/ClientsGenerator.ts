@@ -23,6 +23,7 @@ import {
 } from "./AbstractionUtilities";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 import { RootImportsFile } from "./utils/RootImportsFile";
 
@@ -109,6 +110,11 @@ export class ClientsGenerator {
         }
 
         const requestOptionsClass = new RequestOptions({ headersGenerator: this.headersGenerator });
+        const idempotencyRequestOptionsClass = new IdempotencyRequestOptions({
+            crf: this.crf,
+            idempotencyHeaders: this.intermediateRepresentation.idempotencyHeaders,
+            headersGenerator: this.headersGenerator
+        });
         const [syncClientClass, asyncClientClass] = generateRequestClients(
             this.intermediateRepresentation.sdkConfig,
             this.clientName,
@@ -122,8 +128,10 @@ export class ClientsGenerator {
         const requestsModule = Module_.wrapInModules(this.clientName, [
             syncClientClass,
             asyncClientClass,
-            requestOptionsClass
+            requestOptionsClass,
+            idempotencyRequestOptionsClass
         ]);
+
         clientFiles.push(
             new GeneratedRubyFile({
                 rootNode: requestsModule,
@@ -175,6 +183,7 @@ export class ClientsGenerator {
                 asyncClientClass.classReference,
                 crf,
                 requestOptionsClass,
+                idempotencyRequestOptionsClass,
                 irBasePath,
                 generatedClasses,
                 flattenedProperties,
@@ -314,6 +323,7 @@ export class ClientsGenerator {
                 syncClientClass,
                 asyncClientClass,
                 requestOptionsClass,
+                idempotencyRequestOptionsClass,
                 this.crf,
                 new Map(rootSubpackageClasses.map((sp) => [sp.subpackageName, sp.syncClientClass])),
                 new Map(rootSubpackageClasses.map((sp) => [sp.subpackageName, sp.asyncClientClass])),

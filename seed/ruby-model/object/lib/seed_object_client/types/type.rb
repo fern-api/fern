@@ -25,8 +25,8 @@ module SeedObjectClient
     # @param twelve [Hash{String => String}]
     # @param thirteen [Long]
     # @param fourteen [Object]
-    # @param fifteen [Array<Array>]
-    # @param sixteen [Array<Hash>]
+    # @param fifteen [Array<Array<Integer>>]
+    # @param sixteen [Array<Hash{String => String}>]
     # @param seventeen [Array<UUID>]
     # @param eighteen [String]
     # @param nineteen [Name]
@@ -62,9 +62,9 @@ module SeedObjectClient
       @thirteen = thirteen
       # @type [Object]
       @fourteen = fourteen
-      # @type [Array<Array>]
+      # @type [Array<Array<Integer>>]
       @fifteen = fifteen
-      # @type [Array<Hash>]
+      # @type [Array<Hash{String => String}>]
       @sixteen = sixteen
       # @type [Array<UUID>]
       @seventeen = seventeen

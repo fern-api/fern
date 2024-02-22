@@ -1,7 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import { OpenAPIIntermediateRepresentation, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
@@ -31,7 +30,7 @@ export async function parse({
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     taskContext: TaskContext;
-}): Promise<OpenAPIIntermediateRepresentation> {
+}): Promise<OpenApiIntermediateRepresentation> {
     let asyncAPISchemas: Record<SchemaId, Schema> = {};
     if (absolutePathToAsyncAPI != null) {
         const asyncAPI = await loadAsyncAPI(absolutePathToAsyncAPI);
@@ -43,7 +42,7 @@ export async function parse({
         context: taskContext,
         absolutePathToOpenAPIOverrides
     });
-    let openApiIr: OpenAPIIntermediateRepresentation | undefined = undefined;
+    let openApiIr: OpenApiIntermediateRepresentation | undefined = undefined;
     if (isOpenApiV3(openApiDocument)) {
         openApiIr = generateIrFromV3(openApiDocument, taskContext);
     } else if (isOpenApiV2(openApiDocument)) {

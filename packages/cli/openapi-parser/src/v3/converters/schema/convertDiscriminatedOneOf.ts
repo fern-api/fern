@@ -1,5 +1,9 @@
-import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
-import { CommonPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import {
+    CommonPropertyWithExample,
+    OneOfSchemaWithExample,
+    SchemaWithExample,
+    SdkGroupName
+} from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
@@ -163,28 +167,30 @@ export function wrapDiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
-            value: SchemaWithExample.oneOf({
-                type: "discriminated",
-                description,
-                discriminantProperty: discriminant,
-                nameOverride,
-                generatedName,
-                schemas: subtypes,
-                commonProperties: properties,
-                groupName
-            }),
+            value: SchemaWithExample.oneOf(
+                OneOfSchemaWithExample.discriminated({
+                    description,
+                    discriminantProperty: discriminant,
+                    nameOverride,
+                    generatedName,
+                    schemas: subtypes,
+                    commonProperties: properties,
+                    groupName
+                })
+            ),
             groupName,
             description
         });
     }
-    return SchemaWithExample.oneOf({
-        type: "discriminated",
-        description,
-        discriminantProperty: discriminant,
-        nameOverride,
-        generatedName,
-        schemas: subtypes,
-        commonProperties: properties,
-        groupName
-    });
+    return SchemaWithExample.oneOf(
+        OneOfSchemaWithExample.discriminated({
+            description,
+            discriminantProperty: discriminant,
+            nameOverride,
+            generatedName,
+            schemas: subtypes,
+            commonProperties: properties,
+            groupName
+        })
+    );
 }

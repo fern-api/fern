@@ -1,11 +1,12 @@
-import { HttpMethod, LiteralSchemaValue } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     HeaderWithExample,
+    HttpMethod,
+    LiteralSchemaValue,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     SchemaWithExample
-} from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getParameterName } from "../../extensions/getParameterName";

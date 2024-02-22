@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "running_submission_state"
 require_relative "error_info"
 require_relative "graded_test_case_update"
 require_relative "recorded_test_case_update"
+require_relative "running_submission_state"
 
 module SeedTraceClient
   class Submission
@@ -31,7 +31,7 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "running"
-                   Submission::RUNNING_SUBMISSION_STATE.key(json_object.value) || json_object.value
+                   json_object.value
                  when "stopped"
                    nil
                  when "errored"
@@ -43,7 +43,7 @@ module SeedTraceClient
                  when "finished"
                    nil
                  else
-                   Submission::RUNNING_SUBMISSION_STATE.key(json_object) || json_object
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -78,7 +78,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "running"
-          obj.is_a?(Submission::RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "stopped"
           # noop
         when "errored"
@@ -102,7 +102,7 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [RUNNING_SUBMISSION_STATE]
+      # @param member [Submission::RunningSubmissionState]
       # @return [Submission::TestSubmissionUpdateInfo]
       def self.running(member:)
         new(member: member, discriminant: "running")

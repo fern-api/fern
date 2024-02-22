@@ -33,12 +33,6 @@ describe("no-undefined-type-reference", () => {
                 severity: "error"
             },
             {
-                message: "The file type can only be used as properties in inlined requests.",
-                nodePath: ["service", "endpoints", "listOfFiles", "request", "body", "properties", "file"],
-                relativeFilepath: RelativeFilePath.of("file-upload.yml"),
-                severity: "error"
-            },
-            {
                 message: "Type MissingType is not defined.",
                 nodePath: ["types", "MyType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),

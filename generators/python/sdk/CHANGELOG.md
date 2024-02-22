@@ -5,19 +5,181 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.2] - 2024-02-21
+- Improvement (Beta): The Python generator now supports a configuration option called `improved_imports`. To enable 
+  this configuration, just add the following to your generators.yml 
+
+  ```yaml
+  generators: 
+    - name: fernapi/fern-python-sdk
+      ...
+      config: 
+        improved_imports: true
+  ```
+
+  Enabling improved imports will remove the verbose `resources` directory in the SDK and make the imports
+  shorter. This will also improve the imports from Pylance and Pyright that are automaticaly generated
+
+  ```python
+  # Before
+  from sdk.resources.fhir import Paient
+
+  # After
+  from sdk.fhir import Patient
+  ```
+
+## [0.11.1] - 2024-02-20
+
+- Improvement: Python now supports specifying files to auto-export from the root `__init__.py` file, this means you can export custom classes and functions from your package for users to access like so:
+
+  ```python
+  from my_package import custom_function
+  ```
+
+  the configuration for this is:
+
+  ```yaml
+  # generators.yml
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.11.1
+        config:
+          additional_init_exports:
+            - from: file_with_custom_function
+              imports:
+                - custom_function
+  ```
+
+- Chore: Add a docstring for base clients to explain usage, example:
+
+  ```python
+  class SeedTest:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    ---
+    from seed.client import SeedTest
+
+    client = SeedTest(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+  ```
+
+## [0.11.0] - 2024-02-19
+
+- Improvement: Python now supports a wider range of types for file upload, mirroring the `httpx` library used under the hood, these are grouped under a new type `File`:
+
+  ```python
+  # core/file.py
+  FileContent = typing.Union[typing.IO[bytes], bytes, str]
+  File = typing.Union[
+      # file (or bytes)
+      FileContent,
+      # (filename, file (or bytes))
+      typing.Tuple[typing.Optional[str], FileContent],
+      # (filename, file (or bytes), content_type)
+      typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str]],
+      # (filename, file (or bytes), content_type, headers)
+      typing.Tuple[typing.Optional[str], FileContent, typing.Optional[str], typing.Mapping[str, str]],
+  ]
+
+  ...
+
+  # service.py
+  def post(
+      self,
+      *,
+      file: core.File,
+      request_options: typing.Optional[RequestOptions] = None,
+  ) -> None:
+      """
+      Parameters:
+          - file: core.File. See core.File for more documentation
+          - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+      """
+  ...
+
+  # main.py
+  f = open('report.xls', 'rb')
+  service.post(file=f)
+
+  # Or leveraging a tuple
+  with open('largefile.zip', 'rb') as f:
+    service.post(file=('largefile.zip', f))
+  ...
+  ```
+
+- Fix: Python now supports API specifications that leverage lists for file upload. Previously, Fern incorrectly made all `list<file>` type requests simply `file`.
+
+  ```python
+  # service.py
+  def post(
+      self,
+      *,
+      file_list: typing.List[core.File],
+      request_options: typing.Optional[RequestOptions] = None,
+  ) -> None:
+      """
+      Parameters:
+          - file_list: typing.List[core.File]. See core.File for more documentation
+          - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+      """
+  ...
+
+  # main.py
+  f1 = open('report.xls', 'rb')
+  f2 = open('page.docx', 'rb')
+  service.post(file_list=[f1, f2])
+  ```
+
+## [0.10.3] - 2024-02-19
+
+- Fix: Several bugfixes were made to related to literal properties. If a literal is
+  used as a query parameeter, header, path parameter, or request parameter, the user
+  no longer has to explicitly pass it in.
+
+  For example, the following endpoint
+
+  ```yaml
+  endpoints:
+    chat_stream:
+      request:
+        name: ListUsersRequest
+        headers:
+          X_API_VERSION: literal<"2022-02-02">
+        body:
+          properties:
+            stream: literal<true>
+            query: string
+  ```
+
+  would generate the following signature in Python
+
+  ```python
+  class Client:
+
+    # The user does not have to pass in api version or stream since
+    # they are literals and always the same
+    def chat_stream(self, *, query: str) -> None:
+  ```
+
 ## [0.10.2] - 2024-02-18
 
-- Fix: The SDK always sends the enum wire value instead of the name of the enum. For example, 
+- Fix: The SDK always sends the enum wire value instead of the name of the enum. For example,
   for the following enum,
+
   ```python
   class Operand(str, enum.Enum):
     GREATER_THAN = ">"
     EQUAL_TO = "="
   ```
-  the SDK should always be sending `>` and `=` when making a request. 
 
-  This affected enums used in path parameters, query parameters and any request body parameters at 
-  the first level. To fix, the SDK sends the `.value` attribute of the enum. 
+  the SDK should always be sending `>` and `=` when making a request.
+
+  This affected enums used in path parameters, query parameters and any request body parameters at
+  the first level. To fix, the SDK sends the `.value` attribute of the enum.
 
 - Fix: Revert #2719 which introduced additional issues with circular references within our Python types.
 

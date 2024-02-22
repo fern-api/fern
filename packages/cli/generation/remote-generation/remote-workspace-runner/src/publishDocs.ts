@@ -497,7 +497,8 @@ async function convertUnversionedNavigationConfig({
                                         version
                                     })
                                 )
-                            )
+                            ),
+                            urlSlugOverride: tabConfig.slug
                         };
                     })
                 )
@@ -702,6 +703,12 @@ async function convertNavigationItem({
                 showErrors: item.showErrors
             };
         }
+        case "link":
+            return {
+                type: "link",
+                title: item.text,
+                url: item.url
+            };
         default:
             assertNever(item);
     }

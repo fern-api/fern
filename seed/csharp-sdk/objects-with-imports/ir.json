@@ -7504,6 +7504,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_commons": {
       "name": {
@@ -7525,6 +7526,7 @@
           "safeName": "Commons"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -7596,6 +7598,7 @@
           "safeName": "Metadata"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -7705,6 +7708,7 @@
           "safeName": "File"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -7778,6 +7782,7 @@
           "safeName": "Directory"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -7873,6 +7878,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:Node",
       "type_:Tree"

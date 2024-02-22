@@ -1,6 +1,7 @@
-from typing import Dict, Literal, Optional, Union
+from typing import Dict, List, Literal, Optional, Union
 
 import pydantic
+from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
 
 
@@ -23,6 +24,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
+    additional_init_exports: Optional[List[ModuleExport]] = None
+    # Feature flag that improves imports in the
+    # Python SDK by removing nested `resources` directoy
+    improved_imports: bool = False
 
     class Config:
         extra = pydantic.Extra.forbid

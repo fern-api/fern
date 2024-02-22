@@ -2,13 +2,12 @@
 
 module SeedTraceClient
   class Submission
-    # @type [RUNNING_SUBMISSION_STATE]
-    RUNNING_SUBMISSION_STATE = {
-      queueing_submission: "QUEUEING_SUBMISSION",
-      killing_historical_submissions: "KILLING_HISTORICAL_SUBMISSIONS",
-      writing_submission_to_file: "WRITING_SUBMISSION_TO_FILE",
-      compiling_submission: "COMPILING_SUBMISSION",
-      running_submission: "RUNNING_SUBMISSION"
-    }.freeze
+    class RunningSubmissionState
+      QUEUEING_SUBMISSION = "QUEUEING_SUBMISSION"
+      KILLING_HISTORICAL_SUBMISSIONS = "KILLING_HISTORICAL_SUBMISSIONS"
+      WRITING_SUBMISSION_TO_FILE = "WRITING_SUBMISSION_TO_FILE"
+      COMPILING_SUBMISSION = "COMPILING_SUBMISSION"
+      RUNNING_SUBMISSION = "RUNNING_SUBMISSION"
+    end
   end
 end

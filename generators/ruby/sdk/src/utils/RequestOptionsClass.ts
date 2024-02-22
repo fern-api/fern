@@ -17,6 +17,8 @@ import { HeadersGenerator } from "./HeadersGenerator";
 export declare namespace RequestOptions {
     export interface Init {
         headersGenerator: HeadersGenerator;
+        nameOverride?: string;
+        additionalProperties?: Property[];
     }
 }
 
@@ -27,7 +29,7 @@ export class RequestOptions extends Class_ {
     public additionalQueryProperty: Property;
     public additionalBodyProperty: Property;
 
-    constructor({ headersGenerator }: RequestOptions.Init) {
+    constructor({ nameOverride, headersGenerator, additionalProperties }: RequestOptions.Init) {
         const timeoutProperty = new Property({
             name: "timeout_in_seconds",
             type: LongClassReference,
@@ -57,14 +59,15 @@ export class RequestOptions extends Class_ {
         });
 
         super({
-            classReference: new ClassReference({ name: "RequestOptions", location: "requests" }),
+            classReference: new ClassReference({ name: nameOverride ?? "RequestOptions", location: "requests" }),
             includeInitializer: true,
             properties: [
                 ...headerProperties,
                 additionalHeaderProperty,
                 additionalQueryProperty,
                 additionalBodyProperty,
-                timeoutProperty
+                timeoutProperty,
+                ...(additionalProperties ?? [])
             ],
             documentation: "Additional options for request-specific configuration when calling APIs via the SDK."
         });

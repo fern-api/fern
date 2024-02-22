@@ -1,4 +1,4 @@
-name: ir-publish
+name: IR Publish
 
 on:
   workflow_dispatch:

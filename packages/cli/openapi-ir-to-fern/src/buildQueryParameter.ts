@@ -1,8 +1,8 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { QueryParameter, Schema } from "@fern-api/openapi-ir-sdk";
 import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-parser";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -95,17 +95,17 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undisciminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
-            for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
+            for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
                 if (schema.type === "literal" && schema.value.type === "string") {
-                    if (VALID_ENUM_NAME_REGEX.test(schema.value.string)) {
-                        potentialEnumValues.push(schema.value.string);
+                    if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
+                        potentialEnumValues.push(schema.value.value);
                     } else {
                         potentialEnumValues.push({
-                            value: schema.value.string,
-                            name: generateEnumNameFromValue(schema.value.string)
+                            value: schema.value.value,
+                            name: generateEnumNameFromValue(schema.value.value)
                         });
                     }
                 }
@@ -123,7 +123,7 @@ function getQueryParameterTypeReference({
             }
 
             // If no literal values, just pick the first schema of the undiscriminated union
-            for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
+            for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
                 return getQueryParameterTypeReference({
                     schema,
                     context,
@@ -171,17 +171,17 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
+        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undisciminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
-            for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
+            for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
-                    if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.string)) {
-                        potentialEnumValues.push(oneOfSchema.value.string);
+                    if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.value)) {
+                        potentialEnumValues.push(oneOfSchema.value.value);
                     } else {
                         potentialEnumValues.push({
-                            value: oneOfSchema.value.string,
-                            name: generateEnumNameFromValue(oneOfSchema.value.string)
+                            value: oneOfSchema.value.value,
+                            name: generateEnumNameFromValue(oneOfSchema.value.value)
                         });
                     }
                 }
@@ -193,13 +193,13 @@ function getQueryParameterTypeReference({
                     schema: { enum: potentialEnumValues }
                 });
                 return {
-                    value: `optional<${schema.value.oneOf.generatedName}>`,
+                    value: `optional<${schema.value.value.generatedName}>`,
                     allowMultiple: false
                 };
             }
 
             // If no literal values, just pick the first schema of the undiscriminated union
-            for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
+            for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 return getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,

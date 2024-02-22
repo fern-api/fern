@@ -15,7 +15,7 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param language [LANGUAGE]
+    # @param language [Commons::Language]
     # @param num_warm_instances [Integer]
     # @param request_options [RequestOptions]
     # @return [Void]
@@ -29,7 +29,7 @@ module SeedTraceClient
     end
 
     # @param request_options [RequestOptions]
-    # @return [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+    # @return [Hash{Commons::Language => Commons::Language}]
     def get_num_warm_instances(request_options: nil)
       response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -37,12 +37,7 @@ module SeedTraceClient
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
       end
-      return if response.body.nil?
-
-      response.body.transform_values do |_k, v|
-        v = v.to_json
-        Commons::LANGUAGE.key(v) || v
-      end
+      response.body
     end
   end
 
@@ -56,7 +51,7 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param language [LANGUAGE]
+    # @param language [Commons::Language]
     # @param num_warm_instances [Integer]
     # @param request_options [RequestOptions]
     # @return [Void]
@@ -72,7 +67,7 @@ module SeedTraceClient
     end
 
     # @param request_options [RequestOptions]
-    # @return [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+    # @return [Hash{Commons::Language => Commons::Language}]
     def get_num_warm_instances(request_options: nil)
       Async do
         response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
@@ -81,10 +76,7 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
-        response.body&.transform_values do |_k, v|
-          v = v.to_json
-          Commons::LANGUAGE.key(v) || v
-        end
+        response.body
       end
     end
   end

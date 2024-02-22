@@ -42,7 +42,7 @@ class OnlyLiteralHeadersClient:
                         **self._client_wrapper.get_headers(),
                         "literalServiceHeader": "service header",
                         "literalEndpointHeader": "endpoint header",
-                        "falseEndpointHeader": "false",
+                        "falseEndpointHeader": False,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -91,7 +91,7 @@ class AsyncOnlyLiteralHeadersClient:
                         **self._client_wrapper.get_headers(),
                         "literalServiceHeader": "service header",
                         "literalEndpointHeader": "endpoint header",
-                        "falseEndpointHeader": "false",
+                        "falseEndpointHeader": False,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

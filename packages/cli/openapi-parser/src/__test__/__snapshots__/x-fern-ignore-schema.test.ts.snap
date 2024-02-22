@@ -2,20 +2,20 @@
 
 exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
 {
-  "description": undefined,
+  "description": null,
   "endpoints": [],
   "errors": {},
-  "globalHeaders": undefined,
+  "globalHeaders": null,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaToKeep": {
       "allOf": [],
       "allOfPropertyConflicts": [],
-      "description": undefined,
+      "description": null,
       "generatedName": "SchemaToKeep",
-      "groupName": undefined,
-      "nameOverride": undefined,
+      "groupName": null,
+      "nameOverride": null,
       "properties": [
         {
           "audiences": [],
@@ -23,19 +23,19 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
           "generatedName": "schemaToKeepId",
           "key": "id",
           "schema": {
-            "description": undefined,
+            "description": null,
             "generatedName": "schemaToKeepId",
-            "groupName": undefined,
-            "nameOverride": undefined,
+            "groupName": null,
+            "nameOverride": null,
             "type": "optional",
             "value": {
-              "description": undefined,
+              "description": null,
               "generatedName": "SchemaToKeepId",
-              "groupName": undefined,
-              "nameOverride": undefined,
+              "groupName": null,
+              "nameOverride": null,
               "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
+                "maxLength": null,
+                "minLength": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -49,7 +49,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   "securitySchemes": {},
   "servers": [],
   "tags": {
-    "orderedTagIds": undefined,
+    "orderedTagIds": null,
     "tagsById": {},
   },
   "title": "Test extension \`x-fern-ignore\` for schemas",

@@ -25,6 +25,29 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class SeedExamples:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+
+        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
+
+        - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import SeedExamples
+    from seed.environment import SeedExamplesEnvironment
+
+    client = SeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -90,6 +113,29 @@ class SeedExamples:
 
 
 class AsyncSeedExamples:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+
+        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
+
+        - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import AsyncSeedExamples
+    from seed.environment import SeedExamplesEnvironment
+
+    client = AsyncSeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
+    """
+
     def __init__(
         self,
         *,

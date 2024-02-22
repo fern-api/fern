@@ -10,7 +10,8 @@ import {
     SingleUnionTypeProperty,
     TypeDeclaration,
     TypeId,
-    TypeReference
+    TypeReference,
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 import { LocationGenerator } from "../../utils/LocationGenerator";
@@ -184,6 +185,29 @@ export class SerializableObjectReference extends ClassReference {
     }
 }
 
+export declare namespace DiscriminatedUnionClassReference {
+    export type InitReference = SerializableObjectReference.InitReference;
+}
+export class DiscriminatedUnionClassReference extends SerializableObjectReference {
+    constructor(init: DiscriminatedUnionClassReference.InitReference) {
+        super({ ...init });
+    }
+
+    static fromDeclaredTypeName(
+        declaredTypeName: DeclaredTypeName,
+        locationGenerator: LocationGenerator
+    ): ClassReference {
+        const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        return new DiscriminatedUnionClassReference({
+            name: declaredTypeName.name.pascalCase.safeName,
+            import_: new Import({ from: location }),
+            moduleBreadcrumbs,
+            resolvedTypeId: declaredTypeName.typeId
+        });
+    }
+}
+
 export declare namespace AliasReference {
     export interface Init extends ClassReference.Init {
         aliasOf: ClassReference;
@@ -233,7 +257,7 @@ export declare namespace ArrayReference {
 export class ArrayReference extends ClassReference {
     public innerType: ClassReference | string;
     constructor({ innerType, ...rest }: ArrayReference.InitReference) {
-        const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
+        const typeName = innerType instanceof ClassReference ? innerType.typeHint : innerType;
         super({
             name: "Array",
             typeHint: `Array<${typeName}>`,
@@ -431,45 +455,15 @@ export class HashInstance extends AstNode {
     }
 }
 
-export declare namespace Enum {
-    export interface ReferenceInit extends ClassReference.Init {
+export declare namespace EnumReference {
+    export interface Init extends ClassReference.Init {
         name: string;
     }
-    export interface InstanceInit extends ClassReference.Init {
-        contents: Map<string, string>;
-    }
 }
 
-// TODO: allow for per-enum documentation
-export class Enum extends HashInstance {
-    constructor({ contents, documentation }: Enum.InstanceInit) {
-        super({ contents, isFrozen: true, documentation });
-    }
-}
-
-export class EnumReference extends HashReference {
-    constructor({ name, ...rest }: Enum.ReferenceInit) {
-        super({ name, ...rest, typeHint: name, keyType: "String", valueType: "String" });
-    }
-
-    public fromJson(variable: Variable | string): AstNode | undefined {
-        return new Expression({
-            leftSide: new FunctionInvocation({
-                baseFunction: new Function_({ name: "key", functionBody: [] }),
-                onObject: this,
-                arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
-            }),
-            rightSide: variable,
-            operation: "||"
-        });
-    }
-
-    public toJson(variable: Variable | string): AstNode {
-        return new Expression({
-            leftSide: `${this.qualifiedName}[${variable instanceof AstNode ? variable.write({}) : variable}]`,
-            rightSide: variable,
-            operation: "||"
-        });
+export class EnumReference extends ClassReference {
+    constructor({ name, ...rest }: ClassReference.Init) {
+        super({ name, ...rest });
     }
 
     static fromDeclaredTypeName(
@@ -479,7 +473,7 @@ export class EnumReference extends HashReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new EnumReference({
-            name: declaredTypeName.name.screamingSnakeCase.safeName,
+            name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs
         });
@@ -573,10 +567,13 @@ export class ClassReferenceFactory {
     private typeDeclarations: Map<TypeId, TypeDeclaration>;
     public generatedReferences: Map<TypeId, ClassReference>;
 
+    public resolvedReferences: Map<TypeId, ClassReference[]>;
+
     constructor(typeDeclarations: Map<TypeId, TypeDeclaration>, locationGenerator: LocationGenerator) {
         this.locationGenerator = locationGenerator;
         this.typeDeclarations = typeDeclarations;
         this.generatedReferences = new Map();
+        this.resolvedReferences = new Map();
         for (const [_, type] of typeDeclarations) {
             this.fromTypeDeclaration(type);
         }
@@ -605,9 +602,14 @@ export class ClassReferenceFactory {
                 },
                 enum: () => EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator),
                 object: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),
-                union: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),
-                undiscriminatedUnion: () =>
-                    SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                union: () => DiscriminatedUnionClassReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => {
+                    this.resolvedReferences.set(
+                        typeId,
+                        uutd.members.map((member) => this.fromTypeReference(member.type))
+                    );
+                    return SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator);
+                },
                 _other: () => {
                     throw new Error("Attempting to generate a class reference for an unknown type.");
                 }

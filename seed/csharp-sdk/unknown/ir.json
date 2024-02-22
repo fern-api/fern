@@ -391,6 +391,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_unknown": {
       "name": {
@@ -412,6 +413,7 @@
           "safeName": "Unknown"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -470,6 +472,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

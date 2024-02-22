@@ -1848,6 +1848,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_commons": {
       "name": {
@@ -1869,6 +1870,7 @@
           "safeName": "Commons"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1939,6 +1941,7 @@
           "safeName": "FolderA"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2010,6 +2013,7 @@
           "safeName": "Service"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2120,6 +2124,7 @@
           "safeName": "FolderB"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2191,6 +2196,7 @@
           "safeName": "Common"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2300,6 +2306,7 @@
           "safeName": "FolderC"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2371,6 +2378,7 @@
           "safeName": "Common"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2480,6 +2488,7 @@
           "safeName": "Foo"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -2539,6 +2548,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

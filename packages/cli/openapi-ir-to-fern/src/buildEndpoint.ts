@@ -1,14 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import {
-    Endpoint,
-    EndpointAvailability,
-    EndpointExample,
-    Request,
-    Response,
-    Schema
-} from "@fern-fern/openapi-ir-model/finalIr";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
@@ -98,7 +90,7 @@ export function buildEndpoint({
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
-            nonRequestReferencedSchemas,
+            nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
             usedNames: names
         });
@@ -126,7 +118,7 @@ export function buildEndpoint({
     }
 
     if (endpoint.response != null) {
-        Response._visit(endpoint.response, {
+        endpoint.response._visit({
             json: (jsonResponse) => {
                 const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
@@ -170,7 +162,7 @@ export function buildEndpoint({
                     type: "text"
                 };
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unrecognized Response type: " + endpoint.response?.type);
             }
         });
@@ -381,10 +373,11 @@ function getRequest({
         const properties = Object.fromEntries(
             request.properties.map((property) => {
                 if (property.schema.type === "file") {
-                    return [property.key, property.schema.isOptional ? "optional<file>" : "file"];
+                    const fileType = property.schema.isArray ? "list<file>" : "file";
+                    return [property.key, property.schema.isOptional ? `optional<${fileType}>` : fileType];
                 } else {
                     const propertyTypeReference = buildTypeReference({
-                        schema: property.schema.json,
+                        schema: property.schema.value,
                         fileContainingReference: declarationFile,
                         context
                     });

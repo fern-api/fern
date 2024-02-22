@@ -1153,6 +1153,7 @@
     "sharedTypes": []
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_no-headers": {
       "name": {
@@ -1174,6 +1175,7 @@
           "safeName": "NoHeaders"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1243,6 +1245,7 @@
           "safeName": "OnlyLiteralHeaders"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1312,6 +1315,7 @@
           "safeName": "WithNonLiteralHeaders"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1367,6 +1371,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

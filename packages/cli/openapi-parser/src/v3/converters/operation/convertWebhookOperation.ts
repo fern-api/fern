@@ -1,4 +1,4 @@
-import { Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { Webhook } from "@fern-api/openapi-ir-sdk";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { OperationContext } from "../contexts";

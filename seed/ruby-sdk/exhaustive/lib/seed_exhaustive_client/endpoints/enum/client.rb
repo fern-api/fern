@@ -16,9 +16,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [WEATHER_REPORT]
+      # @param request [Types::Enum::WeatherReport]
       # @param request_options [RequestOptions]
-      # @return [WEATHER_REPORT]
+      # @return [Types::Enum::WeatherReport]
       def get_and_return_enum(request:, request_options: nil)
         response = @request_client.conn.post("/enum") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -26,7 +26,7 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        Types::Enum::WEATHER_REPORT.key(response.body) || response.body
+        response.body
       end
     end
 
@@ -40,9 +40,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [WEATHER_REPORT]
+      # @param request [Types::Enum::WeatherReport]
       # @param request_options [RequestOptions]
-      # @return [WEATHER_REPORT]
+      # @return [Types::Enum::WeatherReport]
       def get_and_return_enum(request:, request_options: nil)
         Async do
           response = @request_client.conn.post("/enum") do |req|
@@ -51,7 +51,7 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
-          Types::Enum::WEATHER_REPORT.key(response.body) || response.body
+          response.body
         end
       end
     end

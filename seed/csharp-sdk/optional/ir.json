@@ -235,6 +235,7 @@
     "sharedTypes": []
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_optional": {
       "name": {
@@ -256,6 +257,7 @@
           "safeName": "Optional"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -311,6 +313,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

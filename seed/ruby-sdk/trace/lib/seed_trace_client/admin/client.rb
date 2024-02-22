@@ -25,7 +25,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [Submission::SUBMISSION_ID]
-    # @param request [Hash] Request of type Submission::TestSubmissionStatus, as a Hash
+    # @param request [Submission::TestSubmissionStatus]
     # @param request_options [RequestOptions]
     # @return [Void]
     def update_test_submission_status(submission_id:, request:, request_options: nil)
@@ -55,7 +55,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [Submission::SUBMISSION_ID]
-    # @param request [Hash] Request of type Submission::WorkspaceSubmissionStatus, as a Hash
+    # @param request [Submission::WorkspaceSubmissionStatus]
     # @param request_options [RequestOptions]
     # @return [Void]
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)
@@ -233,7 +233,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [Submission::SUBMISSION_ID]
-    # @param request [Hash] Request of type Submission::TestSubmissionStatus, as a Hash
+    # @param request [Submission::TestSubmissionStatus]
     # @param request_options [RequestOptions]
     # @return [Void]
     def update_test_submission_status(submission_id:, request:, request_options: nil)
@@ -267,7 +267,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [Submission::SUBMISSION_ID]
-    # @param request [Hash] Request of type Submission::WorkspaceSubmissionStatus, as a Hash
+    # @param request [Submission::WorkspaceSubmissionStatus]
     # @param request_options [RequestOptions]
     # @return [Void]
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)

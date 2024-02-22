@@ -37,7 +37,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"maybeString\": \"example\",\n    \"integer\": 0,\n    \"maybeInteger\": 0,\n    \"listOfStrings\": [\n        \"example\"\n    ],\n    \"setOfStrings\": [\n        \"example\"\n    ],\n    \"optionalListOfStrings\": [\n        \"example\"\n    ],\n    \"optionalSetOfStrings\": [\n        \"example\"\n    ],\n    \"maybeList\": \"example\",\n    \"maybeListOrSet\": \"example\",\n    \"listOfObjects\": [\n        {\n            \"foo\": \"example\"\n        }\n    ]\n}",
+              "raw": "{\n    \"maybeString\": \"example\",\n    \"integer\": 0,\n    \"maybeInteger\": 0,\n    \"optionalListOfStrings\": [\n        \"example\"\n    ],\n    \"listOfObjects\": [\n        {\n            \"foo\": \"example\"\n        }\n    ]\n}",
               "options": {
                 "raw": {
                   "language": "json"

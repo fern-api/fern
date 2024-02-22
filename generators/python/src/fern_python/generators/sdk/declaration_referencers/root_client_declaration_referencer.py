@@ -4,8 +4,8 @@ from .sdk_declaration_referencer import SdkDeclarationReferencer
 
 
 class RootClientDeclarationReferencer(SdkDeclarationReferencer[None]):
-    def __init__(self, root_class_name: str, root_client_filename: str):
-        super().__init__()
+    def __init__(self, root_class_name: str, root_client_filename: str, skip_resources_module: bool):
+        super().__init__(skip_resources_module=skip_resources_module)
         self._root_class_name = root_class_name
         self._root_client_filename = root_client_filename
 

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";

@@ -1,5 +1,4 @@
-import { LiteralSchemaValue, Schema } from "@fern-fern/openapi-ir-model/finalIr";
-import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension";
@@ -62,10 +61,10 @@ export function convertAsyncSyncOperation({
 
     asyncOperation.headers.push({
         name: headerToIgnore,
-        schema: Schema.literal({
+        schema: SchemaWithExample.literal({
             nameOverride: undefined,
             generatedName: getGeneratedTypeName([headerToIgnore]),
-            description: null,
+            description: undefined,
             value: LiteralSchemaValue.string(headerValue),
             groupName: undefined
         }),

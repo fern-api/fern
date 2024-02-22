@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { serialization } from "@fern-api/openapi-ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { getOpenAPIIRFromOpenAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
@@ -25,7 +26,10 @@ export async function generateOpenAPIIrForWorkspaces({
                 const openAPIIr = getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
 
                 const irOutputFilePath = path.resolve(irFilepath);
-                await writeFile(irOutputFilePath, await stringifyLargeObject(openAPIIr, { pretty: true }));
+                const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {
+                    skipValidation: true
+                });
+                await writeFile(irOutputFilePath, await stringifyLargeObject(openApiIrJson, { pretty: true }));
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

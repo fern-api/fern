@@ -9,7 +9,27 @@ import com.seed.literal.core.Environment;
 public final class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String version = null;
+
+    private String auditLogging = null;
+
     private Environment environment;
+
+    /**
+     * Sets version
+     */
+    public SeedLiteralClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
+    /**
+     * Sets auditLogging
+     */
+    public SeedLiteralClientBuilder auditLogging(String auditLogging) {
+        this.auditLogging = auditLogging;
+        return this;
+    }
 
     public SeedLiteralClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -17,6 +37,8 @@ public final class SeedLiteralClientBuilder {
     }
 
     public SeedLiteralClient build() {
+        this.clientOptionsBuilder.addHeader("X-API-Version", this.version);
+        this.clientOptionsBuilder.addHeader("X-API-Enable-Audit-Logging", this.auditLogging);
         clientOptionsBuilder.environment(this.environment);
         return new SeedLiteralClient(clientOptionsBuilder.build());
     }

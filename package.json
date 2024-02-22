@@ -46,6 +46,7 @@
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
     "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)",
     "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
+    "openapi-ir:generate": "yarn workspace @fern-api/openapi-ir-sdk generate",
     "seed-config:generate": "yarn workspace @fern-api/seed-cli generate"
   },
   "devDependencies": {
@@ -100,6 +101,7 @@
     }
   },
   "dependencies": {
-    "terminal-link": "^3.0.0"
+    "terminal-link": "^3.0.0",
+    "workspace": "^0.0.1-preview.1"
   }
 }

@@ -16,7 +16,7 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Hash] Request of type Types::Union::Animal, as a Hash
+      # @param request [Types::Union::Animal]
       # @param request_options [RequestOptions]
       # @return [Types::Union::Animal]
       def get_and_return_union(request:, request_options: nil)
@@ -40,7 +40,7 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Hash] Request of type Types::Union::Animal, as a Hash
+      # @param request [Types::Union::Animal]
       # @param request_options [RequestOptions]
       # @return [Types::Union::Animal]
       def get_and_return_union(request:, request_options: nil)

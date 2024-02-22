@@ -40,7 +40,7 @@ function addTestCommand(cli: Argv) {
                 .option("custom-fixture", {
                     type: "string",
                     demandOption: false,
-                    description: "Path to the api directory"
+                    description: "Path to the API directory"
                 })
                 .option("fixture", {
                     type: "array",
@@ -49,6 +49,11 @@ function addTestCommand(cli: Argv) {
                     choices: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
+                })
+                .option("outputFolder", {
+                    type: "string",
+                    demandOption: false,
+                    description: "A specific output folder to test against"
                 })
                 .option("keepDocker", {
                     type: "boolean",
@@ -73,6 +78,7 @@ function addTestCommand(cli: Argv) {
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
 
+            let failurePresent = false;
             for (const workspace of workspaces) {
                 if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
                     continue;
@@ -109,7 +115,7 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts
                     });
                 } else {
-                    await testWorkspaceFixtures({
+                    const passed = await testWorkspaceFixtures({
                         workspace,
                         fixtures: argv.fixture,
                         irVersion: workspace.workspaceConfig.irVersion,
@@ -120,9 +126,15 @@ function addTestCommand(cli: Argv) {
                         numDockers: argv.parallel,
                         taskContextFactory,
                         keepDocker: argv.keepDocker,
-                        skipScripts: argv.skipScripts
+                        skipScripts: argv.skipScripts,
+                        outputFolder: argv.outputFolder
                     });
+                    failurePresent = failurePresent || !passed;
                 }
+            }
+
+            if (failurePresent) {
+                process.exit(1);
             }
         }
     );

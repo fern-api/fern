@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { CustomCodeSample } from "@fern-fern/openapi-ir-model/finalIr";
+import { CustomCodeSample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "./getExtension";
 import { ReadmeOpenAPIExtension } from "./readmeExtensions";
@@ -42,14 +42,15 @@ export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject)
 
     const customCodeSamples: CustomCodeSample[] = [];
     for (const codeSample of readmeCodeSamples) {
-        customCodeSamples.push({
-            type: "language",
-            name: codeSample.name,
-            language: codeSample.language,
-            code: codeSample.code,
-            install: codeSample.install,
-            description: undefined
-        });
+        customCodeSamples.push(
+            CustomCodeSample.language({
+                name: codeSample.name,
+                language: codeSample.language,
+                code: codeSample.code,
+                install: codeSample.install,
+                description: undefined
+            })
+        );
     }
     return customCodeSamples;
 }

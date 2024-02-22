@@ -8,13 +8,6 @@ export interface MyRequest {
     maybeString?: string;
     integer: number;
     maybeInteger?: number;
-    listOfStrings: string[];
-    setOfStrings: Set<string>;
     optionalListOfStrings?: string[];
-    optionalSetOfStrings?: Set<string>;
-    maybeList: SeedFileUpload.MaybeList;
-    optionalMaybeList?: SeedFileUpload.MaybeList;
-    maybeListOrSet: SeedFileUpload.MaybeListOrSet;
-    optionalMaybeListOrSet?: SeedFileUpload.MaybeListOrSet;
     listOfObjects: SeedFileUpload.MyObject[];
 }

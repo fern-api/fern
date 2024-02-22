@@ -1,6 +1,5 @@
+import { Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import { Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AsyncAPI } from "../asyncapi";
 import { generateIr } from "../v3/generateIr";

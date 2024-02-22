@@ -1321,6 +1321,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_a": {
       "name": {
@@ -1342,6 +1343,7 @@
           "safeName": "A"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1412,6 +1414,7 @@
           "safeName": "Ast"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -1471,6 +1474,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:ImportingA",
       "type_:RootType"

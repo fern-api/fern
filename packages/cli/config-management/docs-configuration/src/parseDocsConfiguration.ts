@@ -131,7 +131,7 @@ export async function parseDocsConfiguration({
         favicon,
         backgroundImage,
         colors: convertColorsConfiguration(colors ?? {}, context),
-        navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
+        navbarLinks,
         typography,
         layout: convertLayoutConfig(layout),
         css,
@@ -503,6 +503,13 @@ async function convertNavigationItem({
                 rawConfig.snippets != null ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets }) : undefined
         };
     }
+    if (isRawLinkConfig(rawConfig)) {
+        return {
+            type: "link",
+            text: rawConfig.text,
+            url: rawConfig.url
+        };
+    }
     assertNever(rawConfig);
 }
 
@@ -534,6 +541,11 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
     return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
+function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as RawDocs.LinkConfiguration).url != null;
+}
+
 async function convertImageReference({
     rawImageReference,
     absoluteFilepathToDocsConfig
@@ -547,27 +559,6 @@ async function convertImageReference({
             rawUnresolvedFilepath: rawImageReference
         })
     };
-}
-
-function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.NavbarLink[] {
-    return rawConfig.map((rawNavbarLink) => {
-        switch (rawNavbarLink.type) {
-            case "primary":
-                return {
-                    type: "primary",
-                    text: rawNavbarLink.text,
-                    url: rawNavbarLink.url
-                };
-            case "secondary":
-                return {
-                    type: "secondary",
-                    text: rawNavbarLink.text,
-                    url: rawNavbarLink.url
-                };
-            default:
-                assertNever(rawNavbarLink);
-        }
-    });
 }
 
 async function resolveFilepath({

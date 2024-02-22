@@ -1,12 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import { FullExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import {
     EnumSchemaWithExample,
+    FullExample,
+    FullOneOfExample,
+    KeyValuePair,
     ObjectSchemaWithExample,
+    PrimitiveExample,
     PrimitiveSchemaValueWithExample,
+    SchemaId,
     SchemaWithExample
-} from "@fern-fern/openapi-ir-model/parseIr";
+} from "@fern-api/openapi-ir-sdk";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
@@ -80,10 +83,10 @@ export class ExampleTypeFactory {
                     depth,
                     options
                 });
-                if (result != null && result.type === "array" && result.array.length === 0) {
+                if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
                 }
-                if (result != null && result.type === "map" && result.map.length === 0) {
+                if (result != null && result.type === "map" && result.value.length === 0) {
                     return undefined;
                 }
                 if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
@@ -106,10 +109,10 @@ export class ExampleTypeFactory {
                     depth,
                     options
                 });
-                if (result != null && result.type === "array" && result.array.length === 0) {
+                if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
                 }
-                if (result != null && result.type === "map" && result.map.length === 0) {
+                if (result != null && result.type === "map" && result.value.length === 0) {
                     return undefined;
                 }
                 if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
@@ -138,7 +141,7 @@ export class ExampleTypeFactory {
                 return undefined;
             }
             case "oneOf":
-                switch (schema.oneOf.type) {
+                switch (schema.value.type) {
                     case "discriminated": {
                         const result: Record<string, FullExample> = {};
 
@@ -146,10 +149,10 @@ export class ExampleTypeFactory {
                         let requiredProperties: Record<string, SchemaWithExample> = {};
 
                         const fullExample = getFullExampleAsObject(example);
-                        const exampleDiscriminant = fullExample?.[schema.oneOf.discriminantProperty];
-                        const exampleUnionVariantSchema = schema.oneOf.schemas[exampleDiscriminant];
+                        const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
+                        const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        const firstUnionVariant = Object.entries(schema.oneOf.schemas)[0];
+                        const firstUnionVariant = Object.entries(schema.value.schemas)[0];
                         if (
                             exampleDiscriminant != null &&
                             exampleUnionVariantSchema != null &&
@@ -157,20 +160,20 @@ export class ExampleTypeFactory {
                         ) {
                             allProperties = this.getAllProperties(exampleUnionVariantSchema);
                             requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
-                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                            result[schema.value.discriminantProperty] = FullExample.primitive(
                                 PrimitiveExample.string(exampleDiscriminant)
                             );
                         } else if (firstUnionVariant != null && firstUnionVariant[1].type === "object") {
                             allProperties = this.getAllProperties(firstUnionVariant[1]);
                             requiredProperties = this.getAllRequiredProperties(firstUnionVariant[1]);
-                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                            result[schema.value.discriminantProperty] = FullExample.primitive(
                                 PrimitiveExample.string(firstUnionVariant[0])
                             );
                         } else {
                             return undefined;
                         }
 
-                        for (const commonProperty of schema.oneOf.commonProperties) {
+                        for (const commonProperty of schema.value.commonProperties) {
                             allProperties[commonProperty.key] = commonProperty.schema;
                             const resolvedSchema = this.getResolvedSchema(commonProperty.schema);
                             if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
@@ -208,17 +211,14 @@ export class ExampleTypeFactory {
                                 }
                             }
                         }
-                        return FullExample.oneOf({
-                            type: "discriminated",
-                            discriminated: result
-                        });
+                        return FullExample.oneOf(FullOneOfExample.discriminated(result));
                     }
                     case "undisciminated": {
-                        if (schema.oneOf.schemas[0] != null) {
+                        if (schema.value.schemas[0] != null) {
                             // TODO (we should select the oneOf schema based on the example)
                             return this.buildExampleHelper({
                                 example,
-                                schema: schema.oneOf.schemas[0],
+                                schema: schema.value.schemas[0],
                                 visitedSchemaIds,
                                 depth,
                                 options
@@ -406,7 +406,7 @@ export class ExampleTypeFactory {
             case "unknown":
                 return schema.example != null;
             case "oneOf":
-                return Object.values(schema.oneOf.schemas).some((schema) => this.hasExample(schema));
+                return Object.values(schema.value.schemas).some((schema) => this.hasExample(schema));
             default:
                 return false;
         }
@@ -518,11 +518,11 @@ export class ExampleTypeFactory {
                 }
             case "datetime":
                 if (example != null && typeof example === "string") {
-                    return PrimitiveExample.datetime(example);
+                    return PrimitiveExample.datetime(new Date(example));
                 } else if (schema.example != null) {
-                    return PrimitiveExample.datetime(schema.example);
+                    return PrimitiveExample.datetime(new Date(schema.example));
                 } else {
-                    return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
+                    return PrimitiveExample.datetime(new Date("2024-01-15T09:30:00Z"));
                 }
             case "double":
                 if (example != null && typeof example === "number") {
@@ -544,7 +544,7 @@ export class ExampleTypeFactory {
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int(example);
                 } else if (schema.example != null) {
-                    return PrimitiveExample.int(1);
+                    return PrimitiveExample.int(schema.example);
                 } else {
                     return PrimitiveExample.int(1);
                 }

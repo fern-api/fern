@@ -6,15 +6,34 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const FileProperty: core.serialization.ObjectSchema<serializers.FileProperty.Raw, FernIr.FileProperty> =
-    core.serialization.objectWithoutOptionalProperties({
-        key: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
-        isOptional: core.serialization.boolean(),
-    });
+export const FileProperty: core.serialization.Schema<serializers.FileProperty.Raw, FernIr.FileProperty> =
+    core.serialization
+        .union("type", {
+            file: core.serialization.lazyObject(async () => (await import("../../..")).FilePropertySingle),
+            fileArray: core.serialization.lazyObject(async () => (await import("../../..")).FilePropertyArray),
+        })
+        .transform<FernIr.FileProperty>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "file":
+                        return FernIr.FileProperty.file(value);
+                    case "fileArray":
+                        return FernIr.FileProperty.fileArray(value);
+                    default:
+                        return value as FernIr.FileProperty;
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace FileProperty {
-    interface Raw {
-        key: serializers.NameAndWireValue.Raw;
-        isOptional: boolean;
+    type Raw = FileProperty.File | FileProperty.FileArray;
+
+    interface File extends serializers.FilePropertySingle.Raw {
+        type: "file";
+    }
+
+    interface FileArray extends serializers.FilePropertyArray.Raw {
+        type: "fileArray";
     }
 }

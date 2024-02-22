@@ -2,39 +2,38 @@
 
 exports[`x-fern-type x-fern-type parse open api 1`] = `
 {
-  "description": undefined,
+  "description": null,
   "endpoints": [],
   "errors": {},
-  "globalHeaders": undefined,
+  "globalHeaders": null,
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BaseUser": {
-      "description": undefined,
+      "description": null,
       "generatedName": "BaseUser",
-      "groupName": undefined,
+      "groupName": null,
       "key": {
-        "description": undefined,
+        "description": null,
         "generatedName": "BaseUser",
-        "groupName": undefined,
-        "nameOverride": undefined,
+        "groupName": null,
+        "nameOverride": null,
         "schema": {
-          "maxLength": undefined,
-          "minLength": undefined,
+          "maxLength": null,
+          "minLength": null,
           "type": "string",
         },
-        "type": "primitive",
       },
-      "nameOverride": undefined,
+      "nameOverride": null,
       "type": "map",
       "value": {
-        "description": undefined,
+        "description": null,
         "generatedName": "BaseUser",
-        "groupName": undefined,
-        "nameOverride": undefined,
+        "groupName": null,
+        "nameOverride": null,
         "schema": {
-          "maxLength": undefined,
-          "minLength": undefined,
+          "maxLength": null,
+          "minLength": null,
           "type": "string",
         },
         "type": "primitive",
@@ -44,7 +43,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "securitySchemes": {},
   "servers": [],
   "tags": {
-    "orderedTagIds": undefined,
+    "orderedTagIds": null,
     "tagsById": {},
   },
   "title": "Test extension \`x-fern-type\`",

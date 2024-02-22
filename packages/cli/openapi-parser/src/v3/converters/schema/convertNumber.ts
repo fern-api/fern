@@ -1,5 +1,4 @@
-import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
-import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { wrapPrimitive } from "../convertSchemas";
 
 export function convertNumber({
