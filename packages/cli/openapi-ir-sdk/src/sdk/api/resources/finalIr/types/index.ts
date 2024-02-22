@@ -3,6 +3,8 @@ export * from "./GlobalHeader";
 export * from "./Tags";
 export * from "./HttpError";
 export * from "./Webhook";
+export * from "./WebsocketChannel";
+export * from "./WebsocketHandshake";
 export * from "./WebhookHttpMethod";
 export * from "./EndpointAvailability";
 export * from "./Endpoint";

@@ -12,6 +12,7 @@ types:
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
+      channel: list<WebsocketChannel>
       schemas: map<commons.SchemaId, Schema>
       errors: map<commons.StatusCode, HttpError>
       variables: map<string, PrimitiveSchema>
@@ -53,6 +54,21 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
+  
+  WebsocketChannel: 
+    extends: commons.WithDescription
+    properties: 
+      path: string
+      groupName: list<commons.SdkGroupName>
+      summary: optional<string>
+      handshake: WebsocketHandshake
+      publish: optional<Schema>
+      subscribe: optional<Schema>
+    
+  WebsocketHandshake: 
+    properties: 
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
 
   WebhookHttpMethod:
     enum:
