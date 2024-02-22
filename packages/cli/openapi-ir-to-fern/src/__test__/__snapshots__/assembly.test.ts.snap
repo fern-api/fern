@@ -289,6 +289,33 @@ The LLM response data, as well as any context provided in the original request w
       },
     },
     "realtime.yml": {
+      "channel": {
+        "auth": false,
+        "headers": {
+          "Authentication": {
+            "docs": "Authenticate using your AssemblyAI API key.",
+            "name": "authentication",
+            "type": "optional<string>",
+          },
+        },
+        "path": "/",
+        "query-parameters": {
+          "sample_rate": {
+            "docs": "The sample rate of the streamed audio.",
+            "type": "optional<integer>",
+          },
+          "token": {
+            "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+            "type": "optional<string>",
+          },
+          "word_boost": {
+            "docs": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+            "type": "optional<string>",
+          },
+        },
+      },
       "imports": {
         "root": "__package__.yml",
       },
@@ -1320,6 +1347,18 @@ The LLM response data, as well as any context provided in the original request w
       },
     },
     "types": {
+      "": {
+        "docs": undefined,
+        "extends": [
+          "optional<>",
+        ],
+        "properties": {
+          "terminate_session": {
+            "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
+            "type": "boolean",
+          },
+        },
+      },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
         "enum": [

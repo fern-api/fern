@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { isRawAliasDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { buildAuthSchemes } from "./buildAuthSchemes";
+import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
 import { buildGlobalHeaders } from "./buildGlobalHeaders";
 import { buildServices } from "./buildServices";
@@ -29,6 +30,12 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     }
     const { schemaIdsToExclude } = buildServices(context);
     buildWebhooks(context);
+
+    // Add Channels
+    for (const channel of context.ir.channel) {
+        const declarationFile = RelativeFilePath.of(`${channel.groupName.join("/")}.yml`);
+        buildChannel({ channel, context, declarationFile });
+    }
 
     // Add Schemas
     for (const [id, schema] of Object.entries(context.ir.schemas)) {
