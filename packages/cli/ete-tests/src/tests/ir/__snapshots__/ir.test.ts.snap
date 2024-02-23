@@ -1527,6 +1527,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -7874,6 +7875,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -7920,6 +7922,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -8023,6 +8026,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -9764,6 +9768,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -10495,6 +10500,7 @@ exports[`ir {"name":"packages"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -11806,6 +11812,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -11994,6 +12001,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -12906,6 +12914,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         }
                     ],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -15388,6 +15397,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -22261,6 +22271,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         }
                     ],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -23567,6 +23578,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -25062,6 +25074,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -25401,6 +25414,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         }
                     ],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -25964,6 +25978,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -26136,6 +26151,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -26785,6 +26801,7 @@ exports[`ir {"name":"variables"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }

@@ -269,7 +269,8 @@ async function visitEndpoint({
                     example
                 });
             }
-        }
+        },
+        pagination: noop
     });
 }
 

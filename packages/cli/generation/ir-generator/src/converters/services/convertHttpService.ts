@@ -150,7 +150,9 @@ export async function convertHttpService({
                                       workspace
                                   })
                               )
-                            : []
+                            : [],
+                    // TODO: Implement pagination.
+                    pagination: undefined
                 };
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
                 return httpEndpoint;

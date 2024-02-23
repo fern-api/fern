@@ -175,6 +175,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": undefined,
           "path": {
             "head": "/check/",
             "parts": [

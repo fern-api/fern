@@ -271,6 +271,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "boot_instance",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/boot",
             "parts": [],
@@ -489,6 +490,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_presigned_url",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/presigned-url",
             "parts": [],
