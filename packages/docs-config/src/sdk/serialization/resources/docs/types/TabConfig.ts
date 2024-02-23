@@ -10,7 +10,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
     core.serialization.object({
         displayName: core.serialization.property("display-name", core.serialization.string()),
         icon: core.serialization.string(),
-        slug: core.serialization.string().optional(),
+        slug: core.serialization.string().optional()
     });
 
 export declare namespace TabConfig {

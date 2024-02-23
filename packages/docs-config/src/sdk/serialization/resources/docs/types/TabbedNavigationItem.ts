@@ -11,7 +11,7 @@ export const TabbedNavigationItem: core.serialization.ObjectSchema<
     FernDocsConfig.TabbedNavigationItem
 > = core.serialization.object({
     tab: core.serialization.lazy(async () => (await import("../../..")).TabId),
-    layout: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem)),
+    layout: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem))
 });
 
 export declare namespace TabbedNavigationItem {

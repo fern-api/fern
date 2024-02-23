@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const CssConfig: core.serialization.Schema<serializers.CssConfig.Raw, FernDocsConfig.CssConfig> =
     core.serialization.undiscriminatedUnion([
         core.serialization.string(),
-        core.serialization.list(core.serialization.string()),
+        core.serialization.list(core.serialization.string())
     ]);
 
 export declare namespace CssConfig {

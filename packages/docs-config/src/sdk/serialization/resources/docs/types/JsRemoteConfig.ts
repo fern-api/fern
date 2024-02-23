@@ -11,7 +11,7 @@ export const JsRemoteConfig: core.serialization.ObjectSchema<
     FernDocsConfig.JsRemoteConfig
 > = core.serialization.object({
     url: core.serialization.string(),
-    strategy: core.serialization.lazy(async () => (await import("../../..")).JsScriptStrategy).optional(),
+    strategy: core.serialization.lazy(async () => (await import("../../..")).JsScriptStrategy).optional()
 });
 
 export declare namespace JsRemoteConfig {

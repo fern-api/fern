@@ -13,7 +13,7 @@ export const LogoConfiguration: core.serialization.ObjectSchema<
     dark: core.serialization.string().optional(),
     light: core.serialization.string().optional(),
     height: core.serialization.number().optional(),
-    href: core.serialization.string().optional(),
+    href: core.serialization.string().optional()
 });
 
 export declare namespace LogoConfiguration {

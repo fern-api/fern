@@ -7,7 +7,7 @@ export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Sc
     const baseSchema = constructLazyBaseSchema(getter);
     return {
         ...baseSchema,
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -17,7 +17,7 @@ export function constructLazyBaseSchema<Raw, Parsed>(
     return {
         parse: async (raw, opts) => (await getMemoizedSchema(getter)).parse(raw, opts),
         json: async (parsed, opts) => (await getMemoizedSchema(getter)).json(parsed, opts),
-        getType: async () => (await getMemoizedSchema(getter)).getType(),
+        getType: async () => (await getMemoizedSchema(getter)).getType()
     };
 }
 

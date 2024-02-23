@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const FontConfigPath: core.serialization.Schema<serializers.FontConfigPath.Raw, FernDocsConfig.FontConfigPath> =
     core.serialization.undiscriminatedUnion([
         core.serialization.string(),
-        core.serialization.lazyObject(async () => (await import("../../..")).FontConfigVariant),
+        core.serialization.lazyObject(async () => (await import("../../..")).FontConfigVariant)
     ]);
 
 export declare namespace FontConfigPath {

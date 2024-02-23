@@ -13,7 +13,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
     section: core.serialization.string(),
     contents: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem)),
     collapsed: core.serialization.boolean().optional(),
-    slug: core.serialization.string().optional(),
+    slug: core.serialization.string().optional()
 });
 
 export declare namespace SectionConfiguration {

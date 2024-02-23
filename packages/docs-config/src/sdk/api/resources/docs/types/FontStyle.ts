@@ -6,5 +6,5 @@ export type FontStyle = "normal" | "italic";
 
 export const FontStyle = {
     Normal: "normal",
-    Italic: "italic",
+    Italic: "italic"
 } as const;

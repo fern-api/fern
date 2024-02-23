@@ -13,7 +13,7 @@ export const GithubEditThisPageConfig: core.serialization.ObjectSchema<
     host: core.serialization.string().optional(),
     owner: core.serialization.string(),
     repo: core.serialization.string(),
-    branch: core.serialization.string().optional(),
+    branch: core.serialization.string().optional()
 });
 
 export declare namespace GithubEditThisPageConfig {

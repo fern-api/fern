@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const ColorConfig: core.serialization.Schema<serializers.ColorConfig.Raw, FernDocsConfig.ColorConfig> =
     core.serialization.undiscriminatedUnion([
         core.serialization.string(),
-        core.serialization.lazyObject(async () => (await import("../../..")).ColorThemedConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).ColorThemedConfig)
     ]);
 
 export declare namespace ColorConfig {

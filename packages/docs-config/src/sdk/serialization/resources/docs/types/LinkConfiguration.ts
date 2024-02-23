@@ -11,7 +11,7 @@ export const LinkConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.LinkConfiguration
 > = core.serialization.object({
     link: core.serialization.string(),
-    href: core.serialization.string(),
+    href: core.serialization.string()
 });
 
 export declare namespace LinkConfiguration {

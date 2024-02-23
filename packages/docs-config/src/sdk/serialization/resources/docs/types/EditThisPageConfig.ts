@@ -10,7 +10,7 @@ export const EditThisPageConfig: core.serialization.ObjectSchema<
     serializers.EditThisPageConfig.Raw,
     FernDocsConfig.EditThisPageConfig
 > = core.serialization.object({
-    github: core.serialization.lazyObject(async () => (await import("../../..")).GithubEditThisPageConfig).optional(),
+    github: core.serialization.lazyObject(async () => (await import("../../..")).GithubEditThisPageConfig).optional()
 });
 
 export declare namespace EditThisPageConfig {

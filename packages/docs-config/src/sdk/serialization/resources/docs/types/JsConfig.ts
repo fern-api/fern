@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const JsConfig: core.serialization.Schema<serializers.JsConfig.Raw, FernDocsConfig.JsConfig> =
     core.serialization.undiscriminatedUnion([
         core.serialization.lazy(async () => (await import("../../..")).JsConfigOptions),
-        core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).JsConfigOptions)),
+        core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).JsConfigOptions))
     ]);
 
 export declare namespace JsConfig {

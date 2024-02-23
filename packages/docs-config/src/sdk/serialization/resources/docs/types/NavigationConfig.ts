@@ -11,7 +11,7 @@ export const NavigationConfig: core.serialization.Schema<
     FernDocsConfig.NavigationConfig
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazy(async () => (await import("../../..")).UntabbedNavigationConifg),
-    core.serialization.lazy(async () => (await import("../../..")).TabbedNavigationConfig),
+    core.serialization.lazy(async () => (await import("../../..")).TabbedNavigationConfig)
 ]);
 
 export declare namespace NavigationConfig {

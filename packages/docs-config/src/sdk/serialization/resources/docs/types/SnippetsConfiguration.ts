@@ -13,7 +13,7 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     python: core.serialization.string().optional(),
     typescript: core.serialization.string().optional(),
     go: core.serialization.string().optional(),
-    java: core.serialization.string().optional(),
+    java: core.serialization.string().optional()
 });
 
 export declare namespace SnippetsConfiguration {
