@@ -57,7 +57,9 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/create"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -106,8 +108,8 @@ class PlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        multiple_field: typing.Union[str, typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -122,15 +124,17 @@ class PlaylistClient:
 
             - multi_line_docs: str. I'm a multiline
                                     description
-            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
-            - multiple_field: typing.Union[str, typing.List[str]].
+            - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/all"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -183,7 +187,8 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -238,7 +243,8 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -290,7 +296,8 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -345,7 +352,9 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/create"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -394,8 +403,8 @@ class AsyncPlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        multiple_field: typing.Union[str, typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -410,15 +419,17 @@ class AsyncPlaylistClient:
 
             - multi_line_docs: str. I'm a multiline
                                     description
-            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
-            - multiple_field: typing.Union[str, typing.List[str]].
+            - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/all"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -471,7 +482,8 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -526,7 +538,8 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -578,7 +591,8 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None

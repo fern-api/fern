@@ -22,13 +22,14 @@ export class QueryParam {
     constructor(protected readonly _options: QueryParam.Options) {}
 
     public async send(
-        request: SeedEnum.SendEnumAsQueryParamRequest = {},
+        request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { operand } = request;
+        const { operand, maybeOperand } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (operand != null) {
-            _queryParams["operand"] = operand;
+        _queryParams["operand"] = operand;
+        if (maybeOperand != null) {
+            _queryParams["maybeOperand"] = maybeOperand;
         }
 
         const _response = await core.fetcher({
@@ -73,16 +74,22 @@ export class QueryParam {
     }
 
     public async sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest = {},
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { operand } = request;
+        const { operand, maybeOperand } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (operand != null) {
-            if (Array.isArray(operand)) {
-                _queryParams["operand"] = operand.map((item) => item);
+        if (Array.isArray(operand)) {
+            _queryParams["operand"] = operand.map((item) => item);
+        } else {
+            _queryParams["operand"] = operand;
+        }
+
+        if (maybeOperand != null) {
+            if (Array.isArray(maybeOperand)) {
+                _queryParams["maybeOperand"] = maybeOperand.map((item) => item);
             } else {
-                _queryParams["operand"] = operand;
+                _queryParams["maybeOperand"] = maybeOperand;
             }
         }
 

@@ -16,7 +16,7 @@
         },
         {
             "id": {
-                "path": "/path/{operand}",
+                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 "method": "POST"
             },
             "snippet": {

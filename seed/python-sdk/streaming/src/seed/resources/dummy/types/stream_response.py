@@ -13,7 +13,7 @@ except ImportError:
 
 class StreamResponse(pydantic.BaseModel):
     id: str
-    name: typing.Optional[str]
+    name: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

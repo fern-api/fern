@@ -34,7 +34,7 @@ class HttpMethodsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -112,7 +112,7 @@ class HttpMethodsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -155,7 +155,7 @@ class HttpMethodsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "PATCH",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -194,7 +194,7 @@ class HttpMethodsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -232,7 +232,7 @@ class AsyncHttpMethodsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -310,7 +310,7 @@ class AsyncHttpMethodsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -353,7 +353,7 @@ class AsyncHttpMethodsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PATCH",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -392,7 +392,7 @@ class AsyncHttpMethodsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

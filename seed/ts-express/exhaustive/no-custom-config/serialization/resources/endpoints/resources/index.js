@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.primitive = exports.params = exports.httpMethods = exports.container = void 0;
+exports.primitive = exports.params = exports.object = exports.httpMethods = exports.container = void 0;
 exports.container = __importStar(require("./container"));
 exports.httpMethods = __importStar(require("./httpMethods"));
+exports.object = __importStar(require("./object"));
 exports.params = __importStar(require("./params"));
 exports.primitive = __importStar(require("./primitive"));

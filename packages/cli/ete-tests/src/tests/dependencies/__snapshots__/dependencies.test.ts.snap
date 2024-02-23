@@ -421,6 +421,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -770,4 +771,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `1412392`;
+exports[`dependencies file dependencies 1`] = `1412752`;

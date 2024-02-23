@@ -529,6 +529,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_direct_thread",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -1208,6 +1209,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "find",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],

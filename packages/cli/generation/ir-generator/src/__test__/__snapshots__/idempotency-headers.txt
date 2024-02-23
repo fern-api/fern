@@ -420,6 +420,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -769,6 +770,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "delete",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [

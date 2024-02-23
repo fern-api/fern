@@ -7,11 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
-## [0.16.0] - 2024-02-12
-- Feature: The generator now supports whitelabelling. When this is turned on, 
-  there will be no mention of Fern in the generated code. 
+## [0.17.0-rc0] - 2024-02-21
 
-  **Note**: You must be on the enterprise tier to enable this mode. 
+- Fix: Package documentation is now generated into the correct package's `doc.go`.
+- Feature: Add support for generated endpoint snippets.
+  - The snippets will be available in the API reference documentation, as well as the
+    snippets API.
+  - The snippets are _not_ embedded in the SDK itself (yet).
+
+```go
+import (
+  context "context"
+  time "time"
+  acme "github.com/acme/acme-go"
+  acmeclient "github.com/acme/acme-go/client"
+  option "github.com/acme/acme-go/option"
+)
+
+client := acmeclient.NewClient(
+  option.WithToken(
+    "<YOUR_AUTH_TOKEN>",
+  ),
+)
+response, err := client.User.Create(
+  context.TODO(),
+  &acme.CreateUserRequest{
+    Username: "john",
+    Language: acme.LanguageEnglish,
+    Age:      acme.Int(32),
+    Birthday: acme.MustParseDate(
+      "1980-06-01"
+    ),
+  },
+)
+```
+
+## [0.16.0] - 2024-02-12
+
+- Feature: The generator now supports whitelabelling. When this is turned on,
+  there will be no mention of Fern in the generated code.
+
+  **Note**: You must be on the enterprise tier to enable this mode.
 
 ## [0.15.0] - 2024-02-09
 

@@ -142,7 +142,64 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
           "displayName": undefined,
           "docs": undefined,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "_visit": [Function],
+              "codeSamples": undefined,
+              "docs": undefined,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "hot",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": {
+                          "original": "hot",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": undefined,
+              "queryParameters": [],
+              "request": undefined,
+              "response": {
+                "_visit": [Function],
+                "body": undefined,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/check/",
+            },
+          ],
           "fullPath": {
             "head": "/check/",
             "parts": [
@@ -175,6 +232,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": undefined,
           "path": {
             "head": "/check/",
             "parts": [

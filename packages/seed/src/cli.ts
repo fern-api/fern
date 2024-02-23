@@ -50,6 +50,11 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
+                .option("outputFolder", {
+                    type: "string",
+                    demandOption: false,
+                    description: "A specific output folder to test against"
+                })
                 .option("keepDocker", {
                     type: "boolean",
                     demandOption: false,
@@ -121,7 +126,8 @@ function addTestCommand(cli: Argv) {
                         numDockers: argv.parallel,
                         taskContextFactory,
                         keepDocker: argv.keepDocker,
-                        skipScripts: argv.skipScripts
+                        skipScripts: argv.skipScripts,
+                        outputFolder: argv.outputFolder
                     });
                     failurePresent = failurePresent || !passed;
                 }

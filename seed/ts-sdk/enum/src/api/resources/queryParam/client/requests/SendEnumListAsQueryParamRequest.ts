@@ -5,5 +5,6 @@
 import * as SeedEnum from "../../../..";
 
 export interface SendEnumListAsQueryParamRequest {
-    operand?: SeedEnum.Operand | SeedEnum.Operand[];
+    operand: SeedEnum.Operand | SeedEnum.Operand[];
+    maybeOperand?: SeedEnum.Operand | SeedEnum.Operand[];
 }

@@ -5,6 +5,7 @@ import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
 import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
+import { PaginationSchema } from "./PaginationSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 
 export const HttpEndpointSchema = DeclarationSchema.extend({
@@ -19,7 +20,8 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     response: z.optional(HttpResponseSchema),
     "response-stream": z.optional(z.union([z.string(), HttpResponseStreamSchema])),
     errors: z.optional(ResponseErrorsSchema),
-    examples: z.optional(z.array(ExampleEndpointCallSchema))
+    examples: z.optional(z.array(ExampleEndpointCallSchema)),
+    pagination: z.optional(z.union([PaginationSchema, z.boolean()]))
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;

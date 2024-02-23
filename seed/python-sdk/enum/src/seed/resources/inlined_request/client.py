@@ -47,7 +47,7 @@ class InlinedRequestClient:
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
         client.inlined_request.send(operand=Operand., )
         """
-        _request: typing.Dict[str, typing.Any] = {"operand": operand.value, "operandOrColor": operand_or_color}
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
         if maybe_operand is not OMIT:
             _request["maybeOperand"] = maybe_operand.value if maybe_operand is not None else None
         if maybe_operand_or_color is not OMIT:
@@ -116,7 +116,7 @@ class AsyncInlinedRequestClient:
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
         await client.inlined_request.send(operand=Operand., )
         """
-        _request: typing.Dict[str, typing.Any] = {"operand": operand.value, "operandOrColor": operand_or_color}
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
         if maybe_operand is not OMIT:
             _request["maybeOperand"] = maybe_operand.value if maybe_operand is not None else None
         if maybe_operand_or_color is not OMIT:

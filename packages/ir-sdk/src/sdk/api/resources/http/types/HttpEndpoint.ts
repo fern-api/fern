@@ -23,4 +23,5 @@ export interface HttpEndpoint extends FernIr.Declaration {
     auth: boolean;
     idempotent: boolean;
     examples: FernIr.HttpEndpointExample[];
+    pagination: FernIr.Pagination | undefined;
 }

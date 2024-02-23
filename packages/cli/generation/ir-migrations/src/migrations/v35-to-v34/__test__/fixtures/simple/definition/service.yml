@@ -1,17 +1,26 @@
+types:
+  User:
+    properties:
+      name: string
+
+  ListUsersResponse:
+    properties:
+      nextPage: optional<string>
+      users: list<User>
+
 service:
   auth: false
   base-path: /
   endpoints:
-    check:
+    listUsers:
       method: GET
-      path: /check/{id}
-      path-parameters:
-        id: string
+      path: /users
+      pagination:
+        page: $request.cursor
+        next: $response.nextPage
+        results: $response.users
       request:
-        name: CheckRequest
-        body:
-          properties:
-            file: file
-            fileList: list<file>
-            maybeFile: optional<file>
-            maybeFileList: optional<list<file>>
+        name: ListUsersRequest
+        query-parameters:
+          cursor: string
+      response: ListUsersResponse

@@ -32,10 +32,12 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        in_endpoint: Optional[bool] = False,
     ) -> AST.TypeHint:
         return self._type_reference_to_type_hint_converter.get_type_hint_for_type_reference(
             type_reference,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            in_endpoint=in_endpoint,
         )
 
     def get_class_reference_for_type_id(

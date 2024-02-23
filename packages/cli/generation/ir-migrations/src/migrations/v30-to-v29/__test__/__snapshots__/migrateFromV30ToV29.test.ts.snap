@@ -148,6 +148,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "errors": [],
           "examples": [
             {
+              "_visit": [Function],
               "codeSamples": undefined,
               "docs": undefined,
               "endpointHeaders": [
@@ -211,7 +212,76 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
+              "type": "provided",
               "url": "//check/id-2sdx82h",
+            },
+            {
+              "_visit": [Function],
+              "codeSamples": undefined,
+              "docs": undefined,
+              "endpointHeaders": [
+                {
+                  "value": {
+                    "jsonExample": "viciously",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "viciously",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "wireKey": "X-API-Version",
+                },
+              ],
+              "endpointPathParameters": [
+                {
+                  "key": "id",
+                  "value": {
+                    "jsonExample": "till",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "till",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": undefined,
+              "queryParameters": [
+                {
+                  "value": {
+                    "jsonExample": "huzzah",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "huzzah",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "wireKey": "filter",
+                },
+              ],
+              "request": undefined,
+              "response": {
+                "_visit": [Function],
+                "body": undefined,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/check/",
             },
           ],
           "fullPath": {

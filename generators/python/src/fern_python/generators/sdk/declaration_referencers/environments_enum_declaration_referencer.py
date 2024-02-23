@@ -4,8 +4,8 @@ from .sdk_declaration_referencer import SdkDeclarationReferencer
 
 
 class EnvironmentsEnumDeclarationReferencer(SdkDeclarationReferencer[None]):
-    def __init__(self, client_class_name: str):
-        super().__init__()
+    def __init__(self, client_class_name: str, skip_resources_module: bool):
+        super().__init__(skip_resources_module=skip_resources_module)
         self._client_class_name = client_class_name
 
     def get_filepath(self, *, name: None) -> Filepath:

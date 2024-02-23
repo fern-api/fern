@@ -27,14 +27,16 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         for property in self._get_all_properties_for_inlined_request_body():
             if not self._is_type_literal(property.value_type):
                 type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    property.value_type
+                    property.value_type,
+                    in_endpoint=True,
                 )
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
                         docs=property.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            property.value_type
+                            property.value_type,
+                            in_endpoint=True,
                         ),
                         initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                     ),
@@ -89,7 +91,8 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def _are_any_properties_optional(self) -> bool:
         return any(
             self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                body_property.value_type
+                body_property.value_type,
+                in_endpoint=True,
             ).is_optional
             for body_property in self._get_all_properties_for_inlined_request_body()
         )
@@ -105,7 +108,8 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         required_properties: List[ir_types.InlinedRequestBodyProperty] = []
         for body_property in self._get_all_properties_for_inlined_request_body():
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                body_property.value_type
+                body_property.value_type,
+                in_endpoint=True,
             )
             if type_hint.is_optional:
                 optional_properties.append(body_property)
@@ -123,11 +127,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 with writer.indent():
                     for required_property in required_properties:
                         literal_value = self._context.get_literal_value(reference=required_property.value_type)
-                        if self._context.resolved_schema_is_enum(reference=required_property.value_type):
-                            writer.write_line(
-                                f'"{required_property.name.wire_value}": {self._get_property_name(required_property)}.value,'
-                            )
-                        elif literal_value is not None and type(literal_value) is str:
+                        if literal_value is not None and type(literal_value) is str:
                             writer.write_line(f'"{required_property.name.wire_value}": "{literal_value}",')
                         elif literal_value is not None and type(literal_value) is bool:
                             writer.write_line(f'"{required_property.name.wire_value}": {literal_value},')

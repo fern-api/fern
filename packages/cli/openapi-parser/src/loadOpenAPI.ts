@@ -8,7 +8,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { mergeWith } from "lodash-es";
 import { OpenAPI } from "openapi-types";
-import { FernOpenAPIExtension } from "./v3/extensions/fernExtensions";
+import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
 
 const XFernStreaming: NodeType = {
     properties: {

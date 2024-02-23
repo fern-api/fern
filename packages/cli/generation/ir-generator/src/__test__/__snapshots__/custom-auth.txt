@@ -604,6 +604,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_custom_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/custom-auth",
             "parts": [],
@@ -1012,6 +1013,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_custom_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/custom-auth",
             "parts": [],

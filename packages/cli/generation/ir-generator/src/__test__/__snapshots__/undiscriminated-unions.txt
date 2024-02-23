@@ -334,6 +334,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],

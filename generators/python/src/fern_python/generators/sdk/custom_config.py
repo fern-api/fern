@@ -11,6 +11,7 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     smart_union: bool = True
     include_union_utils: bool = False
     wrapped_aliases: bool = False
+    require_optional_fields: bool = False
 
 
 class SDKCustomConfig(pydantic.BaseModel):
@@ -25,6 +26,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
+    # Feature flag that improves imports in the
+    # Python SDK by removing nested `resources` directoy
+    improved_imports: bool = False
 
     class Config:
         extra = pydantic.Extra.forbid

@@ -167,7 +167,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                                     .getDiscriminantValue()
                                     .getName()
                                     .getPascalCase()
-                                    .getUnsafeName() + "Value");
+                                    .getSafeName() + "Value");
         }
 
         @Override

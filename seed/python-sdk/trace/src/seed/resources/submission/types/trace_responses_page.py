@@ -14,10 +14,11 @@ except ImportError:
 
 class TraceResponsesPage(pydantic.BaseModel):
     offset: typing.Optional[int] = pydantic.Field(
+        default=None,
         description=(
             "If present, use this to load subseqent pages.\n"
             "The offset is the id of the next trace response to load.\n"
-        )
+        ),
     )
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 

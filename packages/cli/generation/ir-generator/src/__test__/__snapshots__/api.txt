@@ -710,6 +710,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/create-movie",
             "parts": [],
@@ -1929,6 +1930,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -4556,6 +4558,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4640,6 +4643,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4802,6 +4806,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4964,6 +4969,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -5088,6 +5094,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "endpoint",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -5397,6 +5404,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "unknown_request",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],

@@ -66,6 +66,7 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
             context=context,
+            improved_imports=False,
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -139,7 +140,7 @@ class PydanticModelGenerator(AbstractGenerator):
     ) -> bool:
         return False
 
-    def _build_snippet_writer(self, context: PydanticGeneratorContext) -> SnippetWriter:
+    def _build_snippet_writer(self, context: PydanticGeneratorContext, improved_imports: bool = False) -> SnippetWriter:
         """
         Note that this function is a copy of the function with the same name in
         the fern_python.utils package. This is redeclared here to prevent an import
@@ -147,6 +148,7 @@ class PydanticModelGenerator(AbstractGenerator):
         """
         snippet_writer = SnippetWriter(
             context=context,
+            improved_imports=improved_imports,
         )
 
         type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(

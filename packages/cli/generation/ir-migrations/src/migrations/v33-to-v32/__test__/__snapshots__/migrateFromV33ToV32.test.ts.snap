@@ -148,6 +148,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
           "errors": [],
           "examples": [
             {
+              "_visit": [Function],
               "codeSamples": undefined,
               "docs": undefined,
               "endpointHeaders": [],
@@ -346,7 +347,249 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
+              "type": "provided",
               "url": "//check/id-2sdx82h",
+            },
+            {
+              "_visit": [Function],
+              "codeSamples": undefined,
+              "docs": undefined,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "consequently",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": {
+                          "original": "consequently",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": undefined,
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "id",
+                        "unsafeName": "id",
+                      },
+                      "originalName": "id",
+                      "pascalCase": {
+                        "safeName": "ID",
+                        "unsafeName": "ID",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ID",
+                        "unsafeName": "ID",
+                      },
+                      "snakeCase": {
+                        "safeName": "id",
+                        "unsafeName": "id",
+                      },
+                    },
+                    "wireValue": "id",
+                  },
+                  "value": {
+                    "jsonExample": "3bff9862-ac2f-4b4f-a4f0-d9cd42208e2c",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "type": "uuid",
+                        "uuid": "3bff9862-ac2f-4b4f-a4f0-d9cd42208e2c",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "limit",
+                        "unsafeName": "limit",
+                      },
+                      "originalName": "limit",
+                      "pascalCase": {
+                        "safeName": "Limit",
+                        "unsafeName": "Limit",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LIMIT",
+                        "unsafeName": "LIMIT",
+                      },
+                      "snakeCase": {
+                        "safeName": "limit",
+                        "unsafeName": "limit",
+                      },
+                    },
+                    "wireValue": "limit",
+                  },
+                  "value": {
+                    "jsonExample": 8383155635486720,
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "integer": 8383155635486720,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "date",
+                        "unsafeName": "date",
+                      },
+                      "originalName": "date",
+                      "pascalCase": {
+                        "safeName": "Date",
+                        "unsafeName": "Date",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "DATE",
+                        "unsafeName": "DATE",
+                      },
+                      "snakeCase": {
+                        "safeName": "date",
+                        "unsafeName": "date",
+                      },
+                    },
+                    "wireValue": "date",
+                  },
+                  "value": {
+                    "jsonExample": "Fri Feb 23 2024",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "date": "Fri Feb 23 2024",
+                        "type": "date",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "optionalString",
+                        "unsafeName": "optionalString",
+                      },
+                      "originalName": "optionalString",
+                      "pascalCase": {
+                        "safeName": "OptionalString",
+                        "unsafeName": "OptionalString",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OPTIONAL_STRING",
+                        "unsafeName": "OPTIONAL_STRING",
+                      },
+                      "snakeCase": {
+                        "safeName": "optional_string",
+                        "unsafeName": "optional_string",
+                      },
+                    },
+                    "wireValue": "optionalString",
+                  },
+                  "value": {
+                    "jsonExample": "kindheartedly",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": {
+                          "original": "kindheartedly",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "filter",
+                        "unsafeName": "filter",
+                      },
+                      "originalName": "filter",
+                      "pascalCase": {
+                        "safeName": "Filter",
+                        "unsafeName": "Filter",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILTER",
+                        "unsafeName": "FILTER",
+                      },
+                      "snakeCase": {
+                        "safeName": "filter",
+                        "unsafeName": "filter",
+                      },
+                    },
+                    "wireValue": "filter",
+                  },
+                  "value": {
+                    "jsonExample": "amidst",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": {
+                          "original": "amidst",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "request": undefined,
+              "response": {
+                "_visit": [Function],
+                "body": undefined,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/check/",
             },
           ],
           "fullPath": {
@@ -381,6 +624,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": undefined,
           "path": {
             "head": "/check/",
             "parts": [

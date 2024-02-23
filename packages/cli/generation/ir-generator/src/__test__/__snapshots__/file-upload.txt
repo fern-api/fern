@@ -161,6 +161,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -668,6 +669,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "just_file",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/just-file",
             "parts": [],
@@ -1023,6 +1025,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "just_file_with_query_params",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/just-file-with-query-params",
             "parts": [],

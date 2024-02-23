@@ -193,6 +193,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_dummy",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/dummy",
             "parts": [],

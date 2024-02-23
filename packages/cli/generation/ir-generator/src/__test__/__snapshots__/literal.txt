@@ -1015,6 +1015,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/headers",
             "parts": [],
@@ -2073,6 +2074,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/inlined",
             "parts": [],
@@ -3027,6 +3029,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/path/",
             "parts": [
@@ -3907,6 +3910,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/query",
             "parts": [],
@@ -5462,6 +5466,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/reference",
             "parts": [],

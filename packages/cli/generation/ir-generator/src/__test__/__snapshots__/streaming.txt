@@ -483,6 +483,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "generate_stream",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/generate-stream",
             "parts": [],

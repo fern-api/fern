@@ -25,13 +25,13 @@ class AbstractEndpointsContainerService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_and_return_list_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.List[str]:
+    def get_and_return_list_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.Sequence[str]:
         ...
 
     @abc.abstractmethod
     def get_and_return_list_of_objects(
         self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.Sequence[ObjectWithRequiredField]:
         ...
 
     @abc.abstractmethod
@@ -41,7 +41,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @abc.abstractmethod
     def get_and_return_set_of_objects(
         self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.Sequence[ObjectWithRequiredField]:
         ...
 
     @abc.abstractmethod
@@ -93,7 +93,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         )
 
         @functools.wraps(cls.get_and_return_list_of_primitives)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[str]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[str]:
             try:
                 return cls.get_and_return_list_of_primitives(*args, **kwargs)
             except FernHTTPException as e:
@@ -110,7 +110,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-primitives",
-            response_model=typing.List[str],
+            response_model=typing.Sequence[str],
             description=AbstractEndpointsContainerService.get_and_return_list_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_list_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
@@ -133,7 +133,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         )
 
         @functools.wraps(cls.get_and_return_list_of_objects)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ObjectWithRequiredField]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ObjectWithRequiredField]:
             try:
                 return cls.get_and_return_list_of_objects(*args, **kwargs)
             except FernHTTPException as e:
@@ -150,7 +150,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-objects",
-            response_model=typing.List[ObjectWithRequiredField],
+            response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_list_of_objects.__doc__,
             **get_route_args(cls.get_and_return_list_of_objects, default_tag="endpoints.container"),
         )(wrapper)
@@ -213,7 +213,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         )
 
         @functools.wraps(cls.get_and_return_set_of_objects)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ObjectWithRequiredField]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ObjectWithRequiredField]:
             try:
                 return cls.get_and_return_set_of_objects(*args, **kwargs)
             except FernHTTPException as e:
@@ -230,7 +230,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-objects",
-            response_model=typing.List[ObjectWithRequiredField],
+            response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_set_of_objects.__doc__,
             **get_route_args(cls.get_and_return_set_of_objects, default_tag="endpoints.container"),
         )(wrapper)

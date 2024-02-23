@@ -616,6 +616,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_basic_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/basic-auth",
             "parts": [],
@@ -1024,6 +1025,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_basic_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/basic-auth",
             "parts": [],
