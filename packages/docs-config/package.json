@@ -25,7 +25,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "generate": "fern generate --api docs-config --local && yarn compile && yarn lint:eslint:fix && yarn format"
+    "generate": "fern generate --api docs-config --local && yarn compile"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

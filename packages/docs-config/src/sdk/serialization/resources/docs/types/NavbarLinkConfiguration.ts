@@ -12,7 +12,7 @@ export const NavbarLinkConfiguration: core.serialization.ObjectSchema<
 > = core.serialization.object({
     href: core.serialization.string().optional(),
     url: core.serialization.string().optional(),
-    text: core.serialization.string()
+    text: core.serialization.string(),
 });
 
 export declare namespace NavbarLinkConfiguration {

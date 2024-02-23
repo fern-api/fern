@@ -11,7 +11,7 @@ export const AudiencesConfig: core.serialization.Schema<
     FernDocsConfig.AudiencesConfig
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    core.serialization.list(core.serialization.string())
+    core.serialization.list(core.serialization.string()),
 ]);
 
 export declare namespace AudiencesConfig {

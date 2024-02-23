@@ -12,7 +12,7 @@ export const PageConfiguration: core.serialization.ObjectSchema<
 > = core.serialization.object({
     page: core.serialization.string(),
     path: core.serialization.string(),
-    slug: core.serialization.string().optional()
+    slug: core.serialization.string().optional(),
 });
 
 export declare namespace PageConfiguration {

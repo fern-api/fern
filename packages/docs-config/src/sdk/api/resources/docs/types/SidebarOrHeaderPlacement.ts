@@ -6,5 +6,5 @@ export type SidebarOrHeaderPlacement = "header" | "sidebar";
 
 export const SidebarOrHeaderPlacement = {
     Header: "header",
-    Sidebar: "sidebar"
+    Sidebar: "sidebar",
 } as const;

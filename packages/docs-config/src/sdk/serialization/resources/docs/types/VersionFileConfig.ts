@@ -10,7 +10,7 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
     serializers.VersionFileConfig.Raw,
     FernDocsConfig.VersionFileConfig
 > = core.serialization.object({
-    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig)
+    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig),
 });
 
 export declare namespace VersionFileConfig {

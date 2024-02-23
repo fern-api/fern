@@ -11,7 +11,7 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
         core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).SectionConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).ApiSectionConfiguration),
-        core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration)
+        core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
     ]);
 
 export declare namespace NavigationItem {

@@ -13,11 +13,11 @@ export const NavbarLink: core.serialization.Schema<serializers.NavbarLink.Raw, F
             outlined: core.serialization.lazyObject(async () => (await import("../../..")).NavbarLinkConfiguration),
             minimal: core.serialization.lazyObject(async () => (await import("../../..")).NavbarLinkConfiguration),
             primary: core.serialization.lazyObject(async () => (await import("../../..")).NavbarLinkConfiguration),
-            secondary: core.serialization.lazyObject(async () => (await import("../../..")).NavbarLinkConfiguration)
+            secondary: core.serialization.lazyObject(async () => (await import("../../..")).NavbarLinkConfiguration),
         })
         .transform<FernDocsConfig.NavbarLink>({
             transform: (value) => value,
-            untransform: (value) => value
+            untransform: (value) => value,
         });
 
 export declare namespace NavbarLink {

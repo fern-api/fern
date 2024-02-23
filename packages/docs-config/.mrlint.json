@@ -4,7 +4,7 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "generate": "fern generate --api docs-config --local && yarn compile && yarn lint:eslint:fix && yarn format"
+        "generate": "fern generate --api docs-config --local && yarn compile"
       }
     }
   }

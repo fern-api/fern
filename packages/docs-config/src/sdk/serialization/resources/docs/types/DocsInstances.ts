@@ -17,7 +17,7 @@ export const DocsInstances: core.serialization.ObjectSchema<
     editThisPage: core.serialization.property(
         "edit-this-page",
         core.serialization.lazyObject(async () => (await import("../../..")).EditThisPageConfig).optional()
-    )
+    ),
 });
 
 export declare namespace DocsInstances {

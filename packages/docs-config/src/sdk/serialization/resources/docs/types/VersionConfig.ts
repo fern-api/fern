@@ -13,7 +13,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
     displayName: core.serialization.property("display-name", core.serialization.string()),
     path: core.serialization.string(),
     slug: core.serialization.string().optional(),
-    availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional()
+    availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional(),
 });
 
 export declare namespace VersionConfig {

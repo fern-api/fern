@@ -14,7 +14,7 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     apiName: core.serialization.property("api-name", core.serialization.string().optional()),
     audiences: core.serialization.list(core.serialization.string()).optional(),
     displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
-    snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional()
+    snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional(),
 });
 
 export declare namespace ApiSectionConfiguration {

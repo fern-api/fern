@@ -22,7 +22,7 @@ export class FernDocsConfigError extends Error {
 function buildMessage({
     message,
     statusCode,
-    body
+    body,
 }: {
     message: string | undefined;
     statusCode: number | undefined;

@@ -19,7 +19,7 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         tabsPlacement: core.serialization.property(
             "tabs-placement",
             core.serialization.lazy(async () => (await import("../../..")).SidebarOrHeaderPlacement).optional()
-        )
+        ),
     });
 
 export declare namespace LayoutConfig {

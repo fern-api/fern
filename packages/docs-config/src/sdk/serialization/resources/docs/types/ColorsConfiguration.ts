@@ -11,7 +11,7 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.ColorsConfiguration
 > = core.serialization.object({
     accentPrimary: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
-    background: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    background: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
 });
 
 export declare namespace ColorsConfiguration {
