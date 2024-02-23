@@ -250,7 +250,7 @@ func (s *SnippetWriter) getSnippetForContainer(
 		if exampleContainer.Optional == nil {
 			return nil
 		}
-		if primitive := exampleContainer.Optional.Shape.Primitive; primitive != nil {
+		if primitive := maybePrimitiveExampleTypeReferenceShape(exampleContainer.Optional.Shape); primitive != nil {
 			return s.getSnippetForOptionalPrimitive(primitive)
 		}
 		return s.GetSnippetForExampleTypeReference(exampleContainer.Optional)
@@ -508,6 +508,24 @@ func (s *SnippetWriter) declaredTypeNameToImportedReference(
 		ImportPath: fernFilepathToImportPath(s.baseImportPath, declaredTypeName.FernFilepath),
 		Name:       declaredTypeName.Name.PascalCase.UnsafeName,
 	}
+}
+
+func maybePrimitiveExampleTypeReferenceShape(
+	exampleTypeReferenceShape *ir.ExampleTypeReferenceShape,
+) *ir.ExamplePrimitive {
+	switch exampleTypeReferenceShape.Type {
+	case "primitive":
+		return exampleTypeReferenceShape.Primitive
+	case "container":
+		if exampleTypeReferenceShape.Container.Optional != nil {
+			return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Shape)
+		}
+	case "named":
+		if exampleTypeReferenceShape.Named.Shape.Alias != nil {
+			return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Named.Shape.Alias.Value.Shape)
+		}
+	}
+	return nil
 }
 
 func examplePrimitiveToPointerConstructorName(
