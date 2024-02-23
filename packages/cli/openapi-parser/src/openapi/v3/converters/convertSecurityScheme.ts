@@ -1,12 +1,12 @@
 import { EnumSchema, SecurityScheme } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
-import { getExtension } from "../extensions/getExtension";
 import {
     getBasicSecuritySchemeNameAndEnvvar,
     SecuritySchemeNames

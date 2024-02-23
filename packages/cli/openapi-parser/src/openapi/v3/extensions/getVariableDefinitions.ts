@@ -1,8 +1,8 @@
 import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension";
 import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName";
 import { FernOpenAPIExtension } from "./fernExtensions";
-import { getExtension } from "./getExtension";
 
 export function getVariableDefinitions(document: OpenAPIV3.Document): Record<string, PrimitiveSchema> {
     const variables = getExtension<Record<string, OpenAPIV3.SchemaObject>>(

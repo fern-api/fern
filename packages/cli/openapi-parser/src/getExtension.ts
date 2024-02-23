@@ -1,6 +1,6 @@
-import { OpenAPIExtension } from "./extensions";
-import { FernOpenAPIExtension } from "./fernExtensions";
-import { ReadmeOpenAPIExtension } from "./readmeExtensions";
+import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
+import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
+import { ReadmeOpenAPIExtension } from "./openapi/v3/extensions/readmeExtensions";
 
 export function getExtension<T>(
     object: object,

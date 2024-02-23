@@ -1,11 +1,11 @@
 import { MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExtension } from "../../extensions/getExtension";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 export const APPLICATION_JSON_CONTENT = "application/json";

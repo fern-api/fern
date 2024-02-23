@@ -1,9 +1,9 @@
 import { EndpointSdkName, EndpointWithExample, HttpMethod, Webhook } from "@fern-api/openapi-ir-sdk";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExtension } from "../../extensions/getExtension";
 import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension";
 import { getFernStreamingExtension } from "../../extensions/getFernStreamingExtension";
 import { OperationContext, PathItemContext } from "../contexts";
