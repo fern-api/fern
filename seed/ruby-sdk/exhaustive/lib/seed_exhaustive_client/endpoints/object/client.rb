@@ -126,6 +126,33 @@ module SeedExhaustiveClient
         end
         Types::Object::NestedObjectWithRequiredField.from_json(json_object: response.body)
       end
+
+      # @param request [Array<Hash>] Request of type Array<Types::Object::NestedObjectWithRequiredField>, as a Hash
+      #   * :string (String)
+      #   * :nested_object (Hash)
+      #     * :string (String)
+      #     * :integer (Integer)
+      #     * :long (Long)
+      #     * :double (Float)
+      #     * :bool (Boolean)
+      #     * :datetime (DateTime)
+      #     * :date (Date)
+      #     * :uuid (UUID)
+      #     * :base_64 (String)
+      #     * :list (Array<String>)
+      #     * :set (Set<String>)
+      #     * :map (Hash{Integer => Integer})
+      # @param request_options [RequestOptions]
+      # @return [Types::Object::NestedObjectWithRequiredField]
+      def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
+        response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        end
+        Types::Object::NestedObjectWithRequiredField.from_json(json_object: response.body)
+      end
     end
 
     class AsyncObjectClient
@@ -244,6 +271,35 @@ module SeedExhaustiveClient
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field(request:, request_options: nil)
+        Async do
+          response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+            req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          end
+          Types::Object::NestedObjectWithRequiredField.from_json(json_object: response.body)
+        end
+      end
+
+      # @param request [Array<Hash>] Request of type Array<Types::Object::NestedObjectWithRequiredField>, as a Hash
+      #   * :string (String)
+      #   * :nested_object (Hash)
+      #     * :string (String)
+      #     * :integer (Integer)
+      #     * :long (Long)
+      #     * :double (Float)
+      #     * :bool (Boolean)
+      #     * :datetime (DateTime)
+      #     * :date (Date)
+      #     * :uuid (UUID)
+      #     * :base_64 (String)
+      #     * :list (Array<String>)
+      #     * :set (Set<String>)
+      #     * :map (Hash{Integer => Integer})
+      # @param request_options [RequestOptions]
+      # @return [Types::Object::NestedObjectWithRequiredField]
+      def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
         Async do
           response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

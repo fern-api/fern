@@ -92,7 +92,9 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{jsonable_encoder(problem_id)}"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -133,7 +135,9 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{jsonable_encoder(problem_id)}"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -160,7 +164,7 @@ class ProblemClient:
     def get_default_starter_files(
         self,
         *,
-        input_params: typing.List[VariableTypeAndName],
+        input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         method_name: str,
         request_options: typing.Optional[RequestOptions] = None,
@@ -169,7 +173,7 @@ class ProblemClient:
         Returns default starter files for problem
 
         Parameters:
-            - input_params: typing.List[VariableTypeAndName].
+            - input_params: typing.Sequence[VariableTypeAndName].
 
             - output_type: VariableType.
 
@@ -281,7 +285,9 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{jsonable_encoder(problem_id)}"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -324,7 +330,9 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{jsonable_encoder(problem_id)}"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -351,7 +359,7 @@ class AsyncProblemClient:
     async def get_default_starter_files(
         self,
         *,
-        input_params: typing.List[VariableTypeAndName],
+        input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         method_name: str,
         request_options: typing.Optional[RequestOptions] = None,
@@ -360,7 +368,7 @@ class AsyncProblemClient:
         Returns default starter files for problem
 
         Parameters:
-            - input_params: typing.List[VariableTypeAndName].
+            - input_params: typing.Sequence[VariableTypeAndName].
 
             - output_type: VariableType.
 

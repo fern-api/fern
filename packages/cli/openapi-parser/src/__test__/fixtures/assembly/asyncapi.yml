@@ -70,6 +70,17 @@ channels:
           - $ref: "#/components/messages/FinalTranscript"
           - $ref: "#/components/messages/SessionTerminated"
           - $ref: "#/components/messages/RealtimeError"
+    
+    x-fern-examples: 
+      - messages: 
+        - messageId: SendAudio
+          type: publish
+          payload: 
+            audio_data: "base64-encoded-audio-data"
+        - messageId: TerminateSession
+          type: publish
+          payload: 
+            terminate_session: true
 
 components:
   messages:

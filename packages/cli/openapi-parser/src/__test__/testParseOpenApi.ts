@@ -1,7 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { serialization } from "@fern-api/openapi-ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { parse } from "../parse";
+import { parse } from "../openapi/parse";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -26,7 +27,10 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
                 absolutePathToOpenAPIOverrides: undefined,
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
-            expect(openApiIr).toMatchSnapshot();
+            const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
+                skipValidation: true
+            });
+            expect(openApiIrJson).toMatchSnapshot();
         });
     });
 }

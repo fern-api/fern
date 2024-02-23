@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Webhook } from "@fern-api/openapi-ir-sdk";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Webhook } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";

@@ -125,7 +125,11 @@ export interface TabbedNavigation {
     layout: DocsNavigationItem[];
 }
 
-export type DocsNavigationItem = DocsNavigationItem.Page | DocsNavigationItem.Section | DocsNavigationItem.ApiSection;
+export type DocsNavigationItem =
+    | DocsNavigationItem.Page
+    | DocsNavigationItem.Section
+    | DocsNavigationItem.ApiSection
+    | DocsNavigationItem.Link;
 
 export declare namespace DocsNavigationItem {
     export interface Page {
@@ -150,6 +154,12 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+    }
+
+    export interface Link {
+        type: "link";
+        text: string;
+        url: string;
     }
 
     export interface SnippetsConfiguration {

@@ -163,7 +163,8 @@ class EndpointFunctionGenerator:
                     AST.FunctionParameter(
                         name=get_parameter_name(path_parameter.name),
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type
+                            path_parameter.value_type,
+                            in_endpoint=True,
                         ),
                     ),
                 )
@@ -182,7 +183,8 @@ class EndpointFunctionGenerator:
         for query_parameter in endpoint.query_parameters:
             if not self._is_type_literal(type_reference=query_parameter.value_type):
                 query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    query_parameter.value_type
+                    query_parameter.value_type,
+                    in_endpoint=True,
                 )
                 parameters.append(
                     AST.NamedFunctionParameter(
@@ -202,7 +204,8 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(header.name.name),
                         docs=header.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            header.value_type
+                            header.value_type,
+                            in_endpoint=True,
                         ),
                     ),
                 )
@@ -216,7 +219,8 @@ class EndpointFunctionGenerator:
                             name=get_parameter_name(header.name.name),
                             docs=header.docs,
                             type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                header.value_type
+                                header.value_type,
+                                in_endpoint=True,
                             ),
                         ),
                     )
@@ -504,7 +508,8 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(path_parameter.name),
                         docs=path_parameter.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type
+                            path_parameter.value_type,
+                            in_endpoint=True,
                         ),
                     ),
                 )
@@ -527,19 +532,18 @@ class EndpointFunctionGenerator:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
                     writer.write("{")
-                    if self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
-                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
-                    elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
-                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
-                    else:
-                        writer.write(
-                            get_parameter_name(
-                                self._get_path_parameter_from_name(
-                                    endpoint=endpoint,
-                                    path_parameter_name=part.path_parameter,
-                                ).name,
+                    writer.write_node(
+                        self._context.core_utilities.jsonable_encoder(
+                            AST.Expression(
+                                get_parameter_name(
+                                    self._get_path_parameter_from_name(
+                                        endpoint=endpoint,
+                                        path_parameter_name=part.path_parameter,
+                                    ).name,
+                                )
                             )
                         )
+                    )
                     writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
@@ -577,7 +581,7 @@ class EndpointFunctionGenerator:
     ) -> AST.TypeHint:
         return json_response.visit(
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                response.response_body_type
+                response.response_body_type,
             ),
             nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
         )
@@ -638,12 +642,6 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
-
-        elif self._context.resolved_schema_is_enum(reference=query_parameter.value_type):
-            return AST.Expression(f"{parameter_name}.value")
-
-        elif self._context.resolved_schema_is_optional_enum(reference=query_parameter.value_type):
-            return AST.Expression(f"{parameter_name}.value if {parameter_name} is not None else None")
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
@@ -865,11 +863,13 @@ class EndpointFunctionGenerator:
             return AST.TypeHint.optional(
                 AST.TypeHint.union(
                     self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        unwrap_optional_type(query_parameter.value_type)
+                        unwrap_optional_type(query_parameter.value_type),
+                        in_endpoint=True,
                     ),
-                    AST.TypeHint.list(
+                    AST.TypeHint.sequence(
                         self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            unwrap_optional_type(query_parameter.value_type)
+                            unwrap_optional_type(query_parameter.value_type),
+                            in_endpoint=True,
                         )
                     ),
                 )
@@ -877,9 +877,10 @@ class EndpointFunctionGenerator:
         elif query_parameter.allow_multiple:
             return AST.TypeHint.union(
                 query_parameter_type_hint,
-                AST.TypeHint.list(
+                AST.TypeHint.sequence(
                     self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        unwrap_optional_type(query_parameter.value_type)
+                        unwrap_optional_type(query_parameter.value_type),
+                        in_endpoint=True,
                     )
                 ),
             )

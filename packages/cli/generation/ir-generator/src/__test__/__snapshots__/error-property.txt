@@ -412,6 +412,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "throw_error",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/property-based-error",
             "parts": [],

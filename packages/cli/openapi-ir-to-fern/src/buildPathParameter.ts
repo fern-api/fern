@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { PathParameter } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { PathParameter } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";

@@ -322,7 +322,8 @@ async function getAreRootApiFilesEquivalent(
             areRootApiFilesEquivalent &&= basePathsAreEqual;
         },
         "path-parameters": noop,
-        variables: noop
+        variables: noop,
+        pagination: noop
     });
     return {
         equal: areRootApiFilesEquivalent,

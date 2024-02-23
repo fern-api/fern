@@ -385,6 +385,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "echo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -1026,6 +1027,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_exception",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -1575,6 +1577,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_file",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -2001,6 +2004,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/check/",
             "parts": [
@@ -2108,6 +2112,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "ping",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/ping",
             "parts": [],
@@ -3355,6 +3360,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie/",
             "parts": [
@@ -4546,6 +4552,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -5146,6 +5153,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_metadata",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/metadata",
             "parts": [],

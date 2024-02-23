@@ -34,3 +34,9 @@ service:
       method: POST
       request: objects.NestedObjectWithRequiredField
       response: objects.NestedObjectWithRequiredField
+
+    getAndReturnNestedWithRequiredFieldAsList:
+      path: /get-and-return-nested-with-required-field
+      method: POST
+      request: list<objects.NestedObjectWithRequiredField>
+      response: objects.NestedObjectWithRequiredField

@@ -1748,6 +1748,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_list_of_primitives",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/list-of-primitives",
             "parts": [],
@@ -1862,6 +1863,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_list_of_objects",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/list-of-objects",
             "parts": [],
@@ -2279,6 +2281,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_set_of_primitives",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/set-of-primitives",
             "parts": [],
@@ -2393,6 +2396,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_set_of_objects",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/set-of-objects",
             "parts": [],
@@ -2810,6 +2814,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_map_prim_to_prim",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/map-prim-to-prim",
             "parts": [],
@@ -2936,6 +2941,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_map_of_prim_to_object",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/map-prim-to-object",
             "parts": [],
@@ -3365,6 +3371,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_optional",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/opt-objects",
             "parts": [],
@@ -3878,6 +3885,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_enum",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4407,6 +4415,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "test_get",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -4497,6 +4506,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "test_post",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4930,6 +4940,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "test_put",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -5397,6 +5408,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "test_patch",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -5864,6 +5876,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "test_delete",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -6050,6 +6063,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_with_optional_field",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/get-and-return-with-optional-field",
             "parts": [],
@@ -6449,6 +6463,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_with_required_field",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/get-and-return-with-required-field",
             "parts": [],
@@ -6848,6 +6863,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_with_map_of_map",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/get-and-return-with-map-of-map",
             "parts": [],
@@ -7247,6 +7263,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_nested_with_optional_field",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/get-and-return-nested-with-optional-field",
             "parts": [],
@@ -7646,6 +7663,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_nested_with_required_field",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/get-and-return-nested-with-required-field",
             "parts": [],
@@ -8175,6 +8193,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_path",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/path/",
             "parts": [
@@ -8265,6 +8284,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_query",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -8435,6 +8455,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_allow_multiple_query",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -8639,6 +8660,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_path_and_query",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/path/",
             "parts": [
@@ -8846,6 +8868,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "modify_with_path",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/path/",
             "parts": [
@@ -9072,6 +9095,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_string",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/string",
             "parts": [],
@@ -9168,6 +9192,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_int",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/integer",
             "parts": [],
@@ -9264,6 +9289,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_long",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/long",
             "parts": [],
@@ -9360,6 +9386,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_double",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/double",
             "parts": [],
@@ -9456,6 +9483,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_bool",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/boolean",
             "parts": [],
@@ -9552,6 +9580,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_datetime",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/datetime",
             "parts": [],
@@ -9648,6 +9677,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_date",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/date",
             "parts": [],
@@ -9744,6 +9774,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_uuid",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/uuid",
             "parts": [],
@@ -9840,6 +9871,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_base64",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/base64",
             "parts": [],
@@ -10032,6 +10064,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_and_return_union",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -10596,6 +10629,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_object_bodyand_response",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/object",
             "parts": [],
@@ -11153,6 +11187,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_no_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -11304,6 +11339,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_no_request_body",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -11461,6 +11497,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_no_request_body",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -11605,6 +11642,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_custom_header",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/custom-header",
             "parts": [],
