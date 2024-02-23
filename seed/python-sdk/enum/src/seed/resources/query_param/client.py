@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
 
@@ -17,11 +18,23 @@ class QueryParamClient:
         self._client_wrapper = client_wrapper
 
     def send(
-        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = None,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[Operand].
+            - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -37,7 +50,10 @@ class QueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "operand": operand.value if operand is not None else None,
+                        "operand": operand,
+                        "maybeOperand": maybe_operand,
+                        "operandOrColor": jsonable_encoder(operand_or_color),
+                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -72,12 +88,21 @@ class QueryParamClient:
     def send_list(
         self,
         *,
-        operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+
+            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+
+            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+
+            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -87,7 +112,10 @@ class QueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "operand": operand.value if operand is not None else None,
+                        "operand": operand,
+                        "maybeOperand": maybe_operand,
+                        "operandOrColor": jsonable_encoder(operand_or_color),
+                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -125,11 +153,23 @@ class AsyncQueryParamClient:
         self._client_wrapper = client_wrapper
 
     async def send(
-        self, *, operand: typing.Optional[Operand] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = None,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[Operand].
+            - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -145,7 +185,10 @@ class AsyncQueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "operand": operand.value if operand is not None else None,
+                        "operand": operand,
+                        "maybeOperand": maybe_operand,
+                        "operandOrColor": jsonable_encoder(operand_or_color),
+                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -180,12 +223,21 @@ class AsyncQueryParamClient:
     async def send_list(
         self,
         *,
-        operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+
+            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+
+            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+
+            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -195,7 +247,10 @@ class AsyncQueryParamClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "operand": operand.value if operand is not None else None,
+                        "operand": operand,
+                        "maybeOperand": maybe_operand,
+                        "operandOrColor": jsonable_encoder(operand_or_color),
+                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

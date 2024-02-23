@@ -46,7 +46,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -95,7 +96,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -144,7 +146,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -193,7 +196,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -249,7 +253,7 @@ class AdminClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+                f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -302,7 +306,7 @@ class AdminClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+                f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -354,7 +358,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -403,7 +408,8 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -457,7 +463,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -506,7 +513,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -555,7 +563,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -604,7 +613,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -660,7 +670,7 @@ class AsyncAdminClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+                f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -713,7 +723,7 @@ class AsyncAdminClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+                f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -765,7 +775,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -814,7 +825,8 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None

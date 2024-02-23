@@ -13,7 +13,10 @@ service:
         body: 
           properties: 
             operand:
-              type: optional<root.Operand>
+              type: root.Operand
+            maybeOperand: optional<root.Operand>
+            operandOrColor: root.ColorOrOperand
+            maybeOperandOrColor: optional<root.ColorOrOperand>
       examples: 
         - request:
             operand: $root.Operand.GreaterThan

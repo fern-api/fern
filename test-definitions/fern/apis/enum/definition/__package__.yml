@@ -17,3 +17,15 @@ types:
         value: ">"
       - name: LessThan
         value: less_than
+  
+  Color:
+    enum:
+      - value: "red"
+        name: RED 
+      - value: "blue"
+        name: BLUE
+  
+  ColorOrOperand:
+    union:
+      color: Color
+      operand: Operand
