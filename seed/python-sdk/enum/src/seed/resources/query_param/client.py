@@ -88,21 +88,21 @@ class QueryParamClient:
     def send_list(
         self,
         *,
-        operand: typing.Union[Operand, typing.List[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
-        operand_or_color: typing.Union[ColorOrOperand, typing.List[ColorOrOperand]],
-        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.List[ColorOrOperand]]] = None,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Union[Operand, typing.List[Operand]].
+            - operand: typing.Union[Operand, typing.Sequence[Operand]].
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.List[ColorOrOperand]].
+            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.List[ColorOrOperand]]].
+            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -223,21 +223,21 @@ class AsyncQueryParamClient:
     async def send_list(
         self,
         *,
-        operand: typing.Union[Operand, typing.List[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
-        operand_or_color: typing.Union[ColorOrOperand, typing.List[ColorOrOperand]],
-        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.List[ColorOrOperand]]] = None,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Union[Operand, typing.List[Operand]].
+            - operand: typing.Union[Operand, typing.Sequence[Operand]].
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.List[ColorOrOperand]].
+            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.List[ColorOrOperand]]].
+            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

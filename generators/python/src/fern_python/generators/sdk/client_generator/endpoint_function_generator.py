@@ -534,13 +534,16 @@ class EndpointFunctionGenerator:
                     writer.write("{")
                     writer.write_node(
                         self._context.core_utilities.jsonable_encoder(
-                            AST.Expression(get_parameter_name(
-                            self._get_path_parameter_from_name(
-                                endpoint=endpoint,
-                                path_parameter_name=part.path_parameter,
-                            ).name,
+                            AST.Expression(
+                                get_parameter_name(
+                                    self._get_path_parameter_from_name(
+                                        endpoint=endpoint,
+                                        path_parameter_name=part.path_parameter,
+                                    ).name,
+                                )
+                            )
                         )
-                    )))
+                    )
                     writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
