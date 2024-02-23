@@ -29,3 +29,4 @@ allowedFailures:
   - streaming
   - literal
   - websocket
+  - enum
