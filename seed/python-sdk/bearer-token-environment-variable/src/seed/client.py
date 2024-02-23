@@ -41,7 +41,7 @@ class SeedBearerTokenEnvironmentVariable:
     ):
         if api_key is None:
             raise ApiError(
-                message="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
+                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
             )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
@@ -82,7 +82,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     ):
         if api_key is None:
             raise ApiError(
-                message="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
+                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
             )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
