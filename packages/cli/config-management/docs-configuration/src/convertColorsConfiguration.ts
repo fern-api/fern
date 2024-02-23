@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernDocsConfig as RawDocs } from "@fern-api/docs-config";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import tinycolor from "tinycolor2";
 
 export function convertColorsConfiguration(

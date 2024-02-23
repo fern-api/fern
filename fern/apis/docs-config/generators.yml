@@ -3,8 +3,11 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.8.13
         output:
-          location: npm
-          url: npm.buildwithfern.com
-          package-name: '@fern-fern/docs-config'
+          location: local-file-system
+          path: ../../../packages/docs-config/src/sdk
+        config:
+          outputSourceFiles: true
+          includeUtilsOnUnionMembers: false
+          noOptionalProperties: false

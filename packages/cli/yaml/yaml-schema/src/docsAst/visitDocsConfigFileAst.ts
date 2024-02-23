@@ -1,4 +1,3 @@
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import {
     DocsConfiguration,
     NavigationConfig,
@@ -6,7 +5,8 @@ import {
     PageConfiguration,
     SectionConfiguration,
     TabbedNavigationConfig
-} from "@fern-fern/docs-config/api";
+} from "@fern-api/docs-config";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { NodePath } from "../NodePath";
