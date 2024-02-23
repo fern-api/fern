@@ -135,7 +135,37 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": "GET request with custom api key",
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": "fervently",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "fervently",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/apiKey",
+            },
+          ],
           "fullPath": {
             "head": "apiKey",
             "parts": [],

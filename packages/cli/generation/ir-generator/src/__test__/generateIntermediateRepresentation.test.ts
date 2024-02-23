@@ -1,9 +1,9 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import path from "path";
 // import * as prettier from "prettier";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";

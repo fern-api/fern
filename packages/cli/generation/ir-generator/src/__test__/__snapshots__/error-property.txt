@@ -384,7 +384,120 @@ exports[`generate IR 1`] = `
               },
             },
           ],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": "whereas",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "whereas",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/property-based-error",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "error": {
+                  "errorId": "error_errors:PropertyBasedErrorTest",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                        "originalName": "errors",
+                        "pascalCase": {
+                          "safeName": "Errors",
+                          "unsafeName": "Errors",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ERRORS",
+                          "unsafeName": "ERRORS",
+                        },
+                        "snakeCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                      "originalName": "errors",
+                      "pascalCase": {
+                        "safeName": "Errors",
+                        "unsafeName": "Errors",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ERRORS",
+                        "unsafeName": "ERRORS",
+                      },
+                      "snakeCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "propertyBasedErrorTest",
+                      "unsafeName": "propertyBasedErrorTest",
+                    },
+                    "originalName": "PropertyBasedErrorTest",
+                    "pascalCase": {
+                      "safeName": "PropertyBasedErrorTest",
+                      "unsafeName": "PropertyBasedErrorTest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PROPERTY_BASED_ERROR_TEST",
+                      "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "property_based_error_test",
+                      "unsafeName": "property_based_error_test",
+                    },
+                  },
+                },
+                "type": "error",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/property-based-error",
+            },
+          ],
           "fullPath": {
             "head": "property-based-error",
             "parts": [],

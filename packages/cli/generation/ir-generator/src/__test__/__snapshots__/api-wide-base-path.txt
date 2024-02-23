@@ -237,7 +237,126 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "endpointParam",
+                      "unsafeName": "endpointParam",
+                    },
+                    "originalName": "endpointParam",
+                    "pascalCase": {
+                      "safeName": "EndpointParam",
+                      "unsafeName": "EndpointParam",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ENDPOINT_PARAM",
+                      "unsafeName": "ENDPOINT_PARAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "endpoint_param",
+                      "unsafeName": "endpoint_param",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": 6080701608755200,
+                    "shape": {
+                      "primitive": {
+                        "integer": 6080701608755200,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "pathParam",
+                      "unsafeName": "pathParam",
+                    },
+                    "originalName": "pathParam",
+                    "pascalCase": {
+                      "safeName": "PathParam",
+                      "unsafeName": "PathParam",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PATH_PARAM",
+                      "unsafeName": "PATH_PARAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "path_param",
+                      "unsafeName": "path_param",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "shy",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "shy",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "serviceHeaders": [],
+              "servicePathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "serviceParam",
+                      "unsafeName": "serviceParam",
+                    },
+                    "originalName": "serviceParam",
+                    "pascalCase": {
+                      "safeName": "ServiceParam",
+                      "unsafeName": "ServiceParam",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE_PARAM",
+                      "unsafeName": "SERVICE_PARAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "service_param",
+                      "unsafeName": "service_param",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "what",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "what",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "type": "generated",
+              "url": "/",
+            },
+          ],
           "fullPath": {
             "head": "/test/",
             "parts": [

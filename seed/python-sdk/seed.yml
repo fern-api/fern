@@ -46,8 +46,6 @@ allowedFailures:
   - response-property
   # Generator does not handle list of enums
   - enum
-  - auth-environment-variables
-  - bearer-token-environment-variable
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports

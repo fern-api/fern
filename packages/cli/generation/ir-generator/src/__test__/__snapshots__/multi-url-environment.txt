@@ -243,7 +243,70 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": Map {
+                  "size" => "quarantine",
+                },
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "size",
+                          "unsafeName": "size",
+                        },
+                        "originalName": "size",
+                        "pascalCase": {
+                          "safeName": "Size",
+                          "unsafeName": "Size",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SIZE",
+                          "unsafeName": "SIZE",
+                        },
+                        "snakeCase": {
+                          "safeName": "size",
+                          "unsafeName": "size",
+                        },
+                      },
+                      "wireValue": "size",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "quarantine",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "quarantine",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "inlinedRequestBody",
+              },
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/boot",
+            },
+          ],
           "fullPath": {
             "head": "/ec2/boot",
             "parts": [],
@@ -461,7 +524,81 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": Map {
+                  "s3Key" => "rationalize",
+                },
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "s3Key",
+                          "unsafeName": "s3Key",
+                        },
+                        "originalName": "s3Key",
+                        "pascalCase": {
+                          "safeName": "S3Key",
+                          "unsafeName": "S3Key",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "S3KEY",
+                          "unsafeName": "S3KEY",
+                        },
+                        "snakeCase": {
+                          "safeName": "s3key",
+                          "unsafeName": "s3key",
+                        },
+                      },
+                      "wireValue": "s3Key",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "rationalize",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "rationalize",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "inlinedRequestBody",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": "indeed",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "indeed",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/presigned-url",
+            },
+          ],
           "fullPath": {
             "head": "/s3/presigned-url",
             "parts": [],

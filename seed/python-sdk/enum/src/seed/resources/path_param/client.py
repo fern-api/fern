@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
 
@@ -16,10 +17,24 @@ class PathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def send(
+        self,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand],
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand],
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -63,10 +78,24 @@ class AsyncPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def send(
+        self,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand],
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand],
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

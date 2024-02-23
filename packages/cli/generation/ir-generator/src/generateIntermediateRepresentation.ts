@@ -376,7 +376,11 @@ export async function generateIntermediateRepresentation({
         }
     };
 
-    return ExampleGenerator.enrichWithExamples(intermediateRepresentationWithoutGeneratedExamples);
+    const intermediateRepresentationWithGeneratedExamples = new ExampleGenerator(
+        intermediateRepresentationWithoutGeneratedExamples
+    ).enrichWithExamples();
+
+    return intermediateRepresentationWithGeneratedExamples;
 }
 
 function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {

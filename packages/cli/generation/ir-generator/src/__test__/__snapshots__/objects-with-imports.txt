@@ -110,7 +110,71 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "suspicious": {},
+                },
+                "shape": {
+                  "container": {
+                    "map": [
+                      {
+                        "key": {
+                          "jsonExample": "admonish",
+                          "shape": {
+                            "primitive": {
+                              "string": {
+                                "original": "admonish",
+                              },
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "value": {
+                          "jsonExample": {},
+                          "shape": {
+                            "type": "unknown",
+                            "unknown": {},
+                          },
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                  "type": "container",
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": "inventory",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "inventory",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/send-optional-body",
+            },
+          ],
           "fullPath": {
             "head": "send-optional-body",
             "parts": [],

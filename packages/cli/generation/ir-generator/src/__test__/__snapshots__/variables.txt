@@ -139,7 +139,60 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "endpointParam",
+                      "unsafeName": "endpointParam",
+                    },
+                    "originalName": "endpointParam",
+                    "pascalCase": {
+                      "safeName": "EndpointParam",
+                      "unsafeName": "EndpointParam",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ENDPOINT_PARAM",
+                      "unsafeName": "ENDPOINT_PARAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "endpoint_param",
+                      "unsafeName": "endpoint_param",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "repel",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "repel",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "type": "generated",
+              "url": "/",
+            },
+          ],
           "fullPath": {
             "head": "/",
             "parts": [

@@ -10,6 +10,9 @@ service:
       method: POST
       path-parameters: 
         operand: root.Operand
+        maybeOperand: optional<root.Operand>
+        operandOrColor: root.ColorOrOperand
+        maybeOperandOrColor: optional<root.ColorOrOperand>
       examples: 
         - path-parameters:
             operand: $root.Operand.GreaterThan
