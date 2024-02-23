@@ -44,6 +44,7 @@ import { snakeCase } from "lodash-es";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
@@ -62,6 +63,7 @@ export function generateEndpoints(
     requestClientVariable: Variable,
     endpoints: HttpEndpoint[],
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     isAsync: boolean,
     irBasePath: string,
     serviceBasePath: string,
@@ -82,15 +84,17 @@ export function generateEndpoints(
                 type: GenericClassReference,
                 variableType: VariableType.LOCAL
             });
+
+            const endpointRequestOptions = endpoint.idempotent ? idempotencyRequestOptions : requestOptions;
             const requestOptionsVariable = new Variable({
                 name: "request_options",
-                type: requestOptions.classReference,
+                type: endpointRequestOptions.classReference,
                 variableType: VariableType.LOCAL
             });
             const generator = new EndpointGenerator(
                 endpoint,
                 requestOptionsVariable,
-                requestOptions,
+                endpointRequestOptions,
                 crf,
                 generatedClasses,
                 fileUploadUtility
@@ -144,6 +148,7 @@ export function generateRootPackage(
     requestClient: Class_,
     asyncRequestClient: Class_,
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     crf: ClassReferenceFactory,
     syncSubpackages: Map<string, Class_>,
     asyncSubpackages: Map<string, Class_>,
@@ -177,6 +182,7 @@ export function generateRootPackage(
                   requestClientVariable,
                   rootService.endpoints,
                   requestOptions,
+                  idempotencyRequestOptions,
                   false,
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
@@ -244,6 +250,7 @@ export function generateRootPackage(
                   asyncRequestClientVariable,
                   rootService.endpoints,
                   requestOptions,
+                  idempotencyRequestOptions,
                   false,
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
@@ -415,6 +422,7 @@ export function generateService(
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
     requestOptions: RequestOptions,
+    idempotencyRequestOptions: IdempotencyRequestOptions,
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
@@ -444,6 +452,7 @@ export function generateService(
             requestClientProperty.toVariable(),
             service.endpoints,
             requestOptions,
+            idempotencyRequestOptions,
             false,
             irBasePath,
             serviceBasePath,
@@ -468,6 +477,7 @@ export function generateService(
             asyncRequestClientProperty.toVariable(),
             service.endpoints,
             requestOptions,
+            idempotencyRequestOptions,
             true,
             irBasePath,
             serviceBasePath,

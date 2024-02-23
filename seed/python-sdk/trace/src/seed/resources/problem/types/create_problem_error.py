@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .generic_create_problem_error import GenericCreateProblemError
 
 try:
@@ -15,7 +13,7 @@ except ImportError:
 
 
 class CreateProblemError_Generic(GenericCreateProblemError):
-    error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
+    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type")
 
     class Config:
         frozen = True

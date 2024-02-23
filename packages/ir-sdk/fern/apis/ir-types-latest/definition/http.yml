@@ -40,6 +40,7 @@ types:
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
+      pagination: optional<Pagination>
       examples: list<ExampleEndpointCall>
   EndpointName: commons.Name
   HttpPath:
@@ -110,6 +111,14 @@ types:
       file: FileProperty
       bodyProperty: InlinedRequestBodyProperty
   FileProperty:
+    union:
+      file: FilePropertySingle
+      fileArray: FilePropertyArray
+  FilePropertySingle:
+    properties:
+      key: commons.NameAndWireValue
+      isOptional: boolean
+  FilePropertyArray:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
@@ -189,6 +198,30 @@ types:
     extends: commons.WithDocs
     properties:
       error: errors.DeclaredErrorName
+
+  Pagination:
+    docs: |
+      If set, the endpoint will be generated with auto-pagination features.
+
+      The page must be defined as a query parameter included in the request,
+      whereas the next page and results are resolved from properties defined
+      on the response.
+    properties:
+      page: QueryParameter
+      next: PaginationProperty
+      results: PaginationProperty
+
+  PaginationProperty:
+    docs: |
+      A property associated with a paginated endpoint's request or response.
+    properties:
+      propertyPath:
+        docs: |
+          If empty, the property is defined at the top-level.
+          Otherwise, the property is defined on the nested object identified
+          by the path.
+        type: optional<list<commons.Name>>
+      property: types.ObjectProperty
 
   # examples
 

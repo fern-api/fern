@@ -8,6 +8,9 @@ AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType], Optional[AST.Expre
 EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType], AST.Expression]
 ObjectSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleObjectType], AST.Expression]
 DiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUnionType], AST.Expression]
+UndiscriminatedUnionGenerator = Callable[
+    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType], AST.Expression
+]
 
 
 class TypeDeclarationSnippetGenerator:
@@ -22,6 +25,8 @@ class TypeDeclarationSnippetGenerator:
         self._generate_enum = enum
         self._generate_object = object
         self._generate_discriminated_union = discriminated_union
+        # TODO(FER-918): implement undiscriminated_union snippets
+        # self._generate_undiscriminated_union = undiscriminated_union
 
     def generate_snippet(
         self,
@@ -33,4 +38,7 @@ class TypeDeclarationSnippetGenerator:
             enum=lambda enum: self._generate_enum(name, enum),
             object=lambda object_: self._generate_object(name, object_),
             union=lambda union: self._generate_discriminated_union(name, union),
+            # TODO(FER-918): implement undiscriminated_union snippets
+            # undiscriminated_union=lambda union: self._generate_undiscriminated_union(name, union),
+            undiscriminated_union=lambda union: None,
         )

@@ -81,6 +81,7 @@ exports[`generate IR 1`] = `
       "type_:Operand",
     ],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -125,31 +126,31 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "value": ">",
+                  "operand": ">",
                 },
                 "properties": [
                   {
                     "name": {
                       "name": {
                         "camelCase": {
-                          "safeName": "value",
-                          "unsafeName": "value",
+                          "safeName": "operand",
+                          "unsafeName": "operand",
                         },
-                        "originalName": "value",
+                        "originalName": "operand",
                         "pascalCase": {
-                          "safeName": "Value",
-                          "unsafeName": "Value",
+                          "safeName": "Operand",
+                          "unsafeName": "Operand",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "VALUE",
-                          "unsafeName": "VALUE",
+                          "safeName": "OPERAND",
+                          "unsafeName": "OPERAND",
                         },
                         "snakeCase": {
-                          "safeName": "value",
-                          "unsafeName": "value",
+                          "safeName": "operand",
+                          "unsafeName": "operand",
                         },
                       },
-                      "wireValue": "value",
+                      "wireValue": "operand",
                     },
                     "originalTypeDeclaration": null,
                     "value": {
@@ -230,11 +231,11 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/inlined-request",
+              "url": "/inlined",
             },
           ],
           "fullPath": {
-            "head": "inlined-request",
+            "head": "inlined",
             "parts": [],
           },
           "headers": [],
@@ -260,8 +261,9 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
-            "head": "/inlined-request",
+            "head": "/inlined",
             "parts": [],
           },
           "pathParameters": [],
@@ -294,24 +296,24 @@ exports[`generate IR 1`] = `
                 "name": {
                   "name": {
                     "camelCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
+                      "safeName": "operand",
+                      "unsafeName": "operand",
                     },
-                    "originalName": "value",
+                    "originalName": "operand",
                     "pascalCase": {
-                      "safeName": "Value",
-                      "unsafeName": "Value",
+                      "safeName": "Operand",
+                      "unsafeName": "Operand",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "VALUE",
-                      "unsafeName": "VALUE",
+                      "safeName": "OPERAND",
+                      "unsafeName": "OPERAND",
                     },
                     "snakeCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
+                      "safeName": "operand",
+                      "unsafeName": "operand",
                     },
                   },
-                  "wireValue": "value",
+                  "wireValue": "operand",
                 },
                 "valueType": {
                   "_type": "container",
@@ -479,21 +481,21 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "value",
-                  "unsafeName": "value",
+                  "safeName": "operand",
+                  "unsafeName": "operand",
                 },
-                "originalName": "value",
+                "originalName": "operand",
                 "pascalCase": {
-                  "safeName": "Value",
-                  "unsafeName": "Value",
+                  "safeName": "Operand",
+                  "unsafeName": "Operand",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "VALUE",
-                  "unsafeName": "VALUE",
+                  "safeName": "OPERAND",
+                  "unsafeName": "OPERAND",
                 },
                 "snakeCase": {
-                  "safeName": "value",
-                  "unsafeName": "value",
+                  "safeName": "operand",
+                  "unsafeName": "operand",
                 },
               },
               "valueType": {
@@ -542,21 +544,21 @@ exports[`generate IR 1`] = `
                 {
                   "name": {
                     "camelCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
+                      "safeName": "operand",
+                      "unsafeName": "operand",
                     },
-                    "originalName": "value",
+                    "originalName": "operand",
                     "pascalCase": {
-                      "safeName": "Value",
-                      "unsafeName": "Value",
+                      "safeName": "Operand",
+                      "unsafeName": "Operand",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "VALUE",
-                      "unsafeName": "VALUE",
+                      "safeName": "OPERAND",
+                      "unsafeName": "OPERAND",
                     },
                     "snakeCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
+                      "safeName": "operand",
+                      "unsafeName": "operand",
                     },
                   },
                   "value": {
@@ -629,14 +631,14 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/path-param/>",
+              "url": "/path/>",
             },
           ],
           "fullPath": {
-            "head": "path-param/",
+            "head": "path/",
             "parts": [
               {
-                "pathParameter": "value",
+                "pathParameter": "operand",
                 "tail": "",
               },
             ],
@@ -664,11 +666,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
-            "head": "/path-param/",
+            "head": "/path/",
             "parts": [
               {
-                "pathParameter": "value",
+                "pathParameter": "operand",
                 "tail": "",
               },
             ],
@@ -679,21 +682,21 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "value",
-                  "unsafeName": "value",
+                  "safeName": "operand",
+                  "unsafeName": "operand",
                 },
-                "originalName": "value",
+                "originalName": "operand",
                 "pascalCase": {
-                  "safeName": "Value",
-                  "unsafeName": "Value",
+                  "safeName": "Operand",
+                  "unsafeName": "Operand",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "VALUE",
-                  "unsafeName": "VALUE",
+                  "safeName": "OPERAND",
+                  "unsafeName": "OPERAND",
                 },
                 "snakeCase": {
-                  "safeName": "value",
-                  "unsafeName": "value",
+                  "safeName": "operand",
+                  "unsafeName": "operand",
                 },
               },
               "valueType": {
@@ -809,24 +812,24 @@ exports[`generate IR 1`] = `
                   "name": {
                     "name": {
                       "camelCase": {
-                        "safeName": "value",
-                        "unsafeName": "value",
+                        "safeName": "operand",
+                        "unsafeName": "operand",
                       },
-                      "originalName": "value",
+                      "originalName": "operand",
                       "pascalCase": {
-                        "safeName": "Value",
-                        "unsafeName": "Value",
+                        "safeName": "Operand",
+                        "unsafeName": "Operand",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "VALUE",
-                        "unsafeName": "VALUE",
+                        "safeName": "OPERAND",
+                        "unsafeName": "OPERAND",
                       },
                       "snakeCase": {
-                        "safeName": "value",
-                        "unsafeName": "value",
+                        "safeName": "operand",
+                        "unsafeName": "operand",
                       },
                     },
-                    "wireValue": "value",
+                    "wireValue": "operand",
                   },
                   "value": {
                     "jsonExample": ">",
@@ -935,6 +938,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/query",
             "parts": [],
@@ -948,24 +952,24 @@ exports[`generate IR 1`] = `
               "name": {
                 "name": {
                   "camelCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
+                    "safeName": "operand",
+                    "unsafeName": "operand",
                   },
-                  "originalName": "value",
+                  "originalName": "operand",
                   "pascalCase": {
-                    "safeName": "Value",
-                    "unsafeName": "Value",
+                    "safeName": "Operand",
+                    "unsafeName": "Operand",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "VALUE",
-                    "unsafeName": "VALUE",
+                    "safeName": "OPERAND",
+                    "unsafeName": "OPERAND",
                   },
                   "snakeCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
+                    "safeName": "operand",
+                    "unsafeName": "operand",
                   },
                 },
-                "wireValue": "value",
+                "wireValue": "operand",
               },
               "valueType": {
                 "_type": "container",
@@ -1104,6 +1108,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send_list",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/query-list",
             "parts": [],
@@ -1117,24 +1122,24 @@ exports[`generate IR 1`] = `
               "name": {
                 "name": {
                   "camelCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
+                    "safeName": "operand",
+                    "unsafeName": "operand",
                   },
-                  "originalName": "value",
+                  "originalName": "operand",
                   "pascalCase": {
-                    "safeName": "Value",
-                    "unsafeName": "Value",
+                    "safeName": "Operand",
+                    "unsafeName": "Operand",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "VALUE",
-                    "unsafeName": "VALUE",
+                    "safeName": "OPERAND",
+                    "unsafeName": "OPERAND",
                   },
                   "snakeCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
+                    "safeName": "operand",
+                    "unsafeName": "operand",
                   },
                 },
-                "wireValue": "value",
+                "wireValue": "operand",
               },
               "valueType": {
                 "_type": "container",
@@ -1359,6 +1364,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_path-param": {
       "docs": null,
@@ -1431,6 +1437,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_query-param": {
       "docs": null,
@@ -1503,6 +1510,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -1724,5 +1732,6 @@ are similar for less than. ",
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

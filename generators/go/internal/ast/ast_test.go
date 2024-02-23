@@ -10,24 +10,24 @@ import (
 func TestSourceCodeBuilder(t *testing.T) {
 	builder := NewSourceCodeBuilder()
 	builder.AddExpr(
-		AssignStmt{
+		&AssignStmt{
 			Left: []Expr{
-				NewLocalObject("value"),
+				NewLocalReference("value"),
 			},
 			Right: []Expr{
 				NewCallExpr(
-					NewImportedObject(
+					NewImportedReference(
 						"foo",
 						"example.io/bar",
 					),
 					[]Expr{
-						NewLocalObject(`"one"`),
-						NewLocalObject(`"two"`),
-						NewImportedObject(
+						NewBasicLit(`"one"`),
+						NewBasicLit(`"two"`),
+						NewImportedReference(
 							"Value",
 							"example.io/enum",
 						),
-						NewImportedObject(
+						NewImportedReference(
 							"Collision",
 							"example.io/another/enum",
 						),

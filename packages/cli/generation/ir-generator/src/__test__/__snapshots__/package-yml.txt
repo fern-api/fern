@@ -114,6 +114,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -283,6 +284,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "echo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -550,6 +552,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "nop",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -716,10 +719,12 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {},
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

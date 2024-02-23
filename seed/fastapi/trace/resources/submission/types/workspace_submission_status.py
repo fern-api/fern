@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -74,7 +72,7 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         if self.__root__.type == "traced":
             return traced(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _WorkspaceSubmissionStatus.Stopped,
             _WorkspaceSubmissionStatus.Errored,
@@ -100,24 +98,24 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
 
 class _WorkspaceSubmissionStatus:
     class Stopped(pydantic.BaseModel):
-        type: typing_extensions.Literal["stopped"]
+        type: typing.Literal["stopped"]
 
     class Errored(pydantic.BaseModel):
-        type: typing_extensions.Literal["errored"]
+        type: typing.Literal["errored"]
         value: ErrorInfo
 
     class Running(pydantic.BaseModel):
-        type: typing_extensions.Literal["running"]
+        type: typing.Literal["running"]
         value: RunningSubmissionState
 
     class Ran(WorkspaceRunDetails):
-        type: typing_extensions.Literal["ran"]
+        type: typing.Literal["ran"]
 
         class Config:
             allow_population_by_field_name = True
 
     class Traced(WorkspaceRunDetails):
-        type: typing_extensions.Literal["traced"]
+        type: typing.Literal["traced"]
 
         class Config:
             allow_population_by_field_name = True

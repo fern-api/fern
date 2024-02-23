@@ -14,7 +14,6 @@ COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/call
 COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth
 COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
 COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
-COPY generators/typescript/utils/core-utilities/runtime/src/ /assets/runtime
 RUN find /assets -name __test__ -exec rm -rf {} \+
 
 COPY generators/typescript/sdk/cli/browser-docker/dist/bundle.js /bundle.js

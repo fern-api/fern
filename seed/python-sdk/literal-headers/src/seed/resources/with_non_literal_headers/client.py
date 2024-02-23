@@ -6,7 +6,9 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 
 
 class WithNonLiteralHeadersClient:
@@ -14,7 +16,12 @@ class WithNonLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self, *, integer: int, maybe_integer: typing.Optional[int] = None, non_literal_endpoint_header: str
+        self,
+        *,
+        integer: int,
+        maybe_integer: typing.Optional[int] = None,
+        non_literal_endpoint_header: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -23,6 +30,8 @@ class WithNonLiteralHeadersClient:
             - maybe_integer: typing.Optional[int].
 
             - non_literal_endpoint_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedLiteralHeaders
 
@@ -37,19 +46,30 @@ class WithNonLiteralHeadersClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "with-non-literal-headers"),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "literalServiceHeader": "service header",
-                    "trueServiceHeader": "true",
-                    "nonLiteralEndpointHeader": non_literal_endpoint_header,
-                    "literalEndpointHeader": "endpoint header",
-                    "trueEndpointHeader": "true",
-                }
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            timeout=60,
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        "integer": integer,
+                        "maybeInteger": maybe_integer,
+                        "literalServiceHeader": "service header",
+                        "trueServiceHeader": True,
+                        "nonLiteralEndpointHeader": non_literal_endpoint_header,
+                        "literalEndpointHeader": "endpoint header",
+                        "trueEndpointHeader": True,
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -65,7 +85,12 @@ class AsyncWithNonLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self, *, integer: int, maybe_integer: typing.Optional[int] = None, non_literal_endpoint_header: str
+        self,
+        *,
+        integer: int,
+        maybe_integer: typing.Optional[int] = None,
+        non_literal_endpoint_header: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -74,6 +99,8 @@ class AsyncWithNonLiteralHeadersClient:
             - maybe_integer: typing.Optional[int].
 
             - non_literal_endpoint_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedLiteralHeaders
 
@@ -88,19 +115,30 @@ class AsyncWithNonLiteralHeadersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "with-non-literal-headers"),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "literalServiceHeader": "service header",
-                    "trueServiceHeader": "true",
-                    "nonLiteralEndpointHeader": non_literal_endpoint_header,
-                    "literalEndpointHeader": "endpoint header",
-                    "trueEndpointHeader": "true",
-                }
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            timeout=60,
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        "integer": integer,
+                        "maybeInteger": maybe_integer,
+                        "literalServiceHeader": "service header",
+                        "trueServiceHeader": True,
+                        "nonLiteralEndpointHeader": non_literal_endpoint_header,
+                        "literalEndpointHeader": "endpoint header",
+                        "trueEndpointHeader": True,
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

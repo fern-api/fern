@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "form-data": "^4.0.0"
+    "form-data": "4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

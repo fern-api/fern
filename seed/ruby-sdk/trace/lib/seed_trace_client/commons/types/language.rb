@@ -2,7 +2,10 @@
 
 module SeedTraceClient
   class Commons
-    # @type [LANGUAGE]
-    LANGUAGE = { java: "JAVA", javascript: "JAVASCRIPT", python: "PYTHON" }.freeze
+    class Language
+      JAVA = "JAVA"
+      JAVASCRIPT = "JAVASCRIPT"
+      PYTHON = "PYTHON"
+    end
   end
 end

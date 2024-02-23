@@ -473,6 +473,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -853,6 +854,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "update_test_submission_status",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-test-submission-status/",
             "parts": [
@@ -1255,6 +1257,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send_test_submission_update",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-test-submission-status-v2/",
             "parts": [
@@ -1657,6 +1660,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "update_workspace_submission_status",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-workspace-submission-status/",
             "parts": [
@@ -2059,6 +2063,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "send_workspace_submission_update",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-workspace-submission-status-v2/",
             "parts": [
@@ -2493,6 +2498,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "store_traced_test_case",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-test-trace/submission/",
             "parts": [
@@ -3170,6 +3176,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "store_traced_test_case_v2",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-test-trace-v2/submission/",
             "parts": [
@@ -3717,6 +3724,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "store_traced_workspace",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-workspace-trace/submission/",
             "parts": [
@@ -4229,6 +4237,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "store_traced_workspace_v2",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/store-workspace-trace-v2/submission/",
             "parts": [
@@ -4604,6 +4613,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_homepage_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4728,6 +4738,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "set_homepage_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -5038,6 +5049,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_attempted_migrations",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/all",
             "parts": [],
@@ -5319,6 +5331,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create_playlist",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/create",
             "parts": [],
@@ -5671,6 +5684,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_playlists",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/all",
             "parts": [],
@@ -6290,6 +6304,7 @@ description",
               "unsafeName": "get_playlist",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -6701,6 +6716,7 @@ description",
               "unsafeName": "update_playlist",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -7225,6 +7241,7 @@ description",
               "unsafeName": "delete_playlist",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -7453,6 +7470,7 @@ description",
               "unsafeName": "create_problem",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/create",
             "parts": [],
@@ -7831,6 +7849,7 @@ description",
               "unsafeName": "update_problem",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/update/",
             "parts": [
@@ -8305,6 +8324,7 @@ description",
               "unsafeName": "delete_problem",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/delete/",
             "parts": [
@@ -8447,6 +8467,7 @@ description",
               "unsafeName": "get_default_starter_files",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/default-starter-files",
             "parts": [],
@@ -9027,6 +9048,7 @@ The method name cannot include the following characters:
               "unsafeName": "create_execution_session",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/create-session/",
             "parts": [
@@ -9275,6 +9297,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_execution_session",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -9467,6 +9490,7 @@ The method name cannot include the following characters:
               "unsafeName": "stop_execution_session",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/stop/",
             "parts": [
@@ -9547,6 +9571,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_execution_sessions_state",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/execution-sessions-state",
             "parts": [],
@@ -9850,6 +9875,7 @@ The method name cannot include the following characters:
               "unsafeName": "set_num_warm_instances",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/num-warm-instances/",
             "parts": [
@@ -10024,6 +10050,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_num_warm_instances",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/num-warm-instances",
             "parts": [],
@@ -10209,6 +10236,7 @@ The method name cannot include the following characters:
               "unsafeName": "test",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -10314,6 +10342,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_lightweight_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/lightweight-problem-info",
             "parts": [],
@@ -10477,6 +10506,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info",
             "parts": [],
@@ -10736,6 +10766,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_latest_problem",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info/",
             "parts": [
@@ -11117,6 +11148,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_problem_version",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info/",
             "parts": [
@@ -11498,6 +11530,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_lightweight_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/lightweight-problem-info",
             "parts": [],
@@ -11699,6 +11732,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_problems",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info",
             "parts": [],
@@ -11996,6 +12030,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_latest_problem",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info/",
             "parts": [
@@ -12415,6 +12450,7 @@ The method name cannot include the following characters:
               "unsafeName": "get_problem_version",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/problem-info/",
             "parts": [
@@ -12903,6 +12939,7 @@ The method name cannot include the following characters:
         "type_admin:Test",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_commons": {
       "docs": null,
@@ -13002,6 +13039,7 @@ The method name cannot include the following characters:
         "type_commons:Language",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_homepage": {
       "docs": null,
@@ -13074,6 +13112,7 @@ The method name cannot include the following characters:
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_lang-server": {
       "docs": null,
@@ -13149,6 +13188,7 @@ The method name cannot include the following characters:
         "type_lang-server:LangServerResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_migration": {
       "docs": null,
@@ -13224,6 +13264,7 @@ The method name cannot include the following characters:
         "type_migration:Migration",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_playlist": {
       "docs": null,
@@ -13306,6 +13347,7 @@ The method name cannot include the following characters:
         "type_playlist:ReservedKeywordEnum",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_problem": {
       "docs": null,
@@ -13390,6 +13432,7 @@ The method name cannot include the following characters:
         "type_problem:GetDefaultStarterFilesResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_submission": {
       "docs": "Responsible for spinning up and spinning down execution.",
@@ -13543,6 +13586,7 @@ The method name cannot include the following characters:
         "type_submission:GetSubmissionStateResponse",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_sysprop": {
       "docs": null,
@@ -13615,6 +13659,7 @@ The method name cannot include the following characters:
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2": {
       "docs": null,
@@ -13692,6 +13737,7 @@ The method name cannot include the following characters:
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/problem": {
       "docs": null,
@@ -13845,6 +13891,7 @@ The method name cannot include the following characters:
         "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/v3": {
       "docs": null,
@@ -13959,6 +14006,7 @@ The method name cannot include the following characters:
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_v2/v3/problem": {
       "docs": null,
@@ -14150,6 +14198,7 @@ The method name cannot include the following characters:
         "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -86297,5 +86346,6 @@ The offset is the id of the next trace response to load.",
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

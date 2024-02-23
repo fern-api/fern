@@ -25,7 +25,7 @@ class AbstractPathParamService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send(self, *, value: Operand) -> None:
+    def send(self, *, operand: Operand) -> None:
         ...
 
     """
@@ -44,7 +44,7 @@ class AbstractPathParamService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
-            elif parameter_name == "value":
+            elif parameter_name == "operand":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
@@ -67,7 +67,7 @@ class AbstractPathParamService(AbstractFernService):
         wrapper.__globals__.update(cls.send.__globals__)
 
         router.post(
-            path="//path-param/{value}",
+            path="//path/{operand}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractPathParamService.send.__doc__,

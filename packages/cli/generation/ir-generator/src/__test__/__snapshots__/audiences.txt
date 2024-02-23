@@ -78,6 +78,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -151,6 +152,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_direct_thread",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -404,6 +406,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "find",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -827,6 +830,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_folder-a/service": {
       "docs": null,
@@ -940,6 +944,7 @@ exports[`generate IR 1`] = `
         "type_folder-a/service:Response",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_foo": {
       "docs": null,
@@ -1016,6 +1021,7 @@ exports[`generate IR 1`] = `
         "type_foo:FilteredType",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -2139,5 +2145,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

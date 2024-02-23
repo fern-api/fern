@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Endpoint, HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase, compact, isEqual } from "lodash-es";
 
 export interface EndpointLocation {
@@ -32,6 +32,14 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
                     endpoint.summary != null
                         ? camelCase(endpoint.summary)
                         : camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`)
+            };
+        }
+
+        // If no operation id and tag, use summary to generate id
+        if (endpoint.summary != null) {
+            return {
+                file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                endpointId: camelCase(endpoint.summary)
             };
         }
 

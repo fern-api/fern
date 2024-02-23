@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "running_submission_state"
 require_relative "error_info"
 require_relative "workspace_run_details"
+require_relative "running_submission_state"
 
 module SeedTraceClient
   class Submission
@@ -34,7 +34,7 @@ module SeedTraceClient
                  when "errored"
                    Submission::ErrorInfo.from_json(json_object: json_object.value)
                  when "running"
-                   Submission::RUNNING_SUBMISSION_STATE.key(json_object.value) || json_object.value
+                   json_object.value
                  when "ran"
                    Submission::WorkspaceRunDetails.from_json(json_object: json_object)
                  when "traced"
@@ -77,7 +77,7 @@ module SeedTraceClient
         when "errored"
           Submission::ErrorInfo.validate_raw(obj: obj)
         when "running"
-          obj.is_a?(Submission::RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "ran"
           Submission::WorkspaceRunDetails.validate_raw(obj: obj)
         when "traced"
@@ -106,7 +106,7 @@ module SeedTraceClient
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [RUNNING_SUBMISSION_STATE]
+      # @param member [Submission::RunningSubmissionState]
       # @return [Submission::WorkspaceSubmissionStatus]
       def self.running(member:)
         new(member: member, discriminant: "running")

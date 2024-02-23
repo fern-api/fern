@@ -771,12 +771,14 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [
       "type_:TypeId",
       "type_:Type",

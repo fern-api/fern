@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .playlist_id import PlaylistId
 
 try:
@@ -15,7 +13,7 @@ except ImportError:
 
 
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):
-    type: typing_extensions.Literal["playlistId"]
+    type: typing.Literal["playlistId"]
     value: PlaylistId
 
 

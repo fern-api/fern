@@ -16,7 +16,9 @@ module SeedExamplesClient
         @request_client = request_client
       end
 
-      # @param filename [String]
+      # This endpoint returns a file by its name.
+      #
+      # @param filename [String] This is a filename
       # @param request_options [RequestOptions]
       # @return [Types::File]
       def get_file(filename:, request_options: nil)
@@ -39,7 +41,9 @@ module SeedExamplesClient
         @request_client = request_client
       end
 
-      # @param filename [String]
+      # This endpoint returns a file by its name.
+      #
+      # @param filename [String] This is a filename
       # @param request_options [RequestOptions]
       # @return [Types::File]
       def get_file(filename:, request_options: nil)

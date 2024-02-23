@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
@@ -13,7 +11,7 @@ except ImportError:
 
 
 class Test_And(pydantic.BaseModel):
-    type: typing_extensions.Literal["and"]
+    type: typing.Literal["and"]
     value: bool
 
     class Config:
@@ -22,7 +20,7 @@ class Test_And(pydantic.BaseModel):
 
 
 class Test_Or(pydantic.BaseModel):
-    type: typing_extensions.Literal["or"]
+    type: typing.Literal["or"]
     value: bool
 
     class Config:

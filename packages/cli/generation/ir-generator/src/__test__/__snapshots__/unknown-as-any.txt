@@ -77,6 +77,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -140,6 +141,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -328,6 +330,7 @@ exports[`generate IR 1`] = `
         "type_unknown:MyObject",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -520,5 +523,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

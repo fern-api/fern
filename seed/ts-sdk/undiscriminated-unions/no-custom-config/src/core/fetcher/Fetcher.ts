@@ -1,5 +1,6 @@
 import { default as FormData } from "form-data";
 import qs from "qs";
+import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
@@ -69,11 +70,17 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     if (args.body instanceof FormData) {
         // @ts-expect-error
         body = args.body;
+    } else if (args.body instanceof Uint8Array) {
+        body = args.body;
     } else {
         body = JSON.stringify(args.body);
     }
 
-    const fetchFn = typeof fetch == "function" ? fetch : require("node-fetch");
+    // In Node.js environments, the SDK always uses`node-fetch`.
+    // If not in Node.js the SDK uses global fetch if available,
+    // and falls back to node-fetch.
+    const fetchFn =
+        RUNTIME.type === "node" ? require("node-fetch") : typeof fetch == "function" ? fetch : require("node-fetch");
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();

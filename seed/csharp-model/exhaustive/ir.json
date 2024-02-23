@@ -13787,6 +13787,7 @@
     ]
   },
   "webhookGroups": {},
+  "websocketChannels": {},
   "subpackages": {
     "subpackage_endpoints": {
       "name": {
@@ -13808,6 +13809,7 @@
           "safeName": "Endpoints"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -13885,6 +13887,7 @@
           "safeName": "Container"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -13993,6 +13996,7 @@
           "safeName": "Enum"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14101,6 +14105,7 @@
           "safeName": "HttpMethods"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14209,6 +14214,7 @@
           "safeName": "Object"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14317,6 +14323,7 @@
           "safeName": "Params"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14425,6 +14432,7 @@
           "safeName": "Primitive"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14533,6 +14541,7 @@
           "safeName": "Union"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14641,6 +14650,7 @@
           "safeName": "GeneralErrors"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14713,6 +14723,7 @@
           "safeName": "InlinedRequests"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14782,6 +14793,7 @@
           "safeName": "NoAuth"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14851,6 +14863,7 @@
           "safeName": "NoReqBody"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14920,6 +14933,7 @@
           "safeName": "ReqWithHeaders"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -14989,6 +15003,7 @@
           "safeName": "Types"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -15062,6 +15077,7 @@
           "safeName": "Enum"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -15173,6 +15189,7 @@
           "safeName": "Object"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -15291,6 +15308,7 @@
           "safeName": "Union"
         }
       },
+      "websocket": null,
       "fernFilepath": {
         "allParts": [
           {
@@ -15390,6 +15408,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "websocket": null,
     "types": [],
     "errors": [],
     "subpackages": [

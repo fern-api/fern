@@ -7,7 +7,8 @@ generated
 bundle.c?js
 .pnp*
 packages/ir-sdk/**
+packages/cli/openapi-ir-sdk/**
 packages/seed/**
 generators/typescript/utils/core-utilities/**
 seed/**
-
+docker/seed/**

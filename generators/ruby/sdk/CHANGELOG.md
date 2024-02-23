@@ -7,10 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.2.0] - 2024-02-20
+
+- Improvement: Ruby enum construct now leverages class constants instead of hashes to support better autocomplete
+  For example, previously enums would be constructed as:
+
+  ```ruby
+  # operand.rb
+  module SeedEnumClient
+    OPERAND = { greater_than: ">", equal_to: "=", less_than: "less_than" }.freeze
+  end
+
+  # main.rb
+  ...
+  SeedEnum::OPERAND[:equal_to]
+  ```
+
+  and are now constructed as:
+
+  ```ruby
+  # operand.rb
+  module SeedEnumClient
+    # Tests enum name and value can be
+    # different.
+    class Operand
+      GREATER_THAN = ">"
+      EQUAL_TO = "="
+      LESS_THAN = "less_than"
+    end
+  end
+
+  # main.rb
+  ...
+  SeedEnum::Operand::EQUAL_TO
+  ```
+
+- Improvement: Discriminated unions are no longer wrapped within a parent object, rather, any field or parameter that depends on a discriminated union now explicitly references the member types in support of better autocomplete.
+
+- Improvement: Undiscriminated unions are no longer allowed as hashes as input to SDK functions, this is in support of better autocomplete as well.
+
+- Feature: The generated Ruby SDKs now support idempotency headers, users may specify idempotency headers within the RequestOptions object:
+
+  ```ruby
+  imdb = Imdb::Client(api_key: "...")
+
+  request_options = IdempotencyRequestOptions.new(
+    idempotency_key: "key",
+    idempotency_expiration: 60
+  )
+
+  resp = imbd.ticket.purchase(id: "", request_options: request_options)
+  ```
+
+## [0.1.1] - 2024-02-15
+
+- Fix: ensure the Ruby generators do not have strict dependencies on the IR. The generators have been updated to allow non breaking changes for the IR and the Fern CLI to happen without issue.
+
 ## [0.1.0-rc0] - 2024-02-12
 
 - Improvement: loosen the Faraday dependencies within the generated SDKs, now we are supporting Faraday 1.x, while continuing to support the same upperbound (specifically supporting the latest major version as well).
-- Release a major version as the Ruby generator is now being used in beta!
+- Release a minor version as the Ruby generator is now being used in beta!
 
 ## [0.0.6] - 2024-02-09
 

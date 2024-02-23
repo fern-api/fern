@@ -22,15 +22,15 @@ import types.Operand;
     builder = SendEnumInlinedRequest.Builder.class
 )
 public final class SendEnumInlinedRequest {
-  private final Optional<Operand> value;
+  private final Optional<Operand> operand;
 
-  private SendEnumInlinedRequest(Optional<Operand> value) {
-    this.value = value;
+  private SendEnumInlinedRequest(Optional<Operand> operand) {
+    this.operand = operand;
   }
 
-  @JsonProperty("value")
-  public Optional<Operand> getValue() {
-    return value;
+  @JsonProperty("operand")
+  public Optional<Operand> getOperand() {
+    return operand;
   }
 
   @java.lang.Override
@@ -40,12 +40,12 @@ public final class SendEnumInlinedRequest {
   }
 
   private boolean equalTo(SendEnumInlinedRequest other) {
-    return value.equals(other.value);
+    return operand.equals(other.operand);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.value);
+    return Objects.hash(this.operand);
   }
 
   @java.lang.Override
@@ -61,32 +61,32 @@ public final class SendEnumInlinedRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Optional<Operand> value = Optional.empty();
+    private Optional<Operand> operand = Optional.empty();
 
     private Builder() {
     }
 
     public Builder from(SendEnumInlinedRequest other) {
-      value(other.getValue());
+      operand(other.getOperand());
       return this;
     }
 
     @JsonSetter(
-        value = "value",
+        value = "operand",
         nulls = Nulls.SKIP
     )
-    public Builder value(Optional<Operand> value) {
-      this.value = value;
+    public Builder operand(Optional<Operand> operand) {
+      this.operand = operand;
       return this;
     }
 
-    public Builder value(Operand value) {
-      this.value = Optional.of(value);
+    public Builder operand(Operand operand) {
+      this.operand = Optional.of(operand);
       return this;
     }
 
     public SendEnumInlinedRequest build() {
-      return new SendEnumInlinedRequest(value);
+      return new SendEnumInlinedRequest(operand);
     }
   }
 }

@@ -1,7 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { RawSchemas } from "@fern-api/yaml-schema";
 import {
     ArraySchema,
     EnumSchema,
@@ -11,10 +9,11 @@ import {
     OneOfSchema,
     OptionalSchema,
     PrimitiveSchema,
-    PrimitiveSchemaValue,
     ReferencedSchema,
     Schema
-} from "@fern-fern/openapi-ir-model/finalIr";
+} from "@fern-api/openapi-ir-sdk";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
 import {
     buildEnumTypeDeclaration,
@@ -59,14 +58,14 @@ export function buildTypeReference({
         case "object":
             return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "oneOf":
-            return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context, declarationFile });
+            return buildOneOfTypeReference({ schema: schema.value, fileContainingReference, context, declarationFile });
         default:
             assertNever(schema);
     }
 }
 
 export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceWithDocsSchema {
-    const typeReference = PrimitiveSchemaValue._visit<string>(primitiveSchema.schema, {
+    const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",
         float: () => "double",
@@ -76,7 +75,7 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         date: () => "date",
         base64: () => "base64",
         boolean: () => "boolean",
-        _unknown: () => "unknown"
+        _other: () => "unknown"
     });
     if (primitiveSchema.description != null) {
         return {
@@ -204,9 +203,9 @@ export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsSch
 export function buildLiteralTypeReference(value: LiteralSchemaValue): RawSchemas.TypeReferenceWithDocsSchema {
     switch (value.type) {
         case "boolean":
-            return `literal<${value.boolean}>`;
+            return `literal<${value.value}>`;
         case "string":
-            return `literal<"${value.string}">`;
+            return `literal<"${value.value}">`;
         default:
             assertNever(value);
     }
@@ -335,6 +334,6 @@ function getSchemaName(schema: Schema): string | undefined {
         optional: (s) => s.nameOverride ?? s.generatedName,
         nullable: (s) => s.nameOverride ?? s.generatedName,
         unknown: (s) => s.nameOverride ?? s.generatedName,
-        _unknown: () => undefined
+        _other: () => undefined
     });
 }

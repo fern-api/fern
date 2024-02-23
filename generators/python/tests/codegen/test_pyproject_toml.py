@@ -13,7 +13,7 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
         version="0.0.0",
         package=PyProjectTomlPackageConfig(include="ir", _from="src"),
         dependency_manager=dependency_manager,
-        python_version="3.7",
+        python_version="3.8",
         path=str(tmpdir),
     )
     pyproject_toml.write()
@@ -35,11 +35,11 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
-mypy = "0.971"
+mypy = "^1.8.0"
 pytest = "^7.4.0"
 
 [build-system]

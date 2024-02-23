@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from ...commons.types.binary_tree_node_value import BinaryTreeNodeValue
 from ...commons.types.binary_tree_value import BinaryTreeValue
 from ...commons.types.doubly_linked_list_node_value import DoublyLinkedListNodeValue
@@ -33,7 +31,7 @@ except ImportError:
 
 
 class TestSubmissionStatus_Stopped(pydantic.BaseModel):
-    type: typing_extensions.Literal["stopped"]
+    type: typing.Literal["stopped"]
 
     class Config:
         frozen = True
@@ -41,7 +39,7 @@ class TestSubmissionStatus_Stopped(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_Errored(pydantic.BaseModel):
-    type: typing_extensions.Literal["errored"]
+    type: typing.Literal["errored"]
     value: ErrorInfo
 
     class Config:
@@ -50,7 +48,7 @@ class TestSubmissionStatus_Errored(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_Running(pydantic.BaseModel):
-    type: typing_extensions.Literal["running"]
+    type: typing.Literal["running"]
     value: RunningSubmissionState
 
     class Config:
@@ -59,7 +57,7 @@ class TestSubmissionStatus_Running(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_TestCaseIdToState(pydantic.BaseModel):
-    type: typing_extensions.Literal["testCaseIdToState"]
+    type: typing.Literal["testCaseIdToState"]
     value: typing.Dict[str, SubmissionStatusForTestCase]
 
     class Config:

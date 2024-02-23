@@ -2,17 +2,17 @@
     "endpoints": [
         {
             "id": {
-                "path": "/inlined-request",
+                "path": "/inlined",
                 "method": "POST"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    value: SeedEnum.Operand.GreaterThan\n});\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    operand: SeedEnum.Operand.GreaterThan\n});\n"
             }
         },
         {
             "id": {
-                "path": "/path-param/{value}",
+                "path": "/path/{operand}",
                 "method": "POST"
             },
             "snippet": {
@@ -27,7 +27,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    value: SeedEnum.Operand.GreaterThan\n});\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan\n});\n"
             }
         }
     ],

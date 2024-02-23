@@ -26,10 +26,16 @@ class AbstractHealthServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def check(self, *, id: str, auth: ApiAuth) -> None:
+        """
+        This endpoint checks the health of a resource.
+        """
         ...
 
     @abc.abstractmethod
     def ping(self, *, auth: ApiAuth) -> bool:
+        """
+        This endpoint checks the health of the service.
+        """
         ...
 
     """

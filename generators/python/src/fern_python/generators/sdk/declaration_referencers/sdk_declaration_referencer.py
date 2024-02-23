@@ -9,12 +9,22 @@ T = TypeVar("T")
 
 
 class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
+    def __init__(self, *, skip_resources_module: bool) -> None:
+        self.skip_resources_module = skip_resources_module
+
     def _get_directories_for_fern_filepath_part(
         self,
         *,
         fern_filepath_part: ir_types.Name,
         export_strategy: ExportStrategy,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
+        if self.skip_resources_module:
+            return (
+                Filepath.DirectoryFilepathPart(
+                    module_name=fern_filepath_part.snake_case.unsafe_name,
+                    export_strategy=export_strategy,
+                ),
+            )
         return (
             Filepath.DirectoryFilepathPart(
                 module_name="resources",

@@ -4,29 +4,27 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 from .compile_error import CompileError
 from .internal_error import InternalError
 from .runtime_error import RuntimeError
 
 
 class ErrorInfo_CompileError(CompileError):
-    type: typing_extensions.Literal["compileError"]
+    type: typing.Literal["compileError"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class ErrorInfo_RuntimeError(RuntimeError):
-    type: typing_extensions.Literal["runtimeError"]
+    type: typing.Literal["runtimeError"]
 
     class Config:
         allow_population_by_field_name = True
 
 
 class ErrorInfo_InternalError(InternalError):
-    type: typing_extensions.Literal["internalError"]
+    type: typing.Literal["internalError"]
 
     class Config:
         allow_population_by_field_name = True

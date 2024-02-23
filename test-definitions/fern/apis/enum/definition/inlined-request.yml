@@ -6,15 +6,15 @@ service:
   base-path: ""
   endpoints:
     send:
-      path: /inlined-request
+      path: /inlined
       method: POST
       request:
         name: SendEnumInlinedRequest
         body: 
           properties: 
-            value:
+            operand:
               type: optional<root.Operand>
       examples: 
         - request:
-            value: $root.Operand.GreaterThan
+            operand: $root.Operand.GreaterThan
       

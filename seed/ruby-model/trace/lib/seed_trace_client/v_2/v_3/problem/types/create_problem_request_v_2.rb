@@ -20,7 +20,7 @@ module SeedTraceClient
           # @param custom_files [V2::V3::Problem::CustomFiles]
           # @param custom_test_case_templates [Array<V2::V3::Problem::TestCaseTemplate>]
           # @param testcases [Array<V2::V3::Problem::TestCaseV2>]
-          # @param supported_languages [Set<Commons::LANGUAGE>]
+          # @param supported_languages [Set<Commons::Language>]
           # @param is_public [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::CreateProblemRequestV2]
@@ -36,7 +36,7 @@ module SeedTraceClient
             @custom_test_case_templates = custom_test_case_templates
             # @type [Array<V2::V3::Problem::TestCaseV2>]
             @testcases = testcases
-            # @type [Set<Commons::LANGUAGE>]
+            # @type [Set<Commons::Language>]
             @supported_languages = supported_languages
             # @type [Boolean]
             @is_public = is_public

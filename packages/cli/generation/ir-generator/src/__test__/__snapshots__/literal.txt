@@ -3,7 +3,7 @@
 exports[`generate IR 1`] = `
 {
   "apiDisplayName": null,
-  "apiDocs": null,
+  "apiDocs": "Test definition for literal schemas. ",
   "apiName": {
     "camelCase": {
       "safeName": "literal",
@@ -58,7 +58,80 @@ exports[`generate IR 1`] = `
     "type": "statusCode",
   },
   "errors": {},
-  "headers": [],
+  "headers": [
+    {
+      "availability": null,
+      "docs": null,
+      "name": {
+        "name": {
+          "camelCase": {
+            "safeName": "version",
+            "unsafeName": "version",
+          },
+          "originalName": "version",
+          "pascalCase": {
+            "safeName": "Version",
+            "unsafeName": "Version",
+          },
+          "screamingSnakeCase": {
+            "safeName": "VERSION",
+            "unsafeName": "VERSION",
+          },
+          "snakeCase": {
+            "safeName": "version",
+            "unsafeName": "version",
+          },
+        },
+        "wireValue": "X-API-Version",
+      },
+      "valueType": {
+        "_type": "container",
+        "container": {
+          "_type": "literal",
+          "literal": {
+            "string": "02-02-2024",
+            "type": "string",
+          },
+        },
+      },
+    },
+    {
+      "availability": null,
+      "docs": null,
+      "name": {
+        "name": {
+          "camelCase": {
+            "safeName": "auditLogging",
+            "unsafeName": "auditLogging",
+          },
+          "originalName": "audit_logging",
+          "pascalCase": {
+            "safeName": "AuditLogging",
+            "unsafeName": "AuditLogging",
+          },
+          "screamingSnakeCase": {
+            "safeName": "AUDIT_LOGGING",
+            "unsafeName": "AUDIT_LOGGING",
+          },
+          "snakeCase": {
+            "safeName": "audit_logging",
+            "unsafeName": "audit_logging",
+          },
+        },
+        "wireValue": "X-API-Enable-Audit-Logging",
+      },
+      "valueType": {
+        "_type": "container",
+        "container": {
+          "_type": "literal",
+          "literal": {
+            "boolean": true,
+            "type": "boolean",
+          },
+        },
+      },
+    },
+  ],
   "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
@@ -73,10 +146,17 @@ exports[`generate IR 1`] = `
     "navigationConfig": null,
     "service": null,
     "subpackages": [
-      "subpackage_literal",
+      "subpackage_headers",
+      "subpackage_inlined",
+      "subpackage_path",
+      "subpackage_query",
+      "subpackage_reference",
     ],
-    "types": [],
+    "types": [
+      "type_:SendResponse",
+    ],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -89,20 +169,20 @@ exports[`generate IR 1`] = `
     },
   },
   "serviceTypeReferenceInfo": {
-    "sharedTypes": [],
+    "sharedTypes": [
+      "type_:SendResponse",
+    ],
     "typesReferencedOnlyByService": {
-      "service_literal": [
-        "type_literal:Options",
-        "type_literal:UndiscriminatedOptions",
-        "type_literal:CreateOptionsResponse",
+      "service_reference": [
+        "type_reference:SendRequest",
       ],
     },
   },
   "services": {
-    "service_literal": {
+    "service_headers": {
       "availability": null,
       "basePath": {
-        "head": "/",
+        "head": "",
         "parts": [],
       },
       "displayName": null,
@@ -115,36 +195,469 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "endpointVersion",
+                        "unsafeName": "endpointVersion",
+                      },
+                      "originalName": "endpointVersion",
+                      "pascalCase": {
+                        "safeName": "EndpointVersion",
+                        "unsafeName": "EndpointVersion",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ENDPOINT_VERSION",
+                        "unsafeName": "ENDPOINT_VERSION",
+                      },
+                      "snakeCase": {
+                        "safeName": "endpoint_version",
+                        "unsafeName": "endpoint_version",
+                      },
+                    },
+                    "wireValue": "X-Endpoint-Version",
+                  },
+                  "value": {
+                    "jsonExample": "02-12-2024",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "02-12-2024",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "async",
+                        "unsafeName": "async",
+                      },
+                      "originalName": "async",
+                      "pascalCase": {
+                        "safeName": "Async",
+                        "unsafeName": "Async",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ASYNC",
+                        "unsafeName": "ASYNC",
+                      },
+                      "snakeCase": {
+                        "safeName": "async",
+                        "unsafeName": "async",
+                      },
+                    },
+                    "wireValue": "X-Async",
+                  },
+                  "value": {
+                    "jsonExample": true,
+                    "shape": {
+                      "primitive": {
+                        "boolean": true,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "query": "What is the weather today",
+                },
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "query",
+                          "unsafeName": "query",
+                        },
+                        "originalName": "query",
+                        "pascalCase": {
+                          "safeName": "Query",
+                          "unsafeName": "Query",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "QUERY",
+                          "unsafeName": "QUERY",
+                        },
+                        "snakeCase": {
+                          "safeName": "query",
+                          "unsafeName": "query",
+                        },
+                      },
+                      "wireValue": "query",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "What is the weather today",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "What is the weather today",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "inlinedRequestBody",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "message": "The weather is sunny",
+                    "status": 200,
+                    "success": true,
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                              "originalName": "message",
+                              "pascalCase": {
+                                "safeName": "Message",
+                                "unsafeName": "Message",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MESSAGE",
+                                "unsafeName": "MESSAGE",
+                              },
+                              "snakeCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                            },
+                            "wireValue": "message",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": "The weather is sunny",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "The weather is sunny",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                              "originalName": "status",
+                              "pascalCase": {
+                                "safeName": "Status",
+                                "unsafeName": "Status",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "STATUS",
+                                "unsafeName": "STATUS",
+                              },
+                              "snakeCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                            },
+                            "wireValue": "status",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": 200,
+                            "shape": {
+                              "primitive": {
+                                "integer": 200,
+                                "type": "integer",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                              "originalName": "success",
+                              "pascalCase": {
+                                "safeName": "Success",
+                                "unsafeName": "Success",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SUCCESS",
+                                "unsafeName": "SUCCESS",
+                              },
+                              "snakeCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                            },
+                            "wireValue": "success",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "sendResponse",
+                          "unsafeName": "sendResponse",
+                        },
+                        "originalName": "SendResponse",
+                        "pascalCase": {
+                          "safeName": "SendResponse",
+                          "unsafeName": "SendResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SEND_RESPONSE",
+                          "unsafeName": "SEND_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "send_response",
+                          "unsafeName": "send_response",
+                        },
+                      },
+                      "typeId": "type_:SendResponse",
+                    },
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/headers",
+            },
+          ],
           "fullPath": {
-            "head": "/options",
+            "head": "headers",
             "parts": [],
           },
-          "headers": [],
-          "id": "endpoint_literal.createOptions",
+          "headers": [
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "endpointVersion",
+                    "unsafeName": "endpointVersion",
+                  },
+                  "originalName": "endpointVersion",
+                  "pascalCase": {
+                    "safeName": "EndpointVersion",
+                    "unsafeName": "EndpointVersion",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "ENDPOINT_VERSION",
+                    "unsafeName": "ENDPOINT_VERSION",
+                  },
+                  "snakeCase": {
+                    "safeName": "endpoint_version",
+                    "unsafeName": "endpoint_version",
+                  },
+                },
+                "wireValue": "X-Endpoint-Version",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "02-12-2024",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "async",
+                    "unsafeName": "async",
+                  },
+                  "originalName": "async",
+                  "pascalCase": {
+                    "safeName": "Async",
+                    "unsafeName": "Async",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "ASYNC",
+                    "unsafeName": "ASYNC",
+                  },
+                  "snakeCase": {
+                    "safeName": "async",
+                    "unsafeName": "async",
+                  },
+                },
+                "wireValue": "X-Async",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                },
+              },
+            },
+          ],
+          "id": "endpoint_headers.send",
           "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "createOptions",
-              "unsafeName": "createOptions",
+              "safeName": "send",
+              "unsafeName": "send",
             },
-            "originalName": "createOptions",
+            "originalName": "send",
             "pascalCase": {
-              "safeName": "CreateOptions",
-              "unsafeName": "CreateOptions",
+              "safeName": "Send",
+              "unsafeName": "Send",
             },
             "screamingSnakeCase": {
-              "safeName": "CREATE_OPTIONS",
-              "unsafeName": "CREATE_OPTIONS",
+              "safeName": "SEND",
+              "unsafeName": "SEND",
             },
             "snakeCase": {
-              "safeName": "create_options",
-              "unsafeName": "create_options",
+              "safeName": "send",
+              "unsafeName": "send",
             },
           },
+          "pagination": null,
           "path": {
-            "head": "/options",
+            "head": "/headers",
             "parts": [],
           },
           "pathParameters": [],
@@ -154,21 +667,21 @@ exports[`generate IR 1`] = `
             "extends": [],
             "name": {
               "camelCase": {
-                "safeName": "createOptionsRequest",
-                "unsafeName": "createOptionsRequest",
+                "safeName": "sendLiteralsInHeadersRequest",
+                "unsafeName": "sendLiteralsInHeadersRequest",
               },
-              "originalName": "CreateOptionsRequest",
+              "originalName": "SendLiteralsInHeadersRequest",
               "pascalCase": {
-                "safeName": "CreateOptionsRequest",
-                "unsafeName": "CreateOptionsRequest",
+                "safeName": "SendLiteralsInHeadersRequest",
+                "unsafeName": "SendLiteralsInHeadersRequest",
               },
               "screamingSnakeCase": {
-                "safeName": "CREATE_OPTIONS_REQUEST",
-                "unsafeName": "CREATE_OPTIONS_REQUEST",
+                "safeName": "SEND_LITERALS_IN_HEADERS_REQUEST",
+                "unsafeName": "SEND_LITERALS_IN_HEADERS_REQUEST",
               },
               "snakeCase": {
-                "safeName": "create_options_request",
-                "unsafeName": "create_options_request",
+                "safeName": "send_literals_in_headers_request",
+                "unsafeName": "send_literals_in_headers_request",
               },
             },
             "properties": [
@@ -177,38 +690,28 @@ exports[`generate IR 1`] = `
                 "name": {
                   "name": {
                     "camelCase": {
-                      "safeName": "values",
-                      "unsafeName": "values",
+                      "safeName": "query",
+                      "unsafeName": "query",
                     },
-                    "originalName": "values",
+                    "originalName": "query",
                     "pascalCase": {
-                      "safeName": "Values",
-                      "unsafeName": "Values",
+                      "safeName": "Query",
+                      "unsafeName": "Query",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "VALUES",
-                      "unsafeName": "VALUES",
+                      "safeName": "QUERY",
+                      "unsafeName": "QUERY",
                     },
                     "snakeCase": {
-                      "safeName": "values",
-                      "unsafeName": "values",
+                      "safeName": "query",
+                      "unsafeName": "query",
                     },
                   },
-                  "wireValue": "values",
+                  "wireValue": "query",
                 },
                 "valueType": {
-                  "_type": "container",
-                  "container": {
-                    "_type": "map",
-                    "keyType": {
-                      "_type": "primitive",
-                      "primitive": "STRING",
-                    },
-                    "valueType": {
-                      "_type": "primitive",
-                      "primitive": "STRING",
-                    },
-                  },
+                  "_type": "primitive",
+                  "primitive": "STRING",
                 },
               },
             ],
@@ -221,68 +724,30 @@ exports[`generate IR 1`] = `
               "responseBodyType": {
                 "_type": "named",
                 "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                      "originalName": "literal",
-                      "pascalCase": {
-                        "safeName": "Literal",
-                        "unsafeName": "Literal",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "LITERAL",
-                        "unsafeName": "LITERAL",
-                      },
-                      "snakeCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                    "originalName": "literal",
-                    "pascalCase": {
-                      "safeName": "Literal",
-                      "unsafeName": "Literal",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "LITERAL",
-                      "unsafeName": "LITERAL",
-                    },
-                    "snakeCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                  },
+                  "allParts": [],
+                  "file": null,
                   "packagePath": [],
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "createOptionsResponse",
-                    "unsafeName": "createOptionsResponse",
+                    "safeName": "sendResponse",
+                    "unsafeName": "sendResponse",
                   },
-                  "originalName": "CreateOptionsResponse",
+                  "originalName": "SendResponse",
                   "pascalCase": {
-                    "safeName": "CreateOptionsResponse",
-                    "unsafeName": "CreateOptionsResponse",
+                    "safeName": "SendResponse",
+                    "unsafeName": "SendResponse",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "CREATE_OPTIONS_RESPONSE",
-                    "unsafeName": "CREATE_OPTIONS_RESPONSE",
+                    "safeName": "SEND_RESPONSE",
+                    "unsafeName": "SEND_RESPONSE",
                   },
                   "snakeCase": {
-                    "safeName": "create_options_response",
-                    "unsafeName": "create_options_response",
+                    "safeName": "send_response",
+                    "unsafeName": "send_response",
                   },
                 },
-                "typeId": "type_literal:CreateOptionsResponse",
+                "typeId": "type_:SendResponse",
               },
               "type": "response",
             },
@@ -330,499 +795,21 @@ exports[`generate IR 1`] = `
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "createOptionsRequest",
-                  "unsafeName": "createOptionsRequest",
+                  "safeName": "sendLiteralsInHeadersRequest",
+                  "unsafeName": "sendLiteralsInHeadersRequest",
                 },
-                "originalName": "CreateOptionsRequest",
+                "originalName": "SendLiteralsInHeadersRequest",
                 "pascalCase": {
-                  "safeName": "CreateOptionsRequest",
-                  "unsafeName": "CreateOptionsRequest",
+                  "safeName": "SendLiteralsInHeadersRequest",
+                  "unsafeName": "SendLiteralsInHeadersRequest",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "CREATE_OPTIONS_REQUEST",
-                  "unsafeName": "CREATE_OPTIONS_REQUEST",
+                  "safeName": "SEND_LITERALS_IN_HEADERS_REQUEST",
+                  "unsafeName": "SEND_LITERALS_IN_HEADERS_REQUEST",
                 },
                 "snakeCase": {
-                  "safeName": "create_options_request",
-                  "unsafeName": "create_options_request",
-                },
-              },
-            },
-          },
-        },
-        {
-          "allPathParameters": [],
-          "auth": false,
-          "availability": null,
-          "baseUrl": null,
-          "displayName": null,
-          "docs": null,
-          "errors": [],
-          "examples": [],
-          "fullPath": {
-            "head": "/options",
-            "parts": [],
-          },
-          "headers": [],
-          "id": "endpoint_literal.getOptions",
-          "idempotent": false,
-          "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "getOptions",
-              "unsafeName": "getOptions",
-            },
-            "originalName": "getOptions",
-            "pascalCase": {
-              "safeName": "GetOptions",
-              "unsafeName": "GetOptions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_OPTIONS",
-              "unsafeName": "GET_OPTIONS",
-            },
-            "snakeCase": {
-              "safeName": "get_options",
-              "unsafeName": "get_options",
-            },
-          },
-          "path": {
-            "head": "/options",
-            "parts": [],
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "requestBody": {
-            "contentType": null,
-            "extends": [],
-            "name": {
-              "camelCase": {
-                "safeName": "getOptionsRequest",
-                "unsafeName": "getOptionsRequest",
-              },
-              "originalName": "GetOptionsRequest",
-              "pascalCase": {
-                "safeName": "GetOptionsRequest",
-                "unsafeName": "GetOptionsRequest",
-              },
-              "screamingSnakeCase": {
-                "safeName": "GET_OPTIONS_REQUEST",
-                "unsafeName": "GET_OPTIONS_REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "get_options_request",
-                "unsafeName": "get_options_request",
-              },
-            },
-            "properties": [
-              {
-                "docs": null,
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "dryRun",
-                      "unsafeName": "dryRun",
-                    },
-                    "originalName": "dryRun",
-                    "pascalCase": {
-                      "safeName": "DryRun",
-                      "unsafeName": "DryRun",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "DRY_RUN",
-                      "unsafeName": "DRY_RUN",
-                    },
-                    "snakeCase": {
-                      "safeName": "dry_run",
-                      "unsafeName": "dry_run",
-                    },
-                  },
-                  "wireValue": "dryRun",
-                },
-                "valueType": {
-                  "_type": "container",
-                  "container": {
-                    "_type": "literal",
-                    "literal": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                  },
-                },
-              },
-            ],
-            "type": "inlinedRequestBody",
-          },
-          "response": {
-            "type": "json",
-            "value": {
-              "docs": null,
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                      "originalName": "literal",
-                      "pascalCase": {
-                        "safeName": "Literal",
-                        "unsafeName": "Literal",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "LITERAL",
-                        "unsafeName": "LITERAL",
-                      },
-                      "snakeCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                    "originalName": "literal",
-                    "pascalCase": {
-                      "safeName": "Literal",
-                      "unsafeName": "Literal",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "LITERAL",
-                      "unsafeName": "LITERAL",
-                    },
-                    "snakeCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "options",
-                    "unsafeName": "options",
-                  },
-                  "originalName": "Options",
-                  "pascalCase": {
-                    "safeName": "Options",
-                    "unsafeName": "Options",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OPTIONS",
-                    "unsafeName": "OPTIONS",
-                  },
-                  "snakeCase": {
-                    "safeName": "options",
-                    "unsafeName": "options",
-                  },
-                },
-                "typeId": "type_literal:Options",
-              },
-              "type": "response",
-            },
-          },
-          "sdkRequest": {
-            "requestParameterName": {
-              "camelCase": {
-                "safeName": "request",
-                "unsafeName": "request",
-              },
-              "originalName": "request",
-              "pascalCase": {
-                "safeName": "Request",
-                "unsafeName": "Request",
-              },
-              "screamingSnakeCase": {
-                "safeName": "REQUEST",
-                "unsafeName": "REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "request",
-                "unsafeName": "request",
-              },
-            },
-            "shape": {
-              "bodyKey": {
-                "camelCase": {
-                  "safeName": "body",
-                  "unsafeName": "body",
-                },
-                "originalName": "body",
-                "pascalCase": {
-                  "safeName": "Body",
-                  "unsafeName": "Body",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "BODY",
-                  "unsafeName": "BODY",
-                },
-                "snakeCase": {
-                  "safeName": "body",
-                  "unsafeName": "body",
-                },
-              },
-              "type": "wrapper",
-              "wrapperName": {
-                "camelCase": {
-                  "safeName": "getOptionsRequest",
-                  "unsafeName": "getOptionsRequest",
-                },
-                "originalName": "GetOptionsRequest",
-                "pascalCase": {
-                  "safeName": "GetOptionsRequest",
-                  "unsafeName": "GetOptionsRequest",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "GET_OPTIONS_REQUEST",
-                  "unsafeName": "GET_OPTIONS_REQUEST",
-                },
-                "snakeCase": {
-                  "safeName": "get_options_request",
-                  "unsafeName": "get_options_request",
-                },
-              },
-            },
-          },
-        },
-        {
-          "allPathParameters": [],
-          "auth": false,
-          "availability": null,
-          "baseUrl": null,
-          "displayName": null,
-          "docs": null,
-          "errors": [],
-          "examples": [],
-          "fullPath": {
-            "head": "/options",
-            "parts": [],
-          },
-          "headers": [],
-          "id": "endpoint_literal.getUndiscriminatedOptions",
-          "idempotent": false,
-          "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "getUndiscriminatedOptions",
-              "unsafeName": "getUndiscriminatedOptions",
-            },
-            "originalName": "getUndiscriminatedOptions",
-            "pascalCase": {
-              "safeName": "GetUndiscriminatedOptions",
-              "unsafeName": "GetUndiscriminatedOptions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_UNDISCRIMINATED_OPTIONS",
-              "unsafeName": "GET_UNDISCRIMINATED_OPTIONS",
-            },
-            "snakeCase": {
-              "safeName": "get_undiscriminated_options",
-              "unsafeName": "get_undiscriminated_options",
-            },
-          },
-          "path": {
-            "head": "/options",
-            "parts": [],
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "requestBody": {
-            "contentType": null,
-            "extends": [],
-            "name": {
-              "camelCase": {
-                "safeName": "getUndiscriminatedOptionsRequest",
-                "unsafeName": "getUndiscriminatedOptionsRequest",
-              },
-              "originalName": "GetUndiscriminatedOptionsRequest",
-              "pascalCase": {
-                "safeName": "GetUndiscriminatedOptionsRequest",
-                "unsafeName": "GetUndiscriminatedOptionsRequest",
-              },
-              "screamingSnakeCase": {
-                "safeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
-                "unsafeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "get_undiscriminated_options_request",
-                "unsafeName": "get_undiscriminated_options_request",
-              },
-            },
-            "properties": [
-              {
-                "docs": null,
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "dryRun",
-                      "unsafeName": "dryRun",
-                    },
-                    "originalName": "dryRun",
-                    "pascalCase": {
-                      "safeName": "DryRun",
-                      "unsafeName": "DryRun",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "DRY_RUN",
-                      "unsafeName": "DRY_RUN",
-                    },
-                    "snakeCase": {
-                      "safeName": "dry_run",
-                      "unsafeName": "dry_run",
-                    },
-                  },
-                  "wireValue": "dryRun",
-                },
-                "valueType": {
-                  "_type": "container",
-                  "container": {
-                    "_type": "literal",
-                    "literal": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                  },
-                },
-              },
-            ],
-            "type": "inlinedRequestBody",
-          },
-          "response": {
-            "type": "json",
-            "value": {
-              "docs": null,
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                      "originalName": "literal",
-                      "pascalCase": {
-                        "safeName": "Literal",
-                        "unsafeName": "Literal",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "LITERAL",
-                        "unsafeName": "LITERAL",
-                      },
-                      "snakeCase": {
-                        "safeName": "literal",
-                        "unsafeName": "literal",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                    "originalName": "literal",
-                    "pascalCase": {
-                      "safeName": "Literal",
-                      "unsafeName": "Literal",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "LITERAL",
-                      "unsafeName": "LITERAL",
-                    },
-                    "snakeCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "undiscriminatedOptions",
-                    "unsafeName": "undiscriminatedOptions",
-                  },
-                  "originalName": "UndiscriminatedOptions",
-                  "pascalCase": {
-                    "safeName": "UndiscriminatedOptions",
-                    "unsafeName": "UndiscriminatedOptions",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNDISCRIMINATED_OPTIONS",
-                    "unsafeName": "UNDISCRIMINATED_OPTIONS",
-                  },
-                  "snakeCase": {
-                    "safeName": "undiscriminated_options",
-                    "unsafeName": "undiscriminated_options",
-                  },
-                },
-                "typeId": "type_literal:UndiscriminatedOptions",
-              },
-              "type": "response",
-            },
-          },
-          "sdkRequest": {
-            "requestParameterName": {
-              "camelCase": {
-                "safeName": "request",
-                "unsafeName": "request",
-              },
-              "originalName": "request",
-              "pascalCase": {
-                "safeName": "Request",
-                "unsafeName": "Request",
-              },
-              "screamingSnakeCase": {
-                "safeName": "REQUEST",
-                "unsafeName": "REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "request",
-                "unsafeName": "request",
-              },
-            },
-            "shape": {
-              "bodyKey": {
-                "camelCase": {
-                  "safeName": "body",
-                  "unsafeName": "body",
-                },
-                "originalName": "body",
-                "pascalCase": {
-                  "safeName": "Body",
-                  "unsafeName": "Body",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "BODY",
-                  "unsafeName": "BODY",
-                },
-                "snakeCase": {
-                  "safeName": "body",
-                  "unsafeName": "body",
-                },
-              },
-              "type": "wrapper",
-              "wrapperName": {
-                "camelCase": {
-                  "safeName": "getUndiscriminatedOptionsRequest",
-                  "unsafeName": "getUndiscriminatedOptionsRequest",
-                },
-                "originalName": "GetUndiscriminatedOptionsRequest",
-                "pascalCase": {
-                  "safeName": "GetUndiscriminatedOptionsRequest",
-                  "unsafeName": "GetUndiscriminatedOptionsRequest",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
-                  "unsafeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
-                },
-                "snakeCase": {
-                  "safeName": "get_undiscriminated_options_request",
-                  "unsafeName": "get_undiscriminated_options_request",
+                  "safeName": "send_literals_in_headers_request",
+                  "unsafeName": "send_literals_in_headers_request",
                 },
               },
             },
@@ -835,41 +822,41 @@ exports[`generate IR 1`] = `
           "allParts": [
             {
               "camelCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "headers",
+                "unsafeName": "headers",
               },
-              "originalName": "literal",
+              "originalName": "headers",
               "pascalCase": {
-                "safeName": "Literal",
-                "unsafeName": "Literal",
+                "safeName": "Headers",
+                "unsafeName": "Headers",
               },
               "screamingSnakeCase": {
-                "safeName": "LITERAL",
-                "unsafeName": "LITERAL",
+                "safeName": "HEADERS",
+                "unsafeName": "HEADERS",
               },
               "snakeCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "headers",
+                "unsafeName": "headers",
               },
             },
           ],
           "file": {
             "camelCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "headers",
+              "unsafeName": "headers",
             },
-            "originalName": "literal",
+            "originalName": "headers",
             "pascalCase": {
-              "safeName": "Literal",
-              "unsafeName": "Literal",
+              "safeName": "Headers",
+              "unsafeName": "Headers",
             },
             "screamingSnakeCase": {
-              "safeName": "LITERAL",
-              "unsafeName": "LITERAL",
+              "safeName": "HEADERS",
+              "unsafeName": "HEADERS",
             },
             "snakeCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "headers",
+              "unsafeName": "headers",
             },
           },
           "packagePath": [],
@@ -877,417 +864,784 @@ exports[`generate IR 1`] = `
       },
       "pathParameters": [],
     },
-  },
-  "subpackages": {
-    "subpackage_literal": {
-      "docs": null,
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
-            },
-            "originalName": "literal",
-            "pascalCase": {
-              "safeName": "Literal",
-              "unsafeName": "Literal",
-            },
-            "screamingSnakeCase": {
-              "safeName": "LITERAL",
-              "unsafeName": "LITERAL",
-            },
-            "snakeCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
-            },
-          },
-        ],
-        "file": {
-          "camelCase": {
-            "safeName": "literal",
-            "unsafeName": "literal",
-          },
-          "originalName": "literal",
-          "pascalCase": {
-            "safeName": "Literal",
-            "unsafeName": "Literal",
-          },
-          "screamingSnakeCase": {
-            "safeName": "LITERAL",
-            "unsafeName": "LITERAL",
-          },
-          "snakeCase": {
-            "safeName": "literal",
-            "unsafeName": "literal",
-          },
-        },
-        "packagePath": [],
-      },
-      "hasEndpointsInTree": true,
-      "name": {
-        "camelCase": {
-          "safeName": "literal",
-          "unsafeName": "literal",
-        },
-        "originalName": "literal",
-        "pascalCase": {
-          "safeName": "Literal",
-          "unsafeName": "Literal",
-        },
-        "screamingSnakeCase": {
-          "safeName": "LITERAL",
-          "unsafeName": "LITERAL",
-        },
-        "snakeCase": {
-          "safeName": "literal",
-          "unsafeName": "literal",
-        },
-      },
-      "navigationConfig": null,
-      "service": "service_literal",
-      "subpackages": [],
-      "types": [
-        "type_literal:Options",
-        "type_literal:UndiscriminatedOptions",
-        "type_literal:CreateOptionsResponse",
-      ],
-      "webhooks": null,
-    },
-  },
-  "types": {
-    "type_literal:CreateOptionsResponse": {
+    "service_inlined": {
       "availability": null,
-      "docs": null,
-      "examples": [],
-      "name": {
-        "fernFilepath": {
-          "allParts": [
-            {
-              "camelCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
-              },
-              "originalName": "literal",
-              "pascalCase": {
-                "safeName": "Literal",
-                "unsafeName": "Literal",
-              },
-              "screamingSnakeCase": {
-                "safeName": "LITERAL",
-                "unsafeName": "LITERAL",
-              },
-              "snakeCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
-              },
-            },
-          ],
-          "file": {
-            "camelCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
-            },
-            "originalName": "literal",
-            "pascalCase": {
-              "safeName": "Literal",
-              "unsafeName": "Literal",
-            },
-            "screamingSnakeCase": {
-              "safeName": "LITERAL",
-              "unsafeName": "LITERAL",
-            },
-            "snakeCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
-            },
-          },
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "createOptionsResponse",
-            "unsafeName": "createOptionsResponse",
-          },
-          "originalName": "CreateOptionsResponse",
-          "pascalCase": {
-            "safeName": "CreateOptionsResponse",
-            "unsafeName": "CreateOptionsResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_OPTIONS_RESPONSE",
-            "unsafeName": "CREATE_OPTIONS_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "create_options_response",
-            "unsafeName": "create_options_response",
-          },
-        },
-        "typeId": "type_literal:CreateOptionsResponse",
+      "basePath": {
+        "head": "",
+        "parts": [],
       },
-      "referencedTypes": [
-        "type_literal:Options",
-      ],
-      "shape": {
-        "_type": "union",
-        "baseProperties": [],
-        "discriminant": {
-          "name": {
-            "camelCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-            "originalName": "type",
-            "pascalCase": {
-              "safeName": "Type",
-              "unsafeName": "Type",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPE",
-              "unsafeName": "TYPE",
-            },
-            "snakeCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-          },
-          "wireValue": "type",
-        },
-        "extends": [],
-        "types": [
-          {
-            "discriminantValue": {
-              "name": {
-                "camelCase": {
-                  "safeName": "ok",
-                  "unsafeName": "ok",
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "prompt": "You are a helpful assistant",
+                  "query": "What is the weather today",
+                  "stream": false,
+                  "temperature": 10.1,
                 },
-                "originalName": "ok",
-                "pascalCase": {
-                  "safeName": "Ok",
-                  "unsafeName": "Ok",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OK",
-                  "unsafeName": "OK",
-                },
-                "snakeCase": {
-                  "safeName": "ok",
-                  "unsafeName": "ok",
-                },
-              },
-              "wireValue": "ok",
-            },
-            "docs": null,
-            "shape": {
-              "_type": "singleProperty",
-              "name": {
-                "name": {
-                  "camelCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                  "originalName": "value",
-                  "pascalCase": {
-                    "safeName": "Value",
-                    "unsafeName": "Value",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "VALUE",
-                    "unsafeName": "VALUE",
-                  },
-                  "snakeCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                },
-                "wireValue": "value",
-              },
-              "type": {
-                "_type": "container",
-                "container": {
-                  "_type": "literal",
-                  "literal": {
-                    "boolean": true,
-                    "type": "boolean",
-                  },
-                },
-              },
-            },
-          },
-          {
-            "discriminantValue": {
-              "name": {
-                "camelCase": {
-                  "safeName": "options",
-                  "unsafeName": "options",
-                },
-                "originalName": "options",
-                "pascalCase": {
-                  "safeName": "Options",
-                  "unsafeName": "Options",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OPTIONS",
-                  "unsafeName": "OPTIONS",
-                },
-                "snakeCase": {
-                  "safeName": "options",
-                  "unsafeName": "options",
-                },
-              },
-              "wireValue": "options",
-            },
-            "docs": null,
-            "shape": {
-              "_type": "samePropertiesAsObject",
-              "fernFilepath": {
-                "allParts": [
+                "properties": [
                   {
-                    "camelCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "temperature",
+                          "unsafeName": "temperature",
+                        },
+                        "originalName": "temperature",
+                        "pascalCase": {
+                          "safeName": "Temperature",
+                          "unsafeName": "Temperature",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TEMPERATURE",
+                          "unsafeName": "TEMPERATURE",
+                        },
+                        "snakeCase": {
+                          "safeName": "temperature",
+                          "unsafeName": "temperature",
+                        },
+                      },
+                      "wireValue": "temperature",
                     },
-                    "originalName": "literal",
-                    "pascalCase": {
-                      "safeName": "Literal",
-                      "unsafeName": "Literal",
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": 10.1,
+                      "shape": {
+                        "container": {
+                          "optional": {
+                            "jsonExample": 10.1,
+                            "shape": {
+                              "primitive": {
+                                "double": 10.1,
+                                "type": "double",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "type": "optional",
+                        },
+                        "type": "container",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "LITERAL",
-                      "unsafeName": "LITERAL",
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "prompt",
+                          "unsafeName": "prompt",
+                        },
+                        "originalName": "prompt",
+                        "pascalCase": {
+                          "safeName": "Prompt",
+                          "unsafeName": "Prompt",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PROMPT",
+                          "unsafeName": "PROMPT",
+                        },
+                        "snakeCase": {
+                          "safeName": "prompt",
+                          "unsafeName": "prompt",
+                        },
+                      },
+                      "wireValue": "prompt",
                     },
-                    "snakeCase": {
-                      "safeName": "literal",
-                      "unsafeName": "literal",
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "You are a helpful assistant",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "You are a helpful assistant",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "stream",
+                          "unsafeName": "stream",
+                        },
+                        "originalName": "stream",
+                        "pascalCase": {
+                          "safeName": "Stream",
+                          "unsafeName": "Stream",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "STREAM",
+                          "unsafeName": "STREAM",
+                        },
+                        "snakeCase": {
+                          "safeName": "stream",
+                          "unsafeName": "stream",
+                        },
+                      },
+                      "wireValue": "stream",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": false,
+                      "shape": {
+                        "primitive": {
+                          "boolean": false,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "query",
+                          "unsafeName": "query",
+                        },
+                        "originalName": "query",
+                        "pascalCase": {
+                          "safeName": "Query",
+                          "unsafeName": "Query",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "QUERY",
+                          "unsafeName": "QUERY",
+                        },
+                        "snakeCase": {
+                          "safeName": "query",
+                          "unsafeName": "query",
+                        },
+                      },
+                      "wireValue": "query",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "What is the weather today",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "What is the weather today",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "literal",
-                    "unsafeName": "literal",
-                  },
-                  "originalName": "literal",
-                  "pascalCase": {
-                    "safeName": "Literal",
-                    "unsafeName": "Literal",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "LITERAL",
-                    "unsafeName": "LITERAL",
-                  },
-                  "snakeCase": {
-                    "safeName": "literal",
-                    "unsafeName": "literal",
-                  },
-                },
-                "packagePath": [],
+                "type": "inlinedRequestBody",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "options",
-                  "unsafeName": "options",
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "message": "The weather is sunny",
+                    "status": 200,
+                    "success": true,
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                              "originalName": "message",
+                              "pascalCase": {
+                                "safeName": "Message",
+                                "unsafeName": "Message",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MESSAGE",
+                                "unsafeName": "MESSAGE",
+                              },
+                              "snakeCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                            },
+                            "wireValue": "message",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": "The weather is sunny",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "The weather is sunny",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                              "originalName": "status",
+                              "pascalCase": {
+                                "safeName": "Status",
+                                "unsafeName": "Status",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "STATUS",
+                                "unsafeName": "STATUS",
+                              },
+                              "snakeCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                            },
+                            "wireValue": "status",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": 200,
+                            "shape": {
+                              "primitive": {
+                                "integer": 200,
+                                "type": "integer",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                              "originalName": "success",
+                              "pascalCase": {
+                                "safeName": "Success",
+                                "unsafeName": "Success",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SUCCESS",
+                                "unsafeName": "SUCCESS",
+                              },
+                              "snakeCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                            },
+                            "wireValue": "success",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "sendResponse",
+                          "unsafeName": "sendResponse",
+                        },
+                        "originalName": "SendResponse",
+                        "pascalCase": {
+                          "safeName": "SendResponse",
+                          "unsafeName": "SendResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SEND_RESPONSE",
+                          "unsafeName": "SEND_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "send_response",
+                          "unsafeName": "send_response",
+                        },
+                      },
+                      "typeId": "type_:SendResponse",
+                    },
+                  },
                 },
-                "originalName": "Options",
-                "pascalCase": {
-                  "safeName": "Options",
-                  "unsafeName": "Options",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OPTIONS",
-                  "unsafeName": "OPTIONS",
-                },
-                "snakeCase": {
-                  "safeName": "options",
-                  "unsafeName": "options",
-                },
+                "type": "ok",
               },
-              "typeId": "type_literal:Options",
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/inlined",
+            },
+          ],
+          "fullPath": {
+            "head": "inlined",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_inlined.send",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+            "originalName": "send",
+            "pascalCase": {
+              "safeName": "Send",
+              "unsafeName": "Send",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SEND",
+              "unsafeName": "SEND",
+            },
+            "snakeCase": {
+              "safeName": "send",
+              "unsafeName": "send",
             },
           },
-        ],
-      },
-    },
-    "type_literal:Options": {
-      "availability": null,
-      "docs": null,
-      "examples": [],
+          "pagination": null,
+          "path": {
+            "head": "/inlined",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "extends": [],
+            "name": {
+              "camelCase": {
+                "safeName": "sendLiteralsInlinedRequest",
+                "unsafeName": "sendLiteralsInlinedRequest",
+              },
+              "originalName": "SendLiteralsInlinedRequest",
+              "pascalCase": {
+                "safeName": "SendLiteralsInlinedRequest",
+                "unsafeName": "SendLiteralsInlinedRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SEND_LITERALS_INLINED_REQUEST",
+                "unsafeName": "SEND_LITERALS_INLINED_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "send_literals_inlined_request",
+                "unsafeName": "send_literals_inlined_request",
+              },
+            },
+            "properties": [
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "prompt",
+                      "unsafeName": "prompt",
+                    },
+                    "originalName": "prompt",
+                    "pascalCase": {
+                      "safeName": "Prompt",
+                      "unsafeName": "Prompt",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PROMPT",
+                      "unsafeName": "PROMPT",
+                    },
+                    "snakeCase": {
+                      "safeName": "prompt",
+                      "unsafeName": "prompt",
+                    },
+                  },
+                  "wireValue": "prompt",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "literal",
+                    "literal": {
+                      "string": "You are a helpful assistant",
+                      "type": "string",
+                    },
+                  },
+                },
+              },
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "query",
+                      "unsafeName": "query",
+                    },
+                    "originalName": "query",
+                    "pascalCase": {
+                      "safeName": "Query",
+                      "unsafeName": "Query",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "QUERY",
+                      "unsafeName": "QUERY",
+                    },
+                    "snakeCase": {
+                      "safeName": "query",
+                      "unsafeName": "query",
+                    },
+                  },
+                  "wireValue": "query",
+                },
+                "valueType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "temperature",
+                      "unsafeName": "temperature",
+                    },
+                    "originalName": "temperature",
+                    "pascalCase": {
+                      "safeName": "Temperature",
+                      "unsafeName": "Temperature",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TEMPERATURE",
+                      "unsafeName": "TEMPERATURE",
+                    },
+                    "snakeCase": {
+                      "safeName": "temperature",
+                      "unsafeName": "temperature",
+                    },
+                  },
+                  "wireValue": "temperature",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "optional",
+                    "optional": {
+                      "_type": "primitive",
+                      "primitive": "DOUBLE",
+                    },
+                  },
+                },
+              },
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "stream",
+                      "unsafeName": "stream",
+                    },
+                    "originalName": "stream",
+                    "pascalCase": {
+                      "safeName": "Stream",
+                      "unsafeName": "Stream",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "STREAM",
+                      "unsafeName": "STREAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "stream",
+                      "unsafeName": "stream",
+                    },
+                  },
+                  "wireValue": "stream",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "literal",
+                    "literal": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                  },
+                },
+              },
+            ],
+            "type": "inlinedRequestBody",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": null,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "sendResponse",
+                    "unsafeName": "sendResponse",
+                  },
+                  "originalName": "SendResponse",
+                  "pascalCase": {
+                    "safeName": "SendResponse",
+                    "unsafeName": "SendResponse",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SEND_RESPONSE",
+                    "unsafeName": "SEND_RESPONSE",
+                  },
+                  "snakeCase": {
+                    "safeName": "send_response",
+                    "unsafeName": "send_response",
+                  },
+                },
+                "typeId": "type_:SendResponse",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "sendLiteralsInlinedRequest",
+                  "unsafeName": "sendLiteralsInlinedRequest",
+                },
+                "originalName": "SendLiteralsInlinedRequest",
+                "pascalCase": {
+                  "safeName": "SendLiteralsInlinedRequest",
+                  "unsafeName": "SendLiteralsInlinedRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SEND_LITERALS_INLINED_REQUEST",
+                  "unsafeName": "SEND_LITERALS_INLINED_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "send_literals_inlined_request",
+                  "unsafeName": "send_literals_inlined_request",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
       "name": {
         "fernFilepath": {
           "allParts": [
             {
               "camelCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "inlined",
+                "unsafeName": "inlined",
               },
-              "originalName": "literal",
+              "originalName": "inlined",
               "pascalCase": {
-                "safeName": "Literal",
-                "unsafeName": "Literal",
+                "safeName": "Inlined",
+                "unsafeName": "Inlined",
               },
               "screamingSnakeCase": {
-                "safeName": "LITERAL",
-                "unsafeName": "LITERAL",
+                "safeName": "INLINED",
+                "unsafeName": "INLINED",
               },
               "snakeCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "inlined",
+                "unsafeName": "inlined",
               },
             },
           ],
           "file": {
             "camelCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "inlined",
+              "unsafeName": "inlined",
             },
-            "originalName": "literal",
+            "originalName": "inlined",
             "pascalCase": {
-              "safeName": "Literal",
-              "unsafeName": "Literal",
+              "safeName": "Inlined",
+              "unsafeName": "Inlined",
             },
             "screamingSnakeCase": {
-              "safeName": "LITERAL",
-              "unsafeName": "LITERAL",
+              "safeName": "INLINED",
+              "unsafeName": "INLINED",
             },
             "snakeCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "inlined",
+              "unsafeName": "inlined",
             },
           },
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "options",
-            "unsafeName": "options",
-          },
-          "originalName": "Options",
-          "pascalCase": {
-            "safeName": "Options",
-            "unsafeName": "Options",
-          },
-          "screamingSnakeCase": {
-            "safeName": "OPTIONS",
-            "unsafeName": "OPTIONS",
-          },
-          "snakeCase": {
-            "safeName": "options",
-            "unsafeName": "options",
-          },
-        },
-        "typeId": "type_literal:Options",
       },
-      "referencedTypes": [],
-      "shape": {
-        "_type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "availability": null,
-            "docs": null,
-            "name": {
+      "pathParameters": [],
+    },
+    "service_path": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [
+            {
+              "docs": null,
+              "location": "ENDPOINT",
               "name": {
                 "camelCase": {
                   "safeName": "id",
@@ -1307,17 +1661,2488 @@ exports[`generate IR 1`] = `
                   "unsafeName": "id",
                 },
               },
-              "wireValue": "id",
-            },
-            "valueType": {
-              "_type": "container",
-              "container": {
-                "_type": "literal",
-                "literal": {
-                  "string": "options",
-                  "type": "string",
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "123",
+                    "type": "string",
+                  },
                 },
               },
+              "variable": null,
+            },
+          ],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "123",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "123",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "message": "The weather is sunny",
+                    "status": 200,
+                    "success": true,
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                              "originalName": "message",
+                              "pascalCase": {
+                                "safeName": "Message",
+                                "unsafeName": "Message",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MESSAGE",
+                                "unsafeName": "MESSAGE",
+                              },
+                              "snakeCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                            },
+                            "wireValue": "message",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": "The weather is sunny",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "The weather is sunny",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                              "originalName": "status",
+                              "pascalCase": {
+                                "safeName": "Status",
+                                "unsafeName": "Status",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "STATUS",
+                                "unsafeName": "STATUS",
+                              },
+                              "snakeCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                            },
+                            "wireValue": "status",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": 200,
+                            "shape": {
+                              "primitive": {
+                                "integer": 200,
+                                "type": "integer",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                              "originalName": "success",
+                              "pascalCase": {
+                                "safeName": "Success",
+                                "unsafeName": "Success",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SUCCESS",
+                                "unsafeName": "SUCCESS",
+                              },
+                              "snakeCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                            },
+                            "wireValue": "success",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "sendResponse",
+                          "unsafeName": "sendResponse",
+                        },
+                        "originalName": "SendResponse",
+                        "pascalCase": {
+                          "safeName": "SendResponse",
+                          "unsafeName": "SendResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SEND_RESPONSE",
+                          "unsafeName": "SEND_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "send_response",
+                          "unsafeName": "send_response",
+                        },
+                      },
+                      "typeId": "type_:SendResponse",
+                    },
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/path/123",
+            },
+          ],
+          "fullPath": {
+            "head": "path/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_path.send",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+            "originalName": "send",
+            "pascalCase": {
+              "safeName": "Send",
+              "unsafeName": "Send",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SEND",
+              "unsafeName": "SEND",
+            },
+            "snakeCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/path/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": null,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "123",
+                    "type": "string",
+                  },
+                },
+              },
+              "variable": null,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": null,
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": null,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "sendResponse",
+                    "unsafeName": "sendResponse",
+                  },
+                  "originalName": "SendResponse",
+                  "pascalCase": {
+                    "safeName": "SendResponse",
+                    "unsafeName": "SendResponse",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SEND_RESPONSE",
+                    "unsafeName": "SEND_RESPONSE",
+                  },
+                  "snakeCase": {
+                    "safeName": "send_response",
+                    "unsafeName": "send_response",
+                  },
+                },
+                "typeId": "type_:SendResponse",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": null,
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "path",
+                "unsafeName": "path",
+              },
+              "originalName": "path",
+              "pascalCase": {
+                "safeName": "Path",
+                "unsafeName": "Path",
+              },
+              "screamingSnakeCase": {
+                "safeName": "PATH",
+                "unsafeName": "PATH",
+              },
+              "snakeCase": {
+                "safeName": "path",
+                "unsafeName": "path",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "path",
+              "unsafeName": "path",
+            },
+            "originalName": "path",
+            "pascalCase": {
+              "safeName": "Path",
+              "unsafeName": "Path",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PATH",
+              "unsafeName": "PATH",
+            },
+            "snakeCase": {
+              "safeName": "path",
+              "unsafeName": "path",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+    "service_query": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "prompt",
+                        "unsafeName": "prompt",
+                      },
+                      "originalName": "prompt",
+                      "pascalCase": {
+                        "safeName": "Prompt",
+                        "unsafeName": "Prompt",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "PROMPT",
+                        "unsafeName": "PROMPT",
+                      },
+                      "snakeCase": {
+                        "safeName": "prompt",
+                        "unsafeName": "prompt",
+                      },
+                    },
+                    "wireValue": "prompt",
+                  },
+                  "value": {
+                    "jsonExample": "You are a helpful assistant",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "You are a helpful assistant",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "stream",
+                        "unsafeName": "stream",
+                      },
+                      "originalName": "stream",
+                      "pascalCase": {
+                        "safeName": "Stream",
+                        "unsafeName": "Stream",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "STREAM",
+                        "unsafeName": "STREAM",
+                      },
+                      "snakeCase": {
+                        "safeName": "stream",
+                        "unsafeName": "stream",
+                      },
+                    },
+                    "wireValue": "stream",
+                  },
+                  "value": {
+                    "jsonExample": false,
+                    "shape": {
+                      "primitive": {
+                        "boolean": false,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "query",
+                        "unsafeName": "query",
+                      },
+                      "originalName": "query",
+                      "pascalCase": {
+                        "safeName": "Query",
+                        "unsafeName": "Query",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "QUERY",
+                        "unsafeName": "QUERY",
+                      },
+                      "snakeCase": {
+                        "safeName": "query",
+                        "unsafeName": "query",
+                      },
+                    },
+                    "wireValue": "query",
+                  },
+                  "value": {
+                    "jsonExample": "What is the weather today",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "What is the weather today",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "message": "The weather is sunny",
+                    "status": 200,
+                    "success": true,
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                              "originalName": "message",
+                              "pascalCase": {
+                                "safeName": "Message",
+                                "unsafeName": "Message",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MESSAGE",
+                                "unsafeName": "MESSAGE",
+                              },
+                              "snakeCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                            },
+                            "wireValue": "message",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": "The weather is sunny",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "The weather is sunny",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                              "originalName": "status",
+                              "pascalCase": {
+                                "safeName": "Status",
+                                "unsafeName": "Status",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "STATUS",
+                                "unsafeName": "STATUS",
+                              },
+                              "snakeCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                            },
+                            "wireValue": "status",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": 200,
+                            "shape": {
+                              "primitive": {
+                                "integer": 200,
+                                "type": "integer",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                              "originalName": "success",
+                              "pascalCase": {
+                                "safeName": "Success",
+                                "unsafeName": "Success",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SUCCESS",
+                                "unsafeName": "SUCCESS",
+                              },
+                              "snakeCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                            },
+                            "wireValue": "success",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "sendResponse",
+                          "unsafeName": "sendResponse",
+                        },
+                        "originalName": "SendResponse",
+                        "pascalCase": {
+                          "safeName": "SendResponse",
+                          "unsafeName": "SendResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SEND_RESPONSE",
+                          "unsafeName": "SEND_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "send_response",
+                          "unsafeName": "send_response",
+                        },
+                      },
+                      "typeId": "type_:SendResponse",
+                    },
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/query",
+            },
+          ],
+          "fullPath": {
+            "head": "query",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_query.send",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+            "originalName": "send",
+            "pascalCase": {
+              "safeName": "Send",
+              "unsafeName": "Send",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SEND",
+              "unsafeName": "SEND",
+            },
+            "snakeCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/query",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "prompt",
+                    "unsafeName": "prompt",
+                  },
+                  "originalName": "prompt",
+                  "pascalCase": {
+                    "safeName": "Prompt",
+                    "unsafeName": "Prompt",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "PROMPT",
+                    "unsafeName": "PROMPT",
+                  },
+                  "snakeCase": {
+                    "safeName": "prompt",
+                    "unsafeName": "prompt",
+                  },
+                },
+                "wireValue": "prompt",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "You are a helpful assistant",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "query",
+                    "unsafeName": "query",
+                  },
+                  "originalName": "query",
+                  "pascalCase": {
+                    "safeName": "Query",
+                    "unsafeName": "Query",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "QUERY",
+                    "unsafeName": "QUERY",
+                  },
+                  "snakeCase": {
+                    "safeName": "query",
+                    "unsafeName": "query",
+                  },
+                },
+                "wireValue": "query",
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "stream",
+                    "unsafeName": "stream",
+                  },
+                  "originalName": "stream",
+                  "pascalCase": {
+                    "safeName": "Stream",
+                    "unsafeName": "Stream",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "STREAM",
+                    "unsafeName": "STREAM",
+                  },
+                  "snakeCase": {
+                    "safeName": "stream",
+                    "unsafeName": "stream",
+                  },
+                },
+                "wireValue": "stream",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": false,
+                    "type": "boolean",
+                  },
+                },
+              },
+            },
+          ],
+          "requestBody": null,
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": null,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "sendResponse",
+                    "unsafeName": "sendResponse",
+                  },
+                  "originalName": "SendResponse",
+                  "pascalCase": {
+                    "safeName": "SendResponse",
+                    "unsafeName": "SendResponse",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SEND_RESPONSE",
+                    "unsafeName": "SEND_RESPONSE",
+                  },
+                  "snakeCase": {
+                    "safeName": "send_response",
+                    "unsafeName": "send_response",
+                  },
+                },
+                "typeId": "type_:SendResponse",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "sendLiteralsInQueryRequest",
+                  "unsafeName": "sendLiteralsInQueryRequest",
+                },
+                "originalName": "SendLiteralsInQueryRequest",
+                "pascalCase": {
+                  "safeName": "SendLiteralsInQueryRequest",
+                  "unsafeName": "SendLiteralsInQueryRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SEND_LITERALS_IN_QUERY_REQUEST",
+                  "unsafeName": "SEND_LITERALS_IN_QUERY_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "send_literals_in_query_request",
+                  "unsafeName": "send_literals_in_query_request",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "query",
+                "unsafeName": "query",
+              },
+              "originalName": "query",
+              "pascalCase": {
+                "safeName": "Query",
+                "unsafeName": "Query",
+              },
+              "screamingSnakeCase": {
+                "safeName": "QUERY",
+                "unsafeName": "QUERY",
+              },
+              "snakeCase": {
+                "safeName": "query",
+                "unsafeName": "query",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "query",
+              "unsafeName": "query",
+            },
+            "originalName": "query",
+            "pascalCase": {
+              "safeName": "Query",
+              "unsafeName": "Query",
+            },
+            "screamingSnakeCase": {
+              "safeName": "QUERY",
+              "unsafeName": "QUERY",
+            },
+            "snakeCase": {
+              "safeName": "query",
+              "unsafeName": "query",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+    "service_reference": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "prompt": "You are a helpful assistant",
+                  "query": "What is the weather today",
+                  "stream": false,
+                },
+                "shape": {
+                  "shape": {
+                    "properties": [
+                      {
+                        "name": {
+                          "name": {
+                            "camelCase": {
+                              "safeName": "prompt",
+                              "unsafeName": "prompt",
+                            },
+                            "originalName": "prompt",
+                            "pascalCase": {
+                              "safeName": "Prompt",
+                              "unsafeName": "Prompt",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "PROMPT",
+                              "unsafeName": "PROMPT",
+                            },
+                            "snakeCase": {
+                              "safeName": "prompt",
+                              "unsafeName": "prompt",
+                            },
+                          },
+                          "wireValue": "prompt",
+                        },
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                                "originalName": "reference",
+                                "pascalCase": {
+                                  "safeName": "Reference",
+                                  "unsafeName": "Reference",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "REFERENCE",
+                                  "unsafeName": "REFERENCE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                              "originalName": "reference",
+                              "pascalCase": {
+                                "safeName": "Reference",
+                                "unsafeName": "Reference",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "REFERENCE",
+                                "unsafeName": "REFERENCE",
+                              },
+                              "snakeCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "sendRequest",
+                              "unsafeName": "sendRequest",
+                            },
+                            "originalName": "SendRequest",
+                            "pascalCase": {
+                              "safeName": "SendRequest",
+                              "unsafeName": "SendRequest",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "SEND_REQUEST",
+                              "unsafeName": "SEND_REQUEST",
+                            },
+                            "snakeCase": {
+                              "safeName": "send_request",
+                              "unsafeName": "send_request",
+                            },
+                          },
+                          "typeId": "type_reference:SendRequest",
+                        },
+                        "value": {
+                          "jsonExample": "You are a helpful assistant",
+                          "shape": {
+                            "primitive": {
+                              "string": {
+                                "original": "You are a helpful assistant",
+                              },
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      },
+                      {
+                        "name": {
+                          "name": {
+                            "camelCase": {
+                              "safeName": "stream",
+                              "unsafeName": "stream",
+                            },
+                            "originalName": "stream",
+                            "pascalCase": {
+                              "safeName": "Stream",
+                              "unsafeName": "Stream",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "STREAM",
+                              "unsafeName": "STREAM",
+                            },
+                            "snakeCase": {
+                              "safeName": "stream",
+                              "unsafeName": "stream",
+                            },
+                          },
+                          "wireValue": "stream",
+                        },
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                                "originalName": "reference",
+                                "pascalCase": {
+                                  "safeName": "Reference",
+                                  "unsafeName": "Reference",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "REFERENCE",
+                                  "unsafeName": "REFERENCE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                              "originalName": "reference",
+                              "pascalCase": {
+                                "safeName": "Reference",
+                                "unsafeName": "Reference",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "REFERENCE",
+                                "unsafeName": "REFERENCE",
+                              },
+                              "snakeCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "sendRequest",
+                              "unsafeName": "sendRequest",
+                            },
+                            "originalName": "SendRequest",
+                            "pascalCase": {
+                              "safeName": "SendRequest",
+                              "unsafeName": "SendRequest",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "SEND_REQUEST",
+                              "unsafeName": "SEND_REQUEST",
+                            },
+                            "snakeCase": {
+                              "safeName": "send_request",
+                              "unsafeName": "send_request",
+                            },
+                          },
+                          "typeId": "type_reference:SendRequest",
+                        },
+                        "value": {
+                          "jsonExample": false,
+                          "shape": {
+                            "primitive": {
+                              "boolean": false,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      },
+                      {
+                        "name": {
+                          "name": {
+                            "camelCase": {
+                              "safeName": "query",
+                              "unsafeName": "query",
+                            },
+                            "originalName": "query",
+                            "pascalCase": {
+                              "safeName": "Query",
+                              "unsafeName": "Query",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "QUERY",
+                              "unsafeName": "QUERY",
+                            },
+                            "snakeCase": {
+                              "safeName": "query",
+                              "unsafeName": "query",
+                            },
+                          },
+                          "wireValue": "query",
+                        },
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                                "originalName": "reference",
+                                "pascalCase": {
+                                  "safeName": "Reference",
+                                  "unsafeName": "Reference",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "REFERENCE",
+                                  "unsafeName": "REFERENCE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "reference",
+                                  "unsafeName": "reference",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                              "originalName": "reference",
+                              "pascalCase": {
+                                "safeName": "Reference",
+                                "unsafeName": "Reference",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "REFERENCE",
+                                "unsafeName": "REFERENCE",
+                              },
+                              "snakeCase": {
+                                "safeName": "reference",
+                                "unsafeName": "reference",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "sendRequest",
+                              "unsafeName": "sendRequest",
+                            },
+                            "originalName": "SendRequest",
+                            "pascalCase": {
+                              "safeName": "SendRequest",
+                              "unsafeName": "SendRequest",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "SEND_REQUEST",
+                              "unsafeName": "SEND_REQUEST",
+                            },
+                            "snakeCase": {
+                              "safeName": "send_request",
+                              "unsafeName": "send_request",
+                            },
+                          },
+                          "typeId": "type_reference:SendRequest",
+                        },
+                        "value": {
+                          "jsonExample": "What is the weather today",
+                          "shape": {
+                            "primitive": {
+                              "string": {
+                                "original": "What is the weather today",
+                              },
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                  "type": "named",
+                  "typeName": {
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "reference",
+                            "unsafeName": "reference",
+                          },
+                          "originalName": "reference",
+                          "pascalCase": {
+                            "safeName": "Reference",
+                            "unsafeName": "Reference",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "REFERENCE",
+                            "unsafeName": "REFERENCE",
+                          },
+                          "snakeCase": {
+                            "safeName": "reference",
+                            "unsafeName": "reference",
+                          },
+                        },
+                      ],
+                      "file": {
+                        "camelCase": {
+                          "safeName": "reference",
+                          "unsafeName": "reference",
+                        },
+                        "originalName": "reference",
+                        "pascalCase": {
+                          "safeName": "Reference",
+                          "unsafeName": "Reference",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "REFERENCE",
+                          "unsafeName": "REFERENCE",
+                        },
+                        "snakeCase": {
+                          "safeName": "reference",
+                          "unsafeName": "reference",
+                        },
+                      },
+                      "packagePath": [],
+                    },
+                    "name": {
+                      "camelCase": {
+                        "safeName": "sendRequest",
+                        "unsafeName": "sendRequest",
+                      },
+                      "originalName": "SendRequest",
+                      "pascalCase": {
+                        "safeName": "SendRequest",
+                        "unsafeName": "SendRequest",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SEND_REQUEST",
+                        "unsafeName": "SEND_REQUEST",
+                      },
+                      "snakeCase": {
+                        "safeName": "send_request",
+                        "unsafeName": "send_request",
+                      },
+                    },
+                    "typeId": "type_reference:SendRequest",
+                  },
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "message": "The weather is sunny",
+                    "status": 200,
+                    "success": true,
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                              "originalName": "message",
+                              "pascalCase": {
+                                "safeName": "Message",
+                                "unsafeName": "Message",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MESSAGE",
+                                "unsafeName": "MESSAGE",
+                              },
+                              "snakeCase": {
+                                "safeName": "message",
+                                "unsafeName": "message",
+                              },
+                            },
+                            "wireValue": "message",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": "The weather is sunny",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "The weather is sunny",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                              "originalName": "status",
+                              "pascalCase": {
+                                "safeName": "Status",
+                                "unsafeName": "Status",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "STATUS",
+                                "unsafeName": "STATUS",
+                              },
+                              "snakeCase": {
+                                "safeName": "status",
+                                "unsafeName": "status",
+                              },
+                            },
+                            "wireValue": "status",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": 200,
+                            "shape": {
+                              "primitive": {
+                                "integer": 200,
+                                "type": "integer",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                              "originalName": "success",
+                              "pascalCase": {
+                                "safeName": "Success",
+                                "unsafeName": "Success",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SUCCESS",
+                                "unsafeName": "SUCCESS",
+                              },
+                              "snakeCase": {
+                                "safeName": "success",
+                                "unsafeName": "success",
+                              },
+                            },
+                            "wireValue": "success",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "sendResponse",
+                                "unsafeName": "sendResponse",
+                              },
+                              "originalName": "SendResponse",
+                              "pascalCase": {
+                                "safeName": "SendResponse",
+                                "unsafeName": "SendResponse",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "SEND_RESPONSE",
+                                "unsafeName": "SEND_RESPONSE",
+                              },
+                              "snakeCase": {
+                                "safeName": "send_response",
+                                "unsafeName": "send_response",
+                              },
+                            },
+                            "typeId": "type_:SendResponse",
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "sendResponse",
+                          "unsafeName": "sendResponse",
+                        },
+                        "originalName": "SendResponse",
+                        "pascalCase": {
+                          "safeName": "SendResponse",
+                          "unsafeName": "SendResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SEND_RESPONSE",
+                          "unsafeName": "SEND_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "send_response",
+                          "unsafeName": "send_response",
+                        },
+                      },
+                      "typeId": "type_:SendResponse",
+                    },
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/reference",
+            },
+          ],
+          "fullPath": {
+            "head": "reference",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_reference.send",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+            "originalName": "send",
+            "pascalCase": {
+              "safeName": "Send",
+              "unsafeName": "Send",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SEND",
+              "unsafeName": "SEND",
+            },
+            "snakeCase": {
+              "safeName": "send",
+              "unsafeName": "send",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/reference",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "docs": null,
+            "requestBodyType": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "reference",
+                      "unsafeName": "reference",
+                    },
+                    "originalName": "reference",
+                    "pascalCase": {
+                      "safeName": "Reference",
+                      "unsafeName": "Reference",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "REFERENCE",
+                      "unsafeName": "REFERENCE",
+                    },
+                    "snakeCase": {
+                      "safeName": "reference",
+                      "unsafeName": "reference",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "reference",
+                    "unsafeName": "reference",
+                  },
+                  "originalName": "reference",
+                  "pascalCase": {
+                    "safeName": "Reference",
+                    "unsafeName": "Reference",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "REFERENCE",
+                    "unsafeName": "REFERENCE",
+                  },
+                  "snakeCase": {
+                    "safeName": "reference",
+                    "unsafeName": "reference",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "sendRequest",
+                  "unsafeName": "sendRequest",
+                },
+                "originalName": "SendRequest",
+                "pascalCase": {
+                  "safeName": "SendRequest",
+                  "unsafeName": "SendRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SEND_REQUEST",
+                  "unsafeName": "SEND_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "send_request",
+                  "unsafeName": "send_request",
+                },
+              },
+              "typeId": "type_reference:SendRequest",
+            },
+            "type": "reference",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": null,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "sendResponse",
+                    "unsafeName": "sendResponse",
+                  },
+                  "originalName": "SendResponse",
+                  "pascalCase": {
+                    "safeName": "SendResponse",
+                    "unsafeName": "SendResponse",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SEND_RESPONSE",
+                    "unsafeName": "SEND_RESPONSE",
+                  },
+                  "snakeCase": {
+                    "safeName": "send_response",
+                    "unsafeName": "send_response",
+                  },
+                },
+                "typeId": "type_:SendResponse",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "type": "justRequestBody",
+              "value": {
+                "contentType": null,
+                "docs": null,
+                "requestBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "reference",
+                          "unsafeName": "reference",
+                        },
+                        "originalName": "reference",
+                        "pascalCase": {
+                          "safeName": "Reference",
+                          "unsafeName": "Reference",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "REFERENCE",
+                          "unsafeName": "REFERENCE",
+                        },
+                        "snakeCase": {
+                          "safeName": "reference",
+                          "unsafeName": "reference",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "reference",
+                        "unsafeName": "reference",
+                      },
+                      "originalName": "reference",
+                      "pascalCase": {
+                        "safeName": "Reference",
+                        "unsafeName": "Reference",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "REFERENCE",
+                        "unsafeName": "REFERENCE",
+                      },
+                      "snakeCase": {
+                        "safeName": "reference",
+                        "unsafeName": "reference",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "sendRequest",
+                      "unsafeName": "sendRequest",
+                    },
+                    "originalName": "SendRequest",
+                    "pascalCase": {
+                      "safeName": "SendRequest",
+                      "unsafeName": "SendRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SEND_REQUEST",
+                      "unsafeName": "SEND_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "send_request",
+                      "unsafeName": "send_request",
+                    },
+                  },
+                  "typeId": "type_reference:SendRequest",
+                },
+                "type": "typeReference",
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "reference",
+                "unsafeName": "reference",
+              },
+              "originalName": "reference",
+              "pascalCase": {
+                "safeName": "Reference",
+                "unsafeName": "Reference",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REFERENCE",
+                "unsafeName": "REFERENCE",
+              },
+              "snakeCase": {
+                "safeName": "reference",
+                "unsafeName": "reference",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "reference",
+              "unsafeName": "reference",
+            },
+            "originalName": "reference",
+            "pascalCase": {
+              "safeName": "Reference",
+              "unsafeName": "Reference",
+            },
+            "screamingSnakeCase": {
+              "safeName": "REFERENCE",
+              "unsafeName": "REFERENCE",
+            },
+            "snakeCase": {
+              "safeName": "reference",
+              "unsafeName": "reference",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_headers": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "headers",
+              "unsafeName": "headers",
+            },
+            "originalName": "headers",
+            "pascalCase": {
+              "safeName": "Headers",
+              "unsafeName": "Headers",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HEADERS",
+              "unsafeName": "HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "headers",
+              "unsafeName": "headers",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "headers",
+            "unsafeName": "headers",
+          },
+          "originalName": "headers",
+          "pascalCase": {
+            "safeName": "Headers",
+            "unsafeName": "Headers",
+          },
+          "screamingSnakeCase": {
+            "safeName": "HEADERS",
+            "unsafeName": "HEADERS",
+          },
+          "snakeCase": {
+            "safeName": "headers",
+            "unsafeName": "headers",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "headers",
+          "unsafeName": "headers",
+        },
+        "originalName": "headers",
+        "pascalCase": {
+          "safeName": "Headers",
+          "unsafeName": "Headers",
+        },
+        "screamingSnakeCase": {
+          "safeName": "HEADERS",
+          "unsafeName": "HEADERS",
+        },
+        "snakeCase": {
+          "safeName": "headers",
+          "unsafeName": "headers",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_headers",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+      "websocket": null,
+    },
+    "subpackage_inlined": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "inlined",
+              "unsafeName": "inlined",
+            },
+            "originalName": "inlined",
+            "pascalCase": {
+              "safeName": "Inlined",
+              "unsafeName": "Inlined",
+            },
+            "screamingSnakeCase": {
+              "safeName": "INLINED",
+              "unsafeName": "INLINED",
+            },
+            "snakeCase": {
+              "safeName": "inlined",
+              "unsafeName": "inlined",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "inlined",
+            "unsafeName": "inlined",
+          },
+          "originalName": "inlined",
+          "pascalCase": {
+            "safeName": "Inlined",
+            "unsafeName": "Inlined",
+          },
+          "screamingSnakeCase": {
+            "safeName": "INLINED",
+            "unsafeName": "INLINED",
+          },
+          "snakeCase": {
+            "safeName": "inlined",
+            "unsafeName": "inlined",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "inlined",
+          "unsafeName": "inlined",
+        },
+        "originalName": "inlined",
+        "pascalCase": {
+          "safeName": "Inlined",
+          "unsafeName": "Inlined",
+        },
+        "screamingSnakeCase": {
+          "safeName": "INLINED",
+          "unsafeName": "INLINED",
+        },
+        "snakeCase": {
+          "safeName": "inlined",
+          "unsafeName": "inlined",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_inlined",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+      "websocket": null,
+    },
+    "subpackage_path": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "path",
+              "unsafeName": "path",
+            },
+            "originalName": "path",
+            "pascalCase": {
+              "safeName": "Path",
+              "unsafeName": "Path",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PATH",
+              "unsafeName": "PATH",
+            },
+            "snakeCase": {
+              "safeName": "path",
+              "unsafeName": "path",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "path",
+            "unsafeName": "path",
+          },
+          "originalName": "path",
+          "pascalCase": {
+            "safeName": "Path",
+            "unsafeName": "Path",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PATH",
+            "unsafeName": "PATH",
+          },
+          "snakeCase": {
+            "safeName": "path",
+            "unsafeName": "path",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "path",
+          "unsafeName": "path",
+        },
+        "originalName": "path",
+        "pascalCase": {
+          "safeName": "Path",
+          "unsafeName": "Path",
+        },
+        "screamingSnakeCase": {
+          "safeName": "PATH",
+          "unsafeName": "PATH",
+        },
+        "snakeCase": {
+          "safeName": "path",
+          "unsafeName": "path",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_path",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+      "websocket": null,
+    },
+    "subpackage_query": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "query",
+              "unsafeName": "query",
+            },
+            "originalName": "query",
+            "pascalCase": {
+              "safeName": "Query",
+              "unsafeName": "Query",
+            },
+            "screamingSnakeCase": {
+              "safeName": "QUERY",
+              "unsafeName": "QUERY",
+            },
+            "snakeCase": {
+              "safeName": "query",
+              "unsafeName": "query",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "query",
+            "unsafeName": "query",
+          },
+          "originalName": "query",
+          "pascalCase": {
+            "safeName": "Query",
+            "unsafeName": "Query",
+          },
+          "screamingSnakeCase": {
+            "safeName": "QUERY",
+            "unsafeName": "QUERY",
+          },
+          "snakeCase": {
+            "safeName": "query",
+            "unsafeName": "query",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "query",
+          "unsafeName": "query",
+        },
+        "originalName": "query",
+        "pascalCase": {
+          "safeName": "Query",
+          "unsafeName": "Query",
+        },
+        "screamingSnakeCase": {
+          "safeName": "QUERY",
+          "unsafeName": "QUERY",
+        },
+        "snakeCase": {
+          "safeName": "query",
+          "unsafeName": "query",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_query",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+      "websocket": null,
+    },
+    "subpackage_reference": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "reference",
+              "unsafeName": "reference",
+            },
+            "originalName": "reference",
+            "pascalCase": {
+              "safeName": "Reference",
+              "unsafeName": "Reference",
+            },
+            "screamingSnakeCase": {
+              "safeName": "REFERENCE",
+              "unsafeName": "REFERENCE",
+            },
+            "snakeCase": {
+              "safeName": "reference",
+              "unsafeName": "reference",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "reference",
+            "unsafeName": "reference",
+          },
+          "originalName": "reference",
+          "pascalCase": {
+            "safeName": "Reference",
+            "unsafeName": "Reference",
+          },
+          "screamingSnakeCase": {
+            "safeName": "REFERENCE",
+            "unsafeName": "REFERENCE",
+          },
+          "snakeCase": {
+            "safeName": "reference",
+            "unsafeName": "reference",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "reference",
+          "unsafeName": "reference",
+        },
+        "originalName": "reference",
+        "pascalCase": {
+          "safeName": "Reference",
+          "unsafeName": "Reference",
+        },
+        "screamingSnakeCase": {
+          "safeName": "REFERENCE",
+          "unsafeName": "REFERENCE",
+        },
+        "snakeCase": {
+          "safeName": "reference",
+          "unsafeName": "reference",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_reference",
+      "subpackages": [],
+      "types": [
+        "type_reference:SendRequest",
+      ],
+      "webhooks": null,
+      "websocket": null,
+    },
+  },
+  "types": {
+    "type_:SendResponse": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "sendResponse",
+            "unsafeName": "sendResponse",
+          },
+          "originalName": "SendResponse",
+          "pascalCase": {
+            "safeName": "SendResponse",
+            "unsafeName": "SendResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SEND_RESPONSE",
+            "unsafeName": "SEND_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "send_response",
+            "unsafeName": "send_response",
+          },
+        },
+        "typeId": "type_:SendResponse",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
             },
           },
           {
@@ -1326,24 +4151,54 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "enabled",
-                  "unsafeName": "enabled",
+                  "safeName": "status",
+                  "unsafeName": "status",
                 },
-                "originalName": "enabled",
+                "originalName": "status",
                 "pascalCase": {
-                  "safeName": "Enabled",
-                  "unsafeName": "Enabled",
+                  "safeName": "Status",
+                  "unsafeName": "Status",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "ENABLED",
-                  "unsafeName": "ENABLED",
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
                 },
                 "snakeCase": {
-                  "safeName": "enabled",
-                  "unsafeName": "enabled",
+                  "safeName": "status",
+                  "unsafeName": "status",
                 },
               },
-              "wireValue": "enabled",
+              "wireValue": "status",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "INTEGER",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "success",
+                  "unsafeName": "success",
+                },
+                "originalName": "success",
+                "pascalCase": {
+                  "safeName": "Success",
+                  "unsafeName": "Success",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SUCCESS",
+                  "unsafeName": "SUCCESS",
+                },
+                "snakeCase": {
+                  "safeName": "success",
+                  "unsafeName": "success",
+                },
+              },
+              "wireValue": "success",
             },
             "valueType": {
               "_type": "container",
@@ -1356,50 +4211,10 @@ exports[`generate IR 1`] = `
               },
             },
           },
-          {
-            "availability": null,
-            "docs": null,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "values",
-                  "unsafeName": "values",
-                },
-                "originalName": "values",
-                "pascalCase": {
-                  "safeName": "Values",
-                  "unsafeName": "Values",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "VALUES",
-                  "unsafeName": "VALUES",
-                },
-                "snakeCase": {
-                  "safeName": "values",
-                  "unsafeName": "values",
-                },
-              },
-              "wireValue": "values",
-            },
-            "valueType": {
-              "_type": "container",
-              "container": {
-                "_type": "map",
-                "keyType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
-                },
-                "valueType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
-                },
-              },
-            },
-          },
         ],
       },
     },
-    "type_literal:UndiscriminatedOptions": {
+    "type_reference:SendRequest": {
       "availability": null,
       "docs": null,
       "examples": [],
@@ -1408,109 +4223,169 @@ exports[`generate IR 1`] = `
           "allParts": [
             {
               "camelCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "reference",
+                "unsafeName": "reference",
               },
-              "originalName": "literal",
+              "originalName": "reference",
               "pascalCase": {
-                "safeName": "Literal",
-                "unsafeName": "Literal",
+                "safeName": "Reference",
+                "unsafeName": "Reference",
               },
               "screamingSnakeCase": {
-                "safeName": "LITERAL",
-                "unsafeName": "LITERAL",
+                "safeName": "REFERENCE",
+                "unsafeName": "REFERENCE",
               },
               "snakeCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
+                "safeName": "reference",
+                "unsafeName": "reference",
               },
             },
           ],
           "file": {
             "camelCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "reference",
+              "unsafeName": "reference",
             },
-            "originalName": "literal",
+            "originalName": "reference",
             "pascalCase": {
-              "safeName": "Literal",
-              "unsafeName": "Literal",
+              "safeName": "Reference",
+              "unsafeName": "Reference",
             },
             "screamingSnakeCase": {
-              "safeName": "LITERAL",
-              "unsafeName": "LITERAL",
+              "safeName": "REFERENCE",
+              "unsafeName": "REFERENCE",
             },
             "snakeCase": {
-              "safeName": "literal",
-              "unsafeName": "literal",
+              "safeName": "reference",
+              "unsafeName": "reference",
             },
           },
           "packagePath": [],
         },
         "name": {
           "camelCase": {
-            "safeName": "undiscriminatedOptions",
-            "unsafeName": "undiscriminatedOptions",
+            "safeName": "sendRequest",
+            "unsafeName": "sendRequest",
           },
-          "originalName": "UndiscriminatedOptions",
+          "originalName": "SendRequest",
           "pascalCase": {
-            "safeName": "UndiscriminatedOptions",
-            "unsafeName": "UndiscriminatedOptions",
+            "safeName": "SendRequest",
+            "unsafeName": "SendRequest",
           },
           "screamingSnakeCase": {
-            "safeName": "UNDISCRIMINATED_OPTIONS",
-            "unsafeName": "UNDISCRIMINATED_OPTIONS",
+            "safeName": "SEND_REQUEST",
+            "unsafeName": "SEND_REQUEST",
           },
           "snakeCase": {
-            "safeName": "undiscriminated_options",
-            "unsafeName": "undiscriminated_options",
+            "safeName": "send_request",
+            "unsafeName": "send_request",
           },
         },
-        "typeId": "type_literal:UndiscriminatedOptions",
+        "typeId": "type_reference:SendRequest",
       },
       "referencedTypes": [],
       "shape": {
-        "_type": "undiscriminatedUnion",
-        "members": [
+        "_type": "object",
+        "extends": [],
+        "properties": [
           {
+            "availability": null,
             "docs": null,
-            "type": {
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "prompt",
+                  "unsafeName": "prompt",
+                },
+                "originalName": "prompt",
+                "pascalCase": {
+                  "safeName": "Prompt",
+                  "unsafeName": "Prompt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PROMPT",
+                  "unsafeName": "PROMPT",
+                },
+                "snakeCase": {
+                  "safeName": "prompt",
+                  "unsafeName": "prompt",
+                },
+              },
+              "wireValue": "prompt",
+            },
+            "valueType": {
               "_type": "container",
               "container": {
                 "_type": "literal",
                 "literal": {
-                  "string": "options",
+                  "string": "You are a helpful assistant",
                   "type": "string",
                 },
               },
             },
           },
           {
+            "availability": null,
             "docs": null,
-            "type": {
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "query",
+                  "unsafeName": "query",
+                },
+                "originalName": "query",
+                "pascalCase": {
+                  "safeName": "Query",
+                  "unsafeName": "Query",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "QUERY",
+                  "unsafeName": "QUERY",
+                },
+                "snakeCase": {
+                  "safeName": "query",
+                  "unsafeName": "query",
+                },
+              },
+              "wireValue": "query",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "stream",
+                  "unsafeName": "stream",
+                },
+                "originalName": "stream",
+                "pascalCase": {
+                  "safeName": "Stream",
+                  "unsafeName": "Stream",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STREAM",
+                  "unsafeName": "STREAM",
+                },
+                "snakeCase": {
+                  "safeName": "stream",
+                  "unsafeName": "stream",
+                },
+              },
+              "wireValue": "stream",
+            },
+            "valueType": {
               "_type": "container",
               "container": {
                 "_type": "literal",
                 "literal": {
-                  "boolean": true,
+                  "boolean": false,
                   "type": "boolean",
-                },
-              },
-            },
-          },
-          {
-            "docs": null,
-            "type": {
-              "_type": "container",
-              "container": {
-                "_type": "map",
-                "keyType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
-                },
-                "valueType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
                 },
               },
             },
@@ -1521,5 +4396,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

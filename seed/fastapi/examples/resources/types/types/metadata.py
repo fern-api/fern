@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -43,9 +41,7 @@ class Metadata(pydantic.BaseModel):
         if self.__root__.type == "markdown":
             return markdown(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
-        typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
-    ]
+    __root__: typing.Annotated[typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -62,11 +58,11 @@ class Metadata(pydantic.BaseModel):
 
 class _Metadata:
     class Html(pydantic.BaseModel):
-        type: typing_extensions.Literal["html"]
+        type: typing.Literal["html"]
         value: str
 
     class Markdown(pydantic.BaseModel):
-        type: typing_extensions.Literal["markdown"]
+        type: typing.Literal["markdown"]
         value: str
 
 

@@ -72,7 +72,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/payments/{payment_id}/breakdown",
+            "path": "/payments/{payment_id}/breakdown",
             "path-parameters": {
               "payment_id": "string",
             },
@@ -104,7 +104,7 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "expires_at": "2020-03-31T10:58:49.780Z",
+                      "expires_at": "2020-03-31T10:58:49Z",
                       "id": "12345",
                       "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
                     },
@@ -113,7 +113,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/billing/{invoice_id}/download",
+            "path": "/billing/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
@@ -148,7 +148,7 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "expires_at": "2020-03-31T10:58:49.780Z",
+                      "expires_at": "2020-03-31T10:58:49Z",
                       "id": "12345",
                       "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
                     },
@@ -157,7 +157,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/invoices/{invoice_id}/download",
+            "path": "/invoices/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
@@ -195,7 +195,7 @@ exports[`open api parser deel simple 1`] = `
                             "id": "rhCTiRd9Mad41RwjsFWw-",
                             "name": "Lisandro Shanahan-Dynamic Web Specialist",
                           },
-                          "created_at": "2022-05-24T09:38:46.235Z",
+                          "created_at": "2022-05-24T09:38:46Z",
                           "currency": "USD",
                           "id": 5586317,
                           "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
@@ -211,7 +211,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/invoices",
+            "path": "/invoices",
             "request": {
               "name": "GetInvoiceListRequest",
               "query-parameters": {
@@ -261,10 +261,10 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "rows": [
                         {
-                          "created_at": "2022-05-24T09:38:46.235Z",
+                          "created_at": "2022-05-24T09:38:46Z",
                           "id": 12345,
                           "label": "label",
-                          "paid_at": "2022-05-24T09:38:46.235Z",
+                          "paid_at": "2022-05-24T09:38:46Z",
                           "payment_currency": "USD",
                           "payment_method": {
                             "type": "stripe_bacs_debit",
@@ -285,7 +285,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/payments",
+            "path": "/payments",
             "request": {
               "name": "GetPaymentListRequest",
               "query-parameters": {
@@ -359,7 +359,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/attachments",
+            "path": "/attachments",
             "request": {
               "body": {
                 "properties": {
@@ -434,7 +434,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/people/me",
+            "path": "/people/me",
             "response": {
               "docs": "Successful operation.",
               "type": "root.PeopleMeContainer",
@@ -487,10 +487,10 @@ exports[`open api parser deel simple 1`] = `
                         "last_name": "last_name",
                         "payments": [
                           {
-                            "created_at": "2022-05-24T09:38:46.235Z",
+                            "created_at": "2022-05-24T09:38:46Z",
                             "id": 12345,
                             "label": "label",
-                            "paid_at": "2022-05-24T09:38:46.235Z",
+                            "paid_at": "2022-05-24T09:38:46Z",
                             "payment_currency": "USD",
                             "payment_method": {
                               "type": "stripe_bacs_debit",
@@ -521,7 +521,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/people",
+            "path": "/people",
             "request": {
               "name": "GetPeopleListRequest",
               "query-parameters": {
@@ -600,7 +600,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/premium",
+            "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -662,7 +662,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/amendments",
+            "path": "/contracts/{contract_id}/amendments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -759,14 +759,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -799,15 +799,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -817,7 +817,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -838,7 +838,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts",
+            "path": "/contracts",
             "request": {
               "body": {
                 "properties": {
@@ -926,14 +926,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -966,15 +966,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -984,7 +984,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -1005,7 +1005,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/fixed-rate",
+            "path": "/contracts/fixed-rate",
             "request": {
               "body": {
                 "properties": {
@@ -1092,14 +1092,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -1132,15 +1132,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -1150,7 +1150,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -1171,7 +1171,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/milestone-based",
+            "path": "/contracts/milestone-based",
             "request": {
               "body": {
                 "properties": {
@@ -1258,14 +1258,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -1298,15 +1298,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -1316,7 +1316,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -1337,7 +1337,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/task-based",
+            "path": "/contracts/task-based",
             "request": {
               "body": {
                 "properties": {
@@ -1425,14 +1425,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -1465,15 +1465,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -1483,7 +1483,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -1504,7 +1504,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/time-based",
+            "path": "/contracts/time-based",
             "request": {
               "body": {
                 "properties": {
@@ -1543,7 +1543,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/preview",
+            "path": "/contracts/{contract_id}/preview",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1590,7 +1590,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/contracts/{contract_id}/premium",
+            "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1645,7 +1645,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/terminations",
+            "path": "/contracts/{contract_id}/terminations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1696,7 +1696,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/documents",
+            "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1706,7 +1706,7 @@ exports[`open api parser deel simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -1747,7 +1747,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/contracts/{contract_id}/archive",
+            "path": "/contracts/{contract_id}/archive",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1794,7 +1794,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/contracts/{contract_id}",
+            "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1837,9 +1837,9 @@ exports[`open api parser deel simple 1`] = `
                       "calculation_type": "CUSTOM_AMOUNT",
                       "daily_rate": "5.8571",
                       "last_cycle": {
-                        "completion_date": "2022-05-24T09:38:46.235Z",
-                        "end": "2022-05-24T09:38:46.235Z",
-                        "start": "2022-05-24T09:38:46.235Z",
+                        "completion_date": "2022-05-24T09:38:46Z",
+                        "end": "2022-05-24T09:38:46Z",
+                        "start": "2022-05-24T09:38:46Z",
                       },
                       "remaining_days": "5.8571",
                       "total": "5.8571",
@@ -1851,7 +1851,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/final-payments",
+            "path": "/contracts/{contract_id}/final-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1900,7 +1900,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PUT",
-            "path": "/rest/v1/contracts/{contract_id}/documents",
+            "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1910,7 +1910,7 @@ exports[`open api parser deel simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "file",
+                  "file": "optional<file>",
                 },
               },
               "headers": undefined,
@@ -1952,7 +1952,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/alternate_emails",
+            "path": "/contracts/{contract_id}/alternate_emails",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2008,14 +2008,14 @@ exports[`open api parser deel simple 1`] = `
                         "amount": "amount",
                         "currency_code": "USD",
                         "first_payment": "first_payment",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "first_payment_date": "2022-05-24T09:38:46Z",
                         "frequency": "frequency",
                         "gross_annual_salary": "gross_annual_salary",
                         "gross_signing_bonus": "gross_signing_bonus",
                         "gross_variable_bonus": "gross_variable_bonus",
                         "scale": "scale",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "custom_fields": [
                         {
                           "name": "Employee ID",
@@ -2048,15 +2048,15 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "signatures": {
                         "client_signature": "client_signature",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "client_signed_at": "2022-05-24T09:38:46Z",
+                        "signed_at": "2022-05-24T09:38:46Z",
                         "worker_signature": "worker_signature",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signed_at": "2022-05-24T09:38:46Z",
                       },
                       "special_clause": "special_clause",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "termination_date": "2022-05-24T09:38:46Z",
                       "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
@@ -2066,7 +2066,7 @@ exports[`open api parser deel simple 1`] = `
                             "isVerified": true,
                           },
                         ],
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "date_of_birth": "2022-05-24T09:38:46Z",
                         "email": "email",
                         "expected_email": "expected_email",
                         "first_name": "John",
@@ -2087,7 +2087,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}",
+            "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2121,7 +2121,7 @@ exports[`open api parser deel simple 1`] = `
                     "data": [
                       {
                         "client": {},
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "external_id": "external_id",
                         "id": "id",
                         "invitations": {},
@@ -2129,12 +2129,12 @@ exports[`open api parser deel simple 1`] = `
                         "is_shielded": true,
                         "notice_period": 15,
                         "signatures": {
-                          "client_signed_at": "2022-05-24T09:38:46.235Z",
+                          "client_signed_at": "2022-05-24T09:38:46Z",
                           "worker_signature": "Jane Doe",
-                          "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                          "worker_signed_at": "2022-05-24T09:38:46Z",
                         },
                         "status": "new",
-                        "termination_date": "2022-05-24T09:38:46.235Z",
+                        "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
                         "who_reports": "both",
@@ -2153,7 +2153,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts",
+            "path": "/contracts",
             "request": {
               "name": "GetContractListRequest",
               "query-parameters": {
@@ -2238,7 +2238,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contract-templates",
+            "path": "/contract-templates",
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractTemplateListContainer",
@@ -2280,7 +2280,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/invitations",
+            "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2353,7 +2353,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/estimate",
+            "path": "/contracts/estimate",
             "request": {
               "body": {
                 "properties": {
@@ -2404,7 +2404,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/signatures",
+            "path": "/contracts/{contract_id}/signatures",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2456,7 +2456,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/contracts/{contract_id}/invitations",
+            "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2531,7 +2531,7 @@ exports[`open api parser deel simple 1`] = `
                         "variable_compensation": "variable_compensation",
                         "variable_compensation_type": "variable_compensation_type",
                       },
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "employee": {
                         "email": "email",
                         "first_name": "first_name",
@@ -2568,7 +2568,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/eor",
+            "path": "/eor",
             "request": {
               "body": {
                 "properties": {
@@ -2663,7 +2663,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/eor/validations/{country_code}",
+            "path": "/eor/validations/{country_code}",
             "path-parameters": {
               "country_code": {
                 "docs": "Country code.",
@@ -2704,7 +2704,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/rest/v1/hris/direct-employees",
+            "path": "/hris/direct-employees",
             "request": {
               "body": "root.HrisDirectEmployee",
             },
@@ -2756,7 +2756,7 @@ exports[`open api parser deel simple 1`] = `
                   "body": {
                     "data": {
                       "created": true,
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
                       "status": "status",
@@ -2766,7 +2766,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/invoice-adjustments",
+            "path": "/invoice-adjustments",
             "request": {
               "body": {
                 "properties": {
@@ -2817,7 +2817,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}/reviews",
+            "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -2874,7 +2874,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/invoice-adjustments/many/reviews",
+            "path": "/invoice-adjustments/many/reviews",
             "request": {
               "body": {
                 "properties": {
@@ -2920,7 +2920,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
+            "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -2971,15 +2971,15 @@ exports[`open api parser deel simple 1`] = `
                           "title": "title",
                           "type": "ongoing_time_based",
                         },
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "currency_code": "USD",
                         "custom_scale": "custom_scale",
-                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "description",
                         "id": "id",
                         "payment_cycle": {
-                          "end_date": "2022-05-24T09:38:46.235Z",
-                          "start_date": "2022-05-24T09:38:46.235Z",
+                          "end_date": "2022-05-24T09:38:46Z",
+                          "start_date": "2022-05-24T09:38:46Z",
                         },
                         "public_id": "00000000-0000-0000-0000-000000000000",
                         "quantity": 1,
@@ -3015,7 +3015,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/invoice-adjustments",
+            "path": "/invoice-adjustments",
             "request": {
               "name": "GetInvoiceAdjustmentsRequest",
               "query-parameters": {
@@ -3102,15 +3102,15 @@ exports[`open api parser deel simple 1`] = `
                           "title": "title",
                           "type": "ongoing_time_based",
                         },
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "currency_code": "USD",
                         "custom_scale": "custom_scale",
-                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "description",
                         "id": "id",
                         "payment_cycle": {
-                          "end_date": "2022-05-24T09:38:46.235Z",
-                          "start_date": "2022-05-24T09:38:46.235Z",
+                          "end_date": "2022-05-24T09:38:46Z",
+                          "start_date": "2022-05-24T09:38:46Z",
                         },
                         "public_id": "00000000-0000-0000-0000-000000000000",
                         "quantity": 1,
@@ -3146,7 +3146,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/invoice-adjustments",
+            "path": "/contracts/{contract_id}/invoice-adjustments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3237,7 +3237,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
+            "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -3311,7 +3311,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/lookups/countries",
+            "path": "/lookups/countries",
             "response": {
               "docs": "Successful operation.",
               "type": "root.CountryListContainer",
@@ -3347,7 +3347,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/lookups/currencies",
+            "path": "/lookups/currencies",
             "response": {
               "docs": "Successful operation.",
               "type": "root.CurrencyListContainer",
@@ -3386,7 +3386,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/lookups/job-titles",
+            "path": "/lookups/job-titles",
             "request": {
               "name": "GetJobTitleListRequest",
               "query-parameters": {
@@ -3436,7 +3436,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/lookups/seniorities",
+            "path": "/lookups/seniorities",
             "request": {
               "name": "GetSeniorityListRequest",
               "query-parameters": {
@@ -3478,7 +3478,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/lookups/time-off-types",
+            "path": "/lookups/time-off-types",
             "response": {
               "docs": "Successful operation.",
               "type": "root.TimeoffTypeListContainer",
@@ -3534,7 +3534,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/milestones",
+            "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3592,7 +3592,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}/reviews",
+            "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3656,7 +3656,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/milestones/many/reviews",
+            "path": "/contracts/{contract_id}/milestones/many/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3709,7 +3709,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}",
+            "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3751,7 +3751,7 @@ exports[`open api parser deel simple 1`] = `
                       {
                         "amount": "900.00",
                         "approval_requested": false,
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "description": "Sprint #1",
                         "id": 2625861,
                         "reported_by": {
@@ -3771,7 +3771,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/milestones",
+            "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3809,7 +3809,7 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "amount": "900.00",
                       "approval_requested": false,
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "description": "Sprint #1",
                       "id": 2625861,
                       "reported_by": {
@@ -3828,7 +3828,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}",
+            "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3893,7 +3893,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments",
+            "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3940,9 +3940,9 @@ exports[`open api parser deel simple 1`] = `
                   "body": {
                     "data": {
                       "amount": "200.00",
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "currency_code": "USD",
-                      "date_submitted": "2022-05-24T09:38:46.235Z",
+                      "date_submitted": "2022-05-24T09:38:46Z",
                       "description": "Yearly bonus.",
                       "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
@@ -3963,7 +3963,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
+            "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4004,9 +4004,9 @@ exports[`open api parser deel simple 1`] = `
                     "data": [
                       {
                         "amount": "200.00",
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "currency_code": "USD",
-                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "Yearly bonus.",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
@@ -4028,7 +4028,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments",
+            "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4095,7 +4095,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/agreements",
+            "path": "/agreements",
             "request": {
               "name": "GetAgreementsRequest",
               "query-parameters": {
@@ -4150,7 +4150,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/legal-entities",
+            "path": "/legal-entities",
             "response": {
               "docs": "Successful operation.",
               "type": "root.LegalEntityListContainer",
@@ -4186,7 +4186,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/organizations",
+            "path": "/organizations",
             "response": {
               "docs": "Successful operation.",
               "type": "root.OrganizationListContainer",
@@ -4222,7 +4222,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/teams",
+            "path": "/teams",
             "response": {
               "docs": "Successful operation.",
               "type": "root.TeamListContainer",
@@ -4278,7 +4278,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/tasks",
+            "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4348,7 +4348,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/tasks/many/reviews",
+            "path": "/contracts/{contract_id}/tasks/many/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4416,7 +4416,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/tasks/{task_id}/reviews",
+            "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4473,7 +4473,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/contracts/{contract_id}/tasks/{task_id}",
+            "path": "/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4538,7 +4538,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/tasks",
+            "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4600,7 +4600,7 @@ exports[`open api parser deel simple 1`] = `
                         {
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
-                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requested_at": "2022-05-24T09:38:46Z",
                           "status": "REQUESTED",
                           "total_days_used": "4.00",
                           "type": "VACATION",
@@ -4622,38 +4622,38 @@ exports[`open api parser deel simple 1`] = `
                         "has_multiple_dates": true,
                         "other_timeoff_name": "This is time off for a doctor's appointment",
                         "reason": "I have a doctors appointment",
-                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requested_at": "2022-05-24T09:38:46Z",
                         "requester": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewed_at": "2022-05-24T09:38:46Z",
                         "reviewer": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "single_date": "2022-05-24T09:38:46Z",
                         "start_date_is_half_day": true,
                         "status": "REQUESTED",
                         "total_days_used": "4.00",
                         "type": "VACATION",
                       },
                       "contract_id": "abc123",
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "date_is_half_day": true,
                       "days_used_end_year": "2.00",
                       "days_used_start_year": "2.00",
                       "denial_reason": "No time off available",
-                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "end_date": "2022-05-24T09:38:46Z",
                       "end_date_is_half_day": true,
                       "has_multiple_dates": true,
                       "id": 6938,
                       "is_updated": true,
                       "other_timeoff_name": "This is time off for a doctor's appointment",
                       "reason": "I have a doctors appointment",
-                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requested_at": "2022-05-24T09:38:46Z",
                       "requester": {
                         "id": 409222,
                         "is_employee": true,
@@ -4661,7 +4661,7 @@ exports[`open api parser deel simple 1`] = `
                         "pic_url": "pic_url",
                         "profile_type": "client",
                       },
-                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewed_at": "2022-05-24T09:38:46Z",
                       "reviewer": {
                         "id": 409222,
                         "is_employee": true,
@@ -4669,20 +4669,20 @@ exports[`open api parser deel simple 1`] = `
                         "pic_url": "pic_url",
                         "profile_type": "client",
                       },
-                      "single_date": "2022-05-24T09:38:46.235Z",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "single_date": "2022-05-24T09:38:46Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "start_date_is_half_day": true,
                       "status": "REQUESTED",
                       "total_days_used": "4.00",
                       "type": "VACATION",
-                      "updated_at": "2022-05-24T09:38:46.235Z",
+                      "updated_at": "2022-05-24T09:38:46Z",
                     },
                   },
                 },
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/contracts/{contract_id}/time-offs",
+            "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4726,7 +4726,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
+            "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4780,7 +4780,7 @@ exports[`open api parser deel simple 1`] = `
                         {
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
-                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requested_at": "2022-05-24T09:38:46Z",
                           "status": "REQUESTED",
                           "total_days_used": "4.00",
                           "type": "VACATION",
@@ -4802,38 +4802,38 @@ exports[`open api parser deel simple 1`] = `
                         "has_multiple_dates": true,
                         "other_timeoff_name": "This is time off for a doctor's appointment",
                         "reason": "I have a doctors appointment",
-                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requested_at": "2022-05-24T09:38:46Z",
                         "requester": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewed_at": "2022-05-24T09:38:46Z",
                         "reviewer": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "single_date": "2022-05-24T09:38:46Z",
                         "start_date_is_half_day": true,
                         "status": "REQUESTED",
                         "total_days_used": "4.00",
                         "type": "VACATION",
                       },
                       "contract_id": "abc123",
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "date_is_half_day": true,
                       "days_used_end_year": "2.00",
                       "days_used_start_year": "2.00",
                       "denial_reason": "No time off available",
-                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "end_date": "2022-05-24T09:38:46Z",
                       "end_date_is_half_day": true,
                       "has_multiple_dates": true,
                       "id": 6938,
                       "is_updated": true,
                       "other_timeoff_name": "This is time off for a doctor's appointment",
                       "reason": "I have a doctors appointment",
-                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requested_at": "2022-05-24T09:38:46Z",
                       "requester": {
                         "id": 409222,
                         "is_employee": true,
@@ -4841,7 +4841,7 @@ exports[`open api parser deel simple 1`] = `
                         "pic_url": "pic_url",
                         "profile_type": "client",
                       },
-                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewed_at": "2022-05-24T09:38:46Z",
                       "reviewer": {
                         "id": 409222,
                         "is_employee": true,
@@ -4849,20 +4849,20 @@ exports[`open api parser deel simple 1`] = `
                         "pic_url": "pic_url",
                         "profile_type": "client",
                       },
-                      "single_date": "2022-05-24T09:38:46.235Z",
-                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "single_date": "2022-05-24T09:38:46Z",
+                      "start_date": "2022-05-24T09:38:46Z",
                       "start_date_is_half_day": true,
                       "status": "REQUESTED",
                       "total_days_used": "4.00",
                       "type": "VACATION",
-                      "updated_at": "2022-05-24T09:38:46.235Z",
+                      "updated_at": "2022-05-24T09:38:46Z",
                     },
                   },
                 },
               },
             ],
             "method": "PUT",
-            "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
+            "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -4910,11 +4910,11 @@ exports[`open api parser deel simple 1`] = `
                               "requests": [
                                 {
                                   "contract_id": "abc123",
-                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "created_at": "2022-05-24T09:38:46Z",
                                   "days_used_end_year": "2.00",
                                   "days_used_start_year": "2.00",
                                   "id": 6938,
-                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requested_at": "2022-05-24T09:38:46Z",
                                   "status": "REQUESTED",
                                   "total_days_used": "4.00",
                                   "type": "VACATION",
@@ -4928,11 +4928,11 @@ exports[`open api parser deel simple 1`] = `
                               "requests": [
                                 {
                                   "contract_id": "abc123",
-                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "created_at": "2022-05-24T09:38:46Z",
                                   "days_used_end_year": "2.00",
                                   "days_used_start_year": "2.00",
                                   "id": 6938,
-                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requested_at": "2022-05-24T09:38:46Z",
                                   "status": "REQUESTED",
                                   "total_days_used": "4.00",
                                   "type": "VACATION",
@@ -4947,11 +4947,11 @@ exports[`open api parser deel simple 1`] = `
                               "requests": [
                                 {
                                   "contract_id": "abc123",
-                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "created_at": "2022-05-24T09:38:46Z",
                                   "days_used_end_year": "2.00",
                                   "days_used_start_year": "2.00",
                                   "id": 6938,
-                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requested_at": "2022-05-24T09:38:46Z",
                                   "status": "REQUESTED",
                                   "total_days_used": "4.00",
                                   "type": "VACATION",
@@ -4969,7 +4969,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/time-offs",
+            "path": "/time-offs",
             "response": {
               "docs": "successful operation",
               "type": "root.EorClientTimeoffsContainer",
@@ -5022,7 +5022,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/entitlements",
+            "path": "/contracts/{contract_id}/entitlements",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -5060,7 +5060,7 @@ exports[`open api parser deel simple 1`] = `
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46.235Z",
+                            "requested_at": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -5073,43 +5073,43 @@ exports[`open api parser deel simple 1`] = `
                         "change_request": {
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
-                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requested_at": "2022-05-24T09:38:46Z",
                           "status": "REQUESTED",
                           "total_days_used": "4.00",
                           "type": "VACATION",
                         },
                         "contract_id": "abc123",
-                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "created_at": "2022-05-24T09:38:46Z",
                         "date_is_half_day": true,
                         "days_used_end_year": "2.00",
                         "days_used_start_year": "2.00",
                         "denial_reason": "No time off available",
-                        "end_date": "2022-05-24T09:38:46.235Z",
+                        "end_date": "2022-05-24T09:38:46Z",
                         "end_date_is_half_day": true,
                         "has_multiple_dates": true,
                         "id": 6938,
                         "is_updated": true,
                         "other_timeoff_name": "This is time off for a doctor's appointment",
                         "reason": "I have a doctors appointment",
-                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requested_at": "2022-05-24T09:38:46Z",
                         "requester": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewed_at": "2022-05-24T09:38:46Z",
                         "reviewer": {
                           "id": 409222,
                           "name": "Mr. Rogers",
                           "profile_type": "client",
                         },
-                        "single_date": "2022-05-24T09:38:46.235Z",
-                        "start_date": "2022-05-24T09:38:46.235Z",
+                        "single_date": "2022-05-24T09:38:46Z",
+                        "start_date": "2022-05-24T09:38:46Z",
                         "start_date_is_half_day": true,
                         "status": "REQUESTED",
                         "total_days_used": "4.00",
                         "type": "VACATION",
-                        "updated_at": "2022-05-24T09:38:46.235Z",
+                        "updated_at": "2022-05-24T09:38:46Z",
                       },
                     ],
                   },
@@ -5117,7 +5117,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/time-offs",
+            "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -5165,7 +5165,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/time-offs/{timeoff_id}/review",
+            "path": "/time-offs/{timeoff_id}/review",
             "path-parameters": {
               "timeoff_id": {
                 "docs": "Time off Id",
@@ -5229,7 +5229,7 @@ exports[`open api parser deel simple 1`] = `
                   "body": {
                     "data": {
                       "created": true,
-                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "created_at": "2022-05-24T09:38:46Z",
                       "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
                       "status": "status",
@@ -5239,7 +5239,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/timesheets",
+            "path": "/timesheets",
             "request": {
               "body": {
                 "properties": {
@@ -5290,7 +5290,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/timesheets/{timesheet_id}/reviews",
+            "path": "/timesheets/{timesheet_id}/reviews",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -5347,7 +5347,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/timesheets/many/reviews",
+            "path": "/timesheets/many/reviews",
             "request": {
               "body": {
                 "properties": {
@@ -5393,7 +5393,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/timesheets/{timesheet_id}",
+            "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -5456,12 +5456,12 @@ exports[`open api parser deel simple 1`] = `
                       "created_at": "2022-05-04T03:45:27.108Z",
                       "currency_code": "USD",
                       "custom_scale": "custom_scale",
-                      "date_submitted": "2022-05-24T09:38:46.235Z",
+                      "date_submitted": "2022-05-24T09:38:46Z",
                       "description": "description",
                       "id": "id",
                       "payment_cycle": {
-                        "end_date": "2022-05-24T09:38:46.235Z",
-                        "start_date": "2022-05-24T09:38:46.235Z",
+                        "end_date": "2022-05-24T09:38:46Z",
+                        "start_date": "2022-05-24T09:38:46Z",
                       },
                       "public_id": "00000000-0000-0000-0000-000000000000",
                       "quantity": 1,
@@ -5491,7 +5491,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/timesheets/{timesheet_id}",
+            "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -5536,7 +5536,7 @@ exports[`open api parser deel simple 1`] = `
                         "created_at": "2022-05-04T03:45:27.108Z",
                         "currency_code": "USD",
                         "custom_scale": "custom_scale",
-                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "description",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
@@ -5571,7 +5571,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/timesheets",
+            "path": "/timesheets",
             "request": {
               "name": "GetTimesheetsRequest",
               "query-parameters": {
@@ -5652,7 +5652,7 @@ exports[`open api parser deel simple 1`] = `
                         "created_at": "2022-05-04T03:45:27.108Z",
                         "currency_code": "USD",
                         "custom_scale": "custom_scale",
-                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "description",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
@@ -5687,7 +5687,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/contracts/{contract_id}/timesheets",
+            "path": "/contracts/{contract_id}/timesheets",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -5770,7 +5770,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/timesheets/{timesheet_id}",
+            "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -5826,7 +5826,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/rest/v1/webhooks/{id}",
+            "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -5882,7 +5882,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
-            "path": "/rest/v1/webhooks/{id}",
+            "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -5966,7 +5966,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/webhooks/{id}",
+            "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -6024,7 +6024,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/rest/v1/webhooks",
+            "path": "/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -6108,7 +6108,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rest/v1/webhooks",
+            "path": "/webhooks",
             "response": {
               "docs": "successful operation",
               "type": "root.WebhookListResponse",
@@ -10676,7 +10676,7 @@ exports[`open api parser deel simple 1`] = `
     "default-environment": "Default",
     "display-name": "Deel REST API",
     "environments": {
-      "Default": "https://api.letsdeel.com",
+      "Default": "https://api.letsdeel.com/rest/v1",
     },
     "error-discrimination": {
       "strategy": "status-code",

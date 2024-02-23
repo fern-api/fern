@@ -1,5 +1,5 @@
+import { HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
 
 export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMethodSchema {
     return HttpMethod._visit<RawSchemas.HttpMethodSchema>(httpMethod, {
@@ -17,7 +17,7 @@ export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMeth
         trace: () => {
             throw new Error("HEAD is unsupported");
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unkown http method is unsupported");
         }
     });

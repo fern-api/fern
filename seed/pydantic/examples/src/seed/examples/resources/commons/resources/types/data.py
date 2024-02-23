@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import typing_extensions
-
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
@@ -13,12 +11,12 @@ except ImportError:
 
 
 class Data_String(pydantic.BaseModel):
-    type: typing_extensions.Literal["string"]
+    type: typing.Literal["string"]
     value: str
 
 
 class Data_Base64(pydantic.BaseModel):
-    type: typing_extensions.Literal["base64"]
+    type: typing.Literal["base64"]
     value: str
 
 

@@ -10,7 +10,8 @@ import {
     SubpackageId,
     TypeDeclaration,
     TypeId,
-    WebhookGroupId
+    WebhookGroupId,
+    WebSocketChannelId
 } from "@fern-api/ir-sdk";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -28,6 +29,7 @@ export class PackageTreeGenerator {
             packagePath: [],
             file: undefined
         },
+        websocket: undefined,
         service: undefined,
         types: [],
         errors: [],
@@ -80,6 +82,14 @@ export class PackageTreeGenerator {
             throw new Error("Found duplicate webhook group for " + webhookGroupId);
         }
         package_.webhooks = webhookGroupId;
+    }
+
+    public addWebSocketChannel(websocketChannelId: WebSocketChannelId, fernFilepath: FernFilepath): void {
+        const package_ = this.getPackageForFernFilepath(fernFilepath);
+        if (package_.webhooks != null) {
+            throw new Error("Found duplicate webhook group for " + websocketChannelId);
+        }
+        package_.websocket = websocketChannelId;
     }
 
     public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
@@ -210,7 +220,8 @@ export class PackageTreeGenerator {
                 errors: [],
                 subpackages: [],
                 navigationConfig: undefined,
-                webhooks: undefined
+                webhooks: undefined,
+                websocket: undefined
             };
             this.subpackages[newParentId] = newParent;
             parent.subpackages.push(newParentId);

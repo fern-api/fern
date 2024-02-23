@@ -1,3 +1,4 @@
+import typing
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -28,7 +29,7 @@ class SdkGeneratorContext(ABC):
         self.generator_config = generator_config
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(),
+            type_declaration_referencer=TypeDeclarationReferencer(skip_resources_module=custom_config.improved_imports),
             generator_config=generator_config,
             project_module_path=project_module_path,
         )
@@ -96,9 +97,17 @@ class SdkGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
+    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[typing.Union[str, bool]]:
         ...
 
     @abstractmethod
-    def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[str]:
+    def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
+        ...
+
+    @abstractmethod
+    def resolved_schema_is_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
+
+    @abstractmethod
+    def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
         ...

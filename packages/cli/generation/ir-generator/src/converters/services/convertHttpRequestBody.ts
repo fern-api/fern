@@ -1,4 +1,5 @@
 import {
+    FileProperty,
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
@@ -43,13 +44,27 @@ export function convertHttpRequestBody({
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
-                    return FileUploadRequestProperty.file({
-                        key: file.casingsGenerator.generateNameAndWireValue({
-                            wireValue: property.key,
-                            name: property.key
-                        }),
-                        isOptional: property.isOptional
-                    });
+                    if (property.isArray) {
+                        return FileUploadRequestProperty.file(
+                            FileProperty.fileArray({
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
+                                isOptional: property.isOptional
+                            })
+                        );
+                    } else {
+                        return FileUploadRequestProperty.file(
+                            FileProperty.file({
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
+                                isOptional: property.isOptional
+                            })
+                        );
+                    }
                 } else {
                     return FileUploadRequestProperty.bodyProperty(
                         convertInlinedRequestProperty({

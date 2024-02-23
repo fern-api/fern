@@ -1,9 +1,9 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { FernWorkspace, OpenAPIWorkspace } from "../types/Workspace";
@@ -11,7 +11,7 @@ import { FernWorkspace, OpenAPIWorkspace } from "../types/Workspace";
 export async function getOpenAPIIRFromOpenAPIWorkspace(
     openapiWorkspace: OpenAPIWorkspace,
     context: TaskContext
-): Promise<OpenAPIIntermediateRepresentation> {
+): Promise<OpenApiIntermediateRepresentation> {
     return await parse({
         absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
         absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,

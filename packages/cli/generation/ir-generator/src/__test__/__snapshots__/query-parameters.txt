@@ -77,6 +77,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -142,6 +143,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_username",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -954,6 +956,7 @@ exports[`generate IR 1`] = `
         "type_user:NestedUser",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -1304,5 +1307,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

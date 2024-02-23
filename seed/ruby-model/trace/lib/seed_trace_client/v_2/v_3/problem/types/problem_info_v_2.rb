@@ -21,7 +21,7 @@ module SeedTraceClient
           # @param problem_description [Problem::ProblemDescription]
           # @param problem_name [String]
           # @param problem_version [Integer]
-          # @param supported_languages [Set<Commons::LANGUAGE>]
+          # @param supported_languages [Set<Commons::Language>]
           # @param custom_files [V2::V3::Problem::CustomFiles]
           # @param generated_files [V2::V3::Problem::GeneratedFiles]
           # @param custom_test_case_templates [Array<V2::V3::Problem::TestCaseTemplate>]
@@ -39,7 +39,7 @@ module SeedTraceClient
             @problem_name = problem_name
             # @type [Integer]
             @problem_version = problem_version
-            # @type [Set<Commons::LANGUAGE>]
+            # @type [Set<Commons::Language>]
             @supported_languages = supported_languages
             # @type [V2::V3::Problem::CustomFiles]
             @custom_files = custom_files

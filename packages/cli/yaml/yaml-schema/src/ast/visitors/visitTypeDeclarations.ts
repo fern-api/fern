@@ -189,7 +189,8 @@ export async function visitTypeDeclaration({
                             await visitObject(enumType, {
                                 docs: createDocsVisitor(visitor, nodePathForEnumType),
                                 name: noop,
-                                value: noop
+                                value: noop,
+                                casing: noop
                             });
                         }
                     }

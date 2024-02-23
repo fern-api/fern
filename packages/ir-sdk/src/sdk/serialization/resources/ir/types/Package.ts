@@ -13,6 +13,7 @@ export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, F
         types: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).TypeId)),
         errors: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ErrorId)),
         webhooks: core.serialization.lazy(async () => (await import("../../..")).WebhookGroupId).optional(),
+        websocket: core.serialization.lazy(async () => (await import("../../..")).WebSocketChannelId).optional(),
         subpackages: core.serialization.list(
             core.serialization.lazy(async () => (await import("../../..")).SubpackageId)
         ),
@@ -30,6 +31,7 @@ export declare namespace Package {
         types: serializers.TypeId.Raw[];
         errors: serializers.ErrorId.Raw[];
         webhooks?: serializers.WebhookGroupId.Raw | null;
+        websocket?: serializers.WebSocketChannelId.Raw | null;
         subpackages: serializers.SubpackageId.Raw[];
         hasEndpointsInTree: boolean;
         navigationConfig?: serializers.PackageNavigationConfig.Raw | null;

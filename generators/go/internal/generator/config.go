@@ -10,6 +10,7 @@ type Config struct {
 	Organization               string
 	Version                    string
 	IRFilepath                 string
+	SnippetFilepath            string
 	ImportPath                 string
 	PackageName                string
 
@@ -43,6 +44,7 @@ func NewConfig(
 	organization string,
 	version string,
 	irFilepath string,
+	snippetFilepath string,
 	importPath string,
 	packageName string,
 	moduleConfig *ModuleConfig,
@@ -56,6 +58,7 @@ func NewConfig(
 		Whitelabel:                 whitelabel,
 		Version:                    version,
 		IRFilepath:                 irFilepath,
+		SnippetFilepath:            snippetFilepath,
 		ImportPath:                 importPath,
 		PackageName:                packageName,
 		ModuleConfig:               moduleConfig,

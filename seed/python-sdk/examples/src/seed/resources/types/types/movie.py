@@ -3,8 +3,6 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from ...commons.resources.types.types.tag import Tag
 from .movie_id import MovieId
@@ -33,9 +31,9 @@ class Movie(pydantic.BaseModel):
     title: str
     from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field(description="The rating scale is one to five stars")
-    type: typing_extensions.Literal["movie"]
+    type: typing.Literal["movie"]
     tag: Tag
-    book: typing.Optional[str]
+    book: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

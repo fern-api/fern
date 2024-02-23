@@ -260,6 +260,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -326,6 +327,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/create-movie",
             "parts": [],
@@ -773,6 +775,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -1079,6 +1082,7 @@ exports[`generate IR 1`] = `
         "type_imdb:CreateMovieRequest",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -1535,6 +1539,7 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;
 
@@ -1619,6 +1624,7 @@ exports[`generate IR 2`] = `
       "type_:RootType",
     ],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -1717,6 +1723,7 @@ exports[`generate IR 2`] = `
         "type_a:A",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_ast": {
       "docs": null,
@@ -1794,6 +1801,7 @@ exports[`generate IR 2`] = `
         "type_ast:ObjectValue",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -3096,6 +3104,7 @@ exports[`generate IR 2`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;
 
@@ -3312,6 +3321,7 @@ exports[`generate IR 3`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -3374,6 +3384,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -3439,6 +3450,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -3582,6 +3594,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -3725,6 +3738,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "foo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -3830,6 +3844,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "endpoint",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -3984,6 +3999,7 @@ exports[`generate IR 3`] = `
               "unsafeName": "unknown_request",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -4199,6 +4215,7 @@ exports[`generate IR 3`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_a/b": {
       "docs": null,
@@ -4311,6 +4328,7 @@ exports[`generate IR 3`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_a/c": {
       "docs": null,
@@ -4423,6 +4441,7 @@ exports[`generate IR 3`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_a/d": {
       "docs": null,
@@ -4537,6 +4556,7 @@ exports[`generate IR 3`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_a/d/types": {
       "docs": null,
@@ -4688,6 +4708,7 @@ exports[`generate IR 3`] = `
         "type_a/d/types:Foo",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_folder": {
       "docs": null,
@@ -4764,6 +4785,7 @@ exports[`generate IR 3`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_folder/service": {
       "docs": null,
@@ -4877,6 +4899,7 @@ exports[`generate IR 3`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -5042,5 +5065,6 @@ exports[`generate IR 3`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

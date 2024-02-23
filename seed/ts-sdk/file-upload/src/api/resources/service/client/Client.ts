@@ -25,7 +25,9 @@ export class Service {
 
     public async post(
         file: File | fs.ReadStream,
+        fileList: File | fs.ReadStream,
         maybeFile: File | fs.ReadStream | undefined,
+        maybeFileList: File | fs.ReadStream | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
@@ -36,59 +38,23 @@ export class Service {
 
         _request.append("integer", request.integer.toString());
         _request.append("file", file);
+        _request.append("fileList", fileList);
         if (maybeFile != null) {
             _request.append("maybeFile", maybeFile);
+        }
+
+        if (maybeFileList != null) {
+            _request.append("maybeFileList", maybeFileList);
         }
 
         if (request.maybeInteger != null) {
             _request.append("maybeInteger", request.maybeInteger.toString());
         }
 
-        for (const _item of request.listOfStrings) {
-            _request.append("listOfStrings", _item);
-        }
-
-        for (const _item of request.setOfStrings) {
-            _request.append("setOfStrings", _item);
-        }
-
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
                 _request.append("optionalListOfStrings", _item);
             }
-        }
-
-        if (request.optionalSetOfStrings != null) {
-            for (const _item of request.optionalSetOfStrings) {
-                _request.append("optionalSetOfStrings", _item);
-            }
-        }
-
-        if (Array.isArray(request.maybeList))
-            for (const _item of request.maybeList) {
-                _request.append("maybeList", typeof _item === "string" ? _item : JSON.stringify(_item));
-            }
-
-        if (request.optionalMaybeList != null) {
-            if (Array.isArray(request.optionalMaybeList))
-                for (const _item of request.optionalMaybeList) {
-                    _request.append("optionalMaybeList", typeof _item === "string" ? _item : JSON.stringify(_item));
-                }
-        }
-
-        if (Array.isArray(request.maybeListOrSet) || request.maybeListOrSet instanceof Set)
-            for (const _item of request.maybeListOrSet) {
-                _request.append("maybeListOrSet", typeof _item === "string" ? _item : JSON.stringify(_item));
-            }
-
-        if (request.optionalMaybeListOrSet != null) {
-            if (Array.isArray(request.optionalMaybeListOrSet) || request.optionalMaybeListOrSet instanceof Set)
-                for (const _item of request.optionalMaybeListOrSet) {
-                    _request.append(
-                        "optionalMaybeListOrSet",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
-                    );
-                }
         }
 
         for (const _item of request.listOfObjects) {
@@ -182,8 +148,33 @@ export class Service {
 
     public async justFileWithQueryParams(
         file: File | fs.ReadStream,
+        request: SeedFileUpload.JustFileWithQueryParamsRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
+        const _queryParams: Record<string, string | string[]> = {};
+        if (request.maybeString != null) {
+            _queryParams["maybeString"] = request.maybeString;
+        }
+
+        _queryParams["integer"] = request.integer.toString();
+        if (request.maybeInteger != null) {
+            _queryParams["maybeInteger"] = request.maybeInteger.toString();
+        }
+
+        if (Array.isArray(request.listOfStrings)) {
+            _queryParams["listOfStrings"] = request.listOfStrings.map((item) => item);
+        } else {
+            _queryParams["listOfStrings"] = request.listOfStrings;
+        }
+
+        if (request.optionalListOfStrings != null) {
+            if (Array.isArray(request.optionalListOfStrings)) {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings.map((item) => item);
+            } else {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings;
+            }
+        }
+
         const _request = new FormData();
         _request.append("file", file);
         const _response = await core.fetcher({
@@ -197,6 +188,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
+            queryParameters: _queryParams,
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

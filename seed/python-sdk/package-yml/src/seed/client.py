@@ -9,6 +9,8 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
+from .core.remove_none_from_dict import remove_none_from_dict
+from .core.request_options import RequestOptions
 from .resources.service.client import AsyncServiceClient, ServiceClient
 
 try:
@@ -21,6 +23,23 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class SeedPackageYml:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: str. The base url to use for requests from the client.
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import SeedPackageYml
+
+    client = SeedPackageYml(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -29,12 +48,14 @@ class SeedPackageYml:
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
-    def echo(self, id: str, *, request: str) -> str:
+    def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - id: str.
 
             - request: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedPackageYml
 
@@ -49,9 +70,21 @@ class SeedPackageYml:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{id}/"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -63,6 +96,23 @@ class SeedPackageYml:
 
 
 class AsyncSeedPackageYml:
+    """
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+
+    Parameters:
+        - base_url: str. The base url to use for requests from the client.
+
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+
+        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+    ---
+    from seed.client import AsyncSeedPackageYml
+
+    client = AsyncSeedPackageYml(
+        base_url="https://yourhost.com/path/to/api",
+    )
+    """
+
     def __init__(
         self,
         *,
@@ -75,12 +125,14 @@ class AsyncSeedPackageYml:
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
-    async def echo(self, id: str, *, request: str) -> str:
+    async def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - id: str.
 
             - request: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedPackageYml
 
@@ -95,9 +147,21 @@ class AsyncSeedPackageYml:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{id}/"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

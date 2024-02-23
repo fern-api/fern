@@ -5,8 +5,6 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ....core.datetime_utils import serialize_datetime
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import (
@@ -92,7 +90,7 @@ class SubmissionResponse(pydantic.BaseModel):
         if self.__root__.type == "terminated":
             return terminated(TerminatedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing_extensions.Annotated[
+    __root__: typing.Annotated[
         typing.Union[
             _SubmissionResponse.ServerInitialized,
             _SubmissionResponse.ProblemInitialized,
@@ -119,27 +117,27 @@ class SubmissionResponse(pydantic.BaseModel):
 
 class _SubmissionResponse:
     class ServerInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["serverInitialized"]
+        type: typing.Literal["serverInitialized"]
 
     class ProblemInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["problemInitialized"]
+        type: typing.Literal["problemInitialized"]
         value: ProblemId
 
     class WorkspaceInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["workspaceInitialized"]
+        type: typing.Literal["workspaceInitialized"]
 
     class ServerErrored(ExceptionInfo):
-        type: typing_extensions.Literal["serverErrored"]
+        type: typing.Literal["serverErrored"]
 
         class Config:
             allow_population_by_field_name = True
 
     class CodeExecutionUpdate(pydantic.BaseModel):
-        type: typing_extensions.Literal["codeExecutionUpdate"]
+        type: typing.Literal["codeExecutionUpdate"]
         value: resources_submission_types_code_execution_update_CodeExecutionUpdate
 
     class Terminated(TerminatedResponse):
-        type: typing_extensions.Literal["terminated"]
+        type: typing.Literal["terminated"]
 
         class Config:
             allow_population_by_field_name = True

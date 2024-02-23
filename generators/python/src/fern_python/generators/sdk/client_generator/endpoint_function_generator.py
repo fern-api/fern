@@ -45,6 +45,8 @@ class GeneratedEndpointFunction:
 
 
 class EndpointFunctionGenerator:
+    REQUEST_OPTIONS_VARIABLE = "request_options"
+
     def __init__(
         self,
         *,
@@ -69,6 +71,19 @@ class EndpointFunctionGenerator:
         self.snippet_writer = snippet_writer
 
     def generate(self) -> GeneratedEndpointFunction:
+        is_primitive: bool = (
+            self._endpoint.request_body.visit(
+                inlined_request_body=lambda _: False,
+                reference=lambda referenced_request_body: self._is_httpx_primitive_data(
+                    type_reference=referenced_request_body.request_body_type, allow_optional=True
+                ),
+                file_upload=lambda _: False,
+                bytes=lambda _: False,
+            )
+            if self._endpoint.request_body is not None
+            else False
+        )
+
         request_body_parameters: Optional[AbstractRequestBodyParameters] = (
             self._endpoint.request_body.visit(
                 inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
@@ -115,19 +130,13 @@ class EndpointFunctionGenerator:
                 snippet=endpoint_snippet,
             ),
             signature=AST.FunctionSignature(
-                parameters=[
-                    AST.FunctionParameter(
-                        name=get_parameter_name(path_parameter.name),
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type
-                        ),
-                    )
-                    for path_parameter in self._endpoint.all_path_parameters
-                ],
+                parameters=self._get_endpoint_path_parameters(),
                 named_parameters=named_parameters,
-                return_type=self._get_response_body_type(self._endpoint.response, self._is_async)
-                if self._endpoint.response is not None
-                else AST.TypeHint.none(),
+                return_type=(
+                    self._get_response_body_type(self._endpoint.response, self._is_async)
+                    if self._endpoint.response is not None
+                    else AST.TypeHint.none()
+                ),
             ),
             body=self._create_endpoint_body_writer(
                 service=self._service,
@@ -135,6 +144,7 @@ class EndpointFunctionGenerator:
                 idempotency_headers=self._idempotency_headers,
                 request_body_parameters=request_body_parameters,
                 is_async=self._is_async,
+                is_primitive=is_primitive,
             ),
         )
         return GeneratedEndpointFunction(
@@ -142,6 +152,22 @@ class EndpointFunctionGenerator:
             is_default_body_parameter_used=request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
+
+    def _get_endpoint_path_parameters(
+        self,
+    ) -> List[AST.FunctionParameter]:
+        parameters: List[AST.FunctionParameter] = []
+        for path_parameter in self._endpoint.all_path_parameters:
+            if not self._is_type_literal(path_parameter.value_type):
+                parameters.append(
+                    AST.FunctionParameter(
+                        name=get_parameter_name(path_parameter.name),
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type
+                        ),
+                    ),
+                )
+        return parameters
 
     def _get_endpoint_named_parameters(
         self,
@@ -181,7 +207,7 @@ class EndpointFunctionGenerator:
                     ),
                 )
 
-        # Always include the idempotency header parameters last.
+        # Always include the idempotency header parameters second to last.
         if endpoint.idempotent:
             for header in idempotency_headers:
                 if not self._is_header_literal(header):
@@ -194,6 +220,16 @@ class EndpointFunctionGenerator:
                             ),
                         ),
                     )
+        # Always include request options last.
+        parameters.append(
+            AST.NamedFunctionParameter(
+                name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                docs="Request-specific configuration.",
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
+                ),
+            ),
+        )
 
         return parameters
 
@@ -205,6 +241,7 @@ class EndpointFunctionGenerator:
         idempotency_headers: List[ir_types.HttpHeader],
         request_body_parameters: Optional[AbstractRequestBodyParameters],
         is_async: bool,
+        is_primitive: bool,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
@@ -214,6 +251,53 @@ class EndpointFunctionGenerator:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))
 
             json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
+            encoded_json_request_body = (
+                self._context.core_utilities.jsonable_encoder(json_request_body)
+                if json_request_body is not None
+                else None
+            )
+
+            method = endpoint.method.visit(
+                get=lambda: "GET",
+                post=lambda: "POST",
+                put=lambda: "PUT",
+                patch=lambda: "PATCH",
+                delete=lambda: "DELETE",
+            )
+
+            def write_request_body(writer: AST.NodeWriter) -> None:
+                if is_primitive:
+                    if encoded_json_request_body:
+                        writer.write_node(encoded_json_request_body)
+                else:
+                    # If there's an existing request body:
+                    #   - Use it if the additional body params are none (e.g. request options has no impact)
+                    #   - If additional body params is not none, json encode it and spread both dicts into a new one
+                    #      - NOTE: With the is_primitive bail out, we do not acknowledge the additional body parameters,
+                    #        to not have to merge together an integer and a hash, for example
+                    # If there is not an existing request body, send the encoded dict
+                    additional_parameters = (
+                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters')"
+                    )
+                    additional_parameters_defaulted = f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_body_parameters', {'{}'})"
+                    json_encoded_additional_params = self._context.core_utilities.jsonable_encoder(
+                        self._context.core_utilities.remove_none_from_dict(
+                            AST.Expression(additional_parameters_defaulted)
+                        )
+                    )
+                    if encoded_json_request_body:
+                        writer.write_node(encoded_json_request_body)
+                        writer.write(
+                            f" if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is None or {additional_parameters} is None else"
+                        )
+                        writer.write(" {**")
+                        writer.write_node(encoded_json_request_body)
+                        writer.write(", **(")
+                        writer.write_node(json_encoded_additional_params)
+                        writer.write(")}")
+                    else:
+                        writer.write_node(json_encoded_additional_params)
+                        writer.write(f" if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None")
 
             is_streaming = (
                 True
@@ -228,41 +312,44 @@ class EndpointFunctionGenerator:
                 context=self._context, endpoint=endpoint, is_async=is_async
             )
 
+            timeout_default = (
+                "None"
+                if self._context.custom_config.timeout_in_seconds == "infinity"
+                else f"{self._context.custom_config.timeout_in_seconds}"
+            )
+            timeout = AST.Expression(
+                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else {timeout_default}"
+            )
+            files = (
+                request_body_parameters.get_files()
+                if request_body_parameters is not None and request_body_parameters.get_files() is not None
+                else None
+            )
             writer.write_node(
                 HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
-                    url=self._get_environment_as_str(endpoint=endpoint)
-                    if is_endpoint_path_empty(endpoint)
-                    else UrlLibParse.urljoin(
-                        self._get_environment_as_str(endpoint=endpoint),
-                        self._get_path_for_endpoint(endpoint),
+                    url=(
+                        self._get_environment_as_str(endpoint=endpoint)
+                        if is_endpoint_path_empty(endpoint)
+                        else UrlLibParse.urljoin(
+                            self._get_environment_as_str(endpoint=endpoint),
+                            self._get_path_for_endpoint(endpoint),
+                        )
                     ),
-                    method=endpoint.method.visit(
-                        get=lambda: "GET",
-                        post=lambda: "POST",
-                        put=lambda: "PUT",
-                        patch=lambda: "PATCH",
-                        delete=lambda: "DELETE",
-                    ),
+                    method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
-                    request_body=(
-                        self._context.core_utilities.jsonable_encoder(json_request_body)
-                        if json_request_body is not None
-                        else None
-                    ),
+                    request_body=AST.Expression(AST.CodeWriter(write_request_body))
+                    if (method != "GET" and method != "DELETE")
+                    else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
-                    files=request_body_parameters.get_files() if request_body_parameters is not None else None,
+                    files=self._context.core_utilities.httpx_tuple_converter(files) if files is not None else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(
                         service=service, endpoint=endpoint, idempotency_headers=idempotency_headers
                     ),
                     auth=None,
-                    timeout=AST.Expression(
-                        "None"
-                        if self._context.custom_config.timeout_in_seconds == "infinity"
-                        else f"{self._context.custom_config.timeout_in_seconds}"
-                    ),
+                    timeout=timeout,
                     response_code_writer=response_code_writer.get_writer(),
                     reference_to_client=AST.Expression(
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
@@ -436,18 +523,24 @@ class EndpointFunctionGenerator:
             for i, part in enumerate(endpoint.full_path.parts):
                 parameter_obj = endpoint.all_path_parameters[i]
                 possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
-                writer.write("{")
-                writer.write(
-                    get_parameter_name(
-                        self._get_path_parameter_from_name(
-                            endpoint=endpoint,
-                            path_parameter_name=part.path_parameter,
-                        ).name,
-                    )
-                ) if possible_path_part_literal is None else writer.write_node(
-                    AST.Expression(f'"{possible_path_part_literal}"')
-                )
-                writer.write("}")
+                if possible_path_part_literal is not None:
+                    writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
+                else:
+                    writer.write("{")
+                    if self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
+                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                    elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
+                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
+                    else:
+                        writer.write(
+                            get_parameter_name(
+                                self._get_path_parameter_from_name(
+                                    endpoint=endpoint,
+                                    path_parameter_name=part.path_parameter,
+                                ).name,
+                            )
+                        )
+                    writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
 
@@ -466,9 +559,11 @@ class EndpointFunctionGenerator:
 
     def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
         return response.visit(
-            file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-            if self._is_async
-            else AST.TypeHint.iterator(AST.TypeHint.bytes()),
+            file_download=lambda _: (
+                AST.TypeHint.async_iterator(AST.TypeHint.bytes())
+                if self._is_async
+                else AST.TypeHint.iterator(AST.TypeHint.bytes())
+            ),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             streaming=lambda stream_response: self._get_streaming_response_body_type(
                 stream_response=stream_response, is_async=is_async
@@ -505,7 +600,8 @@ class EndpointFunctionGenerator:
         raise RuntimeError(f"{union.type} streaming response is unsupported")
 
     def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
-        reference = AST.Expression(get_parameter_name(query_parameter.name.name))
+        parameter_name = get_parameter_name(query_parameter.name.name)
+        reference = AST.Expression(parameter_name)
 
         if self._is_datetime(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.serialize_datetime(reference)
@@ -542,6 +638,12 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif self._context.resolved_schema_is_enum(reference=query_parameter.value_type):
+            return AST.Expression(f"{parameter_name}.value")
+
+        elif self._context.resolved_schema_is_optional_enum(reference=query_parameter.value_type):
+            return AST.Expression(f"{parameter_name}.value if {parameter_name} is not None else None")
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
@@ -580,20 +682,28 @@ class EndpointFunctionGenerator:
 
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
-            headers.append(
-                (
-                    header.name.wire_value,
-                    AST.Expression(
-                        f'"{literal_header_value}"'
-                        if literal_header_value is not None
-                        else get_parameter_name(header.name.name)
-                    ),
-                ),
+            if literal_header_value is not None and type(literal_header_value) is str:
+                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
+            elif literal_header_value is not None and type(literal_header_value) is bool:
+                headers.append((header.name.wire_value, AST.Expression(f"{literal_header_value}")))
+            else:
+                headers.append((header.name.wire_value, AST.Expression(get_parameter_name(header.name.name))))
+
+        def write_headers_dict_default(writer: AST.NodeWriter) -> None:
+            writer.write("{")
+            writer.write(
+                f"**self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}(),"
             )
+            writer.write(
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_headers', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+            )
+            writer.write_line("}")
 
         if len(headers) == 0:
-            return AST.Expression(
-                f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"
+            self._context.core_utilities.jsonable_encoder(
+                self._context.core_utilities.remove_none_from_dict(
+                    AST.Expression(AST.CodeWriter(write_headers_dict_default)),
+                )
             )
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
@@ -605,20 +715,22 @@ class EndpointFunctionGenerator:
                 writer.write(f'"{header_key}": ')
                 writer.write_node(header_value)
                 writer.write(", ")
-
+            writer.write(
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_headers', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+            )
             writer.write_line("},")
 
-        return self._context.core_utilities.remove_none_from_dict(
-            AST.Expression(AST.CodeWriter(write_headers_dict)),
+        return self._context.core_utilities.jsonable_encoder(
+            self._context.core_utilities.remove_none_from_dict(
+                AST.Expression(AST.CodeWriter(write_headers_dict)),
+            )
         )
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
-        return (
-            self._get_reference_to_query_parameter(query_parameter)
-            if possible_query_literal is None
-            else AST.Expression(f'"{possible_query_literal}"')
-        )
+        if possible_query_literal is not None:
+            return AST.Expression(f'"{possible_query_literal}"')
+        return self._get_reference_to_query_parameter(query_parameter)
 
     def _get_query_parameters_for_endpoint(
         self,
@@ -631,7 +743,11 @@ class EndpointFunctionGenerator:
         ]
 
         if len(query_parameters) == 0:
-            return None
+            return self._context.core_utilities.jsonable_encoder(
+                AST.Expression(
+                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+                )
+            )
 
         def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
@@ -639,11 +755,15 @@ class EndpointFunctionGenerator:
                 writer.write(f'"{query_param_key}": ')
                 writer.write_node(query_param_value)
                 writer.write(", ")
-
+            writer.write(
+                f"**({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters', {'{}'}) if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}),"
+            )
             writer.write_line("},")
 
-        return self._context.core_utilities.remove_none_from_dict(
-            AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+        return self._context.core_utilities.jsonable_encoder(
+            self._context.core_utilities.remove_none_from_dict(
+                AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+            )
         )
 
     def _is_datetime(
@@ -792,7 +912,7 @@ class EndpointFunctionSnippetGenerator:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
             )
-            if path_parameter_value is not None:
+            if not self._is_path_literal(path_parameter.name.original_name) and path_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(path_parameter.name),
@@ -816,7 +936,10 @@ class EndpointFunctionSnippetGenerator:
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_header.value,
             )
-            if example_header_parameter_value is not None:
+            if (
+                not self._is_header_literal(example_header.name.wire_value)
+                and example_header_parameter_value is not None
+            ):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_header.name.name),
@@ -828,7 +951,7 @@ class EndpointFunctionSnippetGenerator:
             query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=query_parameter.value,
             )
-            if query_parameter_value is not None:
+            if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(query_parameter.name.name),
@@ -866,7 +989,7 @@ class EndpointFunctionSnippetGenerator:
             property_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_property.value,
             )
-            if property_value is not None:
+            if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_property.name.name),
@@ -895,6 +1018,40 @@ class EndpointFunctionSnippetGenerator:
         if self.endpoint.sdk_request is None:
             raise Exception("request body is referenced but SDKRequestBody is not defined")
         return self.endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
+
+    def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
+        param = next(
+            filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None
+        )
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_path_literal(self, path_parameter_original_name: str) -> bool:
+        param = next(
+            filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters),
+            None,
+        )
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_header_literal(self, header_wire_value: str) -> bool:
+        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_inlined_request_literal(self, property_wire_value: str) -> bool:
+        if self.endpoint.request_body is None:
+            return False
+        request_body_union = self.endpoint.request_body.get_as_union()
+        if request_body_union.type == "inlinedRequestBody":
+            param = next(filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties))
+            if param is not None:
+                return self.context.get_literal_value(param.value_type) is not None
+            return False
+        return False
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:

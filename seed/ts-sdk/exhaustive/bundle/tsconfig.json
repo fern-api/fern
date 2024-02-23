@@ -10,7 +10,6 @@
         "declaration": true,
         "emitDeclarationOnly": true,
         "sourceMap": true,
-        "noUnusedParameters": true,
         "outDir": "types",
         "rootDir": "src",
         "baseUrl": "src"

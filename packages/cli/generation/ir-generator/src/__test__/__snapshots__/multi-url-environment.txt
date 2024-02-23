@@ -210,6 +210,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -270,6 +271,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "boot_instance",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/boot",
             "parts": [],
@@ -488,6 +490,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_presigned_url",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/presigned-url",
             "parts": [],
@@ -745,6 +748,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_s3": {
       "docs": null,
@@ -817,10 +821,12 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {},
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

@@ -2,7 +2,10 @@
 
 module SeedTraceClient
   class Migration
-    # @type [MIGRATION_STATUS]
-    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.freeze
+    class MigrationStatus
+      RUNNING = "RUNNING"
+      FAILED = "FAILED"
+      FINISHED = "FINISHED"
+    end
   end
 end

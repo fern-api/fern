@@ -280,6 +280,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -411,6 +412,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "throw_error",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/property-based-error",
             "parts": [],
@@ -557,6 +559,7 @@ exports[`generate IR 1`] = `
         "type_errors:PropertyBasedErrorTestBody",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_property-based-error": {
       "docs": null,
@@ -629,6 +632,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -742,5 +746,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../cli/logger" },
     { "path": "../../commons/fs-utils" },
-    { "path": "../../commons/logging-execa" },
-    { "path": "../../ir-sdk" }
+    { "path": "../../commons/logging-execa" }
   ]
 }

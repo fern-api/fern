@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
 
@@ -45,6 +45,15 @@ export interface FernDefinitionBuilder {
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
+    addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
+
+    addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void;
+
+    addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
+
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
     build(): FernDefinition;
@@ -61,7 +70,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenAPIIntermediateRepresentation) {
+    public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -72,6 +81,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile["display-name"] = ir.title;
         }
     }
+
     setServiceInfo(
         file: RelativeFilePath,
         { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
@@ -220,34 +230,58 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         fernFile.webhooks[name] = schema;
     }
 
-    public build(): FernDefinition {
-        const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
+    public addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void {
+        const fernFile = this.getOrCreateFile(file);
+        fernFile.channel = channel;
+    }
 
-        // substitute package marker file
-        if (this.packageMarkerFile.service != null) {
-            this.packageMarkerFile.service = {
-                ...this.packageMarkerFile.service,
-                endpoints: Object.fromEntries(
-                    Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
-                        return [
-                            id,
-                            {
-                                ...endpoint,
-                                path: `${basePath}${endpoint.path}`
-                            }
-                        ];
-                    })
-                )
+    public addChannelExample(
+        file: RelativeFilePath,
+        { example }: { example: RawSchemas.ExampleWebSocketSession }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.channel == null) {
+            fernFile.channel = {
+                path: "",
+                auth: false
             };
         }
+        if (fernFile.channel.messages == null) {
+            fernFile.channel.messages = {};
+        }
+        if (fernFile.channel.examples == null) {
+            fernFile.channel.examples = [];
+        }
+        fernFile.channel.examples.push(example);
+    }
 
-        // subsitute definition files
-        for (const [_, file] of Object.entries(this.definitionFiles)) {
-            if (file.service != null) {
-                file.service = {
-                    ...file.service,
+    public addChannelMessage(
+        file: RelativeFilePath,
+        { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.channel == null) {
+            fernFile.channel = {
+                path: "",
+                auth: false
+            };
+        }
+        if (fernFile.channel.messages == null) {
+            fernFile.channel.messages = {};
+        }
+        fernFile.channel.messages[messageId] = message;
+    }
+
+    public build(): FernDefinition {
+        if (this.modifyBasePaths) {
+            const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
+
+            // substitute package marker file
+            if (this.packageMarkerFile.service != null) {
+                this.packageMarkerFile.service = {
+                    ...this.packageMarkerFile.service,
                     endpoints: Object.fromEntries(
-                        Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                        Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
                             return [
                                 id,
                                 {
@@ -259,36 +293,56 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                     )
                 };
             }
-        }
 
-        if (this.rootApiFile.environments != null) {
-            this.rootApiFile.environments = {
-                ...Object.fromEntries(
-                    Object.entries(this.rootApiFile.environments).map(([env, url]) => {
-                        if (typeof url === "string") {
-                            return [env, url.substring(0, url.length - basePath.length)];
-                        } else if (isSingleBaseUrl(url)) {
-                            return [
-                                env,
-                                {
-                                    url: url.url.substring(0, url.url.length - basePath.length)
-                                }
-                            ];
-                        } else {
-                            return [
-                                env,
-                                {
-                                    urls: Object.fromEntries(
-                                        Object.entries(url.urls).map(([name, url]) => {
-                                            return [name, url.substring(0, url.length - basePath.length)];
-                                        })
-                                    )
-                                }
-                            ];
-                        }
-                    })
-                )
-            };
+            // subsitute definition files
+            for (const [_, file] of Object.entries(this.definitionFiles)) {
+                if (file.service != null) {
+                    file.service = {
+                        ...file.service,
+                        endpoints: Object.fromEntries(
+                            Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                                return [
+                                    id,
+                                    {
+                                        ...endpoint,
+                                        path: `${basePath}${endpoint.path}`
+                                    }
+                                ];
+                            })
+                        )
+                    };
+                }
+            }
+
+            if (this.rootApiFile.environments != null) {
+                this.rootApiFile.environments = {
+                    ...Object.fromEntries(
+                        Object.entries(this.rootApiFile.environments).map(([env, url]) => {
+                            if (typeof url === "string") {
+                                return [env, url.substring(0, url.length - basePath.length)];
+                            } else if (isSingleBaseUrl(url)) {
+                                return [
+                                    env,
+                                    {
+                                        url: url.url.substring(0, url.url.length - basePath.length)
+                                    }
+                                ];
+                            } else {
+                                return [
+                                    env,
+                                    {
+                                        urls: Object.fromEntries(
+                                            Object.entries(url.urls).map(([name, url]) => {
+                                                return [name, url.substring(0, url.length - basePath.length)];
+                                            })
+                                        )
+                                    }
+                                ];
+                            }
+                        })
+                    )
+                };
+            }
         }
 
         const definition: FernDefinition = {
@@ -357,6 +411,5 @@ function getSharedSuffix(strings: string[]): string {
 }
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
 }

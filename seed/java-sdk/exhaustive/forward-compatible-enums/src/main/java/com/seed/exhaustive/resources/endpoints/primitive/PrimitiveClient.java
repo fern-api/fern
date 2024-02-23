@@ -13,6 +13,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -48,8 +49,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
             }
@@ -85,8 +91,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), int.class);
             }
@@ -122,8 +133,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), long.class);
             }
@@ -159,8 +175,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), double.class);
             }
@@ -196,8 +217,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), boolean.class);
             }
@@ -233,8 +259,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), OffsetDateTime.class);
             }
@@ -270,8 +301,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
             }
@@ -307,8 +343,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UUID.class);
             }
@@ -344,8 +385,13 @@ public class PrimitiveClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), byte[].class);
             }

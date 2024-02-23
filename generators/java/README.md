@@ -1,6 +1,6 @@
 # Java Generator
 
-This repository contains the source for the [Fern]([https://buildwithfern.com](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=repo-contains)) generators that produce Java artifacts:
+This repository contains the source for the [Fern](<[https://buildwithfern.com](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=repo-contains)>) generators that produce Java artifacts:
 
 - `fernapi/fern-java-sdk`
 - `fernapi/fern-java-model`
@@ -12,7 +12,7 @@ Fern handles transforming an API definition -- either an OpenAPI or Fern specifi
 
 ## What is Fern?
 
-Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
+Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
 Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
@@ -97,13 +97,13 @@ When enabled, generates public constructors for model types.
 **Type:** string
 
 ```yaml
-custom-dependencies: 
+custom-dependencies:
   - "implementation com.foo:bar:0.0.0"
   - "testImplementation com.foo:bar:0.0.0"
   - "api com.foo:bar:0.0.0"
 ```
 
-The provided string will be used as the client class name. 
+The provided string will be used as the client class name.
 
 ## Versions
 

@@ -78,6 +78,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
     ],
     "types": [],
     "webhooks": undefined,
+    "websocket": undefined,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -380,6 +381,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": undefined,
           "path": {
             "head": "/check/",
             "parts": [
@@ -781,6 +783,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
         "type_service:User",
       ],
       "webhooks": undefined,
+      "websocket": undefined,
     },
   },
   "types": {
@@ -896,5 +899,6 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

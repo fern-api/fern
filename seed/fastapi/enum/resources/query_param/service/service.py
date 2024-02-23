@@ -25,11 +25,11 @@ class AbstractQueryParamService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send(self, *, value: typing.Optional[Operand] = None) -> None:
+    def send(self, *, operand: typing.Optional[Operand] = None) -> None:
         ...
 
     @abc.abstractmethod
-    def send_list(self, *, value: typing.Optional[typing.List[Operand]] = None) -> None:
+    def send_list(self, *, operand: typing.Optional[typing.List[Operand]] = None) -> None:
         ...
 
     """
@@ -49,7 +49,7 @@ class AbstractQueryParamService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
-            elif parameter_name == "value":
+            elif parameter_name == "operand":
                 new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             else:
                 new_parameters.append(parameter)
@@ -86,7 +86,7 @@ class AbstractQueryParamService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
-            elif parameter_name == "value":
+            elif parameter_name == "operand":
                 new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             else:
                 new_parameters.append(parameter)

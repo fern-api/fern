@@ -15,7 +15,7 @@ import {
     VariableId
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, JavaScriptRuntime, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
@@ -23,7 +23,6 @@ import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/Generated
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
-import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
@@ -278,6 +277,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ...args,
             opts: {}
         });
+    }
+
+    public getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined {
+        const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
+            return generatedEndpoint.endpoint.id === args.endpointId;
+        });
+        return generatedEndpoint;
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {

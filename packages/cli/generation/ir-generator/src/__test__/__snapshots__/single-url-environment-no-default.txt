@@ -157,6 +157,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -217,6 +218,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_dummy",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/dummy",
             "parts": [],
@@ -359,10 +361,12 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {},
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

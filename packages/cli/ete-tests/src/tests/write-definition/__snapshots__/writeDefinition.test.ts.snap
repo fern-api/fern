@@ -24,7 +24,7 @@ error-discrimination:
   strategy: status-code
 display-name: Swagger Petstore
 environments:
-  Default: http://petstore.swagger.io
+  Default: http://petstore.swagger.io/v1
 default-environment: Default
 ",
     "name": "api.yml",
@@ -38,7 +38,7 @@ service:
   base-path: ''
   endpoints:
     listPets:
-      path: /v1/pets
+      path: /pets
       method: GET
       auth: false
       display-name: List all pets
@@ -58,14 +58,14 @@ service:
                 name: name
                 tag: tag
     createPets:
-      path: /v1/pets
+      path: /pets
       method: POST
       auth: false
       display-name: Create a pet
       examples:
         - {}
     showPetById:
-      path: /v1/pets/{petId}
+      path: /pets/{petId}
       method: GET
       auth: false
       path-parameters:

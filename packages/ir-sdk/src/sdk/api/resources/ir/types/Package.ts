@@ -10,6 +10,7 @@ export interface Package extends FernIr.WithDocs {
     types: FernIr.TypeId[];
     errors: FernIr.ErrorId[];
     webhooks: FernIr.WebhookGroupId | undefined;
+    websocket: FernIr.WebSocketChannelId | undefined;
     subpackages: FernIr.SubpackageId[];
     hasEndpointsInTree: boolean;
     navigationConfig: FernIr.PackageNavigationConfig | undefined;

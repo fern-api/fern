@@ -12,7 +12,7 @@ except ImportError:
 
 
 class FilteredType(pydantic.BaseModel):
-    public_property: typing.Optional[str]
+    public_property: typing.Optional[str] = None
     private_property: int
 
     def json(self, **kwargs: typing.Any) -> str:

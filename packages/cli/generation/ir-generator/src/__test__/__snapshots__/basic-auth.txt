@@ -373,6 +373,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -504,6 +505,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_basic_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/basic-auth",
             "parts": [],
@@ -697,6 +699,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "post_with_basic_auth",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/basic-auth",
             "parts": [],
@@ -877,6 +880,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_errors": {
       "docs": null,
@@ -954,6 +958,7 @@ exports[`generate IR 1`] = `
         "type_errors:UnauthorizedRequestErrorBody",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -1067,5 +1072,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

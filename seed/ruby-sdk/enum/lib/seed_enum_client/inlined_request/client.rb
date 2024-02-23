@@ -15,14 +15,14 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param value [OPERAND]
+    # @param operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(value: nil, request_options: nil)
-      @request_client.conn.post("/inlined-request") do |req|
+    def send(operand: nil, request_options: nil)
+      @request_client.conn.post("/inlined") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-        req.body = { **(request_options&.additional_body_parameters || {}), value: value }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}), operand: operand }.compact
       end
     end
   end
@@ -37,15 +37,15 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param value [OPERAND]
+    # @param operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(value: nil, request_options: nil)
+    def send(operand: nil, request_options: nil)
       Async do
-        @request_client.conn.post("/inlined-request") do |req|
+        @request_client.conn.post("/inlined") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-          req.body = { **(request_options&.additional_body_parameters || {}), value: value }.compact
+          req.body = { **(request_options&.additional_body_parameters || {}), operand: operand }.compact
         end
       end
     end

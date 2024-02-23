@@ -257,6 +257,7 @@ exports[`generate IR 1`] = `
     ],
     "types": [],
     "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -384,6 +385,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "echo",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -1025,6 +1027,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_exception",
             },
           },
+          "pagination": null,
           "path": {
             "head": "",
             "parts": [],
@@ -1273,7 +1276,7 @@ exports[`generate IR 1`] = `
         {
           "allPathParameters": [
             {
-              "docs": null,
+              "docs": "This is a filename",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1305,7 +1308,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint returns a file by its name.",
           "errors": [
             {
               "docs": null,
@@ -1574,6 +1577,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_file",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/",
             "parts": [
@@ -1585,7 +1589,7 @@ exports[`generate IR 1`] = `
           },
           "pathParameters": [
             {
-              "docs": null,
+              "docs": "This is a filename",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1881,7 +1885,7 @@ exports[`generate IR 1`] = `
         {
           "allPathParameters": [
             {
-              "docs": null,
+              "docs": "The id to check",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -1913,7 +1917,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint checks the health of a resource.",
           "errors": [],
           "examples": [
             {
@@ -2000,6 +2004,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "check",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/check/",
             "parts": [
@@ -2011,7 +2016,7 @@ exports[`generate IR 1`] = `
           },
           "pathParameters": [
             {
-              "docs": null,
+              "docs": "The id to check",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2050,7 +2055,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": null,
+          "docs": "This endpoint checks the health of the service.",
           "errors": [],
           "examples": [
             {
@@ -2107,6 +2112,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "ping",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/ping",
             "parts": [],
@@ -3354,6 +3360,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie/",
             "parts": [
@@ -4545,6 +4552,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "create_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -5145,6 +5153,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_metadata",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/metadata",
             "parts": [],
@@ -5489,6 +5498,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_commons/types": {
       "docs": null,
@@ -5605,6 +5615,7 @@ exports[`generate IR 1`] = `
         "type_commons/types:Data",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file": {
       "docs": null,
@@ -5682,6 +5693,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification": {
       "docs": null,
@@ -5796,6 +5808,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/notification/service": {
       "docs": null,
@@ -5945,6 +5958,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_file/service": {
       "docs": null,
@@ -6058,6 +6072,7 @@ exports[`generate IR 1`] = `
         "type_file/service:Filename",
       ],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health": {
       "docs": null,
@@ -6134,6 +6149,7 @@ exports[`generate IR 1`] = `
       ],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_health/service": {
       "docs": null,
@@ -6245,6 +6261,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_service": {
       "docs": null,
@@ -6317,6 +6334,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [],
       "webhooks": null,
+      "websocket": null,
     },
     "subpackage_types": {
       "docs": null,
@@ -6412,6 +6430,7 @@ exports[`generate IR 1`] = `
         "type_types:Test",
       ],
       "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
@@ -21305,5 +21324,6 @@ exports[`generate IR 1`] = `
   },
   "variables": [],
   "webhookGroups": {},
+  "websocketChannels": {},
 }
 `;

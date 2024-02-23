@@ -4,8 +4,6 @@ import datetime as dt
 import typing
 import uuid
 
-import typing_extensions
-
 from ..core.datetime_utils import serialize_datetime
 from .name import Name
 
@@ -75,12 +73,12 @@ class Type(pydantic.BaseModel):
     ten: typing.List[int]
     eleven: typing.Set[float]
     twelve: typing.Dict[str, bool]
-    thirteen: typing.Optional[int]
+    thirteen: typing.Optional[int] = None
     fourteen: typing.Any
     fifteen: typing.List[typing.List[int]]
     sixteen: typing.List[typing.Dict[str, int]]
     seventeen: typing.List[typing.Optional[uuid.UUID]]
-    eighteen: typing_extensions.Literal["eighteen"]
+    eighteen: typing.Literal["eighteen"]
     nineteen: Name
 
     def json(self, **kwargs: typing.Any) -> str:

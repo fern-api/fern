@@ -30,6 +30,12 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
         core.serialization.lazy(async () => (await import("../../..")).WebhookGroupId),
         core.serialization.lazy(async () => (await import("../../..")).WebhookGroup)
     ),
+    websocketChannels: core.serialization
+        .record(
+            core.serialization.lazy(async () => (await import("../../..")).WebSocketChannelId),
+            core.serialization.lazyObject(async () => (await import("../../..")).WebSocketChannel)
+        )
+        .optional(),
     errors: core.serialization.record(
         core.serialization.lazy(async () => (await import("../../..")).ErrorId),
         core.serialization.lazyObject(async () => (await import("../../..")).ErrorDeclaration)
@@ -68,6 +74,7 @@ export declare namespace IntermediateRepresentation {
         types: Record<serializers.TypeId.Raw, serializers.TypeDeclaration.Raw>;
         services: Record<serializers.ServiceId.Raw, serializers.HttpService.Raw>;
         webhookGroups: Record<serializers.WebhookGroupId.Raw, serializers.WebhookGroup.Raw>;
+        websocketChannels?: Record<serializers.WebSocketChannelId.Raw, serializers.WebSocketChannel.Raw> | null;
         errors: Record<serializers.ErrorId.Raw, serializers.ErrorDeclaration.Raw>;
         subpackages: Record<serializers.SubpackageId.Raw, serializers.Subpackage.Raw>;
         rootPackage: serializers.Package.Raw;
