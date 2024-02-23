@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/fs-utils" },
+    { "path": "../../../docs-config" },
     { "path": "../../task-context" },
     { "path": "../commons" }
   ]
