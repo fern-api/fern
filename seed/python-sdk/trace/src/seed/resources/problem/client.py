@@ -164,7 +164,7 @@ class ProblemClient:
     def get_default_starter_files(
         self,
         *,
-        input_params: typing.List[VariableTypeAndName],
+        input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         method_name: str,
         request_options: typing.Optional[RequestOptions] = None,
@@ -173,7 +173,7 @@ class ProblemClient:
         Returns default starter files for problem
 
         Parameters:
-            - input_params: typing.List[VariableTypeAndName].
+            - input_params: typing.Sequence[VariableTypeAndName].
 
             - output_type: VariableType.
 
@@ -359,7 +359,7 @@ class AsyncProblemClient:
     async def get_default_starter_files(
         self,
         *,
-        input_params: typing.List[VariableTypeAndName],
+        input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         method_name: str,
         request_options: typing.Optional[RequestOptions] = None,
@@ -368,7 +368,7 @@ class AsyncProblemClient:
         Returns default starter files for problem
 
         Parameters:
-            - input_params: typing.List[VariableTypeAndName].
+            - input_params: typing.Sequence[VariableTypeAndName].
 
             - output_type: VariableType.
 

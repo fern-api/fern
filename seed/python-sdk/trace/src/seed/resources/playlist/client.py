@@ -108,8 +108,8 @@ class PlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        multiple_field: typing.Union[str, typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -124,9 +124,9 @@ class PlaylistClient:
 
             - multi_line_docs: str. I'm a multiline
                                     description
-            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
-            - multiple_field: typing.Union[str, typing.List[str]].
+            - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -403,8 +403,8 @@ class AsyncPlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
-        multiple_field: typing.Union[str, typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -419,9 +419,9 @@ class AsyncPlaylistClient:
 
             - multi_line_docs: str. I'm a multiline
                                     description
-            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
-            - multiple_field: typing.Union[str, typing.List[str]].
+            - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

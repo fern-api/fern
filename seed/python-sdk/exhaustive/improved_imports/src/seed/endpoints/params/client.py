@@ -110,17 +110,17 @@ class ParamsClient:
     def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.List[str]],
-        numer: typing.Union[int, typing.List[int]],
+        query: typing.Union[str, typing.Sequence[str]],
+        numer: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         GET with multiple of same query param
 
         Parameters:
-            - query: typing.Union[str, typing.List[str]].
+            - query: typing.Union[str, typing.Sequence[str]].
 
-            - numer: typing.Union[int, typing.List[int]].
+            - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -340,17 +340,17 @@ class AsyncParamsClient:
     async def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.List[str]],
-        numer: typing.Union[int, typing.List[int]],
+        query: typing.Union[str, typing.Sequence[str]],
+        numer: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         GET with multiple of same query param
 
         Parameters:
-            - query: typing.Union[str, typing.List[str]].
+            - query: typing.Union[str, typing.Sequence[str]].
 
-            - numer: typing.Union[int, typing.List[int]].
+            - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

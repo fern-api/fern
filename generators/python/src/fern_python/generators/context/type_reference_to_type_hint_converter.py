@@ -21,11 +21,13 @@ class TypeReferenceToTypeHintConverter:
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        in_endpoint: Optional[bool] = False,
     ) -> AST.TypeHint:
         return type_reference.visit(
             container=lambda container: self._get_type_hint_for_container(
                 container=container,
                 must_import_after_current_declaration=must_import_after_current_declaration,
+                in_endpoint=in_endpoint,
             ),
             named=lambda type_name: self._get_type_hint_for_named(
                 type_name=type_name,
@@ -39,6 +41,7 @@ class TypeReferenceToTypeHintConverter:
         self,
         name: ir_types.DeclaredTypeName,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        in_endpoint: Optional[bool],
     ) -> AST.TypeHint:
         is_primative = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
             alias=lambda alias_td: alias_td.resolved_type.visit(
@@ -55,41 +58,65 @@ class TypeReferenceToTypeHintConverter:
         )
         if is_primative:
             return AST.TypeHint.set(inner_hint)
+        if in_endpoint:
+            return AST.TypeHint.sequence(inner_hint)
         return AST.TypeHint.list(inner_hint)
 
     def _get_type_hint_for_container(
         self,
         container: ir_types.ContainerType,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        in_endpoint: Optional[bool],
     ) -> AST.TypeHint:
         return container.visit(
-            list=lambda wrapped_type: AST.TypeHint.list(
+            list=lambda wrapped_type: AST.TypeHint.sequence(
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
+                )
+            )
+            if in_endpoint
+            else AST.TypeHint.list(
+                self.get_type_hint_for_type_reference(
+                    type_reference=wrapped_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
                 )
             ),
             map=lambda map_type: AST.TypeHint.dict(
                 key_type=self.get_type_hint_for_type_reference(
                     type_reference=map_type.key_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
                 ),
                 value_type=self.get_type_hint_for_type_reference(
                     type_reference=map_type.value_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
                 ),
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
             set=lambda wrapped_type: wrapped_type.visit(
-                container=lambda type_reference: AST.TypeHint.list(
+                container=lambda type_reference: AST.TypeHint.sequence(
                     self._get_type_hint_for_container(
                         container=type_reference,
                         must_import_after_current_declaration=must_import_after_current_declaration,
+                        in_endpoint=in_endpoint,
+                    )
+                )
+                if in_endpoint
+                else AST.TypeHint.list(
+                    self._get_type_hint_for_container(
+                        container=type_reference,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                        in_endpoint=in_endpoint,
                     )
                 ),
                 named=lambda type_reference: self._get_set_type_hint_for_named(
                     type_reference,
                     must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
                 ),
                 primitive=lambda type_reference: AST.TypeHint.set(
                     self._get_type_hint_for_primitive(primitive=type_reference)
@@ -100,6 +127,7 @@ class TypeReferenceToTypeHintConverter:
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
+                    in_endpoint=in_endpoint,
                 )
             ),
             literal=self.visit_literal,

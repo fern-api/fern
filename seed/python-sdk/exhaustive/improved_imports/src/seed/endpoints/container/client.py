@@ -25,11 +25,11 @@ class ContainerClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_list_of_primitives(
-        self, *, request: typing.List[str], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
         Parameters:
-            - request: typing.List[str].
+            - request: typing.Sequence[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -66,11 +66,14 @@ class ContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_list_of_objects(
-        self, *, request: typing.List[ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Sequence[ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters:
-            - request: typing.List[ObjectWithRequiredField].
+            - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -148,11 +151,14 @@ class ContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_set_of_objects(
-        self, *, request: typing.List[ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Sequence[ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters:
-            - request: typing.List[ObjectWithRequiredField].
+            - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -323,11 +329,11 @@ class AsyncContainerClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_list_of_primitives(
-        self, *, request: typing.List[str], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
         Parameters:
-            - request: typing.List[str].
+            - request: typing.Sequence[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -364,11 +370,14 @@ class AsyncContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_list_of_objects(
-        self, *, request: typing.List[ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Sequence[ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters:
-            - request: typing.List[ObjectWithRequiredField].
+            - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -446,11 +455,14 @@ class AsyncContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_set_of_objects(
-        self, *, request: typing.List[ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Sequence[ObjectWithRequiredField],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters:
-            - request: typing.List[ObjectWithRequiredField].
+            - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

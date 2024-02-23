@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.3] - 2024-02-23
+## [0.11.4] - 2024-02-23
 
 - Fix: We now grab enum values appropriately when enums are within unions.
+
+## [0.11.3] - 2024-02-22
+
+- Fix: Transition from lists to sequences within function calls, this is a fix as a result of how mypy handles type variance.
+  This fix is only for function calls as testing shows that we do not hit the same issue within mypy with list[union[*]] fields on pydantic objects.
+  This issue outlines it well: https://stackoverflow.com/questions/76138438/incompatible-types-in-assignment-expression-has-type-liststr-variable-has
 
 - Improvement: The Python SDK generator now defaults to `require_optional_fields = False`. This means that any requests that have optional fields no longer require a user to input data (or a `None` value) in.
   Example:

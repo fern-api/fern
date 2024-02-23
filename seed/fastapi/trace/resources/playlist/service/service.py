@@ -36,7 +36,7 @@ class AbstractPlaylistService(AbstractFernService):
         """
         ...
     @abc.abstractmethod
-    def get_playlists(self, *, service_param: int, limit: typing.Optional[int] = None, other_field: str, multi_line_docs: str, optional_multiple_field: typing.Optional[typing.List[str]] = None, multiple_field: typing.List[str], x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> typing.List[Playlist]:
+    def get_playlists(self, *, service_param: int, limit: typing.Optional[int] = None, other_field: str, multi_line_docs: str, optional_multiple_field: typing.Optional[typing.List[str]] = None, multiple_field: typing.List[str], x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> typing.Sequence[Playlist]:
         """
         Returns the user's playlists
         """
@@ -144,7 +144,7 @@ class AbstractPlaylistService(AbstractFernService):
         setattr(cls.get_playlists, "__signature__", endpoint_function.replace(parameters=new_parameters))
         
         @functools.wraps(cls.get_playlists)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[Playlist]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[Playlist]:
             try:
                 return cls.get_playlists(*args, **kwargs)
             except FernHTTPException as e:
@@ -161,7 +161,7 @@ class AbstractPlaylistService(AbstractFernService):
         
         router.get(
             path="/v2/playlist/{service_param}/all",
-            response_model=typing.List[Playlist],
+            response_model=typing.Sequence[Playlist],
             description=AbstractPlaylistService.get_playlists.__doc__,
             **get_route_args(cls.get_playlists, default_tag="playlist"),
         )(wrapper)

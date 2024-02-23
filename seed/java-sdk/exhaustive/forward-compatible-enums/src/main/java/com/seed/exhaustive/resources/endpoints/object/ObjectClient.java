@@ -14,6 +14,7 @@ import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
+import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -215,6 +216,51 @@ public class ObjectClient {
 
     public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
             NestedObjectWithRequiredField request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-nested-with-required-field")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), NestedObjectWithRequiredField.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
+            List<NestedObjectWithRequiredField> request) {
+        return getAndReturnNestedWithRequiredFieldAsList(request, null);
+    }
+
+    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
+            List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")

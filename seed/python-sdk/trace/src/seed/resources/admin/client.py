@@ -234,7 +234,7 @@ class AdminClient:
         test_case_id: str,
         *,
         result: TestCaseResultWithStdout,
-        trace_responses: typing.List[TraceResponse],
+        trace_responses: typing.Sequence[TraceResponse],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -245,7 +245,7 @@ class AdminClient:
 
             - result: TestCaseResultWithStdout.
 
-            - trace_responses: typing.List[TraceResponse].
+            - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -289,7 +289,7 @@ class AdminClient:
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
         *,
-        request: typing.List[TraceResponseV2],
+        request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -298,7 +298,7 @@ class AdminClient:
 
             - test_case_id: TestCaseId.
 
-            - request: typing.List[TraceResponseV2].
+            - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -342,7 +342,7 @@ class AdminClient:
         submission_id: SubmissionId,
         *,
         workspace_run_details: WorkspaceRunDetails,
-        trace_responses: typing.List[TraceResponse],
+        trace_responses: typing.Sequence[TraceResponse],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -351,7 +351,7 @@ class AdminClient:
 
             - workspace_run_details: WorkspaceRunDetails.
 
-            - trace_responses: typing.List[TraceResponse].
+            - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -394,14 +394,14 @@ class AdminClient:
         self,
         submission_id: SubmissionId,
         *,
-        request: typing.List[TraceResponseV2],
+        request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
-            - request: typing.List[TraceResponseV2].
+            - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -651,7 +651,7 @@ class AsyncAdminClient:
         test_case_id: str,
         *,
         result: TestCaseResultWithStdout,
-        trace_responses: typing.List[TraceResponse],
+        trace_responses: typing.Sequence[TraceResponse],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -662,7 +662,7 @@ class AsyncAdminClient:
 
             - result: TestCaseResultWithStdout.
 
-            - trace_responses: typing.List[TraceResponse].
+            - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -706,7 +706,7 @@ class AsyncAdminClient:
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
         *,
-        request: typing.List[TraceResponseV2],
+        request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -715,7 +715,7 @@ class AsyncAdminClient:
 
             - test_case_id: TestCaseId.
 
-            - request: typing.List[TraceResponseV2].
+            - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -759,7 +759,7 @@ class AsyncAdminClient:
         submission_id: SubmissionId,
         *,
         workspace_run_details: WorkspaceRunDetails,
-        trace_responses: typing.List[TraceResponse],
+        trace_responses: typing.Sequence[TraceResponse],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -768,7 +768,7 @@ class AsyncAdminClient:
 
             - workspace_run_details: WorkspaceRunDetails.
 
-            - trace_responses: typing.List[TraceResponse].
+            - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -811,14 +811,14 @@ class AsyncAdminClient:
         self,
         submission_id: SubmissionId,
         *,
-        request: typing.List[TraceResponseV2],
+        request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
-            - request: typing.List[TraceResponseV2].
+            - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
