@@ -3,8 +3,115 @@
 package enum
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 )
+
+type Color string
+
+const (
+	ColorRed  Color = "red"
+	ColorBlue Color = "blue"
+)
+
+func NewColorFromString(s string) (Color, error) {
+	switch s {
+	case "red":
+		return ColorRed, nil
+	case "blue":
+		return ColorBlue, nil
+	}
+	var t Color
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c Color) Ptr() *Color {
+	return &c
+}
+
+type ColorOrOperand struct {
+	Type    string
+	Color   Color
+	Operand Operand
+}
+
+func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
+	return &ColorOrOperand{Type: "color", Color: value}
+}
+
+func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
+	return &ColorOrOperand{Type: "operand", Operand: value}
+}
+
+func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	c.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "color":
+		var valueUnmarshaler struct {
+			Color Color `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		c.Color = valueUnmarshaler.Color
+	case "operand":
+		var valueUnmarshaler struct {
+			Operand Operand `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		c.Operand = valueUnmarshaler.Operand
+	}
+	return nil
+}
+
+func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
+	switch c.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
+	case "color":
+		var marshaler = struct {
+			Type  string `json:"type"`
+			Color Color  `json:"value,omitempty"`
+		}{
+			Type:  c.Type,
+			Color: c.Color,
+		}
+		return json.Marshal(marshaler)
+	case "operand":
+		var marshaler = struct {
+			Type    string  `json:"type"`
+			Operand Operand `json:"value,omitempty"`
+		}{
+			Type:    c.Type,
+			Operand: c.Operand,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type ColorOrOperandVisitor interface {
+	VisitColor(Color) error
+	VisitOperand(Operand) error
+}
+
+func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
+	switch c.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", c.Type, c)
+	case "color":
+		return visitor.VisitColor(c.Color)
+	case "operand":
+		return visitor.VisitOperand(c.Operand)
+	}
+}
 
 // Tests enum name and value can be
 // different.

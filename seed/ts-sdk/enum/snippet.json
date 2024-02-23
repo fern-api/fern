@@ -12,12 +12,12 @@
         },
         {
             "id": {
-                "path": "/path/{operand}",
+                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 "method": "POST"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan);\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, undefined, undefined, undefined);\n"
             }
         },
         {

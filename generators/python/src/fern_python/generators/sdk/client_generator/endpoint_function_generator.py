@@ -527,19 +527,15 @@ class EndpointFunctionGenerator:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
                     writer.write("{")
-                    if self._context.resolved_schema_is_enum(reference=parameter_obj.value_type):
-                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
-                    elif self._context.resolved_schema_is_optional_enum(reference=parameter_obj.value_type):
-                        writer.write(f"{get_parameter_name(parameter_obj.name)}.value")
-                    else:
-                        writer.write(
-                            get_parameter_name(
-                                self._get_path_parameter_from_name(
-                                    endpoint=endpoint,
-                                    path_parameter_name=part.path_parameter,
-                                ).name,
-                            )
+                    writer.write_node(
+                        self._context.core_utilities.jsonable_encoder(
+                            AST.Expression(get_parameter_name(
+                            self._get_path_parameter_from_name(
+                                endpoint=endpoint,
+                                path_parameter_name=part.path_parameter,
+                            ).name,
                         )
+                    )))
                     writer.write("}")
                 writer.write(part.tail)
             writer.write('"')
@@ -638,12 +634,6 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
-
-        elif self._context.resolved_schema_is_enum(reference=query_parameter.value_type):
-            return AST.Expression(f"{parameter_name}.value")
-
-        elif self._context.resolved_schema_is_optional_enum(reference=query_parameter.value_type):
-            return AST.Expression(f"{parameter_name}.value if {parameter_name} is not None else None")
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)

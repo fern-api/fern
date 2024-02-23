@@ -46,7 +46,7 @@ class ServiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{jsonable_encoder(movie_id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -221,7 +221,7 @@ class AsyncServiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{jsonable_encoder(movie_id)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

@@ -15,3 +15,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Operand"), exports);
+__exportStar(require("./Color"), exports);
+__exportStar(require("./ColorOrOperand"), exports);

@@ -11,5 +11,6 @@ import * as SeedEnum from "../../../..";
  *     }
  */
 export interface SendEnumAsQueryParamRequest {
-    operand?: SeedEnum.Operand;
+    operand: SeedEnum.Operand;
+    maybeOperand?: SeedEnum.Operand;
 }

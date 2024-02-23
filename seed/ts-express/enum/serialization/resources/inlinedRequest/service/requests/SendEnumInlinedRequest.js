@@ -38,5 +38,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SendEnumInlinedRequest = void 0;
 const core = __importStar(require("../../../../../core"));
 exports.SendEnumInlinedRequest = core.serialization.object({
-    operand: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../../..")))).Operand; })).optional(),
+    operand: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../../..")))).Operand; })),
+    maybeOperand: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../../..")))).Operand; })).optional(),
+    operandOrColor: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../../..")))).ColorOrOperand; })),
+    maybeOperandOrColor: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../../..")))).ColorOrOperand; })).optional(),
 });

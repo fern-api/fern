@@ -109,13 +109,16 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/path/:operand",
+              "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "path",
-                ":operand"
+                ":operand",
+                ":maybeOperand",
+                ":operandOrColor",
+                ":maybeOperandOrColor"
               ],
               "query": [],
               "variable": [
@@ -145,13 +148,16 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/path/:operand",
+                  "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "path",
-                    ":operand"
+                    ":operand",
+                    ":maybeOperand",
+                    ":operandOrColor",
+                    ":maybeOperandOrColor"
                   ],
                   "query": [],
                   "variable": [
@@ -266,7 +272,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?operand=",
+              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -276,6 +282,11 @@
               "query": [
                 {
                   "key": "operand",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "maybeOperand",
                   "value": "",
                   "description": null
                 }
