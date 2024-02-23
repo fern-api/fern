@@ -254,6 +254,55 @@ export class Object_ {
         };
     }
 
+    public async getAndReturnNestedWithRequiredFieldAsList(
+        request: Fiddle.types.NestedObjectWithRequiredField[],
+        requestOptions?: Object_.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            Fiddle.types.NestedObjectWithRequiredField,
+            Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
+        >
+    > {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                "/object/get-and-return-nested-with-required-field"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: await serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(
+                request,
+                { unrecognizedObjectKeys: "strip" }
+            ),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+            };
+        }
+
+        return {
+            ok: false,
+            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(_response.error),
+        };
+    }
+
     protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {

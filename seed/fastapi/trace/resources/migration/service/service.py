@@ -26,7 +26,7 @@ class AbstractMigrationService(AbstractFernService):
     @abc.abstractmethod
     def get_attempted_migrations(
         self, *, admin_key_header: str, x_random_header: typing.Optional[str] = None
-    ) -> typing.List[Migration]:
+    ) -> typing.Sequence[Migration]:
         ...
 
     """
@@ -54,7 +54,7 @@ class AbstractMigrationService(AbstractFernService):
         setattr(cls.get_attempted_migrations, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_attempted_migrations)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[Migration]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[Migration]:
             try:
                 return cls.get_attempted_migrations(*args, **kwargs)
             except FernHTTPException as e:
@@ -71,7 +71,7 @@ class AbstractMigrationService(AbstractFernService):
 
         router.get(
             path="/migration-info/all",
-            response_model=typing.List[Migration],
+            response_model=typing.Sequence[Migration],
             description=AbstractMigrationService.get_attempted_migrations.__doc__,
             **get_route_args(cls.get_attempted_migrations, default_tag="migration"),
         )(wrapper)

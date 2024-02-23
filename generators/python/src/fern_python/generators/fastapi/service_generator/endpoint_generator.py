@@ -365,7 +365,8 @@ class EndpointGenerator:
     ) -> AST.TypeHint:
         return json_response.visit(
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                response.response_body_type
+                response.response_body_type,
+                in_endpoint=True,
             ),
             nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
         )

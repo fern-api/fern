@@ -72,12 +72,12 @@ class QueryParamClient:
     def send_list(
         self,
         *,
-        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -180,12 +180,12 @@ class AsyncQueryParamClient:
     async def send_list(
         self,
         *,
-        operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]] = None,
+        operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[typing.Union[Operand, typing.List[Operand]]].
+            - operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """

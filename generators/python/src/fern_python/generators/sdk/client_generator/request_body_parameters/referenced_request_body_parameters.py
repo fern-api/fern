@@ -24,7 +24,8 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             AST.NamedFunctionParameter(
                 name=self._get_request_parameter_name(),
                 type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    self._request_body.request_body_type
+                    self._request_body.request_body_type,
+                    in_endpoint=True,
                 ),
             )
         ]
