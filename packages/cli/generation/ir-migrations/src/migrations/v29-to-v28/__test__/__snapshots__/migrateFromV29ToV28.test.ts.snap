@@ -125,6 +125,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
               "docs": undefined,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": undefined,
               "queryParameters": [],
               "request": {
@@ -178,8 +179,8 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
                 "_visit": [Function],
                 "body": {
                   "jsonExample": Map {
-                    "id" => "instead",
-                    "name" => "where",
+                    "id" => "oof",
+                    "name" => "eek",
                     "authorized" => "false",
                   },
                   "shape": {
@@ -276,12 +277,12 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "instead",
+                            "jsonExample": "oof",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "instead",
+                                "string": "oof",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -378,12 +379,12 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "where",
+                            "jsonExample": "eek",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "where",
+                                "string": "eek",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -571,7 +572,6 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],

@@ -35,7 +35,7 @@ export const V36_TO_V35_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
-        IrSerialization.V33.IntermediateRepresentation.jsonOrThrow(ir, {
+        IrSerialization.V34.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),

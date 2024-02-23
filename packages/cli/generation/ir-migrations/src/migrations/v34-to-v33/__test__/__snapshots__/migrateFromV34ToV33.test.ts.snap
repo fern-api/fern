@@ -170,13 +170,13 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "hot",
+                    "jsonExample": "quirky",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "hot",
+                          "original": "quirky",
                         },
                         "type": "string",
                       },
@@ -185,6 +185,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -196,7 +197,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/check/",
             },
           ],

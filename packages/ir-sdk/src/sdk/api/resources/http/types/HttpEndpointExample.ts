@@ -8,11 +8,11 @@ export type HttpEndpointExample = FernIr.HttpEndpointExample.Provided | FernIr.H
 
 export declare namespace HttpEndpointExample {
     interface Provided extends FernIr.ExampleEndpointCall, _Utils {
-        type: "provided";
+        exampleType: "provided";
     }
 
     interface Generated extends FernIr.ExampleEndpointCall, _Utils {
-        type: "generated";
+        exampleType: "generated";
     }
 
     interface _Utils {
@@ -22,7 +22,7 @@ export declare namespace HttpEndpointExample {
     interface _Visitor<_Result> {
         provided: (value: FernIr.ExampleEndpointCall) => _Result;
         generated: (value: FernIr.ExampleEndpointCall) => _Result;
-        _other: (value: { type: string }) => _Result;
+        _other: (value: { exampleType: string }) => _Result;
     }
 }
 
@@ -30,7 +30,7 @@ export const HttpEndpointExample = {
     provided: (value: FernIr.ExampleEndpointCall): FernIr.HttpEndpointExample.Provided => {
         return {
             ...value,
-            type: "provided",
+            exampleType: "provided",
             _visit: function <_Result>(
                 this: FernIr.HttpEndpointExample.Provided,
                 visitor: FernIr.HttpEndpointExample._Visitor<_Result>
@@ -43,7 +43,7 @@ export const HttpEndpointExample = {
     generated: (value: FernIr.ExampleEndpointCall): FernIr.HttpEndpointExample.Generated => {
         return {
             ...value,
-            type: "generated",
+            exampleType: "generated",
             _visit: function <_Result>(
                 this: FernIr.HttpEndpointExample.Generated,
                 visitor: FernIr.HttpEndpointExample._Visitor<_Result>
@@ -57,7 +57,7 @@ export const HttpEndpointExample = {
         value: FernIr.HttpEndpointExample,
         visitor: FernIr.HttpEndpointExample._Visitor<_Result>
     ): _Result => {
-        switch (value.type) {
+        switch (value.exampleType) {
             case "provided":
                 return visitor.provided(value);
             case "generated":

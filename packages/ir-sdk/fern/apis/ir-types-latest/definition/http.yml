@@ -226,6 +226,7 @@ types:
   # examples
 
   HttpEndpointExample:
+    discriminant: exampleType
     union:
       provided: ExampleEndpointCall
       generated: ExampleEndpointCall

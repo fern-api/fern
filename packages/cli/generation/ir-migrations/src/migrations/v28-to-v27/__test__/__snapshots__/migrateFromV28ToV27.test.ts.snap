@@ -121,6 +121,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               "docs": undefined,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": undefined,
               "queryParameters": [],
               "request": {
@@ -174,8 +175,8 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                 "_visit": [Function],
                 "body": {
                   "jsonExample": Map {
-                    "id" => "pharmacopoeia",
-                    "name" => "huzzah",
+                    "id" => "blah",
+                    "name" => "into",
                     "authorized" => "false",
                   },
                   "shape": {
@@ -272,12 +273,12 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "pharmacopoeia",
+                            "jsonExample": "blah",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "pharmacopoeia",
+                                "string": "blah",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -374,12 +375,12 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "huzzah",
+                            "jsonExample": "into",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "huzzah",
+                                "string": "into",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -567,7 +568,6 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],

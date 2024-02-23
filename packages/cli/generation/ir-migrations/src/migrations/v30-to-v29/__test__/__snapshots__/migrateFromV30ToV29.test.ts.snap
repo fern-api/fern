@@ -185,6 +185,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": undefined,
               "queryParameters": [
                 {
@@ -212,7 +213,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//check/id-2sdx82h",
             },
             {
@@ -222,12 +222,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "endpointHeaders": [
                 {
                   "value": {
-                    "jsonExample": "viciously",
+                    "jsonExample": "an",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "viciously",
+                        "string": "an",
                         "type": "string",
                       },
                       "type": "primitive",
@@ -240,12 +240,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 {
                   "key": "id",
                   "value": {
-                    "jsonExample": "till",
+                    "jsonExample": "flow",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "till",
+                        "string": "flow",
                         "type": "string",
                       },
                       "type": "primitive",
@@ -253,16 +253,17 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": undefined,
               "queryParameters": [
                 {
                   "value": {
-                    "jsonExample": "huzzah",
+                    "jsonExample": "amidst",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "huzzah",
+                        "string": "amidst",
                         "type": "string",
                       },
                       "type": "primitive",
@@ -280,7 +281,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/check/",
             },
           ],

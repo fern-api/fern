@@ -5121,7 +5121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v32-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v33-sdk", "npm:0.0.15"],\
             ["@fern-fern/ir-v34-sdk", "npm:0.0.8"],\
-            ["@fern-fern/ir-v35-sdk", "npm:0.0.1"],\
+            ["@fern-fern/ir-v35-sdk", "npm:0.0.11"],\
             ["@fern-fern/ir-v4-model", "npm:0.0.4"],\
             ["@fern-fern/ir-v5-model", "npm:0.0.3"],\
             ["@fern-fern/ir-v6-model", "npm:0.0.33"],\
@@ -6286,10 +6286,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-v35-sdk", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v35-sdk-npm-0.0.1-26cf5f7018-978ca3bcf9.zip/node_modules/@fern-fern/ir-v35-sdk/",\
+        ["npm:0.0.11", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v35-sdk-npm-0.0.11-d1699d19a3-3086a7eaa1.zip/node_modules/@fern-fern/ir-v35-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-v35-sdk", "npm:0.0.1"]\
+            ["@fern-fern/ir-v35-sdk", "npm:0.0.11"]\
           ],\
           "linkType": "HARD"\
         }]\

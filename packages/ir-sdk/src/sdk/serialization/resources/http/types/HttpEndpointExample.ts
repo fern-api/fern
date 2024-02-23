@@ -10,13 +10,13 @@ export const HttpEndpointExample: core.serialization.Schema<
     serializers.HttpEndpointExample.Raw,
     FernIr.HttpEndpointExample
 > = core.serialization
-    .union("type", {
+    .union("exampleType", {
         provided: core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointCall),
         generated: core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointCall),
     })
     .transform<FernIr.HttpEndpointExample>({
         transform: (value) => {
-            switch (value.type) {
+            switch (value.exampleType) {
                 case "provided":
                     return FernIr.HttpEndpointExample.provided(value);
                 case "generated":
@@ -32,10 +32,10 @@ export declare namespace HttpEndpointExample {
     type Raw = HttpEndpointExample.Provided | HttpEndpointExample.Generated;
 
     interface Provided extends serializers.ExampleEndpointCall.Raw {
-        type: "provided";
+        exampleType: "provided";
     }
 
     interface Generated extends serializers.ExampleEndpointCall.Raw {
-        type: "generated";
+        exampleType: "generated";
     }
 }
