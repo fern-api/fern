@@ -3,15 +3,11 @@
 package enum
 
 type SendEnumAsQueryParamRequest struct {
-	Operand             Operand         `json:"-" url:"operand,omitempty"`
-	MaybeOperand        *Operand        `json:"-" url:"maybeOperand,omitempty"`
-	OperandOrColor      *ColorOrOperand `json:"-" url:"operandOrColor,omitempty"`
-	MaybeOperandOrColor *ColorOrOperand `json:"-" url:"maybeOperandOrColor,omitempty"`
+	Operand      Operand  `json:"-" url:"operand,omitempty"`
+	MaybeOperand *Operand `json:"-" url:"maybeOperand,omitempty"`
 }
 
 type SendEnumListAsQueryParamRequest struct {
-	Operand             []Operand         `json:"-" url:"operand,omitempty"`
-	MaybeOperand        []*Operand        `json:"-" url:"maybeOperand,omitempty"`
-	OperandOrColor      []*ColorOrOperand `json:"-" url:"operandOrColor,omitempty"`
-	MaybeOperandOrColor []*ColorOrOperand `json:"-" url:"maybeOperandOrColor,omitempty"`
+	Operand      []Operand  `json:"-" url:"operand,omitempty"`
+	MaybeOperand []*Operand `json:"-" url:"maybeOperand,omitempty"`
 }

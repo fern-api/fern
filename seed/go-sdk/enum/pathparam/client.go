@@ -34,9 +34,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Send(
 	ctx context.Context,
 	operand fern.Operand,
-	maybeOperand *fern.Operand,
 	operandOrColor *fern.ColorOrOperand,
-	maybeOperandOrColor *fern.ColorOrOperand,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
@@ -48,7 +46,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v/%v/%v", operand, maybeOperand, operandOrColor, maybeOperandOrColor)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v/%v/%v", operand, operandOrColor)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

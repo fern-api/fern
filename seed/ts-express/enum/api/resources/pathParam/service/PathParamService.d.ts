@@ -6,9 +6,7 @@ import express from "express";
 export interface PathParamServiceMethods {
     send(req: express.Request<{
         operand: serializers.Operand.Raw;
-        maybeOperand?: serializers.Operand.Raw | null;
         operandOrColor: serializers.ColorOrOperand.Raw;
-        maybeOperandOrColor?: serializers.ColorOrOperand.Raw | null;
     }, never, never, never>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

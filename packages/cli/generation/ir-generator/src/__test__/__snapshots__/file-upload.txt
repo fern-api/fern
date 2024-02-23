@@ -120,6 +120,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -130,7 +131,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -628,6 +628,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -638,7 +639,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/just-file",
             },
           ],
@@ -807,6 +807,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -833,11 +834,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "maybeString",
                   },
                   "value": {
-                    "jsonExample": "hew",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "hew",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -869,10 +870,10 @@ exports[`generate IR 1`] = `
                     "wireValue": "integer",
                   },
                   "value": {
-                    "jsonExample": 204027054784512,
+                    "jsonExample": 42,
                     "shape": {
                       "primitive": {
-                        "integer": 204027054784512,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -903,10 +904,10 @@ exports[`generate IR 1`] = `
                     "wireValue": "maybeInteger",
                   },
                   "value": {
-                    "jsonExample": 5332837309874176,
+                    "jsonExample": 42,
                     "shape": {
                       "primitive": {
-                        "integer": 5332837309874176,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -937,11 +938,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "listOfStrings",
                   },
                   "value": {
-                    "jsonExample": "state",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "state",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -973,11 +974,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "optionalListOfStrings",
                   },
                   "value": {
-                    "jsonExample": "savage",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "savage",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -994,7 +995,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/just-file-with-query-params",
             },
           ],

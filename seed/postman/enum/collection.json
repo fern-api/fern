@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"operand\": \">\"\n}",
+              "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \">\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,47 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"operand\": \">\"\n}",
+                  "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \">\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -141,6 +181,48 @@
             "body": null
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path",
+                    ":operand",
+                    ":maybeOperand",
+                    ":operandOrColor",
+                    ":maybeOperandOrColor"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",
@@ -263,6 +345,49 @@
               "description": null,
               "body": "",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?operand=%3E&maybeOperand=%3E",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -272,7 +397,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=",
+              "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -282,23 +407,73 @@
               "query": [
                 {
                   "key": "operand",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": ">"
                 },
                 {
                   "key": "maybeOperand",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": ">"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query-list"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

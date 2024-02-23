@@ -36,6 +36,9 @@ paths:
               Example1:
                 value:
                   operand: '>'
+                  operandOrColor: '>'
+              Example2:
+                value: {}
   /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
     post:
       operationId: pathParam_send
@@ -50,23 +53,13 @@ paths:
           examples:
             Example1:
               value: '>'
-        - name: maybeOperand
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/Operand'
-            nullable: true
+            Example2:
+              value: '>'
         - name: operandOrColor
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
-        - name: maybeOperandOrColor
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/ColorOrOperand'
-            nullable: true
       responses:
         '204':
           description: ''
@@ -84,12 +77,17 @@ paths:
           examples:
             Example1:
               value: '>'
+            Example2:
+              value: '>'
         - name: maybeOperand
           in: query
           required: false
           schema:
             $ref: '#/components/schemas/Operand'
             nullable: true
+          examples:
+            Example1:
+              value: '>'
       responses:
         '204':
           description: ''
@@ -106,6 +104,9 @@ paths:
             type: array
             items:
               $ref: '#/components/schemas/Operand'
+          examples:
+            Example1:
+              value: '>'
         - name: maybeOperand
           in: query
           required: false
@@ -114,6 +115,9 @@ paths:
             items:
               $ref: '#/components/schemas/Operand'
               nullable: true
+          examples:
+            Example1:
+              value: '>'
       responses:
         '204':
           description: ''
@@ -138,24 +142,6 @@ components:
     ColorOrOperand:
       title: ColorOrOperand
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - color
-            value:
-              $ref: '#/components/schemas/Color'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - operand
-            value:
-              $ref: '#/components/schemas/Operand'
-          required:
-            - type
+        - $ref: '#/components/schemas/Color'
+        - $ref: '#/components/schemas/Operand'
   securitySchemes: {}

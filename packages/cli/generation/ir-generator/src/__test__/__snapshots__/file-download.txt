@@ -116,16 +116,17 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": "ZG9sb3JlcyB0ZXh0aWxpcyB0YW50dW0gY3VyaW9zaXRhcyBhYmR1Y28=",
+                  "jsonExample": "SGVsbG8gV29ybGQ=",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "ZG9sb3JlcyB0ZXh0aWxpcyB0YW50dW0gY3VyaW9zaXRhcyBhYmR1Y28=",
+                        "original": "SGVsbG8gV29ybGQ=",
                       },
                       "type": "string",
                     },
@@ -137,7 +138,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

@@ -80,6 +80,7 @@ export function convertTypeExample({
         discriminatedUnion: (rawUnion) => {
             const discriminant = getUnionDiscriminant(rawUnion);
             if (!isPlainObject(example)) {
+                console.log("[TEST] THROWING in test", typeName, discriminant);
                 throw new Error("Example is not an object");
             }
             const discriminantValueForExample = example[discriminant];

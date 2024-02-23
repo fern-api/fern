@@ -4,7 +4,6 @@
 
 package resources.pathparam;
 
-import java.util.Optional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,5 @@ import types.Operand;
 public interface PathParamService {
   @PostMapping("/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}")
   void send(@PathVariable("operand") Operand operand,
-      @PathVariable("maybeOperand") Optional<Operand> maybeOperand,
-      @PathVariable("operandOrColor") ColorOrOperand operandOrColor,
-      @PathVariable("maybeOperandOrColor") Optional<ColorOrOperand> maybeOperandOrColor);
+      @PathVariable("operandOrColor") ColorOrOperand operandOrColor);
 }

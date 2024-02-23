@@ -121,6 +121,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -147,10 +148,10 @@ exports[`generate IR 1`] = `
                     "wireValue": "limit",
                   },
                   "value": {
-                    "jsonExample": 2585305295093760,
+                    "jsonExample": 42,
                     "shape": {
                       "primitive": {
-                        "integer": 2585305295093760,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -181,11 +182,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "id",
                   },
                   "value": {
-                    "jsonExample": "69326386-52df-48b3-b72e-211976c54f00",
+                    "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     "shape": {
                       "primitive": {
                         "type": "uuid",
-                        "uuid": "69326386-52df-48b3-b72e-211976c54f00",
+                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
                       "type": "primitive",
                     },
@@ -215,10 +216,10 @@ exports[`generate IR 1`] = `
                     "wireValue": "date",
                   },
                   "value": {
-                    "jsonExample": "Fri Feb 23 2024",
+                    "jsonExample": "2024-01-01",
                     "shape": {
                       "primitive": {
-                        "date": "Fri Feb 23 2024",
+                        "date": "2024-01-01",
                         "type": "date",
                       },
                       "type": "primitive",
@@ -249,10 +250,10 @@ exports[`generate IR 1`] = `
                     "wireValue": "deadline",
                   },
                   "value": {
-                    "jsonExample": "2024-02-23T03:19:14.977Z",
+                    "jsonExample": "2024-01-01T00:00:00Z",
                     "shape": {
                       "primitive": {
-                        "datetime": "2024-02-23T03:19:14.977Z",
+                        "datetime": "2024-01-01T00:00:00.000Z",
                         "type": "datetime",
                       },
                       "type": "primitive",
@@ -283,11 +284,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "bytes",
                   },
                   "value": {
-                    "jsonExample": "dXhvciBkZWJpdGlz",
+                    "jsonExample": "SGVsbG8gV29ybGQ=",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "dXhvciBkZWJpdGlz",
+                          "original": "SGVsbG8gV29ybGQ=",
                         },
                         "type": "string",
                       },
@@ -320,9 +321,9 @@ exports[`generate IR 1`] = `
                   },
                   "value": {
                     "jsonExample": Map {
-                      "name" => "dazzling",
+                      "name" => "string",
                       "tags" => [
-                        "accountability",
+                        "string",
                       ],
                     },
                     "shape": {
@@ -417,11 +418,11 @@ exports[`generate IR 1`] = `
                               "typeId": "type_user:User",
                             },
                             "value": {
-                              "jsonExample": "dazzling",
+                              "jsonExample": "string",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "dazzling",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -519,17 +520,17 @@ exports[`generate IR 1`] = `
                             },
                             "value": {
                               "jsonExample": [
-                                "accountability",
+                                "string",
                               ],
                               "shape": {
                                 "container": {
                                   "list": [
                                     {
-                                      "jsonExample": "accountability",
+                                      "jsonExample": "string",
                                       "shape": {
                                         "primitive": {
                                           "string": {
-                                            "original": "accountability",
+                                            "original": "string",
                                           },
                                           "type": "string",
                                         },
@@ -640,18 +641,18 @@ exports[`generate IR 1`] = `
                   },
                   "value": {
                     "jsonExample": {
-                      "before": "reorder",
+                      "string": "string",
                     },
                     "shape": {
                       "container": {
                         "map": [
                           {
                             "key": {
-                              "jsonExample": "jinx",
+                              "jsonExample": "string",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "jinx",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -659,11 +660,11 @@ exports[`generate IR 1`] = `
                               },
                             },
                             "value": {
-                              "jsonExample": "reorder",
+                              "jsonExample": "string",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "reorder",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -702,11 +703,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "optionalString",
                   },
                   "value": {
-                    "jsonExample": "self-reliant",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "self-reliant",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -739,11 +740,11 @@ exports[`generate IR 1`] = `
                   },
                   "value": {
                     "jsonExample": Map {
-                      "name" => "suffuse",
+                      "name" => "string",
                       "user" => Map {
-                        "name" => "dazzling",
+                        "name" => "string",
                         "tags" => [
-                          "accountability",
+                          "string",
                         ],
                       },
                     },
@@ -839,11 +840,11 @@ exports[`generate IR 1`] = `
                               "typeId": "type_user:NestedUser",
                             },
                             "value": {
-                              "jsonExample": "suffuse",
+                              "jsonExample": "string",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "suffuse",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -941,9 +942,9 @@ exports[`generate IR 1`] = `
                             },
                             "value": {
                               "jsonExample": Map {
-                                "name" => "dazzling",
+                                "name" => "string",
                                 "tags" => [
-                                  "accountability",
+                                  "string",
                                 ],
                               },
                               "shape": {
@@ -1038,11 +1039,11 @@ exports[`generate IR 1`] = `
                                         "typeId": "type_user:User",
                                       },
                                       "value": {
-                                        "jsonExample": "dazzling",
+                                        "jsonExample": "string",
                                         "shape": {
                                           "primitive": {
                                             "string": {
-                                              "original": "dazzling",
+                                              "original": "string",
                                             },
                                             "type": "string",
                                           },
@@ -1140,17 +1141,17 @@ exports[`generate IR 1`] = `
                                       },
                                       "value": {
                                         "jsonExample": [
-                                          "accountability",
+                                          "string",
                                         ],
                                         "shape": {
                                           "container": {
                                             "list": [
                                               {
-                                                "jsonExample": "accountability",
+                                                "jsonExample": "string",
                                                 "shape": {
                                                   "primitive": {
                                                     "string": {
-                                                      "original": "accountability",
+                                                      "original": "string",
                                                     },
                                                     "type": "string",
                                                   },
@@ -1333,9 +1334,9 @@ exports[`generate IR 1`] = `
                   },
                   "value": {
                     "jsonExample": Map {
-                      "name" => "dazzling",
+                      "name" => "string",
                       "tags" => [
-                        "accountability",
+                        "string",
                       ],
                     },
                     "shape": {
@@ -1430,11 +1431,11 @@ exports[`generate IR 1`] = `
                               "typeId": "type_user:User",
                             },
                             "value": {
-                              "jsonExample": "dazzling",
+                              "jsonExample": "string",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "dazzling",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -1532,17 +1533,17 @@ exports[`generate IR 1`] = `
                             },
                             "value": {
                               "jsonExample": [
-                                "accountability",
+                                "string",
                               ],
                               "shape": {
                                 "container": {
                                   "list": [
                                     {
-                                      "jsonExample": "accountability",
+                                      "jsonExample": "string",
                                       "shape": {
                                         "primitive": {
                                           "string": {
-                                            "original": "accountability",
+                                            "original": "string",
                                           },
                                           "type": "string",
                                         },
@@ -1652,11 +1653,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "filter",
                   },
                   "value": {
-                    "jsonExample": "lysine",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "lysine",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -1669,9 +1670,9 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "name" => "dazzling",
+                    "name" => "string",
                     "tags" => [
-                      "accountability",
+                      "string",
                     ],
                   },
                   "shape": {
@@ -1766,11 +1767,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_user:User",
                           },
                           "value": {
-                            "jsonExample": "dazzling",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "dazzling",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1868,17 +1869,17 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": [
-                              "accountability",
+                              "string",
                             ],
                             "shape": {
                               "container": {
                                 "list": [
                                   {
-                                    "jsonExample": "accountability",
+                                    "jsonExample": "string",
                                     "shape": {
                                       "primitive": {
                                         "string": {
-                                          "original": "accountability",
+                                          "original": "string",
                                         },
                                         "type": "string",
                                       },
@@ -1968,7 +1969,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

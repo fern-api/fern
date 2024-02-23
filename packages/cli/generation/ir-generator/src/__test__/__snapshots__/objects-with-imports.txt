@@ -116,22 +116,23 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "suspicious": {},
+                  "string": {},
                 },
                 "shape": {
                   "container": {
                     "map": [
                       {
                         "key": {
-                          "jsonExample": "admonish",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "admonish",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -155,11 +156,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "inventory",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "inventory",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -171,7 +172,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/send-optional-body",
             },
           ],

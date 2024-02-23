@@ -249,11 +249,12 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "size" => "quarantine",
+                  "size" => "string",
                 },
                 "properties": [
                   {
@@ -281,11 +282,11 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "quarantine",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "quarantine",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -303,7 +304,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/boot",
             },
           ],
@@ -531,11 +531,12 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "s3Key" => "rationalize",
+                  "s3Key" => "string",
                 },
                 "properties": [
                   {
@@ -563,11 +564,11 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "rationalize",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "rationalize",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -580,11 +581,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "indeed",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "indeed",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -596,7 +597,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/presigned-url",
             },
           ],

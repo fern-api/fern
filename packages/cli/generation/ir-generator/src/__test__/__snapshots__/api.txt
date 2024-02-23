@@ -305,12 +305,13 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "title" => "drat",
-                  "rating" => 0.8616264667361975,
+                  "title" => "string",
+                  "rating" => 1,
                 },
                 "shape": {
                   "shape": {
@@ -404,11 +405,11 @@ exports[`generate IR 1`] = `
                           "typeId": "type_imdb:CreateMovieRequest",
                         },
                         "value": {
-                          "jsonExample": "drat",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "drat",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -505,10 +506,10 @@ exports[`generate IR 1`] = `
                           "typeId": "type_imdb:CreateMovieRequest",
                         },
                         "value": {
-                          "jsonExample": 0.8616264667361975,
+                          "jsonExample": 1,
                           "shape": {
                             "primitive": {
-                              "double": 0.8616264667361975,
+                              "double": 1,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -589,16 +590,16 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "retreat",
+                  "jsonExample": "string",
                   "shape": {
                     "shape": {
                       "type": "alias",
                       "value": {
-                        "jsonExample": "retreat",
+                        "jsonExample": "string",
                         "shape": {
                           "primitive": {
                             "string": {
-                              "original": "retreat",
+                              "original": "string",
                             },
                             "type": "string",
                           },
@@ -679,7 +680,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/create-movie",
             },
           ],
@@ -1152,16 +1152,16 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "enquire",
+                    "jsonExample": "string",
                     "shape": {
                       "shape": {
                         "type": "alias",
                         "value": {
-                          "jsonExample": "enquire",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "enquire",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -1239,15 +1239,16 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "id" => "patrol",
-                    "title" => "pillage",
-                    "rating" => 0.6637125078123063,
+                    "id" => "string",
+                    "title" => "string",
+                    "rating" => 1,
                   },
                   "shape": {
                     "shape": {
@@ -1341,16 +1342,16 @@ exports[`generate IR 1`] = `
                             "typeId": "type_imdb:Movie",
                           },
                           "value": {
-                            "jsonExample": "patrol",
+                            "jsonExample": "string",
                             "shape": {
                               "shape": {
                                 "type": "alias",
                                 "value": {
-                                  "jsonExample": "patrol",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "patrol",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -1516,11 +1517,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_imdb:Movie",
                           },
                           "value": {
-                            "jsonExample": "pillage",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "pillage",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1617,10 +1618,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_imdb:Movie",
                           },
                           "value": {
-                            "jsonExample": 0.6637125078123063,
+                            "jsonExample": 1,
                             "shape": {
                               "primitive": {
-                                "double": 0.6637125078123063,
+                                "double": 1,
                                 "type": "double",
                               },
                               "type": "primitive",
@@ -1703,7 +1704,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
             {
@@ -1732,16 +1732,16 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "mortally",
+                    "jsonExample": "string",
                     "shape": {
                       "shape": {
                         "type": "alias",
                         "value": {
-                          "jsonExample": "mortally",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "mortally",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -1819,6 +1819,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -1894,7 +1895,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],
@@ -4517,6 +4517,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -4527,7 +4528,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -4602,6 +4602,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -4612,7 +4613,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -4765,6 +4765,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -4775,7 +4776,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -4928,6 +4928,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -4938,7 +4939,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -5053,6 +5053,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -5063,7 +5064,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -5227,6 +5227,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -5244,7 +5245,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
             {
@@ -5252,6 +5252,7 @@ exports[`generate IR 3`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -5373,7 +5374,6 @@ exports[`generate IR 3`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

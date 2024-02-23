@@ -17,13 +17,11 @@ module SeedEnumClient
     end
 
     # @param operand [Operand]
-    # @param maybe_operand [Operand]
-    # @param operand_or_color [ColorOrOperand]
-    # @param maybe_operand_or_color [ColorOrOperand]
+    # @param operand_or_color [Color, Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
-      @request_client.conn.post("/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}") do |req|
+    def send(operand:, operand_or_color:, request_options: nil)
+      @request_client.conn.post("/path/#{operand}/#{operand_or_color}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
       end
@@ -41,14 +39,12 @@ module SeedEnumClient
     end
 
     # @param operand [Operand]
-    # @param maybe_operand [Operand]
-    # @param operand_or_color [ColorOrOperand]
-    # @param maybe_operand_or_color [ColorOrOperand]
+    # @param operand_or_color [Color, Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
+    def send(operand:, operand_or_color:, request_options: nil)
       Async do
-        @request_client.conn.post("/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}") do |req|
+        @request_client.conn.post("/path/#{operand}/#{operand_or_color}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end

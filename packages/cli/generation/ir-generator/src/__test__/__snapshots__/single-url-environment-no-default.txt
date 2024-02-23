@@ -196,16 +196,17 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": "potentially",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "potentially",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -217,7 +218,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/dummy",
             },
           ],

@@ -434,6 +434,35 @@ exports[`fdr {"name":"simple"} 1`] = `
                                 "type": "json",
                                 "value": "shrek-123"
                             }
+                        },
+                        {
+                            "path": "",
+                            "pathParameters": {},
+                            "queryParameters": {},
+                            "headers": {},
+                            "requestBody": {},
+                            "requestBodyV3": {
+                                "type": "json",
+                                "value": {}
+                            },
+                            "responseStatusCode": 200,
+                            "responseBody": "string",
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": "string"
+                            }
+                        },
+                        {
+                            "path": "",
+                            "pathParameters": {},
+                            "queryParameters": {},
+                            "headers": {},
+                            "requestBody": {},
+                            "requestBodyV3": {
+                                "type": "json",
+                                "value": {}
+                            },
+                            "responseStatusCode": 400
                         }
                     ]
                 },
@@ -581,6 +610,44 @@ exports[`fdr {"name":"simple"} 1`] = `
                                 "type": "json",
                                 "value": "id-123"
                             }
+                        },
+                        {
+                            "path": "/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {
+                                "movieName": "string"
+                            },
+                            "headers": {},
+                            "responseStatusCode": 200,
+                            "responseBody": {},
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": {}
+                            }
+                        },
+                        {
+                            "path": "/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {
+                                "movieName": "string"
+                            },
+                            "headers": {},
+                            "responseStatusCode": 404
+                        },
+                        {
+                            "path": "/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {
+                                "movieName": "string"
+                            },
+                            "headers": {},
+                            "responseStatusCode": 400
                         }
                     ]
                 },
@@ -631,7 +698,26 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "name": "BadRequestError"
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204
+                        },
+                        {
+                            "path": "/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 400
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -680,7 +766,26 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "name": "BadRequestError"
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/upload/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204
+                        },
+                        {
+                            "path": "/upload/",
+                            "pathParameters": {
+                                "movieId": "string"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 400
+                        }
+                    ]
                 }
             ],
             "webhooks": [],

@@ -120,19 +120,20 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "per",
+                "jsonExample": "string",
                 "shape": {
                   "shape": {
                     "index": 0,
                     "singleUnionType": {
-                      "jsonExample": "per",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "per",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -212,16 +213,16 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "lest",
+                  "jsonExample": "string",
                   "shape": {
                     "shape": {
                       "index": 0,
                       "singleUnionType": {
-                        "jsonExample": "lest",
+                        "jsonExample": "string",
                         "shape": {
                           "primitive": {
                             "string": {
-                              "original": "lest",
+                              "original": "string",
                             },
                             "type": "string",
                           },
@@ -303,7 +304,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

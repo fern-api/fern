@@ -130,6 +130,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -498,7 +499,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -761,6 +761,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -787,16 +788,16 @@ exports[`generate IR 1`] = `
                     "wireValue": "optionalString",
                   },
                   "value": {
-                    "jsonExample": "pigeon",
+                    "jsonExample": "string",
                     "shape": {
                       "shape": {
                         "type": "alias",
                         "value": {
-                          "jsonExample": "pigeon",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "pigeon",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -876,7 +877,7 @@ exports[`generate IR 1`] = `
               ],
               "request": {
                 "jsonExample": Map {
-                  "publicProperty" => "scale",
+                  "publicProperty" => "string",
                 },
                 "properties": [
                   {
@@ -904,11 +905,11 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "scale",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "scale",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -922,7 +923,7 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "imported" => "generate",
+                    "imported" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -1016,16 +1017,16 @@ exports[`generate IR 1`] = `
                             "typeId": "type_foo:ImportingType",
                           },
                           "value": {
-                            "jsonExample": "generate",
+                            "jsonExample": "string",
                             "shape": {
                               "shape": {
                                 "type": "alias",
                                 "value": {
-                                  "jsonExample": "generate",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "generate",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -1178,7 +1179,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

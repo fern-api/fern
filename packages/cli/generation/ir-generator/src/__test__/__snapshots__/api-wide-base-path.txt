@@ -264,10 +264,10 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": 6080701608755200,
+                    "jsonExample": 42,
                     "shape": {
                       "primitive": {
-                        "integer": 6080701608755200,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -275,6 +275,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -304,11 +305,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "shy",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "shy",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -340,11 +341,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "what",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "what",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -353,7 +354,6 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
-              "type": "generated",
               "url": "/",
             },
           ],

@@ -824,13 +824,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "drat",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "drat",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -866,13 +866,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     "wireValue": "id",
                   },
                   "value": {
-                    "jsonExample": "86c607c3-2339-49ca-a213-944c4435a7c3",
+                    "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "type": "uuid",
-                        "uuid": "86c607c3-2339-49ca-a213-944c4435a7c3",
+                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
                       "type": "primitive",
                     },
@@ -902,12 +902,12 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     "wireValue": "limit",
                   },
                   "value": {
-                    "jsonExample": 6825152037781504,
+                    "jsonExample": 42,
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "integer": 6825152037781504,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -939,7 +939,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": Map {
-                      "name" => "mockingly",
+                      "name" => "string",
                     },
                     "shape": {
                       "_visit": [Function],
@@ -1035,13 +1035,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                               "typeId": "type_service:User",
                             },
                             "value": {
-                              "jsonExample": "mockingly",
+                              "jsonExample": "string",
                               "shape": {
                                 "_visit": [Function],
                                 "primitive": {
                                   "_visit": [Function],
                                   "string": {
-                                    "original": "mockingly",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -1148,7 +1148,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": {
-                      "including": "inaugurate",
+                      "string": "string",
                     },
                     "shape": {
                       "_visit": [Function],
@@ -1157,13 +1157,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                         "map": [
                           {
                             "key": {
-                              "jsonExample": "now",
+                              "jsonExample": "string",
                               "shape": {
                                 "_visit": [Function],
                                 "primitive": {
                                   "_visit": [Function],
                                   "string": {
-                                    "original": "now",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -1171,13 +1171,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                               },
                             },
                             "value": {
-                              "jsonExample": "inaugurate",
+                              "jsonExample": "string",
                               "shape": {
                                 "_visit": [Function],
                                 "primitive": {
                                   "_visit": [Function],
                                   "string": {
-                                    "original": "inaugurate",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -1216,13 +1216,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     "wireValue": "optionalString",
                   },
                   "value": {
-                    "jsonExample": "hmph",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "hmph",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -1255,7 +1255,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": Map {
-                      "name" => "mockingly",
+                      "name" => "string",
                     },
                     "shape": {
                       "_visit": [Function],
@@ -1351,13 +1351,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                               "typeId": "type_service:User",
                             },
                             "value": {
-                              "jsonExample": "mockingly",
+                              "jsonExample": "string",
                               "shape": {
                                 "_visit": [Function],
                                 "primitive": {
                                   "_visit": [Function],
                                   "string": {
-                                    "original": "mockingly",
+                                    "original": "string",
                                   },
                                   "type": "string",
                                 },
@@ -1463,13 +1463,13 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     "wireValue": "filter",
                   },
                   "value": {
-                    "jsonExample": "seldom",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "seldom",
+                          "original": "string",
                         },
                         "type": "string",
                       },

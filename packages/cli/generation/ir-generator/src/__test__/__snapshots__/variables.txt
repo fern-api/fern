@@ -166,11 +166,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "repel",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "repel",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -179,6 +179,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -189,7 +190,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],

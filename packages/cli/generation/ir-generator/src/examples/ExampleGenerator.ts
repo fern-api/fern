@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
@@ -318,7 +317,7 @@ export class ExampleGenerator {
         if (enumDeclaration.values.length === 0 || enumDeclaration.values[0] == null) {
             return null;
         }
-        const exampleEnumValue = faker.helpers.arrayElement(enumDeclaration.values);
+        const exampleEnumValue = enumDeclaration.values[0];
         return this.newNamelessExampleType({
             jsonExample: exampleEnumValue.name.wireValue,
             shape: ExampleTypeShape.enum({
@@ -492,9 +491,9 @@ export class ExampleGenerator {
 
     private jsonExampleToMapKey(jsonExample: unknown): string | number {
         if (typeof jsonExample === "number") {
-            return faker.number.int();
+            return 42;
         }
-        return faker.word.sample();
+        return "string";
     }
 
     private generateExampleTypeReferenceSet(typeReference: TypeReference, depth: number): ExampleTypeReference {
@@ -524,72 +523,58 @@ export class ExampleGenerator {
 
     private generateExamplePrimitive(primitiveType: PrimitiveType): ExampleTypeReference {
         switch (primitiveType) {
-            case "STRING": {
-                const word = faker.word.sample();
+            case "STRING":
                 return {
-                    jsonExample: word,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: word }))
+                    jsonExample: "string",
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: "string" }))
                 };
-            }
-            case "INTEGER": {
-                const int = faker.number.int();
+            case "INTEGER":
                 return {
-                    jsonExample: int,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(int))
+                    jsonExample: 42,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(0))
                 };
-            }
-            case "DOUBLE": {
-                const float = faker.number.float();
+            case "DOUBLE":
                 return {
-                    jsonExample: float,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(float))
+                    jsonExample: 1.0,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(1.0))
                 };
-            }
-            case "BOOLEAN": {
-                const bool = faker.datatype.boolean();
+            case "BOOLEAN":
                 return {
-                    jsonExample: bool,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(bool))
+                    jsonExample: true,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(true))
                 };
-            }
-            case "LONG": {
-                const long = faker.number.int();
+            case "LONG":
                 return {
-                    jsonExample: long,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(long))
+                    jsonExample: 99999,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(99999))
                 };
-            }
-            case "DATE_TIME": {
-                const datetime = faker.date.recent();
+            case "DATE_TIME":
                 return {
-                    jsonExample: datetime.toJSON(),
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(datetime))
+                    jsonExample: "2024-01-01T00:00:00Z",
+                    shape: ExampleTypeReferenceShape.primitive(
+                        ExamplePrimitive.datetime(new Date("2024-01-01T00:00:00Z"))
+                    )
                 };
-            }
-            case "UUID": {
-                const uuid = faker.string.uuid();
+            case "UUID":
                 return {
-                    jsonExample: uuid,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(uuid))
+                    jsonExample: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    shape: ExampleTypeReferenceShape.primitive(
+                        ExamplePrimitive.uuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+                    )
                 };
-            }
-            case "DATE": {
-                const date = faker.date.recent().toDateString();
+            case "DATE":
                 return {
-                    jsonExample: date,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(date))
+                    jsonExample: "2024-01-01",
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.date("2024-01-01"))
                 };
-            }
-            case "BASE_64": {
+            case "BASE_64":
                 // TODO(amckinney): Add support for base64 example primitives; use a string for now.
-                const strToEncode = faker.lorem.words({ min: 2, max: 5 });
-                const encoded = Buffer.from(strToEncode, "binary").toString("base64");
-
                 return {
-                    jsonExample: encoded,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: encoded }))
+                    jsonExample: "SGVsbG8gV29ybGQ=",
+                    shape: ExampleTypeReferenceShape.primitive(
+                        ExamplePrimitive.string({ original: "SGVsbG8gV29ybGQ=" })
+                    )
                 };
-            }
             default:
                 assertNever(primitiveType);
         }

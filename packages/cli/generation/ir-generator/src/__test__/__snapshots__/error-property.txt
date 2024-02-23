@@ -390,16 +390,17 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": "whereas",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "whereas",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -411,7 +412,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/property-based-error",
             },
             {
@@ -419,6 +419,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -494,7 +495,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/property-based-error",
             },
           ],

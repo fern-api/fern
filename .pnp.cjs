@@ -4410,15 +4410,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@faker-js/faker", [\
-        ["npm:8.4.1", {\
-          "packageLocation": "./.yarn/cache/@faker-js-faker-npm-8.4.1-dde75d9856-d802d531f8.zip/node_modules/@faker-js/faker/",\
-          "packageDependencies": [\
-            ["@faker-js/faker", "npm:8.4.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@fern-api/auth", [\
         ["workspace:packages/cli/auth", {\
           "packageLocation": "./packages/cli/auth/",\
@@ -5049,7 +5040,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/generation/ir-generator/",\
           "packageDependencies": [\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
-            ["@faker-js/faker", "npm:8.4.1"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\

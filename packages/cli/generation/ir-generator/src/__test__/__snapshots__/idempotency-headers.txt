@@ -206,11 +206,12 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "amount" => 2734811011612672,
+                  "amount" => 42,
                   "currency" => "USD",
                 },
                 "properties": [
@@ -239,10 +240,10 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": 2734811011612672,
+                      "jsonExample": 42,
                       "shape": {
                         "primitive": {
-                          "integer": 2734811011612672,
+                          "integer": 0,
                           "type": "integer",
                         },
                         "type": "primitive",
@@ -375,11 +376,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "b941d0c5-e731-40c5-b48d-b35241f93e5c",
+                  "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   "shape": {
                     "primitive": {
                       "type": "uuid",
-                      "uuid": "b941d0c5-e731-40c5-b48d-b35241f93e5c",
+                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     },
                     "type": "primitive",
                   },
@@ -389,7 +390,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -711,11 +711,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "knead",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "knead",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -724,6 +724,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -734,7 +735,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],

@@ -272,6 +272,7 @@ exports[`generate IR 1`] = `
                 },
               ],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -552,7 +553,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/headers",
             },
             {
@@ -631,11 +631,12 @@ exports[`generate IR 1`] = `
                 },
               ],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "query" => "disgust",
+                  "query" => "string",
                 },
                 "properties": [
                   {
@@ -663,11 +664,11 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "disgust",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "disgust",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -681,8 +682,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "message" => "mmm",
-                    "status" => 7706281777299456,
+                    "message" => "string",
+                    "status" => 42,
                     "success" => "true",
                   },
                   "shape": {
@@ -739,11 +740,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": "mmm",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "mmm",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -802,10 +803,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": 7706281777299456,
+                            "jsonExample": 42,
                             "shape": {
                               "primitive": {
-                                "integer": 7706281777299456,
+                                "integer": 0,
                                 "type": "integer",
                               },
                               "type": "primitive",
@@ -911,7 +912,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/headers",
             },
           ],
@@ -1246,6 +1246,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -1645,7 +1646,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/inlined",
             },
             {
@@ -1653,13 +1653,14 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
                   "prompt" => ""You are a helpful assistant"",
-                  "query" => "pro",
-                  "temperature" => 0.16398658882826567,
+                  "query" => "string",
+                  "temperature" => 1,
                   "stream" => "false",
                 },
                 "properties": [
@@ -1725,11 +1726,11 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "pro",
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "pro",
+                            "original": "string",
                           },
                           "type": "string",
                         },
@@ -1762,10 +1763,10 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": 0.16398658882826567,
+                      "jsonExample": 1,
                       "shape": {
                         "primitive": {
-                          "double": 0.16398658882826567,
+                          "double": 1,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -1813,8 +1814,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "message" => "mmm",
-                    "status" => 7706281777299456,
+                    "message" => "string",
+                    "status" => 42,
                     "success" => "true",
                   },
                   "shape": {
@@ -1871,11 +1872,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": "mmm",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "mmm",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1934,10 +1935,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": 7706281777299456,
+                            "jsonExample": 42,
                             "shape": {
                               "primitive": {
-                                "integer": 7706281777299456,
+                                "integer": 0,
                                 "type": "integer",
                               },
                               "type": "primitive",
@@ -2043,7 +2044,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/inlined",
             },
           ],
@@ -2479,6 +2479,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -2715,7 +2716,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/path/123",
             },
             {
@@ -2757,14 +2757,15 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "message" => "mmm",
-                    "status" => 7706281777299456,
+                    "message" => "string",
+                    "status" => 42,
                     "success" => "true",
                   },
                   "shape": {
@@ -2821,11 +2822,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": "mmm",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "mmm",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -2884,10 +2885,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": 7706281777299456,
+                            "jsonExample": 42,
                             "shape": {
                               "primitive": {
-                                "integer": 7706281777299456,
+                                "integer": 0,
                                 "type": "integer",
                               },
                               "type": "primitive",
@@ -2993,7 +2994,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/path/",
             },
           ],
@@ -3185,6 +3185,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [
                 {
@@ -3528,7 +3529,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/query",
             },
             {
@@ -3536,6 +3536,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -3598,11 +3599,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "query",
                   },
                   "value": {
-                    "jsonExample": "vaccinate",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "vaccinate",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -3649,8 +3650,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "message" => "mmm",
-                    "status" => 7706281777299456,
+                    "message" => "string",
+                    "status" => 42,
                     "success" => "true",
                   },
                   "shape": {
@@ -3707,11 +3708,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": "mmm",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "mmm",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -3770,10 +3771,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": 7706281777299456,
+                            "jsonExample": 42,
                             "shape": {
                               "primitive": {
-                                "integer": 7706281777299456,
+                                "integer": 0,
                                 "type": "integer",
                               },
                               "type": "primitive",
@@ -3879,7 +3880,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/query",
             },
           ],
@@ -4193,6 +4193,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -4810,7 +4811,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/reference",
             },
             {
@@ -4818,12 +4818,13 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
                   "prompt" => ""You are a helpful assistant"",
-                  "query" => "down",
+                  "query" => "string",
                   "stream" => "false",
                 },
                 "shape": {
@@ -5019,11 +5020,11 @@ exports[`generate IR 1`] = `
                           "typeId": "type_reference:SendRequest",
                         },
                         "value": {
-                          "jsonExample": "down",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "down",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -5205,8 +5206,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "message" => "mmm",
-                    "status" => 7706281777299456,
+                    "message" => "string",
+                    "status" => 42,
                     "success" => "true",
                   },
                   "shape": {
@@ -5263,11 +5264,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": "mmm",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "mmm",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -5326,10 +5327,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_:SendResponse",
                           },
                           "value": {
-                            "jsonExample": 7706281777299456,
+                            "jsonExample": 42,
                             "shape": {
                               "primitive": {
-                                "integer": 7706281777299456,
+                                "integer": 0,
                                 "type": "integer",
                               },
                               "type": "primitive",
@@ -5435,7 +5436,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/reference",
             },
           ],

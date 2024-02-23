@@ -13,8 +13,6 @@ service:
         query-parameters:
           operand: root.Operand
           maybeOperand: optional<root.Operand>
-          operandOrColor: root.ColorOrOperand
-          maybeOperandOrColor: optional<root.ColorOrOperand>
       examples: 
         - query-parameters:
             operand: $root.Operand.GreaterThan
@@ -30,10 +28,4 @@ service:
             allow-multiple: true
           maybeOperand:
             type: optional<root.Operand>
-            allow-multiple: true
-          operandOrColor:
-            type: root.ColorOrOperand
-            allow-multiple: true
-          maybeOperandOrColor:
-            type: optional<root.ColorOrOperand>
             allow-multiple: true

@@ -26,6 +26,7 @@ types:
         name: BLUE
   
   ColorOrOperand:
+    discriminated: false
     union:
-      color: Color
-      operand: Operand
+      - Color
+      - Operand

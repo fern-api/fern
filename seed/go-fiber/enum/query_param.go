@@ -3,15 +3,11 @@
 package enum
 
 type SendEnumAsQueryParamRequest struct {
-	Operand             Operand         `query:"operand"`
-	MaybeOperand        *Operand        `query:"maybeOperand"`
-	OperandOrColor      *ColorOrOperand `query:"operandOrColor"`
-	MaybeOperandOrColor *ColorOrOperand `query:"maybeOperandOrColor"`
+	Operand      Operand  `query:"operand"`
+	MaybeOperand *Operand `query:"maybeOperand"`
 }
 
 type SendEnumListAsQueryParamRequest struct {
-	Operand             []Operand         `query:"operand"`
-	MaybeOperand        []*Operand        `query:"maybeOperand"`
-	OperandOrColor      []*ColorOrOperand `query:"operandOrColor"`
-	MaybeOperandOrColor []*ColorOrOperand `query:"maybeOperandOrColor"`
+	Operand      []Operand  `query:"operand"`
+	MaybeOperand []*Operand `query:"maybeOperand"`
 }

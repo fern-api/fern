@@ -322,6 +322,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -355,7 +356,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/",
             },
             {
@@ -363,14 +363,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "nor",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "nor",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -380,11 +381,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "circa",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "circa",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -396,7 +397,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -555,6 +555,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -1034,7 +1035,6 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
-              "type": "provided",
               "url": "/file/notification/notification-hsy129x",
             },
             {
@@ -1042,6 +1042,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -1167,11 +1168,11 @@ exports[`generate IR 1`] = `
                                   "typeId": "type_types:ExceptionInfo",
                                 },
                                 "value": {
-                                  "jsonExample": "tame",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "tame",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -1268,11 +1269,11 @@ exports[`generate IR 1`] = `
                                   "typeId": "type_types:ExceptionInfo",
                                 },
                                 "value": {
-                                  "jsonExample": "sorrowful",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "sorrowful",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -1369,11 +1370,11 @@ exports[`generate IR 1`] = `
                                   "typeId": "type_types:ExceptionInfo",
                                 },
                                 "value": {
-                                  "jsonExample": "worry",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "worry",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -1505,11 +1506,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "adjure",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "adjure",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -1518,7 +1519,6 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -1946,6 +1946,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -2069,7 +2070,6 @@ exports[`generate IR 1`] = `
                 },
               ],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/file/file.txt",
             },
             {
@@ -2098,11 +2098,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "young",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "young",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -2111,14 +2111,15 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "name" => "anatomy",
-                    "contents" => "against",
+                    "name" => "string",
+                    "contents" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -2212,11 +2213,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:File",
                           },
                           "value": {
-                            "jsonExample": "anatomy",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "anatomy",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -2313,11 +2314,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:File",
                           },
                           "value": {
-                            "jsonExample": "against",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "against",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -2424,11 +2425,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "X-File-API-Version",
                   },
                   "value": {
-                    "jsonExample": "very",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "very",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -2438,7 +2439,6 @@ exports[`generate IR 1`] = `
                 },
               ],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
             {
@@ -2467,11 +2467,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "brownie",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "brownie",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -2480,6 +2480,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -2578,11 +2579,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "X-File-API-Version",
                   },
                   "value": {
-                    "jsonExample": "worldly",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "worldly",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -2592,7 +2593,6 @@ exports[`generate IR 1`] = `
                 },
               ],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],
@@ -3010,6 +3010,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -3020,7 +3021,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//check/id-2sdx82h",
             },
             {
@@ -3049,11 +3049,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "by",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "by",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -3062,6 +3062,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -3072,7 +3073,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/check/",
             },
           ],
@@ -3167,6 +3167,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -3186,7 +3187,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//ping",
             },
             {
@@ -3194,15 +3194,16 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": false,
+                  "jsonExample": true,
                   "shape": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
@@ -3213,7 +3214,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/ping",
             },
           ],
@@ -3574,6 +3574,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -4457,7 +4458,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//movie/movie-c06a4ad7",
             },
             {
@@ -4486,16 +4486,16 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "gosh",
+                    "jsonExample": "string",
                     "shape": {
                       "shape": {
                         "type": "alias",
                         "value": {
-                          "jsonExample": "gosh",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "gosh",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -4573,19 +4573,20 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "id" => "er",
-                    "title" => "wherever",
-                    "from" => "gah",
-                    "rating" => 0.24662657314911485,
+                    "id" => "string",
+                    "title" => "string",
+                    "from" => "string",
+                    "rating" => 1,
                     "type" => ""movie"",
-                    "tag" => "joyously",
-                    "book" => "bitterly",
+                    "tag" => "string",
+                    "book" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -4679,16 +4680,16 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": "er",
+                            "jsonExample": "string",
                             "shape": {
                               "shape": {
                                 "type": "alias",
                                 "value": {
-                                  "jsonExample": "er",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "er",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -4854,11 +4855,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": "wherever",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "wherever",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -4955,11 +4956,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": "gah",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "gah",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -5056,10 +5057,10 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": 0.24662657314911485,
+                            "jsonExample": 1,
                             "shape": {
                               "primitive": {
-                                "double": 0.24662657314911485,
+                                "double": 1,
                                 "type": "double",
                               },
                               "type": "primitive",
@@ -5256,16 +5257,16 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": "joyously",
+                            "jsonExample": "string",
                             "shape": {
                               "shape": {
                                 "type": "alias",
                                 "value": {
-                                  "jsonExample": "joyously",
+                                  "jsonExample": "string",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "joyously",
+                                        "original": "string",
                                       },
                                       "type": "string",
                                     },
@@ -5470,11 +5471,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types:Movie",
                           },
                           "value": {
-                            "jsonExample": "bitterly",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "bitterly",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -5558,7 +5559,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie/",
             },
           ],
@@ -5787,6 +5787,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -6756,7 +6757,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//movie",
             },
             {
@@ -6764,17 +6764,18 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "id" => "er",
-                  "title" => "wherever",
-                  "from" => "gah",
-                  "rating" => 0.24662657314911485,
+                  "id" => "string",
+                  "title" => "string",
+                  "from" => "string",
+                  "rating" => 1,
                   "type" => ""movie"",
-                  "tag" => "joyously",
-                  "book" => "bitterly",
+                  "tag" => "string",
+                  "book" => "string",
                 },
                 "shape": {
                   "shape": {
@@ -6868,16 +6869,16 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": "er",
+                          "jsonExample": "string",
                           "shape": {
                             "shape": {
                               "type": "alias",
                               "value": {
-                                "jsonExample": "er",
+                                "jsonExample": "string",
                                 "shape": {
                                   "primitive": {
                                     "string": {
-                                      "original": "er",
+                                      "original": "string",
                                     },
                                     "type": "string",
                                   },
@@ -7043,11 +7044,11 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": "wherever",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "wherever",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -7144,11 +7145,11 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": "gah",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "gah",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -7245,10 +7246,10 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": 0.24662657314911485,
+                          "jsonExample": 1,
                           "shape": {
                             "primitive": {
-                              "double": 0.24662657314911485,
+                              "double": 1,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -7445,16 +7446,16 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": "joyously",
+                          "jsonExample": "string",
                           "shape": {
                             "shape": {
                               "type": "alias",
                               "value": {
-                                "jsonExample": "joyously",
+                                "jsonExample": "string",
                                 "shape": {
                                   "primitive": {
                                     "string": {
-                                      "original": "joyously",
+                                      "original": "string",
                                     },
                                     "type": "string",
                                   },
@@ -7659,11 +7660,11 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types:Movie",
                         },
                         "value": {
-                          "jsonExample": "bitterly",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "bitterly",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -7745,16 +7746,16 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "unfolded",
+                  "jsonExample": "string",
                   "shape": {
                     "shape": {
                       "type": "alias",
                       "value": {
-                        "jsonExample": "unfolded",
+                        "jsonExample": "string",
                         "shape": {
                           "primitive": {
                             "string": {
-                              "original": "unfolded",
+                              "original": "string",
                             },
                             "type": "string",
                           },
@@ -7835,7 +7836,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -8164,6 +8164,7 @@ exports[`generate IR 1`] = `
                 },
               ],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [
                 {
@@ -8406,7 +8407,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//metadata",
             },
             {
@@ -8437,11 +8437,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "X-API-Version",
                   },
                   "value": {
-                    "jsonExample": "capacity",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "capacity",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -8451,6 +8451,7 @@ exports[`generate IR 1`] = `
                 },
               ],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -8511,11 +8512,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "tag",
                   },
                   "value": {
-                    "jsonExample": "alien",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "alien",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -8528,10 +8529,12 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "0": "g",
-                    "1": "e",
-                    "2": "e",
-                    "3": "z",
+                    "0": "s",
+                    "1": "t",
+                    "2": "r",
+                    "3": "i",
+                    "4": "n",
+                    "5": "g",
                     "type": "html",
                   },
                   "shape": {
@@ -8560,11 +8563,11 @@ exports[`generate IR 1`] = `
                       },
                       "singleUnionType": {
                         "shape": {
-                          "jsonExample": "geez",
+                          "jsonExample": "string",
                           "shape": {
                             "primitive": {
                               "string": {
-                                "original": "geez",
+                                "original": "string",
                               },
                               "type": "string",
                             },
@@ -8670,7 +8673,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/metadata",
             },
           ],

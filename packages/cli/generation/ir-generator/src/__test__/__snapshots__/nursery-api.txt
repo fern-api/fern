@@ -163,6 +163,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [
                 {
@@ -189,11 +190,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "for",
                   },
                   "value": {
-                    "jsonExample": "like",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "like",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -210,7 +211,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],

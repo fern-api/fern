@@ -120,11 +120,12 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
                 "jsonExample": Map {
-                  "num_events" => 140038744571904,
+                  "num_events" => 42,
                 },
                 "properties": [
                   {
@@ -152,10 +153,10 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": 140038744571904,
+                      "jsonExample": 42,
                       "shape": {
                         "primitive": {
-                          "integer": 140038744571904,
+                          "integer": 0,
                           "type": "integer",
                         },
                         "type": "primitive",
@@ -168,8 +169,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "id" => "drat",
-                    "name" => "nearly",
+                    "id" => "string",
+                    "name" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -263,11 +264,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_dummy:StreamResponse",
                           },
                           "value": {
-                            "jsonExample": "drat",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "drat",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -364,11 +365,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_dummy:StreamResponse",
                           },
                           "value": {
-                            "jsonExample": "nearly",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "nearly",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -452,7 +453,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/generate-stream",
             },
           ],

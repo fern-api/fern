@@ -182,6 +182,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -249,7 +250,6 @@ exports[`generate IR 1`] = `
               ],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "/",
             },
             {
@@ -257,14 +257,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "hm",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "hm",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -274,11 +275,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "why",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "why",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -309,11 +310,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "gadzooks",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "gadzooks",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -324,7 +325,6 @@ exports[`generate IR 1`] = `
               ],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "",
             },
           ],
@@ -545,6 +545,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "provided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -589,7 +590,6 @@ exports[`generate IR 1`] = `
               ],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "provided",
               "url": "//id-219xca8",
             },
             {
@@ -618,11 +618,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "immediate",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "immediate",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -631,6 +631,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -660,11 +661,11 @@ exports[`generate IR 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "emergent",
+                    "jsonExample": "string",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "emergent",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -675,7 +676,6 @@ exports[`generate IR 1`] = `
               ],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/",
             },
           ],

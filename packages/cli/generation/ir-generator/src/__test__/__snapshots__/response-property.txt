@@ -131,14 +131,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "yahoo",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "yahoo",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -149,8 +150,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "id" => "than",
-                    "name" => "budget",
+                    "id" => "string",
+                    "name" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -244,11 +245,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_service:Movie",
                           },
                           "value": {
-                            "jsonExample": "than",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "than",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -345,11 +346,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_service:Movie",
                           },
                           "value": {
-                            "jsonExample": "budget",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "budget",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -433,7 +434,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -693,14 +693,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "import",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "import",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -710,11 +711,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "at",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "at",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -726,7 +727,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -924,14 +924,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "pliers",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "pliers",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -941,11 +942,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "swot",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "swot",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -957,7 +958,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -1117,14 +1117,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "incidentally",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "incidentally",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -1135,18 +1136,18 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "midst": "yowza",
+                    "string": "string",
                   },
                   "shape": {
                     "container": {
                       "map": [
                         {
                           "key": {
-                            "jsonExample": "cheerfully",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "cheerfully",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1154,11 +1155,11 @@ exports[`generate IR 1`] = `
                             },
                           },
                           "value": {
-                            "jsonExample": "yowza",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "yowza",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1177,7 +1178,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -1385,14 +1385,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "vine",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "vine",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -1403,8 +1404,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": Map {
-                    "id" => "than",
-                    "name" => "budget",
+                    "id" => "string",
+                    "name" => "string",
                   },
                   "shape": {
                     "shape": {
@@ -1498,11 +1499,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_service:Movie",
                           },
                           "value": {
-                            "jsonExample": "than",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "than",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1599,11 +1600,11 @@ exports[`generate IR 1`] = `
                             "typeId": "type_service:Movie",
                           },
                           "value": {
-                            "jsonExample": "budget",
+                            "jsonExample": "string",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "budget",
+                                  "original": "string",
                                 },
                                 "type": "string",
                               },
@@ -1687,7 +1688,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -1953,14 +1953,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "finance",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "finance",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -1970,11 +1971,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "goggles",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "goggles",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -1986,7 +1987,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
@@ -2184,14 +2184,15 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "generated",
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "ah",
+                "jsonExample": "string",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "ah",
+                      "original": "string",
                     },
                     "type": "string",
                   },
@@ -2201,11 +2202,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "painfully",
+                  "jsonExample": "string",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "painfully",
+                        "original": "string",
                       },
                       "type": "string",
                     },
@@ -2217,7 +2218,6 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "type": "generated",
               "url": "/movie",
             },
           ],
