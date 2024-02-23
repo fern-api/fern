@@ -403,8 +403,8 @@ class RootClientGenerator:
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(
                     body=AST.Expression(
-                                f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
-                            ),
+                        f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
+                    ),
                     status_code=None,
                 )
             )
