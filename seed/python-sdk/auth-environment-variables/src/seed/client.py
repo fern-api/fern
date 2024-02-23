@@ -40,9 +40,7 @@ class SeedAuthEnvironmentVariables:
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         if api_key is None:
-            raise ApiError(
-                message="The client must be instantiated be either passing in api_key or setting FERN_API_KEY"
-            )
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -81,9 +79,7 @@ class AsyncSeedAuthEnvironmentVariables:
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         if api_key is None:
-            raise ApiError(
-                message="The client must be instantiated be either passing in api_key or setting FERN_API_KEY"
-            )
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
