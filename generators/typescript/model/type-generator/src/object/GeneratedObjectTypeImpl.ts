@@ -39,6 +39,8 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
+        console.log("[TESTING] Type name: ", this.typeName);
+        console.log("[TESTING] propertyWireKey: ", propertyWireKey);
         const property = this.shape.properties.find((property) => property.name.wireValue === propertyWireKey);
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
