@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ResponseWithExample, StatusCode } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExtension } from "../../extensions/getExtension";
 import { OperationContext } from "../contexts";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 

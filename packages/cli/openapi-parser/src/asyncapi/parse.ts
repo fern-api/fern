@@ -4,7 +4,8 @@ import {
     Schema,
     SchemaId,
     SchemaWithExample,
-    WebsocketChannel
+    WebsocketChannel,
+    WebsocketSessionExample
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
@@ -14,6 +15,7 @@ import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaW
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
+import { getFernExamples, WebsocketSessionExampleExtension } from "./getFernExamples";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
@@ -104,14 +106,33 @@ export function parseAsyncAPI({
         }
 
         if (headers.length > 0 || queryParameters.length > 0 || publishSchema != null || subscribeSchema != null) {
-            const example = exampleFactory.buildWebsocketSessionExample({
-                handshake: {
-                    headers,
-                    queryParameters
-                },
-                publish: publishSchema,
-                subscribe: subscribeSchema
-            });
+            // Reads the `x-fern-examples` extension from the channel
+            const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
+            let examples: WebsocketSessionExample[] = [];
+            if (fernExamples.length > 0) {
+                examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
+                    context,
+                    extensionExamples: fernExamples,
+                    handshake: {
+                        headers,
+                        queryParameters
+                    },
+                    publish: publishSchema,
+                    subscribe: subscribeSchema
+                });
+            } else {
+                const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                    handshake: {
+                        headers,
+                        queryParameters
+                    },
+                    publish: publishSchema,
+                    subscribe: subscribeSchema
+                });
+                if (autogenExample != null) {
+                    examples.push(autogenExample);
+                }
+            }
 
             const tag = document.tags?.[0];
             parsedChannel = {
@@ -136,7 +157,7 @@ export function parseAsyncAPI({
                 summary: undefined,
                 path: channelPath,
                 description: undefined,
-                examples: example != null ? [example] : []
+                examples
             };
             break;
         }

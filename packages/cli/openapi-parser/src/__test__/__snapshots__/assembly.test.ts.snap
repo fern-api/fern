@@ -28,28 +28,18 @@ exports[`open api parser assembly parse open api 1`] = `
             },
             {
               "description": null,
-              "messageType": "subscribe",
+              "messageType": "publish",
               "payload": {
                 "properties": {
-                  "expires_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
-                    },
-                  },
                   "message_type": {
-                    "type": "literal",
-                    "value": {
-                      "type": "string",
-                      "value": "SessionBegins",
-                    },
+                    "type": "enum",
+                    "value": "SessionBegins",
                   },
-                  "session_id": {
+                  "terminate_session": {
                     "type": "primitive",
                     "value": {
-                      "type": "string",
-                      "value": "session_id",
+                      "type": "boolean",
+                      "value": true,
                     },
                   },
                 },

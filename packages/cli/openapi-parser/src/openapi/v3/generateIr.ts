@@ -13,6 +13,7 @@ import {
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../getExtension";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -23,7 +24,6 @@ import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
-import { getExtension } from "./extensions/getExtension";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";

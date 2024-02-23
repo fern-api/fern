@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
-import { getExtension } from "./getExtension";
 
 export type FernPaginationExtension = FernPaginationEnabledExtension | FernPaginationConfigExtension;
 

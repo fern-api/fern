@@ -1,8 +1,8 @@
 import { NamedFullExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { OpenAPIExtension } from "../../extensions/extensions";
-import { getExtension } from "../../extensions/getExtension";
 
 export interface ApplicationJsonMediaObject {
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;

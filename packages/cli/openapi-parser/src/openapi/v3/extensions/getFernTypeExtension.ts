@@ -2,8 +2,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { LiteralSchemaValue, PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
 import { recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
-import { getExtension } from "./getExtension";
 
 export function getFernTypeExtension({
     nameOverride,
