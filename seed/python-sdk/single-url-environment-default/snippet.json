@@ -1,0 +1,16 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/dummy",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedSingleUrlEnvironmentDefault\n\nclient = SeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)\nclient.dummy.get_dummy()\n",
+                "async_client": "from seed.client import AsyncSeedSingleUrlEnvironmentDefault\n\nclient = AsyncSeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)\nawait client.dummy.get_dummy()\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -26,6 +26,16 @@ export class Playlist {
 
     /**
      * Create a new playlist
+     *
+     * @example
+     *     await seedTrace.playlist.createPlaylist(0, {
+     *         datetime: new Date("2024-01-01T00:00:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-01T00:00:00.000Z"),
+     *         body: {
+     *             name: "string",
+     *             problems: ["string"]
+     *         }
+     *     })
      */
     public async createPlaylist(
         serviceParam: number,
@@ -91,6 +101,15 @@ export class Playlist {
 
     /**
      * Returns the user's playlists
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylists(0, {
+     *         limit: 0,
+     *         otherField: "string",
+     *         multiLineDocs: "string",
+     *         optionalMultipleField: "string",
+     *         multipleField: "string"
+     *     })
      */
     public async getPlaylists(
         serviceParam: number,
@@ -172,6 +191,15 @@ export class Playlist {
      * Returns a playlist
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      * @throws {@link SeedTrace.UnauthorizedError}
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylist(0, "string")
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylist(0, "string")
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylist(0, "string")
      */
     public async getPlaylist(
         serviceParam: number,
@@ -238,6 +266,18 @@ export class Playlist {
     /**
      * Updates a playlist
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     *
+     * @example
+     *     await seedTrace.playlist.updatePlaylist(0, "string", {
+     *         name: "string",
+     *         problems: ["string"]
+     *     })
+     *
+     * @example
+     *     await seedTrace.playlist.updatePlaylist(0, "string", {
+     *         name: "string",
+     *         problems: ["string"]
+     *     })
      */
     public async updatePlaylist(
         serviceParam: number,
@@ -303,6 +343,9 @@ export class Playlist {
 
     /**
      * Deletes a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.deletePlaylist(0, "string")
      */
     public async deletePlaylist(
         serviceParam: number,

@@ -4,6 +4,10 @@
 
 import * as SeedFileUpload from "../../../..";
 
+/**
+ * @example
+ *     {}
+ */
 export interface MyRequest {
     maybeString?: string;
     integer: number;

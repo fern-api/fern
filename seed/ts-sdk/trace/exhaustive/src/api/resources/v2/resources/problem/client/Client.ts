@@ -26,6 +26,9 @@ export class Problem {
 
     /**
      * Returns lightweight versions of all problems
+     *
+     * @example
+     *     await seedTrace.v2.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -75,6 +78,9 @@ export class Problem {
 
     /**
      * Returns latest versions of all problems
+     *
+     * @example
+     *     await seedTrace.v2.problem.getProblems()
      */
     public async getProblems(
         requestOptions?: Problem.RequestOptions
@@ -122,6 +128,9 @@ export class Problem {
 
     /**
      * Returns latest version of a problem
+     *
+     * @example
+     *     await seedTrace.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"))
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -170,6 +179,9 @@ export class Problem {
 
     /**
      * Returns requested version of a problem
+     *
+     * @example
+     *     await seedTrace.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 0)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,

@@ -28,6 +28,9 @@ export class Service {
      *
      * @example
      *     await seedExamples.health.service.check("id-2sdx82h")
+     *
+     * @example
+     *     await seedExamples.health.service.check("string")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -73,6 +76,9 @@ export class Service {
 
     /**
      * This endpoint checks the health of the service.
+     *
+     * @example
+     *     await seedExamples.health.service.ping()
      *
      * @example
      *     await seedExamples.health.service.ping()

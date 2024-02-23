@@ -132,7 +132,7 @@ exports[`generate IR 1`] = `
               "request": {
                 "jsonExample": {
                   "operand": ">",
-                  "operandOrColor": ">",
+                  "operandOrColor": "red",
                 },
                 "properties": [
                   {
@@ -243,36 +243,36 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": ">",
+                      "jsonExample": "red",
                       "shape": {
                         "shape": {
-                          "index": 1,
+                          "index": 0,
                           "singleUnionType": {
-                            "jsonExample": ">",
+                            "jsonExample": "red",
                             "shape": {
                               "shape": {
                                 "type": "enum",
                                 "value": {
                                   "name": {
                                     "camelCase": {
-                                      "safeName": "",
-                                      "unsafeName": "",
+                                      "safeName": "red",
+                                      "unsafeName": "red",
                                     },
-                                    "originalName": ">",
+                                    "originalName": "red",
                                     "pascalCase": {
-                                      "safeName": "",
-                                      "unsafeName": "",
+                                      "safeName": "Red",
+                                      "unsafeName": "Red",
                                     },
                                     "screamingSnakeCase": {
-                                      "safeName": "",
-                                      "unsafeName": "",
+                                      "safeName": "RED",
+                                      "unsafeName": "RED",
                                     },
                                     "snakeCase": {
-                                      "safeName": "",
-                                      "unsafeName": "",
+                                      "safeName": "red",
+                                      "unsafeName": "red",
                                     },
                                   },
-                                  "wireValue": ">",
+                                  "wireValue": "red",
                                 },
                               },
                               "type": "named",
@@ -284,24 +284,24 @@ exports[`generate IR 1`] = `
                                 },
                                 "name": {
                                   "camelCase": {
-                                    "safeName": "operand",
-                                    "unsafeName": "operand",
+                                    "safeName": "color",
+                                    "unsafeName": "color",
                                   },
-                                  "originalName": "Operand",
+                                  "originalName": "Color",
                                   "pascalCase": {
-                                    "safeName": "Operand",
-                                    "unsafeName": "Operand",
+                                    "safeName": "Color",
+                                    "unsafeName": "Color",
                                   },
                                   "screamingSnakeCase": {
-                                    "safeName": "OPERAND",
-                                    "unsafeName": "OPERAND",
+                                    "safeName": "COLOR",
+                                    "unsafeName": "COLOR",
                                   },
                                   "snakeCase": {
-                                    "safeName": "operand",
-                                    "unsafeName": "operand",
+                                    "safeName": "color",
+                                    "unsafeName": "color",
                                   },
                                 },
-                                "typeId": "type_:Operand",
+                                "typeId": "type_:Color",
                               },
                             },
                           },
@@ -1516,7 +1516,7 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/path/>/{maybeOperand}/red/{maybeOperandOrColor}",
+              "url": "/path/>/red",
             },
             {
               "codeSamples": null,
@@ -1741,15 +1741,7 @@ exports[`generate IR 1`] = `
                 "tail": "/",
               },
               {
-                "pathParameter": "maybeOperand",
-                "tail": "/",
-              },
-              {
                 "pathParameter": "operandOrColor",
-                "tail": "/",
-              },
-              {
-                "pathParameter": "maybeOperandOrColor",
                 "tail": "",
               },
             ],
@@ -1786,15 +1778,7 @@ exports[`generate IR 1`] = `
                 "tail": "/",
               },
               {
-                "pathParameter": "maybeOperand",
-                "tail": "/",
-              },
-              {
                 "pathParameter": "operandOrColor",
-                "tail": "/",
-              },
-              {
-                "pathParameter": "maybeOperandOrColor",
                 "tail": "",
               },
             ],

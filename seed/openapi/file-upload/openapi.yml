@@ -79,17 +79,26 @@ paths:
           schema:
             type: string
             nullable: true
+          examples:
+            Example1:
+              value: string
         - name: integer
           in: query
           required: true
           schema:
             type: integer
+          examples:
+            Example1:
+              value: 42
         - name: maybeInteger
           in: query
           required: false
           schema:
             type: integer
             nullable: true
+          examples:
+            Example1:
+              value: 42
         - name: listOfStrings
           in: query
           required: true
@@ -97,6 +106,9 @@ paths:
             type: array
             items:
               type: string
+          examples:
+            Example1:
+              value: string
         - name: optionalListOfStrings
           in: query
           required: false
@@ -105,6 +117,9 @@ paths:
             items:
               type: string
               nullable: true
+          examples:
+            Example1:
+              value: string
       responses:
         '204':
           description: ''

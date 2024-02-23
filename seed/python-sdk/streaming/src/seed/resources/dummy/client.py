@@ -33,6 +33,15 @@ class DummyClient:
             - num_events: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedStreaming
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.dummy.generate_stream(
+            num_events=0,
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -84,6 +93,15 @@ class AsyncDummyClient:
             - num_events: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.dummy.generate_stream(
+            num_events=0,
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",

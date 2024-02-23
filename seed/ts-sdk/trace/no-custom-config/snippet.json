@@ -1,4 +1,355 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.test();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.updateTestSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-01T00:00:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.updateWorkspaceSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-01T00:00:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedTestCase(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 0,\n            returnValue: {\n                type: \"integerValue\",\n                value: 0\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedTestCaseV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 0,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 0\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedWorkspace(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    workspaceRunDetails: {\n        exceptionV2: {\n            type: \"generic\"\n        },\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 0,\n            returnValue: {\n                type: \"integerValue\",\n                value: 0\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedWorkspaceV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 0,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 0\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.homepage.getHomepageProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.homepage.setHomepageProblems([\"string\"]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.migration.getAttemptedMigrations({\n    adminKeyHeader: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.createPlaylist(0, {\n    datetime: new Date(\"2024-01-01T00:00:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-01T00:00:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [\"string\"]\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylists(0, {\n    limit: 0,\n    otherField: \"string\",\n    multiLineDocs: \"string\",\n    optionalMultipleField: \"string\",\n    multipleField: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylist(0, \"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.updatePlaylist(0, \"string\", {\n    name: \"string\",\n    problems: [\"string\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.deletePlaylist(0, \"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 0\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 0\n            }\n        }],\n    methodName: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.updateProblem(\"string\", {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 0\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 0\n            }\n        }],\n    methodName: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.deleteProblem(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    methodName: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.createExecutionSession(SeedTrace.Language.Java);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.getExecutionSession(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.stopExecutionSession(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.getExecutionSessionsState();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient, SeedTrace } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 0);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.sysprop.getNumWarmInstances();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getLightweightProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getLatestProblem(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getProblemVersion(\"string\", 0);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getLightweightProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getLatestProblem(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getProblemVersion(\"string\", 0);\n"
+            }
+        }
+    ],
     "types": {}
 }

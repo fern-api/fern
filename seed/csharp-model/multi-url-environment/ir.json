@@ -256,7 +256,62 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/boot",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "inlinedRequestBody",
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "size",
+                        "camelCase": {
+                          "unsafeName": "size",
+                          "safeName": "size"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "size",
+                          "safeName": "size"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SIZE",
+                          "safeName": "SIZE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Size",
+                          "safeName": "Size"
+                        }
+                      },
+                      "wireValue": "size"
+                    },
+                    "value": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "string"
+                    }
+                  }
+                ],
+                "jsonExample": {}
+              },
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         }
       ]
     },
@@ -476,7 +531,74 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/presigned-url",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "inlinedRequestBody",
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "s3Key",
+                        "camelCase": {
+                          "unsafeName": "s3Key",
+                          "safeName": "s3Key"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "s_3_key",
+                          "safeName": "s_3_key"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "S_3_KEY",
+                          "safeName": "S_3_KEY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "S3Key",
+                          "safeName": "S3Key"
+                        }
+                      },
+                      "wireValue": "s3Key"
+                    },
+                    "value": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "string"
+                    }
+                  }
+                ],
+                "jsonExample": {}
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         }
       ]
     }

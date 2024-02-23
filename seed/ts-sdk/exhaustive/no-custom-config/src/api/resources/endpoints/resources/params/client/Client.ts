@@ -25,6 +25,9 @@ export class Params {
 
     /**
      * GET with path param
+     *
+     * @example
+     *     await seedExhaustive.endpoints.params.getWithPath("string")
      */
     public async getWithPath(param: string, requestOptions?: Params.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -75,6 +78,12 @@ export class Params {
 
     /**
      * GET with query param
+     *
+     * @example
+     *     await seedExhaustive.endpoints.params.getWithQuery({
+     *         query: "string",
+     *         number: 0
+     *     })
      */
     public async getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
@@ -128,6 +137,12 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @example
+     *     await seedExhaustive.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "string",
+     *         numer: 0
+     *     })
      */
     public async getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
@@ -191,6 +206,11 @@ export class Params {
 
     /**
      * GET with path and query params
+     *
+     * @example
+     *     await seedExhaustive.endpoints.params.getWithPathAndQuery("string", {
+     *         query: "string"
+     *     })
      */
     public async getWithPathAndQuery(
         param: string,
@@ -244,6 +264,9 @@ export class Params {
 
     /**
      * PUT to update with path param
+     *
+     * @example
+     *     await seedExhaustive.endpoints.params.modifyWithPath("string", "string")
      */
     public async modifyWithPath(
         param: string,

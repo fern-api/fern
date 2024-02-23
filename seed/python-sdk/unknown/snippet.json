@@ -1,0 +1,16 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post(\n    request={},\n)\n",
+                "async_client": "from seed.client import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.unknown.post(\n    request={},\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -19,6 +19,13 @@ class ServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedPlainText
+
+        client = SeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_text()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -58,6 +65,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedPlainText
+
+        client = AsyncSeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_text()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

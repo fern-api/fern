@@ -24,6 +24,15 @@ class Ec2Client:
             - size: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedMultiUrlEnvironment
+
+        client = SeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+        client.ec_2.boot_instance(
+            size="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -68,6 +77,15 @@ class AsyncEc2Client:
             - size: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedMultiUrlEnvironment
+
+        client = AsyncSeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+        await client.ec_2.boot_instance(
+            size="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

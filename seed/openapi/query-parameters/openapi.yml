@@ -14,36 +14,54 @@ paths:
           required: true
           schema:
             type: integer
+          examples:
+            Example1:
+              value: 42
         - name: id
           in: query
           required: true
           schema:
             type: string
             format: uuid
+          examples:
+            Example1:
+              value: d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
         - name: date
           in: query
           required: true
           schema:
             type: string
             format: date
+          examples:
+            Example1:
+              value: '2024-01-01'
         - name: deadline
           in: query
           required: true
           schema:
             type: string
             format: date-time
+          examples:
+            Example1:
+              value: '2024-01-01T00:00:00Z'
         - name: bytes
           in: query
           required: true
           schema:
             type: string
             format: byte
+          examples:
+            Example1:
+              value: SGVsbG8gV29ybGQ=
         - name: optionalString
           in: query
           required: false
           schema:
             type: string
             nullable: true
+          examples:
+            Example1:
+              value: string
         - name: filter
           in: query
           required: true
@@ -51,6 +69,9 @@ paths:
             type: array
             items:
               type: string
+          examples:
+            Example1:
+              value: string
       responses:
         '200':
           description: ''
@@ -58,6 +79,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value: {}
 components:
   schemas:
     User:
@@ -66,10 +90,13 @@ components:
       properties:
         name:
           type: string
+          example: string
         tags:
           type: array
           items:
             type: string
+          example:
+            - string
       required:
         - name
         - tags

@@ -35,6 +35,16 @@ class NoAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.no_auth.post_with_no_auth(
+            request={},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -85,6 +95,16 @@ class AsyncNoAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.no_auth.post_with_no_auth(
+            request={},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

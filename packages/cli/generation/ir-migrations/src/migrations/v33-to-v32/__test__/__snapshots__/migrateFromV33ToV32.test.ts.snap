@@ -377,13 +377,13 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "reassemble",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "reassemble",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -419,13 +419,13 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     "wireValue": "id",
                   },
                   "value": {
-                    "jsonExample": "e28d3b46-3f4c-47d0-b311-628d0ff1706a",
+                    "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "type": "uuid",
-                        "uuid": "e28d3b46-3f4c-47d0-b311-628d0ff1706a",
+                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
                       "type": "primitive",
                     },
@@ -455,12 +455,12 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     "wireValue": "limit",
                   },
                   "value": {
-                    "jsonExample": 1677929863970816,
+                    "jsonExample": 42,
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "integer": 1677929863970816,
+                        "integer": 0,
                         "type": "integer",
                       },
                       "type": "primitive",
@@ -491,12 +491,12 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     "wireValue": "date",
                   },
                   "value": {
-                    "jsonExample": "Fri Feb 23 2024",
+                    "jsonExample": "2024-01-01",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "date": "Fri Feb 23 2024",
+                        "date": "2024-01-01",
                         "type": "date",
                       },
                       "type": "primitive",
@@ -527,13 +527,13 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     "wireValue": "optionalString",
                   },
                   "value": {
-                    "jsonExample": "outlandish",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "outlandish",
+                          "original": "string",
                         },
                         "type": "string",
                       },
@@ -565,13 +565,13 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                     "wireValue": "filter",
                   },
                   "value": {
-                    "jsonExample": "than",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "than",
+                          "original": "string",
                         },
                         "type": "string",
                       },

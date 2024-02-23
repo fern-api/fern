@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedVariablesClient } from \"\";\n\nconst seedVariables = new SeedVariablesClient;\nawait seedVariables.service.post();\n"
+            }
+        }
+    ],
     "types": {}
 }

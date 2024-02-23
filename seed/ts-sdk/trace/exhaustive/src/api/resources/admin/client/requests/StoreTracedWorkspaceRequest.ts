@@ -4,6 +4,24 @@
 
 import * as SeedTrace from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         workspaceRunDetails: {
+ *             exceptionV2: SeedTrace.ExceptionV2.generic({}),
+ *             exception: {},
+ *             stdout: "string"
+ *         },
+ *         traceResponses: [{
+ *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+ *                 lineNumber: 0,
+ *                 returnValue: SeedTrace.DebugVariableValue.integerValue(0),
+ *                 expressionLocation: {},
+ *                 stack: {},
+ *                 stdout: "string"
+ *             }]
+ *     }
+ */
 export interface StoreTracedWorkspaceRequest {
     workspaceRunDetails: SeedTrace.WorkspaceRunDetails;
     traceResponses: SeedTrace.TraceResponse[];

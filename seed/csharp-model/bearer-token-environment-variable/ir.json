@@ -151,7 +151,32 @@
             "type": "json"
           },
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "url": "/apiKey",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ],
           "docs": "GET request with custom api key"
         }
       ]

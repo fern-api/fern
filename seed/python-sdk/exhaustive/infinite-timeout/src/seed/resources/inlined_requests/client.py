@@ -45,6 +45,41 @@ class InlinedRequestsClient:
             - nested_object: ObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import SeedExhaustive
+        from seed.resources.types import ObjectWithOptionalField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.inlined_requests.post_with_object_bodyand_response(
+            string="string",
+            integer=0,
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=0,
+                long=99999,
+                double=1.0,
+                bool=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-01 00:00:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2024-01-01",
+                ),
+                uuid=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gV29ybGQ=",
+                list=["string"],
+                set=["string"],
+                map={0: "string"},
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -104,6 +139,41 @@ class AsyncInlinedRequestsClient:
             - nested_object: ObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import ObjectWithOptionalField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.inlined_requests.post_with_object_bodyand_response(
+            string="string",
+            integer=0,
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=0,
+                long=99999,
+                double=1.0,
+                bool=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-01 00:00:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2024-01-01",
+                ),
+                uuid=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gV29ybGQ=",
+                list=["string"],
+                set=["string"],
+                map={0: "string"},
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

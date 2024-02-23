@@ -481,7 +481,195 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "type": "named",
+                  "typeName": {
+                    "name": {
+                      "originalName": "MyUnion",
+                      "camelCase": {
+                        "unsafeName": "myUnion",
+                        "safeName": "myUnion"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "my_union",
+                        "safeName": "my_union"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "MY_UNION",
+                        "safeName": "MY_UNION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "MyUnion",
+                        "safeName": "MyUnion"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "originalName": "union",
+                          "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                          }
+                        }
+                      ],
+                      "packagePath": [],
+                      "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                          "unsafeName": "union",
+                          "safeName": "union"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "union",
+                          "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "UNION",
+                          "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Union",
+                          "safeName": "Union"
+                        }
+                      }
+                    },
+                    "typeId": "type_union:MyUnion"
+                  },
+                  "shape": {
+                    "type": "undiscriminatedUnion",
+                    "index": 0,
+                    "singleUnionType": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "string"
+                    }
+                  }
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "type": "named",
+                    "typeName": {
+                      "name": {
+                        "originalName": "MyUnion",
+                        "camelCase": {
+                          "unsafeName": "myUnion",
+                          "safeName": "myUnion"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "my_union",
+                          "safeName": "my_union"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "MY_UNION",
+                          "safeName": "MY_UNION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "MyUnion",
+                          "safeName": "MyUnion"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "union",
+                            "camelCase": {
+                              "unsafeName": "union",
+                              "safeName": "union"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "union",
+                              "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "UNION",
+                              "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Union",
+                              "safeName": "Union"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "union",
+                          "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                          }
+                        }
+                      },
+                      "typeId": "type_union:MyUnion"
+                    },
+                    "shape": {
+                      "type": "undiscriminatedUnion",
+                      "index": 0,
+                      "singleUnionType": {
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "string"
+                            },
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "jsonExample": "string"
+                      }
+                    }
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         }
       ]
     }

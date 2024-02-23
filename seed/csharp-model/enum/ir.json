@@ -948,33 +948,33 @@
                         },
                         "shape": {
                           "type": "undiscriminatedUnion",
-                          "index": 1,
+                          "index": 0,
                           "singleUnionType": {
                             "shape": {
                               "type": "named",
                               "typeName": {
-                                "typeId": "type_:Operand",
+                                "typeId": "type_:Color",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
                                 "name": {
-                                  "originalName": "Operand",
+                                  "originalName": "Color",
                                   "camelCase": {
-                                    "unsafeName": "operand",
-                                    "safeName": "operand"
+                                    "unsafeName": "color",
+                                    "safeName": "color"
                                   },
                                   "snakeCase": {
-                                    "unsafeName": "operand",
-                                    "safeName": "operand"
+                                    "unsafeName": "color",
+                                    "safeName": "color"
                                   },
                                   "screamingSnakeCase": {
-                                    "unsafeName": "OPERAND",
-                                    "safeName": "OPERAND"
+                                    "unsafeName": "COLOR",
+                                    "safeName": "COLOR"
                                   },
                                   "pascalCase": {
-                                    "unsafeName": "Operand",
-                                    "safeName": "Operand"
+                                    "unsafeName": "Color",
+                                    "safeName": "Color"
                                   }
                                 }
                               },
@@ -982,39 +982,39 @@
                                 "type": "enum",
                                 "value": {
                                   "name": {
-                                    "originalName": ">",
+                                    "originalName": "red",
                                     "camelCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "red",
+                                      "safeName": "red"
                                     },
                                     "snakeCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "red",
+                                      "safeName": "red"
                                     },
                                     "screamingSnakeCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "RED",
+                                      "safeName": "RED"
                                     },
                                     "pascalCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "Red",
+                                      "safeName": "Red"
                                     }
                                   },
-                                  "wireValue": ">"
+                                  "wireValue": "red"
                                 }
                               }
                             },
-                            "jsonExample": ">"
+                            "jsonExample": "red"
                           }
                         }
                       },
-                      "jsonExample": ">"
+                      "jsonExample": "red"
                     }
                   }
                 ],
                 "jsonExample": {
                   "operand": ">",
-                  "operandOrColor": ">"
+                  "operandOrColor": "red"
                 }
               },
               "response": {
@@ -1524,15 +1524,7 @@
                 "tail": "/"
               },
               {
-                "pathParameter": "maybeOperand",
-                "tail": "/"
-              },
-              {
                 "pathParameter": "operandOrColor",
-                "tail": "/"
-              },
-              {
-                "pathParameter": "maybeOperandOrColor",
                 "tail": ""
               }
             ]
@@ -1545,15 +1537,7 @@
                 "tail": "/"
               },
               {
-                "pathParameter": "maybeOperand",
-                "tail": "/"
-              },
-              {
                 "pathParameter": "operandOrColor",
-                "tail": "/"
-              },
-              {
-                "pathParameter": "maybeOperandOrColor",
                 "tail": ""
               }
             ]
@@ -1763,7 +1747,7 @@
           "errors": [],
           "examples": [
             {
-              "url": "/path/>/{maybeOperand}/red/{maybeOperandOrColor}",
+              "url": "/path/>/red",
               "rootPathParameters": [],
               "endpointPathParameters": [
                 {

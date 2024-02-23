@@ -349,7 +349,48 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "unknown": {},
+                  "type": "unknown"
+                },
+                "jsonExample": {}
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "container": {
+                      "list": [
+                        {
+                          "shape": {
+                            "unknown": {},
+                            "type": "unknown"
+                          },
+                          "jsonExample": {}
+                        }
+                      ],
+                      "type": "list"
+                    },
+                    "type": "container"
+                  },
+                  "jsonExample": [
+                    {}
+                  ]
+                }
+              }
+            }
+          ]
         }
       ]
     }

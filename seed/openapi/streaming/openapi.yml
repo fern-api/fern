@@ -19,8 +19,12 @@ paths:
               properties:
                 num_events:
                   type: integer
+                  example: 42
               required:
                 - num_events
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     StreamResponse:

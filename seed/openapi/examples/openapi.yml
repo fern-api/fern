@@ -19,6 +19,8 @@ paths:
               examples:
                 Example1:
                   value: Hello world!
+                Example2:
+                  value: string
       requestBody:
         required: true
         content:
@@ -28,6 +30,8 @@ paths:
             examples:
               Example1:
                 value: Hello world!
+              Example2:
+                value: string
   /file/notification/{notificationId}:
     get:
       operationId: file_notification_service_getException
@@ -42,6 +46,8 @@ paths:
           examples:
             Example1:
               value: notification-hsy129x
+            Example2:
+              value: string
       responses:
         '200':
           description: ''
@@ -56,6 +62,9 @@ paths:
                     exceptionType: Unavailable
                     exceptionMessage: This component is unavailable!
                     exceptionStacktrace: <logs>
+                Example2:
+                  value:
+                    type: generic
       security:
         - BearerAuth: []
   /file/{filename}:
@@ -74,6 +83,10 @@ paths:
           examples:
             Example1:
               value: file.txt
+            Example2:
+              value: string
+            Example3:
+              value: string
       responses:
         '200':
           description: ''
@@ -81,6 +94,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/File'
+              examples:
+                Example1:
+                  value: {}
         '404':
           description: ''
           content:
@@ -108,6 +124,8 @@ paths:
           examples:
             Example1:
               value: id-2sdx82h
+            Example2:
+              value: string
       responses:
         '204':
           description: ''
@@ -130,6 +148,8 @@ paths:
               examples:
                 Example1:
                   value: true
+                Example2:
+                  value: true
       security:
         - BearerAuth: []
   /movie/{movieId}:
@@ -146,6 +166,8 @@ paths:
           examples:
             Example1:
               value: movie-c06a4ad7
+            Example2:
+              value: string
       responses:
         '200':
           description: ''
@@ -162,6 +184,8 @@ paths:
                     rating: 8
                     type: movie
                     tag: tag-wf9as23d
+                Example2:
+                  value: {}
   /movie:
     post:
       operationId: service_createMovie
@@ -178,6 +202,8 @@ paths:
               examples:
                 Example1:
                   value: movie-c06a4ad7
+                Example2:
+                  value: string
       requestBody:
         required: true
         content:
@@ -193,6 +219,8 @@ paths:
                   rating: 8
                   type: movie
                   tag: tag-wf9as23d
+              Example2:
+                value: {}
   /metadata:
     get:
       operationId: service_getMetadata
@@ -208,6 +236,8 @@ paths:
           examples:
             Example1:
               value: false
+            Example2:
+              value: true
         - name: tag
           in: query
           required: false
@@ -219,6 +249,8 @@ paths:
           examples:
             Example1:
               value: development
+            Example2:
+              value: string
         - name: X-API-Version
           in: header
           required: true
@@ -227,6 +259,8 @@ paths:
           examples:
             Example1:
               value: 0.0.1
+            Example2:
+              value: string
       responses:
         '200':
           description: ''
@@ -245,6 +279,15 @@ paths:
                       - development
                       - public
                     value: <head>...</head>
+                Example2:
+                  value:
+                    '0': s
+                    '1': t
+                    '2': r
+                    '3': i
+                    '4': 'n'
+                    '5': g
+                    type: html
 components:
   schemas:
     commonsTag:

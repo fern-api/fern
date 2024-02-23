@@ -26,6 +26,12 @@ export class NoAuth {
     /**
      * POST request with no auth
      * @throws {@link SeedExhaustive.BadRequestBody}
+     *
+     * @example
+     *     await seedExhaustive.noAuth.postWithNoAuth({})
+     *
+     * @example
+     *     await seedExhaustive.noAuth.postWithNoAuth({})
      */
     public async postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

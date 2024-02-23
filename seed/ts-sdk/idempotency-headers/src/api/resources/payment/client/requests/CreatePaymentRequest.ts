@@ -4,6 +4,13 @@
 
 import * as SeedIdempotencyHeaders from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         amount: 0,
+ *         currency: SeedIdempotencyHeaders.Currency.Usd
+ *     }
+ */
 export interface CreatePaymentRequest {
     amount: number;
     currency: SeedIdempotencyHeaders.Currency;

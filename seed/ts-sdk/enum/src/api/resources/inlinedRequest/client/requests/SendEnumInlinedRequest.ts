@@ -9,6 +9,12 @@ import * as SeedEnum from "../../../..";
  *     {
  *         operand: SeedEnum.Operand.GreaterThan
  *     }
+ *
+ * @example
+ *     {
+ *         operand: SeedEnum.Operand.GreaterThan,
+ *         maybeOperand: SeedEnum.Operand.GreaterThan
+ *     }
  */
 export interface SendEnumInlinedRequest {
     operand: SeedEnum.Operand;

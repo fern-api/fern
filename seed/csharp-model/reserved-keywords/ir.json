@@ -454,7 +454,57 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "for",
+                      "camelCase": {
+                        "unsafeName": "for",
+                        "safeName": "for_"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "for",
+                        "safeName": "for_"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "FOR",
+                        "safeName": "FOR"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "For",
+                        "safeName": "For"
+                      }
+                    },
+                    "wireValue": "for"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         }
       ]
     }

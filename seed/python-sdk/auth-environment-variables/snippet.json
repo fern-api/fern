@@ -1,0 +1,16 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiKey",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedAuthEnvironmentVariables\n\nclient = SeedAuthEnvironmentVariables(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_with_api_key()\n",
+                "async_client": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.service.get_with_api_key()\n",
+                "type": "python"
+            }
+        }
+    ]
+}

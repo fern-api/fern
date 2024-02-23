@@ -150,7 +150,20 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/upload-content",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         }
       ]
     }

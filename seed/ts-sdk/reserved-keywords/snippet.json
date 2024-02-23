@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNurseryApiClient } from \"\";\n\nconst seedNurseryApi = new SeedNurseryApiClient;\nawait seedNurseryApi.package.test({\n    for: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

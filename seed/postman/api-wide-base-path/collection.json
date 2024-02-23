@@ -36,22 +36,73 @@
               "variable": [
                 {
                   "key": "serviceParam",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "endpointParam",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "42"
                 }
               ]
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:serviceParam/:endpointParam",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":serviceParam",
+                    ":endpointParam"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "serviceParam",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "endpointParam",
+                      "description": null,
+                      "value": "42"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

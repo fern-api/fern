@@ -30,6 +30,14 @@ class HomepageClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.homepage.get_homepage_problems()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -65,6 +73,16 @@ class HomepageClient:
             - request: typing.Sequence[ProblemId].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.homepage.set_homepage_problems(
+            request=["string"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -109,6 +127,14 @@ class AsyncHomepageClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.homepage.get_homepage_problems()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -144,6 +170,16 @@ class AsyncHomepageClient:
             - request: typing.Sequence[ProblemId].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.homepage.set_homepage_problems(
+            request=["string"],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

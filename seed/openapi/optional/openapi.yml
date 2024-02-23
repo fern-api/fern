@@ -16,6 +16,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       requestBody:
         required: false
         content:
@@ -24,6 +27,10 @@ paths:
               type: object
               additionalProperties: true
               nullable: true
+            examples:
+              Example1:
+                value:
+                  string: {}
 components:
   schemas: {}
   securitySchemes: {}

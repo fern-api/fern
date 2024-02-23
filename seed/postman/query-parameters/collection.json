@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&optionalString=&filter=",
+              "raw": "{{baseUrl}}/user?limit=42&id=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&date=2024-01-01&deadline=2024-01-01T00%3A00%3A00Z&bytes=SGVsbG8gV29ybGQ%3D&optionalString=string&filter=string",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -34,48 +34,123 @@
               "query": [
                 {
                   "key": "limit",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "42"
                 },
                 {
                   "key": "id",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 },
                 {
                   "key": "date",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "2024-01-01"
                 },
                 {
                   "key": "deadline",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "2024-01-01T00:00:00Z"
                 },
                 {
                   "key": "bytes",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "SGVsbG8gV29ybGQ="
                 },
                 {
                   "key": "optionalString",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "filter",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user?limit=42&id=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&date=2024-01-01&deadline=2024-01-01T00%3A00%3A00Z&bytes=SGVsbG8gV29ybGQ%3D&optionalString=string&filter=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "42"
+                    },
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    },
+                    {
+                      "key": "date",
+                      "description": null,
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "deadline",
+                      "description": null,
+                      "value": "2024-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "bytes",
+                      "description": null,
+                      "value": "SGVsbG8gV29ybGQ="
+                    },
+                    {
+                      "key": "optionalString",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "filter",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

@@ -54,6 +54,29 @@ class PlaylistClient:
             - request: PlaylistCreateRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed import PlaylistCreateRequest
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.playlist.create_playlist(
+            service_param=0,
+            datetime=datetime.datetime.fromisoformat(
+                "2024-01-01 00:00:00+00:00",
+            ),
+            optional_datetime=datetime.datetime.fromisoformat(
+                "2024-01-01 00:00:00+00:00",
+            ),
+            request=PlaylistCreateRequest(
+                name="string",
+                problems=["string"],
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -129,6 +152,21 @@ class PlaylistClient:
             - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.playlist.get_playlists(
+            service_param=0,
+            limit=0,
+            other_field="string",
+            multi_line_docs="string",
+            optional_multiple_field="string",
+            multiple_field="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -183,6 +221,17 @@ class PlaylistClient:
             - playlist_id: PlaylistId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.playlist.get_playlist(
+            service_param=0,
+            playlist_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -239,6 +288,22 @@ class PlaylistClient:
             - request: typing.Optional[UpdatePlaylistRequest].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import UpdatePlaylistRequest
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.playlist.update_playlist(
+            service_param=0,
+            playlist_id="string",
+            request=UpdatePlaylistRequest(
+                name="string",
+                problems=["string"],
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
@@ -292,6 +357,17 @@ class PlaylistClient:
             - playlist_id: PlaylistId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.playlist.delete_playlist(
+            service_param=0,
+            playlist_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -349,6 +425,29 @@ class AsyncPlaylistClient:
             - request: PlaylistCreateRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed import PlaylistCreateRequest
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.playlist.create_playlist(
+            service_param=0,
+            datetime=datetime.datetime.fromisoformat(
+                "2024-01-01 00:00:00+00:00",
+            ),
+            optional_datetime=datetime.datetime.fromisoformat(
+                "2024-01-01 00:00:00+00:00",
+            ),
+            request=PlaylistCreateRequest(
+                name="string",
+                problems=["string"],
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -424,6 +523,21 @@ class AsyncPlaylistClient:
             - multiple_field: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.playlist.get_playlists(
+            service_param=0,
+            limit=0,
+            other_field="string",
+            multi_line_docs="string",
+            optional_multiple_field="string",
+            multiple_field="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -478,6 +592,17 @@ class AsyncPlaylistClient:
             - playlist_id: PlaylistId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.playlist.get_playlist(
+            service_param=0,
+            playlist_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -534,6 +659,22 @@ class AsyncPlaylistClient:
             - request: typing.Optional[UpdatePlaylistRequest].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import UpdatePlaylistRequest
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.playlist.update_playlist(
+            service_param=0,
+            playlist_id="string",
+            request=UpdatePlaylistRequest(
+                name="string",
+                problems=["string"],
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
@@ -587,6 +728,17 @@ class AsyncPlaylistClient:
             - playlist_id: PlaylistId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.playlist.delete_playlist(
+            service_param=0,
+            playlist_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",

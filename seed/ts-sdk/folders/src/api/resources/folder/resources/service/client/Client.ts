@@ -65,6 +65,12 @@ export class Service {
 
     /**
      * @throws {@link SeedApi.folder.NotFoundError}
+     *
+     * @example
+     *     await seedApi.folder.service.unknownRequest({})
+     *
+     * @example
+     *     await seedApi.folder.service.unknownRequest({})
      */
     public async unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

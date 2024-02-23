@@ -229,6 +229,77 @@
                   "jsonExample": "Hello world!"
                 }
               }
+            },
+            {
+              "url": "",
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "originalName": "id",
+                    "camelCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ID",
+                      "safeName": "ID"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Id",
+                      "safeName": "Id"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
             }
           ]
         }
@@ -494,6 +565,86 @@
               "servicePathParameters": [],
               "endpointHeaders": [],
               "serviceHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok"
+              }
+            },
+            {
+              "url": "/",
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "originalName": "id",
+                    "camelCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ID",
+                      "safeName": "ID"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Id",
+                      "safeName": "Id"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "servicePathParameters": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "originalName": "nestedId",
+                    "camelCase": {
+                      "unsafeName": "nestedId",
+                      "safeName": "nestedId"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "nested_id",
+                      "safeName": "nested_id"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "NESTED_ID",
+                      "safeName": "NESTED_ID"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "NestedId",
+                      "safeName": "NestedId"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
               "queryParameters": [],
               "response": {
                 "type": "ok"

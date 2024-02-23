@@ -19,6 +19,8 @@ paths:
               examples:
                 Example1:
                   value: Hello world!
+                Example2:
+                  value: string
       requestBody:
         required: true
         content:
@@ -28,6 +30,8 @@ paths:
             examples:
               Example1:
                 value: Hello world!
+              Example2:
+                value: string
   /{nestedId}:
     get:
       operationId: service_nop
@@ -42,6 +46,8 @@ paths:
           examples:
             Example1:
               value: id-219xca8
+            Example2:
+              value: string
       responses:
         '204':
           description: ''

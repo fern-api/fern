@@ -40,6 +40,69 @@ class ProblemClient:
             - request: CreateProblemRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import (
+            CreateProblemRequest,
+            FileInfo,
+            Language,
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableTypeAndName,
+            VariableValue_IntegerValue,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.create_problem(
+            request=CreateProblemRequest(
+                problem_name="string",
+                problem_description=ProblemDescription(
+                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                ),
+                files={
+                    Language.JAVA: ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="string",
+                            contents="string",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="string",
+                                contents="string",
+                            )
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="string",
+                    )
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="string",
+                            params=[
+                                VariableValue_IntegerValue(type="integerValue", value=0)
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(
+                            type="integerValue", value=0
+                        ),
+                    )
+                ],
+                method_name="string",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -89,6 +152,70 @@ class ProblemClient:
             - request: CreateProblemRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import (
+            CreateProblemRequest,
+            FileInfo,
+            Language,
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableTypeAndName,
+            VariableValue_IntegerValue,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.update_problem(
+            problem_id="string",
+            request=CreateProblemRequest(
+                problem_name="string",
+                problem_description=ProblemDescription(
+                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                ),
+                files={
+                    Language.JAVA: ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="string",
+                            contents="string",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="string",
+                                contents="string",
+                            )
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="string",
+                    )
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="string",
+                            params=[
+                                VariableValue_IntegerValue(type="integerValue", value=0)
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(
+                            type="integerValue", value=0
+                        ),
+                    )
+                ],
+                method_name="string",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -132,6 +259,16 @@ class ProblemClient:
             - problem_id: ProblemId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.delete_problem(
+            problem_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -185,6 +322,24 @@ class ProblemClient:
                                   - Period `.`
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import VariableType, VariableTypeAndName
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.get_default_starter_files(
+            input_params=[
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="string",
+                )
+            ],
+            output_type=VariableType(),
+            method_name="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -233,6 +388,69 @@ class AsyncProblemClient:
             - request: CreateProblemRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import (
+            CreateProblemRequest,
+            FileInfo,
+            Language,
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableTypeAndName,
+            VariableValue_IntegerValue,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.problem.create_problem(
+            request=CreateProblemRequest(
+                problem_name="string",
+                problem_description=ProblemDescription(
+                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                ),
+                files={
+                    Language.JAVA: ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="string",
+                            contents="string",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="string",
+                                contents="string",
+                            )
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="string",
+                    )
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="string",
+                            params=[
+                                VariableValue_IntegerValue(type="integerValue", value=0)
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(
+                            type="integerValue", value=0
+                        ),
+                    )
+                ],
+                method_name="string",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -282,6 +500,70 @@ class AsyncProblemClient:
             - request: CreateProblemRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import (
+            CreateProblemRequest,
+            FileInfo,
+            Language,
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableTypeAndName,
+            VariableValue_IntegerValue,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.problem.update_problem(
+            problem_id="string",
+            request=CreateProblemRequest(
+                problem_name="string",
+                problem_description=ProblemDescription(
+                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                ),
+                files={
+                    Language.JAVA: ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="string",
+                            contents="string",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="string",
+                                contents="string",
+                            )
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="string",
+                    )
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="string",
+                            params=[
+                                VariableValue_IntegerValue(type="integerValue", value=0)
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(
+                            type="integerValue", value=0
+                        ),
+                    )
+                ],
+                method_name="string",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -327,6 +609,16 @@ class AsyncProblemClient:
             - problem_id: ProblemId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.problem.delete_problem(
+            problem_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -380,6 +672,24 @@ class AsyncProblemClient:
                                   - Period `.`
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import VariableType, VariableTypeAndName
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.problem.get_default_starter_files(
+            input_params=[
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="string",
+                )
+            ],
+            output_type=VariableType(),
+            method_name="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

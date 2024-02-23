@@ -32,6 +32,17 @@ class ServiceClient:
             - endpoint_param: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApiWideBasePath
+
+        client = SeedApiWideBasePath(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.post(
+            path_param="string",
+            service_param="string",
+            endpoint_param=0,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -87,6 +98,17 @@ class AsyncServiceClient:
             - endpoint_param: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApiWideBasePath
+
+        client = AsyncSeedApiWideBasePath(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.post(
+            path_param="string",
+            service_param="string",
+            endpoint_param=0,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

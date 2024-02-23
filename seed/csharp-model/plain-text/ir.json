@@ -120,7 +120,32 @@
             "type": "text"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/text",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         }
       ]
     }

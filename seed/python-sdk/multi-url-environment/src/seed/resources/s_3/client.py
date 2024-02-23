@@ -29,6 +29,15 @@ class S3Client:
             - s_3_key: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedMultiUrlEnvironment
+
+        client = SeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+        client.s_3.get_presigned_url(
+            s_3_key="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -73,6 +82,15 @@ class AsyncS3Client:
             - s_3_key: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedMultiUrlEnvironment
+
+        client = AsyncSeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+        await client.s_3.get_presigned_url(
+            s_3_key="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

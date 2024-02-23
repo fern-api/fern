@@ -31,6 +31,18 @@ class SyspropClient:
             - num_warm_instances: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Language
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.sysprop.set_num_warm_instances(
+            language=Language.JAVA,
+            num_warm_instances=0,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
@@ -70,6 +82,14 @@ class SyspropClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.sysprop.get_num_warm_instances()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -112,6 +132,18 @@ class AsyncSyspropClient:
             - num_warm_instances: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Language
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.sysprop.set_num_warm_instances(
+            language=Language.JAVA,
+            num_warm_instances=0,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
@@ -151,6 +183,14 @@ class AsyncSyspropClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.sysprop.get_num_warm_instances()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

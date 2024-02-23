@@ -26,6 +26,39 @@ export class Problem {
 
     /**
      * Creates a problem
+     *
+     * @example
+     *     await seedTrace.problem.createProblem({
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [SeedTrace.VariableValue.integerValue(0)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(0)
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async createProblem(
         request: SeedTrace.CreateProblemRequest,
@@ -75,6 +108,39 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @example
+     *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [SeedTrace.VariableValue.integerValue(0)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(0)
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async updateProblem(
         problemId: SeedTrace.ProblemId,
@@ -125,6 +191,9 @@ export class Problem {
 
     /**
      * Soft deletes a problem
+     *
+     * @example
+     *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
     public async deleteProblem(
         problemId: SeedTrace.ProblemId,
@@ -168,6 +237,16 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @example
+     *     await seedTrace.problem.getDefaultStarterFiles({
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         methodName: "string"
+     *     })
      */
     public async getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,

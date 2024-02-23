@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiWideBasePathClient } from \"\";\n\nconst seedApiWideBasePath = new SeedApiWideBasePathClient;\nawait seedApiWideBasePath.service.post(\"string\", 0);\n"
+            }
+        }
+    ],
     "types": {}
 }

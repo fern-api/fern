@@ -36,6 +36,39 @@ class ObjectClient:
             - request: ObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import SeedExhaustive
+        from seed.types import ObjectWithOptionalField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_optional_field(
+            request=ObjectWithOptionalField(
+                string="string",
+                integer=0,
+                long=99999,
+                double=1.0,
+                bool=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-01 00:00:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2024-01-01",
+                ),
+                uuid=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gV29ybGQ=",
+                list=["string"],
+                set=["string"],
+                map={0: "string"},
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -79,6 +112,19 @@ class ObjectClient:
             - request: ObjectWithRequiredField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.types import ObjectWithRequiredField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_required_field(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -122,6 +168,19 @@ class ObjectClient:
             - request: ObjectWithMapOfMap.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.types import ObjectWithMapOfMap
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_map_of_map(
+            request=ObjectWithMapOfMap(
+                map={"string": {"string": "string"}},
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -163,6 +222,42 @@ class ObjectClient:
             - request: NestedObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import SeedExhaustive
+        from seed.types import NestedObjectWithOptionalField, ObjectWithOptionalField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_nested_with_optional_field(
+            request=NestedObjectWithOptionalField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=0,
+                    long=99999,
+                    double=1.0,
+                    bool=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-01 00:00:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2024-01-01",
+                    ),
+                    uuid=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gV29ybGQ=",
+                    list=["string"],
+                    set=["string"],
+                    map={0: "string"},
+                ),
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -206,6 +301,42 @@ class ObjectClient:
             - request: NestedObjectWithRequiredField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import SeedExhaustive
+        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_nested_with_required_field(
+            request=NestedObjectWithRequiredField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=0,
+                    long=99999,
+                    double=1.0,
+                    bool=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-01 00:00:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2024-01-01",
+                    ),
+                    uuid=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gV29ybGQ=",
+                    list=["string"],
+                    set=["string"],
+                    map={0: "string"},
+                ),
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -252,6 +383,44 @@ class ObjectClient:
             - request: typing.Sequence[NestedObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import SeedExhaustive
+        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+            request=[
+                NestedObjectWithRequiredField(
+                    string="string",
+                    nested_object=ObjectWithOptionalField(
+                        string="string",
+                        integer=0,
+                        long=99999,
+                        double=1.0,
+                        bool=True,
+                        datetime=datetime.datetime.fromisoformat(
+                            "2024-01-01 00:00:00+00:00",
+                        ),
+                        date=datetime.date.fromisoformat(
+                            "2024-01-01",
+                        ),
+                        uuid=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        base_64="SGVsbG8gV29ybGQ=",
+                        list=["string"],
+                        set=["string"],
+                        map={0: "string"},
+                    ),
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -300,6 +469,39 @@ class AsyncObjectClient:
             - request: ObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import ObjectWithOptionalField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_with_optional_field(
+            request=ObjectWithOptionalField(
+                string="string",
+                integer=0,
+                long=99999,
+                double=1.0,
+                bool=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-01 00:00:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2024-01-01",
+                ),
+                uuid=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gV29ybGQ=",
+                list=["string"],
+                set=["string"],
+                map={0: "string"},
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -343,6 +545,19 @@ class AsyncObjectClient:
             - request: ObjectWithRequiredField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import ObjectWithRequiredField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_with_required_field(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -386,6 +601,19 @@ class AsyncObjectClient:
             - request: ObjectWithMapOfMap.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import ObjectWithMapOfMap
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_with_map_of_map(
+            request=ObjectWithMapOfMap(
+                map={"string": {"string": "string"}},
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -427,6 +655,42 @@ class AsyncObjectClient:
             - request: NestedObjectWithOptionalField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import NestedObjectWithOptionalField, ObjectWithOptionalField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_nested_with_optional_field(
+            request=NestedObjectWithOptionalField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=0,
+                    long=99999,
+                    double=1.0,
+                    bool=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-01 00:00:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2024-01-01",
+                    ),
+                    uuid=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gV29ybGQ=",
+                    list=["string"],
+                    set=["string"],
+                    map={0: "string"},
+                ),
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -470,6 +734,42 @@ class AsyncObjectClient:
             - request: NestedObjectWithRequiredField.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_nested_with_required_field(
+            request=NestedObjectWithRequiredField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=0,
+                    long=99999,
+                    double=1.0,
+                    bool=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-01 00:00:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2024-01-01",
+                    ),
+                    uuid=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gV29ybGQ=",
+                    list=["string"],
+                    set=["string"],
+                    map={0: "string"},
+                ),
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -516,6 +816,44 @@ class AsyncObjectClient:
             - request: typing.Sequence[NestedObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+            request=[
+                NestedObjectWithRequiredField(
+                    string="string",
+                    nested_object=ObjectWithOptionalField(
+                        string="string",
+                        integer=0,
+                        long=99999,
+                        double=1.0,
+                        bool=True,
+                        datetime=datetime.datetime.fromisoformat(
+                            "2024-01-01 00:00:00+00:00",
+                        ),
+                        date=datetime.date.fromisoformat(
+                            "2024-01-01",
+                        ),
+                        uuid=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        base_64="SGVsbG8gV29ybGQ=",
+                        list=["string"],
+                        set=["string"],
+                        map={0: "string"},
+                    ),
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

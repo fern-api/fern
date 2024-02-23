@@ -24,6 +24,13 @@ class ServiceClient:
             - request: bytes.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedBytes
+
+        client = SeedBytes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.upload()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -66,6 +73,13 @@ class AsyncServiceClient:
             - request: bytes.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedBytes
+
+        client = AsyncSeedBytes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.upload()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

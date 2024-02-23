@@ -45,6 +45,18 @@ class PaymentClient:
             - idempotency_expiration: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Currency
+        from seed.client import SeedIdempotencyHeaders
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.create(
+            amount=0,
+            currency=Currency.USD,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -86,6 +98,16 @@ class PaymentClient:
             - payment_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedIdempotencyHeaders
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.delete(
+            payment_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -138,6 +160,18 @@ class AsyncPaymentClient:
             - idempotency_expiration: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Currency
+        from seed.client import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.payment.create(
+            amount=0,
+            currency=Currency.USD,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -179,6 +213,16 @@ class AsyncPaymentClient:
             - payment_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.payment.delete(
+            payment_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",

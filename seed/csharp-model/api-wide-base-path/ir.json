@@ -273,7 +273,120 @@
           "queryParameters": [],
           "headers": [],
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/",
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "originalName": "pathParam",
+                    "camelCase": {
+                      "unsafeName": "pathParam",
+                      "safeName": "pathParam"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "path_param",
+                      "safeName": "path_param"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PATH_PARAM",
+                      "safeName": "PATH_PARAM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PathParam",
+                      "safeName": "PathParam"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "servicePathParameters": [
+                {
+                  "name": {
+                    "originalName": "serviceParam",
+                    "camelCase": {
+                      "unsafeName": "serviceParam",
+                      "safeName": "serviceParam"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "service_param",
+                      "safeName": "service_param"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SERVICE_PARAM",
+                      "safeName": "SERVICE_PARAM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ServiceParam",
+                      "safeName": "ServiceParam"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "originalName": "endpointParam",
+                    "camelCase": {
+                      "unsafeName": "endpointParam",
+                      "safeName": "endpointParam"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "endpoint_param",
+                      "safeName": "endpoint_param"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ENDPOINT_PARAM",
+                      "safeName": "ENDPOINT_PARAM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "EndpointParam",
+                      "safeName": "EndpointParam"
+                    }
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "integer": 0,
+                        "type": "integer"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": 42
+                  }
+                }
+              ],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         }
       ]
     }

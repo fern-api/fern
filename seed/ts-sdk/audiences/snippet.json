@@ -1,4 +1,25 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient } from \"\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.folderA.service.getDirectThread();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient } from \"\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 0\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

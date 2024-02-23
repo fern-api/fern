@@ -25,6 +25,12 @@ export class PropertyBasedError {
     /**
      * GET request that always throws an error
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
+     *
+     * @example
+     *     await seedErrorProperty.propertyBasedError.throwError()
+     *
+     * @example
+     *     await seedErrorProperty.propertyBasedError.throwError()
      */
     public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

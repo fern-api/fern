@@ -12,12 +12,12 @@
         },
         {
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, undefined, undefined, undefined);\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, undefined);\n"
             }
         },
         {
@@ -28,6 +28,16 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.sendList({\n    operand: SeedEnum.Operand.GreaterThan,\n    maybeOperand: SeedEnum.Operand.GreaterThan\n});\n"
             }
         }
     ],

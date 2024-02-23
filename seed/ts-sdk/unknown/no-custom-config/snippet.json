@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnknownAsAnyClient } from \"\";\n\nconst seedUnknownAsAny = new SeedUnknownAsAnyClient;\nawait seedUnknownAsAny.unknown.post({});\n"
+            }
+        }
+    ],
     "types": {}
 }

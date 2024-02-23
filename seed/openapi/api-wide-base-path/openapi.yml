@@ -14,11 +14,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: string
         - name: endpointParam
           in: path
           required: true
           schema:
             type: integer
+          examples:
+            Example1:
+              value: 42
       responses:
         '204':
           description: ''

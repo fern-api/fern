@@ -170,13 +170,13 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "quirky",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
                         "string": {
-                          "original": "quirky",
+                          "original": "string",
                         },
                         "type": "string",
                       },

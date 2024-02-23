@@ -26,6 +26,14 @@ class ServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAuthEnvironmentVariables
+
+        client = SeedAuthEnvironmentVariables(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_with_api_key()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -64,6 +72,14 @@ class AsyncServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAuthEnvironmentVariables
+
+        client = AsyncSeedAuthEnvironmentVariables(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_with_api_key()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

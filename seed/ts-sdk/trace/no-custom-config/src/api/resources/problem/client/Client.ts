@@ -27,6 +27,52 @@ export class Problem {
 
     /**
      * Creates a problem
+     *
+     * @example
+     *     await seedTrace.problem.createProblem({
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "string"
+     *                 }]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "string"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 0
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 0
+     *                 }
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async createProblem(
         request: SeedTrace.CreateProblemRequest,
@@ -88,6 +134,52 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @example
+     *     await seedTrace.problem.updateProblem("string", {
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "string"
+     *                 }]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "string"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 0
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 0
+     *                 }
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async updateProblem(
         problemId: SeedTrace.ProblemId,
@@ -150,6 +242,9 @@ export class Problem {
 
     /**
      * Soft deletes a problem
+     *
+     * @example
+     *     await seedTrace.problem.deleteProblem("string")
      */
     public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -202,6 +297,20 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @example
+     *     await seedTrace.problem.getDefaultStarterFiles({
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "string"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         methodName: "string"
+     *     })
      */
     public async getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,

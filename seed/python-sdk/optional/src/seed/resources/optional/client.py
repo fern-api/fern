@@ -34,6 +34,15 @@ class OptionalClient:
             - request: typing.Optional[typing.Dict[str, typing.Any]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedObjectsWithImports
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_body(
+            request={"string": {}},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -83,6 +92,15 @@ class AsyncOptionalClient:
             - request: typing.Optional[typing.Dict[str, typing.Any]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedObjectsWithImports
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.optional.send_optional_body(
+            request={"string": {}},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

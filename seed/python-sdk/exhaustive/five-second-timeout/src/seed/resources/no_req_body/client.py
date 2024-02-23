@@ -27,6 +27,14 @@ class NoReqBodyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.no_req_body.get_with_no_request_body()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -58,6 +66,14 @@ class NoReqBodyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.no_req_body.post_with_no_request_body()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -99,6 +115,14 @@ class AsyncNoReqBodyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.no_req_body.get_with_no_request_body()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -130,6 +154,14 @@ class AsyncNoReqBodyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.no_req_body.post_with_no_request_body()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

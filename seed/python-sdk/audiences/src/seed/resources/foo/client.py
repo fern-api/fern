@@ -41,6 +41,17 @@ class FooClient:
             - private_property: typing.Optional[int].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAudiences
+
+        client = SeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.foo.find(
+            optional_string="string",
+            public_property="string",
+            private_property=0,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:
@@ -110,6 +121,17 @@ class AsyncFooClient:
             - private_property: typing.Optional[int].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAudiences
+
+        client = AsyncSeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.foo.find(
+            optional_string="string",
+            public_property="string",
+            private_property=0,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:

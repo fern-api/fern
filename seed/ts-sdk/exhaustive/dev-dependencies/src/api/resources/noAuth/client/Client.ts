@@ -24,6 +24,12 @@ export class NoAuth {
 
     /**
      * POST request with no auth
+     *
+     * @example
+     *     await fiddle.noAuth.postWithNoAuth({})
+     *
+     * @example
+     *     await fiddle.noAuth.postWithNoAuth({})
      */
     public async postWithNoAuth(
         request?: unknown,

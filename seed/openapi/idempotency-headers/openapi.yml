@@ -17,6 +17,9 @@ paths:
               schema:
                 type: string
                 format: uuid
+              examples:
+                Example1:
+                  value: d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
       security:
         - BearerAuth: []
       requestBody:
@@ -28,11 +31,15 @@ paths:
               properties:
                 amount:
                   type: integer
+                  example: 42
                 currency:
                   $ref: '#/components/schemas/Currency'
               required:
                 - amount
                 - currency
+            examples:
+              Example1:
+                value: {}
   /payment/{paymentId}:
     delete:
       operationId: payment_delete
@@ -44,6 +51,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: string
       responses:
         '204':
           description: ''

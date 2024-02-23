@@ -120,7 +120,32 @@
             "type": "fileDownload"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "SGVsbG8gV29ybGQ="
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "SGVsbG8gV29ybGQ="
+                }
+              }
+            }
+          ]
         }
       ]
     }

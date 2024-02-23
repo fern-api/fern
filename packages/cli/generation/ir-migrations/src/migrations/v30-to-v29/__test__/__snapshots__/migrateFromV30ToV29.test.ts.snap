@@ -222,12 +222,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "endpointHeaders": [
                 {
                   "value": {
-                    "jsonExample": "an",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "an",
+                        "string": "string",
                         "type": "string",
                       },
                       "type": "primitive",
@@ -240,12 +240,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 {
                   "key": "id",
                   "value": {
-                    "jsonExample": "flow",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "flow",
+                        "string": "string",
                         "type": "string",
                       },
                       "type": "primitive",
@@ -258,12 +258,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "queryParameters": [
                 {
                   "value": {
-                    "jsonExample": "amidst",
+                    "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
                       "primitive": {
                         "_visit": [Function],
-                        "string": "amidst",
+                        "string": "string",
                         "type": "string",
                       },
                       "type": "primitive",

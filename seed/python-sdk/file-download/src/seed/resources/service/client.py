@@ -18,6 +18,13 @@ class ServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedFileDownload
+
+        client = SeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.download_file()
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -62,6 +69,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedFileDownload
+
+        client = AsyncSeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.download_file()
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",

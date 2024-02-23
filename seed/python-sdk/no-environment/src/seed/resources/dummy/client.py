@@ -24,6 +24,14 @@ class DummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedNoEnvironment
+
+        client = SeedNoEnvironment(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.dummy.get_dummy()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -60,6 +68,14 @@ class AsyncDummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedNoEnvironment
+
+        client = AsyncSeedNoEnvironment(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.dummy.get_dummy()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

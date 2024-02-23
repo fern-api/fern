@@ -648,7 +648,20 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.justFile",
@@ -799,7 +812,20 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/just-file",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.justFileWithQueryParams",
@@ -1114,7 +1140,197 @@
             }
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/just-file-with-query-params",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "maybeString",
+                      "camelCase": {
+                        "unsafeName": "maybeString",
+                        "safeName": "maybeString"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "maybe_string",
+                        "safeName": "maybe_string"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "MAYBE_STRING",
+                        "safeName": "MAYBE_STRING"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "MaybeString",
+                        "safeName": "MaybeString"
+                      }
+                    },
+                    "wireValue": "maybeString"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                },
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "integer",
+                      "camelCase": {
+                        "unsafeName": "integer",
+                        "safeName": "integer"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "integer",
+                        "safeName": "integer"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "INTEGER",
+                        "safeName": "INTEGER"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Integer",
+                        "safeName": "Integer"
+                      }
+                    },
+                    "wireValue": "integer"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "integer": 0,
+                        "type": "integer"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": 42
+                  }
+                },
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "maybeInteger",
+                      "camelCase": {
+                        "unsafeName": "maybeInteger",
+                        "safeName": "maybeInteger"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "maybe_integer",
+                        "safeName": "maybe_integer"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "MAYBE_INTEGER",
+                        "safeName": "MAYBE_INTEGER"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "MaybeInteger",
+                        "safeName": "MaybeInteger"
+                      }
+                    },
+                    "wireValue": "maybeInteger"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "integer": 0,
+                        "type": "integer"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": 42
+                  }
+                },
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "listOfStrings",
+                      "camelCase": {
+                        "unsafeName": "listOfStrings",
+                        "safeName": "listOfStrings"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "list_of_strings",
+                        "safeName": "list_of_strings"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "LIST_OF_STRINGS",
+                        "safeName": "LIST_OF_STRINGS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ListOfStrings",
+                        "safeName": "ListOfStrings"
+                      }
+                    },
+                    "wireValue": "listOfStrings"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                },
+                {
+                  "name": {
+                    "name": {
+                      "originalName": "optionalListOfStrings",
+                      "camelCase": {
+                        "unsafeName": "optionalListOfStrings",
+                        "safeName": "optionalListOfStrings"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "optional_list_of_strings",
+                        "safeName": "optional_list_of_strings"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "OPTIONAL_LIST_OF_STRINGS",
+                        "safeName": "OPTIONAL_LIST_OF_STRINGS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "OptionalListOfStrings",
+                        "safeName": "OptionalListOfStrings"
+                      }
+                    },
+                    "wireValue": "optionalListOfStrings"
+                  },
+                  "value": {
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string"
+                        },
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "jsonExample": "string"
+                  }
+                }
+              ],
+              "response": {
+                "type": "ok"
+              }
+            }
+          ]
         }
       ]
     }

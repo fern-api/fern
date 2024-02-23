@@ -21,6 +21,15 @@ class ServiceClient:
             - endpoint_param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedVariables
+
+        client = SeedVariables(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.post(
+            endpoint_param="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -62,6 +71,15 @@ class AsyncServiceClient:
             - endpoint_param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedVariables
+
+        client = AsyncSeedVariables(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.post(
+            endpoint_param="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -26,8 +26,12 @@ paths:
               properties:
                 size:
                   type: string
+                  example: string
               required:
                 - size
+            examples:
+              Example1:
+                value: {}
   /s3/presigned-url:
     post:
       operationId: s3_getPresignedUrl
@@ -41,6 +45,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       servers:
         - url: https://s3.aws.com
         - url: https://staging.s3.aws.com
@@ -55,8 +62,12 @@ paths:
               properties:
                 s3Key:
                   type: string
+                  example: string
               required:
                 - s3Key
+            examples:
+              Example1:
+                value: {}
 components:
   schemas: {}
   securitySchemes:

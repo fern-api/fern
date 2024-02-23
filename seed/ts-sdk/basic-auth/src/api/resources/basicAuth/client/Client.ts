@@ -27,6 +27,12 @@ export class BasicAuth {
     /**
      * GET request with basic auth scheme
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.getWithBasicAuth()
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.getWithBasicAuth()
      */
     public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -91,6 +97,15 @@ export class BasicAuth {
      * POST request with basic auth scheme
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
      * @throws {@link SeedBasicAuth.BadRequest}
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.postWithBasicAuth({})
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.postWithBasicAuth({})
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.postWithBasicAuth({})
      */
     public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

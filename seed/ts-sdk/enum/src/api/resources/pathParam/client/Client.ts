@@ -24,19 +24,15 @@ export class PathParam {
 
     public async send(
         operand: SeedEnum.Operand,
-        maybeOperand: SeedEnum.Operand | undefined,
         operandOrColor: SeedEnum.ColorOrOperand,
-        maybeOperandOrColor: SeedEnum.ColorOrOperand | undefined,
         requestOptions?: PathParam.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path/${await serializers.Operand.jsonOrThrow(
-                    operand
-                )}/${maybeOperand}/${await serializers.ColorOrOperand.jsonOrThrow(
+                `path/${await serializers.Operand.jsonOrThrow(operand)}/${await serializers.ColorOrOperand.jsonOrThrow(
                     operandOrColor
-                )}/${maybeOperandOrColor}`
+                )}`
             ),
             method: "POST",
             headers: {

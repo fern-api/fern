@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiKey",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAuthEnvironmentVariablesClient } from \"\";\n\nconst seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\" });\nawait seedAuthEnvironmentVariables.service.getWithApiKey();\n"
+            }
+        }
+    ],
     "types": {}
 }

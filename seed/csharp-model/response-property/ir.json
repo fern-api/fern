@@ -1262,7 +1262,311 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "type": "named",
+                    "typeName": {
+                      "name": {
+                        "originalName": "Movie",
+                        "camelCase": {
+                          "unsafeName": "movie",
+                          "safeName": "movie"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "movie",
+                          "safeName": "movie"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "MOVIE",
+                          "safeName": "MOVIE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Movie",
+                          "safeName": "Movie"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "service",
+                            "camelCase": {
+                              "unsafeName": "service",
+                              "safeName": "service"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "service",
+                              "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SERVICE",
+                              "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Service",
+                              "safeName": "Service"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "service",
+                          "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                          }
+                        }
+                      },
+                      "typeId": "type_service:Movie"
+                    },
+                    "shape": {
+                      "type": "object",
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "originalName": "id",
+                              "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Id",
+                                "safeName": "Id"
+                              }
+                            },
+                            "wireValue": "id"
+                          },
+                          "value": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          },
+                          "originalTypeDeclaration": {
+                            "name": {
+                              "originalName": "Movie",
+                              "camelCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "MOVIE",
+                                "safeName": "MOVIE"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Movie",
+                                "safeName": "Movie"
+                              }
+                            },
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "originalName": "service",
+                                  "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                  }
+                                }
+                              ],
+                              "packagePath": [],
+                              "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "SERVICE",
+                                  "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "Service",
+                                  "safeName": "Service"
+                                }
+                              }
+                            },
+                            "typeId": "type_service:Movie"
+                          }
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "originalName": "name",
+                              "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                              }
+                            },
+                            "wireValue": "name"
+                          },
+                          "value": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          },
+                          "originalTypeDeclaration": {
+                            "name": {
+                              "originalName": "Movie",
+                              "camelCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "MOVIE",
+                                "safeName": "MOVIE"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Movie",
+                                "safeName": "Movie"
+                              }
+                            },
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "originalName": "service",
+                                  "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                  }
+                                }
+                              ],
+                              "packagePath": [],
+                              "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "SERVICE",
+                                  "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "Service",
+                                  "safeName": "Service"
+                                }
+                              }
+                            },
+                            "typeId": "type_service:Movie"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "jsonExample": {}
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getMovieDocs",
@@ -1439,7 +1743,45 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getMovieName",
@@ -1577,7 +1919,45 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getMovieMetadata",
@@ -1764,7 +2144,72 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "container": {
+                      "map": [
+                        {
+                          "key": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          },
+                          "value": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          }
+                        }
+                      ],
+                      "type": "map"
+                    },
+                    "type": "container"
+                  },
+                  "jsonExample": {
+                    "string": "string"
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getOptionalMovie",
@@ -2009,7 +2454,311 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "type": "named",
+                    "typeName": {
+                      "name": {
+                        "originalName": "Movie",
+                        "camelCase": {
+                          "unsafeName": "movie",
+                          "safeName": "movie"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "movie",
+                          "safeName": "movie"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "MOVIE",
+                          "safeName": "MOVIE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Movie",
+                          "safeName": "Movie"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "service",
+                            "camelCase": {
+                              "unsafeName": "service",
+                              "safeName": "service"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "service",
+                              "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SERVICE",
+                              "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Service",
+                              "safeName": "Service"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "service",
+                          "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                          }
+                        }
+                      },
+                      "typeId": "type_service:Movie"
+                    },
+                    "shape": {
+                      "type": "object",
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "originalName": "id",
+                              "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Id",
+                                "safeName": "Id"
+                              }
+                            },
+                            "wireValue": "id"
+                          },
+                          "value": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          },
+                          "originalTypeDeclaration": {
+                            "name": {
+                              "originalName": "Movie",
+                              "camelCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "MOVIE",
+                                "safeName": "MOVIE"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Movie",
+                                "safeName": "Movie"
+                              }
+                            },
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "originalName": "service",
+                                  "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                  }
+                                }
+                              ],
+                              "packagePath": [],
+                              "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "SERVICE",
+                                  "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "Service",
+                                  "safeName": "Service"
+                                }
+                              }
+                            },
+                            "typeId": "type_service:Movie"
+                          }
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "originalName": "name",
+                              "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                              }
+                            },
+                            "wireValue": "name"
+                          },
+                          "value": {
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "jsonExample": "string"
+                          },
+                          "originalTypeDeclaration": {
+                            "name": {
+                              "originalName": "Movie",
+                              "camelCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "movie",
+                                "safeName": "movie"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "MOVIE",
+                                "safeName": "MOVIE"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Movie",
+                                "safeName": "Movie"
+                              }
+                            },
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "originalName": "service",
+                                  "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                  }
+                                }
+                              ],
+                              "packagePath": [],
+                              "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "service",
+                                  "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "SERVICE",
+                                  "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "Service",
+                                  "safeName": "Service"
+                                }
+                              }
+                            },
+                            "typeId": "type_service:Movie"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "jsonExample": {}
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getOptionalMovieDocs",
@@ -2186,7 +2935,45 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "endpoint_service.getOptionalMovieName",
@@ -2324,7 +3111,45 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/movie",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string"
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         }
       ]
     }

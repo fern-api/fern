@@ -16,6 +16,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/folder-aResponse'
+              examples:
+                Example1:
+                  value: {}
     post:
       operationId: foo_find
       tags:
@@ -26,6 +29,9 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/OptionalString'
+          examples:
+            Example1:
+              value: string
       responses:
         '200':
           description: ''
@@ -33,6 +39,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportingType'
+              examples:
+                Example1:
+                  value: {}
       requestBody:
         required: true
         content:
@@ -46,6 +55,9 @@ paths:
                 privateProperty:
                   type: integer
                   nullable: true
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     Imported:

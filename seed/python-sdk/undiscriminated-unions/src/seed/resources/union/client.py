@@ -29,6 +29,13 @@ class UnionClient:
             - request: MyUnion.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedUndiscriminatedUnions
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.get()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -73,6 +80,13 @@ class AsyncUnionClient:
             - request: MyUnion.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.union.get()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

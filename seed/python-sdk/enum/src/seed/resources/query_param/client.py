@@ -9,7 +9,6 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
-from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
 
@@ -22,8 +21,6 @@ class QueryParamClient:
         *,
         operand: Operand,
         maybe_operand: typing.Optional[Operand] = None,
-        operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -31,10 +28,6 @@ class QueryParamClient:
             - operand: Operand.
 
             - maybe_operand: typing.Optional[Operand].
-
-            - operand_or_color: ColorOrOperand.
-
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -52,8 +45,6 @@ class QueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -90,8 +81,6 @@ class QueryParamClient:
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
         maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
-        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
-        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -100,13 +89,9 @@ class QueryParamClient:
 
             - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
-
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
-
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Color, ColorOrOperand_Color, Operand
+        from seed import Operand
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -114,9 +99,7 @@ class QueryParamClient:
         )
         client.query_param.send_list(
             operand=Operand.GREATER_THAN,
-            maybe_operand=Operand.LESS_THAN,
-            operand_or_color=ColorOrOperand_Color(type="color", value=Color.BLUE),
-            maybe_operand_or_color=ColorOrOperand_Color(type="color", value=Color.BLUE),
+            maybe_operand=Operand.GREATER_THAN,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -127,8 +110,6 @@ class QueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -170,8 +151,6 @@ class AsyncQueryParamClient:
         *,
         operand: Operand,
         maybe_operand: typing.Optional[Operand] = None,
-        operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -179,10 +158,6 @@ class AsyncQueryParamClient:
             - operand: Operand.
 
             - maybe_operand: typing.Optional[Operand].
-
-            - operand_or_color: ColorOrOperand.
-
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -200,8 +175,6 @@ class AsyncQueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -238,8 +211,6 @@ class AsyncQueryParamClient:
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
         maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
-        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
-        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -248,13 +219,9 @@ class AsyncQueryParamClient:
 
             - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
-
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
-
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Color, ColorOrOperand_Color, Operand
+        from seed import Operand
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
@@ -262,9 +229,7 @@ class AsyncQueryParamClient:
         )
         await client.query_param.send_list(
             operand=Operand.GREATER_THAN,
-            maybe_operand=Operand.LESS_THAN,
-            operand_or_color=ColorOrOperand_Color(type="color", value=Color.BLUE),
-            maybe_operand_or_color=ColorOrOperand_Color(type="color", value=Color.BLUE),
+            maybe_operand=Operand.GREATER_THAN,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -275,8 +240,6 @@ class AsyncQueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

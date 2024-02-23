@@ -17,11 +17,18 @@ paths:
               schema:
                 type: array
                 items: {}
+              examples:
+                Example1:
+                  value:
+                    - {}
       requestBody:
         required: true
         content:
           application/json:
             schema: {}
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     MyAlias:

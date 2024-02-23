@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedQueryParametersClient } from \"\";\n\nconst seedQueryParameters = new SeedQueryParametersClient;\nawait seedQueryParameters.user.getUsername({\n    limit: 0,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2024-01-01\",\n    deadline: new Date(\"2024-01-01T00:00:00.000Z\"),\n    bytes: \"SGVsbG8gV29ybGQ=\",\n    optionalString: \"string\",\n    filter: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

@@ -35,6 +35,18 @@ class ReqWithHeadersClient:
             - x_test_endpoint_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -87,6 +99,18 @@ class AsyncReqWithHeadersClient:
             - x_test_endpoint_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

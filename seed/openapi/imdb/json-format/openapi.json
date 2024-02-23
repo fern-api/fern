@@ -20,6 +20,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MovieId"
+                },
+                "examples": {
+                  "Example1": {
+                    "value": "string"
+                  }
                 }
               }
             }
@@ -31,6 +36,11 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateMovieRequest"
+              },
+              "examples": {
+                "Example1": {
+                  "value": {}
+                }
               }
             }
           }
@@ -50,6 +60,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/MovieId"
+            },
+            "examples": {
+              "Example1": {
+                "value": "string"
+              },
+              "Example2": {
+                "value": "string"
+              }
             }
           }
         ],
@@ -60,6 +78,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Movie"
+                },
+                "examples": {
+                  "Example1": {
+                    "value": {}
+                  }
                 }
               }
             }
@@ -92,12 +115,14 @@
             "$ref": "#/components/schemas/MovieId"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "example": "string"
           },
           "rating": {
             "type": "number",
             "format": "double",
-            "description": "The rating scale is one to five stars"
+            "description": "The rating scale is one to five stars",
+            "example": 1
           }
         },
         "required": [
@@ -111,11 +136,13 @@
         "type": "object",
         "properties": {
           "title": {
-            "type": "string"
+            "type": "string",
+            "example": "string"
           },
           "rating": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": 1
           }
         },
         "required": [

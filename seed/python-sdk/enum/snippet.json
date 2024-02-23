@@ -16,7 +16,7 @@
         },
         {
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST"
             },
             "snippet": {
@@ -42,8 +42,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import Color, ColorOrOperand_Color, Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.LESS_THAN,\n    operand_or_color=ColorOrOperand_Color(type=\"color\", value=Color.BLUE),\n    maybe_operand_or_color=ColorOrOperand_Color(type=\"color\", value=Color.BLUE),\n)\n",
-                "async_client": "from seed import Color, ColorOrOperand_Color, Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.LESS_THAN,\n    operand_or_color=ColorOrOperand_Color(type=\"color\", value=Color.BLUE),\n    maybe_operand_or_color=ColorOrOperand_Color(type=\"color\", value=Color.BLUE),\n)\n",
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.GREATER_THAN,\n)\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.GREATER_THAN,\n)\n",
                 "type": "python"
             }
         }

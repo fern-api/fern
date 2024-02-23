@@ -32,6 +32,15 @@ class BasicAuthClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedBasicAuth
+
+        client = SeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.basic_auth.get_with_basic_auth()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -73,6 +82,17 @@ class BasicAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedBasicAuth
+
+        client = SeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.basic_auth.post_with_basic_auth(
+            request={},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -123,6 +143,15 @@ class AsyncBasicAuthClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedBasicAuth
+
+        client = AsyncSeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.basic_auth.get_with_basic_auth()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -164,6 +193,17 @@ class AsyncBasicAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedBasicAuth
+
+        client = AsyncSeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.basic_auth.post_with_basic_auth(
+            request={},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

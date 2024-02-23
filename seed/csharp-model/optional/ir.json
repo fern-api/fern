@@ -196,7 +196,67 @@
             "type": "json"
           },
           "errors": [],
-          "examples": []
+          "examples": [
+            {
+              "url": "/send-optional-body",
+              "rootPathParameters": [],
+              "servicePathParameters": [],
+              "endpointPathParameters": [],
+              "serviceHeaders": [],
+              "endpointHeaders": [],
+              "queryParameters": [],
+              "request": {
+                "type": "reference",
+                "shape": {
+                  "container": {
+                    "map": [
+                      {
+                        "key": {
+                          "shape": {
+                            "primitive": {
+                              "string": {
+                                "original": "string"
+                              },
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "jsonExample": "string"
+                        },
+                        "value": {
+                          "shape": {
+                            "unknown": {},
+                            "type": "unknown"
+                          },
+                          "jsonExample": {}
+                        }
+                      }
+                    ],
+                    "type": "map"
+                  },
+                  "type": "container"
+                },
+                "jsonExample": {
+                  "string": {}
+                }
+              },
+              "response": {
+                "type": "ok",
+                "body": {
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string"
+                      },
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "string"
+                }
+              }
+            }
+          ]
         }
       ]
     }

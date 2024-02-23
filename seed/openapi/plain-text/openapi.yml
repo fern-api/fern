@@ -15,6 +15,9 @@ paths:
           content:
             application/json:
               schema: {}
+              examples:
+                Example1:
+                  value: string
 components:
   schemas: {}
   securitySchemes: {}

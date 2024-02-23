@@ -46,7 +46,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v/%v/%v", operand, operandOrColor)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v", operand, operandOrColor)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

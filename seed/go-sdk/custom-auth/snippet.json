@@ -1,0 +1,24 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/custom-auth",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/custom-auth/fern/client\"\n\toption \"github.com/custom-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithCustomAuthScheme(\n\t\t\"\u003cYOUR_CustomAuthScheme\u003e\",\n\t),\n)\nresponse, err := client.CustomAuth.GetWithCustomAuth(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/custom-auth",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/custom-auth/fern/client\"\n\toption \"github.com/custom-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithCustomAuthScheme(\n\t\t\"\u003cYOUR_CustomAuthScheme\u003e\",\n\t),\n)\nresponse, err := client.CustomAuth.PostWithCustomAuth(\n\tcontext.TODO(),\n\t\"{}\",\n)\n"
+            }
+        }
+    ]
+}

@@ -14,6 +14,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: string
       responses:
         '204':
           description: ''

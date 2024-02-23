@@ -175,8 +175,8 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                 "_visit": [Function],
                 "body": {
                   "jsonExample": Map {
-                    "id" => "blah",
-                    "name" => "into",
+                    "id" => "string",
+                    "name" => "string",
                     "authorized" => "false",
                   },
                   "shape": {
@@ -273,12 +273,12 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "blah",
+                            "jsonExample": "string",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "blah",
+                                "string": "string",
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -375,12 +375,12 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                             "typeId": "type_service:UnauthorizedUser",
                           },
                           "value": {
-                            "jsonExample": "into",
+                            "jsonExample": "string",
                             "shape": {
                               "_visit": [Function],
                               "primitive": {
                                 "_visit": [Function],
-                                "string": "into",
+                                "string": "string",
                                 "type": "string",
                               },
                               "type": "primitive",

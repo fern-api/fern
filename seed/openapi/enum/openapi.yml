@@ -36,10 +36,10 @@ paths:
               Example1:
                 value:
                   operand: '>'
-                  operandOrColor: '>'
+                  operandOrColor: red
               Example2:
                 value: {}
-  /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
+  /path/{operand}/{operandOrColor}:
     post:
       operationId: pathParam_send
       tags:

@@ -18,12 +18,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieId'
+              examples:
+                Example1:
+                  value: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateMovieRequest'
+            examples:
+              Example1:
+                value: {}
   /movies/{movieId}:
     get:
       operationId: imdb_getMovie
@@ -35,6 +41,11 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/MovieId'
+          examples:
+            Example1:
+              value: string
+            Example2:
+              value: string
       responses:
         '200':
           description: ''
@@ -42,6 +53,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movie'
+              examples:
+                Example1:
+                  value: {}
         '404':
           description: ''
           content:
@@ -61,10 +75,12 @@ components:
           $ref: '#/components/schemas/MovieId'
         title:
           type: string
+          example: string
         rating:
           type: number
           format: double
           description: The rating scale is one to five stars
+          example: 1
       required:
         - id
         - title
@@ -75,9 +91,11 @@ components:
       properties:
         title:
           type: string
+          example: string
         rating:
           type: number
           format: double
+          example: 1
       required:
         - title
         - rating

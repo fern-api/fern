@@ -4,6 +4,13 @@
 
 import * as SeedEnum from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         operand: SeedEnum.Operand.GreaterThan,
+ *         maybeOperand: SeedEnum.Operand.GreaterThan
+ *     }
+ */
 export interface SendEnumListAsQueryParamRequest {
     operand: SeedEnum.Operand | SeedEnum.Operand[];
     maybeOperand?: SeedEnum.Operand | SeedEnum.Operand[];
