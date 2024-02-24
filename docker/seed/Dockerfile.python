@@ -21,7 +21,11 @@ RUN OLD_PATH="$PATH"
 RUN export PATH="$(echo $PATH | tr : '\n' | grep -v linuxbrew | paste -s -d:)"
 # Install Python
 RUN pyenv install 3.8
+RUN pyenv global 3.8
+RUN pip install poetry
 RUN pyenv install 3.9
+RUN pyenv global 3.9
+RUN pip install poetry
 # revert path
 RUN export PATH=$OLD_PATH
 

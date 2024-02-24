@@ -40,8 +40,6 @@ scripts:
   - docker: fernapi/python-seed
     commands:
       # The global python version is 3.8
-      # - mypy --cache-dir /tmp . --cache-fine-grained
-      # - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
       - poetry install
       - poetry run mypy .
 allowedFailures: 
