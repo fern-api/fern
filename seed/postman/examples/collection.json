@@ -449,7 +449,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+              "body": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"prequel\": \"movie-cv9b914f\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -481,7 +481,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+              "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"prequel\": \"movie-cv9b914f\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -518,7 +518,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+                  "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"prequel\": \"movie-cv9b914f\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
