@@ -9,6 +9,7 @@ import * as core from "../../../../core";
 export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedExamples.Movie> =
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).MovieId),
+        prequel: core.serialization.lazy(async () => (await import("../../..")).MovieId).optional(),
         title: core.serialization.string(),
         from: core.serialization.string(),
         rating: core.serialization.number(),
@@ -20,6 +21,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
 export declare namespace Movie {
     interface Raw {
         id: serializers.MovieId.Raw;
+        prequel?: serializers.MovieId.Raw | null;
         title: string;
         from: string;
         rating: number;

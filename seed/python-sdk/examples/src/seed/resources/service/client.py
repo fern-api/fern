@@ -88,6 +88,7 @@ class ServiceClient:
         client.service.create_movie(
             request=Movie(
                 id="movie-c06a4ad7",
+                prequel="movie-cv9b914f",
                 title="The Boy and the Heron",
                 from_="Hayao Miyazaki",
                 rating=8.0,
@@ -263,6 +264,7 @@ class AsyncServiceClient:
         await client.service.create_movie(
             request=Movie(
                 id="movie-c06a4ad7",
+                prequel="movie-cv9b914f",
                 title="The Boy and the Heron",
                 from_="Hayao Miyazaki",
                 rating=8.0,

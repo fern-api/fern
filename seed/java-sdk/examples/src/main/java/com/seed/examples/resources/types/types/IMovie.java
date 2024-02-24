@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface IMovie {
     String getId();
 
+    Optional<String> getPrequel();
+
     String getTitle();
 
     String getFrom();

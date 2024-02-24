@@ -6,6 +6,7 @@ import * as SeedExamples from "../../..";
  * @example
  *     {
  *         id: "movie-c06a4ad7",
+ *         prequel: "movie-cv9b914f",
  *         title: "The Boy and the Heron",
  *         from: "Hayao Miyazaki",
  *         rating: 8,
@@ -15,6 +16,7 @@ import * as SeedExamples from "../../..";
  */
 export interface Movie {
     id: SeedExamples.MovieId;
+    prequel?: SeedExamples.MovieId;
     title: string;
     from: string;
     /** The rating scale is one to five stars */

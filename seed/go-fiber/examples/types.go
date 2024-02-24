@@ -215,9 +215,10 @@ func (e *ExceptionInfo) String() string {
 }
 
 type ExtendedMovie struct {
-	Id    MovieId `json:"id" url:"id"`
-	Title string  `json:"title" url:"title"`
-	From  string  `json:"from" url:"from"`
+	Id      MovieId  `json:"id" url:"id"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	Title   string   `json:"title" url:"title"`
+	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
 	Rating float64     `json:"rating" url:"rating"`
 	Tag    commons.Tag `json:"tag" url:"tag"`
@@ -459,9 +460,10 @@ func (m *Moment) String() string {
 }
 
 type Movie struct {
-	Id    MovieId `json:"id" url:"id"`
-	Title string  `json:"title" url:"title"`
-	From  string  `json:"from" url:"from"`
+	Id      MovieId  `json:"id" url:"id"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	Title   string   `json:"title" url:"title"`
+	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
 	Rating float64     `json:"rating" url:"rating"`
 	Tag    commons.Tag `json:"tag" url:"tag"`

@@ -157,6 +157,7 @@ paths:
                 Example1:
                   value:
                     id: movie-c06a4ad7
+                    prequel: movie-cv9b914f
                     title: The Boy and the Heron
                     from: Hayao Miyazaki
                     rating: 8
@@ -188,6 +189,7 @@ paths:
               Example1:
                 value:
                   id: movie-c06a4ad7
+                  prequel: movie-cv9b914f
                   title: The Boy and the Heron
                   from: Hayao Miyazaki
                   rating: 8
@@ -327,6 +329,9 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/MovieId'
+        prequel:
+          $ref: '#/components/schemas/MovieId'
+          nullable: true
         title:
           type: string
           example: The Boy and the Heron

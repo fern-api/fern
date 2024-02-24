@@ -20,6 +20,8 @@ import java.util.Optional;
 public final class ExtendedMovie implements IMovie {
     private final String id;
 
+    private final Optional<String> prequel;
+
     private final String title;
 
     private final String from;
@@ -33,8 +35,16 @@ public final class ExtendedMovie implements IMovie {
     private final List<String> cast;
 
     private ExtendedMovie(
-            String id, String title, String from, double rating, String tag, Optional<String> book, List<String> cast) {
+            String id,
+            Optional<String> prequel,
+            String title,
+            String from,
+            double rating,
+            String tag,
+            Optional<String> book,
+            List<String> cast) {
         this.id = id;
+        this.prequel = prequel;
         this.title = title;
         this.from = from;
         this.rating = rating;
@@ -47,6 +57,12 @@ public final class ExtendedMovie implements IMovie {
     @java.lang.Override
     public String getId() {
         return id;
+    }
+
+    @JsonProperty("prequel")
+    @java.lang.Override
+    public Optional<String> getPrequel() {
+        return prequel;
     }
 
     @JsonProperty("title")
@@ -101,6 +117,7 @@ public final class ExtendedMovie implements IMovie {
 
     private boolean equalTo(ExtendedMovie other) {
         return id.equals(other.id)
+                && prequel.equals(other.prequel)
                 && title.equals(other.title)
                 && from.equals(other.from)
                 && rating == other.rating
@@ -111,7 +128,7 @@ public final class ExtendedMovie implements IMovie {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.title, this.from, this.rating, this.tag, this.book, this.cast);
+        return Objects.hash(this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.cast);
     }
 
     @java.lang.Override
@@ -148,6 +165,10 @@ public final class ExtendedMovie implements IMovie {
     public interface _FinalStage {
         ExtendedMovie build();
 
+        _FinalStage prequel(Optional<String> prequel);
+
+        _FinalStage prequel(String prequel);
+
         _FinalStage book(Optional<String> book);
 
         _FinalStage book(String book);
@@ -175,11 +196,14 @@ public final class ExtendedMovie implements IMovie {
 
         private Optional<String> book = Optional.empty();
 
+        private Optional<String> prequel = Optional.empty();
+
         private Builder() {}
 
         @java.lang.Override
         public Builder from(ExtendedMovie other) {
             id(other.getId());
+            prequel(other.getPrequel());
             title(other.getTitle());
             from(other.getFrom());
             rating(other.getRating());
@@ -262,8 +286,21 @@ public final class ExtendedMovie implements IMovie {
         }
 
         @java.lang.Override
+        public _FinalStage prequel(String prequel) {
+            this.prequel = Optional.of(prequel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "prequel", nulls = Nulls.SKIP)
+        public _FinalStage prequel(Optional<String> prequel) {
+            this.prequel = prequel;
+            return this;
+        }
+
+        @java.lang.Override
         public ExtendedMovie build() {
-            return new ExtendedMovie(id, title, from, rating, tag, book, cast);
+            return new ExtendedMovie(id, prequel, title, from, rating, tag, book, cast);
         }
     }
 }

@@ -31,6 +31,7 @@ module SeedExamplesClient
 
     # @param request [Hash] Request of type Types::Movie, as a Hash
     #   * :id (Types::MOVIE_ID)
+    #   * :prequel (Types::MOVIE_ID)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
@@ -95,6 +96,7 @@ module SeedExamplesClient
 
     # @param request [Hash] Request of type Types::Movie, as a Hash
     #   * :id (Types::MOVIE_ID)
+    #   * :prequel (Types::MOVIE_ID)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)

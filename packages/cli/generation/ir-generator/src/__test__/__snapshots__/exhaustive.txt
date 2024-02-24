@@ -8027,6 +8027,418 @@ exports[`generate IR 1`] = `
             },
           },
         },
+        {
+          "allPathParameters": [],
+          "auth": true,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/object/get-and-return-nested-with-required-field",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "getAndReturnNestedWithRequiredFieldAsList",
+              "unsafeName": "getAndReturnNestedWithRequiredFieldAsList",
+            },
+            "originalName": "getAndReturnNestedWithRequiredFieldAsList",
+            "pascalCase": {
+              "safeName": "GetAndReturnNestedWithRequiredFieldAsList",
+              "unsafeName": "GetAndReturnNestedWithRequiredFieldAsList",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_AND_RETURN_NESTED_WITH_REQUIRED_FIELD_AS_LIST",
+              "unsafeName": "GET_AND_RETURN_NESTED_WITH_REQUIRED_FIELD_AS_LIST",
+            },
+            "snakeCase": {
+              "safeName": "get_and_return_nested_with_required_field_as_list",
+              "unsafeName": "get_and_return_nested_with_required_field_as_list",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/get-and-return-nested-with-required-field",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "docs": null,
+            "requestBodyType": {
+              "_type": "container",
+              "container": {
+                "_type": "list",
+                "list": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "object",
+                          "unsafeName": "object",
+                        },
+                        "originalName": "object",
+                        "pascalCase": {
+                          "safeName": "Object",
+                          "unsafeName": "Object",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "OBJECT",
+                          "unsafeName": "OBJECT",
+                        },
+                        "snakeCase": {
+                          "safeName": "object",
+                          "unsafeName": "object",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "nestedObjectWithRequiredField",
+                      "unsafeName": "nestedObjectWithRequiredField",
+                    },
+                    "originalName": "NestedObjectWithRequiredField",
+                    "pascalCase": {
+                      "safeName": "NestedObjectWithRequiredField",
+                      "unsafeName": "NestedObjectWithRequiredField",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                      "unsafeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_object_with_required_field",
+                      "unsafeName": "nested_object_with_required_field",
+                    },
+                  },
+                  "typeId": "type_types/object:NestedObjectWithRequiredField",
+                },
+              },
+            },
+            "type": "reference",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "object",
+                      "unsafeName": "object",
+                    },
+                    "originalName": "object",
+                    "pascalCase": {
+                      "safeName": "Object",
+                      "unsafeName": "Object",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "OBJECT",
+                      "unsafeName": "OBJECT",
+                    },
+                    "snakeCase": {
+                      "safeName": "object",
+                      "unsafeName": "object",
+                    },
+                  },
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "nestedObjectWithRequiredField",
+                    "unsafeName": "nestedObjectWithRequiredField",
+                  },
+                  "originalName": "NestedObjectWithRequiredField",
+                  "pascalCase": {
+                    "safeName": "NestedObjectWithRequiredField",
+                    "unsafeName": "NestedObjectWithRequiredField",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                    "unsafeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                  },
+                  "snakeCase": {
+                    "safeName": "nested_object_with_required_field",
+                    "unsafeName": "nested_object_with_required_field",
+                  },
+                },
+                "typeId": "type_types/object:NestedObjectWithRequiredField",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "type": "justRequestBody",
+              "value": {
+                "contentType": null,
+                "docs": null,
+                "requestBodyType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "list",
+                    "list": {
+                      "_type": "named",
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "object",
+                              "unsafeName": "object",
+                            },
+                            "originalName": "object",
+                            "pascalCase": {
+                              "safeName": "Object",
+                              "unsafeName": "Object",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "OBJECT",
+                              "unsafeName": "OBJECT",
+                            },
+                            "snakeCase": {
+                              "safeName": "object",
+                              "unsafeName": "object",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                          "originalName": "object",
+                          "pascalCase": {
+                            "safeName": "Object",
+                            "unsafeName": "Object",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "OBJECT",
+                            "unsafeName": "OBJECT",
+                          },
+                          "snakeCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "nestedObjectWithRequiredField",
+                          "unsafeName": "nestedObjectWithRequiredField",
+                        },
+                        "originalName": "NestedObjectWithRequiredField",
+                        "pascalCase": {
+                          "safeName": "NestedObjectWithRequiredField",
+                          "unsafeName": "NestedObjectWithRequiredField",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                          "unsafeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                        },
+                        "snakeCase": {
+                          "safeName": "nested_object_with_required_field",
+                          "unsafeName": "nested_object_with_required_field",
+                        },
+                      },
+                      "typeId": "type_types/object:NestedObjectWithRequiredField",
+                    },
+                  },
+                },
+                "type": "typeReference",
+              },
+            },
+          },
+        },
       ],
       "headers": [],
       "name": {
