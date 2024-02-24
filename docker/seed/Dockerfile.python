@@ -14,7 +14,14 @@ ENV PYENV_ROOT="${HOME}/.pyenv"
 ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
 RUN eval "$(pyenv init --path)"
 
-RUN pyenv install 3.9
+# Save so we can revert
+RUN OLD_PATH="$PATH"
+# Remove linuxbrew from the path
+RUN export PATH="$(echo $PATH | tr : '\n' | grep -v linuxbrew | paste -s -d:)"
+# Install Python
 RUN pyenv install 3.8
+RUN pyenv install 3.9
+# revert path
+RUN export PATH=$OLD_PATH
 
 RUN pyenv global 3.8
