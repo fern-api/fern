@@ -3,9 +3,18 @@
  */
 package com.seed.audiences;
 
+import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.resources.foo.requests.FindRequest;
+import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.TimeUnit;
+
 public final class TestClient {
+    @Test
     public void test() {
         // Add tests here and mark this file in .fernignore
-        assert true;
+        SeedAudiencesClient client = SeedAudiencesClient.builder().url("https://localhost").build();
+//        client.foo().find(FindRequest.builder().build());
+        client.foo().find(FindRequest.builder().build(), RequestOptions.builder().timeout(10, TimeUnit.SECONDS).build());
     }
 }

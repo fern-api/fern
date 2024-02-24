@@ -288,7 +288,7 @@ public abstract class AbstractEndpointWriter {
                         defaultedClientName,
                         clientOptionsField,
                         generatedClientOptions.httpClient())
-                .beginControlFlow("if ($L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME)
+                .beginControlFlow("if ($L != null && $L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME, REQUEST_OPTIONS_PARAMETER_NAME)
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
                         "$L = $N.$N($L)",
