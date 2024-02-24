@@ -12,7 +12,6 @@ import com.seed.trace.resources.migration.requests.GetAttemptedMigrationsRequest
 import com.seed.trace.resources.migration.types.Migration;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -47,12 +46,7 @@ public class MigrationClient {
         try {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
-                client = client.newBuilder()
-                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
-                        .connectTimeout(0, TimeUnit.SECONDS)
-                        .writeTimeout(0, TimeUnit.SECONDS)
-                        .readTimeout(0, TimeUnit.SECONDS)
-                        .build();
+                client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {

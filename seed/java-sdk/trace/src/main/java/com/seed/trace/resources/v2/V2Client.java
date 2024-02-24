@@ -11,7 +11,6 @@ import com.seed.trace.core.Suppliers;
 import com.seed.trace.resources.v2.problem.ProblemClient;
 import com.seed.trace.resources.v2.v3.V3Client;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -48,12 +47,7 @@ public class V2Client {
         try {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions.getTimeout().isPresent()) {
-                client = client.newBuilder()
-                        .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
-                        .connectTimeout(0, TimeUnit.SECONDS)
-                        .writeTimeout(0, TimeUnit.SECONDS)
-                        .readTimeout(0, TimeUnit.SECONDS)
-                        .build();
+                client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {

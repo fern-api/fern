@@ -291,17 +291,11 @@ public abstract class AbstractEndpointWriter {
                 .beginControlFlow("if ($L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME)
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
-                        "$L = $L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
-                                ".connectTimeout(0, $T.SECONDS)" +
-                                ".writeTimeout(0, $T.SECONDS)" +
-                                ".readTimeout(0, $T.SECONDS).build()",
+                        "$L = $N.$N($L)",
                         defaultedClientName,
-                        defaultedClientName,
-                        REQUEST_OPTIONS_PARAMETER_NAME,
-                        REQUEST_OPTIONS_PARAMETER_NAME,
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class)
+                        clientOptionsField,
+                        generatedClientOptions.httpClientWithTimeout(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow()
                 .addStatement(
                         "$T $L = $N.newCall($L).execute()",
