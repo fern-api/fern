@@ -63,7 +63,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
@@ -102,7 +102,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
@@ -141,7 +141,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
@@ -185,7 +185,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
@@ -225,7 +225,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
@@ -265,7 +265,7 @@ public class ObjectClient {
     try {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions.getTimeout().isPresent()) {
-        client = client.newBuilder().readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).build();
+        client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
       if (response.isSuccessful()) {
