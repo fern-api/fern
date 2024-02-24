@@ -523,6 +523,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 ```ts
 await seedExamples.service.createMovie({
     id: "movie-c06a4ad7",
+    prequel: "movie-cv9b914f",
     title: "The Boy and the Heron",
     from: "Hayao Miyazaki",
     rating: 8,
