@@ -51,7 +51,10 @@ public final class ClientOptions {
   }
 
   public OkHttpClient httpClientWithTimeout(RequestOptions requestOptions) {
-    return httpClient.newBuilder().callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).connectTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).build();
+    if (requestOptions == null) {
+      return this.httpClient;
+    }
+    return this.httpClient.newBuilder().callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit()).connectTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).build();
   }
 
   public static Builder builder() {
