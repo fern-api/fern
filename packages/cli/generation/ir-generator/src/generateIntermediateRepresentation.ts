@@ -3,6 +3,7 @@ import { noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import {
+    ExampleType,
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
@@ -30,6 +31,7 @@ import { convertTypeDeclaration } from "./converters/type-declarations/convertTy
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
+import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { formatDocs } from "./formatDocs";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
@@ -408,6 +410,9 @@ function filterIntermediateRepresentationForAudiences(
     const filteredTypesAndProperties = Object.fromEntries(
         Object.entries(filteredTypes).map(([typeId, typeDeclaration]) => {
             const filteredProperties = [];
+            typeDeclaration.examples = typeDeclaration.examples
+                .map((example) => filterExampleType(filteredIr, example))
+                .filter((ex) => ex !== undefined) as ExampleType[];
             if (typeDeclaration.shape.type === "object") {
                 for (const property of typeDeclaration.shape.properties) {
                     const hasProperty = filteredIr.hasProperty(typeId, property.name.wireValue);
@@ -415,6 +420,7 @@ function filterIntermediateRepresentationForAudiences(
                         filteredProperties.push(property);
                     }
                 }
+
                 return [
                     typeId,
                     {
@@ -441,6 +447,9 @@ function filterIntermediateRepresentationForAudiences(
                 endpoints: httpService.endpoints
                     .filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
                     .map((httpEndpoint) => {
+                        httpEndpoint.examples = httpEndpoint.examples.map((example) =>
+                            filterEndpointExample(filteredIr, example)
+                        );
                         if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
                             return {
                                 ...httpEndpoint,
