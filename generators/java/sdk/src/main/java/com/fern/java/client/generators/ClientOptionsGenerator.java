@@ -158,8 +158,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
                         REQUEST_OPTIONS_PARAMETER_NAME)
                 .returns(OKHTTP_CLIENT_FIELD.type)
+                .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
+                .endControlFlow()
                 .addStatement(
-                        "return $L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
+                        "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
                                 ".connectTimeout(0, $T.SECONDS)" +
                                 ".writeTimeout(0, $T.SECONDS)" +
                                 ".readTimeout(0, $T.SECONDS).build()",

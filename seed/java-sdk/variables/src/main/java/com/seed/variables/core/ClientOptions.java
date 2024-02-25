@@ -55,7 +55,10 @@ public final class ClientOptions {
     }
 
     public OkHttpClient httpClientWithTimeout(RequestOptions requestOptions) {
-        return httpClient
+        if (requestOptions == null) {
+            return this.httpClient;
+        }
+        return this.httpClient
                 .newBuilder()
                 .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
                 .connectTimeout(0, TimeUnit.SECONDS)

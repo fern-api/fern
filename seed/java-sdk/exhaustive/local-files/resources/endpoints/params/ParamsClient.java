@@ -56,7 +56,7 @@ public class ParamsClient {
       .build();
     try {
       OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions.getTimeout().isPresent()) {
+      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
@@ -92,7 +92,7 @@ public class ParamsClient {
       Request okhttpRequest = _requestBuilder.build();
       try {
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         Response response = client.newCall(okhttpRequest).execute();
@@ -129,7 +129,7 @@ public class ParamsClient {
         Request okhttpRequest = _requestBuilder.build();
         try {
           OkHttpClient client = clientOptions.httpClient();
-          if (requestOptions.getTimeout().isPresent()) {
+          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
           }
           Response response = client.newCall(okhttpRequest).execute();
@@ -166,7 +166,7 @@ public class ParamsClient {
           Request okhttpRequest = _requestBuilder.build();
           try {
             OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions.getTimeout().isPresent()) {
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
               client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
@@ -211,7 +211,7 @@ public class ParamsClient {
             .build();
           try {
             OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions.getTimeout().isPresent()) {
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
               client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
