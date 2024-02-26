@@ -33,23 +33,27 @@ export async function testCustomFixture({
     const outputDir = await tmp.dir();
     const absolutePathToOutput = AbsoluteFilePath.of(outputDir.path);
     const taskContextFactory = new TaskContextFactory(logLevel);
+    const customFixtureConfig = workspace.workspaceConfig.customFixtureConfig;
 
-    const taskContext = taskContextFactory.create(`${workspace.workspaceName}:${"custom"} -`);
+    const taskContext = taskContextFactory.create(
+        `${workspace.workspaceName}:${"custom"} - ${customFixtureConfig?.outputFolder ?? ""}`
+    );
 
     const result = await acquireLocksAndRunTest({
         absolutePathToWorkspace: join(pathToFixture),
         lock,
         irVersion,
-        outputVersion: undefined,
+        outputVersion: customFixtureConfig?.outputVersion,
         language,
         fixture: "custom",
         docker,
         scripts: undefined,
-        customConfig: {},
+        customConfig: customFixtureConfig?.customConfig,
+        selectAudiences: customFixtureConfig?.audiences,
         taskContext,
         outputDir: absolutePathToOutput,
-        outputMode: "github",
-        outputFolder: "custom",
+        outputMode: customFixtureConfig?.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
+        outputFolder: customFixtureConfig?.outputFolder ?? "custom",
         id: "custom",
         keepDocker,
         skipScripts

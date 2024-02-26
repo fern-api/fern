@@ -119,6 +119,7 @@ export async function testWorkspaceFixtures({
                             docker,
                             scripts: runningScripts,
                             customConfig: fixtureConfigInstance.customConfig,
+                            selectAudiences: fixtureConfigInstance.audiences,
                             taskContext: taskContextFactory.create(
                                 `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
                             ),
@@ -196,6 +197,7 @@ export async function acquireLocksAndRunTest({
     fixture,
     docker,
     customConfig,
+    selectAudiences,
     scripts,
     taskContext,
     outputDir,
@@ -213,6 +215,7 @@ export async function acquireLocksAndRunTest({
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
+    selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
@@ -233,6 +236,7 @@ export async function acquireLocksAndRunTest({
         language,
         docker,
         customConfig,
+        selectAudiences,
         scripts,
         taskContext,
         outputDir,
@@ -255,6 +259,7 @@ async function testWithWriteToDisk({
     language,
     docker,
     customConfig,
+    selectAudiences,
     scripts,
     taskContext,
     outputDir,
@@ -271,6 +276,7 @@ async function testWithWriteToDisk({
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
+    selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
@@ -313,6 +319,7 @@ async function testWithWriteToDisk({
             workspace: fernWorkspace,
             language,
             customConfig,
+            selectAudiences,
             taskContext,
             irVersion,
             outputVersion,

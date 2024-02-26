@@ -15221,7 +15221,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "document_type": {
@@ -29668,28 +29668,28 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "actual_delivery_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "actual_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "actual_pickup_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "available_for_pickup_date": {
@@ -29765,7 +29765,7 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "estimated_available_for_pickup_date": {
@@ -29779,21 +29779,21 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "estimated_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "estimated_pickup_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "id": {
@@ -30507,28 +30507,28 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_delivery_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_pickup_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "available_for_pickup_date": {
@@ -30604,7 +30604,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_available_for_pickup_date": {
@@ -30618,21 +30618,21 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_pickup_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "id": {
@@ -43121,14 +43121,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "actual_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "additional_dates": {
@@ -43144,42 +43144,42 @@ Other details about this invoice",
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-09T04:00:00.000Z",
+                                  "value": "2019-07-09T12:00:00.000+08:00",
                                 },
                               },
                               "delivery_appointment_requested_date": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-14T04:00:00.000Z",
+                                  "value": "2019-07-14T12:00:00.000+08:00",
                                 },
                               },
                               "delivery_appointment_scheduled_at_date": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-11T04:00:00.000Z",
+                                  "value": "2019-07-11T12:00:00.000+08:00",
                                 },
                               },
                               "delivery_appointment_scheduled_date": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-14T04:00:00.000Z",
+                                  "value": "2019-07-14T12:00:00.000+08:00",
                                 },
                               },
                               "delivery_completed": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-14T04:00:00.000Z",
+                                  "value": "2019-07-14T12:00:00.000+08:00",
                                 },
                               },
                               "loaded_on_truck_date": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2019-07-13T04:00:00.000Z",
+                                  "value": "2019-07-13T12:00:00.000+08:00",
                                 },
                               },
                             },
@@ -43453,14 +43453,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "estimated_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25.000+00:00",
                             },
                           },
                           "id": {
@@ -44406,14 +44406,14 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25.000+00:00",
                     },
                   },
                   "actual_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25.000+00:00",
                     },
                   },
                   "additional_dates": {
@@ -44429,42 +44429,42 @@ Other details about this invoice",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-09T04:00:00.000Z",
+                          "value": "2019-07-09T12:00:00.000+08:00",
                         },
                       },
                       "delivery_appointment_requested_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-14T04:00:00.000Z",
+                          "value": "2019-07-14T12:00:00.000+08:00",
                         },
                       },
                       "delivery_appointment_scheduled_at_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-11T04:00:00.000Z",
+                          "value": "2019-07-11T12:00:00.000+08:00",
                         },
                       },
                       "delivery_appointment_scheduled_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-14T04:00:00.000Z",
+                          "value": "2019-07-14T12:00:00.000+08:00",
                         },
                       },
                       "delivery_completed": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-14T04:00:00.000Z",
+                          "value": "2019-07-14T12:00:00.000+08:00",
                         },
                       },
                       "loaded_on_truck_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2019-07-13T04:00:00.000Z",
+                          "value": "2019-07-13T12:00:00.000+08:00",
                         },
                       },
                     },
@@ -44521,7 +44521,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "destination": {
@@ -44811,14 +44811,14 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25.000+00:00",
                     },
                   },
                   "estimated_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25.000+00:00",
                     },
                   },
                   "id": {
@@ -45680,35 +45680,35 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "actual_delivered_in_full_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "actual_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "actual_picked_up_in_full_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "arrival_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "belongs_to_a_buyers_consol": {
@@ -46315,14 +46315,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "documents": {
@@ -46355,28 +46355,28 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "estimated_delivered_in_full_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "estimated_departure_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "estimated_picked_up_in_full_date": {
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "freight_type": {
@@ -46899,7 +46899,7 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2019-02-06T19:28:25.000Z",
+                              "value": "2019-02-06T19:28:25+00:00",
                             },
                           },
                           "pieces": {
@@ -48653,28 +48653,28 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_delivered_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_picked_up_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "air_shipment": {
@@ -48745,7 +48745,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "belongs_to_a_buyers_consol": {
@@ -49390,14 +49390,14 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "documents": {
@@ -49430,28 +49430,28 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_delivered_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_picked_up_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "freight_type": {
@@ -50036,7 +50036,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "pieces": {
@@ -50782,28 +50782,28 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_delivered_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "actual_picked_up_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "air_shipment": {
@@ -50874,7 +50874,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "belongs_to_a_buyers_consol": {
@@ -51458,7 +51458,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "customs_entries": {
@@ -51519,14 +51519,14 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "documents": {
@@ -51559,28 +51559,28 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_delivered_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_departure_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "estimated_picked_up_in_full_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "freight_type": {
@@ -52168,7 +52168,7 @@ Other details about this invoice",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2019-02-06T19:28:25.000Z",
+                      "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
                   "pieces": {

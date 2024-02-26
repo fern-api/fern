@@ -11,6 +11,8 @@ export interface SeedWorkspaceConfiguration {
     generatorType: FernSeedConfig.GeneratorType;
     docker: string;
     dockerCommand?: FernSeedConfig.DockerCommand;
+    /** Configuration that will be used for any custom fixture specified by --custom-fixture */
+    customFixtureConfig?: FernSeedConfig.FixtureConfigurations;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]>;
     scripts?: FernSeedConfig.ScriptConfig[];
     /**

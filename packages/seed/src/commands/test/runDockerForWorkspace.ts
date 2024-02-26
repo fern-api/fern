@@ -7,8 +7,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/types/api";
-import { OutputMode } from "../../config/api";
 import { ParsedDockerName } from "../../cli";
+import { OutputMode } from "../../config/api";
 
 const DUMMY_ORGANIZATION = "seed";
 const ALL_AUDIENCES: Audiences = { type: "all" };
@@ -20,6 +20,7 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
+    selectAudiences,
     irVersion,
     outputVersion,
     outputMode,
@@ -32,6 +33,7 @@ export async function runDockerForWorkspace({
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
+    selectAudiences?: string[];
     irVersion?: string;
     outputVersion?: string;
     outputMode: OutputMode;
@@ -40,7 +42,7 @@ export async function runDockerForWorkspace({
 }): Promise<void> {
     const generatorGroup: GeneratorGroup = {
         groupName: "test",
-        audiences: ALL_AUDIENCES,
+        audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
         generators: [
             {
                 name: docker.name,
