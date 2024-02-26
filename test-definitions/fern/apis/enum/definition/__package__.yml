@@ -24,8 +24,15 @@ types:
         name: RED 
       - value: "blue"
         name: BLUE
+    examples:
+      - name: Red
+        value: red
   
   ColorOrOperand:
+    discriminated: false
     union:
-      color: Color
-      operand: Operand
+      - Color
+      - Operand
+    examples:
+      - name: Red
+        value: red

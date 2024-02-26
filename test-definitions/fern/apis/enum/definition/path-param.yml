@@ -16,3 +16,6 @@ service:
       examples: 
         - path-parameters:
             operand: $root.Operand.GreaterThan
+            maybeOperand: $root.Operand.LessThan
+            operandOrColor: $root.ColorOrOperand.Red
+            maybeOperandOrColor: $root.ColorOrOperand.Red

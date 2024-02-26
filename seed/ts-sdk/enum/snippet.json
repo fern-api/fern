@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, undefined, undefined, undefined);\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, undefined, undefined);\n"
             }
         },
         {

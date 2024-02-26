@@ -42,7 +42,7 @@ class PathParamClient:
         from seed.client import SeedEnum
 
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.path_param.send(operand=Operand., )
+        client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -106,7 +106,7 @@ class AsyncPathParamClient:
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.path_param.send(operand=Operand., )
+        await client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

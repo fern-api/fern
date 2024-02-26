@@ -7,30 +7,11 @@ import * as SeedEnum from "../../api";
 import * as core from "../../core";
 
 export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
-    core.serialization
-        .union("type", {
-            color: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("..")).Color),
-            }),
-            operand: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("..")).Operand),
-            }),
-        })
-        .transform<SeedEnum.ColorOrOperand>({
-            transform: (value) => value,
-            untransform: (value) => value,
-        });
+    core.serialization.undiscriminatedUnion([
+        core.serialization.lazy(async () => (await import("..")).Color),
+        core.serialization.lazy(async () => (await import("..")).Operand),
+    ]);
 
 export declare namespace ColorOrOperand {
-    type Raw = ColorOrOperand.Color | ColorOrOperand.Operand;
-
-    interface Color {
-        type: "color";
-        value: serializers.Color.Raw;
-    }
-
-    interface Operand {
-        type: "operand";
-        value: serializers.Operand.Raw;
-    }
+    type Raw = serializers.Color.Raw | serializers.Operand.Raw;
 }

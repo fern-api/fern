@@ -133,10 +133,7 @@ export class ComplexQueryParamTypeDetector {
             return false;
         }
         visited.add(type.rawName);
-        if (
-            isRawDiscriminatedUnionDefinition(type.declaration) ||
-            isRawUndiscriminatedUnionDefinition(type.declaration)
-        ) {
+        if (isRawDiscriminatedUnionDefinition(type.declaration)) {
             return true;
         }
         if (isRawEnumDefinition(type.declaration)) {
@@ -150,10 +147,52 @@ export class ComplexQueryParamTypeDetector {
                 visited
             });
         }
+        if (isRawUndiscriminatedUnionDefinition(type.declaration)) {
+            for (const variant of type.declaration.union) {
+                const variantType = typeof variant === "string" ? variant : variant.type;
+                const isVariantComplex = this.isTypeComplex(variantType, {
+                    contents: file.definitionFile,
+                    relativeFilepath: file.relativeFilepath
+                });
+                if (isVariantComplex) {
+                    return true;
+                }
+            }
+            return false;
+        }
         assertNever(type.declaration);
     }
 
     private objectHasComplexProperties({
+        typeName,
+        objectDeclaration,
+        file,
+        visited
+    }: {
+        typeName: string;
+        objectDeclaration: RawSchemas.ObjectSchema;
+        file: FernFileContext;
+        visited: Set<string>;
+    }): boolean {
+        const allPropertiesForObject = getAllPropertiesForObject({
+            typeName,
+            objectDeclaration,
+            typeResolver: this.typeResolver,
+            definitionFile: file.definitionFile,
+            workspace: this.workspace,
+            filepathOfDeclaration: file.relativeFilepath,
+            smartCasing: false
+        });
+        return allPropertiesForObject.some((property) => {
+            return this.isComplex({
+                type: property.resolvedPropertyType,
+                file,
+                visited
+            });
+        });
+    }
+
+    private undiscriminatedUnionHasPrimitives({
         typeName,
         objectDeclaration,
         file,
