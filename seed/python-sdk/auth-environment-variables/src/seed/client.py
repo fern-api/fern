@@ -17,7 +17,7 @@ class SeedAuthEnvironmentVariables:
     Parameters:
         - base_url: str. The base url to use for requests from the client.
 
-        - x_another_header: str.
+        - x_another_header: typing.Optional[str].
 
         - api_key: typing.Optional[str].
 
@@ -38,11 +38,15 @@ class SeedAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        x_another_header: str,
+        x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
+        if x_another_header is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
+            )
         if api_key is None:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = SyncClientWrapper(
@@ -61,7 +65,7 @@ class AsyncSeedAuthEnvironmentVariables:
     Parameters:
         - base_url: str. The base url to use for requests from the client.
 
-        - x_another_header: str.
+        - x_another_header: typing.Optional[str].
 
         - api_key: typing.Optional[str].
 
@@ -82,11 +86,15 @@ class AsyncSeedAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        x_another_header: str,
+        x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
+        if x_another_header is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
+            )
         if api_key is None:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
