@@ -7,6 +7,12 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class Color(str, enum.Enum):
+    """
+    from seed import Color
+
+    Color.RED
+    """
+
     RED = "red"
     BLUE = "blue"
 

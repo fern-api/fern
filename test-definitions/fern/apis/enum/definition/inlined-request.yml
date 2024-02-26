@@ -20,4 +20,5 @@ service:
       examples: 
         - request:
             operand: $root.Operand.GreaterThan
+            operandOrColor: $root.ColorOrOperand.Red
       

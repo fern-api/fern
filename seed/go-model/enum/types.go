@@ -30,70 +30,43 @@ func (c Color) Ptr() *Color {
 }
 
 type ColorOrOperand struct {
-	Type    string
-	Color   Color
-	Operand Operand
+	typeName string
+	Color    Color
+	Operand  Operand
 }
 
 func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
-	return &ColorOrOperand{Type: "color", Color: value}
+	return &ColorOrOperand{typeName: "color", Color: value}
 }
 
 func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
-	return &ColorOrOperand{Type: "operand", Operand: value}
+	return &ColorOrOperand{typeName: "operand", Operand: value}
 }
 
 func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	var valueColor Color
+	if err := json.Unmarshal(data, &valueColor); err == nil {
+		c.typeName = "color"
+		c.Color = valueColor
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	var valueOperand Operand
+	if err := json.Unmarshal(data, &valueOperand); err == nil {
+		c.typeName = "operand"
+		c.Operand = valueOperand
+		return nil
 	}
-	c.Type = unmarshaler.Type
-	switch unmarshaler.Type {
-	case "color":
-		var valueUnmarshaler struct {
-			Color Color `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		c.Color = valueUnmarshaler.Color
-	case "operand":
-		var valueUnmarshaler struct {
-			Operand Operand `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		c.Operand = valueUnmarshaler.Operand
-	}
-	return nil
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
 }
 
 func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
-	switch c.Type {
+	switch c.typeName {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
+		return nil, fmt.Errorf("invalid type %s in %T", c.typeName, c)
 	case "color":
-		var marshaler = struct {
-			Type  string `json:"type"`
-			Color Color  `json:"value,omitempty"`
-		}{
-			Type:  c.Type,
-			Color: c.Color,
-		}
-		return json.Marshal(marshaler)
+		return json.Marshal(c.Color)
 	case "operand":
-		var marshaler = struct {
-			Type    string  `json:"type"`
-			Operand Operand `json:"value,omitempty"`
-		}{
-			Type:    c.Type,
-			Operand: c.Operand,
-		}
-		return json.Marshal(marshaler)
+		return json.Marshal(c.Operand)
 	}
 }
 
@@ -103,9 +76,9 @@ type ColorOrOperandVisitor interface {
 }
 
 func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
-	switch c.Type {
+	switch c.typeName {
 	default:
-		return fmt.Errorf("invalid type %s in %T", c.Type, c)
+		return fmt.Errorf("invalid type %s in %T", c.typeName, c)
 	case "color":
 		return visitor.VisitColor(c.Color)
 	case "operand":

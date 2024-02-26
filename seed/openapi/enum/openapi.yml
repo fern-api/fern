@@ -36,6 +36,7 @@ paths:
               Example1:
                 value:
                   operand: '>'
+                  operandOrColor: red
   /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
     post:
       operationId: pathParam_send
@@ -56,6 +57,9 @@ paths:
           schema:
             $ref: '#/components/schemas/Operand'
             nullable: true
+          examples:
+            Example1:
+              value: less_than
         - name: operandOrColor
           in: path
           required: true
@@ -67,6 +71,9 @@ paths:
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
             nullable: true
+          examples:
+            Example1:
+              value: red
       responses:
         '204':
           description: ''
@@ -138,24 +145,6 @@ components:
     ColorOrOperand:
       title: ColorOrOperand
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - color
-            value:
-              $ref: '#/components/schemas/Color'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - operand
-            value:
-              $ref: '#/components/schemas/Operand'
-          required:
-            - type
+        - $ref: '#/components/schemas/Color'
+        - $ref: '#/components/schemas/Operand'
   securitySchemes: {}

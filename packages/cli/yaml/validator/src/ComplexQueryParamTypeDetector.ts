@@ -133,10 +133,7 @@ export class ComplexQueryParamTypeDetector {
             return false;
         }
         visited.add(type.rawName);
-        if (
-            isRawDiscriminatedUnionDefinition(type.declaration) ||
-            isRawUndiscriminatedUnionDefinition(type.declaration)
-        ) {
+        if (isRawDiscriminatedUnionDefinition(type.declaration)) {
             return true;
         }
         if (isRawEnumDefinition(type.declaration)) {
@@ -149,6 +146,19 @@ export class ComplexQueryParamTypeDetector {
                 file,
                 visited
             });
+        }
+        if (isRawUndiscriminatedUnionDefinition(type.declaration)) {
+            for (const variant of type.declaration.union) {
+                const variantType = typeof variant === "string" ? variant : variant.type;
+                const isVariantComplex = this.isTypeComplex(variantType, {
+                    contents: file.definitionFile,
+                    relativeFilepath: file.relativeFilepath
+                });
+                if (isVariantComplex != null && isVariantComplex) {
+                    return true;
+                }
+            }
+            return false;
         }
         assertNever(type.declaration);
     }
