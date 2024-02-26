@@ -17,10 +17,13 @@ import {
 } from "@fern-api/ir-sdk";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 
-function filterExampleSingleUnionTypeProperties(
-    filteredIr: FilteredIr,
-    singleUnionTypeProperties: ExampleSingleUnionTypeProperties
-): ExampleSingleUnionTypeProperties | undefined {
+function filterExampleSingleUnionTypeProperties({
+    filteredIr,
+    singleUnionTypeProperties
+}: {
+    filteredIr: FilteredIr;
+    singleUnionTypeProperties: ExampleSingleUnionTypeProperties;
+}): ExampleSingleUnionTypeProperties | undefined {
     return singleUnionTypeProperties._visit<ExampleSingleUnionTypeProperties | undefined>({
         samePropertiesAsObject: (s) => {
             const filteredObject = filteredIr.hasTypeId(s.typeId)
@@ -31,9 +34,9 @@ function filterExampleSingleUnionTypeProperties(
                               .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
                               .map((p) => ({
                                   ...p,
-                                  value: filterExampleTypeReference(filteredIr, p.value)
+                                  value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
                               }))
-                              .filter((p) => p.value !== undefined) as ExampleObjectProperty[]
+                              .filter((p): p is ExampleObjectProperty => p.value !== undefined)
                       }
                   }
                 : undefined;
@@ -42,7 +45,7 @@ function filterExampleSingleUnionTypeProperties(
                 : undefined;
         },
         singleProperty: (s) => {
-            const filteredProperty = filterExampleTypeReference(filteredIr, s);
+            const filteredProperty = filterExampleTypeReference({ filteredIr, exampleTypeReference: s });
             return filteredProperty !== undefined
                 ? ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
                 : undefined;
@@ -54,10 +57,13 @@ function filterExampleSingleUnionTypeProperties(
     });
 }
 
-function filterExampleTypeReference(
-    filteredIr: FilteredIr,
-    exampleTypeReference: ExampleTypeReference
-): ExampleTypeReference | undefined {
+function filterExampleTypeReference({
+    filteredIr,
+    exampleTypeReference
+}: {
+    filteredIr: FilteredIr;
+    exampleTypeReference: ExampleTypeReference;
+}): ExampleTypeReference | undefined {
     return exampleTypeReference.shape._visit<ExampleTypeReference | undefined>({
         primitive: () => exampleTypeReference,
         container: (c) =>
@@ -67,8 +73,8 @@ function filterExampleTypeReference(
                     shape: ExampleTypeReferenceShape.container(
                         ExampleContainer.list(
                             l
-                                .map((t) => filterExampleTypeReference(filteredIr, t))
-                                .filter((t) => t !== undefined) as ExampleTypeReference[]
+                                .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
+                                .filter((t): t is ExampleTypeReference => t !== undefined)
                         )
                     )
                 }),
@@ -77,13 +83,14 @@ function filterExampleTypeReference(
                     shape: ExampleTypeReferenceShape.container(
                         ExampleContainer.set(
                             s
-                                .map((t) => filterExampleTypeReference(filteredIr, t))
-                                .filter((t) => t !== undefined) as ExampleTypeReference[]
+                                .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
+                                .filter((t): t is ExampleTypeReference => t !== undefined)
                         )
                     )
                 }),
                 optional: (o) => {
-                    const innerOption = o !== undefined ? filterExampleTypeReference(filteredIr, o) : o;
+                    const innerOption =
+                        o !== undefined ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o }) : o;
                     return innerOption !== undefined
                         ? {
                               ...exampleTypeReference,
@@ -97,13 +104,19 @@ function filterExampleTypeReference(
                         ExampleContainer.map(
                             m
                                 .map((v) => {
-                                    const filteredKey = filterExampleTypeReference(filteredIr, v.key);
-                                    const filteredValue = filterExampleTypeReference(filteredIr, v.value);
+                                    const filteredKey = filterExampleTypeReference({
+                                        filteredIr,
+                                        exampleTypeReference: v.key
+                                    });
+                                    const filteredValue = filterExampleTypeReference({
+                                        filteredIr,
+                                        exampleTypeReference: v.value
+                                    });
                                     return filteredKey !== undefined && filteredValue !== undefined
                                         ? { key: filteredKey, value: filteredValue }
                                         : undefined;
                                 })
-                                .filter((t) => t !== undefined) as ExampleKeyValuePair[]
+                                .filter((t): t is ExampleKeyValuePair => t !== undefined)
                         )
                     )
                 }),
@@ -117,7 +130,10 @@ function filterExampleTypeReference(
             filteredIr.hasTypeId(n.typeName.typeId)
                 ? n.shape._visit<ExampleTypeReference | undefined>({
                       alias: (a) => {
-                          const filteredAlias = filterExampleTypeReference(filteredIr, a.value);
+                          const filteredAlias = filterExampleTypeReference({
+                              filteredIr,
+                              exampleTypeReference: a.value
+                          });
                           return filteredAlias !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -144,17 +160,20 @@ function filterExampleTypeReference(
                                       )
                                       .map((p) => ({
                                           ...p,
-                                          value: filterExampleTypeReference(filteredIr, p.value)
+                                          value: filterExampleTypeReference({
+                                              filteredIr,
+                                              exampleTypeReference: p.value
+                                          })
                                       }))
-                                      .filter((p) => p.value !== undefined) as ExampleObjectProperty[]
+                                      .filter((p): p is ExampleObjectProperty => p.value !== undefined)
                               })
                           })
                       }),
                       union: (u) => {
-                          const filteredUnion = filterExampleSingleUnionTypeProperties(
+                          const filteredUnion = filterExampleSingleUnionTypeProperties({
                               filteredIr,
-                              u.singleUnionType.shape
-                          );
+                              singleUnionTypeProperties: u.singleUnionType.shape
+                          });
                           return filteredUnion !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -169,7 +188,10 @@ function filterExampleTypeReference(
                               : undefined;
                       },
                       undiscriminatedUnion: (u) => {
-                          const filteredUnion = filterExampleTypeReference(filteredIr, u.singleUnionType);
+                          const filteredUnion = filterExampleTypeReference({
+                              filteredIr,
+                              exampleTypeReference: u.singleUnionType
+                          });
                           return filteredUnion !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -193,13 +215,16 @@ function filterExampleTypeReference(
     });
 }
 
-function filterExamplePathParameters(
-    filteredIr: FilteredIr,
-    pathParameters: ExamplePathParameter[]
-): ExamplePathParameter[] {
+function filterExamplePathParameters({
+    filteredIr,
+    pathParameters
+}: {
+    filteredIr: FilteredIr;
+    pathParameters: ExamplePathParameter[];
+}): ExamplePathParameter[] {
     return pathParameters
         .map((param) => {
-            const filteredParam = filterExampleTypeReference(filteredIr, param.value);
+            const filteredParam = filterExampleTypeReference({ filteredIr, exampleTypeReference: param.value });
             return filteredParam !== undefined
                 ? {
                       ...param,
@@ -207,7 +232,7 @@ function filterExamplePathParameters(
                   }
                 : undefined;
         })
-        .filter((param) => param !== undefined) as ExamplePathParameter[];
+        .filter((param): param is ExamplePathParameter => param !== undefined);
 }
 
 interface ExampleHeaderOrQuery {
@@ -215,10 +240,16 @@ interface ExampleHeaderOrQuery {
     value: ExampleTypeReference;
 }
 
-function filterExampleHeaderOrQuery(filteredIr: FilteredIr, headers: ExampleHeaderOrQuery[]): ExampleHeaderOrQuery[] {
+function filterExampleHeaderOrQuery({
+    filteredIr,
+    headers
+}: {
+    filteredIr: FilteredIr;
+    headers: ExampleHeaderOrQuery[];
+}): ExampleHeaderOrQuery[] {
     return headers
         .map((header) => {
-            const filteredHeader = filterExampleTypeReference(filteredIr, header.value);
+            const filteredHeader = filterExampleTypeReference({ filteredIr, exampleTypeReference: header.value });
             return filteredHeader !== undefined
                 ? {
                       ...header,
@@ -226,13 +257,16 @@ function filterExampleHeaderOrQuery(filteredIr: FilteredIr, headers: ExampleHead
                   }
                 : undefined;
         })
-        .filter((header) => header !== undefined) as ExampleHeaderOrQuery[];
+        .filter((header): header is ExampleHeaderOrQuery => header !== undefined);
 }
 
-function filterExampleRequestBody(
-    filteredIr: FilteredIr,
-    requestBody: ExampleRequestBody
-): ExampleRequestBody | undefined {
+function filterExampleRequestBody({
+    filteredIr,
+    requestBody
+}: {
+    filteredIr: FilteredIr;
+    requestBody: ExampleRequestBody;
+}): ExampleRequestBody | undefined {
     return requestBody._visit<ExampleRequestBody | undefined>({
         inlinedRequestBody: (inlined) => {
             return {
@@ -244,7 +278,10 @@ function filterExampleRequestBody(
                             : true
                     )
                     .map((property) => {
-                        const filteredProperty = filterExampleTypeReference(filteredIr, property.value);
+                        const filteredProperty = filterExampleTypeReference({
+                            filteredIr,
+                            exampleTypeReference: property.value
+                        });
                         return filteredProperty !== undefined
                             ? {
                                   ...property,
@@ -252,11 +289,11 @@ function filterExampleRequestBody(
                               }
                             : undefined;
                     })
-                    .filter((property) => property !== undefined) as ExampleInlinedRequestBodyProperty[]
+                    .filter((property): property is ExampleInlinedRequestBodyProperty => property !== undefined)
             };
         },
         reference: (reference) => {
-            const filteredReference = filterExampleTypeReference(filteredIr, reference);
+            const filteredReference = filterExampleTypeReference({ filteredIr, exampleTypeReference: reference });
             return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined;
         },
         _other: () => {
@@ -265,31 +302,61 @@ function filterExampleRequestBody(
     });
 }
 
-function filterExampleResponse(filteredIr: FilteredIr, response: ExampleResponse): ExampleResponse {
+function filterExampleResponse({
+    filteredIr,
+    response
+}: {
+    filteredIr: FilteredIr;
+    response: ExampleResponse;
+}): ExampleResponse {
     return {
         ...response,
-        body: response.body !== undefined ? filterExampleTypeReference(filteredIr, response.body) : undefined
+        body:
+            response.body !== undefined
+                ? filterExampleTypeReference({ filteredIr, exampleTypeReference: response.body })
+                : undefined
     };
 }
 
-export function filterEndpointExample(filteredIr: FilteredIr, example: ExampleEndpointCall): ExampleEndpointCall {
+export function filterEndpointExample({
+    filteredIr,
+    example
+}: {
+    filteredIr: FilteredIr;
+    example: ExampleEndpointCall;
+}): ExampleEndpointCall {
     return {
         ...example,
-        rootPathParameters: filterExamplePathParameters(filteredIr, example.rootPathParameters),
-        servicePathParameters: filterExamplePathParameters(filteredIr, example.servicePathParameters),
-        endpointPathParameters: filterExamplePathParameters(filteredIr, example.endpointPathParameters),
-        serviceHeaders: filterExampleHeaderOrQuery(filteredIr, example.serviceHeaders),
-        endpointHeaders: filterExampleHeaderOrQuery(filteredIr, example.endpointHeaders),
-        queryParameters: filterExampleHeaderOrQuery(filteredIr, example.queryParameters),
-        request: example.request !== undefined ? filterExampleRequestBody(filteredIr, example.request) : undefined,
-        response: filterExampleResponse(filteredIr, example.response)
+        rootPathParameters: filterExamplePathParameters({ filteredIr, pathParameters: example.rootPathParameters }),
+        servicePathParameters: filterExamplePathParameters({
+            filteredIr,
+            pathParameters: example.servicePathParameters
+        }),
+        endpointPathParameters: filterExamplePathParameters({
+            filteredIr,
+            pathParameters: example.endpointPathParameters
+        }),
+        serviceHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.serviceHeaders }),
+        endpointHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.endpointHeaders }),
+        queryParameters: filterExampleHeaderOrQuery({ filteredIr, headers: example.queryParameters }),
+        request:
+            example.request !== undefined
+                ? filterExampleRequestBody({ filteredIr, requestBody: example.request })
+                : undefined,
+        response: filterExampleResponse({ filteredIr, response: example.response })
     };
 }
 
-export function filterExampleType(filteredIr: FilteredIr, exampleType: ExampleType): ExampleType | undefined {
+export function filterExampleType({
+    filteredIr,
+    exampleType
+}: {
+    filteredIr: FilteredIr;
+    exampleType: ExampleType;
+}): ExampleType | undefined {
     return exampleType.shape._visit<ExampleType | undefined>({
         alias: (a) => {
-            const filteredAlias = filterExampleTypeReference(filteredIr, a.value);
+            const filteredAlias = filterExampleTypeReference({ filteredIr, exampleTypeReference: a.value });
             return filteredAlias !== undefined
                 ? { ...exampleType, shape: ExampleTypeShape.alias({ ...a, value: filteredAlias }) }
                 : undefined;
@@ -301,12 +368,18 @@ export function filterExampleType(filteredIr: FilteredIr, exampleType: ExampleTy
                 ...o,
                 properties: o.properties
                     .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
-                    .map((p) => ({ ...p, value: filterExampleTypeReference(filteredIr, p.value) }))
-                    .filter((p) => p.value !== undefined) as ExampleObjectProperty[]
+                    .map((p) => ({
+                        ...p,
+                        value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
+                    }))
+                    .filter((p): p is ExampleObjectProperty => p.value !== undefined)
             })
         }),
         union: (u) => {
-            const filteredUnion = filterExampleSingleUnionTypeProperties(filteredIr, u.singleUnionType.shape);
+            const filteredUnion = filterExampleSingleUnionTypeProperties({
+                filteredIr,
+                singleUnionTypeProperties: u.singleUnionType.shape
+            });
             return filteredUnion !== undefined
                 ? {
                       ...exampleType,
@@ -318,7 +391,7 @@ export function filterExampleType(filteredIr: FilteredIr, exampleType: ExampleTy
                 : undefined;
         },
         undiscriminatedUnion: (u) => {
-            const filteredUnion = filterExampleTypeReference(filteredIr, u.singleUnionType);
+            const filteredUnion = filterExampleTypeReference({ filteredIr, exampleTypeReference: u.singleUnionType });
             return filteredUnion !== undefined
                 ? {
                       ...exampleType,

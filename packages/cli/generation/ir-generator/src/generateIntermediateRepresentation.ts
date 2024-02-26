@@ -411,7 +411,7 @@ function filterIntermediateRepresentationForAudiences(
         Object.entries(filteredTypes).map(([typeId, typeDeclaration]) => {
             const filteredProperties = [];
             typeDeclaration.examples = typeDeclaration.examples
-                .map((example) => filterExampleType(filteredIr, example))
+                .map((example) => filterExampleType({ filteredIr, exampleType: example }))
                 .filter((ex) => ex !== undefined) as ExampleType[];
             if (typeDeclaration.shape.type === "object") {
                 for (const property of typeDeclaration.shape.properties) {
@@ -448,7 +448,7 @@ function filterIntermediateRepresentationForAudiences(
                     .filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
                     .map((httpEndpoint) => {
                         httpEndpoint.examples = httpEndpoint.examples.map((example) =>
-                            filterEndpointExample(filteredIr, example)
+                            filterEndpointExample({ filteredIr, example })
                         );
                         if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
                             return {

@@ -42,7 +42,7 @@ export async function runDockerForWorkspace({
 }): Promise<void> {
     const generatorGroup: GeneratorGroup = {
         groupName: "test",
-        audiences: selectAudiences !== undefined ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
+        audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
         generators: [
             {
                 name: docker.name,
