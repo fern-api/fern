@@ -27,7 +27,7 @@ export const PrimitiveExample: core.serialization.Schema<
             value: core.serialization.string(),
         }),
         datetime: core.serialization.object({
-            value: core.serialization.date(),
+            value: core.serialization.string(),
         }),
         date: core.serialization.object({
             value: core.serialization.string(),
