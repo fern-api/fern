@@ -13,6 +13,7 @@ export const HeaderWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
+        env: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
@@ -21,6 +22,7 @@ export declare namespace HeaderWithExample {
     interface Raw extends serializers.WithDescription.Raw {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
+        env?: string | null;
         parameterNameOverride?: string | null;
     }
 }

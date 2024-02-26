@@ -227,6 +227,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "env": undefined,
               "name": {
                 "name": {
                   "camelCase": {

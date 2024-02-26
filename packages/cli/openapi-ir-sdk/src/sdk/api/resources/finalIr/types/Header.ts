@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../..";
 export interface Header extends FernOpenapiIr.WithDescription {
     name: string;
     schema: FernOpenapiIr.Schema;
+    env: string | undefined;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
 }

@@ -103,6 +103,7 @@ types:
     properties:
       name: string
       schema: SchemaWithExample
+      env: optional<string>
       parameterNameOverride:
         type: optional<string>
         docs: |

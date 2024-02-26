@@ -109,6 +109,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -508,6 +509,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -697,6 +699,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -1315,6 +1318,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -1624,6 +1628,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2089,6 +2094,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2317,6 +2323,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2712,6 +2719,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2830,6 +2838,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -3089,6 +3098,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -3939,6 +3949,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -4350,6 +4361,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -8991,6 +9003,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -9430,6 +9443,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13079,6 +13093,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13269,6 +13284,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13474,6 +13490,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -14426,6 +14443,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -15183,6 +15201,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -15640,6 +15659,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -17294,6 +17314,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -17766,6 +17787,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18050,6 +18072,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18219,6 +18242,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18595,6 +18619,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18815,6 +18840,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -19502,6 +19528,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -19935,6 +19962,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20149,6 +20177,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20412,6 +20441,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20631,6 +20661,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20807,6 +20838,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20978,6 +21010,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -21408,6 +21441,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -21676,6 +21710,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -22739,6 +22774,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -22971,6 +23007,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -23558,6 +23595,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -23888,6 +23926,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24368,6 +24407,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24475,6 +24515,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24602,6 +24643,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {

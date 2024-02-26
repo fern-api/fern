@@ -165,7 +165,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     description: header.description,
                     name: header.name,
                     schema: convertSchemaWithExampleToSchema(header.schema),
-                    parameterNameOverride: header.parameterNameOverride
+                    parameterNameOverride: header.parameterNameOverride,
+                    env: header.env
                 };
             }),
             examples

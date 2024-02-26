@@ -2898,6 +2898,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -3055,6 +3056,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -3313,6 +3315,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -3588,6 +3591,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -3892,6 +3896,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -4196,6 +4201,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -4504,6 +4510,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {

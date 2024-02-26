@@ -8,6 +8,7 @@ x-fern-global-headers:
     optional: true
   - header: another_header
     optional: false
+    env: MY_HEADER_ENV
 paths:
   "/user/{userId}":
     get:

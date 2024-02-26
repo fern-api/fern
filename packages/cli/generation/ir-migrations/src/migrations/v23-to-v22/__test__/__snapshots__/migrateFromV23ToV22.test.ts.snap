@@ -10829,6 +10829,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "env": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -10967,6 +10968,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "status": "GENERAL_AVAILABILITY",
           },
           "docs": undefined,
+          "env": undefined,
           "name": {
             "name": {
               "camelCase": {

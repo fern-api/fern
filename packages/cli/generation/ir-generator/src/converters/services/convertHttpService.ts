@@ -331,7 +331,8 @@ export async function convertHttpHeader({
             wireValue: headerKey,
             name
         }),
-        valueType: file.parseTypeReference(header)
+        valueType: file.parseTypeReference(header),
+        env: typeof header === "string" ? undefined : header.env
     };
 }
 
