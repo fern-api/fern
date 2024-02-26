@@ -57,14 +57,14 @@ class ServiceClient:
     def get_with_header(
         self,
         *,
-        x_endpoint_header: str = os.getenv("MY_HEADER_ENV"),
+        x_endpoint_header: typing.Optional[str] = os.getenv("MY_HEADER_ENV"),
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         GET request with custom api key
 
         Parameters:
-            - x_endpoint_header: str. Specifies the endpoint key.
+            - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -136,14 +136,14 @@ class AsyncServiceClient:
     async def get_with_header(
         self,
         *,
-        x_endpoint_header: str = os.getenv("MY_HEADER_ENV"),
+        x_endpoint_header: typing.Optional[str] = os.getenv("MY_HEADER_ENV"),
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         GET request with custom api key
 
         Parameters:
-            - x_endpoint_header: str. Specifies the endpoint key.
+            - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
