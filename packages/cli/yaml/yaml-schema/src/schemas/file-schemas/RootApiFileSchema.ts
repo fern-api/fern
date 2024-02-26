@@ -5,6 +5,7 @@ import { EnvironmentSchema } from "../EnvironmentSchema";
 import { ErrorDiscriminationSchema } from "../ErrorDiscriminationSchema";
 import { HttpHeaderSchema } from "../HttpHeaderSchema";
 import { HttpPathParameterSchema } from "../HttpPathParameterSchema";
+import { PaginationSchema } from "../PaginationSchema";
 import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
 
 export const RootApiFileSchema = z.strictObject({
@@ -23,7 +24,8 @@ export const RootApiFileSchema = z.strictObject({
     "base-path": z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
-    variables: z.optional(z.record(VariableDeclarationSchema))
+    variables: z.optional(z.record(VariableDeclarationSchema)),
+    pagination: z.optional(PaginationSchema)
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

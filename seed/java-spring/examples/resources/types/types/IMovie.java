@@ -11,6 +11,8 @@ import resources.commons.types.types.Tag;
 public interface IMovie {
   MovieId getId();
 
+  Optional<MovieId> getPrequel();
+
   String getTitle();
 
   String getFrom();

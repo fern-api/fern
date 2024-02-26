@@ -36,7 +36,7 @@ class SyspropClient:
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"sysprop/num-warm-instances/{language.value}/{num_warm_instances}",
+                f"sysprop/num-warm-instances/{jsonable_encoder(language)}/{jsonable_encoder(num_warm_instances)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -117,7 +117,7 @@ class AsyncSyspropClient:
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"sysprop/num-warm-instances/{language.value}/{num_warm_instances}",
+                f"sysprop/num-warm-instances/{jsonable_encoder(language)}/{jsonable_encoder(num_warm_instances)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None

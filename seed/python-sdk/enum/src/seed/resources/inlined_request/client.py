@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
 # this is used as the default value for optional parameters
@@ -20,11 +21,23 @@ class InlinedRequestClient:
         self._client_wrapper = client_wrapper
 
     def send(
-        self, *, operand: typing.Optional[Operand] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[Operand].
+            - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -34,9 +47,11 @@ class InlinedRequestClient:
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
         client.inlined_request.send(operand=Operand., )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if operand is not OMIT:
-            _request["operand"] = operand.value if operand is not None else None
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
+        if maybe_operand is not OMIT:
+            _request["maybeOperand"] = maybe_operand.value if maybe_operand is not None else None
+        if maybe_operand_or_color is not OMIT:
+            _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
@@ -75,11 +90,23 @@ class AsyncInlinedRequestClient:
         self._client_wrapper = client_wrapper
 
     async def send(
-        self, *, operand: typing.Optional[Operand] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
-            - operand: typing.Optional[Operand].
+            - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -89,9 +116,11 @@ class AsyncInlinedRequestClient:
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
         await client.inlined_request.send(operand=Operand., )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if operand is not OMIT:
-            _request["operand"] = operand.value if operand is not None else None
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
+        if maybe_operand is not OMIT:
+            _request["maybeOperand"] = maybe_operand.value if maybe_operand is not None else None
+        if maybe_operand_or_color is not OMIT:
+            _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),

@@ -6,10 +6,16 @@ service:
   base-path: ""
   endpoints:
     send:
-      path: /path/{operand}
+      path: /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}
       method: POST
       path-parameters: 
         operand: root.Operand
+        maybeOperand: optional<root.Operand>
+        operandOrColor: root.ColorOrOperand
+        maybeOperandOrColor: optional<root.ColorOrOperand>
       examples: 
         - path-parameters:
             operand: $root.Operand.GreaterThan
+            maybeOperand: $root.Operand.LessThan
+            operandOrColor: $root.ColorOrOperand.Red
+            maybeOperandOrColor: $root.ColorOrOperand.Red

@@ -7,9 +7,10 @@ require "json"
 module SeedExamplesClient
   class Types
     class Movie
-      attr_reader :id, :title, :from, :rating, :type, :tag, :book, :additional_properties
+      attr_reader :id, :prequel, :title, :from, :rating, :type, :tag, :book, :additional_properties
 
       # @param id [Types::MOVIE_ID]
+      # @param prequel [Types::MOVIE_ID]
       # @param title [String]
       # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
@@ -18,9 +19,11 @@ module SeedExamplesClient
       # @param book [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Movie]
-      def initialize(id:, title:, from:, rating:, type:, tag:, book: nil, additional_properties: nil)
+      def initialize(id:, title:, from:, rating:, type:, tag:, prequel: nil, book: nil, additional_properties: nil)
         # @type [Types::MOVIE_ID]
         @id = id
+        # @type [Types::MOVIE_ID]
+        @prequel = prequel
         # @type [String]
         @title = title
         # @type [String]
@@ -45,13 +48,14 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         JSON.parse(json_object)
         id = struct.id
+        prequel = struct.prequel
         title = struct.title
         from = struct.from
         rating = struct.rating
         type = struct.type
         tag = struct.tag
         book = struct.book
-        new(id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
+        new(id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
             additional_properties: struct)
       end
 
@@ -61,6 +65,7 @@ module SeedExamplesClient
       def to_json(*_args)
         {
           "id": @id,
+          "prequel": @prequel,
           "title": @title,
           "from": @from,
           "rating": @rating,
@@ -76,6 +81,7 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+        obj.prequel&.is_a?(String) != false || raise("Passed value for field obj.prequel is not the expected type, validation failed.")
         obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
         obj.from.is_a?(String) != false || raise("Passed value for field obj.from is not the expected type, validation failed.")
         obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")

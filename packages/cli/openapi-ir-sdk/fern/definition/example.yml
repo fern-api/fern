@@ -22,9 +22,10 @@ types:
       float: double
       double: double
       string: string
-      datetime: datetime
-      date: date
-      base64: base64
+      # typed as string to handle invalid datetime strings
+      datetime: string
+      date: string
+      base64: string
       boolean: boolean
 
   LiteralExample:

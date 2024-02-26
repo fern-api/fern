@@ -6,6 +6,8 @@ import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
 
 export interface FernDefinitionBuilder {
+    addNavigation({ navigation }: { navigation: string[] }): void;
+
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
 
     setAuth(name: string): void;
@@ -80,6 +82,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (ir.title != null) {
             this.rootApiFile["display-name"] = ir.title;
         }
+    }
+
+    public addNavigation({ navigation }: { navigation: string[] }): void {
+        this.packageMarkerFile.navigation = navigation;
     }
 
     setServiceInfo(

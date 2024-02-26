@@ -15,6 +15,7 @@ export async function visitRootApiFileYamlAst(
         auth: noop,
         "idempotency-headers": noop,
         "auth-schemes": noop,
+        pagination: noop,
         "default-environment": async (defaultEnvironment) => {
             await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
         },

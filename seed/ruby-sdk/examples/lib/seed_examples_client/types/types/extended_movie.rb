@@ -7,10 +7,11 @@ require "json"
 module SeedExamplesClient
   class Types
     class ExtendedMovie
-      attr_reader :cast, :id, :title, :from, :rating, :type, :tag, :book, :additional_properties
+      attr_reader :cast, :id, :prequel, :title, :from, :rating, :type, :tag, :book, :additional_properties
 
       # @param cast [Array<String>]
       # @param id [Types::MOVIE_ID]
+      # @param prequel [Types::MOVIE_ID]
       # @param title [String]
       # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
@@ -19,11 +20,14 @@ module SeedExamplesClient
       # @param book [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::ExtendedMovie]
-      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, book: nil, additional_properties: nil)
+      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, prequel: nil, book: nil,
+                     additional_properties: nil)
         # @type [Array<String>]
         @cast = cast
         # @type [Types::MOVIE_ID]
         @id = id
+        # @type [Types::MOVIE_ID]
+        @prequel = prequel
         # @type [String]
         @title = title
         # @type [String]
@@ -49,14 +53,15 @@ module SeedExamplesClient
         JSON.parse(json_object)
         cast = struct.cast
         id = struct.id
+        prequel = struct.prequel
         title = struct.title
         from = struct.from
         rating = struct.rating
         type = struct.type
         tag = struct.tag
         book = struct.book
-        new(cast: cast, id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
-            additional_properties: struct)
+        new(cast: cast, id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag,
+            book: book, additional_properties: struct)
       end
 
       # Serialize an instance of ExtendedMovie to a JSON object
@@ -66,6 +71,7 @@ module SeedExamplesClient
         {
           "cast": @cast,
           "id": @id,
+          "prequel": @prequel,
           "title": @title,
           "from": @from,
           "rating": @rating,
@@ -82,6 +88,7 @@ module SeedExamplesClient
       def self.validate_raw(obj:)
         obj.cast.is_a?(Array) != false || raise("Passed value for field obj.cast is not the expected type, validation failed.")
         obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+        obj.prequel&.is_a?(String) != false || raise("Passed value for field obj.prequel is not the expected type, validation failed.")
         obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
         obj.from.is_a?(String) != false || raise("Passed value for field obj.from is not the expected type, validation failed.")
         obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")

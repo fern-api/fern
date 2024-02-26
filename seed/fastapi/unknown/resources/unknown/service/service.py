@@ -23,7 +23,7 @@ class AbstractUnknownService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def post(self, *, body: typing.Any) -> typing.List[typing.Any]:
+    def post(self, *, body: typing.Any) -> typing.Sequence[typing.Any]:
         ...
 
     """
@@ -49,7 +49,7 @@ class AbstractUnknownService(AbstractFernService):
         setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[typing.Any]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[typing.Any]:
             try:
                 return cls.post(*args, **kwargs)
             except FernHTTPException as e:
@@ -66,7 +66,7 @@ class AbstractUnknownService(AbstractFernService):
 
         router.post(
             path="/",
-            response_model=typing.List[typing.Any],
+            response_model=typing.Sequence[typing.Any],
             description=AbstractUnknownService.post.__doc__,
             **get_route_args(cls.post, default_tag="unknown"),
         )(wrapper)

@@ -19,6 +19,7 @@ class Movie(pydantic.BaseModel):
 
     Movie(
         id="movie-c06a4ad7",
+        prequel="movie-cv9b914f",
         title="The Boy and the Heron",
         from_="Hayao Miyazaki",
         rating=8.0,
@@ -28,12 +29,13 @@ class Movie(pydantic.BaseModel):
     """
 
     id: MovieId
+    prequel: typing.Optional[MovieId] = None
     title: str
     from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field(description="The rating scale is one to five stars")
     type: typing.Literal["movie"]
     tag: Tag
-    book: typing.Optional[str]
+    book: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

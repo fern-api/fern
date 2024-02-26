@@ -9,8 +9,8 @@ import {
     SdkGroupName
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { getExtension } from "../openapi/v3/extensions/getExtension";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.17.0-rc1] - 2024-02-23
+
+- Fix: Snippets for aliases to optional primitive values. With this, the generated snippet
+  will include the top-level pointer helpers (e.g. `acme.String(...)`).
+
 ## [0.17.0-rc0] - 2024-02-21
 
 - Fix: Package documentation is now generated into the correct package's `doc.go`.

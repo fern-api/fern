@@ -239,6 +239,43 @@ class ObjectService {
                 next(request.errors);
             }
         }));
+        this.router.post("/get-and-return-nested-with-required-field", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const request = yield serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    yield this.methods.getAndReturnNestedWithRequiredFieldAsList(req, {
+                        send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
+                            res.json(yield serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: "strip",
+                            }));
+                        }),
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    });
+                    next();
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.SeedExhaustiveError) {
+                        console.warn(`Endpoint 'getAndReturnNestedWithRequiredFieldAsList' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.");
+                        yield error.send(res);
+                    }
+                    else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            }
+            else {
+                res.status(422).json({
+                    errors: request.errors.map((error) => ["request", ...error.path].join(" -> ") + ": " + error.message),
+                });
+                next(request.errors);
+            }
+        }));
         return this.router;
     }
 }

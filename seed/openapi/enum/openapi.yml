@@ -21,12 +21,23 @@ paths:
               properties:
                 operand:
                   $ref: '#/components/schemas/Operand'
+                maybeOperand:
+                  $ref: '#/components/schemas/Operand'
                   nullable: true
+                operandOrColor:
+                  $ref: '#/components/schemas/ColorOrOperand'
+                maybeOperandOrColor:
+                  $ref: '#/components/schemas/ColorOrOperand'
+                  nullable: true
+              required:
+                - operand
+                - operandOrColor
             examples:
               Example1:
                 value:
                   operand: '>'
-  /path/{operand}:
+                  operandOrColor: red
+  /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
     post:
       operationId: pathParam_send
       tags:
@@ -40,6 +51,29 @@ paths:
           examples:
             Example1:
               value: '>'
+        - name: maybeOperand
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Operand'
+            nullable: true
+          examples:
+            Example1:
+              value: less_than
+        - name: operandOrColor
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+        - name: maybeOperandOrColor
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+            nullable: true
+          examples:
+            Example1:
+              value: red
       responses:
         '204':
           description: ''
@@ -51,13 +85,18 @@ paths:
       parameters:
         - name: operand
           in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Operand'
+          examples:
+            Example1:
+              value: '>'
+        - name: maybeOperand
+          in: query
           required: false
           schema:
             $ref: '#/components/schemas/Operand'
             nullable: true
-          examples:
-            Example1:
-              value: '>'
       responses:
         '204':
           description: ''
@@ -68,6 +107,13 @@ paths:
         - QueryParam
       parameters:
         - name: operand
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Operand'
+        - name: maybeOperand
           in: query
           required: false
           schema:
@@ -90,4 +136,15 @@ components:
       description: |-
         Tests enum name and value can be
         different.
+    Color:
+      title: Color
+      type: string
+      enum:
+        - red
+        - blue
+    ColorOrOperand:
+      title: ColorOrOperand
+      oneOf:
+        - $ref: '#/components/schemas/Color'
+        - $ref: '#/components/schemas/Operand'
   securitySchemes: {}

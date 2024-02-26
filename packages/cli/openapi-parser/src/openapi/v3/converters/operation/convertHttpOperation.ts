@@ -1,11 +1,11 @@
 import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExtension } from "../../extensions/getExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
 import { getFernExamples } from "../../extensions/getFernExamples";
 import { OperationContext } from "../contexts";

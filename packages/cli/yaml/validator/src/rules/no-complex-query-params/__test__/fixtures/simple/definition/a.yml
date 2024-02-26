@@ -34,11 +34,18 @@ types:
       str: string
       bool: boolean
 
-  UndiscriminatedUnion:
+  PrimitiveUndiscriminatedUnion:
     discriminated: false
     union:
       - string
       - boolean
+  
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - Object
+      - Union
 
   Color:
     enum:
@@ -78,3 +85,4 @@ service:
           s: map<string, string>
           t: map<string, User>
           u: map<string, ObjectWithLiteral>
+          v: PrimitiveUndiscriminatedUnion

@@ -32,6 +32,8 @@ public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
 
     public abstract MethodSpec httpClient();
 
+    public abstract MethodSpec httpClientWithTimeout();
+
     public abstract Map<VariableId, MethodSpec> variableGetters();
 
     public abstract ClassName builderClassName();

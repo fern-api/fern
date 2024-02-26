@@ -3,8 +3,88 @@
 package enum
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 )
+
+type Color string
+
+const (
+	ColorRed  Color = "red"
+	ColorBlue Color = "blue"
+)
+
+func NewColorFromString(s string) (Color, error) {
+	switch s {
+	case "red":
+		return ColorRed, nil
+	case "blue":
+		return ColorBlue, nil
+	}
+	var t Color
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c Color) Ptr() *Color {
+	return &c
+}
+
+type ColorOrOperand struct {
+	typeName string
+	Color    Color
+	Operand  Operand
+}
+
+func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
+	return &ColorOrOperand{typeName: "color", Color: value}
+}
+
+func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
+	return &ColorOrOperand{typeName: "operand", Operand: value}
+}
+
+func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
+	var valueColor Color
+	if err := json.Unmarshal(data, &valueColor); err == nil {
+		c.typeName = "color"
+		c.Color = valueColor
+		return nil
+	}
+	var valueOperand Operand
+	if err := json.Unmarshal(data, &valueOperand); err == nil {
+		c.typeName = "operand"
+		c.Operand = valueOperand
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
+	switch c.typeName {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", c.typeName, c)
+	case "color":
+		return json.Marshal(c.Color)
+	case "operand":
+		return json.Marshal(c.Operand)
+	}
+}
+
+type ColorOrOperandVisitor interface {
+	VisitColor(Color) error
+	VisitOperand(Operand) error
+}
+
+func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
+	switch c.typeName {
+	default:
+		return fmt.Errorf("invalid type %s in %T", c.typeName, c)
+	case "color":
+		return visitor.VisitColor(c.Color)
+	case "operand":
+		return visitor.VisitOperand(c.Operand)
+	}
+}
 
 // Tests enum name and value can be
 // different.

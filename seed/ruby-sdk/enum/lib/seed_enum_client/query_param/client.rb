@@ -16,24 +16,34 @@ module SeedEnumClient
     end
 
     # @param operand [Operand]
+    # @param maybe_operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(operand: nil, request_options: nil)
+    def send(operand:, maybe_operand: nil, request_options: nil)
       @request_client.conn.post("/query") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}), "operand": operand }.compact
+        req.params = {
+          **(request_options&.additional_query_parameters || {}),
+          "operand": operand,
+          "maybeOperand": maybe_operand
+        }.compact
       end
     end
 
     # @param operand [Operand]
+    # @param maybe_operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send_list(operand: nil, request_options: nil)
+    def send_list(operand:, maybe_operand: nil, request_options: nil)
       @request_client.conn.post("/query-list") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}), "operand": operand }.compact
+        req.params = {
+          **(request_options&.additional_query_parameters || {}),
+          "operand": operand,
+          "maybeOperand": maybe_operand
+        }.compact
       end
     end
   end
@@ -49,27 +59,37 @@ module SeedEnumClient
     end
 
     # @param operand [Operand]
+    # @param maybe_operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send(operand: nil, request_options: nil)
+    def send(operand:, maybe_operand: nil, request_options: nil)
       Async do
         @request_client.conn.post("/query") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}), "operand": operand }.compact
+          req.params = {
+            **(request_options&.additional_query_parameters || {}),
+            "operand": operand,
+            "maybeOperand": maybe_operand
+          }.compact
         end
       end
     end
 
     # @param operand [Operand]
+    # @param maybe_operand [Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
-    def send_list(operand: nil, request_options: nil)
+    def send_list(operand:, maybe_operand: nil, request_options: nil)
       Async do
         @request_client.conn.post("/query-list") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}), "operand": operand }.compact
+          req.params = {
+            **(request_options&.additional_query_parameters || {}),
+            "operand": operand,
+            "maybeOperand": maybe_operand
+          }.compact
         end
       end
     end

@@ -39,6 +39,7 @@ exports.Movie = void 0;
 const core = __importStar(require("../../../../core"));
 exports.Movie = core.serialization.object({
     id: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../..")))).MovieId; })),
+    prequel: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../..")))).MovieId; })).optional(),
     title: core.serialization.string(),
     from: core.serialization.string(),
     rating: core.serialization.number(),

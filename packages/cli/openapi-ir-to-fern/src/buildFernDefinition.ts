@@ -28,7 +28,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
-    const { schemaIdsToExclude } = buildServices(context);
+    const { schemaIdsToExclude, sdkGroups } = buildServices(context);
     buildWebhooks(context);
 
     // Add Channels
@@ -77,6 +77,17 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
             name: httpError.generatedName,
             schema: errorDeclaration
         });
+    }
+
+    if (context.ir.tags.orderedTagIds != null && context.ir.tags.orderedTagIds.length > 0) {
+        const containsValidTagIds = context.ir.tags.orderedTagIds.every((tagId) => {
+            return sdkGroups.has(tagId);
+        });
+        if (containsValidTagIds) {
+            context.builder.addNavigation({
+                navigation: context.ir.tags.orderedTagIds
+            });
+        }
     }
 
     return context.builder.build();
