@@ -2,6 +2,7 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.external_dependencies.pydantic import Pydantic, PydanticVersionCompatibility
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -19,6 +20,16 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
             exports={"serialize_datetime"},
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="unchecked_base_model.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="unchecked_base_model"),
+            ),
+            exports={"UncheckedBaseModel"},
         )
 
     def _copy_file_to_project(
@@ -43,3 +54,22 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
+    
+    def get_unchecked_pydantic_base_model(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UncheckedBaseModel"
+            ),
+        )
+    
+    def get_construct(self, is_unchecked: bool, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.Expression(type_of_obj),
+                            qualified_name_excluding_import=("construct",),
+                        ),
+                        args=[obj],
+                    )
+                ) if is_unchecked else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)

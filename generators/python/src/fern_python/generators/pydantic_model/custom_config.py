@@ -17,3 +17,5 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
+    # Skip validation of fields and include additional fields
+    skip_validation: bool = False

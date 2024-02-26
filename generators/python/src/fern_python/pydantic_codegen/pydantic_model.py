@@ -6,6 +6,7 @@ from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
+from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from pydantic import BaseModel
 
@@ -29,6 +30,7 @@ class PydanticModel:
         orm_mode: bool,
         smart_union: bool,
         version: PydanticVersionCompatibility,
+        base_model: ClassReference,
         should_export: bool = None,
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
@@ -39,7 +41,7 @@ class PydanticModel:
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=base_models or [Pydantic.BaseModel(version)],
+            extends=base_models or [base_model],
             docstring=AST.Docstring(docstring) if docstring is not None else None,
             snippet=snippet,
         )

@@ -7,6 +7,7 @@ from .file import File, convert_file_dict_to_httpx_tuples
 from .jsonable_encoder import jsonable_encoder
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
+from .unchecked_base_model import UncheckedBaseModel
 
 __all__ = [
     "ApiError",
@@ -15,6 +16,7 @@ __all__ = [
     "File",
     "RequestOptions",
     "SyncClientWrapper",
+    "UncheckedBaseModel",
     "convert_file_dict_to_httpx_tuples",
     "jsonable_encoder",
     "remove_none_from_dict",
