@@ -8,7 +8,8 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedAuthEnvironmentVariablesClient {
     interface Options {
         environment: core.Supplier<string>;
-        apiKey: core.Supplier<string>;
+        apiKey?: core.Supplier<string | undefined>;
+        xAnotherHeader: core.Supplier<string>;
     }
 
     interface RequestOptions {

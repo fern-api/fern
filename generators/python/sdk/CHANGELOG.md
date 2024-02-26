@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.6] - 2024-02-26
+
+- Improvement: You can now specify envvars to scan for headers, not just auth scheme headers.
+  ```
+  # OpenAPI
+  x-fern-global-headers:
+   - header: x-api-key
+     name: api_key
+     optional: true
+     env: MY_API_KEY
+  ```
+  ... or ...
+  ```
+  # Fern Definition
+  getAllUsers:
+    method: GET
+    path: /all
+    request:
+      name: GetAllUsersRequest
+      headers:
+        X-API-KEY: string
+        env: MY_API_KEY
+  ```
+  the generated client will look like
+
+  ```python
+  import os
+
+  class Client:
+
+    def __init__(self, *, apiKey: str = os.getenv("MY_API_KEY"))
+  ```
+
 ## [0.11.5] - 2024-02-23
 
 - Fix: Fix the usage of ApiError when leveraging auth envvars, when the schema for ApiError was changed, this usage was missed in the update.

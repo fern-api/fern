@@ -8,6 +8,11 @@ export interface ServiceServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    getWithHeader(req: express.Request<never, string, never, never>, res: {
+        send: (responseBody: string) => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
 }
 export declare class ServiceService {
     private readonly methods;
