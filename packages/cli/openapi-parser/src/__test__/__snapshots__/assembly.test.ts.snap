@@ -58,6 +58,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "headers": [
           {
             "description": "Authenticate using your AssemblyAI API key.",
+            "env": null,
             "name": "Authentication",
             "parameterNameOverride": null,
             "schema": {

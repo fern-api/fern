@@ -982,6 +982,7 @@ exports[`open api parser superagent simple 1`] = `
     },
     "headers": {
       "X_SUPERAGENT_API_KEY": {
+        "env": undefined,
         "name": "xSuperagentApiKey",
         "type": "string",
       },

@@ -2679,6 +2679,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "headers": [
         {
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
+          "env": null,
           "name": "If-None-Match",
           "parameterNameOverride": null,
           "schema": {
@@ -4357,6 +4358,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "headers": [
         {
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
+          "env": null,
           "name": "If-None-Match",
           "parameterNameOverride": null,
           "schema": {
@@ -5361,6 +5363,7 @@ Note: This operation requires an identity challenge if the financial institution
       "headers": [
         {
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
+          "env": null,
           "name": "Challenge",
           "parameterNameOverride": null,
           "schema": {
@@ -6031,6 +6034,7 @@ Note: This operation requires an identity challenge if the financial institution
       "headers": [
         {
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
+          "env": null,
           "name": "Challenge",
           "parameterNameOverride": null,
           "schema": {

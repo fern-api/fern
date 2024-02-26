@@ -12224,6 +12224,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }
@@ -13293,6 +13294,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }
@@ -15778,6 +15780,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }

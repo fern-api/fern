@@ -11,6 +11,7 @@ export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.
         .objectWithoutOptionalProperties({
             name: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
             valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
+            env: core.serialization.string().optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).Declaration));
 
@@ -18,5 +19,6 @@ export declare namespace HttpHeader {
     interface Raw extends serializers.Declaration.Raw {
         name: serializers.NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
+        env?: string | null;
     }
 }

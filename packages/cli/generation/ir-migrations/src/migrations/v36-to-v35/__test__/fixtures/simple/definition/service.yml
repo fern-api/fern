@@ -1,0 +1,31 @@
+types:
+  User:
+    properties:
+      name: string
+
+  ListUsersResponse:
+    properties:
+      nextPage: optional<string>
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    listUsers:
+      method: GET
+      path: /users
+      pagination:
+        page: $request.cursor
+        next: $response.nextPage
+        results: $response.users
+      request:
+        headers:
+          X-Endpoint-Header:
+            docs: "Specifies the endpoint key."
+            type: string
+            env: MY_HEADER_ENV
+        name: ListUsersRequest
+        query-parameters:
+          cursor: string
+      response: ListUsersResponse

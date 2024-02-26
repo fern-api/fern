@@ -59,7 +59,8 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                     ? header.schema
                     : {
                           ...header.schema,
-                          name: predefinedHeader.name ?? header.schema.name
+                          name: predefinedHeader.name ?? header.schema.name,
+                          env: predefinedHeader.env ?? header.schema.env
                       };
             context.builder.addGlobalHeader({
                 name: headerName,

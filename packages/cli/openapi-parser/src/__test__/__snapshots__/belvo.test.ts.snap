@@ -9243,6 +9243,7 @@ If you try to access older information than what we can access, we will return a
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "X-Belvo-Request-Mode",
           "parameterNameOverride": null,
           "schema": {
