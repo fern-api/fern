@@ -18,6 +18,7 @@ service:
       examples: 
         - query-parameters:
             operand: $root.Operand.GreaterThan
+            operandOrColor: $root.ColorOrOperand.Red
     
     sendList:
       path: /query-list

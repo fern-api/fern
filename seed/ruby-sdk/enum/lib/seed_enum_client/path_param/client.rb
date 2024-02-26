@@ -18,8 +18,8 @@ module SeedEnumClient
 
     # @param operand [Operand]
     # @param maybe_operand [Operand]
-    # @param operand_or_color [ColorOrOperand]
-    # @param maybe_operand_or_color [ColorOrOperand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
@@ -42,8 +42,8 @@ module SeedEnumClient
 
     # @param operand [Operand]
     # @param maybe_operand [Operand]
-    # @param operand_or_color [ColorOrOperand]
-    # @param maybe_operand_or_color [ColorOrOperand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [RequestOptions]
     # @return [Void]
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)

@@ -52,8 +52,8 @@ class QueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
+                        "operandOrColor": operand_or_color,
+                        "maybeOperandOrColor": maybe_operand_or_color,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -114,8 +114,8 @@ class QueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
+                        "operandOrColor": operand_or_color,
+                        "maybeOperandOrColor": maybe_operand_or_color,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -187,8 +187,8 @@ class AsyncQueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
+                        "operandOrColor": operand_or_color,
+                        "maybeOperandOrColor": maybe_operand_or_color,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -249,8 +249,8 @@ class AsyncQueryParamClient:
                     {
                         "operand": operand,
                         "maybeOperand": maybe_operand,
-                        "operandOrColor": jsonable_encoder(operand_or_color),
-                        "maybeOperandOrColor": jsonable_encoder(maybe_operand_or_color),
+                        "operandOrColor": operand_or_color,
+                        "maybeOperandOrColor": maybe_operand_or_color,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
