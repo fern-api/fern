@@ -29,6 +29,11 @@ export interface ObjectServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    getAndReturnNestedWithRequiredFieldAsList(req: express.Request<never, SeedExhaustive.types.NestedObjectWithRequiredField, SeedExhaustive.types.NestedObjectWithRequiredField[], never>, res: {
+        send: (responseBody: SeedExhaustive.types.NestedObjectWithRequiredField) => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
 }
 export declare class ObjectService {
     private readonly methods;

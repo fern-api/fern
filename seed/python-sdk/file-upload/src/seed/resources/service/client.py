@@ -159,8 +159,8 @@ class ServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.Union[str, typing.List[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        list_of_strings: typing.Union[str, typing.Sequence[str]],
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -172,9 +172,9 @@ class ServiceClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - list_of_strings: typing.Union[str, typing.List[str]].
+            - list_of_strings: typing.Union[str, typing.Sequence[str]].
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
             - file: core.File. See core.File for more documentation
 
@@ -370,8 +370,8 @@ class AsyncServiceClient:
         maybe_string: typing.Optional[str] = None,
         integer: int,
         maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.Union[str, typing.List[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        list_of_strings: typing.Union[str, typing.Sequence[str]],
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -383,9 +383,9 @@ class AsyncServiceClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - list_of_strings: typing.Union[str, typing.List[str]].
+            - list_of_strings: typing.Union[str, typing.Sequence[str]].
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
+            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
 
             - file: core.File. See core.File for more documentation
 

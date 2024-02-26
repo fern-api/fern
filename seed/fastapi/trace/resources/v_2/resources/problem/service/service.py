@@ -27,14 +27,14 @@ class AbstractV2ProblemService(AbstractFernService):
     @abc.abstractmethod
     def get_lightweight_problems(
         self, *, x_random_header: typing.Optional[str] = None
-    ) -> typing.List[LightweightProblemInfoV2]:
+    ) -> typing.Sequence[LightweightProblemInfoV2]:
         """
         Returns lightweight versions of all problems
         """
         ...
 
     @abc.abstractmethod
-    def get_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.List[ProblemInfoV2]:
+    def get_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.Sequence[ProblemInfoV2]:
         """
         Returns latest versions of all problems
         """
@@ -82,7 +82,7 @@ class AbstractV2ProblemService(AbstractFernService):
         setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_lightweight_problems)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[LightweightProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[LightweightProblemInfoV2]:
             try:
                 return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -99,7 +99,7 @@ class AbstractV2ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/lightweight-problem-info",
-            response_model=typing.List[LightweightProblemInfoV2],
+            response_model=typing.Sequence[LightweightProblemInfoV2],
             description=AbstractV2ProblemService.get_lightweight_problems.__doc__,
             **get_route_args(cls.get_lightweight_problems, default_tag="v_2.problem"),
         )(wrapper)
@@ -118,7 +118,7 @@ class AbstractV2ProblemService(AbstractFernService):
         setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_problems)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ProblemInfoV2]:
             try:
                 return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -135,7 +135,7 @@ class AbstractV2ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/problem-info",
-            response_model=typing.List[ProblemInfoV2],
+            response_model=typing.Sequence[ProblemInfoV2],
             description=AbstractV2ProblemService.get_problems.__doc__,
             **get_route_args(cls.get_problems, default_tag="v_2.problem"),
         )(wrapper)

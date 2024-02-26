@@ -16,6 +16,7 @@ types:
   Movie:
     properties:
       id: MovieId
+      prequel: optional<MovieId>
       title: string
       from: string
       rating:
@@ -28,6 +29,7 @@ types:
       - name: One
         value:
           id: $MovieId.One
+          prequel: "movie-cv9b914f"
           title: The Boy and the Heron
           from: Hayao Miyazaki
           rating: 8.0

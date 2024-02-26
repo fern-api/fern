@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
 
@@ -16,10 +17,24 @@ class PathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def send(
+        self,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand],
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand],
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -27,11 +42,14 @@ class PathParamClient:
         from seed.client import SeedEnum
 
         client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.path_param.send(operand=Operand., )
+        client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path/{operand.value}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -63,10 +81,24 @@ class AsyncPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, operand: Operand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def send(
+        self,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand],
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand],
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - operand: Operand.
+
+            - maybe_operand: typing.Optional[Operand].
+
+            - operand_or_color: ColorOrOperand.
+
+            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -74,11 +106,14 @@ class AsyncPathParamClient:
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.path_param.send(operand=Operand., )
+        await client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path/{operand.value}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

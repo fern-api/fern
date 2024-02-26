@@ -8,9 +8,9 @@ from .....types.resources.object.types.object_with_required_field import ObjectW
 from .....types.resources.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from .....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from .....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+import typing
 import fastapi
 import inspect
-import typing
 from ......security import FernAuth
 from ......core.exceptions.fern_http_exception import FernHTTPException
 import logging
@@ -39,6 +39,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @abc.abstractmethod
     def get_and_return_nested_with_required_field(self, *, body: NestedObjectWithRequiredField, auth: ApiAuth) -> NestedObjectWithRequiredField:
         ...
+    @abc.abstractmethod
+    def get_and_return_nested_with_required_field_as_list(self, *, body: typing.List[NestedObjectWithRequiredField], auth: ApiAuth) -> NestedObjectWithRequiredField:
+        ...
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -50,6 +53,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         cls.__init_get_and_return_with_map_of_map(router=router)
         cls.__init_get_and_return_nested_with_optional_field(router=router)
         cls.__init_get_and_return_nested_with_required_field(router=router)
+        cls.__init_get_and_return_nested_with_required_field_as_list(router=router)
     @classmethod
     def __init_get_and_return_with_optional_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_optional_field)
@@ -234,4 +238,41 @@ class AbstractEndpointsObjectService(AbstractFernService):
             response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field, default_tag="endpoints.object"),
+        )(wrapper)
+    @classmethod
+    def __init_get_and_return_nested_with_required_field_as_list(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_and_return_nested_with_required_field_as_list)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "auth":
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_and_return_nested_with_required_field_as_list, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
+        @functools.wraps(cls.get_and_return_nested_with_required_field_as_list)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> NestedObjectWithRequiredField:
+            try:
+                return cls.get_and_return_nested_with_required_field_as_list(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_and_return_nested_with_required_field_as_list' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+        
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_and_return_nested_with_required_field_as_list.__globals__)
+        
+        router.post(
+            path="/object/get-and-return-nested-with-required-field",
+            response_model=NestedObjectWithRequiredField,
+            description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
+            **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),
         )(wrapper)

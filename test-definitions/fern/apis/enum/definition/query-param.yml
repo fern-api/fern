@@ -11,11 +11,14 @@ service:
       request:
         name: SendEnumAsQueryParamRequest
         query-parameters:
-          operand:
-            type: optional<root.Operand>
+          operand: root.Operand
+          maybeOperand: optional<root.Operand>
+          operandOrColor: root.ColorOrOperand
+          maybeOperandOrColor: optional<root.ColorOrOperand>
       examples: 
         - query-parameters:
             operand: $root.Operand.GreaterThan
+            operandOrColor: $root.ColorOrOperand.Red
     
     sendList:
       path: /query-list
@@ -24,5 +27,14 @@ service:
         name: SendEnumListAsQueryParamRequest
         query-parameters:
           operand:
+            type: root.Operand
+            allow-multiple: true
+          maybeOperand:
             type: optional<root.Operand>
+            allow-multiple: true
+          operandOrColor:
+            type: root.ColorOrOperand
+            allow-multiple: true
+          maybeOperandOrColor:
+            type: optional<root.ColorOrOperand>
             allow-multiple: true

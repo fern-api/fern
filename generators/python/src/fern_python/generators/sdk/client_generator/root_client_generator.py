@@ -402,16 +402,11 @@ class RootClientGenerator:
             writer.indent()
             writer.write("raise ")
             writer.write_node(
-                AST.ClassInstantiation(
-                    class_=self._context.core_utilities.get_reference_to_api_error(),
-                    kwargs=[
-                        (
-                            "message",
-                            AST.Expression(
-                                f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
-                            ),
-                        )
-                    ],
+                self._context.core_utilities.instantiate_api_error(
+                    body=AST.Expression(
+                        f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
+                    ),
+                    status_code=None,
                 )
             )
             writer.outdent()

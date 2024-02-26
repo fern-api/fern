@@ -93,6 +93,7 @@ class SdkGenerator(AbstractGenerator):
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
+            improved_imports=custom_config.improved_imports,
         )
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,

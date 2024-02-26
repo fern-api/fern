@@ -163,6 +163,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_with_bearer_token",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/apiKey",
             "parts": [],

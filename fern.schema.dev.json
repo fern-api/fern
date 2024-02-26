@@ -618,6 +618,30 @@
                       },
                       "additionalProperties": false
                     }
+                  },
+                  "pagination": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "page": {
+                            "type": "string",
+                            "description": "The request property name that represents the page cursor or offset."
+                          },
+                          "next": {
+                            "type": "string",
+                            "description": "The response property name that represents the next page cursor or offset to retrieve."
+                          },
+                          "results": {
+                            "type": "string",
+                            "description": "The response property name that represents the page elements."
+                          }
+                        },
+                        "required": ["page", "next", "results"],
+                        "additionalProperties": false
+                      },
+                      { "type": "boolean" }
+                    ]
                   }
                 },
                 "required": ["path"],

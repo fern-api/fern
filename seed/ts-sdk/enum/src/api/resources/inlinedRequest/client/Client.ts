@@ -23,7 +23,7 @@ export class InlinedRequest {
     constructor(protected readonly _options: InlinedRequest.Options) {}
 
     public async send(
-        request: SeedEnum.SendEnumInlinedRequest = {},
+        request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({

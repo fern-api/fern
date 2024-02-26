@@ -8,7 +8,7 @@ from fern_python.generators.pydantic_model import (
 from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
 
 
-def build_snippet_writer(context: PydanticGeneratorContext) -> SnippetWriter:
+def build_snippet_writer(*, context: PydanticGeneratorContext, improved_imports: bool = False) -> SnippetWriter:
     """
     Builds a new SnippetWriter. Using this function is preferred over
     the SnippetWriter constructor due to the two-phase construction
@@ -16,6 +16,7 @@ def build_snippet_writer(context: PydanticGeneratorContext) -> SnippetWriter:
     """
     snippet_writer = SnippetWriter(
         context=context,
+        improved_imports=improved_imports,
     )
 
     type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(

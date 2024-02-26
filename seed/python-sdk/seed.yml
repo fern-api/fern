@@ -33,6 +33,9 @@ fixtures:
               - myCustomFunction
               - AnotherCustomClient
       outputFolder: additional_init_exports
+    - customConfig:
+        improved_imports: true
+      outputFolder: improved_imports
 scripts:
   - docker: fernapi/python-seed
     commands:
@@ -46,8 +49,6 @@ allowedFailures:
   - response-property
   # Generator does not handle list of enums
   - enum
-  - auth-environment-variables
-  - bearer-token-environment-variable
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports

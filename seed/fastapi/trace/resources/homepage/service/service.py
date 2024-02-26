@@ -25,7 +25,7 @@ class AbstractHomepageService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_homepage_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.List[ProblemId]:
+    def get_homepage_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.Sequence[ProblemId]:
         ...
 
     @abc.abstractmethod
@@ -58,7 +58,7 @@ class AbstractHomepageService(AbstractFernService):
         setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_homepage_problems)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ProblemId]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ProblemId]:
             try:
                 return cls.get_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -75,7 +75,7 @@ class AbstractHomepageService(AbstractFernService):
 
         router.get(
             path="/homepage-problems",
-            response_model=typing.List[ProblemId],
+            response_model=typing.Sequence[ProblemId],
             description=AbstractHomepageService.get_homepage_problems.__doc__,
             **get_route_args(cls.get_homepage_problems, default_tag="homepage"),
         )(wrapper)

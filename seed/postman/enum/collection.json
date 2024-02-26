@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"operand\": \">\"\n}",
+              "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \"red\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"operand\": \">\"\n}",
+                  "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \"red\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -109,13 +109,16 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/path/:operand",
+              "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "path",
-                ":operand"
+                ":operand",
+                ":maybeOperand",
+                ":operandOrColor",
+                ":maybeOperandOrColor"
               ],
               "query": [],
               "variable": [
@@ -123,6 +126,16 @@
                   "key": "operand",
                   "description": null,
                   "value": ">"
+                },
+                {
+                  "key": "maybeOperand",
+                  "description": null,
+                  "value": "less_than"
+                },
+                {
+                  "key": "maybeOperandOrColor",
+                  "description": null,
+                  "value": "red"
                 }
               ]
             },
@@ -145,13 +158,16 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/path/:operand",
+                  "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "path",
-                    ":operand"
+                    ":operand",
+                    ":maybeOperand",
+                    ":operandOrColor",
+                    ":maybeOperandOrColor"
                   ],
                   "query": [],
                   "variable": [
@@ -159,6 +175,16 @@
                       "key": "operand",
                       "description": null,
                       "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": "less_than"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
                     }
                   ]
                 },
@@ -266,7 +292,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?operand=",
+              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -276,6 +302,11 @@
               "query": [
                 {
                   "key": "operand",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "maybeOperand",
                   "value": "",
                   "description": null
                 }

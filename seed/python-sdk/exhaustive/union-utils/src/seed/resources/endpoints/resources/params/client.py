@@ -34,7 +34,7 @@ class ParamsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -110,17 +110,17 @@ class ParamsClient:
     def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.List[str]],
-        numer: typing.Union[int, typing.List[int]],
+        query: typing.Union[str, typing.Sequence[str]],
+        numer: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         GET with multiple of same query param
 
         Parameters:
-            - query: typing.Union[str, typing.List[str]].
+            - query: typing.Union[str, typing.Sequence[str]].
 
-            - numer: typing.Union[int, typing.List[int]].
+            - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -175,7 +175,7 @@ class ParamsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -223,7 +223,7 @@ class ParamsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -264,7 +264,7 @@ class AsyncParamsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -340,17 +340,17 @@ class AsyncParamsClient:
     async def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.List[str]],
-        numer: typing.Union[int, typing.List[int]],
+        query: typing.Union[str, typing.Sequence[str]],
+        numer: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         GET with multiple of same query param
 
         Parameters:
-            - query: typing.Union[str, typing.List[str]].
+            - query: typing.Union[str, typing.Sequence[str]].
 
-            - numer: typing.Union[int, typing.List[int]].
+            - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -405,7 +405,7 @@ class AsyncParamsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -453,7 +453,7 @@ class AsyncParamsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

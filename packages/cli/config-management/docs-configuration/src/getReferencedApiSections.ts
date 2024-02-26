@@ -77,8 +77,13 @@ export function visitDocsNavigationItem({
         case "apiSection":
             collector.collect(item);
             return;
-        case "page":
         case "section":
+            item.contents.forEach((subItem) => {
+                visitDocsNavigationItem({ item: subItem, collector });
+            });
+            return;
+        case "page":
+        case "link":
             return;
         default:
             assertNever(item);

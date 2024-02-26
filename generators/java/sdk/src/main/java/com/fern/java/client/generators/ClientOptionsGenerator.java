@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -151,8 +152,32 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
         }
 
+        MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(
+                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .returns(OKHTTP_CLIENT_FIELD.type)
+                .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
+                .endControlFlow()
+                .addStatement(
+                        "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
+                                ".connectTimeout(0, $T.SECONDS)" +
+                                ".writeTimeout(0, $T.SECONDS)" +
+                                ".readTimeout(0, $T.SECONDS).build()",
+                        OKHTTP_CLIENT_FIELD.name,
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class)
+                .build();
+
+
         TypeSpec clientOptions = clientOptionsBuilder
                 .addMethod(httpClientGetter)
+                .addMethod(httpClientWithTimeoutGetter)
                 .addMethods(variableGetters.values())
                 .addMethod(MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -163,11 +188,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
         JavaFile environmentsFile =
                 JavaFile.builder(className.packageName(), clientOptions).build();
+
         return GeneratedClientOptions.builder()
                 .className(className)
                 .javaFile(environmentsFile)
                 .environment(environmentGetter)
                 .httpClient(httpClientGetter)
+                .httpClientWithTimeout(httpClientWithTimeoutGetter)
                 .builderClassName(builderClassName)
                 .putAllVariableGetters(variableGetters)
                 .build();

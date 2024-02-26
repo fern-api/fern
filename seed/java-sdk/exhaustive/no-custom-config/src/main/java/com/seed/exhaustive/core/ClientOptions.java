@@ -5,6 +5,7 @@ package com.seed.exhaustive.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
 
@@ -48,6 +49,19 @@ public final class ClientOptions {
 
     public OkHttpClient httpClient() {
         return this.httpClient;
+    }
+
+    public OkHttpClient httpClientWithTimeout(RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return this.httpClient;
+        }
+        return this.httpClient
+                .newBuilder()
+                .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                .connectTimeout(0, TimeUnit.SECONDS)
+                .writeTimeout(0, TimeUnit.SECONDS)
+                .readTimeout(0, TimeUnit.SECONDS)
+                .build();
     }
 
     public static Builder builder() {

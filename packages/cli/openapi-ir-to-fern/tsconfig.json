@@ -8,6 +8,7 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../config-management/project-configuration" },
     { "path": "../logger" },
+    { "path": "../openapi-ir-sdk" },
     { "path": "../openapi-parser" },
     { "path": "../task-context" },
     { "path": "../yaml/yaml-schema" }

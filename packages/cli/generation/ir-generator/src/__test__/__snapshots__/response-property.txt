@@ -153,6 +153,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -403,6 +404,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie_docs",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -591,6 +593,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie_name",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -741,6 +744,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_movie_metadata",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -939,6 +943,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_optional_movie",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -1195,6 +1200,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_optional_movie_docs",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],
@@ -1383,6 +1389,7 @@ exports[`generate IR 1`] = `
               "unsafeName": "get_optional_movie_name",
             },
           },
+          "pagination": null,
           "path": {
             "head": "/movie",
             "parts": [],

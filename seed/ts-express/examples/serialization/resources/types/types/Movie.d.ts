@@ -8,6 +8,7 @@ export declare const Movie: core.serialization.ObjectSchema<serializers.Movie.Ra
 export declare namespace Movie {
     interface Raw {
         id: serializers.MovieId.Raw;
+        prequel?: serializers.MovieId.Raw | null;
         title: string;
         from: string;
         rating: number;

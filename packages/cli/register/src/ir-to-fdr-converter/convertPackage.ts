@@ -147,11 +147,11 @@ function convertWebSocketChannel(
             })
         ),
         examples: channel.examples.map(
-            (example): APIV1Write.ExampleWebSocketQueue => ({
+            (example): APIV1Write.ExampleWebSocketSession => ({
                 name: example.name?.originalName,
                 description: example.docs,
                 path: example.url,
-                pathParameters: example.pathParameters.reduce<APIV1Write.ExampleWebSocketQueue["pathParameters"]>(
+                pathParameters: example.pathParameters.reduce<APIV1Write.ExampleWebSocketSession["pathParameters"]>(
                     (pathParameters, irPathParameterExample) => {
                         pathParameters[irPathParameterExample.name.originalName] =
                             irPathParameterExample.value.jsonExample;
@@ -159,7 +159,7 @@ function convertWebSocketChannel(
                     },
                     {}
                 ),
-                queryParameters: example.queryParameters.reduce<APIV1Write.ExampleWebSocketQueue["queryParameters"]>(
+                queryParameters: example.queryParameters.reduce<APIV1Write.ExampleWebSocketSession["queryParameters"]>(
                     (queryParameters, irQueryParameterExample) => {
                         queryParameters[irQueryParameterExample.name.wireValue] =
                             irQueryParameterExample.value.jsonExample;
@@ -167,7 +167,7 @@ function convertWebSocketChannel(
                     },
                     {}
                 ),
-                headers: example.headers.reduce<APIV1Write.ExampleWebSocketQueue["headers"]>(
+                headers: example.headers.reduce<APIV1Write.ExampleWebSocketSession["headers"]>(
                     (headers, irHeaderExample) => {
                         headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
                         return headers;

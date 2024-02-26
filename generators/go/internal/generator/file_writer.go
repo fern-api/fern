@@ -36,6 +36,7 @@ type fileWriter struct {
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
 	coordinator    *coordinator.Client
+	snippetWriter  *SnippetWriter
 
 	buffer *bytes.Buffer
 }
@@ -85,6 +86,7 @@ func newFileWriter(
 		types:          types,
 		errors:         errors,
 		coordinator:    coordinator,
+		snippetWriter:  NewSnippetWriter(baseImportPath, types),
 		buffer:         new(bytes.Buffer),
 	}
 }

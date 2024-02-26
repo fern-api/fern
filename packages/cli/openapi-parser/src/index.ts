@@ -1,2 +1,2 @@
-export { parse } from "./parse";
-export { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "./v3/converters/schema/convertEnum";
+export { parse } from "./openapi/parse";
+export { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "./schema/convertEnum";

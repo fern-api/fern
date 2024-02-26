@@ -1,4 +1,4 @@
-name: ir
+name: IR Check
 
 on:
   workflow_dispatch:

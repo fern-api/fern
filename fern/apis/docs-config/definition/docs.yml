@@ -33,6 +33,7 @@ types:
     properties:
       display-name: string
       icon: string
+      slug: optional<string>
 
   DocsInstances:
     properties:
@@ -135,6 +136,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiSectionConfiguration
+      - LinkConfiguration
 
   LogoConfiguration:
     properties:
@@ -328,15 +330,15 @@ types:
 
   NavbarLink:
     union:
-      primary: NavbarPrimaryLink
-      secondary: NavbarSecondaryLink
+      filled: LinkConfiguration
+      outlined: LinkConfiguration
+      minimal: LinkConfiguration
 
-  NavbarPrimaryLink:
-    properties:
-      url: string
-      text: string
+      # deprecated
+      primary: LinkConfiguration # use `outlined` instead
+      secondary: LinkConfiguration # use `minimal` instead
 
-  NavbarSecondaryLink:
+  LinkConfiguration:
     properties:
       url: string
       text: string
