@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: You can now specify envvars to scan for headers, not just auth scheme headers.
   ```
+  # OpenAPI
   x-fern-global-headers:
    - header: x-api-key
      name: api_key
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
   ... or ...
   ```
+  # Fern Definition
   getAllUsers:
     method: GET
     path: /all
