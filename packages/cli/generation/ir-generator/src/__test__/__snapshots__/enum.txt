@@ -131,6 +131,7 @@ exports[`generate IR 1`] = `
               "request": {
                 "jsonExample": {
                   "operand": ">",
+                  "operandOrColor": "red",
                 },
                 "properties": [
                   {
@@ -212,6 +213,126 @@ exports[`generate IR 1`] = `
                             },
                           },
                           "typeId": "type_:Operand",
+                        },
+                      },
+                    },
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "operandOrColor",
+                          "unsafeName": "operandOrColor",
+                        },
+                        "originalName": "operandOrColor",
+                        "pascalCase": {
+                          "safeName": "OperandOrColor",
+                          "unsafeName": "OperandOrColor",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "OPERAND_OR_COLOR",
+                          "unsafeName": "OPERAND_OR_COLOR",
+                        },
+                        "snakeCase": {
+                          "safeName": "operand_or_color",
+                          "unsafeName": "operand_or_color",
+                        },
+                      },
+                      "wireValue": "operandOrColor",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "red",
+                      "shape": {
+                        "shape": {
+                          "index": 0,
+                          "singleUnionType": {
+                            "jsonExample": "red",
+                            "shape": {
+                              "shape": {
+                                "type": "enum",
+                                "value": {
+                                  "name": {
+                                    "camelCase": {
+                                      "safeName": "red",
+                                      "unsafeName": "red",
+                                    },
+                                    "originalName": "red",
+                                    "pascalCase": {
+                                      "safeName": "Red",
+                                      "unsafeName": "Red",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "RED",
+                                      "unsafeName": "RED",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "red",
+                                      "unsafeName": "red",
+                                    },
+                                  },
+                                  "wireValue": "red",
+                                },
+                              },
+                              "type": "named",
+                              "typeName": {
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": null,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "color",
+                                    "unsafeName": "color",
+                                  },
+                                  "originalName": "Color",
+                                  "pascalCase": {
+                                    "safeName": "Color",
+                                    "unsafeName": "Color",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "COLOR",
+                                    "unsafeName": "COLOR",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "color",
+                                    "unsafeName": "color",
+                                  },
+                                },
+                                "typeId": "type_:Color",
+                              },
+                            },
+                          },
+                          "type": "undiscriminatedUnion",
+                        },
+                        "type": "named",
+                        "typeName": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": null,
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "colorOrOperand",
+                              "unsafeName": "colorOrOperand",
+                            },
+                            "originalName": "ColorOrOperand",
+                            "pascalCase": {
+                              "safeName": "ColorOrOperand",
+                              "unsafeName": "ColorOrOperand",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COLOR_OR_OPERAND",
+                              "unsafeName": "COLOR_OR_OPERAND",
+                            },
+                            "snakeCase": {
+                              "safeName": "color_or_operand",
+                              "unsafeName": "color_or_operand",
+                            },
+                          },
+                          "typeId": "type_:ColorOrOperand",
                         },
                       },
                     },
@@ -948,6 +1069,335 @@ exports[`generate IR 1`] = `
                     },
                   },
                 },
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "maybeOperand",
+                      "unsafeName": "maybeOperand",
+                    },
+                    "originalName": "maybeOperand",
+                    "pascalCase": {
+                      "safeName": "MaybeOperand",
+                      "unsafeName": "MaybeOperand",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MAYBE_OPERAND",
+                      "unsafeName": "MAYBE_OPERAND",
+                    },
+                    "snakeCase": {
+                      "safeName": "maybe_operand",
+                      "unsafeName": "maybe_operand",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "less_than",
+                    "shape": {
+                      "container": {
+                        "optional": {
+                          "jsonExample": "less_than",
+                          "shape": {
+                            "shape": {
+                              "type": "enum",
+                              "value": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "lessThan",
+                                    "unsafeName": "lessThan",
+                                  },
+                                  "originalName": "less_than",
+                                  "pascalCase": {
+                                    "safeName": "LessThan",
+                                    "unsafeName": "LessThan",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "LESS_THAN",
+                                    "unsafeName": "LESS_THAN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "less_than",
+                                    "unsafeName": "less_than",
+                                  },
+                                },
+                                "wireValue": "less_than",
+                              },
+                            },
+                            "type": "named",
+                            "typeName": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "operand",
+                                  "unsafeName": "operand",
+                                },
+                                "originalName": "Operand",
+                                "pascalCase": {
+                                  "safeName": "Operand",
+                                  "unsafeName": "Operand",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "OPERAND",
+                                  "unsafeName": "OPERAND",
+                                },
+                                "snakeCase": {
+                                  "safeName": "operand",
+                                  "unsafeName": "operand",
+                                },
+                              },
+                              "typeId": "type_:Operand",
+                            },
+                          },
+                        },
+                        "type": "optional",
+                      },
+                      "type": "container",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "operandOrColor",
+                      "unsafeName": "operandOrColor",
+                    },
+                    "originalName": "operandOrColor",
+                    "pascalCase": {
+                      "safeName": "OperandOrColor",
+                      "unsafeName": "OperandOrColor",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "OPERAND_OR_COLOR",
+                      "unsafeName": "OPERAND_OR_COLOR",
+                    },
+                    "snakeCase": {
+                      "safeName": "operand_or_color",
+                      "unsafeName": "operand_or_color",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "red",
+                    "shape": {
+                      "shape": {
+                        "index": 0,
+                        "singleUnionType": {
+                          "jsonExample": "red",
+                          "shape": {
+                            "shape": {
+                              "type": "enum",
+                              "value": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "red",
+                                    "unsafeName": "red",
+                                  },
+                                  "originalName": "red",
+                                  "pascalCase": {
+                                    "safeName": "Red",
+                                    "unsafeName": "Red",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "RED",
+                                    "unsafeName": "RED",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "red",
+                                    "unsafeName": "red",
+                                  },
+                                },
+                                "wireValue": "red",
+                              },
+                            },
+                            "type": "named",
+                            "typeName": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "color",
+                                  "unsafeName": "color",
+                                },
+                                "originalName": "Color",
+                                "pascalCase": {
+                                  "safeName": "Color",
+                                  "unsafeName": "Color",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "COLOR",
+                                  "unsafeName": "COLOR",
+                                },
+                                "snakeCase": {
+                                  "safeName": "color",
+                                  "unsafeName": "color",
+                                },
+                              },
+                              "typeId": "type_:Color",
+                            },
+                          },
+                        },
+                        "type": "undiscriminatedUnion",
+                      },
+                      "type": "named",
+                      "typeName": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": null,
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "colorOrOperand",
+                            "unsafeName": "colorOrOperand",
+                          },
+                          "originalName": "ColorOrOperand",
+                          "pascalCase": {
+                            "safeName": "ColorOrOperand",
+                            "unsafeName": "ColorOrOperand",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "COLOR_OR_OPERAND",
+                            "unsafeName": "COLOR_OR_OPERAND",
+                          },
+                          "snakeCase": {
+                            "safeName": "color_or_operand",
+                            "unsafeName": "color_or_operand",
+                          },
+                        },
+                        "typeId": "type_:ColorOrOperand",
+                      },
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "maybeOperandOrColor",
+                      "unsafeName": "maybeOperandOrColor",
+                    },
+                    "originalName": "maybeOperandOrColor",
+                    "pascalCase": {
+                      "safeName": "MaybeOperandOrColor",
+                      "unsafeName": "MaybeOperandOrColor",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MAYBE_OPERAND_OR_COLOR",
+                      "unsafeName": "MAYBE_OPERAND_OR_COLOR",
+                    },
+                    "snakeCase": {
+                      "safeName": "maybe_operand_or_color",
+                      "unsafeName": "maybe_operand_or_color",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "red",
+                    "shape": {
+                      "container": {
+                        "optional": {
+                          "jsonExample": "red",
+                          "shape": {
+                            "shape": {
+                              "index": 0,
+                              "singleUnionType": {
+                                "jsonExample": "red",
+                                "shape": {
+                                  "shape": {
+                                    "type": "enum",
+                                    "value": {
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "red",
+                                          "unsafeName": "red",
+                                        },
+                                        "originalName": "red",
+                                        "pascalCase": {
+                                          "safeName": "Red",
+                                          "unsafeName": "Red",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "RED",
+                                          "unsafeName": "RED",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "red",
+                                          "unsafeName": "red",
+                                        },
+                                      },
+                                      "wireValue": "red",
+                                    },
+                                  },
+                                  "type": "named",
+                                  "typeName": {
+                                    "fernFilepath": {
+                                      "allParts": [],
+                                      "file": null,
+                                      "packagePath": [],
+                                    },
+                                    "name": {
+                                      "camelCase": {
+                                        "safeName": "color",
+                                        "unsafeName": "color",
+                                      },
+                                      "originalName": "Color",
+                                      "pascalCase": {
+                                        "safeName": "Color",
+                                        "unsafeName": "Color",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "COLOR",
+                                        "unsafeName": "COLOR",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "color",
+                                        "unsafeName": "color",
+                                      },
+                                    },
+                                    "typeId": "type_:Color",
+                                  },
+                                },
+                              },
+                              "type": "undiscriminatedUnion",
+                            },
+                            "type": "named",
+                            "typeName": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "colorOrOperand",
+                                  "unsafeName": "colorOrOperand",
+                                },
+                                "originalName": "ColorOrOperand",
+                                "pascalCase": {
+                                  "safeName": "ColorOrOperand",
+                                  "unsafeName": "ColorOrOperand",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "COLOR_OR_OPERAND",
+                                  "unsafeName": "COLOR_OR_OPERAND",
+                                },
+                                "snakeCase": {
+                                  "safeName": "color_or_operand",
+                                  "unsafeName": "color_or_operand",
+                                },
+                              },
+                              "typeId": "type_:ColorOrOperand",
+                            },
+                          },
+                        },
+                        "type": "optional",
+                      },
+                      "type": "container",
+                    },
+                  },
+                },
               ],
               "name": null,
               "queryParameters": [],
@@ -959,7 +1409,7 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/path/>/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+              "url": "/path/>/less_than/red/red",
             },
           ],
           "fullPath": {
@@ -1406,6 +1856,125 @@ exports[`generate IR 1`] = `
                           },
                         },
                         "typeId": "type_:Operand",
+                      },
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "operandOrColor",
+                        "unsafeName": "operandOrColor",
+                      },
+                      "originalName": "operandOrColor",
+                      "pascalCase": {
+                        "safeName": "OperandOrColor",
+                        "unsafeName": "OperandOrColor",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OPERAND_OR_COLOR",
+                        "unsafeName": "OPERAND_OR_COLOR",
+                      },
+                      "snakeCase": {
+                        "safeName": "operand_or_color",
+                        "unsafeName": "operand_or_color",
+                      },
+                    },
+                    "wireValue": "operandOrColor",
+                  },
+                  "value": {
+                    "jsonExample": "red",
+                    "shape": {
+                      "shape": {
+                        "index": 0,
+                        "singleUnionType": {
+                          "jsonExample": "red",
+                          "shape": {
+                            "shape": {
+                              "type": "enum",
+                              "value": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "red",
+                                    "unsafeName": "red",
+                                  },
+                                  "originalName": "red",
+                                  "pascalCase": {
+                                    "safeName": "Red",
+                                    "unsafeName": "Red",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "RED",
+                                    "unsafeName": "RED",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "red",
+                                    "unsafeName": "red",
+                                  },
+                                },
+                                "wireValue": "red",
+                              },
+                            },
+                            "type": "named",
+                            "typeName": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "color",
+                                  "unsafeName": "color",
+                                },
+                                "originalName": "Color",
+                                "pascalCase": {
+                                  "safeName": "Color",
+                                  "unsafeName": "Color",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "COLOR",
+                                  "unsafeName": "COLOR",
+                                },
+                                "snakeCase": {
+                                  "safeName": "color",
+                                  "unsafeName": "color",
+                                },
+                              },
+                              "typeId": "type_:Color",
+                            },
+                          },
+                        },
+                        "type": "undiscriminatedUnion",
+                      },
+                      "type": "named",
+                      "typeName": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": null,
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "colorOrOperand",
+                            "unsafeName": "colorOrOperand",
+                          },
+                          "originalName": "ColorOrOperand",
+                          "pascalCase": {
+                            "safeName": "ColorOrOperand",
+                            "unsafeName": "ColorOrOperand",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "COLOR_OR_OPERAND",
+                            "unsafeName": "COLOR_OR_OPERAND",
+                          },
+                          "snakeCase": {
+                            "safeName": "color_or_operand",
+                            "unsafeName": "color_or_operand",
+                          },
+                        },
+                        "typeId": "type_:ColorOrOperand",
                       },
                     },
                   },
@@ -2370,7 +2939,56 @@ exports[`generate IR 1`] = `
     "type_:Color": {
       "availability": null,
       "docs": null,
-      "examples": [],
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "red",
+          "name": {
+            "camelCase": {
+              "safeName": "red",
+              "unsafeName": "red",
+            },
+            "originalName": "Red",
+            "pascalCase": {
+              "safeName": "Red",
+              "unsafeName": "Red",
+            },
+            "screamingSnakeCase": {
+              "safeName": "RED",
+              "unsafeName": "RED",
+            },
+            "snakeCase": {
+              "safeName": "red",
+              "unsafeName": "red",
+            },
+          },
+          "shape": {
+            "type": "enum",
+            "value": {
+              "name": {
+                "camelCase": {
+                  "safeName": "red",
+                  "unsafeName": "red",
+                },
+                "originalName": "red",
+                "pascalCase": {
+                  "safeName": "Red",
+                  "unsafeName": "Red",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RED",
+                  "unsafeName": "RED",
+                },
+                "snakeCase": {
+                  "safeName": "red",
+                  "unsafeName": "red",
+                },
+              },
+              "wireValue": "red",
+            },
+          },
+        },
+      ],
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -2460,7 +3078,93 @@ exports[`generate IR 1`] = `
     "type_:ColorOrOperand": {
       "availability": null,
       "docs": null,
-      "examples": [],
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "red",
+          "name": {
+            "camelCase": {
+              "safeName": "red",
+              "unsafeName": "red",
+            },
+            "originalName": "Red",
+            "pascalCase": {
+              "safeName": "Red",
+              "unsafeName": "Red",
+            },
+            "screamingSnakeCase": {
+              "safeName": "RED",
+              "unsafeName": "RED",
+            },
+            "snakeCase": {
+              "safeName": "red",
+              "unsafeName": "red",
+            },
+          },
+          "shape": {
+            "index": 0,
+            "singleUnionType": {
+              "jsonExample": "red",
+              "shape": {
+                "shape": {
+                  "type": "enum",
+                  "value": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "red",
+                        "unsafeName": "red",
+                      },
+                      "originalName": "red",
+                      "pascalCase": {
+                        "safeName": "Red",
+                        "unsafeName": "Red",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "RED",
+                        "unsafeName": "RED",
+                      },
+                      "snakeCase": {
+                        "safeName": "red",
+                        "unsafeName": "red",
+                      },
+                    },
+                    "wireValue": "red",
+                  },
+                },
+                "type": "named",
+                "typeName": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "color",
+                      "unsafeName": "color",
+                    },
+                    "originalName": "Color",
+                    "pascalCase": {
+                      "safeName": "Color",
+                      "unsafeName": "Color",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COLOR",
+                      "unsafeName": "COLOR",
+                    },
+                    "snakeCase": {
+                      "safeName": "color",
+                      "unsafeName": "color",
+                    },
+                  },
+                  "typeId": "type_:Color",
+                },
+              },
+            },
+            "type": "undiscriminatedUnion",
+          },
+        },
+      ],
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -2493,40 +3197,23 @@ exports[`generate IR 1`] = `
         "type_:Operand",
       ],
       "shape": {
-        "_type": "union",
-        "baseProperties": [],
-        "discriminant": {
-          "name": {
-            "camelCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-            "originalName": "type",
-            "pascalCase": {
-              "safeName": "Type",
-              "unsafeName": "Type",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPE",
-              "unsafeName": "TYPE",
-            },
-            "snakeCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-          },
-          "wireValue": "type",
-        },
-        "extends": [],
-        "types": [
+        "_type": "undiscriminatedUnion",
+        "members": [
           {
-            "discriminantValue": {
+            "docs": null,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [],
+                "file": null,
+                "packagePath": [],
+              },
               "name": {
                 "camelCase": {
                   "safeName": "color",
                   "unsafeName": "color",
                 },
-                "originalName": "color",
+                "originalName": "Color",
                 "pascalCase": {
                   "safeName": "Color",
                   "unsafeName": "Color",
@@ -2540,71 +3227,24 @@ exports[`generate IR 1`] = `
                   "unsafeName": "color",
                 },
               },
-              "wireValue": "color",
-            },
-            "docs": null,
-            "shape": {
-              "_type": "singleProperty",
-              "name": {
-                "name": {
-                  "camelCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                  "originalName": "value",
-                  "pascalCase": {
-                    "safeName": "Value",
-                    "unsafeName": "Value",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "VALUE",
-                    "unsafeName": "VALUE",
-                  },
-                  "snakeCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                },
-                "wireValue": "value",
-              },
-              "type": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "color",
-                    "unsafeName": "color",
-                  },
-                  "originalName": "Color",
-                  "pascalCase": {
-                    "safeName": "Color",
-                    "unsafeName": "Color",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "COLOR",
-                    "unsafeName": "COLOR",
-                  },
-                  "snakeCase": {
-                    "safeName": "color",
-                    "unsafeName": "color",
-                  },
-                },
-                "typeId": "type_:Color",
-              },
+              "typeId": "type_:Color",
             },
           },
           {
-            "discriminantValue": {
+            "docs": null,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [],
+                "file": null,
+                "packagePath": [],
+              },
               "name": {
                 "camelCase": {
                   "safeName": "operand",
                   "unsafeName": "operand",
                 },
-                "originalName": "operand",
+                "originalName": "Operand",
                 "pascalCase": {
                   "safeName": "Operand",
                   "unsafeName": "Operand",
@@ -2618,61 +3258,7 @@ exports[`generate IR 1`] = `
                   "unsafeName": "operand",
                 },
               },
-              "wireValue": "operand",
-            },
-            "docs": null,
-            "shape": {
-              "_type": "singleProperty",
-              "name": {
-                "name": {
-                  "camelCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                  "originalName": "value",
-                  "pascalCase": {
-                    "safeName": "Value",
-                    "unsafeName": "Value",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "VALUE",
-                    "unsafeName": "VALUE",
-                  },
-                  "snakeCase": {
-                    "safeName": "value",
-                    "unsafeName": "value",
-                  },
-                },
-                "wireValue": "value",
-              },
-              "type": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "operand",
-                    "unsafeName": "operand",
-                  },
-                  "originalName": "Operand",
-                  "pascalCase": {
-                    "safeName": "Operand",
-                    "unsafeName": "Operand",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OPERAND",
-                    "unsafeName": "OPERAND",
-                  },
-                  "snakeCase": {
-                    "safeName": "operand",
-                    "unsafeName": "operand",
-                  },
-                },
-                "typeId": "type_:Operand",
-              },
+              "typeId": "type_:Operand",
             },
           },
         ],

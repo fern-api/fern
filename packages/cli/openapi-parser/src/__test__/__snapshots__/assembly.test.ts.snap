@@ -58,6 +58,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "headers": [
           {
             "description": "Authenticate using your AssemblyAI API key.",
+            "env": null,
             "name": "Authentication",
             "parameterNameOverride": null,
             "schema": {
@@ -380,14 +381,14 @@ The parameter should map to a JSON encoded list of strings.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
