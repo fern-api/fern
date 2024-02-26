@@ -27,3 +27,10 @@ export type TypeReferenceDeclarationSchema = z.infer<typeof TypeReferenceDeclara
 
 export const TypeReferenceDeclarationWithNameSchema = extendTypeReferenceSchema(DeclarationWithNameSchema.shape);
 export type TypeReferenceWithDocsAndNameSchema = z.infer<typeof TypeReferenceDeclarationWithNameSchema>;
+
+export const TypeReferenceDeclarationWithEnvOverride = extendTypeReferenceSchema(
+    DeclarationWithNameSchema.extend({
+        env: z.optional(z.string())
+    }).shape
+);
+export type TypeReferenceDeclarationWithEnvOverride = z.infer<typeof TypeReferenceDeclarationWithEnvOverride>;

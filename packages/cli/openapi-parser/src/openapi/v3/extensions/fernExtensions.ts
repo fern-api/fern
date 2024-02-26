@@ -310,6 +310,7 @@ export const FernOpenAPIExtension = {
      *    name: api_key
      *    optional: true
      *  - header: telemetry_id
+     *    env: MY_ENVVAR
      */
     FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;

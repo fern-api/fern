@@ -11,6 +11,7 @@ export const GlobalHeader: core.serialization.ObjectSchema<serializers.GlobalHea
         header: core.serialization.string(),
         name: core.serialization.string().optional(),
         optional: core.serialization.boolean().optional(),
+        env: core.serialization.string().optional(),
     });
 
 export declare namespace GlobalHeader {
@@ -18,5 +19,6 @@ export declare namespace GlobalHeader {
         header: string;
         name?: string | null;
         optional?: boolean | null;
+        env?: string | null;
     }
 }

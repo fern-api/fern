@@ -118,7 +118,8 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                     name: securityScheme.headerName,
                     schema: {
                         type: "string",
-                        name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName)
+                        name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName),
+                        env: securityScheme.headerEnvVar
                     }
                 });
             }

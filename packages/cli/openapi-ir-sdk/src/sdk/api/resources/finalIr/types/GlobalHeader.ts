@@ -6,4 +6,5 @@ export interface GlobalHeader {
     header: string;
     name: string | undefined;
     optional: boolean | undefined;
+    env: string | undefined;
 }

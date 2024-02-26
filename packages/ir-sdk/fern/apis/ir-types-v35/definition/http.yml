@@ -63,7 +63,6 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
-      env: optional<string>
   PathParameter:
     extends: commons.WithDocs
     properties:
