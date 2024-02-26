@@ -122,7 +122,40 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
             "head": "/users",
             "parts": [],
           },
-          "headers": [],
+          "headers": [
+            {
+              "availability": undefined,
+              "docs": "Specifies the endpoint key.",
+              "env": "MY_HEADER_ENV",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "xEndpointHeader",
+                    "unsafeName": "xEndpointHeader",
+                  },
+                  "originalName": "X-Endpoint-Header",
+                  "pascalCase": {
+                    "safeName": "XEndpointHeader",
+                    "unsafeName": "XEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "X_ENDPOINT_HEADER",
+                    "unsafeName": "X_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "x_endpoint_header",
+                    "unsafeName": "x_endpoint_header",
+                  },
+                },
+                "wireValue": "X-Endpoint-Header",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+            },
+          ],
           "id": "endpoint_service.listUsers",
           "idempotent": false,
           "method": "GET",

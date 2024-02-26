@@ -20,6 +20,11 @@ service:
         next: $response.nextPage
         results: $response.users
       request:
+        headers:
+          X-Endpoint-Header:
+            docs: "Specifies the endpoint key."
+            type: string
+            env: MY_HEADER_ENV
         name: ListUsersRequest
         query-parameters:
           cursor: string
