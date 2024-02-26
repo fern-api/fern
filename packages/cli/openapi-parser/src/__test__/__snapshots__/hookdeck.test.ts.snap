@@ -57,21 +57,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "deleted_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "disabled_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -103,7 +103,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -730,21 +730,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -776,7 +776,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -1003,21 +1003,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -1049,7 +1049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -1264,21 +1264,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -1310,7 +1310,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -1437,21 +1437,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -1483,7 +1483,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -1836,21 +1836,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -1882,7 +1882,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -2005,21 +2005,21 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deleted_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "disabled_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -2051,7 +2051,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -2164,14 +2164,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "delivered_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "delivery_latency": {
@@ -2217,7 +2217,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "response_latency": {
@@ -2246,7 +2246,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "team_id": {
@@ -2264,7 +2264,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -2664,14 +2664,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "delivered_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "delivery_latency": {
@@ -2717,7 +2717,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "response_latency": {
@@ -2746,7 +2746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -2764,7 +2764,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -2863,7 +2863,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "data": {
@@ -2903,7 +2903,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "team_id": {
@@ -2917,7 +2917,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -3740,7 +3740,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "data": {
@@ -3815,7 +3815,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -3829,7 +3829,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -4009,7 +4009,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "data": {
@@ -4084,7 +4084,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -4098,7 +4098,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -4207,7 +4207,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "data": {
@@ -4282,7 +4282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -4296,7 +4296,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -4620,7 +4620,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at_id": {
@@ -4702,7 +4702,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "last_attempt_at_id": {
@@ -4716,7 +4716,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "request_id": {
@@ -4748,7 +4748,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "team_id": {
@@ -4762,7 +4762,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "webhook_id": {
@@ -4924,7 +4924,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "cli_path": {
@@ -4938,7 +4938,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -4984,7 +4984,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -5927,7 +5927,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -5941,7 +5941,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -5987,7 +5987,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -6275,7 +6275,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -6289,7 +6289,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -6335,7 +6335,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -6622,7 +6622,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -6636,7 +6636,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -6682,7 +6682,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -6792,7 +6792,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -6806,7 +6806,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -6852,7 +6852,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -7187,7 +7187,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -7201,7 +7201,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -7247,7 +7247,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -7344,7 +7344,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "cli_path": {
@@ -7358,7 +7358,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -7404,7 +7404,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -7517,7 +7517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at_id": {
@@ -7564,7 +7564,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "last_attempt_at_id": {
@@ -7578,7 +7578,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "request_id": {
@@ -7610,7 +7610,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "team_id": {
@@ -7624,7 +7624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -9704,7 +9704,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at_id": {
@@ -9786,7 +9786,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "last_attempt_at_id": {
@@ -9800,7 +9800,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "request_id": {
@@ -9832,7 +9832,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -9846,7 +9846,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -10056,14 +10056,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "delivered_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "delivery_latency": {
@@ -10109,7 +10109,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "response_latency": {
@@ -10138,7 +10138,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "team_id": {
@@ -10156,7 +10156,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -10182,7 +10182,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at_id": {
@@ -10264,7 +10264,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "last_attempt_at_id": {
@@ -10278,7 +10278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "request_id": {
@@ -10310,7 +10310,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "team_id": {
@@ -10324,7 +10324,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "webhook_id": {
@@ -10438,7 +10438,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at_id": {
@@ -10520,7 +10520,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "last_attempt_at_id": {
@@ -10534,7 +10534,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "request_id": {
@@ -10566,7 +10566,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "team_id": {
@@ -10580,7 +10580,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -10679,14 +10679,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_count": {
@@ -10700,7 +10700,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "estimated_batch": {
@@ -10770,7 +10770,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -13799,14 +13799,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -13820,7 +13820,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -13919,7 +13919,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -17552,14 +17552,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -17573,7 +17573,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -17672,7 +17672,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -17762,14 +17762,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -17783,7 +17783,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -17882,7 +17882,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -17974,14 +17974,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_count": {
@@ -17995,7 +17995,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "estimated_batch": {
@@ -18065,7 +18065,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -19226,14 +19226,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -19247,7 +19247,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -19346,7 +19346,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -19831,14 +19831,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -19852,7 +19852,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -19951,7 +19951,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -20041,14 +20041,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -20062,7 +20062,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -20161,7 +20161,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -20280,7 +20280,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "features": {
@@ -20333,7 +20333,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -20560,7 +20560,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "features": {
@@ -20613,7 +20613,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -20838,7 +20838,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "features": {
@@ -20891,7 +20891,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -21013,7 +21013,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "features": {
@@ -21066,7 +21066,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -25463,7 +25463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "data": {
@@ -25521,7 +25521,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "ingested_at_id": {
@@ -25560,7 +25560,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "verified": {
@@ -27254,7 +27254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "data": {
@@ -27347,7 +27347,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "ingested_at_id": {
@@ -27386,7 +27386,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "verified": {
@@ -27610,7 +27610,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at_id": {
@@ -27657,7 +27657,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "last_attempt_at_id": {
@@ -27671,7 +27671,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "request_id": {
@@ -27703,7 +27703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "team_id": {
@@ -27717,7 +27717,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -27745,7 +27745,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "data": {
@@ -27838,7 +27838,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "ingested_at_id": {
@@ -27877,7 +27877,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "verified": {
@@ -28045,7 +28045,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at_id": {
@@ -28092,7 +28092,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "last_attempt_at_id": {
@@ -28106,7 +28106,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "request_id": {
@@ -28138,7 +28138,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "team_id": {
@@ -28152,7 +28152,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -30254,7 +30254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -30286,7 +30286,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -30692,14 +30692,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "completed_count": {
@@ -30713,7 +30713,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "estimated_batch": {
@@ -30783,7 +30783,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -33399,14 +33399,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -33420,7 +33420,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -33519,7 +33519,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -36372,14 +36372,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -36393,7 +36393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -36492,7 +36492,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -36582,14 +36582,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "completed_count": {
@@ -36603,7 +36603,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "estimated_batch": {
@@ -36702,7 +36702,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -36794,14 +36794,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -36857,7 +36857,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -37919,14 +37919,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -37996,7 +37996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -38153,14 +38153,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -38230,7 +38230,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -38386,14 +38386,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -38463,7 +38463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -38558,14 +38558,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -38635,7 +38635,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -38846,14 +38846,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -38923,7 +38923,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -39013,14 +39013,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -39090,7 +39090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -39182,14 +39182,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -39256,7 +39256,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -40132,14 +40132,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -40206,7 +40206,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -40319,14 +40319,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -40393,7 +40393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -40505,14 +40505,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -40579,7 +40579,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -40681,14 +40681,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -40755,7 +40755,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -40922,14 +40922,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -40996,7 +40996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -41093,14 +41093,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -41167,7 +41167,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -41442,7 +41442,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "encrypted_env": {
@@ -41484,7 +41484,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -41947,7 +41947,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "encrypted_env": {
@@ -42007,7 +42007,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -42210,7 +42210,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "encrypted_env": {
@@ -42270,7 +42270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -42465,7 +42465,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "encrypted_env": {
@@ -42525,7 +42525,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -42627,7 +42627,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "encrypted_env": {
@@ -42687,7 +42687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -43389,7 +43389,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -43487,7 +43487,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "webhook_id": {
@@ -44278,7 +44278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -44446,7 +44446,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "webhook_id": {
@@ -44562,14 +44562,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "destination": {
@@ -44578,7 +44578,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -44606,7 +44606,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                         },
@@ -44630,7 +44630,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "resolved_rules": {
@@ -44681,7 +44681,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -44737,7 +44737,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                         },
@@ -44749,7 +44749,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -44777,7 +44777,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "url": {
@@ -44801,7 +44801,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -45922,14 +45922,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -45938,7 +45938,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -45952,7 +45952,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -45998,7 +45998,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -46029,7 +46029,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -46108,14 +46108,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -46171,7 +46171,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -46183,14 +46183,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -46257,7 +46257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -46281,7 +46281,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -46863,14 +46863,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -46879,7 +46879,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -46893,7 +46893,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -46939,7 +46939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -46970,7 +46970,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -47049,14 +47049,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -47112,7 +47112,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -47124,14 +47124,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -47198,7 +47198,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -47222,7 +47222,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -47803,14 +47803,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -47819,7 +47819,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -47833,7 +47833,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -47879,7 +47879,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -47910,7 +47910,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -47989,14 +47989,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48052,7 +48052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -48064,14 +48064,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48138,7 +48138,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -48162,7 +48162,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -48257,14 +48257,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -48273,7 +48273,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -48287,7 +48287,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48333,7 +48333,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -48364,7 +48364,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -48443,14 +48443,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48506,7 +48506,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -48518,14 +48518,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48592,7 +48592,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -48616,7 +48616,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -48899,14 +48899,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -48915,7 +48915,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -48929,7 +48929,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -48975,7 +48975,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -49006,7 +49006,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -49085,14 +49085,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49148,7 +49148,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -49160,14 +49160,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49234,7 +49234,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -49258,7 +49258,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -49348,14 +49348,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -49364,7 +49364,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -49378,7 +49378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49424,7 +49424,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -49455,7 +49455,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -49534,14 +49534,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49597,7 +49597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -49609,14 +49609,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49683,7 +49683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -49707,7 +49707,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -49797,14 +49797,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -49813,7 +49813,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -49827,7 +49827,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -49873,7 +49873,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -49904,7 +49904,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -49983,14 +49983,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -50046,7 +50046,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -50058,14 +50058,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -50132,7 +50132,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -50156,7 +50156,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -50246,14 +50246,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "destination": {
@@ -50262,7 +50262,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "cli_path": {
@@ -50276,7 +50276,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -50322,7 +50322,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -50353,7 +50353,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "resolved_rules": {
@@ -50432,14 +50432,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -50495,7 +50495,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -50507,14 +50507,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "created_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -50581,7 +50581,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "url": {
@@ -50605,7 +50605,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },

@@ -67,7 +67,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "createdBy": {
@@ -81,7 +81,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "deletedBy": {
@@ -118,7 +118,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -319,7 +319,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -333,7 +333,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deletedBy": {
@@ -608,7 +608,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -622,7 +622,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deletedBy": {
@@ -894,7 +894,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -908,7 +908,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "deletedBy": {
@@ -1499,7 +1499,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "createdBy": {
@@ -1513,14 +1513,14 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "finishedAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "imageSize": {
@@ -1555,7 +1555,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -1678,7 +1678,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -1692,14 +1692,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "finishedAt": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "imageSize": {
@@ -1734,7 +1734,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "status": {
@@ -1853,7 +1853,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -1867,14 +1867,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "finishedAt": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "imageSize": {
@@ -1909,7 +1909,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "status": {
@@ -2181,7 +2181,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "createdBy": {
@@ -2374,7 +2374,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -2623,7 +2623,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -3212,7 +3212,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "createdBy": {
@@ -3489,7 +3489,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -3793,7 +3793,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -4097,7 +4097,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -4405,7 +4405,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -4734,7 +4734,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "createdBy": {
@@ -4954,7 +4954,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -5166,7 +5166,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -6093,7 +6093,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "port": {
@@ -6160,28 +6160,28 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "startingAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "stoppingAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "terminatedAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "totalRooms": {
@@ -6349,7 +6349,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "port": {
@@ -6388,28 +6388,28 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "startingAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "stoppingAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "terminatedAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -6577,7 +6577,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "port": {
@@ -6616,28 +6616,28 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "startingAt": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "stoppingAt": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "terminatedAt": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
             },
@@ -6884,14 +6884,14 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "unscheduledAt": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -6926,14 +6926,14 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "unscheduledAt": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -7082,14 +7082,14 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "unscheduledAt": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -7247,14 +7247,14 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "unscheduledAt": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },

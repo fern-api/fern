@@ -380,14 +380,14 @@ The parameter should map to a JSON encoded list of strings.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {

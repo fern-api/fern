@@ -70879,7 +70879,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-03-29T05:22:19.000Z",
+                  "value": "2021-03-29 05:22:19+00:00",
                 },
               },
             },
