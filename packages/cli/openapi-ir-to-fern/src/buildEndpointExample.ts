@@ -169,7 +169,7 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
         case "datetime":
             try {
                 // remove milliseconds from the datetime
-                return primitiveExample.value.toISOString().replace(/\.\d{3}Z$/, "Z");
+                return new Date(primitiveExample.value).toISOString().replace(/\.\d{3}Z$/, "Z");
             } catch (e) {
                 return "2024-01-15T09:30:00Z";
             }

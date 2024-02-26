@@ -518,11 +518,11 @@ export class ExampleTypeFactory {
                 }
             case "datetime":
                 if (example != null && typeof example === "string") {
-                    return PrimitiveExample.datetime(new Date(example));
+                    return PrimitiveExample.datetime(example);
                 } else if (schema.example != null) {
-                    return PrimitiveExample.datetime(new Date(schema.example));
+                    return PrimitiveExample.datetime(schema.example);
                 } else {
-                    return PrimitiveExample.datetime(new Date("2024-01-15T09:30:00Z"));
+                    return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
                 }
             case "double":
                 if (example != null && typeof example === "number") {
