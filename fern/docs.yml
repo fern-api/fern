@@ -231,3 +231,7 @@ favicon: ./docs/images/favicon.ico
 layout:
   page-width: 1504px
   header-height: 83px
+
+js: 
+ - fern/docs/scripts/gtag.js
+ - url: https://www.googletagmanager.com/gtag/js?id=G-48GPK08F4E
