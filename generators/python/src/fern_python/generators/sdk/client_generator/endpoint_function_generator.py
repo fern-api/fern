@@ -207,6 +207,17 @@ class EndpointFunctionGenerator:
                             header.value_type,
                             in_endpoint=True,
                         ),
+                        initializer=AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{header.env}"')],
+                            )
+                        )
+                        if header.env is not None
+                        else None,
                     ),
                 )
 

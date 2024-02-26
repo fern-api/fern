@@ -17,6 +17,8 @@ class SeedAuthEnvironmentVariables:
     Parameters:
         - base_url: str. The base url to use for requests from the client.
 
+        - x_another_header: str.
+
         - api_key: typing.Optional[str].
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
@@ -26,6 +28,7 @@ class SeedAuthEnvironmentVariables:
     from seed.client import SeedAuthEnvironmentVariables
 
     client = SeedAuthEnvironmentVariables(
+        x_another_header="YOUR_X_ANOTHER_HEADER",
         api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -35,6 +38,7 @@ class SeedAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
+        x_another_header: str,
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
@@ -43,6 +47,7 @@ class SeedAuthEnvironmentVariables:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
@@ -56,6 +61,8 @@ class AsyncSeedAuthEnvironmentVariables:
     Parameters:
         - base_url: str. The base url to use for requests from the client.
 
+        - x_another_header: str.
+
         - api_key: typing.Optional[str].
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
@@ -65,6 +72,7 @@ class AsyncSeedAuthEnvironmentVariables:
     from seed.client import AsyncSeedAuthEnvironmentVariables
 
     client = AsyncSeedAuthEnvironmentVariables(
+        x_another_header="YOUR_X_ANOTHER_HEADER",
         api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -74,6 +82,7 @@ class AsyncSeedAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
+        x_another_header: str,
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
@@ -82,6 +91,7 @@ class AsyncSeedAuthEnvironmentVariables:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )

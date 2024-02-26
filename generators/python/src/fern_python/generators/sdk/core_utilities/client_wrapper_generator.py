@@ -421,6 +421,7 @@ class ClientWrapperGenerator:
                         f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
                     ),
                     header_key=header.name.wire_value,
+                    environment_variable=header.env
                 )
             )
 
