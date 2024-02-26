@@ -14,6 +14,11 @@ fixtures:
       outputFolder: allow-custom-fetcher
   exhaustive: 
     - customConfig: null
+      audiences:
+        - audience1
+        - audience2
+      outputFolder: with-audiences
+    - customConfig: null
       outputFolder: no-custom-config
     - customConfig: 
         useBrandedStringAliases: true
