@@ -222,7 +222,7 @@ logo:
 colors:
   accentPrimary:
     dark: "#ADFF8C"
-    light: "#49932B"
+    light: "#418326"
   background:
     dark: "#000000"
     light: "#FFFFFF"
@@ -233,5 +233,5 @@ layout:
   header-height: 83px
 
 js: 
- - fern/docs/scripts/gtag.js
+ - ./docs/scripts/gtag.js
  - url: https://www.googletagmanager.com/gtag/js?id=G-48GPK08F4E
