@@ -154,7 +154,7 @@ export class ComplexQueryParamTypeDetector {
                     contents: file.definitionFile,
                     relativeFilepath: file.relativeFilepath
                 });
-                if (isVariantComplex) {
+                if (isVariantComplex != null && isVariantComplex) {
                     return true;
                 }
             }
@@ -164,35 +164,6 @@ export class ComplexQueryParamTypeDetector {
     }
 
     private objectHasComplexProperties({
-        typeName,
-        objectDeclaration,
-        file,
-        visited
-    }: {
-        typeName: string;
-        objectDeclaration: RawSchemas.ObjectSchema;
-        file: FernFileContext;
-        visited: Set<string>;
-    }): boolean {
-        const allPropertiesForObject = getAllPropertiesForObject({
-            typeName,
-            objectDeclaration,
-            typeResolver: this.typeResolver,
-            definitionFile: file.definitionFile,
-            workspace: this.workspace,
-            filepathOfDeclaration: file.relativeFilepath,
-            smartCasing: false
-        });
-        return allPropertiesForObject.some((property) => {
-            return this.isComplex({
-                type: property.resolvedPropertyType,
-                file,
-                visited
-            });
-        });
-    }
-
-    private undiscriminatedUnionHasPrimitives({
         typeName,
         objectDeclaration,
         file,

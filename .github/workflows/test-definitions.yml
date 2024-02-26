@@ -1,3 +1,5 @@
+name: test-definitions
+
 on:
   push:
     paths:
