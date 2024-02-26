@@ -199,14 +199,28 @@ class EndpointFunctionGenerator:
 
         for header in service.headers + endpoint.headers:
             if not self._is_header_literal(header):
+                header_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    header.value_type,
+                    in_endpoint=True,
+                )
+                if header.env is not None:
+                    header_type_hint = AST.TypeHint.optional(header_type_hint)
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(header.name.name),
                         docs=header.docs,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            header.value_type,
-                            in_endpoint=True,
-                        ),
+                        type_hint=header_type_hint,
+                        initializer=AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{header.env}"')],
+                            )
+                        )
+                        if header.env is not None
+                        else None,
                     ),
                 )
 

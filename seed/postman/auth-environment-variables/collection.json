@@ -71,6 +71,42 @@
             "body": null
           },
           "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get With Header",
+          "request": {
+            "description": "GET request with custom api key",
+            "url": {
+              "raw": "{{baseUrl}}/apiKeyInHeader",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "apiKeyInHeader"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-FERN-API-KEY",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
+                "key": "X-Endpoint-Header",
+                "description": "Specifies the endpoint key.",
+                "type": "text",
+                "value": "\"example\""
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
         }
       ]
     }

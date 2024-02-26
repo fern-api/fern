@@ -7,6 +7,7 @@ import com.seed.authEnvironmentVariables.core.ApiError;
 import com.seed.authEnvironmentVariables.core.ClientOptions;
 import com.seed.authEnvironmentVariables.core.ObjectMappers;
 import com.seed.authEnvironmentVariables.core.RequestOptions;
+import com.seed.authEnvironmentVariables.resources.service.requests.HeaderAuthRequest;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -42,6 +43,45 @@ public class ServiceClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
+        try {
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                client = clientOptions.httpClientWithTimeout(requestOptions);
+            }
+            Response response = client.newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * GET request with custom api key
+     */
+    public String getWithHeader(HeaderAuthRequest request) {
+        return getWithHeader(request, null);
+    }
+
+    /**
+     * GET request with custom api key
+     */
+    public String getWithHeader(HeaderAuthRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("apiKeyInHeader")
+                .build();
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader("X-Endpoint-Header", request.getXEndpointHeader());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

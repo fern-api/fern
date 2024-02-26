@@ -4,6 +4,8 @@ package service
 
 import (
 	context "context"
+	fmt "fmt"
+	fern "github.com/auth-environment-variables/fern"
 	core "github.com/auth-environment-variables/fern/core"
 	option "github.com/auth-environment-variables/fern/option"
 	http "net/http"
@@ -46,6 +48,43 @@ func (c *Client) GetWithApiKey(
 	endpointURL := baseURL + "/" + "apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response string
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response, nil
+}
+
+// GET request with custom api key
+func (c *Client) GetWithHeader(
+	ctx context.Context,
+	request *fern.HeaderAuthRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/" + "apiKeyInHeader"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
 	if err := c.caller.Call(

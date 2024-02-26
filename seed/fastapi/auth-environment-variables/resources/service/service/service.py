@@ -24,7 +24,14 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_with_api_key(self, *, auth: ApiAuth) -> str:
+    def get_with_api_key(self, *, x_another_header: str, auth: ApiAuth) -> str:
+        """
+        GET request with custom api key
+        """
+        ...
+
+    @abc.abstractmethod
+    def get_with_header(self, *, x_endpoint_header: str, x_another_header: str) -> str:
         """
         GET request with custom api key
         """
@@ -38,6 +45,7 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_with_api_key(router=router)
+        cls.__init_get_with_header(router=router)
 
     @classmethod
     def __init_get_with_api_key(cls, router: fastapi.APIRouter) -> None:
@@ -46,6 +54,8 @@ class AbstractServiceService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_another_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Another-Header")))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -73,4 +83,42 @@ class AbstractServiceService(AbstractFernService):
             response_model=str,
             description=AbstractServiceService.get_with_api_key.__doc__,
             **get_route_args(cls.get_with_api_key, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_with_header(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_with_header)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_endpoint_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Endpoint-Header")))
+            elif parameter_name == "x_another_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Another-Header")))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_with_header, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_with_header)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.get_with_header(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_with_header' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_with_header.__globals__)
+
+        router.get(
+            path="//apiKeyInHeader",
+            response_model=str,
+            description=AbstractServiceService.get_with_header.__doc__,
+            **get_route_args(cls.get_with_header, default_tag="service"),
         )(wrapper)
