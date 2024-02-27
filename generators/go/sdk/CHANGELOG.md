@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.17.0] - 2024-02-26
+
+- No changes since previous release candidate.
+
 ## [0.17.0-rc1] - 2024-02-23
 
 - Fix: Snippets for aliases to optional primitive values. With this, the generated snippet
