@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.1] - 2024-02-27
+
+- Fix: Optional objects in deep query parameters were previously being incorrectly 
+  serialized. Before this change, optional objects were just being JSON.stringified
+  which would send the incorrect contents over the wire. 
+
+  ```ts
+  // Before
+  if (foo != null) {
+    _queryParams["foo"] = JSON.stringify(foo);
+  }
+
+  // After 
+  if (foo != null) {
+    _queryParams["foo"] = foo;
+  }
+
+  // After (with no serde layer)
+  if (foo != null) {
+    _queryParams["foo"] = serializers.Foo.jsonOrThrow(foo, {
+      skipValidation: false,
+      breadcrumbs: ["request", "foo"]
+    })
+  }
+  ```
+
 ## [0.12.0] - 2024-02-26
 
 - Feature: support deep object query parameter serialization. If, query parameters are 
