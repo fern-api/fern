@@ -158,10 +158,11 @@ navigation:
           - section: Specification
             slug: spec
             contents:
-              - page: OpenAPI
+              - page: OpenAPI generator
                 slug: openapi
                 path: ./docs/pages/fern-sdks/other-generators/spec/openapi-generator.mdx
-              - page: Postman
+              - page: Postman Collection generator
+                slug: postman
                 path: ./docs/pages/fern-sdks/other-generators/spec/postman-collection.mdx
           # To include in nav once the Model pages are added
           # - section: Model
