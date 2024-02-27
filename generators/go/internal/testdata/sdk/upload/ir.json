@@ -213,29 +213,32 @@
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             }
                         ]
                     },
@@ -314,6 +317,7 @@
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -379,29 +383,32 @@
                         "properties": [
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             }
                         ]
                     },
@@ -480,6 +487,7 @@
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -575,55 +583,61 @@
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "optionalFile",
-                                        "camelCase": {
-                                            "unsafeName": "optionalFile",
-                                            "safeName": "optionalFile"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "optionalFile",
+                                            "camelCase": {
+                                                "unsafeName": "optionalFile",
+                                                "safeName": "optionalFile"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "optional_file",
+                                                "safeName": "optional_file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "OPTIONAL_FILE",
+                                                "safeName": "OPTIONAL_FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "OptionalFile",
+                                                "safeName": "OptionalFile"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "optional_file",
-                                            "safeName": "optional_file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OPTIONAL_FILE",
-                                            "safeName": "OPTIONAL_FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "OptionalFile",
-                                            "safeName": "OptionalFile"
-                                        }
+                                        "wireValue": "optionalFile"
                                     },
-                                    "wireValue": "optionalFile"
-                                },
-                                "isOptional": true
+                                    "isOptional": true
+                                }
                             }
                         ]
                     },
@@ -702,6 +716,7 @@
                     },
                     "errors": [],
                     "examples": [],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -744,6 +759,7 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_file": {
             "name": {
@@ -814,6 +830,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -824,6 +841,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

@@ -1,4 +1,4 @@
-irVersion: v33
+irVersion: v35
 docker: fernapi/fern-go-model:latest
 dockerCommand: docker build -f ./generators/go/docker/Dockerfile.model -t fernapi/fern-go-model:latest ./generators/go
 language: go
@@ -28,4 +28,3 @@ allowedFailures:
   - exhaustive
   - reserved-keywords
   - trace
-  - websocket
