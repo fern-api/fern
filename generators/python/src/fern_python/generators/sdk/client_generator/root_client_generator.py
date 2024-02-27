@@ -25,7 +25,7 @@ from ..environment_generators import (
 )
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
-from .generated_root_client import GeneratedRootClient
+from .generated_root_client import GeneratedRootClient, RootClient
 
 
 @dataclass
@@ -576,16 +576,17 @@ class RootClientGenerator:
 
         def build(self) -> GeneratedRootClient:
             def client_snippet_writer(class_name: str) -> CodeWriterFunction:
-                def write_client_snippet(writer: AST.NodeWriter) -> None:
-                    client_class_reference = AST.ClassReference(
-                        qualified_name_excluding_import=(),
-                        import_=AST.ReferenceImport(
-                            module=AST.Module.snippet(
-                                module_path=self._module_path,
-                            ),
-                            named_import=class_name,
+                client_class_reference = AST.ClassReference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.snippet(
+                            module_path=self._module_path,
                         ),
-                    )
+                        named_import=class_name,
+                    ),
+                )
+
+                def write_client_snippet(writer: AST.NodeWriter) -> None:
                     client_instantiation = AST.ClassInstantiation(
                         class_=client_class_reference,
                         args=[
@@ -599,9 +600,13 @@ class RootClientGenerator:
                     writer.write_node(AST.Expression(client_instantiation))
                     writer.write_newline_if_last_line_not()
 
-                return write_client_snippet
+                return client_class_reference, write_client_snippet
 
+            async_class_reference, async_class_snippet_writer = client_snippet_writer(self._async_class_name)
+            sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
             return GeneratedRootClient(
-                async_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._async_class_name))),
-                sync_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._class_name))),
+                async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
+                async_client=RootClient(class_reference=async_class_reference, parameters=self._consrtructor_parameters),
+                sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
+                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._consrtructor_parameters),
             )

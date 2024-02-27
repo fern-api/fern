@@ -17,10 +17,10 @@ class ObjectWithOptionalField(pydantic.BaseModel):
     integer: typing.Optional[int] = None
     long: typing.Optional[int] = None
     double: typing.Optional[float] = None
-    bool: typing.Optional[bool] = None
+    bool_: typing.Optional[bool] = None
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid: typing.Optional[uuid.UUID] = None
+    uuid_: typing.Optional[uuid.UUID] = None
     base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
     list: typing.Optional[typing.List[str]] = None
     set: typing.Optional[typing.Set[str]] = None

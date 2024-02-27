@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 import fern.generator_exec.resources as generator_exec
@@ -6,13 +5,16 @@ import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 
 from fern_python.codegen import AST
+from fern_python.codegen.project import Project
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
+from fern_python.generators.sdk.client_generator.generated_root_client import (
+    GeneratedRootClient,
+)
+from fern_python.snippet.snippet_endpoint_expression import EndpointExpression
+from fern_python.snippet.snippet_tests import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
-
-
-@dataclass
-class EndpointExpression:
-    endpoint_id: generator_exec.EndpointIdentifier
-    expr: AST.Expression
 
 
 class SnippetRegistry:
@@ -56,6 +58,27 @@ class SnippetRegistry:
             types=types,
             endpoints=endpoints,
         )
+
+    def tests(
+        self,
+        project: Project,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        ir: ir_types.IntermediateRepresentation,
+        generated_root_client: GeneratedRootClient,
+    ) -> None:
+        test_fac = SnippetTestFactory(
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            sync_endpoint_snippets=self._sync_client_endpoint_snippets,
+            async_endpoint_snippets=self._async_client_endpoint_snippets,
+            generated_root_client=generated_root_client,
+        )
+        test_fac.generate_client_fixture()
+
+        for service in ir.services.values():
+            test_fac.generate_service_test(endpoints=service.endpoints, fern_filepath=service.name.fern_filepath)
+
+        test_fac.write_test_files()
 
     def register_snippet(
         self,

@@ -161,6 +161,14 @@ class SdkGenerator(AbstractGenerator):
             project=project,
         )
 
+        self._maybe_write_snippet_tests(
+            snippet_registry=snippet_registry,
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            ir=ir,
+            generated_root_client=generated_root_client,
+        )
+
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
             request_sent = self._generate_readme(
@@ -336,6 +344,18 @@ pip install --upgrade {project._project_config.package_name}
             if snippets is None:
                 return
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+
+    def _maybe_write_snippet_tests(
+        self,
+        snippet_registry: SnippetRegistry,
+        project: Project,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        ir: ir_types.IntermediateRepresentation,
+        generated_root_client: GeneratedRootClient,
+    ) -> None:
+        print("[TEST] writing tests now")
+        snippet_registry.tests(project, generator_exec_wrapper, ir, generated_root_client)
+        print("[TEST] done writing tests")
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)
