@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## Unreleased
+
+- Feature: Add support for multiple files in upload endpoints. Endpoints that specify
+  multiple file parameters will include a `[]io.Reader` parameter, where each value
+  is individually named. If the `io.Reader` does not contain a name, a name is generated.
+
+```go
+func (c *Client) Upload(
+  ctx context.Context,
+  fileList []io.Reader,
+  opts ...option.RequestOption,
+) error {
+  ...
+}
+```
+
 ## [0.17.0] - 2024-02-26
 
 - No changes since previous release candidate.
