@@ -34,6 +34,14 @@ navigation:
 ```
 </CodeBlock>
 
+## Page header
+Fern automatically generates the `<h1>` page header for each page from `docs.yml`. For example, here's the `docs.yml` entry that maps the page you are reading now:
+```yml
+          - page: Write Markdown content
+            path: ./docs/pages/fern-docs/content/write-markdown.mdx
+```
+The value for `page` is used as the content of the top `<h1>` element of this page. Thus, when adding content to your Markdown or MDX pages, begin with `<h2>` instead of `<h1>`. 
+
 ## Fern components
 Fern has a built-in component library you can use in Markdown and MDX files. [Explore the components.](/fern-docs/content/component-library/)
 
