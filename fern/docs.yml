@@ -98,6 +98,8 @@ navigation:
         contents:
           - page: December 2023
             path: ./docs/pages/overview/changelog/december-2023.mdx
+          - page: February 2024
+            path: ./docs/pages/overview/changelog/february-2024.mdx
   - tab: fern-sdks
     layout:
       - page: Overview
