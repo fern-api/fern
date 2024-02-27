@@ -26,7 +26,7 @@ export class Foo {
         requestOptions?: Foo.RequestOptions
     ): Promise<SeedAudiences.ImportingType> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }

@@ -27,7 +27,7 @@ export class Query {
         requestOptions?: Query.RequestOptions
     ): Promise<SeedLiteral.SendResponse> {
         const { prompt, query, stream } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["prompt"] = prompt;
         _queryParams["query"] = query;
         _queryParams["stream"] = stream.toString();

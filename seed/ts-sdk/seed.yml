@@ -61,6 +61,12 @@ fixtures:
     - customConfig:
         treatUnknownAsAny: true
       outputFolder: unknown-as-any
+  query-parameters: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer-query
   trace: 
     - customConfig: null
       outputFolder: no-custom-config
