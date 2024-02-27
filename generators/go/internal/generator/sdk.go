@@ -1011,28 +1011,50 @@ func (f *fileWriter) WriteClient(
 			f.P("requestBuffer := bytes.NewBuffer(nil)")
 			f.P("writer := multipart.NewWriter(requestBuffer)")
 			for _, fileProperty := range endpoint.FileProperties {
-				var (
-					fileVariable     = fileProperty.Key.Name.CamelCase.SafeName
-					filenameVariable = fileProperty.Key.Name.CamelCase.UnsafeName + "Filename"
-					filenameValue    = fileProperty.Key.Name.CamelCase.UnsafeName + "_filename"
-					partVariable     = fileProperty.Key.Name.CamelCase.UnsafeName + "Part"
-				)
-				if fileProperty.IsOptional {
-					f.P("if ", fileVariable, " != nil {")
+				filePropertyInfo, err := filePropertyToInfo(fileProperty)
+				if err != nil {
+					return nil, err
 				}
-				f.P(fmt.Sprintf("%s := %q", filenameVariable, filenameValue))
-				f.P("if named, ok := ", fileVariable, ".(interface{ Name() string }); ok {")
-				f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
-				f.P("}")
-				f.P(partVariable, `, err := writer.CreateFormFile("`, fileProperty.Key.WireValue, `", `, filenameVariable, ")")
-				f.P("if err != nil {")
-				f.P("return ", endpoint.ErrorReturnValues)
-				f.P("}")
-				f.P("if _, err := io.Copy(", partVariable, ", ", fileVariable, "); err != nil {")
-				f.P("return ", endpoint.ErrorReturnValues)
-				f.P("}")
-				if fileProperty.IsOptional {
+				var (
+					fileVariable     = filePropertyInfo.Key.Name.CamelCase.SafeName
+					filenameVariable = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Filename"
+					filenameValue    = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "_filename"
+					partVariable     = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Part"
+				)
+				if filePropertyInfo.IsArray {
+					// We don't care whether the file array is optional or not; the range
+					// handles that for us.
+					f.P("for i, f := range ", fileVariable, "{")
+					f.P(filenameVariable, ` := fmt.Sprintf("`, filenameValue, `_%d", i)`)
+					f.P("if named, ok := f.(interface{ Name() string }); ok {")
+					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
 					f.P("}")
+					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
+					f.P("if err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					f.P("if _, err := io.Copy(", partVariable, ", f); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					f.P("}")
+				} else {
+					if filePropertyInfo.IsOptional {
+						f.P("if ", fileVariable, " != nil {")
+					}
+					f.P(fmt.Sprintf("%s := %q", filenameVariable, filenameValue))
+					f.P("if named, ok := ", fileVariable, ".(interface{ Name() string }); ok {")
+					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
+					f.P("}")
+					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
+					f.P("if err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					f.P("if _, err := io.Copy(", partVariable, ", ", fileVariable, "); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					if filePropertyInfo.IsOptional {
+						f.P("}")
+					}
 				}
 			}
 
@@ -1508,6 +1530,29 @@ func generatedClientInstantiation(
 	}
 }
 
+type filePropertyInfo struct {
+	Key        *ir.NameAndWireValue
+	IsOptional bool
+	IsArray    bool
+}
+
+func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error) {
+	switch fileProperty.Type {
+	case "file":
+		return &filePropertyInfo{
+			Key:        fileProperty.File.Key,
+			IsOptional: fileProperty.File.IsOptional,
+		}, nil
+	case "fileArray":
+		return &filePropertyInfo{
+			Key:        fileProperty.FileArray.Key,
+			IsOptional: fileProperty.FileArray.IsOptional,
+			IsArray:    true,
+		}, nil
+	}
+	return nil, fmt.Errorf("file property %s is not yet supported", fileProperty.Type)
+}
+
 // endpoint holds the fields required to generate a client endpoint.
 //
 // All of the fields are pre-formatted so that they can all be simple
@@ -1544,6 +1589,7 @@ type endpoint struct {
 	QueryParameters             []*ir.QueryParameter
 	Headers                     []*ir.HttpHeader
 	IdempotencyHeaders          []*ir.HttpHeader
+	FilePropertyInfo            *filePropertyInfo
 	FileProperties              []*ir.FileProperty
 	FileBodyProperties          []*ir.InlinedRequestBodyProperty
 }
@@ -1586,12 +1632,20 @@ func (f *fileWriter) endpointFromIR(
 	var (
 		fileProperties     []*ir.FileProperty
 		fileBodyProperties []*ir.InlinedRequestBodyProperty
+		filePropertyInfo   *filePropertyInfo
 	)
 	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 		for _, fileUploadProperty := range irEndpoint.RequestBody.FileUpload.Properties {
 			if fileUploadProperty.File != nil {
-				parameterName := fileUploadProperty.File.Key.Name.CamelCase.SafeName
+				filePropertyInfo, err := filePropertyToInfo(fileUploadProperty.File)
+				if err != nil {
+					return nil, err
+				}
+				parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
 				parameterType := "io.Reader"
+				if filePropertyInfo.IsArray {
+					parameterType = "[]io.Reader"
+				}
 				signatureParameters = append(
 					signatureParameters,
 					&signatureParameter{
@@ -1838,6 +1892,7 @@ func (f *fileWriter) endpointFromIR(
 		QueryParameters:             irEndpoint.QueryParameters,
 		Headers:                     irEndpoint.Headers,
 		IdempotencyHeaders:          idempotencyHeaders,
+		FilePropertyInfo:            filePropertyInfo,
 		FileProperties:              fileProperties,
 		FileBodyProperties:          fileBodyProperties,
 	}, nil
