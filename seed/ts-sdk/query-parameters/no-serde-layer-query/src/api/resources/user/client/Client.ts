@@ -25,8 +25,20 @@ export class User {
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions
     ): Promise<SeedQueryParameters.User> {
-        const { limit, id, date, deadline, bytes, user, keyValue, optionalString, nestedUser, excludeUser, filter } =
-            request;
+        const {
+            limit,
+            id,
+            date,
+            deadline,
+            bytes,
+            user,
+            keyValue,
+            optionalString,
+            nestedUser,
+            optionalUser,
+            excludeUser,
+            filter,
+        } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
@@ -40,6 +52,10 @@ export class User {
         }
 
         _queryParams["nestedUser"] = nestedUser;
+        if (optionalUser != null) {
+            _queryParams["optionalUser"] = optionalUser;
+        }
+
         if (Array.isArray(excludeUser)) {
             _queryParams["excludeUser"] = excludeUser.map((item) => item);
         } else {

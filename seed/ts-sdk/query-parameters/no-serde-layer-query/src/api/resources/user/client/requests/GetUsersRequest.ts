@@ -14,6 +14,7 @@ export interface GetUsersRequest {
     keyValue: Record<string, string>;
     optionalString?: string;
     nestedUser: SeedQueryParameters.NestedUser;
+    optionalUser?: SeedQueryParameters.User;
     excludeUser: SeedQueryParameters.User | SeedQueryParameters.User[];
     filter: string | string[];
 }
