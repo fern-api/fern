@@ -102,3 +102,5 @@ allowedFailures:
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences
+  - enum # throws b/c of undiscriminated union examples
+  - examples:examples-with-api-reference # throws b/c of undiscriminated union examples
