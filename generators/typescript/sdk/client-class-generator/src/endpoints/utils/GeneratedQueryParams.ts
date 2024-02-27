@@ -234,14 +234,22 @@ export class GeneratedQueryParams {
 
     private getObjectType(typeReference: TypeReference, context: SdkContext): DeclaredTypeName | undefined {
         switch (typeReference.type) {
-            case "named": {
-                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
-                switch (typeDeclaration.shape.type) {
-                    case "object":
-                        return typeReference;
-                    case "alias": {
-                        return this.getObjectType(typeDeclaration.shape.aliasOf, context);
+            case "named":
+                {
+                    const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                    switch (typeDeclaration.shape.type) {
+                        case "object":
+                            return typeReference;
+                        case "alias": {
+                            return this.getObjectType(typeDeclaration.shape.aliasOf, context);
+                        }
                     }
+                }
+                break;
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.getObjectType(typeReference.container.optional, context);
                 }
             }
         }

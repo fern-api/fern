@@ -27,6 +27,7 @@ service:
           keyValue: map<string, string>
           optionalString: optional<string>
           nestedUser: NestedUser
+          optionalUser: optional<User>
           excludeUser:
             type: User
             allow-multiple: true
