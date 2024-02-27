@@ -19,6 +19,7 @@ type GetUsersRequest struct {
 	KeyValue       map[string]string `query:"keyValue"`
 	OptionalString *string           `query:"optionalString"`
 	NestedUser     *NestedUser       `query:"nestedUser"`
+	OptionalUser   *User             `query:"optionalUser"`
 	ExcludeUser    []*User           `query:"excludeUser"`
 	Filter         []string          `query:"filter"`
 }

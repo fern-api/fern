@@ -37,6 +37,7 @@ class UserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
+        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
@@ -61,6 +62,8 @@ class UserClient:
 
             - nested_user: NestedUser.
 
+            - optional_user: typing.Optional[User].
+
             - exclude_user: typing.Union[User, typing.Sequence[User]].
 
             - filter: typing.Union[str, typing.Sequence[str]].
@@ -82,6 +85,7 @@ class UserClient:
                         "keyValue": jsonable_encoder(key_value),
                         "optionalString": optional_string,
                         "nestedUser": jsonable_encoder(nested_user),
+                        "optionalUser": jsonable_encoder(optional_user),
                         "excludeUser": jsonable_encoder(exclude_user),
                         "filter": filter,
                         **(
@@ -129,6 +133,7 @@ class AsyncUserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
+        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
@@ -153,6 +158,8 @@ class AsyncUserClient:
 
             - nested_user: NestedUser.
 
+            - optional_user: typing.Optional[User].
+
             - exclude_user: typing.Union[User, typing.Sequence[User]].
 
             - filter: typing.Union[str, typing.Sequence[str]].
@@ -174,6 +181,7 @@ class AsyncUserClient:
                         "keyValue": jsonable_encoder(key_value),
                         "optionalString": optional_string,
                         "nestedUser": jsonable_encoder(nested_user),
+                        "optionalUser": jsonable_encoder(optional_user),
                         "excludeUser": jsonable_encoder(exclude_user),
                         "filter": filter,
                         **(
