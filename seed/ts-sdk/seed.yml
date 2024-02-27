@@ -1,4 +1,4 @@
-irVersion: v31
+irVersion: v33
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
@@ -66,6 +66,12 @@ fixtures:
     - customConfig:
         treatUnknownAsAny: true
       outputFolder: unknown-as-any
+  query-parameters: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer-query
   trace: 
     - customConfig: null
       outputFolder: no-custom-config
@@ -101,3 +107,5 @@ allowedFailures:
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences
+  - enum # throws b/c of undiscriminated union examples
+  - examples:examples-with-api-reference # throws b/c of undiscriminated union examples

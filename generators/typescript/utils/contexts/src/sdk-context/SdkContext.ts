@@ -26,4 +26,5 @@ export interface SdkContext extends ModelContext {
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
     targetRuntime: JavaScriptRuntime;
+    includeSerdeLayer: boolean;
 }

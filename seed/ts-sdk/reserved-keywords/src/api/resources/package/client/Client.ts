@@ -22,7 +22,7 @@ export class Package {
 
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
         const { for: for_ } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["for"] = for_;
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

@@ -34,7 +34,7 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<SeedTrace.Playlist> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["datetime"] = datetime.toISOString();
         if (optionalDatetime != null) {
             _queryParams["optionalDatetime"] = optionalDatetime.toISOString();
@@ -104,7 +104,7 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<SeedTrace.Playlist[]> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
