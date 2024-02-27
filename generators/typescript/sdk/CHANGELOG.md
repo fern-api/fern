@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     _queryParams["foo"] = foo;
   }
 
-  // After (with no serde layer)
+  // After (with serde layer)
   if (foo != null) {
     _queryParams["foo"] = serializers.Foo.jsonOrThrow(foo, {
       skipValidation: false,
