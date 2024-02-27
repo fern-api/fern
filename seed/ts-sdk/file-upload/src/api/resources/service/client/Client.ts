@@ -151,7 +151,7 @@ export class Service {
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (request.maybeString != null) {
             _queryParams["maybeString"] = request.maybeString;
         }

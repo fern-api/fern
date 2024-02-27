@@ -5,7 +5,6 @@
 import * as core from "../../../../core";
 import * as SeedQueryParameters from "../../..";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
 export declare namespace User {
@@ -26,15 +25,25 @@ export class User {
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions
     ): Promise<SeedQueryParameters.User> {
-        const { limit, id, date, deadline, bytes, optionalString, filter } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const { limit, id, date, deadline, bytes, user, keyValue, optionalString, nestedUser, excludeUser, filter } =
+            request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
         _queryParams["date"] = date;
-        _queryParams["deadline"] = deadline.toISOString();
+        _queryParams["deadline"] = deadline;
         _queryParams["bytes"] = bytes;
+        _queryParams["user"] = user;
+        _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
+        }
+
+        _queryParams["nestedUser"] = nestedUser;
+        if (Array.isArray(excludeUser)) {
+            _queryParams["excludeUser"] = excludeUser.map((item) => item);
+        } else {
+            _queryParams["excludeUser"] = excludeUser;
         }
 
         if (Array.isArray(filter)) {
@@ -59,12 +68,7 @@ export class User {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return _response.body as SeedQueryParameters.User;
         }
 
         if (_response.error.reason === "status-code") {
