@@ -5,7 +5,6 @@ types:
 
   ListUsersResponse:
     properties:
-      nextPage: optional<string>
       users: list<User>
 
 service:
@@ -16,8 +15,8 @@ service:
       method: GET
       path: /users
       pagination:
-        page: $request.cursor
-        next: $response.nextPage
+        type: offset
+        page: $request.pageNum
         results: $response.users
       request:
         headers:
@@ -27,5 +26,5 @@ service:
             env: MY_HEADER_ENV
         name: ListUsersRequest
         query-parameters:
-          cursor: string
+          pageNum: integer
       response: ListUsersResponse

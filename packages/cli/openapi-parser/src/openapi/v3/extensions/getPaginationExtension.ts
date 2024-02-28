@@ -2,25 +2,41 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
-export type FernPaginationExtension = FernPaginationEnabledExtension | FernPaginationConfigExtension;
+export type FernPaginationExtension =
+    | FernPaginationEnabledExtension
+    | FernCursorPaginationExtension
+    | FernOffsetPaginationExtension;
 
 export interface FernPaginationEnabledExtension {
     type: "pagination";
 }
 
-export interface FernPaginationConfigExtension {
-    type: "paginationConfig";
+export interface FernCursorPaginationExtension {
+    type: "cursor";
     page: string;
     next: string;
     results: string;
 }
 
-declare namespace Raw {
-    export type PaginationExtensionSchema = boolean | PaginationExtensionObjectSchema;
+export interface FernOffsetPaginationExtension {
+    type: "offset";
+    page: string;
+    results: string;
+}
 
-    export interface PaginationExtensionObjectSchema {
+declare namespace Raw {
+    export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema;
+
+    export interface CursorPaginationExtensionSchema {
+        type: "cursor";
         page: string;
         next: string;
+        results: string;
+    }
+
+    export interface OffsetPaginationExtensionSchema {
+        type: "offset";
+        page: string;
         results: string;
     }
 }
@@ -39,11 +55,17 @@ export function getFernPaginationExtension(
               }
             : undefined;
     }
-
+    if (pagination.type === "cursor") {
+        return {
+            type: "cursor",
+            page: pagination.page,
+            next: pagination.next,
+            results: pagination.results
+        };
+    }
     return {
-        type: "paginationConfig",
+        type: "offset",
         page: pagination.page,
-        next: pagination.next,
         results: pagination.results
     };
 }
