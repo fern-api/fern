@@ -132,10 +132,17 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
         if (this.requestParameter != null) {
             const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
-            if (requestParameterExample == null) {
+            if (
+                requestParameterExample != null &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
+                this.requestParameter.isOptional({ context })
+            ) {
+                // pass
+            } else if (requestParameterExample != null) {
+                result.push(requestParameterExample);
+            } else if (!this.requestParameter.isOptional({ context })) {
                 return undefined;
             }
-            result.push(requestParameterExample);
         }
         return result;
     }
