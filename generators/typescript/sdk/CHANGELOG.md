@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.2] - 2024-02-27
+
+- Fix: Previously SDK code snippets would not take into account default parameter values
+  and would always include a `{}`. This was odd and didn't represent how a developer 
+  would use the SDK. Now, the snippets check for default parameter values and omit 
+  if there are no fields specified. 
+
+  ```ts
+  // Before
+  client.users.list({})
+
+  // After
+  client.users.list()
+  ```
+
 ## [0.12.1] - 2024-02-27
 
 - Fix: Optional objects in deep query parameters were previously being incorrectly 
