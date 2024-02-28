@@ -16,6 +16,7 @@ service:
       method: GET
       path: /users
       pagination:
+        type: cursor
         page: $request.cursor
         next: $response.nextPage
         results: $response.users

@@ -1,9 +1,7 @@
 import { z } from "zod";
+import { CursorPaginationSchema } from "./CursorPaginationSchema";
+import { OffsetPaginationSchema } from "./OffsetPaginationSchema";
 
-export const PaginationSchema = z.object({
-    page: z.string().describe("The request property name that represents the page cursor or offset."),
-    next: z.string().describe("The response property name that represents the next page cursor or offset to retrieve."),
-    results: z.string().describe("The response property name that represents the page elements.")
-});
+export const PaginationSchema = z.union([CursorPaginationSchema, OffsetPaginationSchema]);
 
 export type PaginationSchema = z.infer<typeof PaginationSchema>;
