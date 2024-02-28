@@ -14,7 +14,7 @@ module SeedTraceClient
 
           # @param metadata [V2::V3::Problem::TestCaseMetadata]
           # @param implementation [V2::V3::Problem::TestCaseImplementationReference]
-          # @param arguments [Hash{V2::V3::Problem::PARAMETER_ID => V2::V3::Problem::PARAMETER_ID}]
+          # @param arguments [Hash{V2::V3::Problem::PARAMETER_ID => Commons::VariableValue}]
           # @param expects [V2::V3::Problem::TestCaseExpects]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::TestCaseV2]
@@ -23,7 +23,7 @@ module SeedTraceClient
             @metadata = metadata
             # @type [V2::V3::Problem::TestCaseImplementationReference]
             @implementation = implementation
-            # @type [Hash{V2::V3::Problem::PARAMETER_ID => V2::V3::Problem::PARAMETER_ID}]
+            # @type [Hash{V2::V3::Problem::PARAMETER_ID => Commons::VariableValue}]
             @arguments = arguments
             # @type [V2::V3::Problem::TestCaseExpects]
             @expects = expects
@@ -50,7 +50,10 @@ module SeedTraceClient
               implementation = parsed_json["implementation"].to_json
               implementation = V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
             end
-            arguments = struct.arguments
+            arguments = parsed_json["arguments"]&.transform_values do |_k, v|
+              v = v.to_json
+              Commons::VariableValue.from_json(json_object: v)
+            end
             if parsed_json["expects"].nil?
               expects = nil
             else
