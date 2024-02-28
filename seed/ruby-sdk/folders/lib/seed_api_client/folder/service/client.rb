@@ -27,7 +27,7 @@ module SeedApiClient
       # @param request [Object]
       # @param request_options [RequestOptions]
       # @return [Void]
-      def unknown_request(request:, request_options: nil)
+      def unknown_request(request: nil, request_options: nil)
         @request_client.conn.post("/service") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -60,7 +60,7 @@ module SeedApiClient
       # @param request [Object]
       # @param request_options [RequestOptions]
       # @return [Void]
-      def unknown_request(request:, request_options: nil)
+      def unknown_request(request: nil, request_options: nil)
         Async do
           @request_client.conn.post("/service") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

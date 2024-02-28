@@ -553,7 +553,7 @@ function generateRequestClientInitializer(
     isAsync: boolean,
     sdkConfig: SdkConfig,
     classReference: ClassReference,
-    clientName: string,
+    gemName: string,
     sdkVersion: string | undefined,
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
@@ -564,7 +564,7 @@ function generateRequestClientInitializer(
     const allHeaders = new Map([
         // SDK Default Headers
         [`"${sdkConfig.platformHeaders.language}"`, "Ruby"],
-        [`"${sdkConfig.platformHeaders.sdkName}"`, clientName]
+        [`"${sdkConfig.platformHeaders.sdkName}"`, gemName]
     ]);
     if (sdkVersion !== undefined) {
         allHeaders.set(`"${sdkConfig.platformHeaders.sdkVersion}"`, sdkVersion);
@@ -783,7 +783,7 @@ function generateRequestClientInitializer(
 
 export function generateRequestClients(
     sdkConfig: SdkConfig,
-    clientName: string,
+    gemName: string,
     sdkVersion: string | undefined,
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
@@ -820,7 +820,7 @@ export function generateRequestClients(
             false,
             sdkConfig,
             clientClassReference,
-            clientName,
+            gemName,
             sdkVersion,
             headersGenerator,
             environmentCr,
@@ -843,7 +843,7 @@ export function generateRequestClients(
             true,
             sdkConfig,
             asyncClientClassReference,
-            clientName,
+            gemName,
             sdkVersion,
             headersGenerator,
             environmentCr,

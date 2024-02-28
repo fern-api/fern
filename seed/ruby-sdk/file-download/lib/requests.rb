@@ -15,7 +15,7 @@ module SeedFileDownloadClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedFileDownloadClient",
+        "X-Fern-SDK-Name": "seed_file_download_client",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -37,7 +37,7 @@ module SeedFileDownloadClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedFileDownloadClient",
+        "X-Fern-SDK-Name": "seed_file_download_client",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

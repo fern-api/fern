@@ -14,7 +14,7 @@ module SeedResponsePropertyClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedResponsePropertyClient",
+        "X-Fern-SDK-Name": "seed_response_property_client",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -35,7 +35,7 @@ module SeedResponsePropertyClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedResponsePropertyClient",
+        "X-Fern-SDK-Name": "seed_response_property_client",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

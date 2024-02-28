@@ -32,7 +32,7 @@ module SeedCustomAuthClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Boolean]
-    def post_with_custom_auth(request:, request_options: nil)
+    def post_with_custom_auth(request: nil, request_options: nil)
       response = @request_client.conn.post("/custom-auth") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-KEY"] = request_options.custom_auth_scheme unless request_options&.custom_auth_scheme.nil?
@@ -73,7 +73,7 @@ module SeedCustomAuthClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Boolean]
-    def post_with_custom_auth(request:, request_options: nil)
+    def post_with_custom_auth(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post("/custom-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

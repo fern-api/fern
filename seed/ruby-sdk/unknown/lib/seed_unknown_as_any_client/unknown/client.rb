@@ -17,7 +17,7 @@ module SeedUnknownAsAnyClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Array<Object>]
-    def post(request:, request_options: nil)
+    def post(request: nil, request_options: nil)
       response = @request_client.conn.post("/") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -40,7 +40,7 @@ module SeedUnknownAsAnyClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Array<Object>]
-    def post(request:, request_options: nil)
+    def post(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post("/") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
