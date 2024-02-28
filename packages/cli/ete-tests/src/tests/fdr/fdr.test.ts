@@ -7,6 +7,9 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 const FIXTURES: Fixture[] = [
     {
         name: "simple"
+    },
+    {
+        name: "changelog"
     }
 ];
 
