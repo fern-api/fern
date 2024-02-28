@@ -1,9 +1,8 @@
 import { addPrefixToString } from "@fern-api/core-utils";
+import { DocsConfiguration, DocsConfiguration as RawDocsConfiguration, Serializer } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsConfiguration, DocsConfiguration as RawDocsConfiguration } from "@fern-fern/docs-config/api";
-import { DocsConfiguration as RawDocsConfigurationSerializer } from "@fern-fern/docs-config/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -82,7 +81,7 @@ export async function validateSchema({
     context: TaskContext;
     filepathBeingParsed: string;
 }): Promise<RawDocsConfiguration> {
-    const result = await RawDocsConfigurationSerializer.parse(value);
+    const result = await Serializer.DocsConfiguration.parse(value);
     if (result.ok) {
         return result.value;
     }

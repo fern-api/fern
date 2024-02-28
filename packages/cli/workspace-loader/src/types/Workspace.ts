@@ -1,8 +1,8 @@
 import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
+import { DocsConfiguration } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { DocsConfiguration } from "@fern-fern/docs-config/api";
 import { ParsedFernFile } from "./FernFile";
 
 export type Workspace = DocsWorkspace | APIWorkspace;

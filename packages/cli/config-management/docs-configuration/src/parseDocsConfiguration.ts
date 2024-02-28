@@ -1,10 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "@fern-api/docs-config-sdk";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
-import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
-import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
@@ -130,8 +128,18 @@ export async function parseDocsConfiguration({
         logo,
         favicon,
         backgroundImage,
-        colors: convertColorsConfiguration(colors ?? {}, context),
-        navbarLinks,
+        colors: convertColorsConfiguration(
+            colors ?? {
+                accentPrimary: undefined,
+                background: undefined
+            },
+            context
+        ),
+        navbarLinks: navbarLinks?.map((navbarLink) => ({
+            type: navbarLink.type,
+            text: navbarLink.text,
+            url: navbarLink.href ?? navbarLink.url ?? "/"
+        })),
         typography,
         layout: convertLayoutConfig(layout),
         css,
@@ -164,7 +172,7 @@ async function convertCssConfig(
 
 function isRemoteJsConfig(
     config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is DocsV1Write.JsRemoteConfig {
+): config is RawDocs.JsRemoteConfig {
     return Object.hasOwn(config, "url");
 }
 
@@ -284,7 +292,7 @@ async function getNavigationConfiguration({
         for (const version of versions) {
             const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
             const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-            const result = await RawVersionFileConfigSerializer.parseOrThrow(content);
+            const result = await Serializer.VersionFileConfig.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
@@ -506,8 +514,8 @@ async function convertNavigationItem({
     if (isRawLinkConfig(rawConfig)) {
         return {
             type: "link",
-            text: rawConfig.text,
-            url: rawConfig.url
+            text: rawConfig.link,
+            url: rawConfig.href
         };
     }
     assertNever(rawConfig);
@@ -543,7 +551,7 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
 
 function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.LinkConfiguration).url != null;
+    return (item as RawDocs.LinkConfiguration).link != null;
 }
 
 async function convertImageReference({

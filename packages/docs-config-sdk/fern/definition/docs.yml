@@ -99,13 +99,20 @@ types:
   VersionConfig:
     properties:
       display-name: string
-      path: string
-      slug: optional<string>
-      availability: optional<VersionAvailability>
+      path:
+        type: string
+        docs: The relative path to the version's docs.yml file.
+      slug:
+        type: optional<string>
+        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      availability:
+        type: optional<VersionAvailability>
+        docs: |
+          If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
 
   VersionAvailability:
     enum:
-      - deprecated
+      - deprecated # TODO: should we support `legacy`?
       - ga
       - stable
       - beta
@@ -305,6 +312,11 @@ types:
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
 
+  LinkConfiguration:
+    properties:
+      link: string
+      href: string
+
   SnippetsConfiguration:
     properties:
       python: optional<string>
@@ -330,17 +342,20 @@ types:
 
   NavbarLink:
     union:
-      filled: LinkConfiguration
-      outlined: LinkConfiguration
-      minimal: LinkConfiguration
+      filled: NavbarLinkConfiguration
+      outlined: NavbarLinkConfiguration
+      minimal: NavbarLinkConfiguration
 
       # deprecated
-      primary: LinkConfiguration # use `outlined` instead
-      secondary: LinkConfiguration # use `minimal` instead
+      primary: NavbarLinkConfiguration # use `outlined` instead
+      secondary: NavbarLinkConfiguration # use `minimal` instead
 
-  LinkConfiguration:
+  NavbarLinkConfiguration:
     properties:
-      url: string
+      href: optional<string>
+      url:
+        type: optional<string>
+        availability: deprecated
       text: string
 
   CssConfig:
