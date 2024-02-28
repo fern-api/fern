@@ -1,0 +1,11 @@
+{
+  "type": "library",
+  "private": true,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "generate": "fern generate --local"
+      }
+    }
+  }
+}

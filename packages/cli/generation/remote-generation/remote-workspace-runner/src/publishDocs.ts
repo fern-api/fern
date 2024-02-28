@@ -1,6 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
+import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,
@@ -18,8 +19,6 @@ import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernDocsConfig } from "@fern-fern/docs-config";
-import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -693,7 +692,12 @@ async function convertNavigationItem({
                 token,
                 audiences: item.audiences,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
-                    snippetsConfiguration: item.snippetsConfiguration ?? {}
+                    snippetsConfiguration: item.snippetsConfiguration ?? {
+                        python: undefined,
+                        typescript: undefined,
+                        go: undefined,
+                        java: undefined
+                    }
                 })
             });
             return {
