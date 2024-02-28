@@ -18,7 +18,7 @@ module SeedMultiUrlEnvironmentClient
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedMultiUrlEnvironmentClient",
+        "X-Fern-SDK-Name": "seed_multi_url_environment_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -43,7 +43,7 @@ module SeedMultiUrlEnvironmentClient
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedMultiUrlEnvironmentClient",
+        "X-Fern-SDK-Name": "seed_multi_url_environment_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

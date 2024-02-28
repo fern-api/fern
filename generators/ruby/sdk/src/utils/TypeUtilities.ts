@@ -15,6 +15,6 @@ export function isTypeOptional(typeReference: TypeReference): boolean {
         named: () => false,
         primitive: () => false,
         _other: () => false,
-        unknown: () => false
+        unknown: () => true
     });
 }

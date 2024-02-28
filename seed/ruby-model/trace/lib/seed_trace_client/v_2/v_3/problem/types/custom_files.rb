@@ -32,7 +32,10 @@ module SeedTraceClient
                      when "basic"
                        V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
                      when "custom"
-                       json_object.value
+                       json_object.value&.transform_values do |_k, v|
+                         v = v.to_json
+                         V2::V3::Problem::Files.from_json(json_object: v)
+                       end
                      else
                        V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
                      end
@@ -83,7 +86,7 @@ module SeedTraceClient
             new(member: member, discriminant: "basic")
           end
 
-          # @param member [Hash{Commons::Language => Commons::Language}]
+          # @param member [Hash{Commons::Language => V2::V3::Problem::Files}]
           # @return [V2::V3::Problem::CustomFiles]
           def self.custom(member:)
             new(member: member, discriminant: "custom")

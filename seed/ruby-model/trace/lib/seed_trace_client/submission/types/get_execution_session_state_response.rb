@@ -7,13 +7,13 @@ module SeedTraceClient
     class GetExecutionSessionStateResponse
       attr_reader :states, :num_warming_instances, :warming_session_ids, :additional_properties
 
-      # @param states [Hash{String => String}]
+      # @param states [Hash{String => Submission::ExecutionSessionState}]
       # @param num_warming_instances [Integer]
       # @param warming_session_ids [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GetExecutionSessionStateResponse]
       def initialize(states:, warming_session_ids:, num_warming_instances: nil, additional_properties: nil)
-        # @type [Hash{String => String}]
+        # @type [Hash{String => Submission::ExecutionSessionState}]
         @states = states
         # @type [Integer]
         @num_warming_instances = num_warming_instances
@@ -29,8 +29,11 @@ module SeedTraceClient
       # @return [Submission::GetExecutionSessionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        states = struct.states
+        parsed_json = JSON.parse(json_object)
+        states = parsed_json["states"]&.transform_values do |_k, v|
+          v = v.to_json
+          Submission::ExecutionSessionState.from_json(json_object: v)
+        end
         num_warming_instances = struct.numWarmingInstances
         warming_session_ids = struct.warmingSessionIds
         new(states: states, num_warming_instances: num_warming_instances, warming_session_ids: warming_session_ids,

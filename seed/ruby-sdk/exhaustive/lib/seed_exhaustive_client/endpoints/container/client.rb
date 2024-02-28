@@ -88,9 +88,9 @@ module SeedExhaustiveClient
         response.body
       end
 
-      # @param request [Hash{String => String}]
+      # @param request [Hash{String => Types::Object::ObjectWithRequiredField}]
       # @param request_options [RequestOptions]
-      # @return [Hash{String => String}]
+      # @return [Hash{String => Types::Object::ObjectWithRequiredField}]
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
         response = @request_client.conn.post("/container/map-prim-to-object") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -98,7 +98,12 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        response.body
+        return if response.body.nil?
+
+        response.body.transform_values do |_k, v|
+          v = v.to_json
+          Types::Object::ObjectWithRequiredField.from_json(json_object: v)
+        end
       end
 
       # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
@@ -205,9 +210,9 @@ module SeedExhaustiveClient
         end
       end
 
-      # @param request [Hash{String => String}]
+      # @param request [Hash{String => Types::Object::ObjectWithRequiredField}]
       # @param request_options [RequestOptions]
-      # @return [Hash{String => String}]
+      # @return [Hash{String => Types::Object::ObjectWithRequiredField}]
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
         Async do
           response = @request_client.conn.post("/container/map-prim-to-object") do |req|
@@ -216,7 +221,10 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
-          response.body
+          response.body&.transform_values do |_k, v|
+            v = v.to_json
+            Types::Object::ObjectWithRequiredField.from_json(json_object: v)
+          end
         end
       end
 

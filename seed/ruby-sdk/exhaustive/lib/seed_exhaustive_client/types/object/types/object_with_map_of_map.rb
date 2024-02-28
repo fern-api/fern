@@ -8,11 +8,11 @@ module SeedExhaustiveClient
       class ObjectWithMapOfMap
         attr_reader :map, :additional_properties
 
-        # @param map [Hash{String => String}]
+        # @param map [Hash{String => Hash}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::ObjectWithMapOfMap]
         def initialize(map:, additional_properties: nil)
-          # @type [Hash{String => String}]
+          # @type [Hash{String => Hash}]
           @map = map
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties

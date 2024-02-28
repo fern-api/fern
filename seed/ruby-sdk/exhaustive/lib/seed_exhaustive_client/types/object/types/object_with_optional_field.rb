@@ -22,7 +22,7 @@ module SeedExhaustiveClient
         # @param base_64 [String]
         # @param list [Array<String>]
         # @param set [Set<String>]
-        # @param map [Hash{Integer => Integer}]
+        # @param map [Hash{Integer => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::ObjectWithOptionalField]
         def initialize(string: nil, integer: nil, long: nil, double: nil, bool: nil, datetime: nil, date: nil,
@@ -49,7 +49,7 @@ module SeedExhaustiveClient
           @list = list
           # @type [Set<String>]
           @set = set
-          # @type [Hash{Integer => Integer}]
+          # @type [Hash{Integer => String}]
           @map = map
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties

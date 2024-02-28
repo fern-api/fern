@@ -35,7 +35,10 @@ module SeedTraceClient
                  when "running"
                    json_object.value
                  when "testCaseIdToState"
-                   json_object.value
+                   json_object.value&.transform_values do |_k, v|
+                     v = v.to_json
+                     Submission::SubmissionStatusForTestCase.from_json(json_object: v)
+                   end
                  else
                    json_object
                  end
@@ -105,7 +108,7 @@ module SeedTraceClient
         new(member: member, discriminant: "running")
       end
 
-      # @param member [Hash{String => String}]
+      # @param member [Hash{String => Submission::SubmissionStatusForTestCase}]
       # @return [Submission::TestSubmissionStatus]
       def self.test_case_id_to_state(member:)
         new(member: member, discriminant: "testCaseIdToState")

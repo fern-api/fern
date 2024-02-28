@@ -21,7 +21,7 @@ module SeedTraceClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedTraceClient",
+        "X-Fern-SDK-Name": "seed_trace_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -50,7 +50,7 @@ module SeedTraceClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedTraceClient",
+        "X-Fern-SDK-Name": "seed_trace_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

@@ -9,13 +9,13 @@ module SeedTraceClient
       attr_reader :head, :nodes, :additional_properties
 
       # @param head [Commons::NODE_ID]
-      # @param nodes [Hash{Commons::NODE_ID => Commons::NODE_ID}]
+      # @param nodes [Hash{Commons::NODE_ID => Commons::DoublyLinkedListNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::DoublyLinkedListValue]
       def initialize(nodes:, head: nil, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @head = head
-        # @type [Hash{Commons::NODE_ID => Commons::NODE_ID}]
+        # @type [Hash{Commons::NODE_ID => Commons::DoublyLinkedListNodeValue}]
         @nodes = nodes
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,12 @@ module SeedTraceClient
       # @return [Commons::DoublyLinkedListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
+        parsed_json = JSON.parse(json_object)
         head = struct.head
-        nodes = struct.nodes
+        nodes = parsed_json["nodes"]&.transform_values do |_k, v|
+          v = v.to_json
+          Commons::DoublyLinkedListNodeValue.from_json(json_object: v)
+        end
         new(head: head, nodes: nodes, additional_properties: struct)
       end
 

@@ -33,7 +33,7 @@ module SeedBasicAuthClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Boolean]
-    def post_with_basic_auth(request:, request_options: nil)
+    def post_with_basic_auth(request: nil, request_options: nil)
       response = @request_client.conn.post("/basic-auth") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["username"] = request_options.username unless request_options&.username.nil?
@@ -76,7 +76,7 @@ module SeedBasicAuthClient
     # @param request [Object]
     # @param request_options [RequestOptions]
     # @return [Boolean]
-    def post_with_basic_auth(request:, request_options: nil)
+    def post_with_basic_auth(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post("/basic-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

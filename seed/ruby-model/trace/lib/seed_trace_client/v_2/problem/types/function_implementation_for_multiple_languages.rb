@@ -8,11 +8,11 @@ module SeedTraceClient
       class FunctionImplementationForMultipleLanguages
         attr_reader :code_by_language, :additional_properties
 
-        # @param code_by_language [Hash{Commons::Language => Commons::Language}]
+        # @param code_by_language [Hash{Commons::Language => V2::Problem::FunctionImplementation}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::FunctionImplementationForMultipleLanguages]
         def initialize(code_by_language:, additional_properties: nil)
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{Commons::Language => V2::Problem::FunctionImplementation}]
           @code_by_language = code_by_language
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
@@ -24,8 +24,11 @@ module SeedTraceClient
         # @return [V2::Problem::FunctionImplementationForMultipleLanguages]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          JSON.parse(json_object)
-          code_by_language = struct.codeByLanguage
+          parsed_json = JSON.parse(json_object)
+          code_by_language = parsed_json["codeByLanguage"]&.transform_values do |_k, v|
+            v = v.to_json
+            V2::Problem::FunctionImplementation.from_json(json_object: v)
+          end
           new(code_by_language: code_by_language, additional_properties: struct)
         end
 

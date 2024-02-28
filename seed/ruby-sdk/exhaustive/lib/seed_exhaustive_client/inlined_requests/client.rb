@@ -31,7 +31,7 @@ module SeedExhaustiveClient
     #   * :base_64 (String)
     #   * :list (Array<String>)
     #   * :set (Set<String>)
-    #   * :map (Hash{Integer => Integer})
+    #   * :map (Hash{Integer => String})
     # @param request_options [RequestOptions]
     # @return [Types::Object::ObjectWithOptionalField]
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
@@ -76,7 +76,7 @@ module SeedExhaustiveClient
     #   * :base_64 (String)
     #   * :list (Array<String>)
     #   * :set (Set<String>)
-    #   * :map (Hash{Integer => Integer})
+    #   * :map (Hash{Integer => String})
     # @param request_options [RequestOptions]
     # @return [Types::Object::ObjectWithOptionalField]
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)

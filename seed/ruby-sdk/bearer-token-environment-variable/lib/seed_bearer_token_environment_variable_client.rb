@@ -12,7 +12,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [Client]
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           api_key: api_key)
       @service = ServiceClient.new(request_client: @request_client)
@@ -26,7 +26,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [AsyncClient]
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      api_key: api_key)
       @service = AsyncServiceClient.new(request_client: @async_request_client)

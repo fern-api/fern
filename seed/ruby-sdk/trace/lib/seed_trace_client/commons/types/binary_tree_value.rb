@@ -9,13 +9,13 @@ module SeedTraceClient
       attr_reader :root, :nodes, :additional_properties
 
       # @param root [Commons::NODE_ID]
-      # @param nodes [Hash{Commons::NODE_ID => Commons::NODE_ID}]
+      # @param nodes [Hash{Commons::NODE_ID => Commons::BinaryTreeNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::BinaryTreeValue]
       def initialize(nodes:, root: nil, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @root = root
-        # @type [Hash{Commons::NODE_ID => Commons::NODE_ID}]
+        # @type [Hash{Commons::NODE_ID => Commons::BinaryTreeNodeValue}]
         @nodes = nodes
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,12 @@ module SeedTraceClient
       # @return [Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
+        parsed_json = JSON.parse(json_object)
         root = struct.root
-        nodes = struct.nodes
+        nodes = parsed_json["nodes"]&.transform_values do |_k, v|
+          v = v.to_json
+          Commons::BinaryTreeNodeValue.from_json(json_object: v)
+        end
         new(root: root, nodes: nodes, additional_properties: struct)
       end
 
