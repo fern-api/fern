@@ -25,6 +25,7 @@ export * from "./FontConfigVariant";
 export * from "./PageConfiguration";
 export * from "./SectionConfiguration";
 export * from "./ApiSectionConfiguration";
+export * from "./ChangelogConfiguration";
 export * from "./LinkConfiguration";
 export * from "./SnippetsConfiguration";
 export * from "./ColorsConfiguration";

@@ -311,6 +311,21 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
+  #     changelog: 
+  #       type: optional<ChangelogConfiguration> 
+  #       docs: | 
+  #         Defaults to the changelog directory in the API workspace if present.
+  #         > fern/
+  #             changelog/
+  #               ...
+  #             definition/
+  #               ...
+  
+  # ChangelogConfiguration: 
+  #   discriminated: false
+  #   union: 
+  #     - type: string 
+  #       docs: Path to a custom folder which contains markdown files for the changelog. 
 
   LinkConfiguration:
     properties:
