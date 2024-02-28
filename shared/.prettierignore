@@ -1,5 +1,5 @@
 ../packages/ir-sdk/**
-../packages/docs-config/**
+../packages/docs-config-sdk/**
 ../packages/cli/openapi-ir-sdk/**
 ../packages/seed/src/config/**
 ../scripts/**

@@ -48,7 +48,7 @@
     "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
     "openapi-ir:generate": "yarn workspace @fern-api/openapi-ir-sdk generate",
     "seed-config:generate": "yarn workspace @fern-api/seed-cli generate",
-    "docs-config:generate": "yarn workspace @fern-api/docs-config generate"
+    "docs-config:generate": "yarn workspace @fern-api/docs-config-sdk generate"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

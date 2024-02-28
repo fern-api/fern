@@ -9,6 +9,7 @@ bundle.c?js
 packages/ir-sdk/**
 packages/docs-config/**
 packages/cli/openapi-ir-sdk/**
+packages/docs-config-sdk/**
 packages/seed/**
 generators/typescript/utils/core-utilities/**
 seed/**

@@ -376,8 +376,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core"\
       },\
       {\
-        "name": "@fern-api/docs-config",\
-        "reference": "workspace:packages/docs-config"\
+        "name": "@fern-api/docs-config-sdk",\
+        "reference": "workspace:packages/docs-config-sdk"\
       },\
       {\
         "name": "@fern-api/generator-commons",\
@@ -409,7 +409,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/csharp-generator-cli", ["workspace:generators/csharp/cli"]],\
       ["@fern-api/dependencies-configuration", ["workspace:packages/cli/config-management/dependencies-configuration"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
-      ["@fern-api/docs-config", ["workspace:packages/docs-config"]],\
+      ["@fern-api/docs-config-sdk", ["workspace:packages/docs-config-sdk"]],\
       ["@fern-api/docs-configuration", ["workspace:packages/cli/config-management/docs-configuration"]],\
       ["@fern-api/docs-preview", ["workspace:packages/cli/docs-preview"]],\
       ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
@@ -4698,11 +4698,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/docs-config", [\
-        ["workspace:packages/docs-config", {\
-          "packageLocation": "./packages/docs-config/",\
+      ["@fern-api/docs-config-sdk", [\
+        ["workspace:packages/docs-config-sdk", {\
+          "packageLocation": "./packages/docs-config-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4722,7 +4722,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fdr-sdk", "npm:0.50.8-1-gace1ff5"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -4748,7 +4748,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fdr-sdk", "npm:0.50.8-1-gace1ff5"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -5028,7 +5028,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/init", "workspace:packages/cli/init"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/core", "workspace:packages/core"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
@@ -5602,7 +5602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fdr-sdk", "npm:0.50.8-1-gace1ff5"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -5859,7 +5859,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/openapi-ir-sdk", "workspace:packages/cli/openapi-ir-sdk"],\
@@ -5924,7 +5924,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-migrations", "workspace:packages/cli/yaml/yaml-migrations"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -5958,7 +5958,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-config", "workspace:packages/docs-config"],\
+            ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@types/jest", "npm:29.0.3"],\
