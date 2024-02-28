@@ -25,4 +25,5 @@ export interface RequestParameter {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
+    isOptional({ context }: { context: SdkContext }): boolean;
 }
