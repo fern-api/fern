@@ -192,28 +192,28 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
               "name": {
                 "name": {
                   "camelCase": {
-                    "safeName": "cursor",
-                    "unsafeName": "cursor",
+                    "safeName": "pageNum",
+                    "unsafeName": "pageNum",
                   },
-                  "originalName": "cursor",
+                  "originalName": "pageNum",
                   "pascalCase": {
-                    "safeName": "Cursor",
-                    "unsafeName": "Cursor",
+                    "safeName": "PageNum",
+                    "unsafeName": "PageNum",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "CURSOR",
-                    "unsafeName": "CURSOR",
+                    "safeName": "PAGE_NUM",
+                    "unsafeName": "PAGE_NUM",
                   },
                   "snakeCase": {
-                    "safeName": "cursor",
-                    "unsafeName": "cursor",
+                    "safeName": "page_num",
+                    "unsafeName": "page_num",
                   },
                 },
-                "wireValue": "cursor",
+                "wireValue": "pageNum",
               },
               "valueType": {
                 "_visit": [Function],
-                "primitive": "STRING",
+                "primitive": "INTEGER",
                 "type": "primitive",
               },
             },
@@ -564,45 +564,6 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
         "_visit": [Function],
         "extends": [],
         "properties": [
-          {
-            "availability": undefined,
-            "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "nextPage",
-                  "unsafeName": "nextPage",
-                },
-                "originalName": "nextPage",
-                "pascalCase": {
-                  "safeName": "NextPage",
-                  "unsafeName": "NextPage",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NEXT_PAGE",
-                  "unsafeName": "NEXT_PAGE",
-                },
-                "snakeCase": {
-                  "safeName": "next_page",
-                  "unsafeName": "next_page",
-                },
-              },
-              "wireValue": "nextPage",
-            },
-            "valueType": {
-              "_visit": [Function],
-              "container": {
-                "_visit": [Function],
-                "optional": {
-                  "_visit": [Function],
-                  "primitive": "STRING",
-                  "type": "primitive",
-                },
-                "type": "optional",
-              },
-              "type": "container",
-            },
-          },
           {
             "availability": undefined,
             "docs": undefined,
