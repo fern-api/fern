@@ -25,6 +25,16 @@ export interface OpenAPIWorkspace {
     generatorsConfiguration: GeneratorsConfiguration | undefined;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
+    changelog: APIChangelog | undefined;
+}
+
+export interface APIChangelog {
+    files: ChangelogFile[];
+}
+
+export interface ChangelogFile {
+    absoluteFilepath: AbsoluteFilePath;
+    contents: string;
 }
 
 export interface OpenAPIFile {
@@ -45,6 +55,7 @@ export interface FernWorkspace {
     generatorsConfiguration: GeneratorsConfiguration | undefined;
     dependenciesConfiguration: DependenciesConfiguration;
     definition: FernDefinition;
+    changelog: APIChangelog | undefined;
 }
 
 export interface FernDefinition {

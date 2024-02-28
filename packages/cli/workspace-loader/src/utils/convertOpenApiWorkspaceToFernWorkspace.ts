@@ -62,7 +62,8 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
             },
             packageMarkers: {},
             importedDefinitions: {}
-        }
+        },
+        changelog: openapiWorkspace.changelog
     };
 }
 

@@ -4,11 +4,13 @@ import { GeneratorsConfiguration, loadGeneratorsConfiguration } from "@fern-api/
 import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listFiles } from "./listFiles";
+import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPI, getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPI, getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
+import { APIChangelog } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export async function loadAPIWorkspace({
@@ -25,6 +27,11 @@ export async function loadAPIWorkspace({
     let generatorsConfiguration: GeneratorsConfiguration | undefined = undefined;
     try {
         generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    } catch (err) {}
+
+    let changelog: APIChangelog | undefined = undefined;
+    try {
+        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
 
     const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
@@ -51,7 +58,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 absolutePathToOpenAPI,
-                absolutePathToAsyncAPI
+                absolutePathToAsyncAPI,
+                changelog
             }
         };
     }
@@ -72,7 +80,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 absolutePathToOpenAPI,
-                absolutePathToAsyncAPI
+                absolutePathToAsyncAPI,
+                changelog
             }
         };
     }
@@ -120,7 +129,8 @@ export async function loadAPIWorkspace({
                 namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                 packageMarkers: processPackageMarkersResult.packageMarkers,
                 importedDefinitions: processPackageMarkersResult.importedDefinitions
-            }
+            },
+            changelog
         }
     };
 }

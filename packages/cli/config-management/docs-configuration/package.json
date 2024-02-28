@@ -30,7 +30,7 @@
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-config-sdk": "workspace:*",
-    "@fern-api/fdr-sdk": "0.50.8-1-gace1ff5",
+    "@fern-api/fdr-sdk": "0.50.12-4-gdf2d015",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "js-yaml": "^4.1.0",
