@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
-import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config";
+import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,

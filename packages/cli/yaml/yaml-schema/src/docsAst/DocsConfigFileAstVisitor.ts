@@ -1,4 +1,4 @@
-import { DocsConfiguration } from "@fern-api/docs-config";
+import { DocsConfiguration } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NodePath } from "../NodePath";
 

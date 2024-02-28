@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/docs-config"
+    "directory": "packages/docs-config-sdk"
   },
   "private": true,
   "files": [
@@ -25,7 +25,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "generate": "fern generate --api docs-config --local && yarn compile"
+    "generate": "fern generate --local"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

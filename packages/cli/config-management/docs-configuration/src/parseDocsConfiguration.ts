@@ -1,13 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "@fern-api/docs-config-sdk";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    FernDocsConfig as RawDocs,
-    NavigationConfig,
-    Serializer,
-    VersionConfig
-} from "fern/packages/docs-config-sdk/src";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";

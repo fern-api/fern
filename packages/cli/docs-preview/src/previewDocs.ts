@@ -1,5 +1,5 @@
 import { assertNever, entries } from "@fern-api/core-utils";
-import { TabConfig, VersionAvailability } from "@fern-api/docs-config";
+import { TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,

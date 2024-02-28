@@ -5,7 +5,7 @@ import {
     PageConfiguration,
     SectionConfiguration,
     TabbedNavigationConfig
-} from "@fern-api/docs-config";
+} from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";

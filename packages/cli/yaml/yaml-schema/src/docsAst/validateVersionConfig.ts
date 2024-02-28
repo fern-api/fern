@@ -1,5 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { Serializer, VersionFileConfig } from "@fern-api/docs-config";
+import { Serializer, VersionFileConfig } from "@fern-api/docs-config-sdk";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
 

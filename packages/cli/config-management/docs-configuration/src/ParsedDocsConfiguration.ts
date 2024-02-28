@@ -1,7 +1,7 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsInstances, TabConfig, VersionAvailability } from "fern/packages/docs-config-sdk/src";
+import { DocsInstances, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 
 export declare type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
