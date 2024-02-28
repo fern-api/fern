@@ -13,9 +13,7 @@ except ImportError:
 
 
 class NestedObjectWithOptionalField(pydantic.BaseModel):
-    type: typing.Optional[str] = pydantic.Field(
-        description="Indicates what the address is referring to. For example, a physical versus a mailing address."
-    )
+    string: typing.Optional[str] = None
     nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -30,4 +28,5 @@ class NestedObjectWithOptionalField(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
         json_encoders = {dt.datetime: serialize_datetime}

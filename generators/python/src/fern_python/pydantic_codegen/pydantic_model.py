@@ -306,6 +306,12 @@ class PydanticModel:
                     initializer=AST.Expression("True"),
                 )
             )
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="populate_by_name",
+                    initializer=AST.Expression("True"),
+                )
+            )
 
         if self._forbid_extra_fields:
             config.add_class_var(

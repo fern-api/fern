@@ -45,6 +45,7 @@ class Metadata_Html(Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class Metadata_Markdown(Base):
@@ -55,6 +56,7 @@ class Metadata_Markdown(Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 """

@@ -16,6 +16,7 @@ class FunctionSignature_Void(VoidFunctionSignature):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
@@ -25,6 +26,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
@@ -34,6 +36,7 @@ class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakes
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 FunctionSignature = typing.Union[

@@ -21,6 +21,7 @@ class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
@@ -39,6 +40,7 @@ class SubmissionStatusForTestCase_Traced(TracedTestCase):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionStatusForTestCase = typing.Union[

@@ -15,6 +15,7 @@ class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class TestCaseFunction_Custom(VoidFunctionDefinition):
@@ -24,6 +25,7 @@ class TestCaseFunction_Custom(VoidFunctionDefinition):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]

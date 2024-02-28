@@ -19,6 +19,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
+from fern_python.snippet.snippet_factory_test import SnippetTestFactory
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
@@ -161,12 +162,17 @@ class SdkGenerator(AbstractGenerator):
             project=project,
         )
 
-        self._maybe_write_snippet_tests(
-            snippet_registry=snippet_registry,
+        test_fac = SnippetTestFactory(
             project=project,
+            context=context,
             generator_exec_wrapper=generator_exec_wrapper,
-            ir=ir,
             generated_root_client=generated_root_client,
+        )
+
+        self._maybe_write_snippet_tests(
+            snippet_test_factory=test_fac,
+            snippet_writer=snippet_writer,
+            ir=ir,
         )
 
         output_mode = generator_config.output.mode.get_as_union()
@@ -347,14 +353,12 @@ pip install --upgrade {project._project_config.package_name}
 
     def _maybe_write_snippet_tests(
         self,
-        snippet_registry: SnippetRegistry,
-        project: Project,
-        generator_exec_wrapper: GeneratorExecWrapper,
+        snippet_test_factory: SnippetTestFactory,
+        snippet_writer: SnippetWriter,
         ir: ir_types.IntermediateRepresentation,
-        generated_root_client: GeneratedRootClient,
     ) -> None:
         print("[TEST] writing tests now")
-        snippet_registry.tests(project, generator_exec_wrapper, ir, generated_root_client)
+        snippet_test_factory.tests(ir, snippet_writer)
         print("[TEST] done writing tests")
 
     def get_sorted_modules(self) -> Sequence[str]:

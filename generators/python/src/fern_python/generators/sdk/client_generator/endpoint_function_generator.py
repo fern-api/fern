@@ -887,6 +887,7 @@ class EndpointFunctionGenerator:
         return query_parameter_type_hint
 
 
+# TODO: this is effectively what should be exposed when creating the snippets API.
 class EndpointFunctionSnippetGenerator:
     def __init__(
         self,
@@ -902,6 +903,7 @@ class EndpointFunctionSnippetGenerator:
         self.endpoint = endpoint
         self.example = example
 
+    # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
         args: List[AST.Expression] = []
         all_path_parameters = (
