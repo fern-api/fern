@@ -19,7 +19,7 @@ module SeedExamplesClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedExamplesClient",
+        "X-Fern-SDK-Name": "seed_examples_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -45,7 +45,7 @@ module SeedExamplesClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedExamplesClient",
+        "X-Fern-SDK-Name": "seed_examples_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

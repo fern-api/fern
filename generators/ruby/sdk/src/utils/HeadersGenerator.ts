@@ -71,26 +71,26 @@ export class HeadersGenerator {
                     new Parameter({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: !this.isAuthRequired
+                        isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Parameter({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: !this.isAuthRequired
+                        isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: !this.isAuthRequired
+                        isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: !this.isAuthRequired
+                        isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired
                     })
                 ],
                 _other: () => {
@@ -121,7 +121,10 @@ export class HeadersGenerator {
                     new Property({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? this.isAuthRequired,
+                        // If you've overridden optionality, use that, otherwise:
+                        //     If there's an envvar it should be optional
+                        //     If there's not an envvar then check if auth is required
+                        isOptional: isOptionalOverride ?? (bas.tokenEnvVar !== undefined || !this.isAuthRequired),
                         wireValue: "Authorization"
                     })
                 ],
@@ -129,19 +132,19 @@ export class HeadersGenerator {
                     new Property({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? this.isAuthRequired
+                        isOptional: isOptionalOverride ?? (bas.usernameEnvVar !== undefined || !this.isAuthRequired)
                     }),
                     new Property({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? this.isAuthRequired
+                        isOptional: isOptionalOverride ?? (bas.passwordEnvVar !== undefined || !this.isAuthRequired)
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Property({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? this.isAuthRequired,
+                        isOptional: isOptionalOverride ?? (has.headerEnvVar !== undefined || !this.isAuthRequired),
                         wireValue: has.name.wireValue
                     })
                 ],

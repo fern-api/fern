@@ -13,10 +13,10 @@ module SeedAuthEnvironmentVariablesClient
     # @param api_key [String]
     # @param x_another_header [String]
     # @return [RequestClient]
-    def initialize(api_key:, x_another_header:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedAuthEnvironmentVariablesClient",
+        "X-Fern-SDK-Name": "seed_auth_environment_variables_client",
         "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }
@@ -38,10 +38,10 @@ module SeedAuthEnvironmentVariablesClient
     # @param api_key [String]
     # @param x_another_header [String]
     # @return [AsyncRequestClient]
-    def initialize(api_key:, x_another_header:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedAuthEnvironmentVariablesClient",
+        "X-Fern-SDK-Name": "seed_auth_environment_variables_client",
         "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }

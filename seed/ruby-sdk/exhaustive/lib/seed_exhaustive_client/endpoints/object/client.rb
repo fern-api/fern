@@ -32,7 +32,7 @@ module SeedExhaustiveClient
       #   * :base_64 (String)
       #   * :list (Array<String>)
       #   * :set (Set<String>)
-      #   * :map (Hash{Integer => Integer})
+      #   * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::ObjectWithOptionalField]
       def get_and_return_with_optional_field(request:, request_options: nil)
@@ -60,7 +60,7 @@ module SeedExhaustiveClient
       end
 
       # @param request [Hash] Request of type Types::Object::ObjectWithMapOfMap, as a Hash
-      #   * :map (Hash{String => String})
+      #   * :map (Hash{String => Hash})
       # @param request_options [RequestOptions]
       # @return [Types::Object::ObjectWithMapOfMap]
       def get_and_return_with_map_of_map(request:, request_options: nil)
@@ -87,7 +87,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithOptionalField]
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
@@ -114,7 +114,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field(request:, request_options: nil)
@@ -141,7 +141,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
@@ -177,7 +177,7 @@ module SeedExhaustiveClient
       #   * :base_64 (String)
       #   * :list (Array<String>)
       #   * :set (Set<String>)
-      #   * :map (Hash{Integer => Integer})
+      #   * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::ObjectWithOptionalField]
       def get_and_return_with_optional_field(request:, request_options: nil)
@@ -209,7 +209,7 @@ module SeedExhaustiveClient
       end
 
       # @param request [Hash] Request of type Types::Object::ObjectWithMapOfMap, as a Hash
-      #   * :map (Hash{String => String})
+      #   * :map (Hash{String => Hash})
       # @param request_options [RequestOptions]
       # @return [Types::Object::ObjectWithMapOfMap]
       def get_and_return_with_map_of_map(request:, request_options: nil)
@@ -238,7 +238,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithOptionalField]
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
@@ -267,7 +267,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field(request:, request_options: nil)
@@ -296,7 +296,7 @@ module SeedExhaustiveClient
       #     * :base_64 (String)
       #     * :list (Array<String>)
       #     * :set (Set<String>)
-      #     * :map (Hash{Integer => Integer})
+      #     * :map (Hash{Integer => String})
       # @param request_options [RequestOptions]
       # @return [Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)

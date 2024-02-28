@@ -14,7 +14,7 @@ module SeedObjectsWithImportsClient
       @request_client = request_client
     end
 
-    # @param request [Hash{String => String}]
+    # @param request [Hash{String => Object}]
     # @param request_options [RequestOptions]
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)
@@ -37,7 +37,7 @@ module SeedObjectsWithImportsClient
       @request_client = request_client
     end
 
-    # @param request [Hash{String => String}]
+    # @param request [Hash{String => Object}]
     # @param request_options [RequestOptions]
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)

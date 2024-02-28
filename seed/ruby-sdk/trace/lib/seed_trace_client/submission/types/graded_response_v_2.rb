@@ -9,13 +9,13 @@ module SeedTraceClient
       attr_reader :submission_id, :test_cases, :additional_properties
 
       # @param submission_id [Submission::SUBMISSION_ID]
-      # @param test_cases [Hash{V2::Problem::TEST_CASE_ID => V2::Problem::TEST_CASE_ID}]
+      # @param test_cases [Hash{V2::Problem::TEST_CASE_ID => Submission::TestCaseGrade}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GradedResponseV2]
       def initialize(submission_id:, test_cases:, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Hash{V2::Problem::TEST_CASE_ID => V2::Problem::TEST_CASE_ID}]
+        # @type [Hash{V2::Problem::TEST_CASE_ID => Submission::TestCaseGrade}]
         @test_cases = test_cases
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,12 @@ module SeedTraceClient
       # @return [Submission::GradedResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        test_cases = struct.testCases
+        test_cases = parsed_json["testCases"]&.transform_values do |_k, v|
+          v = v.to_json
+          Submission::TestCaseGrade.from_json(json_object: v)
+        end
         new(submission_id: submission_id, test_cases: test_cases, additional_properties: struct)
       end
 

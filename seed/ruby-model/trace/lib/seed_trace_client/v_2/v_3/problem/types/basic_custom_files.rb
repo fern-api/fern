@@ -13,7 +13,7 @@ module SeedTraceClient
 
           # @param method_name [String]
           # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
-          # @param additional_files [Hash{Commons::Language => Commons::Language}]
+          # @param additional_files [Hash{Commons::Language => V2::V3::Problem::Files}]
           # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
@@ -23,7 +23,7 @@ module SeedTraceClient
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
             @signature = signature
-            # @type [Hash{Commons::Language => Commons::Language}]
+            # @type [Hash{Commons::Language => V2::V3::Problem::Files}]
             @additional_files = additional_files
             # @type [V2::V3::Problem::BasicTestCaseTemplate]
             @basic_test_case_template = basic_test_case_template
@@ -45,7 +45,10 @@ module SeedTraceClient
               signature = parsed_json["signature"].to_json
               signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
             end
-            additional_files = struct.additionalFiles
+            additional_files = parsed_json["additionalFiles"]&.transform_values do |_k, v|
+              v = v.to_json
+              V2::V3::Problem::Files.from_json(json_object: v)
+            end
             if parsed_json["basicTestCaseTemplate"].nil?
               basic_test_case_template = nil
             else
