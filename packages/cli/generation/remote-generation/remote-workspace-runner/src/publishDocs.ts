@@ -384,7 +384,12 @@ async function convertNavigationConfig({
                     })
                 )
             );
-            pages = untabbedItems.reduce((pages, untabbedItem) => ({ ...pages, ...untabbedItem.pages }), {});
+            for (const untabbedItem of untabbedItems) {
+                pages = {
+                    ...pages,
+                    ...untabbedItem.pages
+                };
+            }
             config = {
                 items: untabbedItems.map((item) => item.item)
             };
@@ -457,7 +462,7 @@ async function convertNavigationConfig({
     }
     return {
         config,
-        pages: {}
+        pages
     };
 }
 
@@ -571,7 +576,7 @@ async function convertUnversionedNavigationConfig({
     }
     return {
         config,
-        pages: {}
+        pages
     };
 }
 
