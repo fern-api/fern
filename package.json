@@ -103,6 +103,7 @@
   },
   "dependencies": {
     "terminal-link": "^3.0.0",
+    "turbo": "^1.12.4",
     "workspace": "^0.0.1-preview.1"
   }
 }
