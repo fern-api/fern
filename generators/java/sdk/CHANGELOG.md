@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.5-rc0] - 2024-02-23
+- Internal: Use gradle:jdk11-jammy instead of bitnami/gradle:latest for the base 
+  docker image. 
+- Internal: Set file encoding to UTF-8 (JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8")
+
 ## [0.8.4] - 2024-02-23
 - Improvement: The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the read timeout of the request.
   As a refresher, a timeout can be added per request like so: 
