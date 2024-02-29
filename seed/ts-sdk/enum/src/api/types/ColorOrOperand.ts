@@ -4,4 +4,8 @@
 
 import * as SeedEnum from "..";
 
+/**
+ * @example
+ *     SeedEnum.Color.Red
+ */
 export type ColorOrOperand = SeedEnum.Color | SeedEnum.Operand;

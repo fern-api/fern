@@ -133,7 +133,7 @@ export class Service {
         requestOptions?: Service.RequestOptions
     ): Promise<SeedExamples.Metadata> {
         const { shallow, tag, xApiVersion } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (shallow != null) {
             _queryParams["shallow"] = shallow.toString();
         }
