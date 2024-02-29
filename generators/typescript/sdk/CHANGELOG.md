@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.3-rc1] - 2024-02-27
+
+- Fix: Previously SDK code snippets would not support generation with undiscriminated
+  unions. Now, it does. 
+
+
 ## [0.12.2] - 2024-02-27
 
 - Fix: Previously SDK code snippets would not take into account default parameter values
