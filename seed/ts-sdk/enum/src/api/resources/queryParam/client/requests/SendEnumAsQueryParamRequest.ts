@@ -7,10 +7,13 @@ import * as SeedEnum from "../../../..";
 /**
  * @example
  *     {
- *         operand: SeedEnum.Operand.GreaterThan
+ *         operand: SeedEnum.Operand.GreaterThan,
+ *         operandOrColor: SeedEnum.Color.Red
  *     }
  */
 export interface SendEnumAsQueryParamRequest {
     operand: SeedEnum.Operand;
     maybeOperand?: SeedEnum.Operand;
+    operandOrColor: SeedEnum.ColorOrOperand;
+    maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }

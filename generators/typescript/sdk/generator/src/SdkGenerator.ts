@@ -351,7 +351,6 @@ module.exports = {
             let refGenerator: ReferenceGenerator | undefined;
             if (this.config.includeApiReference) {
                 refGenerator = new ReferenceGenerator({
-                    clientName: this.intermediateRepresentation.apiName.camelCase.safeName,
                     apiName: this.namespaceExport === "api" ? "client" : this.namespaceExport
                 });
             }
@@ -640,6 +639,7 @@ module.exports = {
 
                     if (serviceReference !== undefined) {
                         let returnType = undefined;
+                        let endpointClientAccess: ts.Expression | undefined = undefined;
                         const parameters: ReferenceParameterDeclaration[] = [];
                         const referenceSnippet = this.withSnippet({
                             run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
@@ -662,6 +662,10 @@ module.exports = {
                                     }) ?? [])
                                 );
 
+                                endpointClientAccess = clientClass.accessFromRootClient({
+                                    referenceToRootClient: context.sdkInstanceReferenceForSnippet
+                                });
+
                                 return this.runWithSnippet({
                                     sourceFile,
                                     importsManager,
@@ -675,7 +679,14 @@ module.exports = {
                             includeImports: false
                         });
 
+                        let statement = undefined;
+                        if (endpointClientAccess !== undefined) {
+                            statement = getTextOfTsNode(endpointClientAccess);
+                        }
+
                         serviceReference.addEndpoint({
+                            // clientPath: getTextOfTsNode(statement),
+                            clientPath: statement,
                             functionPath: serviceFilepath,
                             functionName: endpoint.name.camelCase.unsafeName,
                             returnType,
