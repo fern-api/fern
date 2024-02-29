@@ -9,6 +9,7 @@ export interface GeneratorsConfiguration {
     absolutePathToOpenAPI: AbsoluteFilePath | undefined;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
+    disableOpenAPIExamples: boolean | undefined;
     rawConfiguration: GeneratorsConfigurationSchema;
     defaultGroup: string | undefined;
     groups: GeneratorGroup[];
