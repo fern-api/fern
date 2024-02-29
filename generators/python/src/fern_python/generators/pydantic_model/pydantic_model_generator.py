@@ -6,6 +6,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.sdk import custom_config
 from fern_python.snippet import (
     SnippetRegistry,
     SnippetWriter,
@@ -67,6 +68,7 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_writer = self._build_snippet_writer(
             context=context,
             improved_imports=False,
+            use_str_enums=custom_config.use_str_enums
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -140,7 +142,7 @@ class PydanticModelGenerator(AbstractGenerator):
     ) -> bool:
         return False
 
-    def _build_snippet_writer(self, context: PydanticGeneratorContext, improved_imports: bool = False) -> SnippetWriter:
+    def _build_snippet_writer(self, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False) -> SnippetWriter:
         """
         Note that this function is a copy of the function with the same name in
         the fern_python.utils package. This is redeclared here to prevent an import
@@ -160,6 +162,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 name=name,
                 example=example,
+                use_str_enums=use_str_enums
             ).generate_snippet(),
             object=lambda name, example: ObjectSnippetGenerator(
                 snippet_writer=snippet_writer,

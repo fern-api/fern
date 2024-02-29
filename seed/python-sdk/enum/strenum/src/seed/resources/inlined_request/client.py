@@ -12,18 +12,21 @@ from ...core.request_options import RequestOptions
 from ...types.color_or_operand import ColorOrOperand
 from ...types.operand import Operand
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
-class PathParamClient:
+
+class InlinedRequestClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def send(
         self,
-        operand: Operand,
-        maybe_operand: typing.Optional[Operand],
-        operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand],
         *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -43,23 +46,27 @@ class PathParamClient:
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.path_param.send(
+        client.inlined_request.send(
             operand=">",
-            maybe_operand="less_than",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
+        if maybe_operand is not OMIT:
+            _request["maybeOperand"] = maybe_operand
+        if maybe_operand_or_color is not OMIT:
+            _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -81,17 +88,17 @@ class PathParamClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncPathParamClient:
+class AsyncInlinedRequestClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def send(
         self,
-        operand: Operand,
-        maybe_operand: typing.Optional[Operand],
-        operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand],
         *,
+        operand: Operand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        operand_or_color: ColorOrOperand,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -111,23 +118,27 @@ class AsyncPathParamClient:
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.path_param.send(
+        await client.inlined_request.send(
             operand=">",
-            maybe_operand="less_than",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
+        if maybe_operand is not OMIT:
+            _request["maybeOperand"] = maybe_operand
+        if maybe_operand_or_color is not OMIT:
+            _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
