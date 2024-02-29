@@ -87,7 +87,7 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 ### Server-side Generators
 
 Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers,
-who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
+who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code. Watch a demo [here](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 | Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
@@ -118,7 +118,7 @@ Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
 ## 🌿 CLI Commands
 
-Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/cli).
+Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/overview).
 
 `fern init`: adds a new starter API to your repository.
 
@@ -145,7 +145,7 @@ Frameworks currently supported:
 - [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
 
-For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
+For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 ### Fern Definition
 
