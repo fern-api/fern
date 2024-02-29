@@ -646,7 +646,7 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Publish fernapi/fern-typescript-node-sdk docker
+      - name: Publish fernapi/fern-typescript-express-sdk docker
         run: |
           yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
           docker push fernapi/fern-typescript-express:"$VERSION"
