@@ -82,6 +82,11 @@ types:
         docs: |
           The SDK should provide a way to access additional properties on the response object. 
           This is useful for when the API adds new fields to the response object and the user wants to grab them without upgrading the SDK.
+      apiReferenceGeneration: 
+        type: FeatureImplementation
+        docs: |
+          The SDK should generate an API reference markdown file (refrence.md at the root level) that shows all the endpoints, their documentation,
+           their parameters, and their responses.
       whitelabel: 
         type: FeatureImplementation
         docs: | 
