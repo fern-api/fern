@@ -680,6 +680,7 @@ module.exports = {
                         });
 
                         let statement = undefined;
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         if (endpointClientAccess !== undefined) {
                             statement = getTextOfTsNode(endpointClientAccess);
                         }

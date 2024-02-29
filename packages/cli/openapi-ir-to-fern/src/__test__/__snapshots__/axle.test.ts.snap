@@ -67,12 +67,66 @@ exports[`open api parser axle simple 1`] = `
         },
       },
       "types": {
+        "Account": {
+          "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
+          "properties": {
+            "carrier": "string",
+            "createdAt": "string",
+            "email": "optional<string>",
+            "firstName": "string",
+            "id": "string",
+            "lastName": "string",
+            "modifiedAt": "string",
+            "phone": "optional<string>",
+            "policies": "list<string>",
+            "refreshedAt": "string",
+          },
+        },
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<root.Account>",
+            "data": "optional<Account>",
             "success": "optional<root.Success>",
           },
+        },
+        "Policy": {
+          "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
+          "properties": {
+            "account": "string",
+            "address": "root.Address",
+            "carrier": "string",
+            "coverages": {
+              "docs": "",
+              "type": "list<root.Coverage>",
+            },
+            "createdAt": "string",
+            "effectiveDate": "string",
+            "expirationDate": "string",
+            "id": "string",
+            "insureds": {
+              "docs": "",
+              "type": "list<root.Insured>",
+            },
+            "isActive": "boolean",
+            "modifiedAt": "string",
+            "policyNumber": "string",
+            "properties": {
+              "docs": "",
+              "type": "list<root.Property>",
+            },
+            "refreshedAt": "string",
+            "thirdParties": {
+              "docs": "",
+              "type": "list<root.ThirdParty>",
+            },
+            "type": "PolicyType",
+          },
+        },
+        "PolicyType": {
+          "enum": [
+            "auto",
+            "motorcycle",
+          ],
         },
       },
     },
@@ -270,6 +324,7 @@ exports[`open api parser axle simple 1`] = `
     },
     "policies.yml": {
       "imports": {
+        "accounts": "accounts.yml",
         "root": "__package__.yml",
       },
       "service": {
@@ -386,7 +441,7 @@ exports[`open api parser axle simple 1`] = `
         "GetPolicyResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<root.Policy>",
+            "data": "optional<accounts.Policy>",
             "success": "optional<root.Success>",
           },
         },
@@ -481,21 +536,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
   },
   "packageMarkerFile": {
     "types": {
-      "Account": {
-        "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
-        "properties": {
-          "carrier": "string",
-          "createdAt": "string",
-          "email": "optional<string>",
-          "firstName": "string",
-          "id": "string",
-          "lastName": "string",
-          "modifiedAt": "string",
-          "phone": "optional<string>",
-          "policies": "list<string>",
-          "refreshedAt": "string",
-        },
-      },
       "Address": {
         "docs": undefined,
         "properties": {
@@ -565,45 +605,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "optional<string>",
         },
-      },
-      "Policy": {
-        "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
-        "properties": {
-          "account": "string",
-          "address": "Address",
-          "carrier": "string",
-          "coverages": {
-            "docs": "",
-            "type": "list<Coverage>",
-          },
-          "createdAt": "string",
-          "effectiveDate": "string",
-          "expirationDate": "string",
-          "id": "string",
-          "insureds": {
-            "docs": "",
-            "type": "list<Insured>",
-          },
-          "isActive": "boolean",
-          "modifiedAt": "string",
-          "policyNumber": "string",
-          "properties": {
-            "docs": "",
-            "type": "list<Property>",
-          },
-          "refreshedAt": "string",
-          "thirdParties": {
-            "docs": "",
-            "type": "list<ThirdParty>",
-          },
-          "type": "PolicyType",
-        },
-      },
-      "PolicyType": {
-        "enum": [
-          "auto",
-          "motorcycle",
-        ],
       },
       "Property": {
         "docs": undefined,
