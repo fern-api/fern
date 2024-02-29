@@ -23,3 +23,4 @@ features:
   forwardCompatibleEnums: true
   additionalProperties: true
   whitelabel: false
+  apiReferenceGeneration: false
