@@ -35,8 +35,10 @@ navigation:
                 path: ./docs/pages/overview/define-your-api/openapi/openapi-overview.mdx
               - page: OpenAPI Extensions
                 path: ./docs/pages/overview/define-your-api/openapi/extensions.mdx
+                slug: extensions
               - page: OpenAPI Examples
                 path: ./docs/pages/overview/define-your-api/openapi/examples.mdx
+                slug: examples
           - section: Fern Definition
             slug: ferndef
             contents:
@@ -117,42 +119,53 @@ navigation:
       #
       # The below page is temporary until the separate sdk quickstarts (for openapi/ferndef) pages are added.
       - page: Fern SDKs Quickstart
-        slug: sdks-quickstart
+        slug: quickstart
         path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart.mdx
       - section: SDK generators
         contents:
           - page: TypeScript Node.js SDK
             path: ./docs/pages/fern-sdks/sdk-generators/node-sdk.mdx
+            slug: typescript
           - page: TypeScript Browser SDK
             path: ./docs/pages/fern-sdks/sdk-generators/browser-sdk.mdx
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
+            slug: python
           - page: Java SDK
             path: ./docs/pages/fern-sdks/sdk-generators/java-sdk.mdx
+            slug: java
           - page: Go SDK
             path: ./docs/pages/fern-sdks/sdk-generators/go-sdk.mdx
+            slug: go
           - page: Ruby SDK
             path: ./docs/pages/fern-sdks/sdk-generators/ruby-sdk.mdx
+            slug: ruby
           - page: C# SDK
             path: ./docs/pages/fern-sdks/sdk-generators/csharp-sdk.mdx
+            slug: csharp
           - page: PHP SDK
             path: ./docs/pages/fern-sdks/sdk-generators/php-sdk.mdx
+            slug: php
       - section: Other generators
         contents:
           - section: Server-side
             contents:
               - page: Express.js
                 path: ./docs/pages/fern-sdks/other-generators/server-side/express.mdx
+                slug: express
               - page: FastAPI
                 path: ./docs/pages/fern-sdks/other-generators/server-side/fastapi.mdx
+                slug: fastapi
               - page: Spring
                 path: ./docs/pages/fern-sdks/other-generators/server-side/spring.mdx
               - page: Go
                 path: ./docs/pages/fern-sdks/other-generators/server-side/go.mdx
               - page: DotNet
                 path: ./docs/pages/fern-sdks/other-generators/server-side/dotnet.mdx
+                slug: dotnet
               - page: Ruby on Rails
                 path: ./docs/pages/fern-sdks/other-generators/server-side/ruby-on-rails.mdx
+                slug: ruby
               - page: Flask
                 path: ./docs/pages/fern-sdks/other-generators/server-side/flask.mdx
               - page: Django
@@ -179,8 +192,10 @@ navigation:
         contents:
           - page: Publish to Maven Central
             path: ./docs/pages/fern-sdks/guides/publish-to-maven-central.mdx
+            slug: publish-maven
           - page: Update SDKs with Fern's GitHub Bot
             path: ./docs/pages/fern-sdks/guides/github-bot.mdx
+            slug: github-bot
   - tab: fern-docs
     layout:
       - page: Overview
@@ -196,7 +211,7 @@ navigation:
       #
       # The below page is temporary until the separate docs quickstarts (for openapi/ferndef) pages are added.
       - page: Fern Docs Quickstart
-        slug: docs-quickstart
+        slug: quickstart
         path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart.mdx
       - page: Pull request previews
         slug: previews
@@ -250,7 +265,7 @@ navigation:
             contents:
               - page: Introduction
                 path: ./docs/pages/fern-docs/content/use-snippets-api/introduction.mdx
-              - api: Snippets API Reference
+              - api: API Reference
                 api-name: public-api
                 audiences:
                 - external
