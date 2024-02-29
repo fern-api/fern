@@ -7,7 +7,9 @@ export const OpenAPIExtension = {
     /* This extension is a boolean that several generators use */
     INTERNAL: "x-internal",
     /* This extension is used for specifying examples */
-    EXAMPLES: "x-examples"
+    EXAMPLES: "x-examples",
+    /* This extension is used for specifying tags on schemas*/
+    TAGS: "x-tags"
 } as const;
 
 export type OpenAPIExtension = Values<typeof OpenAPIExtension>;
