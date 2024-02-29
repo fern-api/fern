@@ -1,17 +1,21 @@
 ---
 title: Fern | Indicate the Availability of an endpoint
-description: Indicate the status of an endpoint using the Availability component. Display whether the endpoint is in beta, generally available, or deprecated. 
+description: Indicate the status of a feature using the Availability component. Display a tag of beta, generally available, or deprecated. 
 ---
 
-The `Availability` component is used to indicate the availability status of an endpoint.
+The `Availability` component is used to indicate the availability status of a feature, such as an endpoint. This component renders as a tag within your documentation.
 
-Availability Prop:
+Within the API reference documentation that's generated using Fern Docs, use [Fern Definition `availability`](/overview/define-your-api/ferndef/availability) property or the [OpenAPI extension `x-fern-availability`](/overview/define-your-api/openapi/extensions) instead to indicate availability. 
+
+In the Markdown pages that make up the rest of your documentation site, use the `Availability` component as shown below to manually render the tag.
+
+Availability prop:
 
 **type**: 'beta' | 'GA' | 'deprecated'
 
 ## Beta availability 
 
-Indicates that an endpoint is in <Availability type="beta" />. This means that the endpoint is still in development and may change before it is released to the public. 
+Indicates that a feature is in <Availability type="beta" />. This means that the feature is still in development and may change before it is released to the public. 
 
 ```mdx
 <Availability type="beta" />
@@ -19,7 +23,7 @@ Indicates that an endpoint is in <Availability type="beta" />. This means that t
 
 ## General availability
 
-Indicates that an endpoint is <Availability type="GA" />. This means that the endpoint is ready for use in production. 
+Indicates that a feature is <Availability type="GA" />. This means that the feature is ready for use in production. 
 
 ```mdx
 <Availability type="GA" />
@@ -27,7 +31,7 @@ Indicates that an endpoint is <Availability type="GA" />. This means that the en
 
 ## Deprecated availability
 
-Indicates that an endpoint is <Availability type="deprecated" />. This means that the endpoint is no longer supported and will be removed in a future release.
+Indicates that a feature is <Availability type="deprecated" />. This means that the feature is no longer supported and will be removed in a future release.
 
 ```mdx
 <Availability type="deprecated" />
