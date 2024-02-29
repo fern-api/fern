@@ -266,7 +266,7 @@ export interface Person  { # <---- Overridden name
 }
 ```
 
-## Parameter Names 
+## Parameter names 
 
 The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI 
 parameters. 
@@ -458,7 +458,7 @@ and sent as `false` for the non-streaming variant. Additionally, a stream of the
 is returned in the streaming variant, whereas the `Logs` array is returned in the non-streaming
 variant.
 
-## Ignoring Schemas or endpoints
+## Ignoring schemas or endpoints
 
 If you want Fern to skip reading any endpoint or schemas, you can use the 
 `x-fern-ignore` extension. 
@@ -543,7 +543,7 @@ shown in the third tab.
     </CodeBlock>
 </CodeBlocks>
 
-## Request + Response Examples
+## Request + response examples
 
 While OpenAPI has several fields for examples, there is no easy way 
 to associate a request with a response. This is expecially useful when 
@@ -580,7 +580,7 @@ components:
           type: integer
 ```
 
-### Code Samples
+### Code samples
 
 If you'd like to specify custom code samples for your example, 
 use `code-samples`. 
@@ -605,6 +605,29 @@ paths:
 ```
 
 If you're on the Fern Starter plan for SDKs you won't 
-have to worry about manually adding code samples! Our generators will do that for you. 
+have to worry about manually adding code samples! Our generators will do that for you.
+
+### Availability
+
+The `x-fern-availability` extension is used to mark the availability of an endpoint. The availability information propagates into the generated Fern Docs website as visual tags. 
+
+The options are: 
+- `beta`
+- `generally-available`
+- `deprecated`
+
+The example below marks that the `POST /pet` endpoint is `deprecated`.
+
+<CodeBlock title="openapi.yml">
+```yaml
+paths:
+  /pet:
+    post:
+      x-fern-availability: deprecated <---- 
+      ...
+```
+</CodeBlock>
+
+### Request new extensions
 
 If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new) to start a discussion about it.
