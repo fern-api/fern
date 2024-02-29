@@ -624,14 +624,14 @@ jobs:
       - name: Print Version
         if: ${{ inputs.generator != 'ts-sdk' }}
         run: |
-          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          projectVersion=$(cat generators/typescript/express/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
       - name: Print Version Dev
         if: ${{ inputs.generator == 'ts-sdk' }}
         run: |
-          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          projectVersion=$(cat generators/typescript/express/VERSION)
           commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
           echo $projectVersion-$commitNumber-$sha_short
