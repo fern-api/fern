@@ -4,10 +4,19 @@ import { OpenAPIV2 } from "openapi-types";
 import { convertObj } from "swagger2openapi";
 import { generateIr as generateIrFromV3 } from "../v3/generateIr";
 
-export async function generateIr(
-    openApi: OpenAPIV2.Document,
-    taskContext: TaskContext
-): Promise<OpenApiIntermediateRepresentation> {
+export async function generateIr({
+    openApi,
+    taskContext,
+    disableExamples
+}: {
+    openApi: OpenAPIV2.Document;
+    taskContext: TaskContext;
+    disableExamples: boolean | undefined;
+}): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
-    return generateIrFromV3(conversionResult.openapi, taskContext);
+    return generateIrFromV3({
+        openApi: conversionResult.openapi,
+        taskContext,
+        disableExamples
+    });
 }

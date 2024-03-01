@@ -24,11 +24,13 @@ export async function parse({
     absolutePathToAsyncAPI,
     absolutePathToOpenAPI,
     absolutePathToOpenAPIOverrides,
+    disableExamples,
     taskContext
 }: {
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    disableExamples: boolean | undefined;
     taskContext: TaskContext;
 }): Promise<OpenApiIntermediateRepresentation> {
     let parsedAsyncAPI: AsyncAPIIntermediateRepresentation = {
@@ -47,9 +49,17 @@ export async function parse({
     });
     let openApiIr: OpenApiIntermediateRepresentation | undefined = undefined;
     if (isOpenApiV3(openApiDocument)) {
-        openApiIr = generateIrFromV3(openApiDocument, taskContext);
+        openApiIr = generateIrFromV3({
+            openApi: openApiDocument,
+            taskContext,
+            disableExamples
+        });
     } else if (isOpenApiV2(openApiDocument)) {
-        openApiIr = await generateIrFromV2(openApiDocument, taskContext);
+        openApiIr = await generateIrFromV2({
+            openApi: openApiDocument,
+            taskContext,
+            disableExamples
+        });
     }
 
     if (openApiIr != null) {

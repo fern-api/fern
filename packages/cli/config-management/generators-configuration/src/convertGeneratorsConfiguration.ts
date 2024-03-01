@@ -18,6 +18,7 @@ import {
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
+import { OPENAPI_DISABLE_EXAMPLES_KEY } from "./schemas/GeneratorsOpenAPIObjectSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
 export async function convertGeneratorsConfiguration({
@@ -27,9 +28,8 @@ export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
-    const pathToOpenAPI = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
+    const openAPI = await parseOpenAPIConfiguration(rawGeneratorsConfiguration);
     const pathToAsyncAPI = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
-    const pathToOpenAPIOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         absolutePathToAsyncAPI:
@@ -37,13 +37,14 @@ export async function convertGeneratorsConfiguration({
                 ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToAsyncAPI))
                 : undefined,
         absolutePathToOpenAPI:
-            pathToOpenAPI != null
-                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPI))
+            openAPI.path != null
+                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(openAPI.path))
                 : undefined,
         absolutePathToOpenAPIOverrides:
-            pathToOpenAPIOverrides != null
-                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPIOverrides))
+            openAPI.overrides != null
+                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(openAPI.overrides))
                 : undefined,
+        disableOpenAPIExamples: openAPI.disableExamples,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         groups:
@@ -64,6 +65,30 @@ export async function convertGeneratorsConfiguration({
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
                 : undefined
+    };
+}
+
+interface OpenAPIConfiguration {
+    path: string | undefined;
+    overrides: string | undefined;
+    disableExamples: boolean | undefined;
+}
+
+async function parseOpenAPIConfiguration(
+    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
+): Promise<OpenAPIConfiguration> {
+    const openAPI = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
+    if (typeof openAPI === "string") {
+        return {
+            path: openAPI,
+            overrides: rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY],
+            disableExamples: undefined
+        };
+    }
+    return {
+        path: openAPI?.path,
+        overrides: openAPI?.overrides ?? rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY],
+        disableExamples: openAPI?.[OPENAPI_DISABLE_EXAMPLES_KEY]
     };
 }
 

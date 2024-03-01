@@ -25,7 +25,8 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
                 absolutePathToAsyncAPI,
                 absolutePathToOpenAPI,
                 absolutePathToOpenAPIOverrides: undefined,
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                disableExamples: undefined
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
                 skipValidation: true
