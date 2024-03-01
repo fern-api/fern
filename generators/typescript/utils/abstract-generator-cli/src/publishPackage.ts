@@ -9,7 +9,7 @@ export async function publishPackage({
     npmPackage,
     dryRun,
     typescriptProject,
-    shouldTolerateRepublish,
+    shouldTolerateRepublish
 }: {
     generatorNotificationService: GeneratorNotificationService | undefined;
     logger: Logger;
@@ -32,8 +32,8 @@ export async function publishPackage({
     await typescriptProject.publish({
         logger,
         dryRun,
-        publishInfo: npmPackage.publishInfo
-        shouldTolerateRepublish,
+        publishInfo: npmPackage.publishInfo,
+        shouldTolerateRepublish
     });
 
     await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));
