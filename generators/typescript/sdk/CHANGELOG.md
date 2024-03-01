@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.12.3-rc1] - 2024-02-27
+## [0.12.5] - 2024-02-27
+
+- Introduce a custom configuration called `tolerateRepublish` which supports running
+  npm publish with the flag `--tolerateRepublish`. This flag allows you to publish 
+  on top of an existing npm package. 
+
+  To turn on this flag, update your generators.yml: 
+
+  ```yaml
+  groups: 
+    generators: 
+      - name: fernapi/fern-typscript-node-sdk
+        version: 0.12.5
+        ...
+        config: 
+          tolerateRepublish: true
+  ```
+
+## [0.12.4] - 2024-02-27
 
 - Fix: Previously reference.md was just leveraging the function name for the reference, now it leverages the full package-scoped path, mirroring how the function would be used in reality.
 
@@ -16,8 +34,6 @@ seedExamples.getException(...)
 
 seedExamples.file.notification.service.getException(...)
 ```
-
-## [0.12.3-rc1] - 2024-02-27
 
 - Fix: Previously SDK code snippets would not support generation with undiscriminated unions. Now, it does.
 
