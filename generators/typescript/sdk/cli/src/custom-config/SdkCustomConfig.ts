@@ -22,4 +22,5 @@ export interface SdkCustomConfig {
     noSerdeLayer: boolean;
     noOptionalProperties: boolean;
     includeApiReference: boolean | undefined;
+    tolerateRepublish: boolean; 
 }

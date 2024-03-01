@@ -91,6 +91,7 @@ export declare namespace SdkGenerator {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         includeApiReference: boolean;
+        tolerateRepublish: boolean;
     }
 }
 

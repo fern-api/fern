@@ -183,11 +183,13 @@ export class PersistedTypescriptProject {
     public async publish({
         logger,
         publishInfo,
-        dryRun
+        dryRun,
+        shouldTolerateRepublish
     }: {
         logger: Logger;
         publishInfo: PublishInfo;
         dryRun: boolean;
+        shouldTolerateRepublish: boolean;
     }): Promise<void> {
         await this.build(logger);
 
@@ -211,6 +213,9 @@ export class PersistedTypescriptProject {
         const publishCommand = ["publish"];
         if (dryRun) {
             publishCommand.push("--dry-run");
+        }
+        if (shouldTolerateRepublish) {
+            publishCommand.push("--tolerate-republish");
         }
         await npm(publishCommand);
     }
