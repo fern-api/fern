@@ -47,7 +47,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
-            includeApiReference: parsed?.includeApiReference ?? false
+            includeApiReference: parsed?.includeApiReference ?? false,
+            tolerateRepublish: parsed?.tolerateRepublish ?? false
         };
     }
 
@@ -99,7 +100,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 noOptionalProperties: customConfig.noOptionalProperties,
-                includeApiReference: customConfig.includeApiReference ?? false
+                includeApiReference: customConfig.includeApiReference ?? false,
+                tolerateRepublish: customConfig.tolerateRepublish
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -117,5 +119,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected outputSourceFiles(customConfig: SdkCustomConfig): boolean {
         return customConfig.outputSourceFiles;
+    }
+
+    protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
+        return customConfig.tolerateRepublish;
     }
 }
