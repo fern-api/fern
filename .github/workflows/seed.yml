@@ -52,6 +52,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -80,6 +87,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -107,6 +121,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:
@@ -140,6 +161,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -171,6 +199,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:
@@ -204,6 +239,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -228,6 +270,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:
@@ -254,6 +303,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -279,6 +335,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -303,6 +366,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:
@@ -334,6 +404,13 @@ jobs:
           node-version: 18
           cache: "yarn"
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - name: Yarn Install
         run: yarn install
 
@@ -359,6 +436,13 @@ jobs:
           node-version: 18
           cache: "yarn"
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - name: Yarn Install
         run: yarn install
 
@@ -378,6 +462,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:
@@ -404,6 +495,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -428,6 +526,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
 
       - uses: actions/setup-node@v3
         with:

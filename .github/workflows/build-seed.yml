@@ -47,6 +47,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Docker
+        run: brew install docker
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
