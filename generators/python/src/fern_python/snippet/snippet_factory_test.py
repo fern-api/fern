@@ -20,6 +20,7 @@ from fern_python.generators.sdk.context.sdk_generator_context import SdkGenerato
 class SnippetTestFactory:
     SYNC_CLIENT_FIXTURE_NAME = "client"
     ASYNC_CLIENT_FIXTURE_NAME = "async_client"
+    TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
     def __init__(
             self,
@@ -63,8 +64,9 @@ class SnippetTestFactory:
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
+        # TODO: use envvars with defaults for each of these
         non_url_params = [param.instantiation for param in client.parameters if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"]
-        non_url_params.append(self._write_envvar_parameter("base_url", "TESTS_BASE_URL"))
+        non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR))
         return AST.ClassInstantiation(
             class_=client.class_reference,
             # TODO: how can we do this in a more connected + typesafe way
@@ -72,11 +74,12 @@ class SnippetTestFactory:
         )
 
     def _generate_client_fixture(self):
+        # Note the conftest name is important, and required to make these fixtures available to all tests
         utilities_filepath = Filepath(
             directories=(Filepath.DirectoryFilepathPart(
                 module_name="tests",
             ),),
-            file=Filepath.FilepathPart(module_name="fixtures"),
+            file=Filepath.FilepathPart(module_name="conftest"),
         )
 
         source_file = SourceFileFactory.create(

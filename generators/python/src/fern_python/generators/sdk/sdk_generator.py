@@ -169,7 +169,7 @@ class SdkGenerator(AbstractGenerator):
             generated_root_client=generated_root_client,
         )
 
-        self._maybe_write_snippet_tests(
+        self._write_snippet_tests(
             snippet_test_factory=test_fac,
             snippet_writer=snippet_writer,
             ir=ir,
@@ -351,15 +351,14 @@ pip install --upgrade {project._project_config.package_name}
                 return
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
 
-    def _maybe_write_snippet_tests(
+    def _write_snippet_tests(
         self,
         snippet_test_factory: SnippetTestFactory,
         snippet_writer: SnippetWriter,
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
-        print("[TEST] writing tests now")
+        # Write tests
         snippet_test_factory.tests(ir, snippet_writer)
-        print("[TEST] done writing tests")
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

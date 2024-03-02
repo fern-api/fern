@@ -2,8 +2,8 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { findUp } from "find-up";
 import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "./constants";
 
-export async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> {
-    const fernDirectoryStr = await findUp(FERN_DIRECTORY, { type: "directory" });
+export async function getFernDirectory(nameOverride?: string): Promise<AbsoluteFilePath | undefined> {
+    const fernDirectoryStr = await findUp(nameOverride ?? FERN_DIRECTORY, { type: "directory" });
     if (fernDirectoryStr == null) {
         return undefined;
     }

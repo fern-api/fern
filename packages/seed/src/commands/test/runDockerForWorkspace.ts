@@ -7,8 +7,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/types/api";
-import { OutputMode } from "../../config/api";
 import { ParsedDockerName } from "../../cli";
+import { OutputMode } from "../../config/api";
 
 const DUMMY_ORGANIZATION = "seed";
 const ALL_AUDIENCES: Audiences = { type: "all" };
@@ -56,6 +56,7 @@ export async function runDockerForWorkspace({
     };
     await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,
+        absolutePathToFernConfig: undefined,
         workspace,
         generatorGroup,
         keepDocker: keepDocker ?? false,

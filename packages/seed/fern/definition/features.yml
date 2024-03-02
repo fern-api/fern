@@ -66,6 +66,10 @@ types:
         type: FeatureImplementation
         docs: |
           Generated code snippets for each endpoint are written to a snippets.json file.
+      snippetTests:
+        type: FeatureImplementation
+        docs: |
+          Generated tests leveraging snippets, that can be run/tested via `fern test`.
       errors:
         type: FeatureImplementation
         docs: |

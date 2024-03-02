@@ -71,7 +71,7 @@ export async function generateAPIWorkspaces({
 
                 await generateWorkspace({
                     workspace: fernWorkspace,
-                    organization: project.config.organization,
+                    projectConfig: project.config,
                     context,
                     version,
                     groupName,

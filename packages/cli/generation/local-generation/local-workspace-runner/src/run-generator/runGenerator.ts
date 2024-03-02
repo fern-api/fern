@@ -1,7 +1,9 @@
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { TaskContext } from "@fern-api/task-context";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
+import { cp } from "fs";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -14,12 +16,16 @@ export declare namespace runGenerator {
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
+        absolutePathToFernConfig: AbsoluteFilePath | undefined;
+        absolutePathToFernDefinition: AbsoluteFilePath | undefined;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
 
         generatorInvocation: GeneratorInvocation;
+
+        context: TaskContext;
     }
 }
 
@@ -28,14 +34,39 @@ export async function runGenerator({
     organization,
     outputVersion,
     absolutePathToOutput,
+    absolutePathToFernDefinition,
+    absolutePathToFernConfig,
     absolutePathToSnippet,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
-    generatorInvocation
+    generatorInvocation,
+    context
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
+
+    // Copy Fern definition to output directory
+    if (absolutePathToFernDefinition != null) {
+        cp(
+            `${absolutePathToFernDefinition}`,
+            `${absolutePathToOutput}/.mock/definition`,
+            { recursive: true },
+            (err) => {
+                if (err) {
+                    context.logger.error(`Failed to copy Fern definition to output directory: ${err.message}`);
+                }
+            }
+        );
+    }
+    if (absolutePathToFernConfig != null) {
+        // Copy Fern config
+        cp(`${absolutePathToFernConfig}`, `${absolutePathToOutput}/.mock`, (err) => {
+            if (err) {
+                context.logger.error(`Failed to copy Fern config to output directory: ${err.message}`);
+            }
+        });
+    }
 
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
