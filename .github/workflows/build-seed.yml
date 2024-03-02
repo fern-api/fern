@@ -39,7 +39,7 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     needs: changes
     steps:
       - name: Checkout repo
@@ -69,7 +69,6 @@ jobs:
         with:
           context: .
           file: ./docker/seed/Dockerfile.${{ matrix.package }}
-          platforms: linux/amd64,linux/arm64
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}
