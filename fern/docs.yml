@@ -106,21 +106,15 @@ navigation:
     layout:
       - page: Overview
         path: ./docs/pages/fern-sdks/sdks-overview.mdx
-      # TBD
-      # - section: Fern SDKs Quickstarts
-      #   slug: sdks-quickstarts
-      #   contents:
-      #     - page: Quickstart with OpenAPI
-      #       slug: sdks-quickstart-openapi
-      #       path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-openapi.mdx
-      #     - page: Quickstart with Fern Def
-      #       slug: sdks-quickstart-ferndef
-      #       path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
-      #
-      # The below page is temporary until the separate sdk quickstarts (for openapi/ferndef) pages are added.
-      - page: Fern SDKs Quickstart
-        slug: quickstart
-        path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart.mdx
+      - section: Fern SDKs Quickstarts
+        slug: quickstarts
+        contents:
+          - page: Quickstart with OpenAPI
+            slug: openapi
+            path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-openapi.mdx
+          - page: Quickstart with Fern Def
+            slug: ferndef
+            path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
       - section: SDK generators
         contents:
           - page: TypeScript Node.js SDK
@@ -201,12 +195,13 @@ navigation:
       - page: Overview
         path: ./docs/pages/fern-docs/docs-overview.mdx
       # - section: Fern Docs Quickstarts
+      #   slug: quickstarts
       #   contents:
       #     - page: Quickstart with OpenAPI
-      #       slug: docs-quickstart-openapi
+      #       slug: openapi
       #       path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
       #     - page: Quickstart with Fern Defs
-      #       slug: docs-quickstart-ferndef
+      #       slug: ferndef
       #       path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
       #
       # The below page is temporary until the separate docs quickstarts (for openapi/ferndef) pages are added.
