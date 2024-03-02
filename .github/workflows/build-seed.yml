@@ -53,7 +53,7 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
+          brew install docker colima
           colima start
 
       - name: Set up Docker Buildx

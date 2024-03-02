@@ -58,8 +58,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -95,8 +95,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -132,8 +132,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -173,8 +173,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -214,8 +214,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -255,8 +255,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -289,8 +289,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -323,8 +323,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -357,8 +357,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -391,8 +391,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -430,8 +430,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - name: Yarn Install
         run: yarn install
@@ -464,8 +464,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - name: Yarn Install
         run: yarn install
@@ -493,8 +493,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -527,7 +527,7 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
+          brew install docker colima
           colima start
 
       - uses: actions/setup-node@v3
@@ -561,8 +561,8 @@ jobs:
 
       - name: Install Docker
         run: |
-          brew install colima
-          colima start
+          brew install docker colima
+           colima start
 
       - uses: actions/setup-node@v3
         with:
