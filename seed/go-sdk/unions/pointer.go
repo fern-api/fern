@@ -1,4 +1,4 @@
-package undiscriminated
+package unions
 
 import (
 	"time"

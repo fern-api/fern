@@ -4,9 +4,10 @@ package union
 
 import (
 	context "context"
-	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
-	core "github.com/fern-api/undiscriminated-go/core"
-	option "github.com/fern-api/undiscriminated-go/option"
+	fmt "fmt"
+	unionsgo "github.com/fern-api/unions-go"
+	core "github.com/fern-api/unions-go/core"
+	option "github.com/fern-api/unions-go/option"
 	http "net/http"
 )
 
@@ -32,9 +33,44 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) Get(
 	ctx context.Context,
-	request *undiscriminatedgo.MyUnion,
+	id string,
 	opts ...option.RequestOption,
-) (*undiscriminatedgo.MyUnion, error) {
+) (*unionsgo.Shape, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *unionsgo.Shape
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) Update(
+	ctx context.Context,
+	request *unionsgo.Shape,
+	opts ...option.RequestOption,
+) (bool, error) {
 	options := core.NewRequestOptions(opts...)
 
 	baseURL := ""
@@ -48,12 +84,12 @@ func (c *Client) Get(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	var response *undiscriminatedgo.MyUnion
+	var response bool
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:         endpointURL,
-			Method:      http.MethodPost,
+			Method:      http.MethodPatch,
 			MaxAttempts: options.MaxAttempts,
 			Headers:     headers,
 			Client:      options.HTTPClient,
@@ -61,7 +97,7 @@ func (c *Client) Get(
 			Response:    &response,
 		},
 	); err != nil {
-		return nil, err
+		return false, err
 	}
 	return response, nil
 }

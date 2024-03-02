@@ -2624,6 +2624,27 @@ func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
 	return ""
 }
 
+// isLiteralType returns true if the given type reference is a literal.
+func isLiteralType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration.Shape.Alias != nil && isLiteralType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+		return isLiteralType(typeReference.Container.Optional, types)
+	}
+	return typeReference.Container != nil && typeReference.Container.Literal != nil
+}
+
+// isOptionalType returns true if the given type reference is an optional.
+func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	return typeReference.Container != nil && typeReference.Container.Optional != nil
+}
+
 // needsOptionalDereference returns true if the optional type needs to be referenced.
 //
 // Container types like lists, maps, and sets are already nil-able, so they don't

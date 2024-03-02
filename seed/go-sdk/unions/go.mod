@@ -1,4 +1,4 @@
-module github.com/fern-api/undiscriminated-go
+module github.com/fern-api/unions-go
 
 go 1.13
 
