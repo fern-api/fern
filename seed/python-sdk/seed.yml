@@ -6,6 +6,8 @@ generatorType: sdk
 defaultOutputMode: github
 fixtures:
   enum:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         pydantic_config:
           use_str_enums: true
