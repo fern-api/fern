@@ -57,7 +57,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -92,7 +94,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -127,7 +131,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -166,7 +172,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -205,7 +213,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -244,7 +254,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -276,7 +288,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -308,7 +322,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -340,7 +356,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -372,7 +390,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -409,7 +429,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - name: Yarn Install
         run: yarn install
@@ -441,7 +463,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - name: Yarn Install
         run: yarn install
@@ -468,7 +492,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -500,7 +526,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:
@@ -532,7 +560,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - uses: actions/setup-node@v3
         with:

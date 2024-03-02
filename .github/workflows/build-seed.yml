@@ -52,7 +52,9 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Docker
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
