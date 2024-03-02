@@ -17,3 +17,4 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
+    use_str_enums: bool = False

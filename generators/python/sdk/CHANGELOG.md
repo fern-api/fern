@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.7] - 2024-02-27
+
+- Improvement: Introduces a flag `use_str_enums` to swap from using proper Enum classes to using Literals to represent enums. This change allows for forward compatibility of enums, since the user will receive the string back.
+
+  ```
+  config:
+    pydantic_config:
+      use_str_enums: true
+  ```
+
+  generates enums as:
+
+  ```
+  Operand = typing.Literal[">", "=", "less_than"]
+  ```
+
+
 ## [0.11.6] - 2024-02-26
 
 - Improvement: You can now specify envvars to scan for headers, not just auth scheme headers.
