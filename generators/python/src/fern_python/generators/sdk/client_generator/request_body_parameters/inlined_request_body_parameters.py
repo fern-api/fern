@@ -142,14 +142,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     f"if {self._get_property_name(optional_property)} is not {DEFAULT_BODY_PARAMETER_VALUE}:"
                 )
                 with writer.indent():
-                    if self._context.resolved_schema_is_optional_enum(reference=optional_property.value_type):
-                        writer.write_line(
-                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value if {self._get_property_name(optional_property)} is not None else None'
-                        )
-                    else:
-                        writer.write_line(
-                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
-                        )
+                    writer.write_line(
+                        f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
+                    )
 
         return AST.CodeWriter(write)
 

@@ -8,7 +8,9 @@ from fern_python.generators.pydantic_model import (
 from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
 
 
-def build_snippet_writer(*, context: PydanticGeneratorContext, improved_imports: bool = False) -> SnippetWriter:
+def build_snippet_writer(
+    *, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False
+) -> SnippetWriter:
     """
     Builds a new SnippetWriter. Using this function is preferred over
     the SnippetWriter constructor due to the two-phase construction
@@ -25,9 +27,7 @@ def build_snippet_writer(*, context: PydanticGeneratorContext, improved_imports:
             example=example,
         ).generate_snippet(),
         enum=lambda name, example: EnumSnippetGenerator(
-            snippet_writer=snippet_writer,
-            name=name,
-            example=example,
+            snippet_writer=snippet_writer, name=name, example=example, use_str_enums=use_str_enums
         ).generate_snippet(),
         object=lambda name, example: ObjectSnippetGenerator(
             snippet_writer=snippet_writer,
