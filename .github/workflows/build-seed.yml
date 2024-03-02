@@ -33,6 +33,7 @@ jobs:
               - 'docker/seed/Dockerfile.java'
               - '.github/workflows/build-seed.yml'
   build-container:
+    if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:
       matrix:
         # Parse JSON array containing names of all filters matching any of changed files
