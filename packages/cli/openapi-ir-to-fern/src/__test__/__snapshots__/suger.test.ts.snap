@@ -4,9 +4,6 @@ exports[`open api parser suger simple 1`] = `
 {
   "definitionFiles": {
     "api.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
       "service": {
         "auth": false,
         "base-path": "",
@@ -7388,6 +7385,9 @@ the same customer, dimension, and time, but a different quantity.",
     },
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },
