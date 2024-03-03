@@ -1,7 +1,4 @@
-import pydantic
-
 from fern_python.codegen import Filepath
-from fern_python.generators.sdk.custom_config import ClientConfiguration
 
 from .sdk_declaration_referencer import SdkDeclarationReferencer
 

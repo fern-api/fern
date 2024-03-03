@@ -34,8 +34,10 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             custom_config=custom_config,
             project_module_path=project_module_path,
         )
-        client_class_name = custom_config.client_class_name or custom_config.client.class_name or (
-            pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
+        client_class_name = (
+            custom_config.client_class_name
+            or custom_config.client.class_name
+            or (pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name))
         )
         exported_client_class_name = custom_config.client.exported_class_name or client_class_name
         client_filename = custom_config.client_filename or custom_config.client.filename
@@ -102,7 +104,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_class_name_for_generated_root_client(self) -> str:
         return self._root_generated_client_declaration_referencer.get_class_name(name=None)
-    
+
     def get_filepath_for_exported_root_client(self) -> Filepath:
         return self._root_exported_client_declaration_referencer.get_filepath(name=None)
 

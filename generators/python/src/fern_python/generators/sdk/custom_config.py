@@ -1,5 +1,5 @@
 from typing import Dict, List, Literal, Optional, Union
-from httpx import Client
+
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
@@ -15,7 +15,7 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     require_optional_fields: bool = False
 
 
-class ClientConfiguration(pydantic.BaseModel): 
+class ClientConfiguration(pydantic.BaseModel):
     # The filename where the auto-generated client
     # lives
     filename: str = "client.py"
@@ -24,7 +24,7 @@ class ClientConfiguration(pydantic.BaseModel):
     # will be used in code snippets
     exported_filename: str = "client.py"
     exported_class_name: Optional[str] = None
-    
+
     class Config:
         extra = pydantic.Extra.forbid
 

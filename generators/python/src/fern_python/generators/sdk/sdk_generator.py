@@ -69,13 +69,12 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
 
-        if custom_config.client_filename is not None and not \
-                custom_config.client_filename.endswith(".py"):
+        if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
-        
+
         if not custom_config.client.filename.endswith(".py"):
             raise RuntimeError("client_location.filename must end in .py")
-    
+
         if not custom_config.client.exported_filename.endswith(".py"):
             raise RuntimeError("client_location.exported_filename must end in .py")
 

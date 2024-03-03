@@ -95,7 +95,7 @@ class SdkGeneratorContext(ABC):
     @abstractmethod
     def get_class_name_for_generated_root_client(self) -> str:
         ...
-    
+
     @abstractmethod
     def get_filepath_for_exported_root_client(self) -> Filepath:
         ...
