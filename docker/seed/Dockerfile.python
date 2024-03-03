@@ -3,7 +3,6 @@ FROM redhat/ubi9:latest
 
 # Setup the environment, can run pytest, poetry install, etc.
 COPY seed/python-sdk/imdb/pyproject.toml ./pyproject.toml
-COPY seed/python-sdk/imdb/poetry.lock ./poetry.lock
 COPY seed/python-sdk/imdb/src ./src
 
 # Setup pyenv
