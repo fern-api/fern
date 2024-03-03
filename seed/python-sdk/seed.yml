@@ -5,6 +5,16 @@ language: python
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
+  examples: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        client: 
+          filename: base_client.py
+          class_name: BaseSeedExhaustive
+          exported_filename: client.py
+          exported_class_name: SeedExhaustive
+      outputFolder: client-filename
   enum:
     - customConfig: null
       outputFolder: no-custom-config
@@ -44,7 +54,7 @@ fixtures:
         improved_imports: true
       outputFolder: improved_imports
 scripts:
-  - docker: fernapi/python-seed
+  - docker: mwalbeck/python-poetry:1.7-3.11
     commands:
       # The global python version is 3.8
       # - mypy --cache-dir /tmp . --cache-fine-grained

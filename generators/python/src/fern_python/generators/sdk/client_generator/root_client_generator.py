@@ -97,12 +97,13 @@ class RootClientGenerator:
         self._snippet_writer = snippet_writer
 
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
+        exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         builder = RootClientGenerator.GeneratedRootClientBuilder(
             module_path=self._context.get_module_path_in_project(
-                self._context.get_filepath_for_root_client().to_module().path
+                self._context.get_filepath_for_exported_root_client().to_module().path
             ),
-            class_name=self._class_name,
-            async_class_name=self._async_class_name,
+            class_name=self._context.get_class_name_for_exported_root_client(),
+            async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._client_wrapper_constructor_params,
         )
         generated_root_client = builder.build()
