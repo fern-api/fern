@@ -39,7 +39,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                     header: {
                         ...header,
                         schema: predefinedHeader?.schema ?? header.schema,
-                        name: predefinedHeader?.name ?? header.name,
+                        name: predefinedHeader?.name ?? header.name
                     },
                     fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
                     context
