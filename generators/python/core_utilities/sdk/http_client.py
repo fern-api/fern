@@ -1,14 +1,15 @@
 import asyncio
-from contextlib import _AsyncGeneratorContextManager, _GeneratorContextManager
-from random import random
-import time
-import httpx
-import typing
-from functools import wraps
-import re
 import email.utils
+import re
+import time
+import typing
+from contextlib import _AsyncGeneratorContextManager, _GeneratorContextManager
+from functools import wraps
+from random import random
 
-INITIAL_RETRY_DELAY_SECONDS = .5
+import httpx
+
+INITIAL_RETRY_DELAY_SECONDS = 0.5
 MAX_RETRY_DELAY_SECONDS = 10
 MAX_RETRY_DELAY_SECONDS_FROM_HEADER = 30
 
@@ -25,7 +26,7 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
             return int(retry_after_ms) / 1000 if retry_after_ms > 0 else 0
         except Exception:
             pass
-    
+
     retry_after = response_headers.get("retry-after")
     if retry_after is None:
         return None
@@ -53,6 +54,7 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
 
     return seconds
 
+
 def _retry_timeout(response: httpx.Response, retries: int) -> float:
     """
     Determine the amount of time to wait before retrying a request.
@@ -72,9 +74,11 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
     timeout = retry_delay * (1 - 0.25 * random())
     return timeout if timeout >= 0 else 0
 
+
 def _should_retry(response: httpx.Response) -> bool:
     retriable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retriable_400s
+
 
 class HttpClient:
     def __init__(self, *, httpx_client: httpx.Client):
@@ -82,18 +86,22 @@ class HttpClient:
 
     # Ensure that the signature of the `request` method is the same as the `httpx.Client.request` method
     @wraps(httpx.Client.request)
-    def request(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> httpx.Response:
+    def request(
+        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+    ) -> httpx.Response:
         response = self.httpx_client.request(*args, **kwargs)
         if _should_retry(response=response):
-            if (max_retries > retries):
+            if max_retries > retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(max_retries=max_retries, retries=retries + 1, *args, **kwargs)
         return response
-    
+
     @wraps(httpx.Client.stream)
-    def stream(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> _GeneratorContextManager[httpx.Response]:
+    def stream(
+        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+    ) -> _GeneratorContextManager[httpx.Response]:
         return self.httpx_client.stream(*args, **kwargs)
-        
+
 
 class AsyncHttpClient:
     def __init__(self, *, httpx_client: httpx.AsyncClient):
@@ -101,14 +109,18 @@ class AsyncHttpClient:
 
     # Ensure that the signature of the `request` method is the same as the `httpx.Client.request` method
     @wraps(httpx.AsyncClient.request)
-    async def request(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> httpx.Response:
+    async def request(
+        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+    ) -> httpx.Response:
         response = await self.httpx_client.request(*args, **kwargs)
         if _should_retry(response=response):
-            if (max_retries > retries):
+            if max_retries > retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(max_retries=max_retries, retries=retries + 1, *args, **kwargs)
         return response
-    
+
     @wraps(httpx.AsyncClient.request)
-    async def stream(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> _AsyncGeneratorContextManager[httpx.Response]:
+    async def stream(
+        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+    ) -> _AsyncGeneratorContextManager[httpx.Response]:
         return self.httpx_client.stream(*args, **kwargs)

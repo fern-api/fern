@@ -204,8 +204,7 @@ class ClientWrapperGenerator:
                 ),
                 body=AST.CodeWriter(
                     self._get_write_derived_client_wrapper_constructor_body(
-                        constructor_parameters=constructor_parameters,
-                        is_async=False
+                        constructor_parameters=constructor_parameters, is_async=False
                     )
                 ),
             ),
@@ -234,8 +233,7 @@ class ClientWrapperGenerator:
                 ),
                 body=AST.CodeWriter(
                     self._get_write_derived_client_wrapper_constructor_body(
-                        constructor_parameters=constructor_parameters,
-                        is_async=True
+                        constructor_parameters=constructor_parameters, is_async=True
                     )
                 ),
             ),
@@ -257,10 +255,12 @@ class ClientWrapperGenerator:
                 )
                 + ")"
             )
-            writer.write(
-                f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = "
+            writer.write(f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = ")
+            writer.write_node(
+                self._context.core_utilities.http_client(
+                    obj=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME), is_async=is_async
+                )
             )
-            writer.write_node(self._context.core_utilities.http_client(obj=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME), is_async=is_async))
 
         return _write_derived_client_wrapper_constructor_body
 

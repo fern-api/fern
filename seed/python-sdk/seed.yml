@@ -49,7 +49,6 @@ scripts:
       # The global python version is 3.8
       # - mypy --cache-dir /tmp . --cache-fine-grained
       # - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
-      - pyenv shell 3.9
       - poetry install
       - poetry run mypy .
 allowedFailures: 
