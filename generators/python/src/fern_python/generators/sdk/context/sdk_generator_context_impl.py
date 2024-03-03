@@ -34,9 +34,10 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             custom_config=custom_config,
             project_module_path=project_module_path,
         )
-        client_class_name = custom_config.client_class_name or (
+        client_class_name = custom_config.client_class_name or custom_config.client.class_name or (
             pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
         )
+        client_filename = custom_config.client_filename or custom_config.client.filename
         self._error_declaration_referencer = ErrorDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
@@ -49,9 +50,14 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
-        self._root_client_declaration_referencer = RootClientDeclarationReferencer(
-            root_class_name=client_class_name,
-            root_client_filename=custom_config.client_filename,
+        self._root_generated_client_declaration_referencer = RootClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+        self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
+            client_class_name=custom_config.client.exported_class_name or client_class_name,
+            client_filename=custom_config.client.exported_filename or client_filename,
             skip_resources_module=custom_config.improved_imports,
         )
         self._custom_config = custom_config
@@ -90,11 +96,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage)
 
-    def get_filepath_for_root_client(self) -> Filepath:
-        return self._root_client_declaration_referencer.get_filepath(name=None)
+    def get_filepath_for_generated_root_client(self) -> Filepath:
+        return self._root_generated_client_declaration_referencer.get_filepath(name=None)
 
-    def get_class_name_for_root_client(self) -> str:
-        return self._root_client_declaration_referencer.get_class_name(name=None)
+    def get_class_name_for_generated_root_client(self) -> str:
+        return self._root_generated_client_declaration_referencer.get_class_name(name=None)
+    
+    def get_filepath_for_exported_root_client(self) -> Filepath:
+        return self._root_exported_client_declaration_referencer.get_filepath(name=None)
+
+    def get_class_name_for_exported_root_client(self) -> str:
+        return self._root_exported_client_declaration_referencer.get_class_name(name=None)
 
     def get_filepath_for_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
         subpackage = self.ir.subpackages[subpackage_id]

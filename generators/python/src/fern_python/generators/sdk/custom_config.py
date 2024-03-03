@@ -1,4 +1,5 @@
 from typing import Dict, List, Literal, Optional, Union
+from httpx import Client
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
@@ -14,11 +15,24 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     require_optional_fields: bool = False
 
 
+class ClientConfiguration(pydantic.BaseModel): 
+    # The filename where the auto-generated client
+    # lives
+    filename: str = "client.py"
+    class_name: Optional[str] = None
+    # The filename of the exported client which
+    # will be used in code snippets
+    exported_filename: str = "client.py"
+    exported_class_name: Optional[str] = None
+    
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, str] = {}
     skip_formatting: bool = False
-    client_class_name: Optional[str] = None
-    client_filename: str = "client.py"
+    client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
@@ -29,6 +43,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directoy
     improved_imports: bool = False
+
+    # deprecated, use client config instead
+    client_class_name: Optional[str] = None
+    # deprecated, use client config instead
+    client_filename: Optional[str] = None
 
     class Config:
         extra = pydantic.Extra.forbid
