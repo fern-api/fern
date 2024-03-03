@@ -28,6 +28,7 @@ types:
       name: optional<string>
       optional: optional<boolean>
       env: optional<string>
+      schema: optional<Schema>
 
   Tags:
     properties:
