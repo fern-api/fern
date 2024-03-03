@@ -37,12 +37,13 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         client_class_name = custom_config.client_class_name or custom_config.client.class_name or (
             pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
         )
+        exported_client_class_name = custom_config.client.exported_class_name or client_class_name
         client_filename = custom_config.client_filename or custom_config.client.filename
         self._error_declaration_referencer = ErrorDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
-            client_class_name=client_class_name, skip_resources_module=custom_config.improved_imports
+            client_class_name=exported_client_class_name, skip_resources_module=custom_config.improved_imports
         )
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
@@ -56,7 +57,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             skip_resources_module=custom_config.improved_imports,
         )
         self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
-            client_class_name=custom_config.client.exported_class_name or client_class_name,
+            client_class_name=exported_client_class_name,
             client_filename=custom_config.client.exported_filename or client_filename,
             skip_resources_module=custom_config.improved_imports,
         )

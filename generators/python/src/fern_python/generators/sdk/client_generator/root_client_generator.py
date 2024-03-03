@@ -103,7 +103,7 @@ class RootClientGenerator:
                 self._context.get_filepath_for_exported_root_client().to_module().path
             ),
             class_name=self._context.get_class_name_for_exported_root_client(),
-            async_class_name="Asnyc" + exported_client_class_name,
+            async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._client_wrapper_constructor_params,
         )
         generated_root_client = builder.build()
