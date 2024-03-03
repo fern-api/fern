@@ -372,6 +372,7 @@ class EndpointFunctionGenerator:
                     reference_to_client=AST.Expression(
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
                     ),
+                    max_retries=AST.Expression(f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('max_retries') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else 0"),
                 )
             )
 
