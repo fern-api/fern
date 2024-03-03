@@ -23,10 +23,6 @@ jobs:
         id: filter
         with:
           filters: |
-            python: 
-              - 'docker/seed/Dockerfile.python'
-              - 'generators/python/poetry.lock'
-              - '.github/workflows/build-seed.yml'
             ts: 
               - 'docker/seed/Dockerfile.ts'
               - '.github/workflows/build-seed.yml'
