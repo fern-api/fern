@@ -1,8 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
+import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getEndpointLocation } from "./utils/getEndpointLocation";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 class HeaderWithCount {
@@ -30,11 +31,12 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             if (HEADERS_TO_IGNORE.has(header.name)) {
                 continue;
             }
+            const { file } = getEndpointLocation(endpoint);
             let headerWithCount = globalHeaders[header.name];
             if (headerWithCount == null) {
                 const convertedHeader = buildHeader({
                     header,
-                    fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                    fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
                     context
                 });
                 headerWithCount = new HeaderWithCount(convertedHeader);
