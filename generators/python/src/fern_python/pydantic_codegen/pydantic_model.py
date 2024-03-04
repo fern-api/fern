@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import re
 from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
