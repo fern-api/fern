@@ -19,7 +19,6 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
     """
 
     additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
-
     code: FunctionImplementationForMultipleLanguages
 
     def json(self, **kwargs: typing.Any) -> str:

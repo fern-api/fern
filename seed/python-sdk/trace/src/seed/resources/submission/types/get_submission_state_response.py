@@ -15,7 +15,6 @@ except ImportError:
 
 class GetSubmissionStateResponse(pydantic.BaseModel):
     time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted", default=None)
-
     submission: str
     language: Language
     submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")

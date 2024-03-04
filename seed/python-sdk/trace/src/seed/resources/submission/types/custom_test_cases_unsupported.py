@@ -15,7 +15,6 @@ except ImportError:
 
 class CustomTestCasesUnsupported(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
     def json(self, **kwargs: typing.Any) -> str:

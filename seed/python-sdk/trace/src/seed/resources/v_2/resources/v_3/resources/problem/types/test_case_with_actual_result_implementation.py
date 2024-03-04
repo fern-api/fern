@@ -15,7 +15,6 @@ except ImportError:
 
 class TestCaseWithActualResultImplementation(pydantic.BaseModel):
     get_actual_result: NonVoidFunctionDefinition = pydantic.Field(alias="getActualResult")
-
     assert_correctness_check: AssertCorrectnessCheck = pydantic.Field(alias="assertCorrectnessCheck")
 
     def json(self, **kwargs: typing.Any) -> str:

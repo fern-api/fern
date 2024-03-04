@@ -14,7 +14,6 @@ except ImportError:
 
 class VariableTypeAndName(pydantic.BaseModel):
     variable_type: VariableType = pydantic.Field(alias="variableType")
-
     name: str
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -15,11 +15,8 @@ except ImportError:
 
 class LightweightProblemInfoV2(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-
     problem_name: str = pydantic.Field(alias="problemName")
-
     problem_version: int = pydantic.Field(alias="problemVersion")
-
     variable_types: typing.List[VariableType] = pydantic.Field(alias="variableTypes")
 
     def json(self, **kwargs: typing.Any) -> str:

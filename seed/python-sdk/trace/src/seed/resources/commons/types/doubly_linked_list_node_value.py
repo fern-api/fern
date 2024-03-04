@@ -14,7 +14,6 @@ except ImportError:
 
 class DoublyLinkedListNodeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
-
     val: float
     next: typing.Optional[NodeId] = None
     prev: typing.Optional[NodeId] = None

@@ -15,7 +15,6 @@ except ImportError:
 
 class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
-
     full_list: DoublyLinkedListValue = pydantic.Field(alias="fullList")
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -14,7 +14,6 @@ except ImportError:
 
 class TestSubmissionUpdate(pydantic.BaseModel):
     update_time: dt.datetime = pydantic.Field(alias="updateTime")
-
     update_info: TestSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
 
     def json(self, **kwargs: typing.Any) -> str:

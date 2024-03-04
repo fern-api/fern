@@ -14,7 +14,6 @@ except ImportError:
 
 class InitializeProblemRequest(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-
     problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -15,7 +15,6 @@ except ImportError:
 
 class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
-
     full_list: SinglyLinkedListValue = pydantic.Field(alias="fullList")
 
     def json(self, **kwargs: typing.Any) -> str:

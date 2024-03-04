@@ -14,9 +14,7 @@ except ImportError:
 
 class RecordedResponseNotification(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
-
     test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:

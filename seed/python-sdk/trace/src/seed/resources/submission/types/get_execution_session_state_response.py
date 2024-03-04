@@ -15,7 +15,6 @@ except ImportError:
 class GetExecutionSessionStateResponse(pydantic.BaseModel):
     states: typing.Dict[str, ExecutionSessionState]
     num_warming_instances: typing.Optional[int] = pydantic.Field(alias="numWarmingInstances", default=None)
-
     warming_session_ids: typing.List[str] = pydantic.Field(alias="warmingSessionIds")
 
     def json(self, **kwargs: typing.Any) -> str:

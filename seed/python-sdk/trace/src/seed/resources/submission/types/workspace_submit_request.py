@@ -16,10 +16,8 @@ except ImportError:
 
 class WorkspaceSubmitRequest(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-
     language: Language
     submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
-
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:

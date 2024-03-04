@@ -15,7 +15,6 @@ except ImportError:
 
 class BuildingExecutorResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-
     status: ExecutionSessionStatus
 
     def json(self, **kwargs: typing.Any) -> str:

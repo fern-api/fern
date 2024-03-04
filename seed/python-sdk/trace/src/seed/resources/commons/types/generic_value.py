@@ -13,7 +13,6 @@ except ImportError:
 
 class GenericValue(pydantic.BaseModel):
     stringified_type: typing.Optional[str] = pydantic.Field(alias="stringifiedType", default=None)
-
     stringified_value: str = pydantic.Field(alias="stringifiedValue")
 
     def json(self, **kwargs: typing.Any) -> str:

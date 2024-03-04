@@ -16,7 +16,6 @@ except ImportError:
 
 class GradedResponseV2(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-
     test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
 
     def json(self, **kwargs: typing.Any) -> str:

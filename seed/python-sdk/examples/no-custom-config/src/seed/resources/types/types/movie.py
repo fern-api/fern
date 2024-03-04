@@ -32,7 +32,6 @@ class Movie(pydantic.BaseModel):
     prequel: typing.Optional[MovieId] = None
     title: str
     from_: str = pydantic.Field(alias="from")
-
     rating: float = pydantic.Field()
     """
     The rating scale is one to five stars

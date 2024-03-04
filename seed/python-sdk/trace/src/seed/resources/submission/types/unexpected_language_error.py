@@ -14,7 +14,6 @@ except ImportError:
 
 class UnexpectedLanguageError(pydantic.BaseModel):
     expected_language: Language = pydantic.Field(alias="expectedLanguage")
-
     actual_language: Language = pydantic.Field(alias="actualLanguage")
 
     def json(self, **kwargs: typing.Any) -> str:

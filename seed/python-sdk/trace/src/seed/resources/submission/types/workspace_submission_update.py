@@ -14,7 +14,6 @@ except ImportError:
 
 class WorkspaceSubmissionUpdate(pydantic.BaseModel):
     update_time: dt.datetime = pydantic.Field(alias="updateTime")
-
     update_info: WorkspaceSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
 
     def json(self, **kwargs: typing.Any) -> str:

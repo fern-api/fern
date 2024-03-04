@@ -14,9 +14,7 @@ except ImportError:
 
 class StackFrame(pydantic.BaseModel):
     method_name: str = pydantic.Field(alias="methodName")
-
     line_number: int = pydantic.Field(alias="lineNumber")
-
     scopes: typing.List[Scope]
 
     def json(self, **kwargs: typing.Any) -> str:

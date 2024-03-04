@@ -15,9 +15,7 @@ except ImportError:
 
 class GeneratedFiles(pydantic.BaseModel):
     generated_test_case_files: typing.Dict[Language, Files] = pydantic.Field(alias="generatedTestCaseFiles")
-
     generated_template_files: typing.Dict[Language, Files] = pydantic.Field(alias="generatedTemplateFiles")
-
     other: typing.Dict[Language, Files]
 
     def json(self, **kwargs: typing.Any) -> str:

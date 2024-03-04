@@ -15,7 +15,6 @@ except ImportError:
 
 class MapType(pydantic.BaseModel):
     key_type: VariableType = pydantic.Field(alias="keyType")
-
     value_type: VariableType = pydantic.Field(alias="valueType")
 
     def json(self, **kwargs: typing.Any) -> str:

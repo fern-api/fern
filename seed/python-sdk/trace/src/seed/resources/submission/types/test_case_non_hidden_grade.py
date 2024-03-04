@@ -16,7 +16,6 @@ except ImportError:
 class TestCaseNonHiddenGrade(pydantic.BaseModel):
     passed: bool
     actual_result: typing.Optional[VariableValue] = pydantic.Field(alias="actualResult", default=None)
-
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
