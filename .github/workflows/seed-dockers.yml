@@ -27,10 +27,10 @@ jobs:
           filters: |
             ts:
               - 'docker/seed/Dockerfile.ts'
-              - '.github/workflows/build-seed.yml'
+              - '.github/workflows/seed-dockers.yml'
             java:
               - 'docker/seed/Dockerfile.java'
-              - '.github/workflows/build-seed.yml'
+              - '.github/workflows/seed-dockers.yml'
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:
