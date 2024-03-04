@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.9] - 2024-03-02
+## [0.11.8-rc1] - 2024-03-02
 
-- Improvement: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests. This parameter will retry requests automatically, with exponential backoff and a jitter. The client will automatically retry requests of a 5XX status code, or certain 4XX codes (429, 408, 409).
+- Beta, Improvement: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests. This parameter will retry requests automatically, with exponential backoff and a jitter. The client will automatically retry requests of a 5XX status code, or certain 4XX codes (429, 408, 409).
 
   ```python
     client\

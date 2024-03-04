@@ -99,7 +99,7 @@ class HttpClient:
     @wraps(httpx.Client.stream)
     def stream(
         self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
-    ) -> _GeneratorContextManager[httpx.Response]:
+    ) -> typing.Any:
         return self.httpx_client.stream(*args, **kwargs)
 
 
@@ -122,5 +122,5 @@ class AsyncHttpClient:
     @wraps(httpx.AsyncClient.request)
     async def stream(
         self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
-    ) -> _AsyncGeneratorContextManager[httpx.Response]:
+    ) -> typing.Any:
         return self.httpx_client.stream(*args, **kwargs)
