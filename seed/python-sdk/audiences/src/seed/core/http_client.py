@@ -5,7 +5,6 @@ import email.utils
 import re
 import time
 import typing
-from contextlib import _AsyncGeneratorContextManager, _GeneratorContextManager
 from functools import wraps
 from random import random
 
