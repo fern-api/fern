@@ -41,6 +41,9 @@ on:
           - go-model
           - go-fiber
 
+env:
+  DOCKER_BUILDKIT: 1
+
 jobs:
   versions-changed:
     runs-on: ubuntu-latest
@@ -75,7 +78,7 @@ jobs:
             ruby-sdk: 'generators/ruby/sdk/VERSION'
             java-sdk: 'generators/java/sdk/VERSION'
             java-model: 'generators/java/model/VERSION'
-            spring: 'generators/java/spring/VERSION'   
+            spring: 'generators/java/spring/VERSION'
             ts-sdk: 'generators/typescript/sdk/VERSION'
             ts-express: 'generators/typescript/express/VERSION'
             go-sdk: 'generators/go/VERSION'
@@ -130,6 +133,8 @@ jobs:
           context: ./generators/python
           file: ./generators/python/pydantic/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-pydantic-model:${{env.VERSION}}
 
