@@ -20,14 +20,21 @@ except ImportError:
 
 class ProblemInfo(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
+
     problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
+
     problem_name: str = pydantic.Field(alias="problemName")
+
     problem_version: int = pydantic.Field(alias="problemVersion")
+
     files: typing.Dict[Language, ProblemFiles]
     input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
+
     output_type: VariableType = pydantic.Field(alias="outputType")
+
     testcases: typing.List[TestCaseWithExpectedResult]
     method_name: str = pydantic.Field(alias="methodName")
+
     supports_custom_test_cases: bool = pydantic.Field(alias="supportsCustomTestCases")
 
     def json(self, **kwargs: typing.Any) -> str:

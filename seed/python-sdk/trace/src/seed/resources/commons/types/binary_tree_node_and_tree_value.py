@@ -15,6 +15,7 @@ except ImportError:
 
 class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
+
     full_tree: BinaryTreeValue = pydantic.Field(alias="fullTree")
 
     def json(self, **kwargs: typing.Any) -> str:

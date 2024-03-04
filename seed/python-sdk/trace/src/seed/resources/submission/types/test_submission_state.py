@@ -16,8 +16,11 @@ except ImportError:
 
 class TestSubmissionState(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
+
     default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
+
     custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+
     status: TestSubmissionStatus
 
     def json(self, **kwargs: typing.Any) -> str:

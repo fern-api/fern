@@ -14,6 +14,7 @@ except ImportError:
 
 class GetBasicSolutionFileRequest(pydantic.BaseModel):
     method_name: str = pydantic.Field(alias="methodName")
+
     signature: NonVoidFunctionSignature
 
     def json(self, **kwargs: typing.Any) -> str:

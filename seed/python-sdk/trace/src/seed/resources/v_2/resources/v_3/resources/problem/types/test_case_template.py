@@ -15,6 +15,7 @@ except ImportError:
 
 class TestCaseTemplate(pydantic.BaseModel):
     template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
+
     name: str
     implementation: TestCaseImplementation
 

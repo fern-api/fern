@@ -14,6 +14,7 @@ except ImportError:
 
 class BinaryTreeNodeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
+
     val: float
     right: typing.Optional[NodeId] = None
     left: typing.Optional[NodeId] = None

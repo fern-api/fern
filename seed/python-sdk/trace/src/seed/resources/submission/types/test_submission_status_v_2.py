@@ -17,7 +17,9 @@ except ImportError:
 class TestSubmissionStatusV2(pydantic.BaseModel):
     updates: typing.List[TestSubmissionUpdate]
     problem_id: ProblemId = pydantic.Field(alias="problemId")
+
     problem_version: int = pydantic.Field(alias="problemVersion")
+
     problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
 
     def json(self, **kwargs: typing.Any) -> str:

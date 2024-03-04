@@ -15,6 +15,7 @@ except ImportError:
 
 class WorkspaceRunDetails(pydantic.BaseModel):
     exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 

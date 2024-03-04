@@ -15,6 +15,7 @@ except ImportError:
 
 class WorkspaceRanResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+
     run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
 
     def json(self, **kwargs: typing.Any) -> str:

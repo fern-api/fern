@@ -17,8 +17,10 @@ except ImportError:
 
 class BasicCustomFiles(pydantic.BaseModel):
     method_name: str = pydantic.Field(alias="methodName")
+
     signature: NonVoidFunctionSignature
     additional_files: typing.Dict[Language, Files] = pydantic.Field(alias="additionalFiles")
+
     basic_test_case_template: BasicTestCaseTemplate = pydantic.Field(alias="basicTestCaseTemplate")
 
     def json(self, **kwargs: typing.Any) -> str:

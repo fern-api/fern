@@ -19,10 +19,14 @@ except ImportError:
 
 class CreateProblemRequest(pydantic.BaseModel):
     problem_name: str = pydantic.Field(alias="problemName")
+
     problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
+
     files: typing.Dict[Language, ProblemFiles]
     input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
+
     output_type: VariableType = pydantic.Field(alias="outputType")
+
     testcases: typing.List[TestCaseWithExpectedResult]
     method_name: str = pydantic.Field(alias="methodName")
 

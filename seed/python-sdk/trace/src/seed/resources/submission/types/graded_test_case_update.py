@@ -15,6 +15,7 @@ except ImportError:
 
 class GradedTestCaseUpdate(pydantic.BaseModel):
     test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
+
     grade: TestCaseGrade
 
     def json(self, **kwargs: typing.Any) -> str:

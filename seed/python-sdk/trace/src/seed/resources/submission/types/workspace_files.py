@@ -14,6 +14,7 @@ except ImportError:
 
 class WorkspaceFiles(pydantic.BaseModel):
     main_file: FileInfo = pydantic.Field(alias="mainFile")
+
     read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
 
     def json(self, **kwargs: typing.Any) -> str:

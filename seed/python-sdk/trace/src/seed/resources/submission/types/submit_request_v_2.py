@@ -17,10 +17,14 @@ except ImportError:
 
 class SubmitRequestV2(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+
     language: Language
     submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
+
     problem_id: ProblemId = pydantic.Field(alias="problemId")
+
     problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
+
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:

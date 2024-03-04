@@ -15,7 +15,9 @@ except ImportError:
 
 class TestCaseResult(pydantic.BaseModel):
     expected_result: VariableValue = pydantic.Field(alias="expectedResult")
+
     actual_result: ActualResult = pydantic.Field(alias="actualResult")
+
     passed: bool
 
     def json(self, **kwargs: typing.Any) -> str:

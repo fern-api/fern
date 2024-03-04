@@ -15,6 +15,7 @@ except ImportError:
 
 class RunningResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+
     state: RunningSubmissionState
 
     def json(self, **kwargs: typing.Any) -> str:

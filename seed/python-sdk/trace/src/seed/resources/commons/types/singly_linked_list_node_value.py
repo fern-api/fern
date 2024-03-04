@@ -14,6 +14,7 @@ except ImportError:
 
 class SinglyLinkedListNodeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
+
     val: float
     next: typing.Optional[NodeId] = None
 

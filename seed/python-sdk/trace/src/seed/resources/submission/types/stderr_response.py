@@ -14,6 +14,7 @@ except ImportError:
 
 class StderrResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+
     stderr: str
 
     def json(self, **kwargs: typing.Any) -> str:

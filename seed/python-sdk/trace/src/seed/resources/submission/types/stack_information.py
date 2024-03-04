@@ -14,6 +14,7 @@ except ImportError:
 
 class StackInformation(pydantic.BaseModel):
     num_stack_frames: int = pydantic.Field(alias="numStackFrames")
+
     top_stack_frame: typing.Optional[StackFrame] = pydantic.Field(alias="topStackFrame", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:

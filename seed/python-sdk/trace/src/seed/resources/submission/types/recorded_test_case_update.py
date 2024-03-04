@@ -14,6 +14,7 @@ except ImportError:
 
 class RecordedTestCaseUpdate(pydantic.BaseModel):
     test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
+
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
     def json(self, **kwargs: typing.Any) -> str:

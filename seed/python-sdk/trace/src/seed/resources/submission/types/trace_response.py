@@ -17,9 +17,13 @@ except ImportError:
 
 class TraceResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+
     line_number: int = pydantic.Field(alias="lineNumber")
+
     return_value: typing.Optional[DebugVariableValue] = pydantic.Field(alias="returnValue", default=None)
+
     expression_location: typing.Optional[ExpressionLocation] = pydantic.Field(alias="expressionLocation", default=None)
+
     stack: StackInformation
     stdout: typing.Optional[str] = None
 

@@ -15,6 +15,7 @@ except ImportError:
 
 class Parameter(pydantic.BaseModel):
     parameter_id: ParameterId = pydantic.Field(alias="parameterId")
+
     name: str
     variable_type: VariableType = pydantic.Field(alias="variableType")
 
