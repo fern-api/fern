@@ -1,4 +1,4 @@
-export { FernIr as V36 } from "@fern-api/ir-sdk";
+export { FernIr as V37 } from "@fern-api/ir-sdk";
 export * as V1 from "@fern-fern/ir-v1-model";
 export * as V10 from "@fern-fern/ir-v10-model";
 export * as V11 from "@fern-fern/ir-v11-model";
@@ -28,6 +28,7 @@ export { FernIrV32 as V32 } from "@fern-fern/ir-v32-sdk";
 export { FernIrV33 as V33 } from "@fern-fern/ir-v33-sdk";
 export { FernIrV34 as V34 } from "@fern-fern/ir-v34-sdk";
 export { FernIrV35 as V35 } from "@fern-fern/ir-v35-sdk";
+export { FernIrV36 as V36 } from "@fern-fern/ir-v36-sdk";
 export * as V4 from "@fern-fern/ir-v4-model";
 export * as V5 from "@fern-fern/ir-v5-model";
 export * as V6 from "@fern-fern/ir-v6-model";

@@ -36,7 +36,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             idempotent: core.serialization.boolean(),
             pagination: core.serialization.lazy(async () => (await import("../../..")).Pagination).optional(),
             examples: core.serialization.list(
-                core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointCall)
+                core.serialization.lazy(async () => (await import("../../..")).HttpEndpointExample)
             ),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).Declaration));
@@ -61,6 +61,6 @@ export declare namespace HttpEndpoint {
         auth: boolean;
         idempotent: boolean;
         pagination?: serializers.Pagination.Raw | null;
-        examples: serializers.ExampleEndpointCall.Raw[];
+        examples: serializers.HttpEndpointExample.Raw[];
     }
 }

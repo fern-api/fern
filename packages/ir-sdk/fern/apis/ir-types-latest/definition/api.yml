@@ -1,3 +1,5 @@
 name: ir
 docs: |
- Adds support for header-specific environment variables.
+ Adds the concept of generated vs. provided examples. This allows us to be able to easily identify
+ which examples the user provided. Gives us flexibility in the future to run tests on either kind,
+ differentiate them in the UI, etc.

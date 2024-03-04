@@ -148,6 +148,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
           "errors": [],
           "examples": [
             {
+              "_visit": [Function],
               "codeSamples": undefined,
               "docs": undefined,
               "endpointHeaders": [],
@@ -188,6 +189,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   },
                 },
               ],
+              "exampleType": "userProvided",
               "name": undefined,
               "queryParameters": [
                 {
