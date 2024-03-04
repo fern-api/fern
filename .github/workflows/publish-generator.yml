@@ -186,6 +186,8 @@ jobs:
           context: ./generators/python
           file: ./generators/python/fastapi/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-fastapi-server:${{env.VERSION}}
 
@@ -237,6 +239,8 @@ jobs:
           context: ./generators/python
           file: ./generators/python/sdk/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-python-sdk:${{env.VERSION}}
 
@@ -293,6 +297,8 @@ jobs:
           context: ./generators/openapi
           file: ./generators/openapi/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-openapi:${{env.VERSION}}
 
@@ -349,6 +355,8 @@ jobs:
           context: ./generators/postman
           file: ./generators/postman/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-postman:${{env.VERSION}}
 
@@ -405,6 +413,8 @@ jobs:
           context: .
           file: ./generators/ruby/model/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-ruby-model:${{env.VERSION}}
 
@@ -461,6 +471,8 @@ jobs:
           context: .
           file: ./generators/ruby/sdk/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-ruby-sdk:${{env.VERSION}}
 
@@ -509,6 +521,8 @@ jobs:
           context: ./generators/java/sdk
           file: ./generators/java/sdk/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-java-sdk:${{env.VERSION}}
 
@@ -557,6 +571,8 @@ jobs:
           context: ./generators/java/model
           file: ./generators/java/model/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/java-model:${{env.VERSION}}
 
@@ -605,6 +621,8 @@ jobs:
           context: ./generators/java/spring
           file: ./generators/java/spring/Dockerfile
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-java-spring:${{env.VERSION}}
 
@@ -795,6 +813,8 @@ jobs:
           context: ./generators/go
           file: ./generators/go/docker/Dockerfile.sdk
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-go-sdk:${{env.VERSION}}
 
@@ -841,6 +861,8 @@ jobs:
           context: ./generators/go
           file: ./generators/go/docker/Dockerfile.model
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-go-model:${{env.VERSION}}
 
@@ -887,5 +909,7 @@ jobs:
           context: ./generators/go
           file: ./generators/go/docker/Dockerfile.fiber
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/fern-go-fiber:${{env.VERSION}}
