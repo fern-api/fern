@@ -3,7 +3,6 @@ import email.utils
 import re
 import time
 import typing
-from contextlib import _AsyncGeneratorContextManager, _GeneratorContextManager
 from functools import wraps
 from random import random
 
@@ -97,9 +96,7 @@ class HttpClient:
         return response
 
     @wraps(httpx.Client.stream)
-    def stream(
-        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
-    ) -> typing.Any:
+    def stream(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> typing.Any:
         return self.httpx_client.stream(*args, **kwargs)
 
 
