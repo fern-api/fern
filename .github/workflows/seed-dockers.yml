@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  DOCKER_BUILDKIT: 1
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -22,12 +25,12 @@ jobs:
         id: filter
         with:
           filters: |
-            ts: 
+            ts:
               - 'docker/seed/Dockerfile.ts'
-              - '.github/workflows/build-seed.yml'
-            java: 
+              - '.github/workflows/seed-dockers.yml'
+            java:
               - 'docker/seed/Dockerfile.java'
-              - '.github/workflows/build-seed.yml'
+              - '.github/workflows/seed-dockers.yml'
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:
@@ -66,6 +69,8 @@ jobs:
           context: .
           file: ./docker/seed/Dockerfile.${{ matrix.package }}
           platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}
