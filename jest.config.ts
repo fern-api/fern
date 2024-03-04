@@ -3,7 +3,9 @@ import defaultConfig from "./shared/jest.config.shared";
 
 export default async (): Promise<Config> => {
     return {
-        ...defaultConfig
+        ...defaultConfig,
+        // These tests have not been migrated from Jest to Vitest yet
+        testMatch: ["**/ir-generator/**/__test__/**/*.test.ts{,x}", "**/yaml-migrations/**/__test__/**/*.test.ts{,x}"]
         // if there are no packages, then jest will run all tests by default.
         // so in that case, change the test match to a dummy path that doesn't
         // match anything.

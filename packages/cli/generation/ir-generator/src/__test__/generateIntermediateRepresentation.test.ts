@@ -1,3 +1,4 @@
+/// <reference types="jest-specific-snapshot" />
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadApis } from "@fern-api/project-loader";
