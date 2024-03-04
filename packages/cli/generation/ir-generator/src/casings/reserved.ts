@@ -161,7 +161,8 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "int",
         "complex",
         // the following aren't actually reserved, but we treat them as unavailable
-        "self"
+        "self",
+        "all"
     ]),
     [GenerationLanguage.GO]: new Set([
         // Keywords - these are not allowed. https://go.dev/ref/spec#Keywords

@@ -32,7 +32,11 @@ class Movie(pydantic.BaseModel):
     prequel: typing.Optional[MovieId] = None
     title: str
     from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field(description="The rating scale is one to five stars")
+    rating: float = pydantic.Field()
+    """
+    The rating scale is one to five stars
+    """
+
     type: typing.Literal["movie"]
     tag: Tag
     book: typing.Optional[str] = None
