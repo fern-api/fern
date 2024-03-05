@@ -1381,7 +1381,7 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 }
 
 // zeroValueForTypeReference returns the zero value for the given type reference.
-func zeroValueForTypeReference(typeReference *fernir.TypeReference) string {
+func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
 		switch typeReference.Container.Literal.Type {
 		case "string":
@@ -1392,6 +1392,15 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference) string {
 	}
 	if typeReference.Primitive != "" {
 		return zeroValueForPrimitive(typeReference.Primitive)
+	}
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return zeroValueForTypeReference(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		if typeDeclaration.Shape.Enum != nil {
+			return `""`
+		}
 	}
 	return "nil"
 }

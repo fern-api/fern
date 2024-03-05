@@ -252,7 +252,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	f.P("func (i *IdempotentRequestOptions) ToHeader() http.Header {")
 	f.P("header := i.RequestOptions.ToHeader()")
 	for _, header := range idempotencyHeaders {
-		valueTypeFormat := formatForValueType(header.ValueType)
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "i." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		f.P("if i.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, valueTypeFormat.Prefix, `%v",`, value, "))")
@@ -380,7 +380,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, literalToValue(header.ValueType.Container.Literal), "))")
 				continue
 			}
-			valueTypeFormat := formatForValueType(header.ValueType)
+			valueTypeFormat := formatForValueType(header.ValueType, f.types)
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 			if valueTypeFormat.IsOptional {
 				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
@@ -396,7 +396,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v",`, literalToValue(header.ValueType.Container.Literal), "))")
 			continue
 		}
-		valueTypeFormat := formatForValueType(header.ValueType)
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsOptional {
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
@@ -914,7 +914,7 @@ func (f *fileWriter) WriteClient(
 		if len(endpoint.Headers) > 0 {
 			// Add endpoint-specific headers from the request, if any.
 			for _, header := range endpoint.Headers {
-				valueTypeFormat := formatForValueType(header.ValueType)
+				valueTypeFormat := formatForValueType(header.ValueType, f.types)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
@@ -1065,7 +1065,7 @@ func (f *fileWriter) WriteClient(
 					f.P("}")
 					continue
 				}
-				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType)
+				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType, f.types)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 
 				// Encapsulate the multipart form WriteField in a closure so that we can easily
@@ -2523,7 +2523,7 @@ type valueTypeFormat struct {
 	IsPrimitive bool
 }
 
-func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
+func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
 	var (
 		prefix      string
 		suffix      string
@@ -2557,7 +2557,7 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	return &valueTypeFormat{
 		Prefix:      prefix,
 		Suffix:      suffix,
-		ZeroValue:   zeroValueForTypeReference(typeReference),
+		ZeroValue:   zeroValueForTypeReference(typeReference, types),
 		IsOptional:  isOptional,
 		IsPrimitive: isPrimitive,
 	}

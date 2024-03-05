@@ -422,7 +422,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		zeroValue := "nil"
 		if unionType.Shape.PropertiesType == "singleProperty" {
-			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type)
+			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
 		}
 		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if isLiteral {
@@ -535,7 +535,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		zeroValue := "nil"
 		if unionType.Shape.PropertiesType == "singleProperty" {
-			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type)
+			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
 		}
 		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if isLiteral {
@@ -634,7 +634,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				variable:                     fmt.Sprintf("value%s", strings.Title(field)),
 				caseName:                     firstLetterToLower(field),
 				value:                        typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-				zeroValue:                    zeroValueForTypeReference(unionMember.Type),
+				zeroValue:                    zeroValueForTypeReference(unionMember.Type, t.writer.types),
 				docs:                         unionMember.Docs,
 				literal:                      literal,
 				isLiteral:                    isLiteral,
