@@ -1,6 +1,8 @@
 instances:
   - url: fern.docs.buildwithfern.com
 
+title: Fern | Documentation
+
 tabs:
   overview:
     display-name: Overview
@@ -71,31 +73,32 @@ navigation:
           - page: Overview
             path: ./docs/pages/overview/cli/cli-overview.mdx
           - section: CLI commands
+            slug: commands
             contents:
               - page: fern generate
-                path: ./docs/pages/overview/cli/cli-commands/fern-generate.mdx
+                path: ./docs/pages/overview/cli/commands/fern-generate.mdx
               - page: fern check
-                path: ./docs/pages/overview/cli/cli-commands/fern-check.mdx
+                path: ./docs/pages/overview/cli/commands/fern-check.mdx
               - page: fern add
-                path: ./docs/pages/overview/cli/cli-commands/fern-add.mdx
+                path: ./docs/pages/overview/cli/commands/fern-add.mdx
               - page: fern init
-                path: ./docs/pages/overview/cli/cli-commands/fern-init.mdx
+                path: ./docs/pages/overview/cli/commands/fern-init.mdx
               - page: fern write-definition
-                path: ./docs/pages/overview/cli/cli-commands/fern-write-definition.mdx
+                path: ./docs/pages/overview/cli/commands/fern-write-definition.mdx
               - page: fern upgrade
-                path: ./docs/pages/overview/cli/cli-commands/fern-upgrade.mdx
+                path: ./docs/pages/overview/cli/commands/fern-upgrade.mdx
               - page: fern token
-                path: ./docs/pages/overview/cli/cli-commands/fern-token.mdx
+                path: ./docs/pages/overview/cli/commands/fern-token.mdx
               - page: fern login
-                path: ./docs/pages/overview/cli/cli-commands/fern-login.mdx
+                path: ./docs/pages/overview/cli/commands/fern-login.mdx
               - page: fern register
-                path: ./docs/pages/overview/cli/cli-commands/fern-register.mdx
+                path: ./docs/pages/overview/cli/commands/fern-register.mdx
               - page: fern format
-                path: ./docs/pages/overview/cli/cli-commands/fern-format.mdx
+                path: ./docs/pages/overview/cli/commands/fern-format.mdx
               - page: fern help
-                path: ./docs/pages/overview/cli/cli-commands/fern-help.mdx
+                path: ./docs/pages/overview/cli/commands/fern-help.mdx
               - page: fern version
-                path: ./docs/pages/overview/cli/cli-commands/fern-version.mdx
+                path: ./docs/pages/overview/cli/commands/fern-version.mdx
       - section: Changelog
         contents:
           - page: December 2023
@@ -122,6 +125,7 @@ navigation:
             slug: typescript
           - page: TypeScript Browser SDK
             path: ./docs/pages/fern-sdks/sdk-generators/browser-sdk.mdx
+            slug: browser
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
             slug: python

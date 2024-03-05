@@ -1,4 +1,9 @@
-[Source code](https://github.com/fern-api/fern/tree/main/generators/python)<br />
+---
+title: The Express.js server-side generator
+description: Use Fern's Express.js server-side generator to generate types and networking logic for your back end.
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/typescript/express)<br />
 [A starter repo for Express + React, using Fern](https://github.com/fern-api/express-starter/)
 
 **Latest version**: `0.9.7`
@@ -17,9 +22,13 @@ Available on the open source plan.
 ## Adding the Express generator
 
 <CodeBlock title='generators.yml'>
-  ```yaml - name: fernapi/fern-typescript-express version: 0.9.7 output: location:
-  local-file-system path: ../generated/server-boilerplate/express
-  ```
+```yaml
+- name: fernapi/fern-typescript-express
+  version: 0.9.7
+  output: 
+    location: local-file-system
+    path: ../src/fern
+```
 </CodeBlock>
 
 <Callout intent='warn'>
@@ -52,21 +61,21 @@ The following options are supported when generating an Express backend:
 
 ### `useBrandedStringAliases`
 
-See TypeScript Node.js SDK Configuration options: [useBrandedStringAliases](/fern-sd-ks/sdk-generators/type-script-node-js-sdk#usebrandedstringaliases).
+See TypeScript Node.js SDK Configuration options: [useBrandedStringAliases](/fern-sd-ks/sdk-generators/typescript#usebrandedstringaliases).
 
-#### `treatUnknownAsAny`
+### `treatUnknownAsAny`
 
-See TypeScript Node.js SDK Configuration options: [treatUnknownAsAny](/fern-sd-ks/sdk-generators/type-script-node-js-sdk#treatunknownasany).
+See TypeScript Node.js SDK Configuration options: [treatUnknownAsAny](/fern-sd-ks/sdk-generators/typescript#treatunknownasany).
 
-#### `noSerdeLayer`
+### `noSerdeLayer`
 
-See TypeScript Node.js SDK Configuration options: [noSerdeLayer](/fern-sd-ks/sdk-generators/type-script-node-js-sdk#noserdelayer).
+See TypeScript Node.js SDK Configuration options: [noSerdeLayer](/fern-sd-ks/sdk-generators/typescript#noserdelayer).
 
-#### `outputSourceFiles`
+### `outputSourceFiles`
 
-See TypeScript Node.js SDK Configuration options: [outputSourceFiles](/fern-sd-ks/sdk-generators/type-script-node-js-sdk#outputsourcefiles).
+See TypeScript Node.js SDK Configuration options: [outputSourceFiles](/fern-sd-ks/sdk-generators/typescript#outputsourcefiles).
 
-#### `areImplementationsOptional`
+### `areImplementationsOptional`
 
 **Type:** boolean
 **Default:** `false`
