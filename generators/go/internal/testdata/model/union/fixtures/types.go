@@ -126,7 +126,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Foo  *Foo   `json:"foo,omitempty"`
 		}{
-			Type: u.Type,
+			Type: "foo",
 			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
@@ -135,7 +135,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Bar  *Bar   `json:"bar,omitempty"`
 		}{
-			Type: u.Type,
+			Type: "bar",
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
@@ -211,7 +211,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			Foo  *Foo   `json:"foo,omitempty"`
 		}{
-			Type: u.Type,
+			Type: "foo",
 			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
@@ -220,7 +220,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			Bar  *Bar   `json:"bar,omitempty"`
 		}{
-			Type: u.Type,
+			Type: "bar",
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
@@ -294,7 +294,7 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 			Base     string `json:"base"`
 			Fern     string `json:"value,omitempty"`
 		}{
-			Type:     u.Type,
+			Type:     "fern",
 			Extended: "extended",
 			Base:     "base",
 			Fern:     "fern",
@@ -368,7 +368,7 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 			Type string     `json:"type"`
 			Date *core.Date `json:"value,omitempty" format:"date"`
 		}{
-			Type: u.Type,
+			Type: "date",
 			Date: core.NewOptionalDate(u.Date),
 		}
 		return json.Marshal(marshaler)
@@ -377,7 +377,7 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 			Type     string         `json:"type"`
 			Dateimte *core.DateTime `json:"value,omitempty"`
 		}{
-			Type:     u.Type,
+			Type:     "dateimte",
 			Dateimte: core.NewOptionalDateTime(u.Dateimte),
 		}
 		return json.Marshal(marshaler)
@@ -452,7 +452,7 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Boolean bool   `json:"value"`
 		}{
-			Type:    u.Type,
+			Type:    "boolean",
 			Boolean: u.Boolean,
 		}
 		return json.Marshal(marshaler)
@@ -461,7 +461,7 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"value"`
 		}{
-			Type:   u.Type,
+			Type:   "string",
 			String: u.String,
 		}
 		return json.Marshal(marshaler)
@@ -549,7 +549,7 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 			Type  string `json:"type"`
 			Value int    `json:"value"`
 		}{
-			Type:  u.Type,
+			Type:  "value",
 			Value: u.Value,
 		}
 		return json.Marshal(marshaler)
@@ -558,7 +558,7 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 			Type string     `json:"type"`
 			Date *core.Date `json:"value" format:"date"`
 		}{
-			Type: u.Type,
+			Type: "date",
 			Date: core.NewDate(u.Date),
 		}
 		return json.Marshal(marshaler)
@@ -567,7 +567,7 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 			Type     string         `json:"type"`
 			Datetime *core.DateTime `json:"value"`
 		}{
-			Type:     u.Type,
+			Type:     "datetime",
 			Datetime: core.NewDateTime(u.Datetime),
 		}
 		return json.Marshal(marshaler)
@@ -641,7 +641,7 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Foo
 		}{
-			Type: u.Type,
+			Type: "foo",
 			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
@@ -650,7 +650,7 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 			Type    string      `json:"type"`
 			Unknown interface{} `json:"unknown,omitempty"`
 		}{
-			Type:    u.Type,
+			Type:    "unknown",
 			Unknown: u.Unknown,
 		}
 		return json.Marshal(marshaler)
@@ -722,7 +722,7 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Foo
 		}{
-			Type: u.Type,
+			Type: "foo",
 			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
@@ -731,7 +731,7 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Bar
 		}{
-			Type: u.Type,
+			Type: "bar",
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)

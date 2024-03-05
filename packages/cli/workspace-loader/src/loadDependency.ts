@@ -7,7 +7,6 @@ import {
     VersionedDependency
 } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
@@ -74,7 +73,6 @@ export async function loadDependency({
                     case "version":
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
-                            rootApiFile,
                             dependency,
                             cliVersion
                         });
@@ -82,7 +80,6 @@ export async function loadDependency({
                     case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
-                            rootApiFile,
                             dependency,
                             cliVersion
                         });
@@ -104,12 +101,10 @@ export async function loadDependency({
 async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
-    rootApiFile,
     cliVersion
 }: {
     dependency: LocalApiDependency;
     context: TaskContext;
-    rootApiFile: RootApiFileSchema;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
     // parse workspace
@@ -130,29 +125,16 @@ async function validateLocalDependencyAndGetDefinition({
             ? loadDependencyWorkspaceResult.workspace
             : await convertOpenApiWorkspaceToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
 
-    // ensure root api files are equivalent
-    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!equal) {
-        context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                ", "
-            )}]`
-        );
-        return undefined;
-    }
-
     return workspaceOfDependency.definition;
 }
 
 async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
-    rootApiFile,
     cliVersion
 }: {
     dependency: VersionedDependency;
     context: TaskContext;
-    rootApiFile: RootApiFileSchema;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
     // load API
@@ -244,27 +226,6 @@ async function validateVersionedDependencyAndGetDefinition({
     if (workspaceOfDependency.type === "openapi") {
         context.failWithoutThrowing("Dependency must be a fern workspace.");
         return undefined;
-    }
-
-    const hasEndpoints =
-        Object.values(workspaceOfDependency.definition.namedDefinitionFiles).filter((file) => {
-            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
-        }).length > 0 ||
-        Object.values(workspaceOfDependency.definition.packageMarkers).filter((file) => {
-            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
-        }).length > 0;
-
-    // ensure root api files are equivalent
-    if (hasEndpoints) {
-        const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-        if (!equal) {
-            context.failWithoutThrowing(
-                `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                    ", "
-                )}]`
-            );
-            return undefined;
-        }
     }
 
     return workspaceOfDependency.definition;
