@@ -5,9 +5,10 @@
       "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
     },
     "compile": {
-      // In future we may want do use turbo's dependency resolution
-      // but currently we use tsconfig build references.
-      // "dependsOn": ["^build", "^compile"],
+      // Depend on dependencies' compile steps
+      // We also compile dependencies' based on tsconfig project references
+      // We should skip this and just use turborepo for fine-grained caching
+      "dependsOn": ["^compile"],
       "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
     },
     "test": {
