@@ -43,6 +43,8 @@ on:
 
 env:
   DOCKER_BUILDKIT: 1
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
 
 jobs:
   versions-changed:

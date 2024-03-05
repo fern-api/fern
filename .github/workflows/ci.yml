@@ -22,7 +22,7 @@ concurrency:
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TUBO_TEAM: "fern"
+  TURBO_TEAM: "buildwithfern"
 
 jobs:
   lint:
