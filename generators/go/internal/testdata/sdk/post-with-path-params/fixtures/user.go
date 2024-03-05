@@ -220,7 +220,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Foo
 		}{
-			Type: u.Type,
+			Type: "foo",
 			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
@@ -229,7 +229,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Bar
 		}{
-			Type: u.Type,
+			Type: "bar",
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)

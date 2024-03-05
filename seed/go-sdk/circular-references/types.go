@@ -147,7 +147,7 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 			Type string        `json:"type"`
 			List []*FieldValue `json:"value,omitempty"`
 		}{
-			Type: c.Type,
+			Type: "list",
 			List: c.List,
 		}
 		return json.Marshal(marshaler)
@@ -156,7 +156,7 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 			Type     string      `json:"type"`
 			Optional *FieldValue `json:"value,omitempty"`
 		}{
-			Type:     c.Type,
+			Type:     "optional",
 			Optional: c.Optional,
 		}
 		return json.Marshal(marshaler)
@@ -242,7 +242,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 			Type           string         `json:"type"`
 			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
 		}{
-			Type:           f.Type,
+			Type:           "primitive_value",
 			PrimitiveValue: f.PrimitiveValue,
 		}
 		return json.Marshal(marshaler)
@@ -251,7 +251,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ObjectValue
 		}{
-			Type:        f.Type,
+			Type:        "object_value",
 			ObjectValue: f.ObjectValue,
 		}
 		return json.Marshal(marshaler)
@@ -260,7 +260,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 			Type           string          `json:"type"`
 			ContainerValue *ContainerValue `json:"value,omitempty"`
 		}{
-			Type:           f.Type,
+			Type:           "container_value",
 			ContainerValue: f.ContainerValue,
 		}
 		return json.Marshal(marshaler)

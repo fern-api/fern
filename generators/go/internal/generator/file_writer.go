@@ -32,6 +32,7 @@ type fileWriter struct {
 	packageName    string
 	baseImportPath string
 	whitelabel     bool
+	unionVersion   UnionVersion
 	scope          *gospec.Scope
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
@@ -46,6 +47,7 @@ func newFileWriter(
 	packageName string,
 	baseImportPath string,
 	whitelabel bool,
+	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 	coordinator *coordinator.Client,
@@ -82,11 +84,12 @@ func newFileWriter(
 		packageName:    packageName,
 		baseImportPath: baseImportPath,
 		whitelabel:     whitelabel,
+		unionVersion:   unionVersion,
 		scope:          scope,
 		types:          types,
 		errors:         errors,
 		coordinator:    coordinator,
-		snippetWriter:  NewSnippetWriter(baseImportPath, types),
+		snippetWriter:  NewSnippetWriter(baseImportPath, unionVersion, types),
 		buffer:         new(bytes.Buffer),
 	}
 }
@@ -102,7 +105,7 @@ func (f *fileWriter) P(elements ...any) {
 // File formats and writes the content stored in the writer's buffer into a *File.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
-	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.whitelabel, f.types, f.errors, f.coordinator)
+	header := f.clone()
 	if f.whitelabel {
 		header.P(whitelabelFileHeader)
 	} else {
@@ -145,6 +148,20 @@ func (f *fileWriter) WriteDocs(docs *string) {
 // WriteRaw writes the raw string into the file.
 func (f *fileWriter) WriteRaw(s string) {
 	fmt.Fprint(f.buffer, s)
+}
+
+// clone returns a clone of this fileWriter.
+func (f *fileWriter) clone() *fileWriter {
+	return newFileWriter(
+		f.filename,
+		f.packageName,
+		f.baseImportPath,
+		f.whitelabel,
+		f.unionVersion,
+		f.types,
+		f.errors,
+		f.coordinator,
+	)
 }
 
 // removeUnusedImports parses the buffer, interpreting it as Go code,

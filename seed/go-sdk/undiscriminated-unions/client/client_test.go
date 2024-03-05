@@ -3,8 +3,8 @@
 package client
 
 import (
+	option "github.com/fern-api/undiscriminated-go/option"
 	assert "github.com/stretchr/testify/assert"
-	option "github.com/undiscriminated-unions/fern/option"
 	http "net/http"
 	testing "testing"
 	time "time"

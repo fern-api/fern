@@ -1,0 +1,82 @@
+{
+  "info": {
+    "name": "Unions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Union",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": null
+                }
+              ]
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Update",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
