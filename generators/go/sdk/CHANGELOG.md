@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.18.0 - 2024-03-04]
 
 - Feature: Add support for simpler unions, which is configurable with `union: v1` (if
-  omitted, the default `v0` version will be used). With `v0`, we would generate a separate
-  constructor for each variant of the union, but using these constructors became
-  cumbersome for production APIs due to the sheer length of the function name. This
-  improves the experience by simply setting the discriminant at runtime, which prevents
-  the need for constructors entirely.
+  omitted, the default `v0` version will be used). With `v0`, a separate constructor for
+  each variant of the union was generated, but using these constructors is cumbersome for
+  large production APIs due to the sheer length of the function name. This improves the
+  experience by simply setting the discriminant at runtime, which prevents the need for
+  constructors entirely.
 
 ```yaml
 - name: fernapi/fern-go-sdk

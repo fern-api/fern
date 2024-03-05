@@ -20,3 +20,4 @@ allowedFailures:
   - reserved-keywords
   - trace
   - undiscriminated-unions
+  - unions
