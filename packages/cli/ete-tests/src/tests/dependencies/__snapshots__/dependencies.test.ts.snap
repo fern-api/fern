@@ -420,7 +420,26 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "sdkRequest": null,
                     "response": null,
                     "errors": [],
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "pagination": null,
                     "availability": null,
                     "docs": null
@@ -771,4 +790,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `1412752`;
+exports[`dependencies file dependencies 1`] = `2592791`;

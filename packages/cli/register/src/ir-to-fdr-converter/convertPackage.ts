@@ -93,7 +93,9 @@ function convertService(
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: convertResponseErrors(irEndpoint.errors, ir),
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
-            examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir))
+            examples: irEndpoint.examples
+                .filter((example) => example.exampleType === "userProvided")
+                .map((example) => convertHttpEndpointExample(example, ir))
         })
     );
 }
