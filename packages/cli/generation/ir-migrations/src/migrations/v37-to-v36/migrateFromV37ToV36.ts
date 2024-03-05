@@ -41,7 +41,20 @@ export const V37_TO_V36_MIGRATION: IrMigration<
         }),
     migrateBackwards: (V37, _context): IrVersions.V36.ir.IntermediateRepresentation => {
         return {
-            ...V37
+            ...V37,
+            services: Object.fromEntries(
+                Object.entries(V37.services).map(([id, service]) => [
+                    id,
+                    {
+                        ...service,
+                        // When migrating, just nix the generated examples
+                        endpoints: service.endpoints.map((endpoint) => ({
+                            ...endpoint,
+                            examples: endpoint.examples.filter((example) => example.exampleType == "userProvided")
+                        }))
+                    }
+                ])
+            )
         };
     }
 };

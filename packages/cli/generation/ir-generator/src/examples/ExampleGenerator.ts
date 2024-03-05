@@ -49,7 +49,7 @@ export class ExampleGenerator {
     // Typing is a convenience to match the typing within generateIntermediateRepresentation.ts
     ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
     private endpointExamples: Map<HttpEndpoint, HttpEndpointExample[]>;
-    private typeExamples: Map<TypeId, ExampleTypeReference>;
+    private typeExamples: Map<TypeId, ExampleType>;
     private types: Map<TypeId, TypeDeclaration>;
     private MAX_EXAMPLE_DEPTH = 2;
     public flattenedProperties: Map<TypeId, ExampleObjectProperty[]>;
@@ -66,7 +66,29 @@ export class ExampleGenerator {
         for (const typeId of this.types.keys()) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
+
+        // Visit each type, if there's an example, complete it and stash it
+        this.typeExamples = new Map();
+        for (const [typeId, type] of Object.entries(this.ir.types)) {
+            const examples = type.examples;
+
+            // Get the most fleshed out example
+            const example =
+                examples.length > 0 ? examples.sort((example) => this.numPropertiesStubbed(example))[0] : null;
+            // Fill in the rest of the example if needed
+
+            if (example !== null) {
+                this.typeExamples.set(typeId, example);
+            }
+        }
+        // Visit each endpoint, if there's an example, complete it, if not make one from scratch
     }
+
+    private numPropertiesStubbed(exampleType: ExampleType): number {
+        return exampleType.shape._visit<number>({});
+    }
+
+    private completeExample(exampleType: ExampleType) {}
 
     private convertPropertyToExampleProperty(
         originalType: DeclaredTypeName,

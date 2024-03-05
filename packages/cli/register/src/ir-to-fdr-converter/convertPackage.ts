@@ -465,8 +465,8 @@ function convertResponseErrorsV2(
     return errors;
 }
 
-function convertExampleEndpointCall(
-    irExample: Ir.http.ExampleEndpointCall,
+function convertHttpEndpointExample(
+    irExample: Ir.http.HttpEndpointExample,
     ir: Ir.ir.IntermediateRepresentation
 ): WithoutQuestionMarks<APIV1Write.ExampleEndpointCall> {
     return {
