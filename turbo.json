@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      // Depends on our dependencies' build/compile steps
+      "dependsOn": ["^build", "^compile"],
+      "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
+    },
+    "compile": {
+      // Depends on our dependencies' build/compile steps
+      "dependsOn": ["^build", "^compile"],
+      "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
+    },
+    "test": {
+      // Depends on our own build/compile steps
+      "dependsOn": ["build", "compile"],
+      "outputs": ["coverage/**"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "typecheck": {},
+    "lint:style": {},
+    "lint:eslint": {},
+    "format": {},
+    "format:fix": {},
+    "dist:cli": {
+      "dependsOn": ["compile"],
+      "outputs": ["dist/bundle.cjs"]
+    },
+    "format:check": {
+      "cache": false
+    },
+    "depcheck": {}
+  },
+  "globalDependencies": [".eslintrc.js"]
+}

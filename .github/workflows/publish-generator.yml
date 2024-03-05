@@ -270,7 +270,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/openapi
-        run: yarn dist:cli
+        run: yarn turbo dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'openapi' }}
@@ -328,7 +328,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/postman
-        run: yarn dist:cli
+        run: yarn turbo dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'postman' }}
@@ -386,7 +386,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/ruby/model
-        run: yarn dist:cli
+        run: yarn turbo dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'ruby-model' }}
@@ -444,7 +444,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/ruby/sdk
-        run: yarn dist:cli
+        run: yarn turbo dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'ruby-sdk' }}

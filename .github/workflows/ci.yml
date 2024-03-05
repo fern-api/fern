@@ -20,12 +20,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TUBO_TEAM: "fern"
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:
@@ -59,6 +65,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:
@@ -76,6 +84,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:
@@ -96,6 +106,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:
@@ -121,6 +133,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:
@@ -146,6 +160,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # so turbo can easily infer changes
 
       - uses: actions/setup-node@v3
         with:

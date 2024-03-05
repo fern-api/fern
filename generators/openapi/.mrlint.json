@@ -20,8 +20,8 @@
     },
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:latest .",
-        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
+        "dockerTagLatest": "turbo dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:latest .",
+        "dockerTagVersion": "turbo dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
       }
     }
   }
