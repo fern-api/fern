@@ -2,13 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      // Depends on our dependencies' build/compile steps
-      "dependsOn": ["^build", "^compile"],
       "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
     },
     "compile": {
-      // Depends on our dependencies' build/compile steps
-      "dependsOn": ["^build", "^compile"],
+      // In future we may want do use turbo's dependency resolution
+      // but currently we use tsconfig build references.
+      // "dependsOn": ["^build", "^compile"],
       "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
     },
     "test": {
