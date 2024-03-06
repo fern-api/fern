@@ -10,13 +10,33 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
     serializers.ColorsConfiguration.Raw,
     FernDocsConfig.ColorsConfiguration
 > = core.serialization.object({
-    accentPrimary: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
+    accentPrimary: core.serialization.property(
+        "accent-primary",
+        core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    ),
     background: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
+    borders: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
+    sidebarBackground: core.serialization.property(
+        "sidebar-background",
+        core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    ),
+    headerBackground: core.serialization.property(
+        "header-background",
+        core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    ),
+    cardBackground: core.serialization.property(
+        "card-background",
+        core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    ),
 });
 
 export declare namespace ColorsConfiguration {
     interface Raw {
-        accentPrimary?: serializers.ColorConfig.Raw | null;
+        "accent-primary"?: serializers.ColorConfig.Raw | null;
         background?: serializers.ColorConfig.Raw | null;
+        borders?: serializers.ColorConfig.Raw | null;
+        "sidebar-background"?: serializers.ColorConfig.Raw | null;
+        "header-background"?: serializers.ColorConfig.Raw | null;
+        "card-background"?: serializers.ColorConfig.Raw | null;
     }
 }
