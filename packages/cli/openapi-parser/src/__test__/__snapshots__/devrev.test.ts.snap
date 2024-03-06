@@ -6373,7 +6373,7 @@ organizations.
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "artifacts-locate-response",

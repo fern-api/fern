@@ -175,7 +175,37 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": "GET request with custom api key",
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": "string",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/apiKey",
+            },
+          ],
           "fullPath": {
             "head": "apiKey",
             "parts": [],
@@ -232,7 +262,74 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": "GET request with custom api key",
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "xEndpointHeader",
+                        "unsafeName": "xEndpointHeader",
+                      },
+                      "originalName": "X-Endpoint-Header",
+                      "pascalCase": {
+                        "safeName": "XEndpointHeader",
+                        "unsafeName": "XEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "X_ENDPOINT_HEADER",
+                        "unsafeName": "X_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "x_endpoint_header",
+                        "unsafeName": "x_endpoint_header",
+                      },
+                    },
+                    "wireValue": "X-Endpoint-Header",
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": "string",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "string",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/apiKeyInHeader",
+            },
+          ],
           "fullPath": {
             "head": "apiKeyInHeader",
             "parts": [],
