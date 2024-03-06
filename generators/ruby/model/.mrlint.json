@@ -19,8 +19,8 @@
     },
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:latest ../../..",
-        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:${0} ../../.."
+        "dockerTagLatest": "turbo dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:latest ../../..",
+        "dockerTagVersion": "turbo dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:${0} ../../.."
       }
     }
   },

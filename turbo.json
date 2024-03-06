@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
+    },
+    "compile": {
+      // Depend on dependencies' compile steps
+      // We also compile dependencies' based on tsconfig project references
+      // We should skip this and just use turborepo for fine-grained caching
+      "dependsOn": ["^compile"],
+      "outputs": ["dist/**", "lib/**", "!dist/bundle.cjs"]
+    },
+    "test": {
+      // Depends on our own build/compile steps
+      "dependsOn": ["build", "compile"],
+      "outputs": ["coverage/**"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "typecheck": {},
+    "lint:style": {},
+    "lint:eslint": {},
+    "format": {},
+    "format:fix": {},
+    "dist:cli": {
+      "dependsOn": ["compile"],
+      "outputs": ["dist/bundle.cjs"]
+    },
+    "format:check": {
+      "cache": false
+    },
+    "depcheck": {}
+  },
+  "globalDependencies": [".eslintrc.js"]
+}

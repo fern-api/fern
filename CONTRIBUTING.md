@@ -95,6 +95,18 @@ To run the locally-generated CLI, run:
 FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 ```
 
+### Using Turborepo
+
+[Turbo documentation](https://turborepo.org/docs).
+
+Turborepo is a tool that makes it easier to work with monorepos. It understands the dependencies between packages and tasks. It knows how to run tasks in topological order, and it can cache the results of those tasks.
+
+When you run `yarn turbo <script>`, it will run the script in the current package and run all the out-of-date dependencies in topological order.
+
+To use Turorepo effectively:
+
+- Scripts should be the smallest units and should not include logic calling other scripts. Let Turborepo handle the dependency graph.
+
 ## Intermediate Representation
 
 Fern generators read in IR (Intermediate Representation) and spit out

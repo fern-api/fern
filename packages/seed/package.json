@@ -21,7 +21,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && vitest --passWithNoTests",
+    "test": "vitest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
@@ -29,8 +29,8 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "yarn compile && node build.cjs && cp -R ../../test-definitions/fern dist",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public",
+    "dist:cli": "node build.cjs && cp -R ../../test-definitions/fern dist",
+    "publish:cli": "turbo dist:cli && cd dist && yarn npm publish --access public",
     "generate": "fern generate --local"
   },
   "dependencies": {
