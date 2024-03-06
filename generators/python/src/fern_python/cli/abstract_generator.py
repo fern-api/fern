@@ -128,7 +128,7 @@ poetry.toml
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
 
-    def _get_github_workflow(self, project, output_mode: GithubOutputMode) -> None:
+    def _get_github_workflow(self, project: Project, output_mode: GithubOutputMode) -> None:
         workflow_yaml = """name: Test SDK
 
 on: [push]

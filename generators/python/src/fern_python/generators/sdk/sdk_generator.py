@@ -342,7 +342,7 @@ pip install --upgrade {project._project_config.package_name}
             summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} API from applications written in Python.",
             installation=installation,
             usage=usage,
-            async_usage=async_usage,
+            asyncUsage=async_usage,
             requirements=[],
         )
 

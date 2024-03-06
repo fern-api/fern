@@ -316,7 +316,7 @@ class RootClientGenerator:
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")
-                    writer.write_node(default_environment)  # type: ignore
+                    writer.write_node(default_environment)
 
                 snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
                 environment_docs += f" {snippet.to_str()}"
@@ -576,7 +576,7 @@ class RootClientGenerator:
             self._consrtructor_parameters = constructor_parameters
 
         def build(self) -> GeneratedRootClient:
-            def client_snippet_writer(class_name: str) -> CodeWriterFunction:
+            def client_snippet_writer(class_name: str) -> typing.Tuple[AST.ClassReference, CodeWriterFunction]:
                 client_class_reference = AST.ClassReference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(

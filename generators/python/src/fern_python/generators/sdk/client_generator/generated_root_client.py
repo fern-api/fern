@@ -1,3 +1,4 @@
+from typing import List
 from dataclasses import dataclass
 
 
@@ -9,7 +10,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 @dataclass
 class RootClient:
     class_reference: AST.ClassReference
-    parameters: ConstructorParameter
+    parameters: List[ConstructorParameter]
 
 @dataclass
 class GeneratedRootClient:

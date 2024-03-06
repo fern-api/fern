@@ -41,12 +41,12 @@ class SnippetTestFactory:
 
         self._service_test_files: Dict[Filepath, SourceFile] = dict()
 
-    def _return_expression(self, returned_expression: AST.ClassInstantiation) -> AST.Expression:
+    def _return_expression(self, returned_expression: AST.ClassInstantiation) -> AST.CodeWriter:
         def return_writer(writer: AST.NodeWriter) -> None:
             writer.write("return ")
             writer.write_node(returned_expression)
             writer.write_newline_if_last_line_not()
-        return AST.Expression(AST.CodeWriter(return_writer))
+        return AST.CodeWriter(return_writer)
     
     def _write_envvar_parameter(self, parameter_name: str, envvar_name: str, default_value: Optional[str] = None) -> AST.Expression:
         args = [AST.Expression(f'"{envvar_name}"')]
@@ -76,7 +76,7 @@ class SnippetTestFactory:
             args=non_url_params,
         )
 
-    def _generate_client_fixture(self):
+    def _generate_client_fixture(self) -> None:
         # Note the conftest name is important, and required to make these fixtures available to all tests
         utilities_filepath = Filepath(
             directories=(Filepath.DirectoryFilepathPart(
@@ -105,7 +105,7 @@ class SnippetTestFactory:
                 ),
                 body=self._return_expression(self._instantiate_client(self._generated_root_client.sync_client)),
             )
-        source_file.add_expression(sync_function_declaration)
+        source_file.add_expression(AST.Expression(sync_function_declaration))
         
         async_function_declaration = AST.FunctionDeclaration(
                 name=self.ASYNC_CLIENT_FIXTURE_NAME,
@@ -124,7 +124,7 @@ class SnippetTestFactory:
                 ),
                 body=self._return_expression(self._instantiate_client(self._generated_root_client.async_client)),
             )
-        source_file.add_expression(async_function_declaration)
+        source_file.add_expression(AST.Expression(async_function_declaration))
         # Maybe add `validate_json` function to this file as an assertion utility
 
         self._project.write_source_file(source_file=source_file, filepath=utilities_filepath)    
@@ -148,7 +148,7 @@ class SnippetTestFactory:
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
         )
     
-    def _test_body(self, sync_expression: Optional[EndpointExpression], async_expression: Optional[EndpointExpression], response_json: Any) -> AST.CodeWriter:
+    def _test_body(self, sync_expression: Optional[AST.Expression], async_expression: Optional[AST.Expression], response_json: Any) -> AST.CodeWriter:
         expectation_name = "expected_response"
         response_name = "response"
         async_response_name = "async_response"
@@ -205,7 +205,7 @@ class SnippetTestFactory:
             return ""
         return ".".join([component.snake_case.unsafe_name for component in components]) + "."
 
-    def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> AST.FunctionDeclaration:
+    def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath
         filepath = self._get_filepath_for_fern_filepath(fern_filepath)
         package_path = self._get_subpackage_client_accessor(fern_filepath)
@@ -276,7 +276,7 @@ class SnippetTestFactory:
                 project=self._project, filepath=filepath, generator_exec_wrapper=self._generator_exec_wrapper
             )
             # Add function to file
-            source_file.add_expression(function_declaration)
+            source_file.add_expression(AST.Expression(function_declaration))
 
         if source_file:
             self._service_test_files[filepath] = source_file

@@ -9,6 +9,7 @@ import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 
 export async function generateWorkspace({
+    organization,
     workspace,
     projectConfig,
     context,
@@ -19,6 +20,7 @@ export async function generateWorkspace({
     useLocalDocker,
     keepDocker
 }: {
+    organization: string;
     workspace: FernWorkspace;
     projectConfig: ProjectConfig;
     context: TaskContext;
@@ -65,8 +67,8 @@ export async function generateWorkspace({
         });
     } else {
         await runRemoteGenerationForAPIWorkspace({
+            organization,
             workspace,
-            projectConfig,
             context,
             generatorGroup: group,
             version,
