@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, Examples } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -93,7 +93,7 @@ export class ExampleGenerator {
             originalTypeDeclaration: originalType
         };
     }
-    // TODO: we'll likely want to use the type examples here too
+
     private getFlattenedProperties(typeId: TypeId): ExampleObjectProperty[] {
         const td = this.types.get(typeId);
         return td === undefined
@@ -649,56 +649,55 @@ export class ExampleGenerator {
     }): ExampleTypeReference {
         switch (primitiveType) {
             case "STRING":
-                const exString = example != null && typeof example === "string" ? example : "string";
+                const exString = example != null && typeof example === "string" ? example : Examples.STRING;
                 return {
                     jsonExample: exString,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exString }))
                 };
             case "INTEGER":
-                const exInt = example != null && typeof example === "number" ? example : 1;
+                const exInt = example != null && typeof example === "number" ? example : Examples.INT;
                 return {
                     jsonExample: exInt,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(exInt))
                 };
             case "DOUBLE":
-                const exDouble = example != null && typeof example === "number" ? example : 1.1;
+                const exDouble = example != null && typeof example === "number" ? example : Examples.DOUBLE;
                 return {
                     jsonExample: exDouble,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(exDouble))
                 };
             case "BOOLEAN":
-                const exBool = example != null && typeof example === "boolean" ? example : true;
+                const exBool = example != null && typeof example === "boolean" ? example : Examples.BOOLEAN;
                 return {
                     jsonExample: exBool,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(exBool))
                 };
             case "LONG":
-                const exLong = example != null && typeof example === "number" ? example : 1000000;
+                const exLong = example != null && typeof example === "number" ? example : Examples.INT64;
                 return {
                     jsonExample: exLong,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(exLong))
                 };
             case "DATE_TIME":
-                const exDateTime = example != null && typeof example === "string" ? example : "2024-01-15T09:30:00Z";
+                const exDateTime = example != null && typeof example === "string" ? example : Examples.DATE_TIME;
                 return {
                     jsonExample: exDateTime,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(exDateTime)))
                 };
             case "UUID":
-                const exUuid =
-                    example != null && typeof example === "string" ? example : "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
+                const exUuid = example != null && typeof example === "string" ? example : Examples.UUID;
                 return {
                     jsonExample: exUuid,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(exUuid))
                 };
             case "DATE":
-                const exDate = example != null && typeof example === "string" ? example : "2023-01-15";
+                const exDate = example != null && typeof example === "string" ? example : Examples.DATE;
                 return {
                     jsonExample: exDate,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(exDate))
                 };
             case "BASE_64":
-                const exB64 = example != null && typeof example === "string" ? example : "SGVsbG8gV29ybGQ";
+                const exB64 = example != null && typeof example === "string" ? example : Examples.BASE64;
                 return {
                     jsonExample: exB64,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exB64 }))

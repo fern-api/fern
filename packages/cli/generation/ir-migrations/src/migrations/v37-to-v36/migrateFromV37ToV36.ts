@@ -50,7 +50,7 @@ export const V37_TO_V36_MIGRATION: IrMigration<
                         // When migrating, just nix the generated examples
                         endpoints: service.endpoints.map((endpoint) => ({
                             ...endpoint,
-                            examples: endpoint.examples.filter((example) => example.exampleType == "userProvided")
+                            examples: endpoint.examples.filter((example) => example.exampleType === "userProvided")
                         }))
                     }
                 ])
