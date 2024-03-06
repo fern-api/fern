@@ -160,6 +160,12 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "float",
         "int",
         "complex",
+        "bool",
+        "uuid",
+        "list",
+        "set",
+        "map",
+        "long",
         // the following aren't actually reserved, but we treat them as unavailable
         "self",
         "all"
