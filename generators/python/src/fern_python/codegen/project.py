@@ -99,7 +99,11 @@ class Project:
     def write_source_file(
         self, *, source_file: SourceFile, filepath: Filepath, include_src_root: Optional[bool] = True
     ) -> None:
-        source_file.write_to_file(filepath=self.get_source_file_filepath(filepath, include_src_root=include_src_root))
+        source_file.write_to_file(
+            filepath=self.get_source_file_filepath(
+                filepath, include_src_root=(include_src_root if include_src_root is not None else True)
+            )
+        )
 
     def get_source_file_filepath(self, filepath: Filepath, include_src_root: bool) -> str:
         return (
@@ -120,7 +124,9 @@ class Project:
             writer = WriterImpl(should_format=self._should_format_files)
             writer.write(existing_file.read())
             writer.write_to_file(
-                filepath=self.get_source_file_filepath(filepath_in_project, include_src_root=include_src_root)
+                filepath=self.get_source_file_filepath(
+                    filepath_in_project, include_src_root=(include_src_root if include_src_root is not None else True)
+                )
             )
         if include_src_root:
             self._module_manager.register_exports(
