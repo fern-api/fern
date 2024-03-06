@@ -125,7 +125,6 @@ plugins = ["pydantic.mypy"]
 
 """
 
-
     @dataclass(frozen=True)
     class BuildSystemBlock(Block):
         def to_string(self) -> str:

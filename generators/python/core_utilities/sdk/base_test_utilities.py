@@ -15,7 +15,7 @@ def validate_response(response: typing.Any, json_expectation: typing.Any) -> Non
             json_expectation, response
         )
         return
-    
+
     response_json = response
     if issubclass(type(response), pydantic.BaseModel):
         response_json = json.loads(response.json())

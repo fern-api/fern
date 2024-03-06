@@ -1,4 +1,8 @@
 import os
+from typing import Any, Dict, Optional, Tuple
+
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
 from fern_python.codegen.ast.references.module import Module
@@ -6,16 +10,20 @@ from fern_python.codegen.ast.references.reference import Reference, ReferenceImp
 from fern_python.codegen.filepath import ExportStrategy, Filepath
 from fern_python.codegen.project import Project
 from fern_python.codegen.source_file import SourceFile
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient, RootClient
-from fern_python.snippet.snippet_endpoint_expression import EndpointExpression
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-import fern.ir.resources as ir_types
-from typing import Dict, Optional, Tuple, Any
-
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionSnippetGenerator
-from fern_python.snippet.snippet_writer import SnippetWriter
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
+    EndpointFunctionSnippetGenerator,
+)
+from fern_python.generators.sdk.client_generator.generated_root_client import (
+    GeneratedRootClient,
+    RootClient,
+)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.snippet.snippet_writer import SnippetWriter
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+
 
 class SnippetTestFactory:
     SYNC_CLIENT_FIXTURE_NAME = "client"
@@ -24,12 +32,12 @@ class SnippetTestFactory:
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
     def __init__(
-            self,
-            project: Project,
-            context: SdkGeneratorContext,
-            generator_exec_wrapper: GeneratorExecWrapper,
-            generated_root_client: GeneratedRootClient
-        ) -> None:
+        self,
+        project: Project,
+        context: SdkGeneratorContext,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        generated_root_client: GeneratedRootClient,
+    ) -> None:
         self._project = project
         self._context = context
         self._generator_exec_wrapper = generator_exec_wrapper
@@ -46,9 +54,12 @@ class SnippetTestFactory:
             writer.write("return ")
             writer.write_node(returned_expression)
             writer.write_newline_if_last_line_not()
+
         return AST.CodeWriter(return_writer)
-    
-    def _write_envvar_parameter(self, parameter_name: str, envvar_name: str, default_value: Optional[str] = None) -> AST.Expression:
+
+    def _write_envvar_parameter(
+        self, parameter_name: str, envvar_name: str, default_value: Optional[str] = None
+    ) -> AST.Expression:
         args = [AST.Expression(f'"{envvar_name}"')]
         if default_value:
             args.append(AST.Expression(f'"{default_value}"'))
@@ -61,14 +72,24 @@ class SnippetTestFactory:
                 args=args,
             )
         )
+
         def envvar_writer(writer: AST.NodeWriter) -> None:
-            writer.write(f'{parameter_name}=')
+            writer.write(f"{parameter_name}=")
             writer.write_node(os_get)
             writer.write_newline_if_last_line_not()
+
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
-        non_url_params = [self._write_envvar_parameter(param.constructor_parameter_name, self.ENVVAR_PREFIX + param.constructor_parameter_name.upper(), param.constructor_parameter_name) for param in client.parameters if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"]
+        non_url_params = [
+            self._write_envvar_parameter(
+                param.constructor_parameter_name,
+                self.ENVVAR_PREFIX + param.constructor_parameter_name.upper(),
+                param.constructor_parameter_name,
+            )
+            for param in client.parameters
+            if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"
+        ]
         non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR))
         return AST.ClassInstantiation(
             class_=client.class_reference,
@@ -79,55 +100,57 @@ class SnippetTestFactory:
     def _generate_client_fixture(self) -> None:
         # Note the conftest name is important, and required to make these fixtures available to all tests
         utilities_filepath = Filepath(
-            directories=(Filepath.DirectoryFilepathPart(
-                module_name="tests",
-            ),),
+            directories=(
+                Filepath.DirectoryFilepathPart(
+                    module_name="tests",
+                ),
+            ),
             file=Filepath.FilepathPart(module_name="conftest"),
         )
 
         source_file = SourceFileFactory.create(
-                project=self._project, filepath=utilities_filepath, generator_exec_wrapper=self._generator_exec_wrapper
-            )
+            project=self._project, filepath=utilities_filepath, generator_exec_wrapper=self._generator_exec_wrapper
+        )
         sync_function_declaration = AST.FunctionDeclaration(
-                name=self.SYNC_CLIENT_FIXTURE_NAME,
-                decorators=[
-                    ReferenceNode(
-                        Reference(
-                            qualified_name_excluding_import=("fixture",),
-                            import_=ReferenceImport(module=Module.built_in(("pytest",))),
-                        )
+            name=self.SYNC_CLIENT_FIXTURE_NAME,
+            decorators=[
+                ReferenceNode(
+                    Reference(
+                        qualified_name_excluding_import=("fixture",),
+                        import_=ReferenceImport(module=Module.built_in(("pytest",))),
                     )
-                ],
-                signature=AST.FunctionSignature(
-                    parameters=[],
-                    named_parameters=[],
-                    return_type=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
-                ),
-                body=self._return_expression(self._instantiate_client(self._generated_root_client.sync_client)),
-            )
+                )
+            ],
+            signature=AST.FunctionSignature(
+                parameters=[],
+                named_parameters=[],
+                return_type=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
+            ),
+            body=self._return_expression(self._instantiate_client(self._generated_root_client.sync_client)),
+        )
         source_file.add_expression(AST.Expression(sync_function_declaration))
-        
+
         async_function_declaration = AST.FunctionDeclaration(
-                name=self.ASYNC_CLIENT_FIXTURE_NAME,
-                decorators=[
-                    ReferenceNode(
-                        Reference(
-                            qualified_name_excluding_import=("fixture",),
-                            import_=ReferenceImport(module=Module.built_in(("pytest",))),
-                        )
+            name=self.ASYNC_CLIENT_FIXTURE_NAME,
+            decorators=[
+                ReferenceNode(
+                    Reference(
+                        qualified_name_excluding_import=("fixture",),
+                        import_=ReferenceImport(module=Module.built_in(("pytest",))),
                     )
-                ],
-                signature=AST.FunctionSignature(
-                    parameters=[],
-                    named_parameters=[],
-                    return_type=AST.TypeHint(self._generated_root_client.async_client.class_reference),
-                ),
-                body=self._return_expression(self._instantiate_client(self._generated_root_client.async_client)),
-            )
+                )
+            ],
+            signature=AST.FunctionSignature(
+                parameters=[],
+                named_parameters=[],
+                return_type=AST.TypeHint(self._generated_root_client.async_client.class_reference),
+            ),
+            body=self._return_expression(self._instantiate_client(self._generated_root_client.async_client)),
+        )
         source_file.add_expression(AST.Expression(async_function_declaration))
         # Maybe add `validate_json` function to this file as an assertion utility
 
-        self._project.write_source_file(source_file=source_file, filepath=utilities_filepath)    
+        self._project.write_source_file(source_file=source_file, filepath=utilities_filepath)
 
     def _get_filepath_for_fern_filepath(self, fern_filepath: ir_types.FernFilepath) -> Filepath:
         directories: Tuple[Filepath.DirectoryFilepathPart, ...] = (
@@ -137,21 +160,26 @@ class SnippetTestFactory:
         )
 
         for pathpart in fern_filepath.package_path:
-            directories += (Filepath.DirectoryFilepathPart(
-                module_name=pathpart.snake_case.unsafe_name,
-                export_strategy=ExportStrategy(export_all=True),
-            ),)
+            directories += (
+                Filepath.DirectoryFilepathPart(
+                    module_name=pathpart.snake_case.unsafe_name,
+                    export_strategy=ExportStrategy(export_all=True),
+                ),
+            )
 
         module_name = fern_filepath.file.snake_case.unsafe_name if fern_filepath.file is not None else "root"
         return Filepath(
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
         )
-    
-    def _test_body(self, sync_expression: Optional[AST.Expression], async_expression: Optional[AST.Expression], response_json: Any) -> AST.CodeWriter:
+
+    def _test_body(
+        self, sync_expression: Optional[AST.Expression], async_expression: Optional[AST.Expression], response_json: Any
+    ) -> AST.CodeWriter:
         expectation_name = "expected_response"
         response_name = "response"
         async_response_name = "async_response"
+
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = f"'{response_json}'" if type(response_json) is str else response_json
@@ -161,9 +189,13 @@ class SnippetTestFactory:
                     writer.write(f"{response_name} = ")
                     writer.write_node(sync_expression)
                     writer.write_newline_if_last_line_not()
-                    writer.write_node(self._validate_response(AST.Expression(response_name), AST.Expression(expectation_name)))
+                    writer.write_node(
+                        self._validate_response(AST.Expression(response_name), AST.Expression(expectation_name))
+                    )
                 else:
-                    writer.write_line(f"# Type ignore to avoid mypy complaining about the function not being meant to return a value")
+                    writer.write_line(
+                        f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
+                    )
                     writer.write(f"assert ")
                     writer.write_node(sync_expression)
                     writer.write(f" is None  # type: ignore[func-returns-value]")
@@ -174,14 +206,19 @@ class SnippetTestFactory:
                     writer.write(f"{async_response_name} = ")
                     writer.write_node(async_expression)
                     writer.write_newline_if_last_line_not()
-                    writer.write_node(self._validate_response(AST.Expression(async_response_name), AST.Expression(expectation_name)))
+                    writer.write_node(
+                        self._validate_response(AST.Expression(async_response_name), AST.Expression(expectation_name))
+                    )
                 else:
                     if sync_expression is None:
-                        writer.write_line(f"# Type ignore to avoid mypy complaining about the function not being meant to return a value")
+                        writer.write_line(
+                            f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
+                        )
                     writer.write(f"assert ")
                     writer.write_node(async_expression)
                     writer.write(f" is None  # type: ignore[func-returns-value]")
             writer.write_newline_if_last_line_not()
+
         return AST.CodeWriter(writer)
 
     def _client_snippet(self, is_async: bool, package_path: str, function_invocation: AST.Expression) -> AST.Expression:
@@ -191,6 +228,7 @@ class SnippetTestFactory:
             writer.write(f"{self.ASYNC_CLIENT_FIXTURE_NAME if is_async else self.SYNC_CLIENT_FIXTURE_NAME}.")
             writer.write(package_path)
             writer.write_node(function_invocation)
+
         return AST.Expression(AST.CodeWriter(client_writer))
 
     # TODO: Stolen from endpoint_function_generator.py, should be shared (and also unified with what actually builds package structure).
@@ -211,20 +249,22 @@ class SnippetTestFactory:
         package_path = self._get_subpackage_client_accessor(fern_filepath)
 
         source_file = self._service_test_files.get(filepath)
-        
+
         for endpoint in service.endpoints:
             endpoint_name = endpoint.name.get_as_name().snake_case.unsafe_name
 
             # TODO: We should make the mock server return the specified error response
             # if we want to test that as well, then we can test each example, but that seems less pressing.
-            successful_examples = list(filter(
-                lambda ex: ir_types.ExampleResponse.visit(
-                    ex.response,
-                    ok=lambda _: True,
-                    error=lambda _: False,
-                ),
-                endpoint.examples
-            ))
+            successful_examples = list(
+                filter(
+                    lambda ex: ir_types.ExampleResponse.visit(
+                        ex.response,
+                        ok=lambda _: True,
+                        error=lambda _: False,
+                    ),
+                    endpoint.examples,
+                )
+            )
             if len(successful_examples) == 0:
                 continue
 
@@ -236,7 +276,7 @@ class SnippetTestFactory:
                 endpoint=endpoint,
                 example=example,
             ).generate_snippet()
-            
+
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
             async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
 
@@ -258,17 +298,21 @@ class SnippetTestFactory:
                     parameters=[
                         AST.FunctionParameter(
                             name=self.SYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference)
+                            type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
                         ),
                         AST.FunctionParameter(
                             name=self.ASYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference)
-                        )
+                            type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference),
+                        ),
                     ],
                     named_parameters=[],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=self._test_body(sync_snippet, async_snippet, response.body.json_example if response is not None and response.body is not None else None)
+                body=self._test_body(
+                    sync_snippet,
+                    async_snippet,
+                    response.body.json_example if response is not None and response.body is not None else None,
+                ),
             )
 
             # At least one endpoint has a snippet, now make the file
@@ -303,24 +347,23 @@ class SnippetTestFactory:
             exports={"validate_response"},
         )
 
-    def _validate_response(self, response_expression: AST.Expression, expected_expression: AST.Expression) -> AST.Expression:
+    def _validate_response(
+        self, response_expression: AST.Expression, expected_expression: AST.Expression
+    ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(self._test_base_path.module_name, "utilities"), named_import="validate_response"
+                        module=AST.Module.local(self._test_base_path.module_name, "utilities"),
+                        named_import="validate_response",
                     ),
                 ),
                 args=[response_expression, expected_expression],
             )
         )
 
-    def tests(
-        self,
-        ir: ir_types.IntermediateRepresentation,
-        snippet_writer: SnippetWriter
-    ) -> None:
+    def tests(self, ir: ir_types.IntermediateRepresentation, snippet_writer: SnippetWriter) -> None:
         self._copy_utilities_to_project()
         self._generate_client_fixture()
 

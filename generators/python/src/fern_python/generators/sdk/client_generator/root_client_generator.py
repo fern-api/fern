@@ -607,7 +607,9 @@ class RootClientGenerator:
             sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
             return GeneratedRootClient(
                 async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
-                async_client=RootClient(class_reference=async_class_reference, parameters=self._consrtructor_parameters),
+                async_client=RootClient(
+                    class_reference=async_class_reference, parameters=self._consrtructor_parameters
+                ),
                 sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
                 sync_client=RootClient(class_reference=sync_class_reference, parameters=self._consrtructor_parameters),
             )

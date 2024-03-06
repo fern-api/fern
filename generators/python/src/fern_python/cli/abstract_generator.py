@@ -127,7 +127,6 @@ poetry.toml
         self._get_github_workflow(project, output_mode)
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
-
     def _get_github_workflow(self, project: Project, output_mode: GithubOutputMode) -> None:
         workflow_yaml = """name: Test SDK
 
@@ -164,7 +163,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Test
-        run: | 
+        run: |
             # Run mock server in the background
             fern mock --api TODO --port 3002 &
 
