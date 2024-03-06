@@ -28,7 +28,7 @@ export interface ColorsConfiguration {
      * dark: black/12%
      * white: white/13%
      */
-    borders?: FernDocsConfig.ColorConfig;
+    border?: FernDocsConfig.ColorConfig;
     /**
      * If `sidebarBackground` is not set, the sidebar will render with a transparent background without a border.
      * If `sidebarBackground` is set, the sidebar will also render a 1px border on the right side.

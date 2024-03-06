@@ -3,9 +3,12 @@ import { FernDocsConfig as RawDocs } from "@fern-api/docs-config-sdk";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
+import { BackgroundImage, Logo } from "./ParsedDocsConfiguration";
 
 export function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
+    logo: Logo | undefined,
+    backgroundImage: BackgroundImage | undefined,
     context: TaskContext
 ): DocsV1Write.ColorsConfigV3 {
     const colorType = getColorType(rawConfig);
@@ -13,18 +16,18 @@ export function convertColorsConfiguration(
         case "dark":
             return {
                 type: "dark",
-                ...convertThemedColorConfig(rawConfig, context, "dark")
+                ...convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "dark")
             };
         case "light":
             return {
                 type: "light",
-                ...convertThemedColorConfig(rawConfig, context, "light")
+                ...convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "light")
             };
         case "darkAndLight":
             return {
                 type: "darkAndLight",
-                dark: convertThemedColorConfig(rawConfig, context, "dark"),
-                light: convertThemedColorConfig(rawConfig, context, "light")
+                dark: convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "dark"),
+                light: convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "light")
             };
         default:
             assertNever(colorType);
@@ -78,17 +81,20 @@ export function getColorType({
 
 export function convertThemedColorConfig(
     rawConfig: RawDocs.ColorsConfiguration,
+    logo: Logo | undefined,
+    backgroundImage: BackgroundImage | undefined,
     context: TaskContext,
     theme: "dark" | "light"
-): DocsV1Write.DarkModeConfig | DocsV1Write.LightModeConfig {
-    let accentPrimaryColor = getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accentPrimary", theme);
+): DocsV1Write.ThemeConfig {
+    let accentPrimaryColor =
+        getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accent-primary", theme) ?? tinycolor.random();
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
     if (backgroundColor != null) {
         const newBackgroundColor = enforceBackgroundTheme(tinycolor(backgroundColor.toString()), theme);
         if (newBackgroundColor.toHexString() !== backgroundColor.toHexString()) {
             context.logger.warn(
-                `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
+                `The chosen shade, 'colors.background' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
             );
             backgroundColor = newBackgroundColor;
         }
@@ -103,15 +109,37 @@ export function convertThemedColorConfig(
         if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
             context.logger.warn(
-                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
+                `The chosen shade, 'colors.accent-primary' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
             );
             accentPrimaryColor = newAccentPrimaryColor;
         }
     }
 
     return {
-        accentPrimary: toRgb(accentPrimaryColor),
-        background: toRgb(backgroundColor)
+        accentPrimary: accentPrimaryColor.toRgb(),
+        background: backgroundColor?.toRgb(),
+        border: getColorInstanceFromRawConfig(rawConfig.border, context, "border", theme)?.toRgb(),
+        sidebarBackground: getColorInstanceFromRawConfig(
+            rawConfig.sidebarBackground,
+            context,
+            "sidebar-background",
+            theme
+        )?.toRgb(),
+        headerBackground: getColorInstanceFromRawConfig(
+            rawConfig.headerBackground,
+            context,
+            "header-background",
+            theme
+        )?.toRgb(),
+        cardBackground: getColorInstanceFromRawConfig(
+            rawConfig.cardBackground,
+            context,
+            "card-background",
+            theme
+        )?.toRgb(),
+        // filepaths need to be resolved in publishDocs.ts to fileID
+        logo: logo?.[theme]?.filepath,
+        backgroundImage: backgroundImage?.[theme]?.filepath
     };
 }
 
@@ -154,16 +182,6 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
     return tinycolor({ h, s, v: 1 - v });
 }
 
-function toRgb(color: tinycolor.Instance): DocsV1Write.RgbColor;
-function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined;
-function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined {
-    if (color == null) {
-        return undefined;
-    }
-    const { r, g, b } = color.toRgb();
-    return { r, g, b };
-}
-
 function getColorInstanceFromRawConfig(
     raw: RawDocs.ColorConfig | undefined,
     context: TaskContext,
@@ -183,7 +201,7 @@ function getColorInstanceFromRawConfig(
     const color = tinycolor(rawColor);
     if (!color.isValid()) {
         context.failAndThrow(
-            `'${typeof raw === "string" ? key : `${key}.${theme}`}' should be a hex color of the format #FFFFFF`
+            `'${typeof raw === "string" ? key : `colors.${key}.${theme}`}' should be a hex color of the format #FFFFFF`
         );
     }
     return color;

@@ -89,13 +89,35 @@ export async function parseDocsConfiguration({
             ? convertImageReference({ rawImageReference: faviconRef, absoluteFilepathToDocsConfig })
             : undefined;
 
-    const backgroundImagePromise =
-        backgroundImageRef != null
-            ? convertImageReference({
-                  rawImageReference: backgroundImageRef,
-                  absoluteFilepathToDocsConfig
-              })
-            : undefined;
+    const backgroundImagePromise = (async () => {
+        if (backgroundImageRef == null) {
+            return undefined;
+        } else if (typeof backgroundImageRef === "string") {
+            const image = await convertImageReference({
+                rawImageReference: backgroundImageRef,
+                absoluteFilepathToDocsConfig
+            });
+
+            return { dark: image, light: image };
+        } else {
+            const dark =
+                backgroundImageRef.dark != null
+                    ? await convertImageReference({
+                          rawImageReference: backgroundImageRef.dark,
+                          absoluteFilepathToDocsConfig
+                      })
+                    : undefined;
+            const light =
+                backgroundImageRef.light != null
+                    ? await convertImageReference({
+                          rawImageReference: backgroundImageRef.light,
+                          absoluteFilepathToDocsConfig
+                      })
+                    : undefined;
+
+            return { dark, light };
+        }
+    })();
 
     const typographyPromise =
         rawTypography != null
@@ -133,6 +155,8 @@ export async function parseDocsConfiguration({
                 accentPrimary: undefined,
                 background: undefined
             },
+            logo,
+            backgroundImage,
             context
         ),
         navbarLinks: navbarLinks?.map((navbarLink) => ({
@@ -237,7 +261,14 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
         tabsPlacement:
             layout.tabsPlacement === "header"
                 ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar
+                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+        contentAlignment:
+            layout.contentAlignment === "left"
+                ? DocsV1Write.ContentAlignment.Left
+                : DocsV1Write.ContentAlignment.Center,
+        headerPosition:
+            layout.headerPosition === "static" ? DocsV1Write.HeaderPosition.Absolute : DocsV1Write.HeaderPosition.Fixed,
+        disableHeader: layout.disableHeader ?? false
     };
 }
 

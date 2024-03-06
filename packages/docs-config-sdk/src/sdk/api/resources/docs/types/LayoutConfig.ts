@@ -79,7 +79,7 @@ export interface LayoutConfig {
     contentAlignment?: FernDocsConfig.ContentAlignment;
     /**
      * If `header-position` is set to `fixed`, the header will be fixed to the top of the viewport.
-     * If `header-position` is set to `static`, the header will be static and will scroll with the content.
+     * If `header-position` is set to `absolute`, the header will be absolute and will scroll with the content.
      *
      * @default: `fixed`
      */

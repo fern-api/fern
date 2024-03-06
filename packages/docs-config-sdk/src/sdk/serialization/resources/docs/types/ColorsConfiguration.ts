@@ -15,7 +15,7 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
         core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
     ),
     background: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
-    borders: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
+    border: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
     sidebarBackground: core.serialization.property(
         "sidebar-background",
         core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
@@ -34,7 +34,7 @@ export declare namespace ColorsConfiguration {
     interface Raw {
         "accent-primary"?: serializers.ColorConfig.Raw | null;
         background?: serializers.ColorConfig.Raw | null;
-        borders?: serializers.ColorConfig.Raw | null;
+        border?: serializers.ColorConfig.Raw | null;
         "sidebar-background"?: serializers.ColorConfig.Raw | null;
         "header-background"?: serializers.ColorConfig.Raw | null;
         "card-background"?: serializers.ColorConfig.Raw | null;

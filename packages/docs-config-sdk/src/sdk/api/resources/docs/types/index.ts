@@ -14,6 +14,8 @@ export * from "./TabbedNavigationConfig";
 export * from "./TabbedNavigationItem";
 export * from "./NavigationItem";
 export * from "./LogoConfiguration";
+export * from "./BackgroundImageConfiguration";
+export * from "./BackgroundImageThemedConfig";
 export * from "./DocsTypographyConfig";
 export * from "./LayoutConfig";
 export * from "./SidebarOrHeaderPlacement";
