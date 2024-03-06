@@ -186,7 +186,7 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 			Animal string `json:"animal"`
 			*Dog
 		}{
-			Animal: a.Animal,
+			Animal: "dog",
 			Dog:    a.Dog,
 		}
 		return json.Marshal(marshaler)
@@ -195,7 +195,7 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 			Animal string `json:"animal"`
 			*Cat
 		}{
-			Animal: a.Animal,
+			Animal: "cat",
 			Cat:    a.Cat,
 		}
 		return json.Marshal(marshaler)

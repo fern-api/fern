@@ -15,7 +15,7 @@ module SeedApiClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedApiClient",
+        "X-Fern-SDK-Name": "seed_api_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -38,7 +38,7 @@ module SeedApiClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedApiClient",
+        "X-Fern-SDK-Name": "seed_api_client",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

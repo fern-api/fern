@@ -1,6 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
+import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,
@@ -18,8 +19,6 @@ import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernDocsConfig } from "@fern-fern/docs-config";
-import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -207,27 +206,31 @@ async function constructRegisterDocsRequest({
     version: string | undefined;
     editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
+    const convertedDocsConfiguration = await convertDocsConfiguration({
+        parsedDocsConfig,
+        organization,
+        fernWorkspaces,
+        context,
+        token,
+        uploadUrls,
+        version
+    });
     return {
         docsDefinition: {
-            pages: entries(parsedDocsConfig.pages).reduce(
-                (pages, [pageFilepath, pageContents]) => ({
-                    ...pages,
-                    [pageFilepath]: {
-                        markdown: pageContents,
-                        editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
-                    }
-                }),
-                {}
-            ),
-            config: await convertDocsConfiguration({
-                parsedDocsConfig,
-                organization,
-                fernWorkspaces,
-                context,
-                token,
-                uploadUrls,
-                version
-            })
+            pages: {
+                ...entries(parsedDocsConfig.pages).reduce(
+                    (pages, [pageFilepath, pageContents]) => ({
+                        ...pages,
+                        [pageFilepath]: {
+                            markdown: pageContents,
+                            editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
+                        }
+                    }),
+                    {}
+                ),
+                ...convertedDocsConfiguration.pages
+            },
+            config: convertedDocsConfiguration.config
         }
     };
 }
@@ -243,6 +246,11 @@ function createEditThisPageUrl(
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
 
     return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
+}
+
+interface ConvertedDocsConfiguration {
+    config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">;
+    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertDocsConfiguration({
@@ -261,8 +269,18 @@ async function convertDocsConfiguration({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">> {
-    return {
+}): Promise<ConvertedDocsConfiguration> {
+    const convertedNavigation = await convertNavigationConfig({
+        navigationConfig: parsedDocsConfig.navigation,
+        tabs: parsedDocsConfig.tabs,
+        parsedDocsConfig,
+        organization,
+        fernWorkspaces,
+        context,
+        token,
+        version
+    });
+    const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
         title: parsedDocsConfig.title,
         logoV2: {
             dark:
@@ -304,16 +322,7 @@ async function convertDocsConfiguration({
                       context
                   })
                 : undefined,
-        navigation: await convertNavigationConfig({
-            navigationConfig: parsedDocsConfig.navigation,
-            tabs: parsedDocsConfig.tabs,
-            parsedDocsConfig,
-            organization,
-            fernWorkspaces,
-            context,
-            token,
-            version
-        }),
+        navigation: convertedNavigation.config,
         colorsV3: parsedDocsConfig.colors,
         navbarLinks: parsedDocsConfig.navbarLinks,
         typographyV2: convertDocsTypographyConfiguration({
@@ -326,6 +335,17 @@ async function convertDocsConfiguration({
         css: parsedDocsConfig.css,
         js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig)
     };
+    return {
+        config,
+        pages: {
+            ...convertedNavigation.pages
+        }
+    };
+}
+
+interface ConvertedNavigationConfig {
+    config: DocsV1Write.NavigationConfig;
+    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertNavigationConfig({
@@ -346,68 +366,86 @@ async function convertNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<DocsV1Write.NavigationConfig> {
+}): Promise<ConvertedNavigationConfig> {
+    let config: DocsV1Write.NavigationConfig;
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
-        case "untabbed":
-            return {
-                items: await Promise.all(
-                    navigationConfig.items.map((item) =>
-                        convertNavigationItem({
-                            item,
-                            parsedDocsConfig,
-                            organization,
-                            fernWorkspaces,
-                            context,
-                            token,
-                            version
-                        })
-                    )
+        case "untabbed": {
+            const untabbedItems = await Promise.all(
+                navigationConfig.items.map((item) =>
+                    convertNavigationItem({
+                        item,
+                        parsedDocsConfig,
+                        organization,
+                        fernWorkspaces,
+                        context,
+                        token,
+                        version
+                    })
                 )
+            );
+            for (const untabbedItem of untabbedItems) {
+                pages = {
+                    ...pages,
+                    ...untabbedItem.pages
+                };
+            }
+            config = {
+                items: untabbedItems.map((item) => item.item)
             };
+            break;
+        }
         case "tabbed":
-            return {
+            config = {
                 tabs: await Promise.all(
                     navigationConfig.items.map(async (tabbedItem) => {
                         const tabConfig = tabs?.[tabbedItem.tab];
                         if (tabConfig == null) {
                             throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
                         }
-                        return {
-                            title: tabConfig.displayName,
-                            icon: tabConfig.icon,
-                            items: await Promise.all(
-                                tabbedItem.layout.map((item) =>
-                                    convertNavigationItem({
-                                        item,
-                                        parsedDocsConfig,
-                                        organization,
-                                        fernWorkspaces,
-                                        context,
-                                        token,
-                                        version
-                                    })
-                                )
-                            )
-                        };
-                    })
-                )
-            };
-        case "versioned":
-            return {
-                versions: await Promise.all(
-                    navigationConfig.versions.map(
-                        async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
-                            return {
-                                version: version.version,
-                                config: await convertUnversionedNavigationConfig({
-                                    navigationConfig: version.navigation,
+                        const tabbedItems = await Promise.all(
+                            tabbedItem.layout.map((item) =>
+                                convertNavigationItem({
+                                    item,
                                     parsedDocsConfig,
                                     organization,
                                     fernWorkspaces,
                                     context,
                                     token,
-                                    version: version.version
-                                }),
+                                    version
+                                })
+                            )
+                        );
+                        return {
+                            title: tabConfig.displayName,
+                            icon: tabConfig.icon,
+                            items: tabbedItems.map((tabItem) => tabItem.item)
+                        };
+                    })
+                )
+            };
+            break;
+        case "versioned":
+            config = {
+                versions: await Promise.all(
+                    navigationConfig.versions.map(
+                        async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
+                            const convertedNavigation = await convertUnversionedNavigationConfig({
+                                navigationConfig: version.navigation,
+                                parsedDocsConfig,
+                                organization,
+                                fernWorkspaces,
+                                context,
+                                token,
+                                version: version.version
+                            });
+                            pages = {
+                                ...pages,
+                                ...convertedNavigation.pages
+                            };
+                            return {
+                                version: version.version,
+                                config: convertedNavigation.config,
                                 availability:
                                     version.availability != null
                                         ? convertAvailability(version.availability)
@@ -418,9 +456,14 @@ async function convertNavigationConfig({
                     )
                 )
             };
+            break;
         default:
             assertNever(navigationConfig);
     }
+    return {
+        config,
+        pages
+    };
 }
 
 function convertAvailability(availability: VersionAvailability): DocsV1Write.VersionAvailability {
@@ -436,6 +479,11 @@ function convertAvailability(availability: VersionAvailability): DocsV1Write.Ver
         default:
             assertNever(availability);
     }
+}
+
+interface ConvertedUnversionedNavigationConfig {
+    config: DocsV1Write.UnversionedNavigationConfig;
+    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertUnversionedNavigationConfig({
@@ -456,56 +504,80 @@ async function convertUnversionedNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<DocsV1Write.UnversionedNavigationConfig> {
+}): Promise<ConvertedUnversionedNavigationConfig> {
+    let config: DocsV1Write.UnversionedNavigationConfig;
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
-        case "untabbed":
-            return {
-                items: await Promise.all(
-                    navigationConfig.items.map((item) =>
-                        convertNavigationItem({
-                            item,
-                            parsedDocsConfig,
-                            organization,
-                            fernWorkspaces,
-                            context,
-                            token,
-                            version
-                        })
-                    )
+        case "untabbed": {
+            const untabbedItems = await Promise.all(
+                navigationConfig.items.map((item) =>
+                    convertNavigationItem({
+                        item,
+                        parsedDocsConfig,
+                        organization,
+                        fernWorkspaces,
+                        context,
+                        token,
+                        version
+                    })
                 )
+            );
+            config = {
+                items: untabbedItems.map((item) => item.item)
             };
-        case "tabbed":
-            return {
+            for (const untabbedItem of untabbedItems) {
+                pages = {
+                    ...pages,
+                    ...untabbedItem.pages
+                };
+            }
+            break;
+        }
+        case "tabbed": {
+            config = {
                 tabs: await Promise.all(
                     navigationConfig.items.map(async (tabbedItem) => {
                         const tabConfig = tabs?.[tabbedItem.tab];
                         if (tabConfig == null) {
                             throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
                         }
+                        const tabItems = await Promise.all(
+                            tabbedItem.layout.map((item) =>
+                                convertNavigationItem({
+                                    item,
+                                    parsedDocsConfig,
+                                    organization,
+                                    fernWorkspaces,
+                                    context,
+                                    token,
+                                    version
+                                })
+                            )
+                        );
+                        for (const tabItem of tabItems) {
+                            pages = {
+                                ...pages,
+                                ...tabItem.pages
+                            };
+                        }
                         return {
                             title: tabConfig.displayName,
                             icon: tabConfig.icon,
-                            items: await Promise.all(
-                                tabbedItem.layout.map((item) =>
-                                    convertNavigationItem({
-                                        item,
-                                        parsedDocsConfig,
-                                        organization,
-                                        fernWorkspaces,
-                                        context,
-                                        token,
-                                        version
-                                    })
-                                )
-                            ),
+                            items: tabItems.map((tabItem) => tabItem.item),
                             urlSlugOverride: tabConfig.slug
                         };
                     })
                 )
             };
+            break;
+        }
         default:
             assertNever(navigationConfig);
     }
+    return {
+        config,
+        pages
+    };
 }
 
 function convertDocsTypographyConfiguration({
@@ -640,6 +712,11 @@ async function convertImageReference({
     return file.fileId;
 }
 
+interface ConvertedNavigationItem {
+    item: DocsV1Write.NavigationItem;
+    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
+}
+
 async function convertNavigationItem({
     item,
     parsedDocsConfig,
@@ -656,62 +733,107 @@ async function convertNavigationItem({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<DocsV1Write.NavigationItem> {
+}): Promise<ConvertedNavigationItem> {
+    let convertedItem: DocsV1Write.NavigationItem;
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (item.type) {
-        case "page":
-            return {
+        case "page": {
+            convertedItem = {
                 type: "page",
                 title: item.title,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
                 urlSlugOverride: item.slug
             };
-        case "section":
-            return {
+            break;
+        }
+        case "section": {
+            const sectionItems = await Promise.all(
+                item.contents.map((nestedItem) =>
+                    convertNavigationItem({
+                        item: nestedItem,
+                        parsedDocsConfig,
+                        organization,
+                        fernWorkspaces,
+                        context,
+                        token,
+                        version
+                    })
+                )
+            );
+            convertedItem = {
                 type: "section",
                 title: item.title,
-                items: await Promise.all(
-                    item.contents.map((nestedItem) =>
-                        convertNavigationItem({
-                            item: nestedItem,
-                            parsedDocsConfig,
-                            organization,
-                            fernWorkspaces,
-                            context,
-                            token,
-                            version
-                        })
-                    )
-                ),
+                items: sectionItems.map((sectionItem) => sectionItem.item),
                 urlSlugOverride: item.slug,
                 collapsed: item.collapsed
             };
+            for (const sectionItem of sectionItems) {
+                pages = {
+                    ...pages,
+                    ...sectionItem.pages
+                };
+            }
+            break;
+        }
         case "apiSection": {
+            const workspace = getFernWorkspaceForApiSection({ apiSection: item, fernWorkspaces });
             const apiDefinitionId = await registerApi({
                 organization,
-                workspace: getFernWorkspaceForApiSection({ apiSection: item, fernWorkspaces }),
+                workspace,
                 context,
                 token,
                 audiences: item.audiences,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
-                    snippetsConfiguration: item.snippetsConfiguration ?? {}
+                    snippetsConfiguration: item.snippetsConfiguration ?? {
+                        python: undefined,
+                        typescript: undefined,
+                        go: undefined,
+                        java: undefined
+                    }
                 })
             });
-            return {
+            if (workspace.changelog != null) {
+                for (const file of workspace.changelog.files) {
+                    pages[file.absoluteFilepath] = {
+                        markdown: file.contents
+                    };
+                }
+            }
+            convertedItem = {
                 type: "api",
                 title: item.title,
                 api: apiDefinitionId,
-                showErrors: item.showErrors
+                showErrors: item.showErrors,
+                changelog:
+                    workspace.changelog != null
+                        ? {
+                              urlSlug: "changelog",
+                              items: workspace.changelog.files.map((file) => {
+                                  return {
+                                      date: new Date().toISOString(),
+                                      pageId: file.absoluteFilepath
+                                  };
+                              })
+                          }
+                        : undefined
             };
+            break;
         }
-        case "link":
-            return {
+        case "link": {
+            convertedItem = {
                 type: "link",
                 title: item.text,
                 url: item.url
             };
+            break;
+        }
         default:
             assertNever(item);
     }
+    return {
+        item: convertedItem,
+        pages
+    };
 }
 
 function convertDocsSnippetsConfigurationToFdr({

@@ -118,7 +118,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Value
 		}{
-			Type:  u.Type,
+			Type:  "value",
 			Value: u.Value,
 		}
 		return json.Marshal(marshaler)
@@ -127,7 +127,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type         string `json:"type"`
 			AnotherValue *Value `json:"anotherValue,omitempty"`
 		}{
-			Type:         u.Type,
+			Type:         "anotherValue",
 			AnotherValue: u.AnotherValue,
 		}
 		return json.Marshal(marshaler)
@@ -136,7 +136,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*bar.Bar
 		}{
-			Type: u.Type,
+			Type: "bar",
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
@@ -145,7 +145,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Type       string   `json:"type"`
 			AnotherBar *bar.Bar `json:"anotherBar,omitempty"`
 		}{
-			Type:       u.Type,
+			Type:       "anotherBar",
 			AnotherBar: u.AnotherBar,
 		}
 		return json.Marshal(marshaler)

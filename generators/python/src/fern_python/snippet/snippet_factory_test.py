@@ -20,6 +20,7 @@ from fern_python.generators.sdk.context.sdk_generator_context import SdkGenerato
 class SnippetTestFactory:
     SYNC_CLIENT_FIXTURE_NAME = "client"
     ASYNC_CLIENT_FIXTURE_NAME = "async_client"
+    ENVVAR_PREFIX = "ENV_"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
     def __init__(
@@ -47,14 +48,17 @@ class SnippetTestFactory:
             writer.write_newline_if_last_line_not()
         return AST.Expression(AST.CodeWriter(return_writer))
     
-    def _write_envvar_parameter(self, parameter_name: str, envvar_name: str) -> AST.Expression:
+    def _write_envvar_parameter(self, parameter_name: str, envvar_name: str, default_value: Optional[str] = None) -> AST.Expression:
+        args = [AST.Expression(f'"{envvar_name}"')]
+        if default_value:
+            args.append(AST.Expression(f'"{default_value}"'))
         os_get = AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                     qualified_name_excluding_import=("getenv",),
                 ),
-                args=[AST.Expression(f'"{envvar_name}"')],
+                args=args,
             )
         )
         def envvar_writer(writer: AST.NodeWriter) -> None:
@@ -64,8 +68,7 @@ class SnippetTestFactory:
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
-        # TODO: use envvars with defaults for each of these
-        non_url_params = [param.instantiation for param in client.parameters if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"]
+        non_url_params = [self._write_envvar_parameter(param.constructor_parameter_name, self.ENVVAR_PREFIX + param.constructor_parameter_name.upper(), param.constructor_parameter_name) for param in client.parameters if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"]
         non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR))
         return AST.ClassInstantiation(
             class_=client.class_reference,

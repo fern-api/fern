@@ -1,4 +1,5 @@
 import { assertNever, entries } from "@fern-api/core-utils";
+import { TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,
@@ -22,7 +23,6 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getPreviewDocsDefinition({

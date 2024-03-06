@@ -3,9 +3,9 @@
 package client
 
 import (
-	core "github.com/undiscriminated-unions/fern/core"
-	option "github.com/undiscriminated-unions/fern/option"
-	union "github.com/undiscriminated-unions/fern/union"
+	core "github.com/fern-api/undiscriminated-go/core"
+	option "github.com/fern-api/undiscriminated-go/option"
+	union "github.com/fern-api/undiscriminated-go/union"
 	http "net/http"
 )
 

@@ -123,4 +123,31 @@ describe("convertGeneratorsConfiguration", () => {
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
+
+    it("OpenAPI legacy", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                openapi: "path/to/openapi.yml",
+                ["openapi-overrides"]: "path/to/overrides.yml"
+            }
+        });
+
+        expect(converted.disableOpenAPIExamples).toEqual(undefined);
+    });
+
+    it("OpenAPI object", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                openapi: {
+                    path: "path/to/openapi.yml",
+                    overrides: "path/to/overrides.yml",
+                    ["disable-examples"]: true
+                }
+            }
+        });
+
+        expect(converted.disableOpenAPIExamples).toEqual(true);
+    });
 });

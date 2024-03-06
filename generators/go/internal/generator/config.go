@@ -1,5 +1,17 @@
 package generator
 
+import "fmt"
+
+// UnionVersion represents the different union versions supported by the generator.
+type UnionVersion uint
+
+// Enumerates the supported union versions.
+const (
+	UnionVersionUnspecified UnionVersion = iota
+	UnionVersionV0
+	UnionVersionV1
+)
+
 // Config represents the Fern generator configuration.
 type Config struct {
 	DryRun                     bool
@@ -12,6 +24,7 @@ type Config struct {
 	IRFilepath                 string
 	SnippetFilepath            string
 	ImportPath                 string
+	UnionVersion               UnionVersion
 	PackageName                string
 
 	// If not specified, a go.mod and go.sum will not be generated.
@@ -47,8 +60,13 @@ func NewConfig(
 	snippetFilepath string,
 	importPath string,
 	packageName string,
+	unionVersion string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
+	uv, err := parseUnionVersion(unionVersion)
+	if err != nil {
+		return nil, err
+	}
 	return &Config{
 		DryRun:                     dryRun,
 		EnableExplicitNull:         enableExplicitNull,
@@ -61,6 +79,19 @@ func NewConfig(
 		SnippetFilepath:            snippetFilepath,
 		ImportPath:                 importPath,
 		PackageName:                packageName,
+		UnionVersion:               uv,
 		ModuleConfig:               moduleConfig,
 	}, nil
+}
+
+func parseUnionVersion(unionVersion string) (UnionVersion, error) {
+	switch unionVersion {
+	case "":
+		return UnionVersionUnspecified, nil
+	case "v0":
+		return UnionVersionV0, nil
+	case "v1":
+		return UnionVersionV1, nil
+	}
+	return UnionVersionUnspecified, fmt.Errorf("unrecognized union version %q", unionVersion)
 }

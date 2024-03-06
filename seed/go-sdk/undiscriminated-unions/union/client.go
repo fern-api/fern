@@ -4,9 +4,9 @@ package union
 
 import (
 	context "context"
-	fern "github.com/undiscriminated-unions/fern"
-	core "github.com/undiscriminated-unions/fern/core"
-	option "github.com/undiscriminated-unions/fern/option"
+	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+	core "github.com/fern-api/undiscriminated-go/core"
+	option "github.com/fern-api/undiscriminated-go/option"
 	http "net/http"
 )
 
@@ -32,9 +32,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) Get(
 	ctx context.Context,
-	request *fern.MyUnion,
+	request *undiscriminatedgo.MyUnion,
 	opts ...option.RequestOption,
-) (*fern.MyUnion, error) {
+) (*undiscriminatedgo.MyUnion, error) {
 	options := core.NewRequestOptions(opts...)
 
 	baseURL := ""
@@ -48,7 +48,7 @@ func (c *Client) Get(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	var response *fern.MyUnion
+	var response *undiscriminatedgo.MyUnion
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{

@@ -4,4 +4,17 @@
 
 import * as SeedExamples from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "actor_123",
+ *         name: "Brad Pitt"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "Jennifer Lawrence",
+ *         id: "actor_456"
+ *     }
+ */
 export type CastMember = SeedExamples.Actor | SeedExamples.Actress | SeedExamples.StuntDouble;

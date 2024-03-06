@@ -1,6 +1,5 @@
 {
   "ignores": [
-    "@types/jest",
     "@types/node",
     "webpack-cli",
     "@fern-api/umd-compat-loader",

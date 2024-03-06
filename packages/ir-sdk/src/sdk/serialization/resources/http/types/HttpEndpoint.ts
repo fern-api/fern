@@ -34,7 +34,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             errors: core.serialization.lazy(async () => (await import("../../..")).ResponseErrors),
             auth: core.serialization.boolean(),
             idempotent: core.serialization.boolean(),
-            pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
+            pagination: core.serialization.lazy(async () => (await import("../../..")).Pagination).optional(),
             examples: core.serialization.list(
                 core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointCall)
             ),

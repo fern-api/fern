@@ -24,7 +24,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 absolutePathToOpenAPI: AbsoluteFilePath.of(openApiPath),
                 absolutePathToAsyncAPI,
                 absolutePathToOpenAPIOverrides: undefined,
-                taskContext: mockTaskContext
+                taskContext: mockTaskContext,
+                disableExamples: undefined
             });
             const fernDefinition = convert({ openApiIr, taskContext: mockTaskContext });
             expect(fernDefinition).toMatchSnapshot();

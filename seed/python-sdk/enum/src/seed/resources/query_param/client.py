@@ -38,11 +38,14 @@ class QueryParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
         from seed.client import SeedEnum
 
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send(operand=Operand., )
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query_param.send(
+            operand=">",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -173,11 +176,14 @@ class AsyncQueryParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
         from seed.client import AsyncSeedEnum
 
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.query_param.send(operand=Operand., )
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.query_param.send(
+            operand=">",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

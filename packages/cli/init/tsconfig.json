@@ -1,10 +1,11 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../commons/fs-utils" },
     { "path": "../../core" },
+    { "path": "../../docs-config-sdk" },
     { "path": "../auth" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },

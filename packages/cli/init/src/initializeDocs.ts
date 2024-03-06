@@ -1,7 +1,7 @@
+import { FernDocsConfig as RawDocs } from "@fern-api/docs-config-sdk";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";

@@ -1,4 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`class > basic 1`] = `
+"using System.Text.Json.Serialization
+
+namespace Fern
+
+public partial class Plant
+{
+    /// <summary>
+    /// Whether the plant has been watered
+    /// </summary>
+    [JsonProperty("watered")]
+    public bool watered { get; init; }
+}
+"
+`;
 
 exports[`class basic 1`] = `
 "using System.Text.Json.Serialization

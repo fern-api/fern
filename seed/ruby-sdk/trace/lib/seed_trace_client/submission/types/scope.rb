@@ -7,11 +7,11 @@ module SeedTraceClient
     class Scope
       attr_reader :variables, :additional_properties
 
-      # @param variables [Hash{String => String}]
+      # @param variables [Hash{String => Commons::DebugVariableValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::Scope]
       def initialize(variables:, additional_properties: nil)
-        # @type [Hash{String => String}]
+        # @type [Hash{String => Commons::DebugVariableValue}]
         @variables = variables
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,8 +23,11 @@ module SeedTraceClient
       # @return [Submission::Scope]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        variables = struct.variables
+        parsed_json = JSON.parse(json_object)
+        variables = parsed_json["variables"]&.transform_values do |_k, v|
+          v = v.to_json
+          Commons::DebugVariableValue.from_json(json_object: v)
+        end
         new(variables: variables, additional_properties: struct)
       end
 

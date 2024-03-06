@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import re
 from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
@@ -376,26 +375,12 @@ def get_field_name_initializer(
             arg_present = True
             writer.write("default_factory=")
             writer.write_node(default_factory)
-        if description is not None:
-            if arg_present:
-                writer.write(", ")
-            arg_present = True
-            lines = re.split("[\n|\r]", description)
-            if len(lines) > 1:
-                writer.write_line("description=(")
-                for i, line in enumerate(lines):
-                    line = line.replace('"', '\\"')
-                    if i == (len(lines) - 1):
-                        # only add the last line if not empty
-                        if line:
-                            writer.write_line(f'"{line}\\n"')
-                    else:
-                        writer.write_line(f'"{line}\\n"')
-                writer.write_line(")")
-            else:
-                escaped_description = description.replace('"', '\\"')
-                writer.write(f'description="{escaped_description}"')
         writer.write(")")
+        if description is not None:
+            writer.write_newline_if_last_line_not()
+            writer.write_line('"""')
+            writer.write_line(description)
+            writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))
 

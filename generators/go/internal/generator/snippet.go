@@ -14,16 +14,19 @@ import (
 // SnippetWriter writes codes snippets as AST expressions from examples.
 type SnippetWriter struct {
 	baseImportPath string
+	unionVersion   UnionVersion
 	types          map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // NewSnippetWriter constructs a new *SnippetWriter.
 func NewSnippetWriter(
 	baseImportPath string,
+	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 ) *SnippetWriter {
 	return &SnippetWriter{
 		baseImportPath: baseImportPath,
+		unionVersion:   unionVersion,
 		types:          types,
 	}
 }
@@ -147,11 +150,8 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			},
 		}
 	}
-	var parameters []ast.Expr
-	if parameter := s.getSnippetForExampleSingleUnionTypeProperties(exampleUnionType.SingleUnionType.Shape); parameter != nil {
-		parameters = append(parameters, parameter)
-	}
-	if len(parameters) == 0 {
+	parameter := s.getSnippetForExampleSingleUnionTypeProperties(exampleUnionType.SingleUnionType.Shape)
+	if parameter == nil {
 		// This union type doesn't have any properties, so we can just construct it
 		// as an in-line struct.
 		return &ast.StructType{
@@ -166,6 +166,18 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			},
 		}
 	}
+	if s.unionVersion == UnionVersionV1 {
+		// In UnionVersionV1, we just return a struct literal with the union type property set.
+		return &ast.StructType{
+			Name: importedReference,
+			Fields: []*ast.Field{
+				{
+					Key:   exampleUnionType.SingleUnionType.WireDiscriminantValue.Name.PascalCase.UnsafeName,
+					Value: parameter,
+				},
+			},
+		}
+	}
 	return &ast.CallExpr{
 		FunctionName: &ast.ImportedReference{
 			Name: fmt.Sprintf(
@@ -175,7 +187,7 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			),
 			ImportPath: importedReference.ImportPath,
 		},
-		Parameters: parameters,
+		Parameters: []ast.Expr{parameter},
 	}
 }
 
@@ -223,6 +235,19 @@ func (s *SnippetWriter) getSnippetForExampleUndiscriminatedUnionType(
 			},
 		}
 	}
+	parameter := s.GetSnippetForExampleTypeReference(exampleUndiscriminatedUnionType.SingleUnionType)
+	if s.unionVersion == UnionVersionV1 {
+		// In UnionVersionV1, we just return a struct literal with the union type property set.
+		return &ast.StructType{
+			Name: importedReference,
+			Fields: []*ast.Field{
+				{
+					Key:   field,
+					Value: parameter,
+				},
+			},
+		}
+	}
 	return &ast.CallExpr{
 		FunctionName: &ast.ImportedReference{
 			Name: fmt.Sprintf(
@@ -233,7 +258,7 @@ func (s *SnippetWriter) getSnippetForExampleUndiscriminatedUnionType(
 			ImportPath: importedReference.ImportPath,
 		},
 		Parameters: []ast.Expr{
-			s.GetSnippetForExampleTypeReference(exampleUndiscriminatedUnionType.SingleUnionType),
+			parameter,
 		},
 	}
 }

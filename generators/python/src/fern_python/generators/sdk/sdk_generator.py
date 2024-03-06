@@ -70,8 +70,14 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
 
-        if not custom_config.client_filename.endswith(".py"):
+        if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
+
+        if not custom_config.client.filename.endswith(".py"):
+            raise RuntimeError("client_location.filename must end in .py")
+
+        if not custom_config.client.exported_filename.endswith(".py"):
+            raise RuntimeError("client_location.exported_filename must end in .py")
 
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
@@ -95,6 +101,7 @@ class SdkGenerator(AbstractGenerator):
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
             improved_imports=custom_config.improved_imports,
+            use_str_enums=custom_config.pydantic_config.use_str_enums,
         )
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -238,7 +245,7 @@ class SdkGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> GeneratedRootClient:
-        filepath = context.get_filepath_for_root_client()
+        filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
@@ -246,8 +253,8 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
-            class_name=context.get_class_name_for_root_client(),
-            async_class_name="Async" + context.get_class_name_for_root_client(),
+            class_name=context.get_class_name_for_generated_root_client(),
+            async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
         ).generate(source_file=source_file)

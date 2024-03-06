@@ -16,6 +16,7 @@ export async function getOpenAPIIRFromOpenAPIWorkspace(
         absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
         absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
         absolutePathToOpenAPIOverrides: openapiWorkspace.generatorsConfiguration?.absolutePathToOpenAPIOverrides,
+        disableExamples: openapiWorkspace.generatorsConfiguration?.disableOpenAPIExamples,
         taskContext: context
     });
 }
@@ -62,7 +63,8 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
             },
             packageMarkers: {},
             importedDefinitions: {}
-        }
+        },
+        changelog: openapiWorkspace.changelog
     };
 }
 

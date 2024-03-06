@@ -5,3 +5,7 @@ auth-schemes:
     header: X-FERN-API-KEY
     type: string
     env: FERN_API_KEY
+headers:
+  X-Another-Header:
+    type: string
+    env: ANOTHER_ENV_VAR

@@ -16,17 +16,15 @@ except ImportError:
 class GetDefaultStarterFilesRequest(pydantic.BaseModel):
     input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
     output_type: VariableType = pydantic.Field(alias="outputType")
-    method_name: str = pydantic.Field(
-        alias="methodName",
-        description=(
-            "The name of the `method` that the student has to complete.\n"
-            "The method name cannot include the following characters:\n"
-            "  - Greater Than `>`\n"
-            "  - Less Than `<``\n"
-            "  - Equals `=`\n"
-            "  - Period `.`\n"
-        ),
-    )
+    method_name: str = pydantic.Field(alias="methodName")
+    """
+    The name of the `method` that the student has to complete.
+    The method name cannot include the following characters:
+      - Greater Than `>`
+      - Less Than `<``
+      - Equals `=`
+      - Period `.`
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

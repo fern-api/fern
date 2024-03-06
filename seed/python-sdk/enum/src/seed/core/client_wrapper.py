@@ -4,6 +4,8 @@ import typing
 
 import httpx
 
+from generators.python.core_utilities.sdk.http_client import AsyncHttpClient, HttpClient
+
 
 class BaseClientWrapper:
     def __init__(self, *, base_url: str):
@@ -24,10 +26,10 @@ class BaseClientWrapper:
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(self, *, base_url: str, httpx_client: httpx.Client):
         super().__init__(base_url=base_url)
-        self.httpx_client = httpx_client
+        self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
 class AsyncClientWrapper(BaseClientWrapper):
     def __init__(self, *, base_url: str, httpx_client: httpx.AsyncClient):
         super().__init__(base_url=base_url)
-        self.httpx_client = httpx_client
+        self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

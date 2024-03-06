@@ -412,6 +412,7 @@ exports[`generate IR 1`] = `
     {
       "availability": null,
       "docs": null,
+      "env": null,
       "name": {
         "name": {
           "camelCase": {
@@ -4999,6 +5000,7 @@ exports[`generate IR 1`] = `
             {
               "availability": null,
               "docs": null,
+              "env": null,
               "name": {
                 "name": {
                   "camelCase": {

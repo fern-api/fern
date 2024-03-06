@@ -117,7 +117,7 @@ export class ClientsGenerator {
         });
         const [syncClientClass, asyncClientClass] = generateRequestClients(
             this.intermediateRepresentation.sdkConfig,
-            this.clientName,
+            this.gemName,
             this.sdkVersion,
             this.headersGenerator,
             environmentClass?.classReference,
@@ -214,7 +214,6 @@ export class ClientsGenerator {
             services: Map<ServiceId, HttpService>,
             subpackages: Map<SubpackageId, Subpackage>,
             clientName: string,
-            gemName: string,
             crf: ClassReferenceFactory,
             irBasePath: string,
             generatedClasses: Map<TypeId, Class_>,
@@ -251,7 +250,6 @@ export class ClientsGenerator {
                                     services,
                                     subpackages,
                                     clientName,
-                                    gemName,
                                     crf,
                                     irBasePath,
                                     generatedClasses,
@@ -298,7 +296,6 @@ export class ClientsGenerator {
                 this.services,
                 this.subpackages,
                 this.clientName,
-                this.gemName,
                 this.crf,
                 this.irBasePath,
                 this.generatedClasses,

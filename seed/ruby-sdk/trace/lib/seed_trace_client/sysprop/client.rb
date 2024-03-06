@@ -29,7 +29,7 @@ module SeedTraceClient
     end
 
     # @param request_options [RequestOptions]
-    # @return [Hash{Commons::Language => Commons::Language}]
+    # @return [Hash{Commons::Language => Integer}]
     def get_num_warm_instances(request_options: nil)
       response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -67,7 +67,7 @@ module SeedTraceClient
     end
 
     # @param request_options [RequestOptions]
-    # @return [Hash{Commons::Language => Commons::Language}]
+    # @return [Hash{Commons::Language => Integer}]
     def get_num_warm_instances(request_options: nil)
       Async do
         response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|

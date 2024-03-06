@@ -8,17 +8,17 @@ module SeedTraceClient
       class GeneratedFiles
         attr_reader :generated_test_case_files, :generated_template_files, :other, :additional_properties
 
-        # @param generated_test_case_files [Hash{Commons::Language => Commons::Language}]
-        # @param generated_template_files [Hash{Commons::Language => Commons::Language}]
-        # @param other [Hash{Commons::Language => Commons::Language}]
+        # @param generated_test_case_files [Hash{Commons::Language => V2::Problem::Files}]
+        # @param generated_template_files [Hash{Commons::Language => V2::Problem::Files}]
+        # @param other [Hash{Commons::Language => V2::Problem::Files}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::GeneratedFiles]
         def initialize(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{Commons::Language => V2::Problem::Files}]
           @generated_test_case_files = generated_test_case_files
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{Commons::Language => V2::Problem::Files}]
           @generated_template_files = generated_template_files
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{Commons::Language => V2::Problem::Files}]
           @other = other
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
@@ -30,10 +30,19 @@ module SeedTraceClient
         # @return [V2::Problem::GeneratedFiles]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          JSON.parse(json_object)
-          generated_test_case_files = struct.generatedTestCaseFiles
-          generated_template_files = struct.generatedTemplateFiles
-          other = struct.other
+          parsed_json = JSON.parse(json_object)
+          generated_test_case_files = parsed_json["generatedTestCaseFiles"]&.transform_values do |_k, v|
+            v = v.to_json
+            V2::Problem::Files.from_json(json_object: v)
+          end
+          generated_template_files = parsed_json["generatedTemplateFiles"]&.transform_values do |_k, v|
+            v = v.to_json
+            V2::Problem::Files.from_json(json_object: v)
+          end
+          other = parsed_json["other"]&.transform_values do |_k, v|
+            v = v.to_json
+            V2::Problem::Files.from_json(json_object: v)
+          end
           new(generated_test_case_files: generated_test_case_files, generated_template_files: generated_template_files,
               other: other, additional_properties: struct)
         end

@@ -1,7 +1,7 @@
 {
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../../../packages/commons/core-utils" },
     { "path": "../../utils/abstract-schema-generator" },

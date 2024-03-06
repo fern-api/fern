@@ -2,7 +2,7 @@
 ## Echo
 
 
-<details><summary> <code>examples.<a href="./src/Client.ts">echo</a>({ ...params }) -> string</code> </summary>
+<details><summary> <code>seedExamples.<a href="./src/Client.ts">echo</a>({ ...params }) -> string</code> </summary>
 
 <dl>
 
@@ -77,7 +77,7 @@ await seedExamples.echo("Hello world!");
 ## File Notification Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code> </summary>
+<details><summary> <code>seedExamples.file.notification.service.<a href="./src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code> </summary>
 
 <dl>
 
@@ -152,7 +152,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 ## File Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code> </summary>
+<details><summary> <code>seedExamples.file.service.<a href="./src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code> </summary>
 
 <dl>
 
@@ -261,7 +261,7 @@ await seedExamples.file.service.getFile("file.txt", {
 ## Health Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code> </summary>
+<details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code> </summary>
 
 <dl>
 
@@ -351,7 +351,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 </details>
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code> </summary>
+<details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code> </summary>
 
 <dl>
 
@@ -434,7 +434,7 @@ await seedExamples.health.service.ping();
 ## Service
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code> </summary>
+<details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code> </summary>
 
 <dl>
 
@@ -504,7 +504,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 </details>
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> SeedExamples.MovieId</code> </summary>
+<details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> SeedExamples.MovieId</code> </summary>
 
 <dl>
 
@@ -582,7 +582,7 @@ await seedExamples.service.createMovie({
 </details>
 
 
-<details><summary> <code>examples.<a href="./src/api/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> SeedExamples.Metadata</code> </summary>
+<details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> SeedExamples.Metadata</code> </summary>
 
 <dl>
 

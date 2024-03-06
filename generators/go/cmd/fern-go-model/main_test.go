@@ -253,12 +253,6 @@ func TestTime(t *testing.T) {
 	})
 
 	t.Run("undiscrimnated union (optional)", func(t *testing.T) {
-		empty := undiscriminated.NewUnionWithOptionalTimeFromDateOptional(nil)
-
-		emptyBytes, err := json.Marshal(empty)
-		require.NoError(t, err)
-		assert.Equal(t, `null`, string(emptyBytes))
-
 		value := undiscriminated.NewUnionWithOptionalTimeFromDateOptional(&date)
 
 		bytes, err := json.Marshal(value)

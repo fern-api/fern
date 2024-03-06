@@ -7,11 +7,11 @@ module SeedTraceClient
     class WorkspaceStarterFilesResponse
       attr_reader :files, :additional_properties
 
-      # @param files [Hash{Commons::Language => Commons::Language}]
+      # @param files [Hash{Commons::Language => Submission::WorkspaceFiles}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceStarterFilesResponse]
       def initialize(files:, additional_properties: nil)
-        # @type [Hash{Commons::Language => Commons::Language}]
+        # @type [Hash{Commons::Language => Submission::WorkspaceFiles}]
         @files = files
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,8 +23,11 @@ module SeedTraceClient
       # @return [Submission::WorkspaceStarterFilesResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        files = struct.files
+        parsed_json = JSON.parse(json_object)
+        files = parsed_json["files"]&.transform_values do |_k, v|
+          v = v.to_json
+          Submission::WorkspaceFiles.from_json(json_object: v)
+        end
         new(files: files, additional_properties: struct)
       end
 

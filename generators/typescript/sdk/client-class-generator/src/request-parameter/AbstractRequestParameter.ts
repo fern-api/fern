@@ -73,4 +73,5 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         hasQuestionToken: boolean;
         initializer?: ts.Expression;
     };
+    public abstract isOptional({ context }: { context: SdkContext }): boolean;
 }

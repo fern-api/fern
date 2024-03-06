@@ -81,7 +81,7 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         _queryParams["number"] = number_.toString();
         const _response = await core.fetcher({
@@ -134,7 +134,7 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query, numer } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (Array.isArray(query)) {
             _queryParams["query"] = query.map((item) => item);
         } else {
@@ -198,7 +198,7 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),

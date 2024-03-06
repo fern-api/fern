@@ -40,4 +40,8 @@ export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSch
         generatorContext.logger.info("Received IR", JSON.stringify(intermediateRepresentation, null, 2));
         await writeFile(`/${config.output.path}/ir.json`, JSON.stringify(intermediateRepresentation, null, 2));
     }
+
+    protected shouldTolerateRepublish(customConfig: ModelCustomConfigSchema): boolean {
+        return false;
+    }
 }

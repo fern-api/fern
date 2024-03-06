@@ -64,12 +64,14 @@ export const FernOpenAPIExtension = {
 
     /**
      * Used to specify if an endpoint should be generated
-     * as a paginated endpoint.
+     * as a paginated endpoint. Both cursor and offset pagination
+     * examples are shown below.
      *
      * Example usage:
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-pagination:
+     *         type: "cursor"
      *         page: $request.page
      *         next: $response.next
      *         results: $response.results
@@ -80,8 +82,8 @@ export const FernOpenAPIExtension = {
      *
      * Example usage:
      *   x-fern-pagination:
+     *     type: "offset"
      *     page: $request.page
-     *     next: $response.next
      *     results: $response.results
      *
      *   paths:
@@ -310,6 +312,10 @@ export const FernOpenAPIExtension = {
      *    name: api_key
      *    optional: true
      *  - header: telemetry_id
+     *    env: MY_ENVVAR
+     *  - header: X-API-Version
+     *    name: version
+     *    type: literal<"2.10"> # The type of the header to use
      */
     FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;

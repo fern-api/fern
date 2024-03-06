@@ -1,10 +1,27 @@
-irVersion: v34
+irVersion: v36
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
+  examples: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        client: 
+          filename: base_client.py
+          class_name: BaseSeedExhaustive
+          exported_filename: client.py
+          exported_class_name: SeedExhaustive
+      outputFolder: client-filename
+  enum:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          use_str_enums: true
+      outputFolder: strenum
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -37,18 +54,15 @@ fixtures:
         improved_imports: true
       outputFolder: improved_imports
 scripts:
-  - docker: fernapi/python-seed
+  - docker: mwalbeck/python-poetry:1.7-3.11
     commands:
       # The global python version is 3.8
       # - mypy --cache-dir /tmp . --cache-fine-grained
       # - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
-      - pyenv shell 3.9
       - poetry install
       - poetry run mypy .
 allowedFailures: 
   - response-property
-  # Generator does not handle list of enums
-  - enum
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports

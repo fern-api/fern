@@ -97,7 +97,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         npmPackage,
                         dryRun: config.dryRun,
                         generatorNotificationService,
-                        typescriptProject
+                        typescriptProject,
+                        shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
                     await typescriptProject.npmPackAsZipTo({
                         logger,
@@ -170,6 +171,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
+    protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 }
 
 class GeneratorContextImpl implements GeneratorContext {

@@ -570,6 +570,105 @@ exports[`generate IR 1`] = `
               },
             },
             {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "optionalUser",
+                    "unsafeName": "optionalUser",
+                  },
+                  "originalName": "optionalUser",
+                  "pascalCase": {
+                    "safeName": "OptionalUser",
+                    "unsafeName": "OptionalUser",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "OPTIONAL_USER",
+                    "unsafeName": "OPTIONAL_USER",
+                  },
+                  "snakeCase": {
+                    "safeName": "optional_user",
+                    "unsafeName": "optional_user",
+                  },
+                },
+                "wireValue": "optionalUser",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "user",
+                            "unsafeName": "user",
+                          },
+                          "originalName": "user",
+                          "pascalCase": {
+                            "safeName": "User",
+                            "unsafeName": "User",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "USER",
+                            "unsafeName": "USER",
+                          },
+                          "snakeCase": {
+                            "safeName": "user",
+                            "unsafeName": "user",
+                          },
+                        },
+                      ],
+                      "file": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "user",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "packagePath": [],
+                    },
+                    "name": {
+                      "camelCase": {
+                        "safeName": "user",
+                        "unsafeName": "user",
+                      },
+                      "originalName": "User",
+                      "pascalCase": {
+                        "safeName": "User",
+                        "unsafeName": "User",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "USER",
+                        "unsafeName": "USER",
+                      },
+                      "snakeCase": {
+                        "safeName": "user",
+                        "unsafeName": "user",
+                      },
+                    },
+                    "typeId": "type_user:User",
+                  },
+                },
+              },
+            },
+            {
               "allowMultiple": true,
               "availability": null,
               "docs": null,

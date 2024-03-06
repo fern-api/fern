@@ -74,6 +74,15 @@ class CoreUtilities:
             ),
             exports={"File", "convert_file_dict_to_httpx_tuples"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="http_client.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="http_client"),
+            ),
+            exports={"HttpClient", "AsyncHttpClient"},
+        )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
 
@@ -222,5 +231,19 @@ class CoreUtilities:
                     ),
                 ),
                 args=[obj],
+            )
+        )
+
+    def http_client(self, obj: AST.Expression, is_async: bool) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "http_client"),
+                        named_import="HttpClient" if not is_async else "AsyncHttpClient",
+                    ),
+                ),
+                kwargs=[("httpx_client", obj)],
             )
         )

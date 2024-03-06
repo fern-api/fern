@@ -11,10 +11,11 @@ module SeedAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param x_another_header [String]
     # @return [Client]
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
-                                          api_key: api_key)
+                                          api_key: api_key, x_another_header: x_another_header)
       @service = ServiceClient.new(request_client: @request_client)
     end
   end
@@ -25,10 +26,11 @@ module SeedAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param x_another_header [String]
     # @return [AsyncClient]
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
-                                                     api_key: api_key)
+                                                     api_key: api_key, x_another_header: x_another_header)
       @service = AsyncServiceClient.new(request_client: @async_request_client)
     end
   end

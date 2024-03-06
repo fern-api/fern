@@ -5,17 +5,115 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.5] - 2024-02-27
+
+- Introduce a custom configuration called `tolerateRepublish` which supports running
+  npm publish with the flag `--tolerateRepublish`. This flag allows you to publish 
+  on top of an existing npm package. 
+
+  To turn on this flag, update your generators.yml: 
+
+  ```yaml
+  groups: 
+    generators: 
+      - name: fernapi/fern-typscript-node-sdk
+        version: 0.12.5
+        ...
+        config: 
+          tolerateRepublish: true
+  ```
+
+## [0.12.4] - 2024-02-27
+
+- Fix: Previously reference.md was just leveraging the function name for the reference, now it leverages the full package-scoped path, mirroring how the function would be used in reality.
+
+```ts
+seedExamples.getException(...)
+
+// is now
+
+seedExamples.file.notification.service.getException(...)
+```
+
+- Fix: Previously SDK code snippets would not support generation with undiscriminated unions. Now, it does.
+
+## [0.12.2] - 2024-02-27
+
+- Fix: Previously SDK code snippets would not take into account default parameter values
+  and would always include a `{}`. This was odd and didn't represent how a developer
+  would use the SDK. Now, the snippets check for default parameter values and omit
+  if there are no fields specified.
+
+  ```ts
+  // Before
+  client.users.list({});
+
+  // After
+  client.users.list();
+  ```
+
+## [0.12.1] - 2024-02-27
+
+- Fix: Optional objects in deep query parameters were previously being incorrectly
+  serialized. Before this change, optional objects were just being JSON.stringified
+  which would send the incorrect contents over the wire.
+
+  ```ts
+  // Before
+  if (foo != null) {
+    _queryParams["foo"] = JSON.stringify(foo);
+  }
+
+  // After
+  if (foo != null) {
+    _queryParams["foo"] = foo;
+  }
+
+  // After (with serde layer)
+  if (foo != null) {
+    _queryParams["foo"] = serializers.Foo.jsonOrThrow(foo, {
+      skipValidation: false,
+      breadcrumbs: ["request", "foo"]
+    });
+  }
+  ```
+
+## [0.12.0] - 2024-02-26
+
+- Feature: support deep object query parameter serialization. If, query parameters are
+  objects then Fern will support serializing them.
+
+  ```yaml
+  MyFoo:
+    properties:
+      bar: optional<string>
+
+  query-parameters:
+    foo: MyFoo
+  ```
+
+  will now be serialized as `?foo[bar]="...` and appear in the SDK as a regular object
+
+  ```ts
+  client.doThing({
+    foo: {
+      bar: "..."
+    }
+  });
+  ```
+
 ## [0.11.5] - 2024-02-15
 
-- Fix: Previously `core.Stream` would not work in the Browser. Now the generated Fern SDK 
-  includes a polyfill for `ReadableStream` and uses `TextDecoder` instead of `Buffer`. 
+- Fix: Previously `core.Stream` would not work in the Browser. Now the generated Fern SDK
+  includes a polyfill for `ReadableStream` and uses `TextDecoder` instead of `Buffer`.
 
-- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints, 
+- Feature: add in a reference markdown file, this shows a quick outline of the available endpoints,
   it's documentation, code snippet, and parameters.
 
-  This feature is currently behind a feature flag called `includeApiReference` and can be used 
+  This feature is currently behind a feature flag called `includeApiReference` and can be used
+
   ```yaml
-  config: 
+  config:
     includeApiReference: true
   ```
 

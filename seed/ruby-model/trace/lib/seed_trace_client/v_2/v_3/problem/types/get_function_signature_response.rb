@@ -9,11 +9,11 @@ module SeedTraceClient
         class GetFunctionSignatureResponse
           attr_reader :function_by_language, :additional_properties
 
-          # @param function_by_language [Hash{Commons::Language => Commons::Language}]
+          # @param function_by_language [Hash{Commons::Language => String}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::GetFunctionSignatureResponse]
           def initialize(function_by_language:, additional_properties: nil)
-            # @type [Hash{Commons::Language => Commons::Language}]
+            # @type [Hash{Commons::Language => String}]
             @function_by_language = function_by_language
             # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties

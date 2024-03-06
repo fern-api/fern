@@ -1,5 +1,5 @@
+import { DocsConfiguration } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { DocsConfiguration } from "@fern-fern/docs-config/api";
 import { NodePath } from "../NodePath";
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {

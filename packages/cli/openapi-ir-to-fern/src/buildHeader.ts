@@ -36,5 +36,8 @@ export function buildHeader({
     if (header.description != null) {
         headerSchema.docs = header.description;
     }
+    if (header.env != null) {
+        headerSchema.env = header.env;
+    }
     return headerSchema;
 }

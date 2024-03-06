@@ -20,6 +20,7 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
+    selectAudiences,
     irVersion,
     outputVersion,
     outputMode,
@@ -32,6 +33,7 @@ export async function runDockerForWorkspace({
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
+    selectAudiences?: string[];
     irVersion?: string;
     outputVersion?: string;
     outputMode: OutputMode;
@@ -40,7 +42,7 @@ export async function runDockerForWorkspace({
 }): Promise<void> {
     const generatorGroup: GeneratorGroup = {
         groupName: "test",
-        audiences: ALL_AUDIENCES,
+        audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
         generators: [
             {
                 name: docker.name,

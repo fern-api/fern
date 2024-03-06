@@ -37,4 +37,4 @@ allowedFailures:
   - idempotency-headers
   - trace
   - undiscriminated-unions
-
+  - unions

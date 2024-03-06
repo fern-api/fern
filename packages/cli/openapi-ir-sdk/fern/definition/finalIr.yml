@@ -27,6 +27,8 @@ types:
       header: string
       name: optional<string>
       optional: optional<boolean>
+      env: optional<string>
+      schema: optional<Schema>
 
   Tags:
     properties:
@@ -256,6 +258,7 @@ types:
     properties:
       name: string
       schema: Schema
+      env: optional<string>
       parameterNameOverride:
         type: optional<string>
         docs: |

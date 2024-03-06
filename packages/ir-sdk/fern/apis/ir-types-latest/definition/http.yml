@@ -63,6 +63,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
+      env: optional<string>
   PathParameter:
     extends: commons.WithDocs
     properties:
@@ -202,6 +203,13 @@ types:
   Pagination:
     docs: |
       If set, the endpoint will be generated with auto-pagination features.
+    union:
+      cursor: CursorPagination
+      offset: OffsetPagination
+
+  CursorPagination:
+    docs: |
+      If set, the endpoint will be generated with auto-pagination features.
 
       The page must be defined as a query parameter included in the request,
       whereas the next page and results are resolved from properties defined
@@ -209,6 +217,16 @@ types:
     properties:
       page: QueryParameter
       next: PaginationProperty
+      results: PaginationProperty
+
+  OffsetPagination:
+    docs: |
+      The page must be defined as a query parameter included in the request,
+      whereas the results are resolved from properties defined on the response.
+
+      The page index is auto-incremented between every additional page request.
+    properties:
+      page: QueryParameter
       results: PaginationProperty
 
   PaginationProperty:

@@ -101,7 +101,7 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 			Raw  string `json:"raw" url:"raw"`
 			*ExampleType
 		}{
-			Type:        n.Type,
+			Type:        "one",
 			Docs:        n.Docs,
 			Raw:         n.Raw,
 			ExampleType: n.One,
@@ -164,7 +164,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Docs string `json:"docs" url:"docs"`
 			*ExampleType
 		}{
-			Type:        u.Type,
+			Type:        "one",
 			Docs:        u.Docs,
 			ExampleType: u.One,
 		}

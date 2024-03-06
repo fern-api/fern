@@ -17,11 +17,12 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL     string
-	HTTPClient  HTTPClient
-	HTTPHeader  http.Header
-	MaxAttempts uint
-	ApiKey      string
+	BaseURL        string
+	HTTPClient     HTTPClient
+	HTTPHeader     http.Header
+	MaxAttempts    uint
+	ApiKey         string
+	XAnotherHeader string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -43,6 +44,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	header.Set("X-FERN-API-KEY", fmt.Sprintf("%v", r.ApiKey))
+	header.Set("X-Another-Header", fmt.Sprintf("%v", r.XAnotherHeader))
 	return header
 }
 
@@ -97,4 +99,13 @@ type ApiKeyOption struct {
 
 func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
 	opts.ApiKey = a.ApiKey
+}
+
+// XAnotherHeaderOption implements the RequestOption interface.
+type XAnotherHeaderOption struct {
+	XAnotherHeader string
+}
+
+func (x *XAnotherHeaderOption) applyRequestOptions(opts *RequestOptions) {
+	opts.XAnotherHeader = x.XAnotherHeader
 }

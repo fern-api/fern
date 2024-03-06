@@ -1,5 +1,5 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }

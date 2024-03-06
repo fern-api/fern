@@ -29,7 +29,15 @@ import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
 
-export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenApiIntermediateRepresentation {
+export function generateIr({
+    openApi,
+    taskContext,
+    disableExamples
+}: {
+    openApi: OpenAPIV3.Document;
+    taskContext: TaskContext;
+    disableExamples: boolean | undefined;
+}): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
@@ -118,7 +126,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         let examples = endpointWithExample.examples;
-        if (examples.length === 0 || examples.every(hasIncompleteExample)) {
+        if (!disableExamples && (examples.length === 0 || examples.every(hasIncompleteExample))) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (endpointExample != null) {
                 examples = [endpointExample, ...endpointWithExample.examples];
@@ -165,7 +173,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     description: header.description,
                     name: header.name,
                     schema: convertSchemaWithExampleToSchema(header.schema),
-                    parameterNameOverride: header.parameterNameOverride
+                    parameterNameOverride: header.parameterNameOverride,
+                    env: header.env
                 };
             }),
             examples

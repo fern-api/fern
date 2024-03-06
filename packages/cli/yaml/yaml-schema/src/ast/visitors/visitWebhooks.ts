@@ -125,7 +125,8 @@ async function visitHeaders({
                     await visitTypeReference(type, nodePathForHeader);
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
-                audiences: noop
+                audiences: noop,
+                env: noop
             });
         }
     }
