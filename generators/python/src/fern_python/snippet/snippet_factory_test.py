@@ -7,7 +7,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
 from fern_python.codegen.ast.references.module import Module
 from fern_python.codegen.ast.references.reference import Reference, ReferenceImport
-from fern_python.codegen.filepath import ExportStrategy, Filepath
+from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.project import Project
 from fern_python.codegen.source_file import SourceFile
 from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
@@ -90,7 +90,7 @@ class SnippetTestFactory:
             for param in client.parameters
             if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"
         ]
-        non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR))
+        non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
         return AST.ClassInstantiation(
             class_=client.class_reference,
             # TODO: how can we do this in a more connected + typesafe way
@@ -109,7 +109,10 @@ class SnippetTestFactory:
         )
 
         source_file = SourceFileFactory.create(
-            project=self._project, filepath=utilities_filepath, generator_exec_wrapper=self._generator_exec_wrapper
+            project=self._project,
+            filepath=utilities_filepath,
+            generator_exec_wrapper=self._generator_exec_wrapper,
+            should_export=False,
         )
         sync_function_declaration = AST.FunctionDeclaration(
             name=self.SYNC_CLIENT_FIXTURE_NAME,
@@ -150,7 +153,7 @@ class SnippetTestFactory:
         source_file.add_expression(AST.Expression(async_function_declaration))
         # Maybe add `validate_json` function to this file as an assertion utility
 
-        self._project.write_source_file(source_file=source_file, filepath=utilities_filepath)
+        self._project.write_source_file(source_file=source_file, filepath=utilities_filepath, include_src_root=False)
 
     def _get_filepath_for_fern_filepath(self, fern_filepath: ir_types.FernFilepath) -> Filepath:
         directories: Tuple[Filepath.DirectoryFilepathPart, ...] = (
@@ -163,7 +166,6 @@ class SnippetTestFactory:
             directories += (
                 Filepath.DirectoryFilepathPart(
                     module_name=pathpart.snake_case.unsafe_name,
-                    export_strategy=ExportStrategy(export_all=True),
                 ),
             )
 
@@ -317,7 +319,10 @@ class SnippetTestFactory:
 
             # At least one endpoint has a snippet, now make the file
             source_file = source_file or SourceFileFactory.create(
-                project=self._project, filepath=filepath, generator_exec_wrapper=self._generator_exec_wrapper
+                project=self._project,
+                filepath=filepath,
+                generator_exec_wrapper=self._generator_exec_wrapper,
+                should_export=False,
             )
             # Add function to file
             source_file.add_expression(AST.Expression(function_declaration))
@@ -327,7 +332,7 @@ class SnippetTestFactory:
 
     def _write_test_files(self) -> None:
         for filepath, test_file in self._service_test_files.items():
-            self._project.write_source_file(source_file=test_file, filepath=filepath)
+            self._project.write_source_file(source_file=test_file, filepath=filepath, include_src_root=False)
 
     def _copy_utilities_to_project(self) -> None:
         utilities_filepath = Filepath(
@@ -345,6 +350,7 @@ class SnippetTestFactory:
             path_on_disk=os.path.join(source, "base_test_utilities.py"),
             filepath_in_project=utilities_filepath,
             exports={"validate_response"},
+            include_src_root=False,
         )
 
     def _validate_response(

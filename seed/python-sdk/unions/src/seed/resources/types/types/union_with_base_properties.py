@@ -38,6 +38,7 @@ class UnionWithBaseProperties_Integer(Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithBaseProperties_String(Base):
@@ -48,6 +49,7 @@ class UnionWithBaseProperties_String(Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithBaseProperties = typing.Union[UnionWithBaseProperties_Integer, UnionWithBaseProperties_String]

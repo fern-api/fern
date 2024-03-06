@@ -15,16 +15,16 @@ except ImportError:
 class ObjectWithOptionalField(pydantic.BaseModel):
     string: typing.Optional[str] = None
     integer: typing.Optional[int] = None
-    long: typing.Optional[int] = None
+    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
     double: typing.Optional[float] = None
-    bool: typing.Optional[bool] = None
+    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid: typing.Optional[uuid.UUID] = None
+    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
     base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list: typing.Optional[typing.List[str]] = None
-    set: typing.Optional[typing.Set[str]] = None
-    map: typing.Optional[typing.Dict[int, str]] = None
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
+    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

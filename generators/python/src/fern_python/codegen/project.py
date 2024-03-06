@@ -6,6 +6,8 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
+from isort import file
+
 from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
@@ -68,17 +70,18 @@ class Project:
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme
 
-    def source_file(self, filepath: Filepath) -> SourceFile:
+    def source_file(self, filepath: Filepath, should_export: Optional[bool]) -> SourceFile:
         """
         with project.source_file() as source_file:
             ...
         """
 
         def on_finish(source_file: SourceFileImpl) -> None:
-            self._module_manager.register_exports(
-                filepath=filepath,
-                exports=source_file.get_exports(),
-            )
+            if should_export:
+                self._module_manager.register_exports(
+                    filepath=filepath,
+                    exports=source_file.get_exports(),
+                )
 
         module = filepath.to_module()
         source_file = SourceFileImpl(
@@ -93,21 +96,37 @@ class Project:
         )
         return source_file
 
-    def write_source_file(self, *, source_file: SourceFile, filepath: Filepath) -> None:
-        source_file.write_to_file(filepath=self.get_source_file_filepath(filepath))
+    def write_source_file(
+        self, *, source_file: SourceFile, filepath: Filepath, include_src_root: Optional[bool] = True
+    ) -> None:
+        source_file.write_to_file(filepath=self.get_source_file_filepath(filepath, include_src_root=include_src_root))
 
-    def get_source_file_filepath(self, filepath: Filepath) -> str:
-        return os.path.join(self._project_filepath, str(filepath))
+    def get_source_file_filepath(self, filepath: Filepath, include_src_root: bool) -> str:
+        return (
+            os.path.join(self._project_filepath, str(filepath))
+            if include_src_root
+            else os.path.join(self._root_filepath, str(filepath))
+        )
 
-    def add_source_file_from_disk(self, *, path_on_disk: str, filepath_in_project: Filepath, exports: Set[str]) -> None:
+    def add_source_file_from_disk(
+        self,
+        *,
+        path_on_disk: str,
+        filepath_in_project: Filepath,
+        exports: Set[str],
+        include_src_root: Optional[bool] = True,
+    ) -> None:
         with open(path_on_disk, "r") as existing_file:
             writer = WriterImpl(should_format=self._should_format_files)
             writer.write(existing_file.read())
-            writer.write_to_file(filepath=self.get_source_file_filepath(filepath_in_project))
-        self._module_manager.register_exports(
-            filepath=filepath_in_project,
-            exports=exports,
-        )
+            writer.write_to_file(
+                filepath=self.get_source_file_filepath(filepath_in_project, include_src_root=include_src_root)
+            )
+        if include_src_root:
+            self._module_manager.register_exports(
+                filepath=filepath_in_project,
+                exports=exports,
+            )
 
     def add_file(self, filepath: str, contents: str) -> None:
         file = Path(os.path.join(self._root_filepath, filepath))

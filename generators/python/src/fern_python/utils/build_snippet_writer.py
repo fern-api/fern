@@ -5,6 +5,9 @@ from fern_python.generators.pydantic_model import (
     EnumSnippetGenerator,
     ObjectSnippetGenerator,
 )
+from fern_python.generators.pydantic_model.type_declaration_handler.undiscriminated_union_generator import (
+    UndiscriminatedUnionSnippetGenerator,
+)
 from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
 
 
@@ -35,6 +38,11 @@ def build_snippet_writer(
             example=example,
         ).generate_snippet(),
         discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
+            snippet_writer=snippet_writer,
+            name=name,
+            example=example,
+        ).generate_snippet(),
+        undiscriminated_union=lambda name, example: UndiscriminatedUnionSnippetGenerator(
             snippet_writer=snippet_writer,
             name=name,
             example=example,

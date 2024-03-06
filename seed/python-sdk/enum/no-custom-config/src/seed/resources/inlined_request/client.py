@@ -41,11 +41,16 @@ class InlinedRequestClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import SeedEnum
 
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.inlined_request.send(operand=Operand., )
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.inlined_request.send(
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
         if maybe_operand is not OMIT:
@@ -112,11 +117,16 @@ class AsyncInlinedRequestClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import AsyncSeedEnum
 
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.inlined_request.send(operand=Operand., )
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.inlined_request.send(
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
         if maybe_operand is not OMIT:

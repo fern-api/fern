@@ -932,11 +932,14 @@ class EndpointFunctionSnippetGenerator:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
             )
-            if not self._is_path_literal(path_parameter.name.original_name) and path_parameter_value is not None:
+            if not self._is_path_literal(path_parameter.name.original_name):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(path_parameter.name),
-                        value=path_parameter_value,
+                        # If there's no value put a None in place as path parameters are unnamed and cannot be skipped
+                        value=path_parameter_value
+                        if path_parameter_value is not None
+                        else AST.Expression(AST.TypeHint.none()),
                     ),
                 )
 

@@ -71,7 +71,7 @@ export async function runGenerator({
         mkdirSync(`${absolutePathToOutput}/.mock`, { recursive: true });
         writeFileSync(
             `${absolutePathToOutput}/.mock/fern.config.json`,
-            '{"organization": "fern-test", "version": "0.17.7"}'
+            '{"organization": "fern-test", "version": "0.19.0"}'
         );
     }
 

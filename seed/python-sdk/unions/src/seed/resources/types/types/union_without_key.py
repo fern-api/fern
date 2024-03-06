@@ -15,6 +15,7 @@ class UnionWithoutKey_Foo(Foo):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithoutKey_Bar(Bar):
@@ -24,6 +25,7 @@ class UnionWithoutKey_Bar(Bar):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]

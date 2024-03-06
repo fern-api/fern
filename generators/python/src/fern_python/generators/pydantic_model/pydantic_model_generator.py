@@ -6,6 +6,9 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.pydantic_model.type_declaration_handler.undiscriminated_union_generator import (
+    UndiscriminatedUnionSnippetGenerator,
+)
 from fern_python.generators.sdk import custom_config
 from fern_python.snippet import (
     SnippetRegistry,
@@ -167,6 +170,11 @@ class PydanticModelGenerator(AbstractGenerator):
                 example=example,
             ).generate_snippet(),
             discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
+                snippet_writer=snippet_writer,
+                name=name,
+                example=example,
+            ).generate_snippet(),
+            undiscriminated_union=lambda name, example: UndiscriminatedUnionSnippetGenerator(
                 snippet_writer=snippet_writer,
                 name=name,
                 example=example,

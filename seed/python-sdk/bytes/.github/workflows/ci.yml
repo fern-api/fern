@@ -33,4 +33,9 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Test
-        run: poetry run pytest .
+        run: |
+            # Run mock server in the background
+            fern mock --api TODO --port 3002 &
+
+            # Run tests
+            poetry run pytest .

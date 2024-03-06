@@ -31,6 +31,9 @@ jobs:
             java:
               - 'docker/seed/Dockerfile.java'
               - '.github/workflows/seed-dockers.yml'
+            python:
+              - 'docker/seed/Dockerfile.python'
+              - '.github/workflows/seed-dockers.yml'
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:

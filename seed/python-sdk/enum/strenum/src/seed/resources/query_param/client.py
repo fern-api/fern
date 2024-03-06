@@ -45,6 +45,7 @@ class QueryParamClient:
         )
         client.query_param.send(
             operand=">",
+            operand_or_color="red",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -187,6 +188,7 @@ class AsyncQueryParamClient:
         )
         await client.query_param.send(
             operand=">",
+            operand_or_color="red",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
