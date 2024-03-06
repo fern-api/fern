@@ -1,3 +1,8 @@
+---
+title: Packages in Fern Definition 
+description: Fern Definition packages have namespaces for reusing API type and error names across packages, and can configure the order in which your docs shows services.
+---
+
 ## What is a package?
 
 Every folder in your API definition is a package.
@@ -33,7 +38,7 @@ other definition file, it can contain [imports](/overview/define-your-api/fernde
 and [errors](/overview/define-your-api/ferndef/errors).
 
 Endpoints in `__package__.yml` will appear at the root of the package.
-For example, the following generated SDK
+For example, the following generated SDK:
 
 ```ts
 const client = new Client();
@@ -41,7 +46,7 @@ const client = new Client();
 client.submitRating('goodwill-hunting', 9.5);
 ```
 
-would have a `fern` directory
+would have a `fern/` folder:
 
 ```yaml
 fern/
@@ -101,7 +106,7 @@ fern/
 of your services. This is relevant when you want to control the display
 of your documentation.
 
-For example, let's say you have the following Fern Directory:
+For example, let's say you have the following `fern/` folder:
 
 ```yaml
 fern/
@@ -127,7 +132,7 @@ navigation:
 </CodeBlock>
 
 
-Note the `fern` directory structure will now look like:
+Note the `fern/` folder structure will now look like:
 
 ```yaml
 fern/

@@ -1,3 +1,8 @@
+---
+title: Types in Fern Definition 
+description: Types describe the data model of your API. Fern has many built-in types and supports custom types, as well as extending and aliasing objects, and unions.
+---
+
 Types describe the data model of your API.
 
 ## Built-in types
@@ -198,11 +203,12 @@ MyUnion:
     - integer
 ```
 
-### Documentation
+### Documenting types
 
 You can add documentation for types. These docs are passed into the compiler,
 and are incredibly useful in the generated outputs (e.g., docstrings in SDKs).
 
+<CodeBlock title="Fern Definition">
 ```yaml
 types:
   Person:
@@ -213,8 +219,10 @@ types:
         docs: age in years
         type: integer
 ```
+</CodeBlock>
 
-```typescript Generated TypeScript SDK
+<CodeBlock title="Generated TypeScript SDK from Fern Definition">
+```typescript 
 /**
  * A person represents a human being
  */
@@ -224,3 +232,4 @@ interface Person {
   age: number;
 }
 ```
+</CodeBlock>

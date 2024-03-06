@@ -1,6 +1,8 @@
 instances:
   - url: fern.docs.buildwithfern.com
 
+title: Fern | Documentation
+
 tabs:
   overview:
     display-name: Overview
@@ -71,6 +73,7 @@ navigation:
           - page: Overview
             path: ./docs/pages/overview/cli/cli-overview.mdx
           - section: CLI commands
+            slug: commands
             contents:
               - page: fern generate
                 path: ./docs/pages/overview/cli/cli-commands/fern-generate.mdx
@@ -122,6 +125,7 @@ navigation:
             slug: typescript
           - page: TypeScript Browser SDK
             path: ./docs/pages/fern-sdks/sdk-generators/browser-sdk.mdx
+            slug: browser
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
             slug: python
