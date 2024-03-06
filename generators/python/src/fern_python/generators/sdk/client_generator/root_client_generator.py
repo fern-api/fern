@@ -316,7 +316,7 @@ class RootClientGenerator:
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")
-                    writer.write_node(default_environment)
+                    writer.write_node(default_environment)  # type: ignore
 
                 snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
                 environment_docs += f" {snippet.to_str()}"
