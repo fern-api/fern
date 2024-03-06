@@ -1,4 +1,5 @@
 from __future__ import annotations
+from email.mime import base
 
 import os
 from dataclasses import dataclass
@@ -70,18 +71,18 @@ class Project:
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme
 
-    def source_file(self, filepath: Filepath, should_export: Optional[bool]) -> SourceFile:
+    def source_file(self, filepath: Filepath, from_src: Optional[bool] = True) -> SourceFile:
         """
         with project.source_file() as source_file:
             ...
         """
 
         def on_finish(source_file: SourceFileImpl) -> None:
-            if should_export:
-                self._module_manager.register_exports(
-                    filepath=filepath,
-                    exports=source_file.get_exports(),
-                )
+            self._module_manager.register_exports(
+                filepath=filepath,
+                exports=source_file.get_exports() if from_src else set(),
+                from_src=from_src
+            )
 
         module = filepath.to_module()
         source_file = SourceFileImpl(
@@ -140,7 +141,7 @@ class Project:
         file.write_text(contents)
 
     def finish(self) -> None:
-        self._module_manager.write_modules(filepath=self._project_filepath)
+        self._module_manager.write_modules(base_filepath= self._root_filepath, filepath=self._project_filepath)
         if self._project_config is not None:
             # generate pyproject.toml
             py_project_toml = PyProjectToml(

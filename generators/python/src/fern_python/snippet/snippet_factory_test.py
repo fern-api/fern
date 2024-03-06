@@ -112,7 +112,7 @@ class SnippetTestFactory:
             project=self._project,
             filepath=utilities_filepath,
             generator_exec_wrapper=self._generator_exec_wrapper,
-            should_export=False,
+            from_src=False,
         )
         sync_function_declaration = AST.FunctionDeclaration(
             name=self.SYNC_CLIENT_FIXTURE_NAME,
@@ -322,7 +322,7 @@ class SnippetTestFactory:
                 project=self._project,
                 filepath=filepath,
                 generator_exec_wrapper=self._generator_exec_wrapper,
-                should_export=False,
+                from_src=False,
             )
             # Add function to file
             source_file.add_expression(AST.Expression(function_declaration))

@@ -19,10 +19,10 @@ class SourceFileFactory:
         project: Project,
         filepath: Filepath,
         generator_exec_wrapper: GeneratorExecWrapper,
-        should_export: Optional[bool] = True,
+        from_src: Optional[bool] = True,
     ) -> SourceFile:
         SourceFileFactory._log_generating_file_update(filepath=filepath, generator_exec_wrapper=generator_exec_wrapper)
-        return project.source_file(filepath=filepath, should_export=should_export)
+        return project.source_file(filepath=filepath, from_src=from_src)
 
     @staticmethod
     def create_snippet() -> SourceFile:
