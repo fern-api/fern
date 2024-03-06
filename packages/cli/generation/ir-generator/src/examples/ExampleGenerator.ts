@@ -73,6 +73,7 @@ export class ExampleGenerator {
         for (const [typeId, type] of Object.entries(this.ir.types)) {
             const examples = type.examples;
             if (examples && examples.length > 0) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 this.typeExamples.set(typeId, examples[0]!);
             }
         }
