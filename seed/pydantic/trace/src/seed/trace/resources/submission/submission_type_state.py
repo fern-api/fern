@@ -13,6 +13,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
@@ -20,6 +21,7 @@ class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

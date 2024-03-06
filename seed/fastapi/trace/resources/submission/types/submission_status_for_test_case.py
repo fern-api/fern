@@ -84,6 +84,7 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class GradedV2(pydantic.BaseModel):
         type: typing.Literal["gradedV2"]
@@ -94,6 +95,7 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 SubmissionStatusForTestCase.update_forward_refs()

@@ -20,6 +20,7 @@ class CustomFiles_Basic(BasicCustomFiles):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CustomFiles_Custom(pydantic.BaseModel):

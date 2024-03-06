@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Test
-        run: | 
+        run: |
             # Run mock server in the background
             fern mock --api TODO --port 3002 &
 

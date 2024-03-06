@@ -19,6 +19,7 @@ class UnionWithDiscriminant_Foo(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithDiscriminant_Bar(pydantic.BaseModel):
@@ -27,6 +28,7 @@ class UnionWithDiscriminant_Bar(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

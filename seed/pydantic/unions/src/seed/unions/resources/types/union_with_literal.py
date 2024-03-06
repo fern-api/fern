@@ -34,6 +34,7 @@ class UnionWithLiteral_Fern(Base):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithLiteral = typing.Union[UnionWithLiteral_Fern]

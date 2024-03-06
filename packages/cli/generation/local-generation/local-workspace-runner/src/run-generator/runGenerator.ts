@@ -3,7 +3,7 @@ import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { cp } from "fs";
+import { cp, mkdirSync, writeFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -66,6 +66,13 @@ export async function runGenerator({
                 context.logger.error(`Failed to copy Fern config to output directory: ${err.message}`);
             }
         });
+    } else if (absolutePathToFernDefinition != null) {
+        // If for whatever reason we don't have the fern config, just write a dummy ones
+        mkdirSync(`${absolutePathToOutput}/.mock`, { recursive: true });
+        writeFileSync(
+            `${absolutePathToOutput}/.mock/fern.config.json`,
+            '{"organization": "fern-test", "version": "0.17.7"}'
+        );
     }
 
     const binds = [

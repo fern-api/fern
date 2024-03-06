@@ -14,6 +14,7 @@ class FunctionSignature_Void(VoidFunctionSignature):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
@@ -21,6 +22,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
@@ -28,6 +30,7 @@ class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakes
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 FunctionSignature = typing.Union[

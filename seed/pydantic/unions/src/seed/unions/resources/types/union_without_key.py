@@ -13,6 +13,7 @@ class UnionWithoutKey_Foo(Foo):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithoutKey_Bar(Bar):
@@ -20,6 +21,7 @@ class UnionWithoutKey_Bar(Bar):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]

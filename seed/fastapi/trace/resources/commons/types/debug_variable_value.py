@@ -213,6 +213,7 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class ListValue(pydantic.BaseModel):
         type: typing.Literal["listValue"]
@@ -223,18 +224,21 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing.Literal["singlyLinkedListNodeValue"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing.Literal["doublyLinkedListNodeValue"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class UndefinedValue(pydantic.BaseModel):
         type: typing.Literal["undefinedValue"]
@@ -247,6 +251,7 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 _DebugVariableValue.MapValue.update_forward_refs(

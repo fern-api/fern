@@ -48,6 +48,7 @@ class VariableValue_MapValue(MapValue):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_ListValue(pydantic.BaseModel):
@@ -60,6 +61,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
@@ -67,6 +69,7 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
@@ -74,6 +77,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_NullValue(pydantic.BaseModel):

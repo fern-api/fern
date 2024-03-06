@@ -68,12 +68,14 @@ class _TestCaseFunction:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Custom(VoidFunctionDefinition):
         type: typing.Literal["custom"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 TestCaseFunction.update_forward_refs()

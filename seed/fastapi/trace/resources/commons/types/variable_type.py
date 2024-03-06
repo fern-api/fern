@@ -158,12 +158,14 @@ class _VariableType:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class MapType(resources_commons_types_map_type_MapType):
         type: typing.Literal["mapType"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class BinaryTreeType(pydantic.BaseModel):
         type: typing.Literal["binaryTreeType"]

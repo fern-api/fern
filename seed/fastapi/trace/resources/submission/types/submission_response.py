@@ -131,6 +131,7 @@ class _SubmissionResponse:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing.Literal["codeExecutionUpdate"]
@@ -141,6 +142,7 @@ class _SubmissionResponse:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 SubmissionResponse.update_forward_refs()

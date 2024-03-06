@@ -119,6 +119,7 @@ class _SubmissionRequest:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing.Literal["initializeWorkspaceRequest"]
@@ -128,18 +129,21 @@ class _SubmissionRequest:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing.Literal["workspaceSubmit"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Stop(StopRequest):
         type: typing.Literal["stop"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 SubmissionRequest.update_forward_refs()

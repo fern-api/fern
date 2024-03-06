@@ -82,18 +82,21 @@ class _FunctionSignature:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class NonVoid(NonVoidFunctionSignature):
         type: typing.Literal["nonVoid"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing.Literal["voidThatTakesActualResult"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 FunctionSignature.update_forward_refs()
