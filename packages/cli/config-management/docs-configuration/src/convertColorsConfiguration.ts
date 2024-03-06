@@ -3,12 +3,9 @@ import { FernDocsConfig as RawDocs } from "@fern-api/docs-config-sdk";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
-import { BackgroundImage, Logo } from "./ParsedDocsConfiguration";
 
 export function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
-    logo: Logo | undefined,
-    backgroundImage: BackgroundImage | undefined,
     context: TaskContext
 ): DocsV1Write.ColorsConfigV3 {
     const colorType = getColorType(rawConfig);
@@ -16,18 +13,18 @@ export function convertColorsConfiguration(
         case "dark":
             return {
                 type: "dark",
-                ...convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "dark")
+                ...convertThemedColorConfig(rawConfig, context, "dark")
             };
         case "light":
             return {
                 type: "light",
-                ...convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "light")
+                ...convertThemedColorConfig(rawConfig, context, "light")
             };
         case "darkAndLight":
             return {
                 type: "darkAndLight",
-                dark: convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "dark"),
-                light: convertThemedColorConfig(rawConfig, logo, backgroundImage, context, "light")
+                dark: convertThemedColorConfig(rawConfig, context, "dark"),
+                light: convertThemedColorConfig(rawConfig, context, "light")
             };
         default:
             assertNever(colorType);
@@ -81,8 +78,6 @@ export function getColorType({
 
 export function convertThemedColorConfig(
     rawConfig: RawDocs.ColorsConfiguration,
-    logo: Logo | undefined,
-    backgroundImage: BackgroundImage | undefined,
     context: TaskContext,
     theme: "dark" | "light"
 ): DocsV1Write.ThemeConfig {
@@ -136,10 +131,8 @@ export function convertThemedColorConfig(
             context,
             "card-background",
             theme
-        )?.toRgb(),
-        // filepaths need to be resolved in publishDocs.ts to fileID
-        logo: logo?.[theme]?.filepath,
-        backgroundImage: backgroundImage?.[theme]?.filepath
+        )?.toRgb()
+        // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
     };
 }
 

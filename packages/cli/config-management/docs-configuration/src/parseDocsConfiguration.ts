@@ -38,7 +38,7 @@ export async function parseDocsConfiguration({
         navigation,
         colors,
         favicon: faviconRef,
-        backgroundImage: backgroundImageRef,
+        backgroundImage: rawBackgroundImage,
         logo: rawLogo,
         navbarLinks,
         title,
@@ -62,62 +62,14 @@ export async function parseDocsConfiguration({
         getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder })
     );
 
-    const logo =
-        rawLogo != null
-            ? {
-                  dark:
-                      rawLogo.dark != null
-                          ? await convertImageReference({
-                                rawImageReference: rawLogo.dark,
-                                absoluteFilepathToDocsConfig
-                            })
-                          : undefined,
-                  light:
-                      rawLogo.light != null
-                          ? await convertImageReference({
-                                rawImageReference: rawLogo.light,
-                                absoluteFilepathToDocsConfig
-                            })
-                          : undefined,
-                  height: rawLogo.height,
-                  href: rawLogo.href != null ? rawLogo.href : undefined
-              }
-            : undefined;
+    const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
 
-    const faviconPromise =
+    const favicon =
         faviconRef != null
             ? convertImageReference({ rawImageReference: faviconRef, absoluteFilepathToDocsConfig })
             : undefined;
 
-    const backgroundImagePromise = (async () => {
-        if (backgroundImageRef == null) {
-            return undefined;
-        } else if (typeof backgroundImageRef === "string") {
-            const image = await convertImageReference({
-                rawImageReference: backgroundImageRef,
-                absoluteFilepathToDocsConfig
-            });
-
-            return { dark: image, light: image };
-        } else {
-            const dark =
-                backgroundImageRef.dark != null
-                    ? await convertImageReference({
-                          rawImageReference: backgroundImageRef.dark,
-                          absoluteFilepathToDocsConfig
-                      })
-                    : undefined;
-            const light =
-                backgroundImageRef.light != null
-                    ? await convertImageReference({
-                          rawImageReference: backgroundImageRef.light,
-                          absoluteFilepathToDocsConfig
-                      })
-                    : undefined;
-
-            return { dark, light };
-        }
-    })();
+    const backgroundImage = convertBackgroundImage(rawBackgroundImage, absoluteFilepathToDocsConfig);
 
     const typographyPromise =
         rawTypography != null
@@ -130,11 +82,9 @@ export async function parseDocsConfiguration({
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
-    const [convertedNavigation, pages, favicon, backgroundImage, typography, css, js] = await Promise.all([
+    const [convertedNavigation, pages, typography, css, js] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
-        faviconPromise,
-        backgroundImagePromise,
         typographyPromise,
         cssPromise,
         jsPromise
@@ -155,8 +105,6 @@ export async function parseDocsConfiguration({
                 accentPrimary: undefined,
                 background: undefined
             },
-            logo,
-            backgroundImage,
             context
         ),
         navbarLinks: navbarLinks?.map((navbarLink) => ({
@@ -171,6 +119,65 @@ export async function parseDocsConfiguration({
     };
 }
 
+function convertLogoReference(
+    rawLogo: RawDocs.LogoConfiguration | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): ParsedDocsConfiguration["logo"] {
+    return rawLogo != null
+        ? {
+              dark:
+                  rawLogo.dark != null
+                      ? convertImageReference({
+                            rawImageReference: rawLogo.dark,
+                            absoluteFilepathToDocsConfig
+                        })
+                      : undefined,
+              light:
+                  rawLogo.light != null
+                      ? convertImageReference({
+                            rawImageReference: rawLogo.light,
+                            absoluteFilepathToDocsConfig
+                        })
+                      : undefined,
+              height: rawLogo.height,
+              href: rawLogo.href != null ? rawLogo.href : undefined
+          }
+        : undefined;
+}
+
+function convertBackgroundImage(
+    rawBackgroundImage: RawDocs.BackgroundImageConfiguration | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): ParsedDocsConfiguration["backgroundImage"] {
+    if (rawBackgroundImage == null) {
+        return undefined;
+    } else if (typeof rawBackgroundImage === "string") {
+        const image = convertImageReference({
+            rawImageReference: rawBackgroundImage,
+            absoluteFilepathToDocsConfig
+        });
+
+        return { dark: image, light: image };
+    } else {
+        const dark =
+            rawBackgroundImage.dark != null
+                ? convertImageReference({
+                      rawImageReference: rawBackgroundImage.dark,
+                      absoluteFilepathToDocsConfig
+                  })
+                : undefined;
+        const light =
+            rawBackgroundImage.light != null
+                ? convertImageReference({
+                      rawImageReference: rawBackgroundImage.light,
+                      absoluteFilepathToDocsConfig
+                  })
+                : undefined;
+
+        return { dark, light };
+    }
+}
+
 async function convertCssConfig(
     css: RawDocs.CssConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
@@ -183,7 +190,7 @@ async function convertCssConfig(
         inline: await Promise.all(
             cssFilePaths.map(async (cssFilePath) => {
                 const content = await readFile(
-                    await resolveFilepath({
+                    resolveFilepath({
                         rawUnresolvedFilepath: cssFilePath,
                         absolutePath: absoluteFilepathToDocsConfig
                     })
@@ -221,7 +228,7 @@ async function convertJsConfig(
     for (const config of configs) {
         if (typeof config === "string") {
             files.push({
-                absolutePath: await resolveFilepath({
+                absolutePath: resolveFilepath({
                     rawUnresolvedFilepath: config,
                     absolutePath: absoluteFilepathToDocsConfig
                 })
@@ -230,7 +237,7 @@ async function convertJsConfig(
             remote.push(config);
         } else if (isFileJsConfig(config)) {
             files.push({
-                absolutePath: await resolveFilepath({
+                absolutePath: resolveFilepath({
                     rawUnresolvedFilepath: config.path,
                     absolutePath: absoluteFilepathToDocsConfig
                 }),
@@ -425,7 +432,7 @@ function constructVariants(
 
     return Promise.all(
         variants.map(async (rawVariant) => ({
-            absolutePath: await resolveFilepath({
+            absolutePath: resolveFilepath({
                 absolutePath: absoluteFilepathToDocsConfig,
                 rawUnresolvedFilepath: rawVariant.path
             }),
@@ -510,7 +517,7 @@ async function convertNavigationItem({
         return {
             type: "page",
             title: rawConfig.page,
-            absolutePath: await resolveFilepath({
+            absolutePath: resolveFilepath({
                 absolutePath: absolutePathToConfig,
                 rawUnresolvedFilepath: rawConfig.path
             }),
@@ -585,28 +592,28 @@ function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConf
     return (item as RawDocs.LinkConfiguration).link != null;
 }
 
-async function convertImageReference({
+function convertImageReference({
     rawImageReference,
     absoluteFilepathToDocsConfig
 }: {
     rawImageReference: string;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
-}): Promise<ImageReference> {
+}): ImageReference {
     return {
-        filepath: await resolveFilepath({
+        filepath: resolveFilepath({
             absolutePath: absoluteFilepathToDocsConfig,
             rawUnresolvedFilepath: rawImageReference
         })
     };
 }
 
-async function resolveFilepath({
+function resolveFilepath({
     rawUnresolvedFilepath,
     absolutePath
 }: {
     rawUnresolvedFilepath: string;
     absolutePath: AbsoluteFilePath;
-}): Promise<AbsoluteFilePath> {
+}): AbsoluteFilePath {
     const resolved = resolve(dirname(absolutePath), rawUnresolvedFilepath);
     return resolved;
 }
