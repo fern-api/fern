@@ -31,6 +31,7 @@
     "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-model:latest ../../.."
   },
   "dependencies": {
+    "@fern-api/csharp-codegen": "workspace:*",
     "@fern-api/csharp-generator-cli": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/generator-exec-sdk": "0.0.571",
