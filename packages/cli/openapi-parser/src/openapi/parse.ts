@@ -7,6 +7,7 @@ import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { parseAsyncAPI } from "../asyncapi/parse";
 import { AsyncAPIV2 } from "../asyncapi/v2";
 import { loadOpenAPI } from "../loadOpenAPI";
+import { mergeWithOverrides } from "../mergeWithOverrides";
 import { generateIr as generateIrFromV2 } from "./v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 
@@ -79,7 +80,11 @@ export async function parse({
             }
             // is openapi file
         } else if (contents.includes("asyncapi")) {
-            const asyncAPI = await loadAsyncAPI(spec.absoluteFilepath);
+            const asyncAPI = await loadAsyncAPI({
+                absoluteFilePathToAsyncAPI: spec.absoluteFilepath,
+                context: taskContext,
+                absoluteFilePathToAsyncAPIOverrides: spec.absoluteFilepathToOverrides
+            });
             const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
@@ -141,9 +146,25 @@ function merge(
     };
 }
 
-async function loadAsyncAPI(absoluteFilePathToAsyncAPI: AbsoluteFilePath): Promise<AsyncAPIV2.Document> {
+async function loadAsyncAPI({
+    absoluteFilePathToAsyncAPI,
+    absoluteFilePathToAsyncAPIOverrides,
+    context
+}: {
+    absoluteFilePathToAsyncAPI: AbsoluteFilePath;
+    absoluteFilePathToAsyncAPIOverrides: AbsoluteFilePath | undefined;
+    context: TaskContext;
+}): Promise<AsyncAPIV2.Document> {
     const contents = (await readFile(absoluteFilePathToAsyncAPI)).toString();
-    return (await yaml.load(contents)) as AsyncAPIV2.Document;
+    const parsed = (await yaml.load(contents)) as AsyncAPIV2.Document;
+    if (absoluteFilePathToAsyncAPIOverrides != null) {
+        return await mergeWithOverrides<AsyncAPIV2.Document>({
+            absoluteFilepathToOverrides: absoluteFilePathToAsyncAPIOverrides,
+            context,
+            data: parsed
+        });
+    }
+    return parsed;
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
