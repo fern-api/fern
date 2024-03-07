@@ -1,6 +1,9 @@
 import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
+import { ClassInstantiation } from "./ClassInstantiation";
+import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
 import { Method } from "./Method";
 
@@ -25,6 +28,7 @@ export class Class extends AstNode {
     public readonly access: Access;
     public readonly sealed: boolean;
     public readonly partial: boolean;
+    public readonly reference: ClassReference;
 
     private fields: Field[] = [];
     private methods: Method[] = [];
@@ -36,6 +40,11 @@ export class Class extends AstNode {
         this.access = access;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
+
+        this.reference = new ClassReference({
+            name: this.name,
+            namespace: this.namespace
+        });
     }
 
     public addField(field: Field): void {
@@ -70,5 +79,31 @@ export class Class extends AstNode {
         // TODO(dsinghvi): add support for methods
 
         writer.writeLine("}");
+    }
+
+    public getFields(): Field[] {
+        return this.fields;
+    }
+
+    public getInitializer(args: Map<Field, CodeBlock>): ClassInstantiation {
+        return new ClassInstantiation({
+            classReference: this.reference,
+            arguments: args
+        });
+    }
+
+    public getInitializerFromExample(example: Map<string, unknown>): ClassInstantiation {
+        const args = new Map<Field, CodeBlock>();
+        for (const field of this.fields) {
+            const value = example.get(field.name);
+            if (value !== undefined) {
+                // TODO: actually handle these examples
+                args.set(field, new CodeBlock({ value: value as string }));
+            }
+        }
+        return new ClassInstantiation({
+            classReference: this.reference,
+            arguments: args
+        });
     }
 }
