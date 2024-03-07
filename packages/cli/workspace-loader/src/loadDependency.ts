@@ -21,7 +21,7 @@ import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition, FernWorkspace } from "./types/Workspace";
-import { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+import { convertToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
 
 const FIDDLE = createFiddleService();
 
@@ -123,7 +123,7 @@ async function validateLocalDependencyAndGetDefinition({
     const workspaceOfDependency =
         loadDependencyWorkspaceResult.workspace.type === "fern"
             ? loadDependencyWorkspaceResult.workspace
-            : await convertOpenApiWorkspaceToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
+            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
 
     return workspaceOfDependency.definition;
 }
@@ -223,7 +223,7 @@ async function validateVersionedDependencyAndGetDefinition({
     }
 
     const workspaceOfDependency = loadDependencyWorkspaceResult.workspace;
-    if (workspaceOfDependency.type === "openapi") {
+    if (workspaceOfDependency.type === "oss") {
         context.failWithoutThrowing("Dependency must be a fern workspace.");
         return undefined;
     }

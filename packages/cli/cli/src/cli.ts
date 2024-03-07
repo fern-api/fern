@@ -730,11 +730,6 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 description:
                     "When generating the initial overrides, also stub the models (in addition to the endpoints)",
                 default: false
-            }),
-            yargs.option("existing-overrides", {
-                string: true,
-                description:
-                    "The existing overrides file to add on to instead of writing a new one, we will default to the one specified in generators.yml."
             })
         ],
         async (argv) => {
@@ -747,7 +742,6 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     defaultToAllApiWorkspaces: true
                 }),
                 includeModels: !(argv.excludeModels as boolean),
-                overridesFilepath: argv.existingOverrides as string,
                 cliContext
             });
         }

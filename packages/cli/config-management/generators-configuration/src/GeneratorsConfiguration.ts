@@ -5,15 +5,25 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export interface GeneratorsConfiguration {
-    absolutePathToConfiguration: AbsoluteFilePath;
-    absolutePathToOpenAPI: AbsoluteFilePath | undefined;
-    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
-    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
-    disableOpenAPIExamples: boolean | undefined;
-    rawConfiguration: GeneratorsConfigurationSchema;
+    api?: APIDefinition;
     defaultGroup: string | undefined;
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+
+    rawConfiguration: GeneratorsConfigurationSchema;
+    absolutePathToConfiguration: AbsoluteFilePath;
+}
+
+export type APIDefinition = SingleNamespaceAPIDefinition;
+
+export interface SingleNamespaceAPIDefinition {
+    type: "singleNamespace";
+    definitions: APIDefinitionLocation[];
+}
+
+export interface APIDefinitionLocation {
+    path: string;
+    overrides: string | undefined;
 }
 
 export interface GeneratorGroup {

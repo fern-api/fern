@@ -14,7 +14,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
     });
     if (!workspace.didSucceed) {
         return context.failAndThrow("Failed to load workspace", workspace.failures);
-    } else if (workspace.workspace.type === "openapi") {
+    } else if (workspace.workspace.type === "oss") {
         return context.failAndThrow("Expected fern workspace but received openapi.");
     }
     return generateIntermediateRepresentation({

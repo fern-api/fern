@@ -31,6 +31,6 @@ describe("loadWorkspace", () => {
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "openapi");
+        assert(workspace.workspace.type === "oss");
     });
 });

@@ -10,11 +10,8 @@ export {
     type FernDefinition,
     type FernWorkspace,
     type OnDiskNamedDefinitionFile,
-    type OpenAPIWorkspace,
+    type OSSWorkspace,
     type Workspace
 } from "./types/Workspace";
 export * from "./utils";
-export {
-    convertOpenApiWorkspaceToFernWorkspace,
-    getOpenAPIIRFromOpenAPIWorkspace
-} from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+export { convertToFernWorkspace as convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";

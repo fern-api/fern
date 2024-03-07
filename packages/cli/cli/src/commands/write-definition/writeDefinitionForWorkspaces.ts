@@ -6,7 +6,7 @@ import {
     convertOpenApiWorkspaceToFernWorkspace,
     FernDefinition,
     FernWorkspace,
-    OpenAPIWorkspace
+    OSSWorkspace
 } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { mkdir, rmdir, writeFile } from "fs/promises";
@@ -24,7 +24,7 @@ export async function writeDefinitionForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
+                if (workspace.type === "oss") {
                     await writeDefinitionForOpenAPIWorkspace({ workspace, context });
                 } else {
                     await writeDefinitionForFernWorkspace({ workspace, context });
@@ -62,7 +62,7 @@ async function writeDefinitionForOpenAPIWorkspace({
     workspace,
     context
 }: {
-    workspace: OpenAPIWorkspace;
+    workspace: OSSWorkspace;
     context: TaskContext;
 }): Promise<void> {
     const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
