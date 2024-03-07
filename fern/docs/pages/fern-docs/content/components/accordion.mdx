@@ -1,0 +1,50 @@
+---
+title: Collapse content using Accordion
+description: Use the Accordion and AccordionGroup components to show or collapse content from view.
+---
+
+The `Accordion` component is used to collapse content until the user chooses to view it. You can group related `Accordion` components together using the `AccordionGroup` component.
+
+## Props
+
+| prop       | type   | description                             | default |
+|------------|--------|-----------------------------------------|---------|
+| *title*    | string | Displayed title for the Accordion       | none    |
+
+All props are optional. However, generally you should always include a title for an `Accordion`, as otherwise it renders without text like this:
+
+<Accordion>Content for an Accordion with no title</Accordion>
+
+## Usage
+
+### Single Accordion
+
+<CodeBlock>
+```mdx
+<Accordion title='Single Accordion'>
+  Standalone content
+</Accordion>
+```
+</CodeBlock>
+
+This renders as:
+
+<Accordion title='Single Accordion'>Standalone content</Accordion>
+
+### Grouped Accordions
+
+<CodeBlock>
+```mdx
+<AccordionGroup>
+  <Accordion title='Grouped Accordion 1'>Grouped content 1</Accordion>
+  <Accordion title='Grouped Accordion 2'>Grouped content 2</Accordion>
+</AccordionGroup>
+```
+</CodeBlock>
+
+This renders as:
+
+<AccordionGroup>
+  <Accordion title='Grouped Accordion 1'>Grouped content 1</Accordion>
+  <Accordion title='Grouped Accordion 2'>Grouped content 2</Accordion>
+</AccordionGroup>
