@@ -1,8 +1,10 @@
 {
   "ignores": [
+    "@types/jest",
     "@types/node",
     "vite",
     "@types/react",
+    "@types/jest",
     "@types/node",
     "vite",
     "@types/react",
