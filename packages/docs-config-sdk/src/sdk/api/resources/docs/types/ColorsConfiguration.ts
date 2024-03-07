@@ -11,6 +11,8 @@ export interface ColorsConfiguration {
      * @default: #818CF8
      */
     accentPrimary?: FernDocsConfig.ColorConfig;
+    /** Use `accent-primary` instead. */
+    accentPrimaryDeprecated?: FernDocsConfig.ColorConfig;
     /**
      * The background color is used for the main background of the docs site.
      *

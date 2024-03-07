@@ -405,6 +405,13 @@ types:
           The primary accent color is used for buttons, links, and other interactive elements. 
 
           @default: #818CF8
+      
+      accentPrimary:
+        type: optional<ColorConfig>
+        name: accentPrimaryDeprecated
+        availability: deprecated
+        docs: | 
+          Use `accent-primary` instead.
 
       background:
         type: optional<ColorConfig>

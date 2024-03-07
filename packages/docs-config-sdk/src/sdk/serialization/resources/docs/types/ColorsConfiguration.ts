@@ -14,6 +14,10 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
         "accent-primary",
         core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
     ),
+    accentPrimaryDeprecated: core.serialization.property(
+        "accentPrimary",
+        core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
+    ),
     background: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
     border: core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional(),
     sidebarBackground: core.serialization.property(
@@ -27,12 +31,13 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
     cardBackground: core.serialization.property(
         "card-background",
         core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
-    ),
+    )
 });
 
 export declare namespace ColorsConfiguration {
     interface Raw {
         "accent-primary"?: serializers.ColorConfig.Raw | null;
+        accentPrimary?: serializers.ColorConfig.Raw | null;
         background?: serializers.ColorConfig.Raw | null;
         border?: serializers.ColorConfig.Raw | null;
         "sidebar-background"?: serializers.ColorConfig.Raw | null;

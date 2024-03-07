@@ -34,10 +34,14 @@ export function convertColorsConfiguration(
 // exported for testing
 export function getColorType({
     background,
-    accentPrimary
+    accentPrimary,
+    accentPrimaryDeprecated
 }: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
     // if both background and accent colors are provided as strings,
     // we can determine the theme using just the background color
+
+    accentPrimary = accentPrimary ?? accentPrimaryDeprecated;
+
     if (typeof background === "string" && typeof accentPrimary === "string") {
         return tinycolor(background).isDark() ? "dark" : "light";
     }
