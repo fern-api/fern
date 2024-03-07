@@ -259,6 +259,12 @@ navigation:
                 path: ./docs/pages/fern-docs/content/components/icons.mdx
               - page: Availability
                 path: ./docs/pages/fern-docs/content/components/availability.mdx
+              - page: Tabs
+                path: ./docs/pages/fern-docs/content/components/tabs.mdx
+              - page: Accordion
+                path: ./docs/pages/fern-docs/content/components/accordion.mdx
+              - page: Steps
+                path: ./docs/pages/fern-docs/content/components/steps.mdx
           - section: Use the Snippets API
             slug: use-snippets-api
             contents:
