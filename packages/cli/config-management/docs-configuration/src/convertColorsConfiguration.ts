@@ -185,7 +185,7 @@ function getColorInstanceFromRawConfig(
         return undefined;
     }
 
-    const rawColor = typeof raw === "string" ? raw : raw[theme] ?? raw.dark ?? raw.light;
+    const rawColor = typeof raw === "string" ? raw : raw[theme];
 
     if (rawColor == null) {
         return undefined;
