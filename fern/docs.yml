@@ -6,15 +6,15 @@ title: Fern | Documentation
 tabs:
   overview:
     display-name: Overview
-    icon: 'fa-solid fa-globe'
+    icon: 'globe'
   fern-sdks:
     display-name: Fern SDKs
     # the slug option for tabs does not work yet, the route generated is still /fern-sd-ks instead of /fern-sdks
     slug: fern-sdks
-    icon: 'fa-solid fa-code'
+    icon: 'code'
   fern-docs:
     display-name: Fern Docs
-    icon: 'fa-solid fa-book'
+    icon: 'book'
 
 navigation:
   - tab: overview
@@ -112,10 +112,10 @@ navigation:
       - section: Fern SDKs Quickstarts
         slug: quickstarts
         contents:
-          - page: Quickstart with OpenAPI
+          - page: Fern SDKs Quickstart with OpenAPI
             slug: openapi
             path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-openapi.mdx
-          - page: Quickstart with Fern Def
+          - page: Fern SDKs Quickstart with Fern Def
             slug: ferndef
             path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
       - section: SDK generators
@@ -198,20 +198,15 @@ navigation:
     layout:
       - page: Overview
         path: ./docs/pages/fern-docs/docs-overview.mdx
-      # - section: Fern Docs Quickstarts
-      #   slug: quickstarts
-      #   contents:
-      #     - page: Quickstart with OpenAPI
-      #       slug: openapi
-      #       path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-      #     - page: Quickstart with Fern Defs
-      #       slug: ferndef
-      #       path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      #
-      # The below page is temporary until the separate docs quickstarts (for openapi/ferndef) pages are added.
-      - page: Fern Docs Quickstart
-        slug: quickstart
-        path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart.mdx
+      - section: Fern Docs Quickstarts
+        slug: quickstarts
+        contents:
+          - page: Fern Docs Quickstart with OpenAPI
+            slug: openapi
+            path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
+          - page: Fern Docs Quickstart with Fern Def
+            slug: ferndef
+            path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
       - page: Pull request previews
         slug: previews
         path: ./docs/pages/fern-docs/previews.mdx
