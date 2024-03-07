@@ -2,6 +2,7 @@ import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Annotation } from "./Annotation";
+import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Type } from "./Type";
 
@@ -13,7 +14,7 @@ export declare namespace Field {
         type: Type;
         /* Whether the field has a getter method */
         get?: boolean;
-        /* Whether the field has a init method */
+        /* Whether the field has an init method */
         init?: boolean;
         /* The access level of the method */
         access: Access;
@@ -23,6 +24,8 @@ export declare namespace Field {
         initializer?: CodeBlock;
         /* The summary tag (used for describing the field) */
         summary?: string;
+        /* JSON value for this particular field */
+        jsonPropertyName?: string;
     }
 }
 
@@ -35,8 +38,9 @@ export class Field extends AstNode {
     private annotations: Annotation[];
     private initializer: CodeBlock | undefined;
     private summary: string | undefined;
+    private jsonPropertyName: string | undefined;
 
-    constructor({ name, type, get, init, access, annotations, initializer, summary }: Field.Args) {
+    constructor({ name, type, get, init, access, annotations, initializer, summary, jsonPropertyName }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -46,6 +50,20 @@ export class Field extends AstNode {
         this.annotations = annotations ?? [];
         this.initializer = initializer;
         this.summary = summary;
+        this.jsonPropertyName = jsonPropertyName;
+
+        if (this.jsonPropertyName != null) {
+            this.annotations = [
+                new Annotation({
+                    reference: new ClassReference({
+                        name: "JsonPropertyName",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    argument: `"${this.jsonPropertyName}"`
+                }),
+                ...this.annotations
+            ];
+        }
     }
 
     public write(writer: Writer): void {

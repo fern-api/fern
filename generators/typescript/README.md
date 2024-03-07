@@ -193,7 +193,7 @@ When disabled (the default), the generated client includes an option to override
 
 ```typescript
 const acme = new AcmeClient({
-  environment: "localhost:8080",
+  environment: "localhost:8080"
 });
 ```
 
@@ -379,4 +379,3 @@ groups:
 ```
 
 Fern will handle the rest automatically.
-

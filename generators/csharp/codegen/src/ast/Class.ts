@@ -1,3 +1,4 @@
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -105,5 +106,9 @@ export class Class extends AstNode {
             classReference: this.reference,
             arguments: args
         });
+    }
+
+    public static getNamespaceFromFernFilepath(rootNamespace: string, fernFilePath: FernFilepath): string {
+        return [rootNamespace, ...fernFilePath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }
 }

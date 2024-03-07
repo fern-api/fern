@@ -29,3 +29,4 @@ export function parameter(args: Parameter.Args): Parameter {
 }
 
 export const Types = Type;
+export { Class, Type } from "./ast";
