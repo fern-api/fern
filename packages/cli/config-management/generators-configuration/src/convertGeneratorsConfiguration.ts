@@ -4,6 +4,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
+    APIDefinition,
+    APIDefinitionLocation,
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
@@ -18,7 +20,6 @@ import {
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
-import { OPENAPI_DISABLE_EXAMPLES_KEY } from "./schemas/GeneratorsOpenAPIObjectSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
 export async function convertGeneratorsConfiguration({
@@ -28,23 +29,9 @@ export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
-    const openAPI = await parseOpenAPIConfiguration(rawGeneratorsConfiguration);
-    const pathToAsyncAPI = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
-        absolutePathToAsyncAPI:
-            pathToAsyncAPI != null
-                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToAsyncAPI))
-                : undefined,
-        absolutePathToOpenAPI:
-            openAPI.path != null
-                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(openAPI.path))
-                : undefined,
-        absolutePathToOpenAPIOverrides:
-            openAPI.overrides != null
-                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(openAPI.overrides))
-                : undefined,
-        disableOpenAPIExamples: openAPI.disableExamples,
+        api: await parseAPIConfiguration(rawGeneratorsConfiguration),
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         groups:
@@ -68,27 +55,65 @@ export async function convertGeneratorsConfiguration({
     };
 }
 
-interface OpenAPIConfiguration {
-    path: string | undefined;
-    overrides: string | undefined;
-    disableExamples: boolean | undefined;
-}
-
-async function parseOpenAPIConfiguration(
+async function parseAPIConfiguration(
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema
-): Promise<OpenAPIConfiguration> {
-    const openAPI = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
-    if (typeof openAPI === "string") {
-        return {
-            path: openAPI,
-            overrides: rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY],
-            disableExamples: undefined
-        };
+): Promise<APIDefinition> {
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    const apiDefinitions: APIDefinitionLocation[] = [];
+    if (apiConfiguration != null) {
+        if (typeof apiConfiguration === "string") {
+            apiDefinitions.push({
+                path: apiConfiguration,
+                overrides: undefined
+            });
+        } else if (Array.isArray(apiConfiguration)) {
+            for (const definition of apiConfiguration) {
+                if (typeof definition === "string") {
+                    apiDefinitions.push({
+                        path: definition,
+                        overrides: undefined
+                    });
+                } else {
+                    apiDefinitions.push({
+                        path: definition.path,
+                        overrides: definition.overrides
+                    });
+                }
+            }
+        } else {
+            apiDefinitions.push({
+                path: apiConfiguration.path,
+                overrides: apiConfiguration.overrides
+            });
+        }
+    } else {
+        const openapi = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
+        const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
+        const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
+
+        if (openapi != null && typeof openapi === "string") {
+            apiDefinitions.push({
+                path: openapi,
+                overrides: openapiOverrides
+            });
+        } else if (openapi != null) {
+            apiDefinitions.push({
+                path: openapi.path,
+                overrides: openapi.overrides
+            });
+        }
+
+        if (asyncapi != null) {
+            apiDefinitions.push({
+                path: asyncapi,
+                overrides: undefined
+            });
+        }
     }
+
     return {
-        path: openAPI?.path,
-        overrides: openAPI?.overrides ?? rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY],
-        disableExamples: openAPI?.[OPENAPI_DISABLE_EXAMPLES_KEY]
+        type: "singleNamespace",
+        definitions: apiDefinitions
     };
 }
 

@@ -13,7 +13,7 @@ export async function formatWorkspaces({
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
-            if (workspace.type === "openapi") {
+            if (workspace.type === "oss") {
                 return;
             }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {

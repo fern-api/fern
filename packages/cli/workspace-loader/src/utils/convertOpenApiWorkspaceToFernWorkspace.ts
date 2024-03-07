@@ -1,31 +1,20 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
-import { FernWorkspace, OpenAPIWorkspace } from "../types/Workspace";
+import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
 
-export async function getOpenAPIIRFromOpenAPIWorkspace(
-    openapiWorkspace: OpenAPIWorkspace,
-    context: TaskContext
-): Promise<OpenApiIntermediateRepresentation> {
-    return await parse({
-        absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
-        absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
-        absolutePathToOpenAPIOverrides: openapiWorkspace.generatorsConfiguration?.absolutePathToOpenAPIOverrides,
-        disableExamples: openapiWorkspace.generatorsConfiguration?.disableOpenAPIExamples,
-        taskContext: context
-    });
-}
-
-export async function convertOpenApiWorkspaceToFernWorkspace(
-    openapiWorkspace: OpenAPIWorkspace,
+export async function convertToFernWorkspace(
+    openapiWorkspace: OSSWorkspace,
     context: TaskContext
 ): Promise<FernWorkspace> {
-    const openApiIr = await getOpenAPIIRFromOpenAPIWorkspace(openapiWorkspace, context);
+    const openApiIr = await parse({
+        workspace: openapiWorkspace,
+        taskContext: context
+    });
     const definition = convert({
         taskContext: context,
         openApiIr

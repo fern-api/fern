@@ -4,11 +4,16 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { AsyncAPIIntermediateRepresentation, parseAsyncAPI } from "../asyncapi/parse";
+import { parseAsyncAPI } from "../asyncapi/parse";
 import { AsyncAPIV2 } from "../asyncapi/v2";
 import { loadOpenAPI } from "../loadOpenAPI";
 import { generateIr as generateIrFromV2 } from "./v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./v3/generateIr";
+
+export interface Spec {
+    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+}
 
 export interface RawOpenAPIFile {
     absoluteFilepath: AbsoluteFilePath;
@@ -21,59 +26,116 @@ export interface RawAsyncAPIFile {
 }
 
 export async function parse({
-    absolutePathToAsyncAPI,
-    absolutePathToOpenAPI,
-    absolutePathToOpenAPIOverrides,
-    disableExamples,
+    workspace,
     taskContext
 }: {
-    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
-    absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
-    disableExamples: boolean | undefined;
+    workspace: {
+        specs: Spec[];
+    };
     taskContext: TaskContext;
 }): Promise<OpenApiIntermediateRepresentation> {
-    let parsedAsyncAPI: AsyncAPIIntermediateRepresentation = {
+    let ir: OpenApiIntermediateRepresentation = {
+        title: undefined,
+        description: undefined,
+        servers: [],
+        tags: {
+            tagsById: {},
+            orderedTagIds: []
+        },
+        hasEndpointsMarkedInternal: false,
+        endpoints: [],
+        webhooks: [],
+        channel: [],
         schemas: {},
-        channel: undefined
+        errors: {},
+        variables: {},
+        nonRequestReferencedSchemas: new Set(),
+        securitySchemes: {},
+        globalHeaders: []
     };
-    if (absolutePathToAsyncAPI != null) {
-        const asyncAPI = await loadAsyncAPI(absolutePathToAsyncAPI);
-        parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
-    }
 
-    const openApiDocument = await loadOpenAPI({
-        absolutePathToOpenAPI,
-        context: taskContext,
-        absolutePathToOpenAPIOverrides
-    });
-    let openApiIr: OpenApiIntermediateRepresentation | undefined = undefined;
-    if (isOpenApiV3(openApiDocument)) {
-        openApiIr = generateIrFromV3({
-            openApi: openApiDocument,
-            taskContext,
-            disableExamples
-        });
-    } else if (isOpenApiV2(openApiDocument)) {
-        openApiIr = await generateIrFromV2({
-            openApi: openApiDocument,
-            taskContext,
-            disableExamples
-        });
-    }
-
-    if (openApiIr != null) {
-        return {
-            ...openApiIr,
-            channel: parsedAsyncAPI.channel != null ? [parsedAsyncAPI.channel] : [],
-            schemas: {
-                ...openApiIr.schemas,
-                ...parsedAsyncAPI.schemas
+    for (const spec of workspace.specs) {
+        const contents = (await readFile(spec.absoluteFilepath)).toString();
+        if (contents.includes("openapi")) {
+            const openApiDocument = await loadOpenAPI({
+                absolutePathToOpenAPI: spec.absoluteFilepath,
+                context: taskContext,
+                absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+            });
+            if (isOpenApiV3(openApiDocument)) {
+                const openapiIr = generateIrFromV3({
+                    openApi: openApiDocument,
+                    taskContext,
+                    disableExamples: false
+                });
+                ir = merge(ir, openapiIr);
+            } else if (isOpenApiV2(openApiDocument)) {
+                const openapiIr = await generateIrFromV2({
+                    openApi: openApiDocument,
+                    taskContext,
+                    disableExamples: false
+                });
+                ir = merge(ir, openapiIr);
             }
-        };
+            // is openapi file
+        } else if (contents.includes("asyncapi")) {
+            const asyncAPI = await loadAsyncAPI(spec.absoluteFilepath);
+            const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
+            if (parsedAsyncAPI.channel != null) {
+                ir.channel.push(parsedAsyncAPI.channel);
+            }
+            if (parsedAsyncAPI.schemas != null) {
+                ir.schemas = {
+                    ...ir.schemas,
+                    ...parsedAsyncAPI.schemas
+                };
+            }
+        } else {
+            taskContext.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
+        }
     }
 
-    return taskContext.failAndThrow("Only OpenAPI V3 and V2 Documents are supported.");
+    return ir;
+}
+
+function merge(
+    ir1: OpenApiIntermediateRepresentation,
+    ir2: OpenApiIntermediateRepresentation
+): OpenApiIntermediateRepresentation {
+    return {
+        title: ir1.title ?? ir2.title,
+        description: ir1.description ?? ir2.description,
+        servers: [...ir1.servers, ...ir2.servers],
+        tags: {
+            tagsById: {
+                ...ir1.tags.tagsById,
+                ...ir2.tags.tagsById
+            },
+            orderedTagIds: [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
+        },
+        hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
+        endpoints: [...ir1.endpoints, ...ir2.endpoints],
+        webhooks: [...ir1.webhooks, ...ir2.webhooks],
+        channel: [...ir1.channel, ...ir2.channel],
+        schemas: {
+            ...ir1.schemas,
+            ...ir2.schemas
+        },
+        errors: {
+            ...ir1.errors,
+            ...ir2.errors
+        },
+        variables: {
+            ...ir1.variables,
+            ...ir2.variables
+        },
+        nonRequestReferencedSchemas: new Set([...ir1.nonRequestReferencedSchemas, ...ir2.nonRequestReferencedSchemas]),
+        securitySchemes: {
+            ...ir1.securitySchemes,
+            ...ir2.securitySchemes
+        },
+        globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined
+    };
 }
 
 async function loadAsyncAPI(absoluteFilePathToAsyncAPI: AbsoluteFilePath): Promise<AsyncAPIV2.Document> {

@@ -23,7 +23,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace =
-                    workspace.type === "openapi"
+                    workspace.type === "oss"
                         ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
                         : workspace;
 

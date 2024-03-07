@@ -1,9 +1,9 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import path from "path";
 // import * as prettier from "prettier";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
@@ -51,7 +51,7 @@ it("generate IR", async () => {
     }
 
     for (const workspace of apiWorkspaces) {
-        if (workspace.type === "openapi") {
+        if (workspace.type === "oss") {
             throw new Error("Convert OpenAPI to Fern workspace before generating IR");
         }
 
