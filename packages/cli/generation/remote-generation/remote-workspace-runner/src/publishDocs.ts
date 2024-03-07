@@ -74,13 +74,19 @@ export async function publishDocs({
     );
 
     // unsizedImageFilepathsToUpload are tracked alongside normal non-image files
-    const filepathsToUpload = [...getFilepathsToUpload(parsedDocsConfig), ...unsizedImageFilepathsToUpload];
+    const filepathsToUpload = Array.from(
+        new Set([...getFilepathsToUpload(parsedDocsConfig), ...unsizedImageFilepathsToUpload])
+    );
     context.logger.debug("Absolute filepaths to upload:", filepathsToUpload.join(", "));
 
-    const relativeImageFilepathsWithSizesToUpload = imageFilepathsWithSizesToUpload.map((imageFilePath) => ({
-        ...imageFilePath,
-        filePath: convertAbsoluteFilepathToFdrFilepath(imageFilePath.filePath, parsedDocsConfig)
-    }));
+    const relativeImageFilepathsWithSizesToUpload = Array.from(
+        new Set(
+            imageFilepathsWithSizesToUpload.map((imageFilePath) => ({
+                ...imageFilePath,
+                filePath: convertAbsoluteFilepathToFdrFilepath(imageFilePath.filePath, parsedDocsConfig)
+            }))
+        )
+    );
     const relativeFilepathsToUpload = filepathsToUpload.map((filepath) =>
         convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
     );
