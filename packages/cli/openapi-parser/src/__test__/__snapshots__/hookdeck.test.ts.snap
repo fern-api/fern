@@ -50703,7 +50703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "IssueType",

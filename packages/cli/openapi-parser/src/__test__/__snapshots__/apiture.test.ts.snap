@@ -6220,7 +6220,7 @@ Note: This operation requires an identity challenge if the financial institution
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "productType",

@@ -6,7 +6,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {

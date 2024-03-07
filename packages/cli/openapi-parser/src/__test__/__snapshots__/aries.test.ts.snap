@@ -73994,7 +73994,7 @@ exports[`open api parser aries parse open api 1`] = `
     },
   ],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ActionMenuModulesResult",
