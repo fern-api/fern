@@ -20,6 +20,15 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "tabs-placement",
             core.serialization.lazy(async () => (await import("../../..")).SidebarOrHeaderPlacement).optional()
         ),
+        contentAlignment: core.serialization.property(
+            "content-alignment",
+            core.serialization.lazy(async () => (await import("../../..")).ContentAlignment).optional()
+        ),
+        headerPosition: core.serialization.property(
+            "header-position",
+            core.serialization.lazy(async () => (await import("../../..")).HeaderPosition).optional()
+        ),
+        disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
     });
 
 export declare namespace LayoutConfig {
@@ -30,5 +39,8 @@ export declare namespace LayoutConfig {
         "header-height"?: string | null;
         "searchbar-placement"?: serializers.SidebarOrHeaderPlacement.Raw | null;
         "tabs-placement"?: serializers.SidebarOrHeaderPlacement.Raw | null;
+        "content-alignment"?: serializers.ContentAlignment.Raw | null;
+        "header-position"?: serializers.HeaderPosition.Raw | null;
+        "disable-header"?: boolean | null;
     }
 }

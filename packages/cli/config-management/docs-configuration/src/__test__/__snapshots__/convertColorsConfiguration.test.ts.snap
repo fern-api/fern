@@ -3,60 +3,84 @@
 exports[`convertThemedColorConfig converts dark to light 1`] = `
 {
   "accentPrimary": {
+    "a": 1,
     "b": 117,
     "g": 117,
     "r": 117,
   },
   "background": {
+    "a": 1,
     "b": 255,
     "g": 255,
     "r": 255,
   },
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
 }
 `;
 
 exports[`convertThemedColorConfig converts light to dark 1`] = `
 {
   "accentPrimary": {
+    "a": 1,
     "b": 117,
     "g": 117,
     "r": 117,
   },
   "background": {
+    "a": 1,
     "b": 0,
     "g": 0,
     "r": 0,
   },
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
 }
 `;
 
 exports[`convertThemedColorConfig correctly interprets dark 1`] = `
 {
   "accentPrimary": {
+    "a": 1,
     "b": 255,
     "g": 255,
     "r": 255,
   },
   "background": {
+    "a": 1,
     "b": 0,
     "g": 0,
     "r": 0,
   },
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
 }
 `;
 
 exports[`convertThemedColorConfig correctly interprets light 1`] = `
 {
   "accentPrimary": {
+    "a": 1,
     "b": 0,
     "g": 0,
     "r": 0,
   },
   "background": {
+    "a": 1,
     "b": 255,
     "g": 255,
     "r": 255,
   },
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
 }
 `;
 

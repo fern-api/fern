@@ -34,10 +34,14 @@ export function convertColorsConfiguration(
 // exported for testing
 export function getColorType({
     background,
-    accentPrimary
+    accentPrimary,
+    accentPrimaryDeprecated
 }: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
     // if both background and accent colors are provided as strings,
     // we can determine the theme using just the background color
+
+    accentPrimary = accentPrimary ?? accentPrimaryDeprecated;
+
     if (typeof background === "string" && typeof accentPrimary === "string") {
         return tinycolor(background).isDark() ? "dark" : "light";
     }
@@ -80,15 +84,16 @@ export function convertThemedColorConfig(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext,
     theme: "dark" | "light"
-): DocsV1Write.DarkModeConfig | DocsV1Write.LightModeConfig {
-    let accentPrimaryColor = getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accentPrimary", theme);
+): DocsV1Write.ThemeConfig {
+    let accentPrimaryColor =
+        getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accent-primary", theme) ?? tinycolor.random();
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
     if (backgroundColor != null) {
         const newBackgroundColor = enforceBackgroundTheme(tinycolor(backgroundColor.toString()), theme);
         if (newBackgroundColor.toHexString() !== backgroundColor.toHexString()) {
             context.logger.warn(
-                `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
+                `The chosen shade, 'colors.background' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
             );
             backgroundColor = newBackgroundColor;
         }
@@ -103,15 +108,35 @@ export function convertThemedColorConfig(
         if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
             context.logger.warn(
-                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
+                `The chosen shade, 'colors.accent-primary' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
             );
             accentPrimaryColor = newAccentPrimaryColor;
         }
     }
 
     return {
-        accentPrimary: toRgb(accentPrimaryColor),
-        background: toRgb(backgroundColor)
+        accentPrimary: accentPrimaryColor.toRgb(),
+        background: backgroundColor?.toRgb(),
+        border: getColorInstanceFromRawConfig(rawConfig.border, context, "border", theme)?.toRgb(),
+        sidebarBackground: getColorInstanceFromRawConfig(
+            rawConfig.sidebarBackground,
+            context,
+            "sidebar-background",
+            theme
+        )?.toRgb(),
+        headerBackground: getColorInstanceFromRawConfig(
+            rawConfig.headerBackground,
+            context,
+            "header-background",
+            theme
+        )?.toRgb(),
+        cardBackground: getColorInstanceFromRawConfig(
+            rawConfig.cardBackground,
+            context,
+            "card-background",
+            theme
+        )?.toRgb()
+        // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
     };
 }
 
@@ -154,16 +179,6 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
     return tinycolor({ h, s, v: 1 - v });
 }
 
-function toRgb(color: tinycolor.Instance): DocsV1Write.RgbColor;
-function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined;
-function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined {
-    if (color == null) {
-        return undefined;
-    }
-    const { r, g, b } = color.toRgb();
-    return { r, g, b };
-}
-
 function getColorInstanceFromRawConfig(
     raw: RawDocs.ColorConfig | undefined,
     context: TaskContext,
@@ -174,7 +189,7 @@ function getColorInstanceFromRawConfig(
         return undefined;
     }
 
-    const rawColor = typeof raw === "string" ? raw : raw[theme] ?? raw.dark ?? raw.light;
+    const rawColor = typeof raw === "string" ? raw : raw[theme];
 
     if (rawColor == null) {
         return undefined;
@@ -183,7 +198,7 @@ function getColorInstanceFromRawConfig(
     const color = tinycolor(rawColor);
     if (!color.isValid()) {
         context.failAndThrow(
-            `'${typeof raw === "string" ? key : `${key}.${theme}`}' should be a hex color of the format #FFFFFF`
+            `'${typeof raw === "string" ? key : `colors.${key}.${theme}`}' should be a hex color of the format #FFFFFF`
         );
     }
     return color;

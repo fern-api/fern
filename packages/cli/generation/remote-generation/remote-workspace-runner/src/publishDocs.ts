@@ -288,48 +288,20 @@ async function convertDocsConfiguration({
     });
     const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
         title: parsedDocsConfig.title,
-        logoV2: {
-            dark:
-                parsedDocsConfig.logo?.dark != null
-                    ? await convertImageReference({
-                          imageReference: parsedDocsConfig.logo.dark,
-                          parsedDocsConfig,
-                          uploadUrls,
-                          context
-                      })
-                    : undefined,
-            light:
-                parsedDocsConfig.logo?.light != null
-                    ? await convertImageReference({
-                          imageReference: parsedDocsConfig.logo.light,
-                          parsedDocsConfig,
-                          uploadUrls,
-                          context
-                      })
-                    : undefined
-        },
+        // deprecated, use colorsV3 instead of logoV2
+        logoV2: undefined,
         logoHeight: parsedDocsConfig.logo?.height,
         logoHref: parsedDocsConfig.logo?.href,
-        favicon:
-            parsedDocsConfig.favicon != null
-                ? await convertImageReference({
-                      imageReference: parsedDocsConfig.favicon,
-                      parsedDocsConfig,
-                      uploadUrls,
-                      context
-                  })
-                : undefined,
-        backgroundImage:
-            parsedDocsConfig.backgroundImage != null
-                ? await convertImageReference({
-                      imageReference: parsedDocsConfig.backgroundImage,
-                      parsedDocsConfig,
-                      uploadUrls,
-                      context
-                  })
-                : undefined,
+        favicon: convertImageReference({
+            imageReference: parsedDocsConfig.favicon,
+            parsedDocsConfig,
+            uploadUrls,
+            context
+        }),
+        // deprecated, use colorsV3 instead of backgroundImage
+        backgroundImage: undefined,
         navigation: convertedNavigation.config,
-        colorsV3: parsedDocsConfig.colors,
+        colorsV3: convertColorConfigImageReferences({ parsedDocsConfig, uploadUrls, context }),
         navbarLinks: parsedDocsConfig.navbarLinks,
         typographyV2: convertDocsTypographyConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
@@ -699,17 +671,108 @@ function convertFont({
     };
 }
 
-async function convertImageReference({
+function convertColorConfigImageReferences({
+    parsedDocsConfig,
+    uploadUrls,
+    context
+}: {
+    parsedDocsConfig: ParsedDocsConfiguration;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
+    context: TaskContext;
+}): DocsV1Write.ColorsConfigV3 | undefined {
+    const { colors } = parsedDocsConfig;
+    if (colors == null) {
+        return undefined;
+    }
+    if (colors.type === "dark") {
+        return {
+            ...colors,
+            ...convertLogoAndBackgroundImage({
+                parsedDocsConfig,
+                uploadUrls,
+                context,
+                theme: "dark"
+            })
+        };
+    } else if (colors.type === "light") {
+        return {
+            ...colors,
+            ...convertLogoAndBackgroundImage({
+                parsedDocsConfig,
+                uploadUrls,
+                context,
+                theme: "light"
+            })
+        };
+    } else {
+        return {
+            ...colors,
+            dark: {
+                ...colors.dark,
+                ...convertLogoAndBackgroundImage({
+                    parsedDocsConfig,
+                    uploadUrls,
+                    context,
+                    theme: "dark"
+                })
+            },
+            light: {
+                ...colors.light,
+                ...convertLogoAndBackgroundImage({
+                    parsedDocsConfig,
+                    uploadUrls,
+                    context,
+                    theme: "light"
+                })
+            }
+        };
+    }
+}
+
+function convertLogoAndBackgroundImage({
+    parsedDocsConfig,
+    uploadUrls,
+    context,
+    theme
+}: {
+    parsedDocsConfig: ParsedDocsConfiguration;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
+    context: TaskContext;
+    theme: "dark" | "light";
+}) {
+    const { logo, backgroundImage } = parsedDocsConfig;
+    const logoRef = logo?.[theme];
+    const backgroundImageRef = backgroundImage?.[theme];
+    return {
+        logo: convertImageReference({
+            imageReference: logoRef,
+            parsedDocsConfig,
+            uploadUrls,
+            context
+        }),
+        backgroundImage: convertImageReference({
+            imageReference: backgroundImageRef,
+            parsedDocsConfig,
+            uploadUrls,
+            context
+        })
+    };
+}
+
+function convertImageReference({
     imageReference,
     parsedDocsConfig,
     uploadUrls,
     context
 }: {
-    imageReference: ImageReference;
+    imageReference: ImageReference | undefined;
     parsedDocsConfig: ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): Promise<DocsV1Write.FileId> {
+}): DocsV1Write.FileId | undefined {
+    if (imageReference == null) {
+        return undefined;
+    }
     const filepath = convertAbsoluteFilepathToFdrFilepath(imageReference.filepath, parsedDocsConfig);
     const file = uploadUrls[filepath];
     if (file == null) {
@@ -931,7 +994,11 @@ async function getImageFilepathsToUpload(
         filepaths.push(parsedDocsConfig.logo.dark.filepath);
     }
 
-    if (parsedDocsConfig.logo?.light != null) {
+    if (
+        parsedDocsConfig.logo?.light != null &&
+        // if the light and dark images are the same, we don't need to re-upload the light image
+        parsedDocsConfig.logo.dark?.filepath !== parsedDocsConfig.logo.light.filepath
+    ) {
         filepaths.push(parsedDocsConfig.logo.light.filepath);
     }
 
@@ -939,8 +1006,16 @@ async function getImageFilepathsToUpload(
         filepaths.push(parsedDocsConfig.favicon.filepath);
     }
 
-    if (parsedDocsConfig.backgroundImage != null) {
-        filepaths.push(parsedDocsConfig.backgroundImage.filepath);
+    if (parsedDocsConfig.backgroundImage?.dark != null) {
+        filepaths.push(parsedDocsConfig.backgroundImage.dark.filepath);
+    }
+
+    if (
+        parsedDocsConfig.backgroundImage?.light != null &&
+        // if the light and dark images are the same, we don't need to re-upload the light image
+        parsedDocsConfig.backgroundImage.dark?.filepath !== parsedDocsConfig.backgroundImage.light.filepath
+    ) {
+        filepaths.push(parsedDocsConfig.backgroundImage.light.filepath);
     }
 
     const imageFilepathsAndSizesToUpload = await Promise.all(

@@ -26,7 +26,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     title: core.serialization.string().optional(),
     logo: core.serialization.lazyObject(async () => (await import("../../..")).LogoConfiguration).optional(),
     favicon: core.serialization.string().optional(),
-    backgroundImage: core.serialization.property("background-image", core.serialization.string().optional()),
+    backgroundImage: core.serialization.property(
+        "background-image",
+        core.serialization.lazy(async () => (await import("../../..")).BackgroundImageConfiguration).optional()
+    ),
     colors: core.serialization.lazyObject(async () => (await import("../../..")).ColorsConfiguration).optional(),
     navbarLinks: core.serialization.property(
         "navbar-links",
@@ -47,7 +50,7 @@ export declare namespace DocsConfiguration {
         title?: string | null;
         logo?: serializers.LogoConfiguration.Raw | null;
         favicon?: string | null;
-        "background-image"?: string | null;
+        "background-image"?: serializers.BackgroundImageConfiguration.Raw | null;
         colors?: serializers.ColorsConfiguration.Raw | null;
         "navbar-links"?: serializers.NavbarLink.Raw[] | null;
         typography?: serializers.DocsTypographyConfig.Raw | null;
