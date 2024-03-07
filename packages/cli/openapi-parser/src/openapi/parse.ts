@@ -40,7 +40,7 @@ export async function parse({
         servers: [],
         tags: {
             tagsById: {},
-            orderedTagIds: []
+            orderedTagIds: undefined
         },
         hasEndpointsMarkedInternal: false,
         endpoints: [],
@@ -56,7 +56,7 @@ export async function parse({
 
     for (const spec of workspace.specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
-        if (contents.includes("openapi")) {
+        if (contents.includes("openapi") || contents.includes("swagger")) {
             const openApiDocument = await loadOpenAPI({
                 absolutePathToOpenAPI: spec.absoluteFilepath,
                 context: taskContext,
@@ -111,7 +111,10 @@ function merge(
                 ...ir1.tags.tagsById,
                 ...ir2.tags.tagsById
             },
-            orderedTagIds: [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
+            orderedTagIds:
+                ir1.tags.orderedTagIds == null && ir2.tags.orderedTagIds == null
+                    ? undefined
+                    : [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
         },
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
