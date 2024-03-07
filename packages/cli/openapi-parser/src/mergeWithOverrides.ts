@@ -25,7 +25,7 @@ export async function mergeWithOverrides<T>({
         return context.failAndThrow(`Failed to read overrides from file ${absoluteFilepathToOverrides}`);
     }
 
-    const merged = mergeWith({}, mergeWith, parsedOverrides, (obj, src) =>
+    const merged = mergeWith(data, mergeWith, parsedOverrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
             ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
                 ? // nested arrays of objects are merged
