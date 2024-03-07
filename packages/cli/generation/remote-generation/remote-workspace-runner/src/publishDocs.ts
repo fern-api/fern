@@ -288,21 +288,7 @@ async function convertDocsConfiguration({
     });
     const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
         title: parsedDocsConfig.title,
-        // moving forward, we should use colorsV3 instead of logoV2.
-        // logoV2: {
-        //     dark: convertImageReference({
-        //         imageReference: parsedDocsConfig.logo?.dark,
-        //         parsedDocsConfig,
-        //         uploadUrls,
-        //         context
-        //     }),
-        //     light: convertImageReference({
-        //         imageReference: parsedDocsConfig.logo?.light,
-        //         parsedDocsConfig,
-        //         uploadUrls,
-        //         context
-        //     })
-        // },
+        // deprecated, use colorsV3 instead of logoV2
         logoV2: undefined,
         logoHeight: parsedDocsConfig.logo?.height,
         logoHref: parsedDocsConfig.logo?.href,
@@ -312,18 +298,8 @@ async function convertDocsConfiguration({
             uploadUrls,
             context
         }),
-
-        // moving forward, we should use colorsV3 instead of backgroundImage.
+        // deprecated, use colorsV3 instead of backgroundImage
         backgroundImage: undefined,
-        // backgroundImage:
-        //     parsedDocsConfig.backgroundImage != null
-        //         ? convertImageReference({
-        //               imageReference: parsedDocsConfig.backgroundImage.dark ?? parsedDocsConfig.backgroundImage.light,
-        //               parsedDocsConfig,
-        //               uploadUrls,
-        //               context
-        //           })
-        //         : undefined,
         navigation: convertedNavigation.config,
         colorsV3: convertColorConfigImageReferences({ parsedDocsConfig, uploadUrls, context }),
         navbarLinks: parsedDocsConfig.navbarLinks,
