@@ -4425,11 +4425,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/jsonwebtoken", "npm:9.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4519,11 +4515,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/axios", "npm:0.14.0"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/is-ci", "npm:3.0.2"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -4565,11 +4557,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4590,11 +4578,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4611,11 +4595,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/core-utils/",\
           "packageDependencies": [\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/ua-parser-js", "npm:0.7.36"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4637,11 +4617,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4664,11 +4640,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4690,11 +4662,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4716,11 +4684,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@types/dockerode", "npm:3.3.9"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["dockerode", "npm:3.3.2"],\
@@ -4739,11 +4703,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/docs-config-sdk/",\
           "packageDependencies": [\
             ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4766,11 +4726,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
@@ -4802,11 +4758,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@types/cors", "npm:2.8.17"],\
             ["@types/express", "npm:4.17.20"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.7"],\
             ["cors", "npm:2.8.5"],\
@@ -4832,11 +4784,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4859,11 +4807,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4905,11 +4849,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4934,11 +4874,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4965,11 +4901,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3277"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5000,11 +4932,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -5028,11 +4956,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5056,11 +4980,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5085,11 +5005,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5121,11 +5037,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/fs-extra", "npm:11.0.1"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5228,11 +5140,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v7-model", "npm:0.0.2"],\
             ["@fern-fern/ir-v8-model", "npm:0.0.1"],\
             ["@fern-fern/ir-v9-model", "npm:0.0.1"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5251,11 +5159,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ir-sdk/",\
           "packageDependencies": [\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5274,11 +5178,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/prettier", "npm:2.7.3"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5299,11 +5199,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5332,11 +5228,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@types/decompress", "npm:4.2.7"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.4"],\
             ["chalk", "npm:5.0.1"],\
@@ -5358,11 +5250,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5381,11 +5269,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5410,11 +5294,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:9.0.3"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.8"],\
             ["axios", "npm:0.28.0"],\
@@ -5441,11 +5321,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5466,11 +5342,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/express", "npm:4.17.20"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.8"],\
@@ -5497,11 +5369,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5527,11 +5395,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/openapi-ir-sdk/",\
           "packageDependencies": [\
             ["@fern-api/openapi-ir-sdk", "workspace:packages/cli/openapi-ir-sdk"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5556,11 +5420,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5587,11 +5447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@redocly/openapi-core", "npm:1.4.1"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5618,11 +5474,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.7"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5645,11 +5497,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@fern-fern/postman-sdk", "npm:0.0.46"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -5676,11 +5524,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5705,11 +5549,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
@@ -5739,11 +5579,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5780,11 +5616,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
             ["@types/decompress", "npm:4.2.7"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/mime-types", "npm:2.1.4"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5817,11 +5649,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -5846,11 +5674,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5870,11 +5694,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/scripts", "workspace:packages/scripts"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5914,11 +5734,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
             ["@types/find-up", "npm:4.0.0"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5950,11 +5766,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/semver-utils/",\
           "packageDependencies": [\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5973,11 +5785,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6014,11 +5822,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
@@ -6066,11 +5870,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6103,11 +5903,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/prettier", "npm:2.7.3"],\
             ["chalk", "npm:5.0.1"],\
@@ -6165,11 +5961,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-config-sdk", "workspace:packages/docs-config-sdk"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -6594,11 +6386,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6622,11 +6410,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6645,11 +6429,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6667,11 +6447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/auth/",\
           "packageDependencies": [\
             ["@fern-typescript/auth", "workspace:generators/typescript/utils/core-utilities/auth"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["buffer", "npm:6.0.3"],\
             ["depcheck", "npm:1.4.6"],\
@@ -6690,11 +6466,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/base/",\
           "packageDependencies": [\
             ["@fern-typescript/base-core-utilities", "workspace:generators/typescript/utils/core-utilities/base"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6711,11 +6483,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/callback-queue/",\
           "packageDependencies": [\
             ["@fern-typescript/callback-queue", "workspace:generators/typescript/utils/core-utilities/callback-queue"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6741,11 +6509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/zurg", "workspace:generators/typescript/utils/core-utilities/zurg"],\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/esutils", "npm:2.0.2"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/url-join", "npm:4.0.1"],\
@@ -6778,11 +6542,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6805,11 +6565,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
             ["@fern-typescript/union-generator", "workspace:generators/typescript/model/union-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6830,11 +6586,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6857,11 +6609,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6883,11 +6631,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6910,11 +6654,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6950,11 +6690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-converters", "workspace:generators/typescript/model/type-reference-converters"],\
             ["@fern-typescript/type-reference-example-generator", "workspace:generators/typescript/model/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:generators/typescript/model/type-schema-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6980,11 +6716,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/express-generator", "workspace:generators/typescript/express/generator"],\
             ["@ts-morph/common", "npm:0.21.0"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.4"],\
@@ -7015,11 +6747,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7040,11 +6768,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7066,11 +6790,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -7094,11 +6814,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7116,11 +6832,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/fetcher/",\
           "packageDependencies": [\
             ["@fern-typescript/fetcher", "workspace:generators/typescript/utils/core-utilities/fetcher"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["@types/node-fetch", "npm:2.6.9"],\
             ["@types/qs", "npm:6.9.8"],\
@@ -7142,11 +6854,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/form-data-utils/",\
           "packageDependencies": [\
             ["@fern-typescript/form-data-utils", "workspace:generators/typescript/utils/core-utilities/form-data-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7167,11 +6875,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7192,11 +6896,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7218,11 +6918,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7242,11 +6938,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7268,11 +6960,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7297,11 +6985,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
             ["@fern-typescript/union-schema-generator", "workspace:generators/typescript/model/union-schema-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7323,11 +7007,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7350,11 +7030,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7392,11 +7068,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-converters", "workspace:generators/typescript/model/type-reference-converters"],\
             ["@fern-typescript/type-reference-example-generator", "workspace:generators/typescript/model/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:generators/typescript/model/type-schema-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/url-join", "npm:4.0.1"],\
@@ -7427,11 +7099,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/sdk-generator", "workspace:generators/typescript/sdk/generator"],\
             ["@ts-morph/common", "npm:0.21.0"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.4"],\
@@ -7463,11 +7131,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7485,11 +7149,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/stream-utils/",\
           "packageDependencies": [\
             ["@fern-typescript/stream-utils", "workspace:generators/typescript/utils/core-utilities/stream-utils"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7510,11 +7170,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/union-generator", "workspace:generators/typescript/model/union-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7535,11 +7191,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7561,11 +7213,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7588,11 +7236,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/union-schema-generator", "workspace:generators/typescript/model/union-schema-generator"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7614,11 +7258,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7640,11 +7280,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -7662,11 +7298,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/zurg/",\
           "packageDependencies": [\
             ["@fern-typescript/zurg", "workspace:generators/typescript/utils/core-utilities/zurg"],\
-<<<<<<< HEAD
             ["@types/jest", "npm:29.0.3"],\
-=======
-            ["@types/jest", "npm:29.5.12"],\
->>>>>>> 309ec1f03 (test work)
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\

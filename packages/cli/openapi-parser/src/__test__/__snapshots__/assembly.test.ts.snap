@@ -4967,7 +4967,7 @@ The LLM response data, as well as any context provided in the original request w
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "UploadedFile",

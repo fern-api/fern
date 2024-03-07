@@ -2794,7 +2794,7 @@ Upload a document to be indexed and used for search.
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "DeploymentRead",

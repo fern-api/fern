@@ -459,7 +459,7 @@ exports[`open api parser hume parse open api 1`] = `
     },
   ],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "Status",

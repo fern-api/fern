@@ -72,7 +72,7 @@ exports[`file-upload file-upload parse open api 1`] = `
     },
   ],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {},
