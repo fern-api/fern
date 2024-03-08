@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union, Literal
+from typing import Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility

@@ -1,4 +1,5 @@
 from typing import Literal, Optional
+
 import pydantic
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility

@@ -13,7 +13,7 @@ except ImportError:
 
 
 class NestedObjectWithOptionalField(pydantic.BaseModel):
-    string: typing.Optional[int] = None
+    string: typing.Optional[str] = None
     nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
