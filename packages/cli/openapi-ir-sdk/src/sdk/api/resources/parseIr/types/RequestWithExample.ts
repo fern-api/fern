@@ -10,7 +10,7 @@ export type RequestWithExample =
     | FernOpenapiIr.RequestWithExample.Json;
 
 export declare namespace RequestWithExample {
-    interface OctetStream extends FernOpenapiIr.OctetStremRequest, _Utils {
+    interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
         type: "octetStream";
     }
 
@@ -27,7 +27,7 @@ export declare namespace RequestWithExample {
     }
 
     interface _Visitor<_Result> {
-        octetStream: (value: FernOpenapiIr.OctetStremRequest) => _Result;
+        octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
         multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequestWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,7 +35,7 @@ export declare namespace RequestWithExample {
 }
 
 export const RequestWithExample = {
-    octetStream: (value: FernOpenapiIr.OctetStremRequest): FernOpenapiIr.RequestWithExample.OctetStream => {
+    octetStream: (value: FernOpenapiIr.OctetStreamRequest): FernOpenapiIr.RequestWithExample.OctetStream => {
         return {
             ...value,
             type: "octetStream",

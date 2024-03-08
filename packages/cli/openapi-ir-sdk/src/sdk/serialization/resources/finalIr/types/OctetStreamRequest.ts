@@ -6,13 +6,13 @@ import * as serializers from "../../..";
 import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const OctetStremRequest: core.serialization.ObjectSchema<
-    serializers.OctetStremRequest.Raw,
-    FernOpenapiIr.OctetStremRequest
+export const OctetStreamRequest: core.serialization.ObjectSchema<
+    serializers.OctetStreamRequest.Raw,
+    FernOpenapiIr.OctetStreamRequest
 > = core.serialization
     .objectWithoutOptionalProperties({})
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
-export declare namespace OctetStremRequest {
+export declare namespace OctetStreamRequest {
     interface Raw extends serializers.WithDescription.Raw {}
 }
