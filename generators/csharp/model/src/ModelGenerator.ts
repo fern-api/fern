@@ -1,10 +1,12 @@
 import { csharp, CSharpFile } from "@fern-api/csharp-codegen";
+import { CodeBlock } from "@fern-api/csharp-codegen/lib/ast";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
     EnumTypeDeclaration,
     IntermediateRepresentation,
+    Name,
     ObjectProperty,
     ObjectTypeDeclaration,
     Type,
@@ -44,8 +46,9 @@ export class ModelGenerator {
         this.referenceGenerator = new ReferenceGenerator(this.types);
     }
 
-    private _getNameFromTypeDeclaration(typeDeclaration: TypeDeclaration): string {
-        return typeDeclaration.name.name.pascalCase.safeName;
+    // Field and Class names follow pascal case, so just make a utility
+    private _getNameFromIrName(name: Name): string {
+        return name.pascalCase.safeName;
     }
 
     // STOLEN FROM: ruby/TypesGenerator.ts
@@ -113,7 +116,7 @@ export class ModelGenerator {
         typeDeclaration: TypeDeclaration
     ): csharp.Class {
         const class_ = csharp.class_({
-            name: this._getNameFromTypeDeclaration(typeDeclaration),
+            name: this._getNameFromIrName(typeDeclaration.name.name),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
             partial: false,
             access: "public"
@@ -128,7 +131,7 @@ export class ModelGenerator {
         typeDeclaration: TypeDeclaration
     ): csharp.Class {
         const class_ = csharp.class_({
-            name: this._getNameFromTypeDeclaration(typeDeclaration),
+            name: this._getNameFromIrName(typeDeclaration.name.name),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
             partial: false,
             access: "public"
@@ -151,6 +154,15 @@ export class ModelGenerator {
         return class_;
     }
 
+    private _generateSingleUnionType() {
+        // Create a base object if there's extended types or properties
+        // Add class that extends the type object and adds a field for the discriminant
+        // For each primitive put a .value field in the class
+        // For each object, create another object that extends the newly created extension class (which would be private)
+        //
+        // Create a class for each type that extends the base, adds the discriminant and the flattened proeprties of `type`
+    }
+
     private generateUnionClass(
         typeId: TypeId,
         unionTypeDeclaration: UnionTypeDeclaration,
@@ -158,7 +170,65 @@ export class ModelGenerator {
     ): csharp.Class {
         // Generate a class that adds the discriminator to the base objects
         // Then leverage the OneOf
-        throw new Error("Not implemented");
+        const namespace = csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath);
+        const class_ = csharp.class_({
+            name: this._getNameFromIrName(typeDeclaration.name.name),
+            namespace,
+            partial: false,
+            access: "public"
+        });
+
+        // Generate a base class that will get extended by the member classes
+        const baseProperties = this.flattenedProperties.get(typeId) ?? [];
+        const baseClass = csharp.class_({});
+
+        unionTypeDeclaration.types
+            .map<csharp.Class>((member) => {
+                const discriminantFieldJsonPropertyName = unionTypeDeclaration.discriminant.wireValue;
+                const discriminantField = csharp.field({
+                    name: this._getNameFromIrName(unionTypeDeclaration.discriminant.name),
+                    type: csharp.Types.string(),
+                    access: "public",
+                    get: true,
+                    initializer: new CodeBlock({ value: `"${member.discriminantValue.wireValue}"` }),
+                    init: false,
+                    jsonPropertyName: discriminantFieldJsonPropertyName
+                });
+
+                const nestedClass = csharp.class_({
+                    name: "TODO: how is this named",
+                    namespace,
+                    partial: false,
+                    access: "public",
+                    parentClassReference: baseClass.reference
+                });
+                nestedClass.addField(discriminantField);
+
+                return member.shape._visit<csharp.Class | undefined>({
+                    samePropertiesAsObject: (objectType) => {
+                        return;
+                    },
+                    singleProperty: (property) => {
+                        const singlePropertyField = csharp.field({
+                            name: this._getNameFromIrName(property.name.name),
+                            type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.type),
+                            access: "public",
+                            get: true,
+                            init: true,
+                            jsonPropertyName: property.name.wireValue
+                        });
+                        nestedClass.addField(singlePropertyField);
+                        return nestedClass;
+                    },
+                    noProperties: () => {
+                        return nestedClass;
+                    },
+                    _other: () => undefined
+                });
+            })
+            .forEach((memberClass) => class_.addNestedClass(memberClass));
+
+        return class_;
     }
 
     private generateUndiscriminatedUnionClass(typeId: TypeId): undefined {
