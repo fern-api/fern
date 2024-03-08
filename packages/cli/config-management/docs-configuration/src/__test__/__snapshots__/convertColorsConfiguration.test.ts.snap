@@ -1,18 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`convertColorsConfiguration should support accentPrimaryDeprecated 1`] = `
+{
+  "accentPrimary": {
+    "a": 1,
+    "b": 238,
+    "g": 101,
+    "r": 93,
+  },
+  "background": undefined,
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
+  "type": "light",
+}
+`;
+
 exports[`convertThemedColorConfig converts dark to light 1`] = `
 {
   "accentPrimary": {
     "a": 1,
-    "b": 117,
-    "g": 117,
-    "r": 117,
-  },
-  "background": {
-    "a": 1,
     "b": 255,
     "g": 255,
     "r": 255,
+  },
+  "background": {
+    "a": 1,
+    "b": 0,
+    "g": 0,
+    "r": 0,
   },
   "border": undefined,
   "cardBackground": undefined,
@@ -25,15 +42,15 @@ exports[`convertThemedColorConfig converts light to dark 1`] = `
 {
   "accentPrimary": {
     "a": 1,
-    "b": 117,
-    "g": 117,
-    "r": 117,
-  },
-  "background": {
-    "a": 1,
     "b": 0,
     "g": 0,
     "r": 0,
+  },
+  "background": {
+    "a": 1,
+    "b": 255,
+    "g": 255,
+    "r": 255,
   },
   "border": undefined,
   "cardBackground": undefined,
@@ -83,7 +100,3 @@ exports[`convertThemedColorConfig correctly interprets light 1`] = `
   "sidebarBackground": undefined,
 }
 `;
-
-exports[`increaseForegroundContrast should darken #E0634C in light mode 1`] = `"#d44025"`;
-
-exports[`increaseForegroundContrast should lighten #5D65EE in dark mode 1`] = `"#6b72ef"`;
