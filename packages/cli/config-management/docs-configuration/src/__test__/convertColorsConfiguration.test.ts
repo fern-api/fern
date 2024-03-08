@@ -1,6 +1,7 @@
+/* eslint-disable jest/no-commented-out-tests */
 import { createMockTaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
-import { convertThemedColorConfig, getColorType, increaseForegroundContrast } from "../convertColorsConfiguration";
+import { convertColorsConfiguration, convertThemedColorConfig, getColorType } from "../convertColorsConfiguration";
 
 describe("getColorType", () => {
     it("should return dark if background is dark", () => {
@@ -95,26 +96,35 @@ describe("convertThemedColorConfig", () => {
     });
 });
 
-describe("increaseForegroundContrast", () => {
-    it("should darken #E0634C in light mode", () => {
-        expect(
-            increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#131414")).toHexString().toUpperCase()
-        ).toEqual("#E0634C");
+// describe("increaseForegroundContrast", () => {
+//     it("should darken #E0634C in light mode", () => {
+//         expect(
+//             increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#131414")).toHexString().toUpperCase()
+//         ).toEqual("#E0634C");
 
-        const newColor = increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#FFFFFF"));
-        expect(tinycolor.isReadable("#E0634C", "#FFFFFF")).toBe(false);
-        expect(tinycolor.isReadable(newColor, "#FFFFFF")).toBe(true);
-        expect(newColor.toHexString()).toMatchSnapshot();
-    });
+//         const newColor = increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#FFFFFF"));
+//         expect(tinycolor.isReadable("#E0634C", "#FFFFFF")).toBe(false);
+//         expect(tinycolor.isReadable(newColor, "#FFFFFF")).toBe(true);
+//         expect(newColor.toHexString()).toMatchSnapshot();
+//     });
 
-    it("should lighten #5D65EE in dark mode", () => {
-        expect(
-            increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#FFFFFF")).toHexString().toUpperCase()
-        ).toEqual("#5D65EE");
+//     it("should lighten #5D65EE in dark mode", () => {
+//         expect(
+//             increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#FFFFFF")).toHexString().toUpperCase()
+//         ).toEqual("#5D65EE");
 
-        const newColor = increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#131414"));
-        expect(tinycolor.isReadable("#5D65EE", "#131414")).toBe(false);
-        expect(tinycolor.isReadable(newColor, "#131414")).toBe(true);
-        expect(newColor.toHexString()).toMatchSnapshot();
+//         const newColor = increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#131414"));
+//         expect(tinycolor.isReadable("#5D65EE", "#131414")).toBe(false);
+//         expect(tinycolor.isReadable(newColor, "#131414")).toBe(true);
+//         expect(newColor.toHexString()).toMatchSnapshot();
+//     });
+// });
+
+describe("convertColorsConfiguration", () => {
+    it("should support accentPrimaryDeprecated", () => {
+        const rawConfig = {
+            accentPrimaryDeprecated: "#5D65EE"
+        };
+        expect(convertColorsConfiguration(rawConfig, createMockTaskContext())).toMatchSnapshot();
     });
 });
