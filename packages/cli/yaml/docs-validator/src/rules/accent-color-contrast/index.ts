@@ -11,8 +11,6 @@ export const AccentColorContrastRule: Rule = {
                 if (config.colors == null) {
                     return [];
                 }
-                // const accentPrimary = config.colors?.accentPrimary ?? config.colors?.accentPrimaryDeprecated;
-                // const backgroundColor = config.colors?.background;
 
                 const colorType = getColorType(config.colors);
 
@@ -35,26 +33,25 @@ export function validateTheme(colors: ColorsConfiguration, theme: "dark" | "ligh
         "accent-primary",
         theme
     );
-    let backgroundColor = getColorFromRawConfig(colors.background, "background", theme);
+    let backgroundColor =
+        getColorFromRawConfig(colors.background, "background", theme) ?? (theme === "dark" ? "#000" : "#FFF");
 
     const ruleViolations: RuleViolation[] = [];
 
-    if (backgroundColor != null) {
-        if (!tinycolor(backgroundColor).isValid()) {
+    if (!tinycolor(backgroundColor).isValid()) {
+        ruleViolations.push({
+            severity: "error",
+            message: `Invalid background color provided for colors.background.${theme}: ${backgroundColor}.`
+        });
+    } else {
+        const newBackground = enforceBackgroundTheme(tinycolor(backgroundColor), theme);
+        if (tinycolor(backgroundColor).toHexString() !== newBackground.toHexString()) {
             ruleViolations.push({
-                severity: "error",
-                message: `Invalid background color provided for colors.background.${theme}: ${backgroundColor}.`
+                severity: "warning",
+                message: `The provided background color for ${theme} mode is not ${theme} enough. It will be adjusted to ${newBackground.toHexString()}.`
             });
-        } else {
-            const newBackground = enforceBackgroundTheme(tinycolor(backgroundColor), theme);
-            if (tinycolor(backgroundColor).toHexString() !== newBackground.toHexString()) {
-                ruleViolations.push({
-                    severity: "warning",
-                    message: `The provided background color for ${theme} mode is not ${theme} enough. It will be adjusted to ${newBackground.toHexString()}.`
-                });
-            }
-            backgroundColor = newBackground.toHexString();
         }
+        backgroundColor = newBackground.toHexString();
     }
 
     if (accentPrimaryColor == null) {
@@ -68,23 +65,25 @@ export function validateTheme(colors: ColorsConfiguration, theme: "dark" | "ligh
             message: `Invalid accent-color provided for colors.accent-primary.${theme}: ${accentPrimaryColor}.`
         });
     } else {
-        const backgroundColorWithFallback = tinycolor(backgroundColor ?? (theme === "dark" ? "#000" : "#FFF"));
-        const accentPrimaryColorInstance = tinycolor(accentPrimaryColor);
-        for (const standard of ["aaa", "aa", "ui"] as const) {
-            const newAccentColor = increaseForegroundContrast(
-                accentPrimaryColorInstance,
-                backgroundColorWithFallback,
-                standard
-            );
-            if (accentPrimaryColorInstance.toHexString() !== newAccentColor.toHexString()) {
-                const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
-                ruleViolations.push({
-                    severity: "warning",
-                    message: `The chosen accent color for ${theme} mode fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG ${standard.toUpperCase()} requirements (${getUserReadableRatio(
-                        standard
-                    )}). To enhance accessibility and ensure content readability, Fern will adjusted from ${accentPrimaryColor} to a more contrast-rich ${newAccentColor.toHexString()}.`
-                });
-            }
+        const ratio = tinycolor.readability(accentPrimaryColor, backgroundColor);
+        const readableRatio = `${ratio.toFixed(2)}:1`;
+        console.log("readableRatio", readableRatio, accentPrimaryColor, backgroundColor);
+
+        if (ratio < 3) {
+            ruleViolations.push({
+                severity: "warning",
+                message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. It should be at least 3:1.`
+            });
+        } else if (ratio < 4.5) {
+            ruleViolations.push({
+                severity: "warning",
+                message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 4.5:1 for WCAG AA and 7:1 for WCAG AAA.`
+            });
+        } else if (ratio < 7) {
+            ruleViolations.push({
+                severity: "warning",
+                message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 7:1 for WCAG AAA.`
+            });
         }
     }
 
