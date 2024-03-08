@@ -29,7 +29,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x  # replace with current or desired version
+        version: 0.x.x  # declare your desired version
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -46,7 +46,7 @@ groups:
   internal:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x # replace with current or desired version
+        version: 0.x.x # declare your desired version
         output:
           location: npm.buildwithfern.com
           package-name: @fern-petstore/api # replace petstore with your org name
@@ -63,7 +63,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x # replace with current or desired version
+        version: 0.x.x # declare your desired version
         output:
           location: npm
           package-name: petstore # replace with your package name
@@ -81,7 +81,7 @@ generators:
   groups:
     public:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x # replace with current or desired version
+        version: 0.x.x # declare your desired version
         output:
           location: npm
           package-name: petstore # replace with your package name
@@ -99,7 +99,7 @@ You can include one or more options for `config`, such as:
 <CodeBlock title='generators.yml'>
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.x.x # replace with current or desired version
+  version: 0.x.x # declare your desired version
   output:
     location: npm
     package-name: petstore
@@ -130,7 +130,7 @@ To customize these names, you can use `namespaceExport`:
 <CodeBlock title='generators.yml'>
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.x.x # replace with current or desired version
+  version: 0.x.x # declare your desired version
   output:
     location: npm
     package-name: petstore
