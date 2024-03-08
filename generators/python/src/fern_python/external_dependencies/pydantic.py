@@ -73,6 +73,9 @@ class Pydantic:
         @staticmethod
         def forbid(version: PydanticVersionCompatibility) -> AST.Expression:
             return AST.Expression(_export(version, "Extra", "forbid"))
+        @staticmethod
+        def allow(version: PydanticVersionCompatibility) -> AST.Expression:
+            return AST.Expression(_export(version, "Extra", "allow"))
 
     @staticmethod
     def root_validator(version: PydanticVersionCompatibility, pre: bool = False) -> AST.FunctionInvocation:

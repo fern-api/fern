@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
+from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union, Literal
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -33,7 +33,7 @@ class PydanticModel:
         parent: ClassParent = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        forbid_extra_fields: bool = False,
+        extra_fields: Optional[Literal["allow", "forbid"]] = None,
     ):
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
@@ -50,7 +50,7 @@ class PydanticModel:
         self._version = version
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
-        self._forbid_extra_fields = forbid_extra_fields
+        self._extra_fields = extra_fields
         self._frozen = frozen
         self._orm_mode = orm_mode
         self._smart_union = smart_union
@@ -306,11 +306,18 @@ class PydanticModel:
                 )
             )
 
-        if self._forbid_extra_fields:
+        if self._extra_fields == "forbid":
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
                     initializer=Pydantic.Extra.forbid(self._version),
+                )
+            )
+        elif self._extra_fields == "allow":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.allow(self._version),
                 )
             )
 
