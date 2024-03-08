@@ -13,13 +13,15 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { ReferenceGenerator } from "./ReferenceGenerator";
 
-class ModelGenerator {
+export class ModelGenerator {
     private rootModule: string;
 
     private types: Map<TypeId, TypeDeclaration>;
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
     private generatorContext: GeneratorContext;
+    private referenceGenerator: ReferenceGenerator;
 
     constructor(
         rootModule: string,
@@ -39,6 +41,12 @@ class ModelGenerator {
         for (const typeId of this.types.keys()) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
+
+        this.referenceGenerator = new ReferenceGenerator(this.types);
+    }
+
+    private _getNameFromTypeDeclaration(typeDeclaration: TypeDeclaration): string {
+        return typeDeclaration.name.name.pascalCase.safeName;
     }
 
     // STOLEN FROM: ruby/TypesGenerator.ts
@@ -93,16 +101,26 @@ class ModelGenerator {
                   });
     }
 
-    private generateAliasClass(
-        typeId: TypeId,
-        aliasTypeDeclaration: AliasTypeDeclaration,
-        typeDeclaration: TypeDeclaration
-    ): csharp.Class {
-        throw new Error("Not implemented");
+    private generateAliasClass(typeId: TypeId): undefined {
+        // C# doesn't have a direct equivalent to an alias, so we do not generate a class here.
+        // The closest thing to aliases are leveraging a `using` statement, but this seems to be file specific.
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/using-alias-types
+        this.generatorContext.logger.debug(`Skipping generation of alias type: ${typeId}`);
+        return;
     }
 
-    private generateEnumClass(enumTypeDeclaration: EnumTypeDeclaration, typeDeclaration: TypeDeclaration): Class {
-        throw new Error("Not implemented");
+    private generateEnumClass(
+        enumTypeDeclaration: EnumTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): csharp.Class {
+        const class_ = csharp.class_({
+            name: this._getNameFromTypeDeclaration(typeDeclaration),
+            namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
+            partial: true,
+            access: "public"
+        });
+
+        return class_;
     }
 
     private generateObjectClass(
@@ -111,7 +129,7 @@ class ModelGenerator {
         typeDeclaration: TypeDeclaration
     ): csharp.Class {
         const class_ = csharp.class_({
-            name: typeDeclaration.name.name.pascalCase.safeName,
+            name: this._getNameFromTypeDeclaration(typeDeclaration),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
             partial: false,
             access: "public"
@@ -122,7 +140,7 @@ class ModelGenerator {
             class_.addField(
                 csharp.field({
                     name: property.name.name.pascalCase.safeName,
-                    type: csharp.Type.typeFromTypeReference(this.rootModule, property.valueType),
+                    type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.valueType),
                     access: "public",
                     get: true,
                     init: true,
@@ -150,8 +168,9 @@ class ModelGenerator {
         throw new Error("Not implemented");
     }
 
-    private generateUnkownClass(shape: Type): csharp.Class | undefined {
-        throw new Error("Unknown type declaration shape: " + shape.type);
+    private generateUnknownClass(shape: Type): undefined {
+        this.generatorContext.logger.error("Skipping generation of unknown type: " + shape.type);
+        return;
     }
 
     public generateTypes(): CSharpFile[] {
@@ -161,13 +180,13 @@ class ModelGenerator {
             const filePath = CSharpFile.getFilePathFromFernFilePath(typeDeclaration.name.fernFilepath);
             this.generatorContext.logger.debug(`Generating type: ${typeId}`);
             const generatedClass = typeDeclaration.shape._visit<csharp.Class | undefined>({
-                alias: (atd: AliasTypeDeclaration) => this.generateAliasClass(typeId, atd, typeDeclaration),
+                alias: () => this.generateAliasClass(typeId),
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumClass(etd, typeDeclaration),
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectClass(typeId, otd, typeDeclaration),
                 union: (utd: UnionTypeDeclaration) => this.generateUnionClass(typeId, utd, typeDeclaration),
                 undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
                     this.generateUndiscriminatedUnionClass(typeId, uutd, typeDeclaration),
-                _other: () => this.generateUnkownClass(typeDeclaration.shape)
+                _other: () => this.generateUnknownClass(typeDeclaration.shape)
             });
 
             if (generatedClass != null) {

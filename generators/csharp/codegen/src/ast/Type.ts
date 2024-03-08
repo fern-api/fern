@@ -1,9 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
-import { Class } from "./Class";
-import { ClassReference } from "./ClassReference";
+import { ClassReference, OneOfClassReference } from "./ClassReference";
 
 type InternalType =
     | Integer
@@ -19,7 +17,8 @@ type InternalType =
     | Set
     | Map
     | Optional
-    | Reference;
+    | Reference
+    | OneOf;
 
 interface Integer {
     type: "integer";
@@ -83,6 +82,11 @@ interface Reference {
     value: ClassReference;
 }
 
+interface OneOf {
+    type: "oneOf";
+    memberValues: Type[];
+}
+
 /* A C# parameter to a method */
 export class Type extends AstNode {
     private constructor(private readonly internalType: InternalType) {
@@ -142,6 +146,17 @@ export class Type extends AstNode {
             case "reference":
                 writer.addReference(this.internalType.value);
                 writer.write(this.internalType.value.name);
+                break;
+            case "oneOf":
+                writer.addReference(OneOfClassReference);
+                writer.write("OneOf<");
+                this.internalType.memberValues.forEach((value, index) => {
+                    if (index !== 0) {
+                        writer.write(",");
+                    }
+                    value.write(writer);
+                });
+                writer.write(">");
                 break;
             default:
                 assertNever(this.internalType);
@@ -239,52 +254,10 @@ export class Type extends AstNode {
         });
     }
 
-    private static typeFromContainerReference(rootModule: string, containerType: ContainerType): Type {
-        return containerType._visit<Type>({
-            list: (value: TypeReference) => Type.list(Type.typeFromTypeReference(rootModule, value)),
-            map: (value: MapType) =>
-                Type.map(
-                    Type.typeFromTypeReference(rootModule, value.keyType),
-                    Type.typeFromTypeReference(rootModule, value.valueType)
-                ),
-            set: (value: TypeReference) => Type.set(Type.typeFromTypeReference(rootModule, value)),
-            optional: (value: TypeReference) => Type.optional(Type.typeFromTypeReference(rootModule, value)),
-            literal: (value: Literal) =>
-                value._visit<Type>({
-                    string: () => Type.string(),
-                    boolean: () => Type.boolean(),
-                    _other: () => Type.object()
-                }),
-            _other: () => Type.object()
-        });
-    }
-
-    public static typeFromTypeReference(rootModule: string, typeReference: TypeReference): Type {
-        return typeReference._visit<Type>({
-            container: (value: ContainerType) => Type.typeFromContainerReference(rootModule, value),
-            named: (value: DeclaredTypeName) =>
-                Type.reference(
-                    new ClassReference({
-                        name: value.name.pascalCase.safeName,
-                        namespace: Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath)
-                    })
-                ),
-            primitive: (value: PrimitiveType) =>
-                PrimitiveType._visit<Type>(value, {
-                    integer: () => Type.integer(),
-                    double: () => Type.double(),
-                    string: () => Type.string(),
-                    boolean: () => Type.boolean(),
-                    long: () => Type.long(),
-                    date: () => Type.date(),
-                    dateTime: () => Type.dateTime(),
-                    uuid: () => Type.uuid(),
-                    // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
-                    base64: () => Type.string(),
-                    _other: () => Type.object()
-                }),
-            unknown: () => Type.object(),
-            _other: () => Type.object()
+    public static oneOf(memberValues: Type[]): Type {
+        return new this({
+            type: "oneOf",
+            memberValues
         });
     }
 }
