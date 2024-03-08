@@ -12,7 +12,7 @@ Front matter must be added to the top of a `.md` or `.mdx` file, before the rest
 <CodeBlock title="Example front matter in .md or .mdx file">
 ```mdx
 ---
-title: Fern | Introduction to the Fern toolkit for REST APIs
+title: Introduction to the Fern toolkit for REST APIs
 description: Define your API with OpenAPI or Fern's simpler format, then generate SDKs, server boilerplate, and a documentation website with an API Reference. 
 editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/docs/pages/overview/introduction.mdx
 image: https://github.com/fern-api/fern/blob/main/fern/docs/images/logo-green.png
@@ -24,9 +24,41 @@ image: https://github.com/fern-api/fern/blob/main/fern/docs/images/logo-green.pn
 **Type**: string<br />
 **Default**: The name of the page as specified in `docs.yml`
 
-Set the content for the [`<title>` element](https://web.dev/learn/html/document-structure#document_title) for a page. This title is displayed in browser tabs, history, and bookmarks, as well as in search engine results. Having a unique and informative title for each page benefits your site's SEO (Search Engine Optimization). For more information, see [Google's guidelines for useful titles](https://developers.google.com/search/docs/appearance/title-link#page-titles).
+Set the content for the [`<title>` element](https://web.dev/learn/html/document-structure#document_title) for a page. This title is displayed in browser tabs, history, and bookmarks, as well as in search engine results. Having a unique and informative title for each page benefits your site's SEO (Search Engine Optimization).
 
-If no title is provided in the front matter of a page, the name of the page in `docs.yml` is used.
+<Tip>
+TIP: For more information, see [Google's guidelines for useful titles](https://developers.google.com/search/docs/appearance/title-link#page-titles).
+</Tip>
+
+If no `title` is provided in the front matter of a page, Fern uses the value for that page in `docs.yml`.
+
+For example, if a page is defined like this in `docs.yml`:
+
+<CodeBlock title='docs.yml'>
+```yaml
+      - page: Overview
+        path: ./docs/pages/fern-docs/docs-overview.mdx
+```
+</CodeBlock>
+
+Then, if Fern does not find a `title` in that page's front matter, `Overview` is used for the default title. 
+
+##### Site-wide title text appended from docs.yml
+
+You can set a field named `title` in `docs.yml` like this:
+
+<CodeBlock title='docs.yml'>
+```yaml
+instances:
+  - url: fern.docs.buildwithfern.com
+
+title: Fern | Documentation # <-- set site-wide
+```
+</CodeBlock>
+
+The value you enter for this field is appended to every page's title across your docs site, as ` - TITLE_VALUE`. 
+
+For example, with the above setting in `docs.yml`, the `Overview` page's title becomes `Overview - Fern | Documentation`. 
 
 #### description
 **Type**: string<br />
