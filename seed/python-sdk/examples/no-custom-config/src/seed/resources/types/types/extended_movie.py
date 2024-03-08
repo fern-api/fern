@@ -6,6 +6,11 @@ import typing
 from ....core.datetime_utils import serialize_datetime
 from .movie import Movie
 
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
+
 
 class ExtendedMovie(Movie):
     """
@@ -36,4 +41,5 @@ class ExtendedMovie(Movie):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
