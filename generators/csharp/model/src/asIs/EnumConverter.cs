@@ -86,16 +86,19 @@ class TolerantEnumConverter : JsonConverter
 
 public class StringEnumConverter : JsonConverter<StringEnum>
 {
-    public override DateTimeOffset Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options) =>
-            DateTimeOffset.ParseExact(reader.GetString()!,
-                "MM/dd/yyyy", CultureInfo.InvariantCulture);
+    public override bool CanConvert(Type objectType)
+    {
+        Type type = IsNullableType(objectType) ? Nullable.GetUnderlyingType(objectType) : objectType;
+        return type.IsEnum;
+    }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        StringEnum strEnum,
-        JsonSerializerOptions options) =>
-            writer.WriteStringValue(strEnum.value.ToString());
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        bool isNullable = IsNullableType(objectType);
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        writer.WriteValue(value.value.ToString());
+    }
 }

@@ -10,7 +10,6 @@ import {
     Type,
     TypeDeclaration,
     TypeId,
-    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { ReferenceGenerator } from "./ReferenceGenerator";
@@ -116,7 +115,7 @@ export class ModelGenerator {
         const class_ = csharp.class_({
             name: this._getNameFromTypeDeclaration(typeDeclaration),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
-            partial: true,
+            partial: false,
             access: "public"
         });
 
@@ -157,15 +156,19 @@ export class ModelGenerator {
         unionTypeDeclaration: UnionTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): csharp.Class {
+        // Generate a class that adds the discriminator to the base objects
+        // Then leverage the OneOf
         throw new Error("Not implemented");
     }
 
-    private generateUndiscriminatedUnionClass(
-        typeId: TypeId,
-        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
-        typeDeclaration: TypeDeclaration
-    ): csharp.Class {
-        throw new Error("Not implemented");
+    private generateUndiscriminatedUnionClass(typeId: TypeId): undefined {
+        // Undiscriminated unions are managed through the use of the OneOf library:
+        // OneOf<Type1, Type2, ...>, and so there is no need to generate a class for them,
+        // given there are no aliases.
+        this.generatorContext.logger.error(
+            "Skipping generation of undiscriminated union type, we just annotate unions: " + typeId
+        );
+        return;
     }
 
     private generateUnknownClass(shape: Type): undefined {
@@ -184,8 +187,7 @@ export class ModelGenerator {
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumClass(etd, typeDeclaration),
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectClass(typeId, otd, typeDeclaration),
                 union: (utd: UnionTypeDeclaration) => this.generateUnionClass(typeId, utd, typeDeclaration),
-                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
-                    this.generateUndiscriminatedUnionClass(typeId, uutd, typeDeclaration),
+                undiscriminatedUnion: () => this.generateUndiscriminatedUnionClass(typeId),
                 _other: () => this.generateUnknownClass(typeDeclaration.shape)
             });
 
