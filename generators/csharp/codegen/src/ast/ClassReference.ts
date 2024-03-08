@@ -25,3 +25,8 @@ export class ClassReference extends AstNode {
         writer.write(`${this.name}`);
     }
 }
+
+export const OneOfClassReference = new ClassReference({
+    name: "OneOf",
+    namespace: "OneOf"
+});
