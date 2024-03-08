@@ -20,6 +20,8 @@ export declare namespace Class {
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
+        /* The class to inherit from if any */
+        parentClassReference?: ClassReference;
     }
 }
 
@@ -30,9 +32,11 @@ export class Class extends AstNode {
     public readonly sealed: boolean;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
+    public readonly parentClassReference: ClassReference | undefined;
 
     private fields: Field[] = [];
     private methods: Method[] = [];
+    private nestedClasses: Class[] = [];
 
     constructor({ name, namespace, access, sealed, partial }: Class.Args) {
         super();
@@ -56,6 +60,10 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
+    public addNestedClass(subClass: Class): void {
+        this.nestedClasses.push(subClass);
+    }
+
     public write(writer: Writer): void {
         writer.writeLine(`namespace ${this.namespace}`);
         writer.newLine();
@@ -68,6 +76,10 @@ export class Class extends AstNode {
         }
         writer.write("class ");
         writer.writeLine(`${this.name}`);
+        if (this.parentClassReference != null) {
+            writer.write(" : ");
+            this.parentClassReference.write(writer);
+        }
         writer.writeLine("{");
 
         writer.indent();
@@ -78,6 +90,8 @@ export class Class extends AstNode {
         writer.dedent();
 
         // TODO(dsinghvi): add support for methods
+
+        // TODO(dsinghvi): add support for subclasses
 
         writer.writeLine("}");
     }
