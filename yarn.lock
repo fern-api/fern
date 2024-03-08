@@ -2542,7 +2542,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docs-config-sdk@workspace:*, @fern-api/docs-config-sdk@workspace:^, @fern-api/docs-config-sdk@workspace:packages/docs-config-sdk":
+"@fern-api/docs-config-sdk@workspace:*, @fern-api/docs-config-sdk@workspace:packages/docs-config-sdk":
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-config-sdk@workspace:packages/docs-config-sdk"
   dependencies:
@@ -2557,7 +2557,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docs-configuration@workspace:*, @fern-api/docs-configuration@workspace:^, @fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration":
+"@fern-api/docs-configuration@workspace:*, @fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration":
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration"
   dependencies:
@@ -2616,8 +2616,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-validator@workspace:packages/cli/yaml/docs-validator"
   dependencies:
-    "@fern-api/docs-config-sdk": "workspace:^"
-    "@fern-api/docs-configuration": "workspace:^"
+    "@fern-api/docs-config-sdk": "workspace:*"
+    "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"

@@ -4,6 +4,8 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../commons/fs-utils" },
+    { "path": "../../../docs-config-sdk" },
+    { "path": "../../config-management/docs-configuration" },
     { "path": "../../config-management/project-configuration" },
     { "path": "../../logger" },
     { "path": "../../workspace-loader" },

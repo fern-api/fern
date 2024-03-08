@@ -27,8 +27,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/docs-config-sdk": "workspace:^",
-    "@fern-api/docs-configuration": "workspace:^",
+    "@fern-api/docs-config-sdk": "workspace:*",
+    "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
