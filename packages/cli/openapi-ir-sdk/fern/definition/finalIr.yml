@@ -266,11 +266,11 @@ types:
 
   Request:
     union:
-      octetStream: OctetStremRequest
+      octetStream: OctetStreamRequest
       multipart: MultipartRequest
       json: JsonRequest
 
-  OctetStremRequest:
+  OctetStreamRequest:
     extends: commons.WithDescription
     properties: {}
 
