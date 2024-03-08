@@ -758,6 +758,7 @@ exports[`open api parser hathora simple 1`] = `
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -804,6 +805,7 @@ exports[`open api parser hathora simple 1`] = `
           },
           "CreatePublicLobbyDeprecated": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -850,6 +852,7 @@ exports[`open api parser hathora simple 1`] = `
           },
           "ListActivePublicLobbiesDeprecated": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -999,6 +1002,7 @@ exports[`open api parser hathora simple 1`] = `
           },
           "CreateLocalLobby": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -1072,6 +1076,7 @@ exports[`open api parser hathora simple 1`] = `
           },
           "CreatePrivateLobby": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -1145,6 +1150,7 @@ exports[`open api parser hathora simple 1`] = `
           },
           "CreatePublicLobby": {
             "auth": true,
+            "availability": "deprecated",
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
