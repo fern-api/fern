@@ -81,9 +81,9 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     // and falls back to node-fetch.
     const fetchFn =
         RUNTIME.type === "node"
-            // `.default` is required due to this issue:
-            // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-            ? require("node-fetch").default
+            ? // `.default` is required due to this issue:
+              // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
+              require("node-fetch").default
             : typeof fetch == "function"
             ? fetch
             : require("node-fetch").default;
