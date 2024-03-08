@@ -67,7 +67,6 @@ export function validateTheme(colors: ColorsConfiguration, theme: "dark" | "ligh
     } else {
         const ratio = tinycolor.readability(accentPrimaryColor, backgroundColor);
         const readableRatio = `${ratio.toFixed(2)}:1`;
-        console.log("readableRatio", readableRatio, accentPrimaryColor, backgroundColor);
 
         if (ratio < 3) {
             ruleViolations.push({

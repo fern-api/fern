@@ -96,34 +96,8 @@ export function convertThemedColorConfig(
         ) ?? tinycolor.random();
     const backgroundColor = getColorInstanceFromRawConfigOrThrow(rawConfig.background, context, "background", theme);
 
-    // we enforce contrast on the frontend
-    // the following is moved to fern-check but preserved here for reference
+    // we enforce contrast on the frontend, but we also want to warn the user if the color is not readable using fern check.
     // see: /packages/cli/yaml/docs-validator/src/rules/accent-color-contrast/index.ts
-
-    // if (backgroundColor != null) {
-    //     const newBackgroundColor = enforceBackgroundTheme(tinycolor(backgroundColor.toString()), theme);
-    //     if (newBackgroundColor.toHexString() !== backgroundColor.toHexString()) {
-    //         context.logger.warn(
-    //             `The chosen shade, 'colors.background' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
-    //         );
-    //         backgroundColor = newBackgroundColor;
-    //     }
-    // }
-
-    // if (accentPrimaryColor != null) {
-    //     const backgroundColorWithFallback = backgroundColor ?? tinycolor(theme === "dark" ? "#000" : "#FFF");
-    //     const newAccentPrimaryColor = increaseForegroundContrast(
-    //         tinycolor(accentPrimaryColor.toString()),
-    //         backgroundColorWithFallback
-    //     );
-    //     if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
-    //         const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
-    //         context.logger.warn(
-    //             `The chosen shade, 'colors.accent-primary' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
-    //         );
-    //         accentPrimaryColor = newAccentPrimaryColor;
-    //     }
-    // }
 
     return {
         accentPrimary: accentPrimaryColor.toRgb(),
@@ -150,24 +124,6 @@ export function convertThemedColorConfig(
         // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
     };
 }
-
-// export function increaseForegroundContrast(
-//     foregroundColor: tinycolor.Instance,
-//     backgroundColor: tinycolor.Instance
-// ): tinycolor.Instance {
-//     let newForgroundColor = foregroundColor;
-//     const dark = backgroundColor.isDark();
-//     while (!tinycolor.isReadable(newForgroundColor, backgroundColor)) {
-//         if (dark ? newForgroundColor.getBrightness() === 255 : newForgroundColor.getBrightness() === 0) {
-//             // if the color is already at its maximum or minimum brightness, stop adjusting
-//             break;
-//         }
-//         // if the accent color is still not readable, adjust it by 1% until it is
-//         // if the theme is dark, lighten the color, otherwise darken it
-//         newForgroundColor = dark ? newForgroundColor.lighten(1) : newForgroundColor.darken(1);
-//     }
-//     return newForgroundColor;
-// }
 
 export function getColorFromRawConfig(
     raw: RawDocs.ColorConfig | undefined,
