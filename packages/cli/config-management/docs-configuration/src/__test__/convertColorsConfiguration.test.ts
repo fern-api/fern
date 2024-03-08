@@ -1,6 +1,5 @@
 import { createMockTaskContext } from "@fern-api/task-context";
-import tinycolor from "tinycolor2";
-import { convertThemedColorConfig, getColorType, increaseForegroundContrast } from "../convertColorsConfiguration";
+import { convertColorsConfiguration, getColorType } from "../convertColorsConfiguration";
 
 describe("getColorType", () => {
     it("should return dark if background is dark", () => {
@@ -49,72 +48,11 @@ describe("getColorType", () => {
     });
 });
 
-describe("convertThemedColorConfig", () => {
-    it("correctly interprets dark", () => {
+describe("convertColorsConfiguration", () => {
+    it("should support accentPrimaryDeprecated", () => {
         const rawConfig = {
-            background: "#000",
-            accentPrimary: "#fff"
+            accentPrimaryDeprecated: "#5D65EE"
         };
-        const converted = convertThemedColorConfig(rawConfig, createMockTaskContext(), "dark");
-        expect(converted).toMatchSnapshot();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(tinycolor.isReadable(converted.accentPrimary!, converted.background!)).toBe(true);
-    });
-
-    it("converts dark to light", () => {
-        const rawConfig = {
-            background: "#000",
-            accentPrimary: "#fff"
-        };
-        const converted = convertThemedColorConfig(rawConfig, createMockTaskContext(), "light");
-        expect(converted).toMatchSnapshot();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(tinycolor.isReadable(converted.accentPrimary!, converted.background!)).toBe(true);
-    });
-
-    it("correctly interprets light", () => {
-        const rawConfig = {
-            background: "#fff",
-            accentPrimary: "#000"
-        };
-        const converted = convertThemedColorConfig(rawConfig, createMockTaskContext(), "light");
-        expect(converted).toMatchSnapshot();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(tinycolor.isReadable(converted.accentPrimary!, converted.background!)).toBe(true);
-    });
-
-    it("converts light to dark", () => {
-        const rawConfig = {
-            background: "#fff",
-            accentPrimary: "#000"
-        };
-        const converted = convertThemedColorConfig(rawConfig, createMockTaskContext(), "dark");
-        expect(converted).toMatchSnapshot();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(tinycolor.isReadable(converted.accentPrimary!, converted.background!)).toBe(true);
-    });
-});
-
-describe("increaseForegroundContrast", () => {
-    it("should darken #E0634C in light mode", () => {
-        expect(
-            increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#131414")).toHexString().toUpperCase()
-        ).toEqual("#E0634C");
-
-        const newColor = increaseForegroundContrast(tinycolor("#E0634C"), tinycolor("#FFFFFF"));
-        expect(tinycolor.isReadable("#E0634C", "#FFFFFF")).toBe(false);
-        expect(tinycolor.isReadable(newColor, "#FFFFFF")).toBe(true);
-        expect(newColor.toHexString()).toMatchSnapshot();
-    });
-
-    it("should lighten #5D65EE in dark mode", () => {
-        expect(
-            increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#FFFFFF")).toHexString().toUpperCase()
-        ).toEqual("#5D65EE");
-
-        const newColor = increaseForegroundContrast(tinycolor("#5D65EE"), tinycolor("#131414"));
-        expect(tinycolor.isReadable("#5D65EE", "#131414")).toBe(false);
-        expect(tinycolor.isReadable(newColor, "#131414")).toBe(true);
-        expect(newColor.toHexString()).toMatchSnapshot();
+        expect(convertColorsConfiguration(rawConfig, createMockTaskContext())).toMatchSnapshot();
     });
 });

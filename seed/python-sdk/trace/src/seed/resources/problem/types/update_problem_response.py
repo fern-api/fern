@@ -26,4 +26,5 @@ class UpdateProblemResponse(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

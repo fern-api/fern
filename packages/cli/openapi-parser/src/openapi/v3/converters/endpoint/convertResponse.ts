@@ -102,6 +102,22 @@ function convertResolvedResponse({
     responseBreadcrumbs: string[];
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
+
+    if (resolvedResponse.content != null) {
+        const isdownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
+            if (mediaObject.schema == null) {
+                return false;
+            }
+            const resolvedSchema = isReferenceObject(mediaObject.schema)
+                ? context.resolveSchemaReference(mediaObject.schema)
+                : mediaObject.schema;
+            return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
+        });
+        if (isdownloadFile) {
+            return ResponseWithExample.file({ description: resolvedResponse.description });
+        }
+    }
+
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
     if (jsonMediaObject != null) {
         if (isStreaming) {

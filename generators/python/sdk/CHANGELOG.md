@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.10] - 2024-03-08
+
+- feature: Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK. This allows for easier forward compatibility should your SDK drift behind your spec.
+
+  Config:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      ...
+      config:
+        pydantic_config:
+          extra_fields: "allow"
+  ```
+
+  Example generated code:
+
+  ```python
+  # my_object.py
+  class MyObject(pydantic.BaseModel):
+      string: typing.Optional[str] = None
+      ...
+
+  # main.py
+  o = pydantic.parse_obj_as(MyObject, {"string": "string", "my_new_property": "custom_value"})
+
+  print(o.my_new_property) # <--- "custom_value"
+  ```
+
 ## [0.11.9] - 2024-03-04
 
 - chore: Use docstrings instead of Pydantic field descriptions. This is meant to be a cleanliness change.
