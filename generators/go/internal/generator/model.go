@@ -21,12 +21,16 @@ var (
 )
 
 // WriteType writes a complete type, including all of its properties.
-func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration, includeRawJSON bool) error {
+func (f *fileWriter) WriteType(
+	typeDeclaration *ir.TypeDeclaration,
+	includeRawJSON bool,
+) error {
 	visitor := &typeVisitor{
 		typeName:       typeDeclaration.Name.Name.PascalCase.UnsafeName,
 		baseImportPath: f.baseImportPath,
 		importPath:     fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
 		writer:         f,
+		unionVersion:   f.unionVersion,
 		includeRawJSON: includeRawJSON,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
@@ -40,6 +44,7 @@ type typeVisitor struct {
 	importPath     string
 	writer         *fileWriter
 
+	unionVersion   UnionVersion
 	includeRawJSON bool
 }
 
@@ -292,7 +297,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
-	// Implement the constructors.
+	// Implement the constructors. If UnionVersionV1 is enabled, we only generate
+	// constructors for literal values.
 	for _, unionType := range union.Types {
 		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
@@ -300,11 +306,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			literal := unionType.Shape.SingleProperty.Type.Container.Literal
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
 			t.writer.P("func New", t.typeName, "With", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "() *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": ", literalToValue(literal), "}")
-		} else {
+			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": ", literalToValue(literal), "}")
+		} else if t.unionVersion != UnionVersionV1 {
 			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 			t.writer.P("func New", t.typeName, "From", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(value ", singleUnionProperty.goType, ") *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": value}")
+			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": value}")
+		} else {
+			continue
 		}
 		t.writer.P("}")
 		t.writer.P()
@@ -354,7 +362,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Generate the switch to unmarshal the appropriate type.
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
 	for _, unionType := range union.Types {
-		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		t.writer.P("case \"", unionType.DiscriminantValue.WireValue, "\":")
 		if unionType.Shape.PropertiesType == "singleProperty" {
 			if unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 				// We have a literal, so we need to set its value explicitly.
@@ -393,14 +401,40 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// Implement the json.Marshaler interface.
 	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("switch ", receiver, ".", discriminantName, " {")
+	if t.unionVersion != UnionVersionV1 {
+		t.writer.P("switch ", receiver, ".", discriminantName, " {")
+	}
 	for i, unionType := range union.Types {
-		if i == 0 {
+		if i == 0 && t.unionVersion != UnionVersionV1 {
 			// Implement the default case first.
 			t.writer.P("default:")
 			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
-		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		var (
+			isLiteral  bool
+			isOptional bool
+			date       *date
+		)
+		if unionType.Shape.SingleProperty != nil {
+			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+		}
+		zeroValue := "nil"
+		if unionType.Shape.PropertiesType == "singleProperty" {
+			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
+		}
+		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		if isLiteral {
+			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
+		}
+		if t.unionVersion != UnionVersionV1 {
+			t.writer.P("case \"", unionType.DiscriminantValue.WireValue, "\":")
+		} else if date != nil && !isOptional {
+			t.writer.P("if !", unionTypeValue, ".IsZero() {")
+		} else {
+			t.writer.P("if ", unionTypeValue, " != ", zeroValue, " {")
+		}
 		t.writer.P("var marshaler = struct {")
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
@@ -429,7 +463,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
-		t.writer.P(discriminantName, ": ", receiver, ".", discriminantName, ",")
+		t.writer.P(discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\",")
 		for _, propertyName := range propertyNames {
 			t.writer.P(propertyName, ": ", receiver, ".", propertyName, ",")
 		}
@@ -454,8 +488,17 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		t.writer.P("}")
 		t.writer.P("return json.Marshal(marshaler)")
+		if t.unionVersion == UnionVersionV1 {
+			// Close the if condition, if present.
+			t.writer.P("}")
+		}
 	}
-	t.writer.P("}")
+	if t.unionVersion != UnionVersionV1 {
+		// Close the switch statement, if present.
+		t.writer.P("}")
+	} else {
+		t.writer.P("return nil, fmt.Errorf(\"type %T does not define a non-empty union type\", ", receiver, ")")
+	}
 	t.writer.P("}")
 	t.writer.P()
 
@@ -470,21 +513,57 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// Generate the Accept method.
 	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(visitor ", t.typeName, "Visitor) error {")
-	t.writer.P("switch ", receiver, ".", discriminantName, "{")
+	if t.unionVersion != UnionVersionV1 {
+		// Close the switch statement, if present.
+		t.writer.P("switch ", receiver, ".", discriminantName, "{")
+	}
 	for i, unionType := range union.Types {
-		if i == 0 {
+		if i == 0 && t.unionVersion != UnionVersionV1 {
 			// Implement the default case first.
 			t.writer.P("default:")
 			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
-		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		var (
+			isLiteral  bool
+			isOptional bool
+			date       *date
+		)
+		if unionType.Shape.SingleProperty != nil {
+			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+		}
+		zeroValue := "nil"
+		if unionType.Shape.PropertiesType == "singleProperty" {
+			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
+		}
+		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		if isLiteral {
+			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
+		}
+		if t.unionVersion != UnionVersionV1 {
+			t.writer.P("case \"", unionType.DiscriminantValue.WireValue, "\":")
+		} else if date != nil && !isOptional {
+			t.writer.P("if !", unionTypeValue, ".IsZero() {")
+		} else {
+			t.writer.P("if ", unionTypeValue, " != ", zeroValue, " {")
+		}
 		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
 		t.writer.P("return visitor.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", receiver, ".", fieldName, ")")
+		if t.unionVersion == UnionVersionV1 {
+			// Close the if condition, if present.
+			t.writer.P("}")
+		}
 	}
-	t.writer.P("}")
+	if t.unionVersion != UnionVersionV1 {
+		// Close the switch statement, if present.
+		t.writer.P("}")
+	} else {
+		t.writer.P("return fmt.Errorf(\"type %T does not define a non-empty union type\", ", receiver, ")")
+	}
 	t.writer.P("}")
 	t.writer.P()
 
@@ -500,14 +579,17 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// all of the relevant information upfront, and traverse it
 	// multiple times seamlessly (and in the order they're specified).
 	type member struct {
-		typeName  string
-		caseName  string
-		field     string
-		variable  string
-		value     string
-		docs      *string
-		literal   string
-		isLiteral bool
+		typeName   string
+		caseName   string
+		field      string
+		variable   string
+		value      string
+		zeroValue  string
+		docs       *string
+		literal    string
+		isLiteral  bool
+		isOptional bool
+		date       *date
 
 		// Optional; only applies to date[-time] values.
 		valueMarshalerValue          string
@@ -523,21 +605,25 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			typeName = unionMember.Type.Named.TypeId
 		}
 		var literal string
-		isLiteral := unionMember.Type.Container != nil && unionMember.Type.Container.Literal != nil
+		isLiteral := isLiteralType(unionMember.Type, t.writer.types)
 		if isLiteral {
 			literal = literalToValue(unionMember.Type.Container.Literal)
 		}
 		hasLiteral = hasLiteral || isLiteral
+
+		isOptional := isOptionalType(unionMember.Type, t.writer.types)
+		date := maybeDate(unionMember.Type, isOptional)
 
 		var (
 			valueMarshalerValue          = ""
 			valueUnmarshalerTypeName     = ""
 			valueUnmarshalerMethodSuffix = ""
 		)
-		if date := maybeDate(unionMember.Type, false); date != nil {
+		if date != nil {
 			valueMarshalerValue = fmt.Sprintf("%s(%s.%s)", date.Constructor, receiver, field)
 			valueUnmarshalerTypeName = date.TypeDeclaration
 			valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
+
 		}
 
 		members = append(
@@ -548,9 +634,12 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				variable:                     fmt.Sprintf("value%s", strings.Title(field)),
 				caseName:                     firstLetterToLower(field),
 				value:                        typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+				zeroValue:                    zeroValueForTypeReference(unionMember.Type, t.writer.types),
 				docs:                         unionMember.Docs,
 				literal:                      literal,
 				isLiteral:                    isLiteral,
+				isOptional:                   isOptional,
+				date:                         date,
 				valueMarshalerValue:          valueMarshalerValue,
 				valueUnmarshalerTypeName:     valueUnmarshalerTypeName,
 				valueUnmarshalerMethodSuffix: valueUnmarshalerMethodSuffix,
@@ -560,7 +649,6 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 
 	// Write the union type definition.
 	t.writer.P("type ", t.typeName, " struct {")
-	t.writer.P("typeName string")
 	for _, member := range members {
 		t.writer.WriteDocs(member.docs)
 		t.writer.P(member.field, " ", member.value)
@@ -568,14 +656,17 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
-	// Implement the constructors.
+	// Implement the constructors. If UnionVersionV1 is enabled, we only generate
+	// constructors for literal values.
 	for _, member := range members {
 		if member.isLiteral {
 			t.writer.P("func New", t.typeName, "With", strings.Title(member.field), "() *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{typeName: \"", member.caseName, "\", ", member.field, ": ", member.literal, "}")
-		} else {
+			t.writer.P("return &", t.typeName, "{", member.field, ": ", member.literal, "}")
+		} else if t.unionVersion != UnionVersionV1 {
 			t.writer.P("func New", t.typeName, "From", member.field, "(value ", member.value, ") *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{typeName: \"", member.caseName, "\", ", member.field, ": value}")
+			t.writer.P("return &", t.typeName, "{", member.field, ": value}")
+		} else {
+			continue
 		}
 		t.writer.P("}")
 		t.writer.P()
@@ -610,7 +701,6 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			// If the undiscriminated union specifies a literal, it will only
 			// succeed if the literal matches exactly.
 			t.writer.P("if ", member.variable, "== ", member.literal, " {")
-			t.writer.P(receiver, ".typeName = \"", member.caseName, "\"")
 			t.writer.P(receiver, ".", member.field, " = ", member.variable)
 			t.writer.P("return nil")
 			t.writer.P("}")
@@ -621,7 +711,6 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.valueUnmarshalerMethodSuffix != "" {
 			variable += member.valueUnmarshalerMethodSuffix
 		}
-		t.writer.P(receiver, ".typeName = \"", member.caseName, "\"")
 		t.writer.P(receiver, ".", member.field, " = ", variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
@@ -631,26 +720,27 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P()
 
 	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("switch ", receiver, ".typeName {")
-	for i, member := range members {
-		if i == 0 {
-			// Implement the default case first.
-			t.writer.P("default:")
-			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".typeName, ", receiver, ")")
+	for _, member := range members {
+		field := fmt.Sprintf("%s.%s", receiver, member.field)
+		if member.date != nil && !member.isOptional {
+			t.writer.P("if !", field, ".IsZero() {")
+		} else {
+			t.writer.P("if ", field, " != ", member.zeroValue, " {")
 		}
-		t.writer.P("case \"", member.caseName, "\":")
 		if member.isLiteral {
 			// If we have a literal, we need to marshal it directly.
 			t.writer.P("return json.Marshal(", member.literal, ")")
+			t.writer.P("}")
 			continue
 		}
-		field := fmt.Sprintf("%s.%s", receiver, member.field)
-		if member.valueMarshalerValue != "" {
-			field = member.valueMarshalerValue
+		if member.date != nil {
+			t.writer.P("return json.Marshal(", member.date.Constructor, "(", field, "))")
+		} else {
+			t.writer.P("return json.Marshal(", field, ")")
 		}
-		t.writer.P("return json.Marshal(", field, ")")
+		t.writer.P("}")
 	}
-	t.writer.P("}")
+	t.writer.P("return nil, fmt.Errorf(\"type %T does not include a non-empty union type\", ", receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
 
@@ -664,17 +754,17 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 
 	// Generate the Accept method.
 	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(visitor ", t.typeName, "Visitor) error {")
-	t.writer.P("switch ", receiver, ".typeName {")
-	for i, member := range members {
-		if i == 0 {
-			// Implement the default case first.
-			t.writer.P("default:")
-			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".typeName, ", receiver, ")")
+	for _, member := range members {
+		field := fmt.Sprintf("%s.%s", receiver, member.field)
+		if member.date != nil && !member.isOptional {
+			t.writer.P("if !", field, ".IsZero() {")
+		} else {
+			t.writer.P("if ", field, " != ", member.zeroValue, " {")
 		}
-		t.writer.P("case \"", member.caseName, "\":")
 		t.writer.P("return visitor.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
+		t.writer.P("}")
 	}
-	t.writer.P("}")
+	t.writer.P("return fmt.Errorf(\"type %T does not include a non-empty union type\", ", receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
 

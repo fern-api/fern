@@ -3,7 +3,7 @@
 package option
 
 import (
-	core "github.com/undiscriminated-unions/fern/core"
+	core "github.com/fern-api/undiscriminated-go/core"
 	http "net/http"
 )
 

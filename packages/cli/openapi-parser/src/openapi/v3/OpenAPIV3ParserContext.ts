@@ -16,6 +16,8 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
     private errorBodies: Record<number, ErrorBodyCollector> = {};
 
+    private schemasToExclude: Set<SchemaId> = new Set();
+
     constructor({
         document,
         taskContext,
@@ -98,5 +100,13 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             }
         });
         return errors;
+    }
+
+    public excludeSchema(schemaId: SchemaId): void {
+        this.schemasToExclude.add(schemaId);
+    }
+
+    public isSchemaExcluded(schemaId: SchemaId): boolean {
+        return this.schemasToExclude.has(schemaId);
     }
 }

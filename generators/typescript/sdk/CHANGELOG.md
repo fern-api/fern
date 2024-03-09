@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.6] - 2024-02-27
+
+- In Node.js environments the SDK will default to using `node-fetch`. The 
+  SDK depends on v2 of node-fetch to stay CJS compatible. 
+
+  Previously the SDK was doing `require("node-fetch")` but it should be 
+  `require("node-fetch").default` based on 
+  https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223. 
+
 ## [0.12.5] - 2024-02-27
 
 - Introduce a custom configuration called `tolerateRepublish` which supports running

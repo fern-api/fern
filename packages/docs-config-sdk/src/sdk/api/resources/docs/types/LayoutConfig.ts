@@ -7,7 +7,8 @@ import * as FernDocsConfig from "../../..";
 export interface LayoutConfig {
     /**
      * Sets the maximum width of the docs layout, including the sidebar and content.
-     * If `page-width` is not set, the default value is 88rem (1408px).
+     *
+     * @default: 88rem (1408px)
      *
      * Valid options are:
      *
@@ -18,7 +19,8 @@ export interface LayoutConfig {
     pageWidth?: string;
     /**
      * Sets the maximum width of the markdown article content.
-     * If `content-width` is not set, the default value is 44rem (704px).
+     *
+     * @default: 44rem (704px)
      *
      * Valid options are:
      *
@@ -27,8 +29,9 @@ export interface LayoutConfig {
      */
     contentWidth?: string;
     /**
-     * Sets the width of the sidebar in desktop mode.
-     * If `sidebar-width` is not set, the default value is 18rem (288px).
+     * Sets the width of the sidebar in desktop mode
+     *
+     * @default: 18rem (288px)
      *
      * Valid options are:
      *
@@ -37,8 +40,9 @@ export interface LayoutConfig {
      */
     sidebarWidth?: string;
     /**
-     * Sets the height of the header.
-     * If `header-height` is not set, the default value is 4rem (64px).
+     * Sets the height of the header
+     *
+     * @default: 4rem (64px)
      *
      * Valid options are:
      *
@@ -47,13 +51,42 @@ export interface LayoutConfig {
      */
     headerHeight?: string;
     /**
-     * Sets the placement of the searchbar.
-     * If `searchbar-position` is not set, the default value is `sidebar`.
+     * Sets the placement of the searchbar
+     *
+     * @default: `sidebar`
+     *
+     * Note: this setting is ignored when `disable-header` is set to true.
      */
     searchbarPlacement?: FernDocsConfig.SidebarOrHeaderPlacement;
     /**
-     * Set the placement of the tabs.
-     * If `tabs-position` is not set, the default value is `sidebar`.
+     * Set the placement of the tabs
+     *
+     * @default: `sidebar`
+     *
+     * Note: this setting is ignored when `disable-header` is set to true.
      */
     tabsPlacement?: FernDocsConfig.SidebarOrHeaderPlacement;
+    /**
+     * Set the alignment of the mardown content.
+     *
+     * @default: `center`
+     *
+     * Side effects:
+     *
+     * - When the alignment is set to `center`, the "On this page" (ToC) will be aligned to the right of the page.
+     * - When the alignment is set to `left`, the content will be aligned next to the right of the markdown content.
+     */
+    contentAlignment?: FernDocsConfig.ContentAlignment;
+    /**
+     * If `header-position` is set to `fixed`, the header will be fixed to the top of the viewport.
+     * If `header-position` is set to `absolute`, the header will be absolute and will scroll with the content.
+     *
+     * @default: `fixed`
+     */
+    headerPosition?: FernDocsConfig.HeaderPosition;
+    /**
+     * If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
+     * and a 1px border will separate the sidebar from the content.
+     */
+    disableHeader?: boolean;
 }

@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
-import re
 from types import TracebackType
-from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
+from typing import Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -34,7 +33,7 @@ class PydanticModel:
         parent: ClassParent = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        forbid_extra_fields: bool = False,
+        extra_fields: Optional[Literal["allow", "forbid"]] = None,
     ):
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
@@ -51,7 +50,7 @@ class PydanticModel:
         self._version = version
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
-        self._forbid_extra_fields = forbid_extra_fields
+        self._extra_fields = extra_fields
         self._frozen = frozen
         self._orm_mode = orm_mode
         self._smart_union = smart_union
@@ -307,11 +306,18 @@ class PydanticModel:
                 )
             )
 
-        if self._forbid_extra_fields:
+        if self._extra_fields == "forbid":
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
                     initializer=Pydantic.Extra.forbid(self._version),
+                )
+            )
+        elif self._extra_fields == "allow":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.allow(self._version),
                 )
             )
 
@@ -370,26 +376,12 @@ def get_field_name_initializer(
             arg_present = True
             writer.write("default_factory=")
             writer.write_node(default_factory)
-        if description is not None:
-            if arg_present:
-                writer.write(", ")
-            arg_present = True
-            lines = re.split("[\n|\r]", description)
-            if len(lines) > 1:
-                writer.write_line("description=(")
-                for i, line in enumerate(lines):
-                    line = line.replace('"', '\\"')
-                    if i == (len(lines) - 1):
-                        # only add the last line if not empty
-                        if line:
-                            writer.write_line(f'"{line}\\n"')
-                    else:
-                        writer.write_line(f'"{line}\\n"')
-                writer.write_line(")")
-            else:
-                escaped_description = description.replace('"', '\\"')
-                writer.write(f'description="{escaped_description}"')
         writer.write(")")
+        if description is not None:
+            writer.write_newline_if_last_line_not()
+            writer.write_line('"""')
+            writer.write_line(description)
+            writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))
 

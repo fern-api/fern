@@ -15,11 +15,10 @@ except ImportError:
 
 class ListType(pydantic.BaseModel):
     value_type: VariableType = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(
-        alias="isFixedLength",
-        default=None,
-        description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
-    )
+    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
+    """
+    Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -33,6 +32,7 @@ class ListType(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 

@@ -91,7 +91,7 @@ class ReferencedAPICollector {
                 continue;
             }
             const fernWorkspace =
-                workspace.type === "openapi"
+                workspace.type === "oss"
                     ? await convertOpenApiWorkspaceToFernWorkspace(workspace, this.context)
                     : workspace;
             const ir = await generateIntermediateRepresentation({

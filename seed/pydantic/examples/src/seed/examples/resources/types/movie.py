@@ -32,7 +32,11 @@ class Movie(pydantic.BaseModel):
     prequel: typing.Optional[MovieId]
     title: str
     from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field(description="The rating scale is one to five stars")
+    rating: float = pydantic.Field()
+    """
+    The rating scale is one to five stars
+    """
+
     type: typing.Literal["movie"]
     tag: Tag
     book: typing.Optional[str]
@@ -47,4 +51,5 @@ class Movie(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

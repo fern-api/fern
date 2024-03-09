@@ -7,6 +7,7 @@ import {
     SingleBaseUrlEnvironments
 } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
+import { mapValues } from "lodash-es";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertEnvironments({
@@ -56,10 +57,11 @@ function convertSingleBaseUrlEnvironments({
                         docs: typeof singleBaseUrlEnvironment === "string" ? undefined : singleBaseUrlEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
-                        url:
+                        url: removeTrailingSlash(
                             typeof singleBaseUrlEnvironment === "string"
                                 ? singleBaseUrlEnvironment
                                 : singleBaseUrlEnvironment.url
+                        )
                     }),
                     multipleBaseUrls: () => {
                         throw new Error(`Environment ${environmentName} has multiple base URLs`);
@@ -90,7 +92,7 @@ function convertMultipleBaseUrlEnvironments({
                         docs: multipleBaseUrlsEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
-                        urls: multipleBaseUrlsEnvironment.urls
+                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url))
                     }),
                     singleBaseUrl: () => {
                         throw new Error(`Environment ${environmentName} does not have multiple base URLs`);
@@ -98,4 +100,8 @@ function convertMultipleBaseUrlEnvironments({
                 })
         )
     };
+}
+
+function removeTrailingSlash(url: string): string {
+    return url.endsWith("/") ? url.slice(0, -1) : url;
 }

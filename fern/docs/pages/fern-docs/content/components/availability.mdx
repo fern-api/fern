@@ -1,5 +1,5 @@
 ---
-title: Fern | Indicate the Availability of an endpoint
+title: Show the Availability of endpoints
 description: Indicate the status of a feature using the Availability component. Display a tag of beta, generally available, or deprecated. 
 ---
 
@@ -9,30 +9,68 @@ Within the API reference documentation generated using Fern Docs, use the [Fern 
 
 In the Markdown/MDX pages that make up the rest of your documentation site, use the `Availability` component as shown below to render the tag.
 
-Availability prop:
+## Props
 
-**type**: 'beta' | 'GA' | 'deprecated'
+| prop     | type    | description                      | default   |
+|----------|---------|----------------------------------|-----------|
+| *type*   | string  | `'beta' ｜ 'GA' ｜ 'deprecated'` | `'GA'`    |
 
-## Beta availability 
+All props are optional.
 
-Indicates that a feature is in <Availability type="beta" />. This means that the feature is still in development and may change before it is released to the public. 
+## Usage
 
+### Beta availability 
+
+Indicates that a feature is in <Availability type='beta' />. This means that the feature is still in development and may change before it is released to the public. 
+
+Example:
+
+<CodeBlock title='Beta example'>
 ```mdx
-<Availability type="beta" />
+<Availability type='beta' />
 ```
+</CodeBlock>
 
-## General availability
+This renders as:
 
-Indicates that a feature is <Availability type="GA" />. This means that the feature is ready for use in production. 
+<Availability type='beta' />
 
+### General availability
+
+Indicates that a feature is <Availability type='GA' /> (Generally Available). This means that the feature is ready for use in production. 
+
+Example:
+
+<CodeBlock title='GA example 1'>
 ```mdx
-<Availability type="GA" />
+<Availability type='GA' />
 ```
+</CodeBlock>
 
-## Deprecated availability
+`'GA'` is the default value for the `type` prop. Thus, you can also use:
 
-Indicates that a feature is <Availability type="deprecated" />. This means that the feature is no longer supported and will be removed in a future release.
-
+<CodeBlock title='GA example 2'>
 ```mdx
-<Availability type="deprecated" />
+<Availability />
 ```
+</CodeBlock>
+
+Either of the above two examples renders as:
+
+<Availability />
+
+### Deprecated availability
+
+Indicates that a feature is <Availability type='deprecated' />. This means that the feature is no longer supported and will be removed in a future release.
+
+Example:
+
+<CodeBlock title='Deprecated example'>
+```mdx
+<Availability type='deprecated' />
+```
+</CodeBlock>
+
+This renders as:
+
+<Availability type='deprecated' />

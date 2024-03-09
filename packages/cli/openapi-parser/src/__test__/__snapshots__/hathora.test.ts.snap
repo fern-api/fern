@@ -2845,7 +2845,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,
@@ -3003,7 +3003,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,
@@ -3161,7 +3161,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,
@@ -3427,7 +3427,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,
@@ -3732,7 +3732,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,
@@ -4037,7 +4037,7 @@ exports[`open api parser hathora parse open api 1`] = `
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [
         401,

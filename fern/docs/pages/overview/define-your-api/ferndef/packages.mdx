@@ -1,56 +1,69 @@
+---
+title: Packages in Fern Definition 
+description: Fern Definition packages have namespaces for reusing API type and error names across packages, and can configure the order in which your docs shows services.
+---
+
 ## What is a package?
 
 Every folder in your API definition is a package.
 
+<CodeBlock title='Example of package and nested package'>
 ```yaml
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/ # <------ root package
   ├─ api.yml
-  ├─ imdb.yml
-  └─ persons/ # <-------- nested package
-    └─ director.yml
+  ├─ projects.yml
+  └─ roles/ # <------- nested package
+    └─ admin.yml
 ```
+</CodeBlock>
 
 The generated SDK will match the hierarchy of your API definition.
 
+<CodeBlock title='Generated SDK'>
 ```ts
 const client = new Client();
 
-// calling endpoint defined in imdb.yml
-client.imdb.getRating('goodwill-hunting');
+// calling endpoint defined in projects.yml
+client.projects.get();
 
-// calling endpoint defined in persons/director.yml
-client.persons.director.get('christopher-nolan');
+// calling endpoint defined in roles/admin.yml
+client.roles.admin.get();
 ```
+</CodeBlock>
 
 ## Package configuration
 
-Each package can have a special file called `__package__.yml`. Just like any
+Each package can have a special definition file called `__package__.yml`. Like any
 other definition file, it can contain [imports](/overview/define-your-api/ferndef/imports),
 [types](/overview/define-your-api/ferndef/types), [endpoints](/overview/define-your-api/ferndef/endpoints),
 and [errors](/overview/define-your-api/ferndef/errors).
 
 Endpoints in `__package__.yml` will appear at the root of the package.
-For example, the following generated SDK
+For example, the following generated SDK:
 
+<CodeBlock title='Generated SDK'>
 ```ts
 const client = new Client();
 
-client.submitRating('goodwill-hunting', 9.5);
+client.getProjects();
 ```
+</CodeBlock>
 
-would have a `fern` directory
+would have a `fern/` folder:
 
+<CodeBlock title='fern/'>
 ```yaml
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/
   ├─ __package__.yml # <---
-  └─ api.yml
+  └─ roles.yml
 ```
+</CodeBlock>
 
 that contains the following `__package__.yml`:
 
@@ -58,16 +71,12 @@ that contains the following `__package__.yml`:
 ```yaml 
 service:
   base-path: ""
-  auth: true
+  auth: false
   endpoints:
-    submitRating:
-      method: POST
-      path: "/submit-rating/{movieId}"
-      path-parameters:
-        movieId: string
-      request:
-        type: double
-        docs: Rating of the movie
+    getProjects:
+      method: GET
+      path: ""
+      response: list<Project>
 ```
 </CodeBlock>
 
@@ -77,23 +86,25 @@ Each package has its own namespace. This means you can reuse type names and
 error names across packages.
 
 This is useful when versioning your APIs. For example, when you want to
-increment your API version, you can just copy the existing API
+increment your API version, you can copy the existing API
 to a new package and start making changes. If the new API version reuses
 certain types or errors, that's okay because the two APIs live in different
 packages.
 
+<CodeBlock title="Versioning example">
 ```yaml
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/
   ├─ api.yml
-  └─ imdb/
+  └─ roles/
       └─ v1/
-        └─ movie.yml # type names can overlap with v2/movie.yml
+        └─ admin.yml # type names can overlap with v2/admin.yml
       └─ v2/
-        └─ movie.yml
+        └─ admin.yml
 ```
+</CodeBlock>
 
 ## Navigation
 
@@ -101,8 +112,9 @@ fern/
 of your services. This is relevant when you want to control the display
 of your documentation.
 
-For example, let's say you have the following Fern Directory:
+For example, let's say you have the following `fern/` folder:
 
+<CodeBlock title='fern/'>
 ```yaml
 fern/
 ├─ fern.config.json
@@ -112,23 +124,13 @@ fern/
   ├─ roles.yml
   └─ users.yml
 ```
+</CodeBlock>
 
 Your API will be sorted alphabetically: projects, roles, then users. If you
 want to control the navigation, you can add a `__package__.yml` file
-and configure the order.
+and configure the order:
 
-<CodeBlock title="__package__.yml">
-```yaml
-navigation: 
-  - users.yml
-  - roles.yml
-  - projects.yml
-```
-</CodeBlock>
-
-
-Note the `fern` directory structure will now look like:
-
+<CodeBlock title='fern/'>
 ```yaml
 fern/
 ├─ fern.config.json
@@ -139,3 +141,13 @@ fern/
   ├─ roles.yml
   └─ users.yml
 ```
+</CodeBlock>
+
+<CodeBlock title='__package__.yml'>
+```yaml
+navigation: 
+  - users.yml
+  - roles.yml
+  - projects.yml
+```
+</CodeBlock>

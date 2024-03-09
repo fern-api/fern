@@ -7489,7 +7489,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "User Pagination API
 ",
       "errorStatusCode": [
@@ -8135,7 +8135,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get number of users
 ",
       "errorStatusCode": [
@@ -9710,7 +9710,7 @@ Note that there is an invisible character at the end of the path, this was to av
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get User Pagination data.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -10067,7 +10067,7 @@ Note that there is an invisible character at the end of the path, this was to av
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get number of users.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
 ",
@@ -17446,7 +17446,7 @@ e.g.:
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get session data
 ",
       "errorStatusCode": [
@@ -18382,7 +18382,7 @@ e.g.:
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get JWT data for a session
 ",
       "errorStatusCode": [

@@ -72,7 +72,7 @@ func (t Tag) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			Number int    `json:"value"`
 		}{
-			Type:   t.Type,
+			Type:   "number",
 			Number: t.Number,
 		}
 		return json.Marshal(marshaler)
@@ -81,7 +81,7 @@ func (t Tag) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"value"`
 		}{
-			Type:   t.Type,
+			Type:   "string",
 			String: t.String,
 		}
 		return json.Marshal(marshaler)
@@ -90,7 +90,7 @@ func (t Tag) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Boolean bool   `json:"value"`
 		}{
-			Type:    t.Type,
+			Type:    "boolean",
 			Boolean: t.Boolean,
 		}
 		return json.Marshal(marshaler)

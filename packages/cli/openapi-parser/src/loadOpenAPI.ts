@@ -4,10 +4,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { bundle, Config } from "@redocly/openapi-core";
 import { Plugin } from "@redocly/openapi-core/lib/config";
 import { NodeType } from "@redocly/openapi-core/lib/types";
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-import { mergeWith } from "lodash-es";
 import { OpenAPI } from "openapi-types";
+import { mergeWithOverrides } from "./mergeWithOverrides";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
 
 const XFernStreaming: NodeType = {
@@ -81,29 +79,11 @@ export async function loadOpenAPI({
     }
 
     if (overridesFilepath != null) {
-        let parsedOverrides = null;
-        try {
-            const contents = (await readFile(overridesFilepath, "utf8")).toString();
-            try {
-                parsedOverrides = JSON.parse(contents);
-            } catch (err) {
-                parsedOverrides = yaml.load(contents, { json: true });
-            }
-        } catch (err) {
-            return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
-        }
-
-        const merged = mergeWith({}, parsed, parsedOverrides, (obj, src) =>
-            Array.isArray(obj) && Array.isArray(src)
-                ? src.every((element) => typeof element === "object") &&
-                  obj.every((element) => typeof element === "object")
-                    ? // nested arrays of objects are merged
-                      undefined
-                    : // nested arrays of primitives are replaced
-                      [...src]
-                : undefined
-        ) as OpenAPI.Document;
-        return merged;
+        return await mergeWithOverrides<OpenAPI.Document>({
+            absoluteFilepathToOverrides: overridesFilepath,
+            context,
+            data: parsed
+        });
     }
     return parsed;
 }

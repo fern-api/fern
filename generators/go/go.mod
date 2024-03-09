@@ -3,12 +3,12 @@ module github.com/fern-api/fern-go
 go 1.19
 
 require (
-	github.com/fern-api/generator-exec-go v0.0.603
+	github.com/fern-api/generator-exec-go v0.0.609
 	github.com/google/uuid v1.6.0
 	github.com/hmdsefi/gograph v0.4.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	go.uber.org/multierr v1.11.0
-	golang.org/x/mod v0.15.0
+	golang.org/x/mod v0.16.0
 	golang.org/x/tools v0.18.0
 )
 

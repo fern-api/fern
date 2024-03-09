@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpenapiIr.Request> = core.serialization
     .union("type", {
-        octetStream: core.serialization.lazyObject(async () => (await import("../../..")).OctetStremRequest),
+        octetStream: core.serialization.lazyObject(async () => (await import("../../..")).OctetStreamRequest),
         multipart: core.serialization.lazyObject(async () => (await import("../../..")).MultipartRequest),
         json: core.serialization.lazyObject(async () => (await import("../../..")).JsonRequest),
     })
@@ -31,7 +31,7 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
 export declare namespace Request {
     type Raw = Request.OctetStream | Request.Multipart | Request.Json;
 
-    interface OctetStream extends serializers.OctetStremRequest.Raw {
+    interface OctetStream extends serializers.OctetStreamRequest.Raw {
         type: "octetStream";
     }
 

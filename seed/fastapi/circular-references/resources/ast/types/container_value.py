@@ -16,7 +16,7 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def list(self, value: typing.List[FieldValue]) -> ContainerValue:
+    def list_(self, value: typing.List[FieldValue]) -> ContainerValue:
         return ContainerValue(__root__=_ContainerValue.List(type="list", value=value))
 
     def optional(self, value: typing.Optional[FieldValue]) -> ContainerValue:
@@ -31,11 +31,11 @@ class ContainerValue(pydantic.BaseModel):
 
     def visit(
         self,
-        list: typing.Callable[[typing.List[FieldValue]], T_Result],
+        list_: typing.Callable[[typing.List[FieldValue]], T_Result],
         optional: typing.Callable[[typing.Optional[FieldValue]], T_Result],
     ) -> T_Result:
         if self.__root__.type == "list":
-            return list(self.__root__.value)
+            return list_(self.__root__.value)
         if self.__root__.type == "optional":
             return optional(self.__root__.value)
 

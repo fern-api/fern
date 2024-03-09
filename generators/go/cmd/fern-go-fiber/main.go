@@ -34,6 +34,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.SnippetFilepath,
 		config.ImportPath,
 		config.PackageName,
+		config.UnionVersion,
 		config.Module,
 	)
 	if err != nil {

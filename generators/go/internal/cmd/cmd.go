@@ -63,6 +63,7 @@ type Config struct {
 	SnippetFilepath            string
 	ImportPath                 string
 	PackageName                string
+	UnionVersion               string
 	Module                     *generator.ModuleConfig
 	Writer                     *writer.Config
 }
@@ -208,6 +209,7 @@ func newConfig(configFilename string) (*Config, error) {
 		SnippetFilepath:            snippetFilepath,
 		ImportPath:                 customConfig.ImportPath,
 		PackageName:                customConfig.PackageName,
+		UnionVersion:               customConfig.UnionVersion,
 		Module:                     moduleConfig,
 		Writer:                     writerConfig,
 	}, nil
@@ -252,6 +254,7 @@ type customConfig struct {
 	IncludeLegacyClientOptions bool          `json:"includeLegacyClientOptions,omitempty"`
 	ImportPath                 string        `json:"importPath,omitempty"`
 	PackageName                string        `json:"packageName,omitempty"`
+	UnionVersion               string        `json:"union,omitempty"`
 	Module                     *moduleConfig `json:"module,omitempty"`
 }
 
@@ -269,6 +272,7 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 	if err != nil {
 		return nil, fmt.Errorf("failed to serialize custom configuration: %v", err)
 	}
+
 	// We use a custom decoder here to validate the custom configuration fields.
 	decoder := json.NewDecoder(bytes.NewReader(configBytes))
 	decoder.DisallowUnknownFields()

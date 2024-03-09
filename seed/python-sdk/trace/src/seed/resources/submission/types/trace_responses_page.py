@@ -13,13 +13,12 @@ except ImportError:
 
 
 class TraceResponsesPage(pydantic.BaseModel):
-    offset: typing.Optional[int] = pydantic.Field(
-        default=None,
-        description=(
-            "If present, use this to load subseqent pages.\n"
-            "The offset is the id of the next trace response to load.\n"
-        ),
-    )
+    offset: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    If present, use this to load subseqent pages.
+    The offset is the id of the next trace response to load.
+    """
+
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -34,4 +33,5 @@ class TraceResponsesPage(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
