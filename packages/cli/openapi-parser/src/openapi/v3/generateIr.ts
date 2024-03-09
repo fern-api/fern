@@ -181,13 +181,15 @@ export function generateIr({
         };
     });
 
-    const schemas: Record<string, Schema> = Object.fromEntries(
-        Object.entries(schemasWithExample).map(([key, schemaWithExample]) => {
-            taskContext.logger.debug(`Converting schema ${key}`);
-            const schema = convertSchemaWithExampleToSchema(schemaWithExample);
-            return [key, schema];
-        })
-    );
+    const schemas: Record<string, Schema> = {};
+    for (const [key, schemaWithExample] of Object.entries(schemasWithExample)) {
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        if (context.isSchemaExcluded(key)) {
+            continue;
+        }
+        schemas[key] = schema;
+        taskContext.logger.debug(`Converted schema ${key}`);
+    }
 
     const ir: OpenApiIntermediateRepresentation = {
         title: openApi.info.title,
