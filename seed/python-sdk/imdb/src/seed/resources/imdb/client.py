@@ -37,6 +37,20 @@ class ImdbClient:
             - request: CreateMovieRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import CreateMovieRequest
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.create_movie(
+            request=CreateMovieRequest(
+                title="string",
+                rating=1.1,
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -78,6 +92,16 @@ class ImdbClient:
             - movie_id: MovieId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.get_movie(
+            movie_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -124,6 +148,20 @@ class AsyncImdbClient:
             - request: CreateMovieRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import CreateMovieRequest
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.imdb.create_movie(
+            request=CreateMovieRequest(
+                title="string",
+                rating=1.1,
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -165,6 +203,16 @@ class AsyncImdbClient:
             - movie_id: MovieId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.imdb.get_movie(
+            movie_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

@@ -30,6 +30,15 @@ class UnionClient:
             - id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedUnions
+
+        client = SeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.get(
+            id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -65,6 +74,19 @@ class UnionClient:
             - request: Shape.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Shape_Circle
+        from seed.client import SeedUnions
+
+        client = SeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.update(
+            request=Shape_Circle(
+                type="circle",
+                radius=1.1,
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "PATCH",
@@ -111,6 +133,15 @@ class AsyncUnionClient:
             - id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedUnions
+
+        client = AsyncSeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.union.get(
+            id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -146,6 +177,19 @@ class AsyncUnionClient:
             - request: Shape.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Shape_Circle
+        from seed.client import AsyncSeedUnions
+
+        client = AsyncSeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.union.update(
+            request=Shape_Circle(
+                type="circle",
+                radius=1.1,
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PATCH",

@@ -69,6 +69,51 @@ class UserClient:
             - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import NestedUser, User
+        from seed.client import SeedQueryParameters
+
+        client = SeedQueryParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.get_username(
+            limit=1,
+            id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            bytes="SGVsbG8gd29ybGQh",
+            user=User(
+                name="string",
+                tags=["string"],
+            ),
+            key_value={"string": "string"},
+            optional_string="string",
+            nested_user=NestedUser(
+                name="string",
+                user=User(
+                    name="string",
+                    tags=["string"],
+                ),
+            ),
+            optional_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            exclude_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            filter="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -167,6 +212,51 @@ class AsyncUserClient:
             - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import NestedUser, User
+        from seed.client import AsyncSeedQueryParameters
+
+        client = AsyncSeedQueryParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.user.get_username(
+            limit=1,
+            id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            bytes="SGVsbG8gd29ybGQh",
+            user=User(
+                name="string",
+                tags=["string"],
+            ),
+            key_value={"string": "string"},
+            optional_string="string",
+            nested_user=NestedUser(
+                name="string",
+                user=User(
+                    name="string",
+                    tags=["string"],
+                ),
+            ),
+            optional_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            exclude_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            filter="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

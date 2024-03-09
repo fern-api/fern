@@ -17,7 +17,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.snippet.snippet_factory_test import SnippetTestFactory
+from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 

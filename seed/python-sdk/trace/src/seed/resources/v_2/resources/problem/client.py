@@ -31,6 +31,14 @@ class ProblemClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.v_2.problem.get_lightweight_problems()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -66,6 +74,14 @@ class ProblemClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.v_2.problem.get_problems()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -105,6 +121,16 @@ class ProblemClient:
             - problem_id: ProblemId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.v_2.problem.get_latest_problem(
+            problem_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -148,6 +174,17 @@ class ProblemClient:
             - problem_version: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.v_2.problem.get_problem_version(
+            problem_id="string",
+            problem_version=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -193,6 +230,14 @@ class AsyncProblemClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.v_2.problem.get_lightweight_problems()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -230,6 +275,14 @@ class AsyncProblemClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.v_2.problem.get_problems()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -269,6 +322,16 @@ class AsyncProblemClient:
             - problem_id: ProblemId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.v_2.problem.get_latest_problem(
+            problem_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -312,6 +375,17 @@ class AsyncProblemClient:
             - problem_version: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.v_2.problem.get_problem_version(
+            problem_id="string",
+            problem_version=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

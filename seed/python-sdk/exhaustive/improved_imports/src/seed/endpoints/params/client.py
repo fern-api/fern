@@ -31,6 +31,16 @@ class ParamsClient:
             - param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path(
+            param="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -72,6 +82,17 @@ class ParamsClient:
             - number: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_query(
+            query="string",
+            number=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -127,6 +148,17 @@ class ParamsClient:
             - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_allow_multiple_query(
+            query="string",
+            numer=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -178,6 +210,17 @@ class ParamsClient:
             - query: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path_and_query(
+            param="string",
+            query="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -228,6 +271,17 @@ class ParamsClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.modify_with_path(
+            param="string",
+            request="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
@@ -271,6 +325,16 @@ class AsyncParamsClient:
             - param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_path(
+            param="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -312,6 +376,17 @@ class AsyncParamsClient:
             - number: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_query(
+            query="string",
+            number=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -367,6 +442,17 @@ class AsyncParamsClient:
             - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_allow_multiple_query(
+            query="string",
+            numer=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -418,6 +504,17 @@ class AsyncParamsClient:
             - query: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_path_and_query(
+            param="string",
+            query="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -468,6 +565,17 @@ class AsyncParamsClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.modify_with_path(
+            param="string",
+            request="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",

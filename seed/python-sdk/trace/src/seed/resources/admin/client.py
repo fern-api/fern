@@ -42,6 +42,22 @@ class AdminClient:
             - request: TestSubmissionStatus.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import TestSubmissionStatus
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.update_test_submission_status(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=TestSubmissionStatus(),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -94,6 +110,34 @@ class AdminClient:
             - request: TestSubmissionUpdate.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import (
+            RunningSubmissionState,
+            TestSubmissionUpdate,
+            TestSubmissionUpdateInfo_Running,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.send_test_submission_update(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=TestSubmissionUpdate(
+                update_time=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                update_info=TestSubmissionUpdateInfo_Running(
+                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                ),
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -146,6 +190,22 @@ class AdminClient:
             - request: WorkspaceSubmissionStatus.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import WorkspaceSubmissionStatus
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.update_workspace_submission_status(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=WorkspaceSubmissionStatus(),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -198,6 +258,34 @@ class AdminClient:
             - request: WorkspaceSubmissionUpdate.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import (
+            RunningSubmissionState,
+            WorkspaceSubmissionUpdate,
+            WorkspaceSubmissionUpdateInfo_Running,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.send_workspace_submission_update(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=WorkspaceSubmissionUpdate(
+                update_time=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                update_info=WorkspaceSubmissionUpdateInfo_Running(
+                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                ),
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -256,6 +344,47 @@ class AdminClient:
             - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TestCaseResult,
+            TestCaseResultWithStdout,
+            TraceResponse,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.store_traced_test_case(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            test_case_id="string",
+            result=TestCaseResultWithStdout(
+                result=TestCaseResult(),
+                stdout="string",
+            ),
+            trace_responses=[
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -311,6 +440,43 @@ class AdminClient:
             - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TracedFile,
+            TraceResponseV2,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.store_traced_test_case_v_2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            test_case_id="string",
+            request=[
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(),
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -366,6 +532,50 @@ class AdminClient:
             - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExceptionInfo,
+            ExceptionV2_Generic,
+            ExpressionLocation,
+            StackInformation,
+            TraceResponse,
+            WorkspaceRunDetails,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.store_traced_workspace(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            workspace_run_details=WorkspaceRunDetails(
+                exception_v_2=ExceptionV2_Generic(
+                    type="generic",
+                ),
+                exception=ExceptionInfo(),
+                stdout="string",
+            ),
+            trace_responses=[
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -418,6 +628,42 @@ class AdminClient:
             - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TracedFile,
+            TraceResponseV2,
+        )
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.admin.store_traced_workspace_v_2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=[
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(),
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -475,6 +721,22 @@ class AsyncAdminClient:
             - request: TestSubmissionStatus.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import TestSubmissionStatus
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.update_test_submission_status(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=TestSubmissionStatus(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -527,6 +789,34 @@ class AsyncAdminClient:
             - request: TestSubmissionUpdate.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import (
+            RunningSubmissionState,
+            TestSubmissionUpdate,
+            TestSubmissionUpdateInfo_Running,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.send_test_submission_update(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=TestSubmissionUpdate(
+                update_time=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                update_info=TestSubmissionUpdateInfo_Running(
+                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                ),
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -579,6 +869,22 @@ class AsyncAdminClient:
             - request: WorkspaceSubmissionStatus.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import WorkspaceSubmissionStatus
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.update_workspace_submission_status(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=WorkspaceSubmissionStatus(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -631,6 +937,34 @@ class AsyncAdminClient:
             - request: WorkspaceSubmissionUpdate.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import (
+            RunningSubmissionState,
+            WorkspaceSubmissionUpdate,
+            WorkspaceSubmissionUpdateInfo_Running,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.send_workspace_submission_update(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=WorkspaceSubmissionUpdate(
+                update_time=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                update_info=WorkspaceSubmissionUpdateInfo_Running(
+                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                ),
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -689,6 +1023,47 @@ class AsyncAdminClient:
             - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TestCaseResult,
+            TestCaseResultWithStdout,
+            TraceResponse,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.store_traced_test_case(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            test_case_id="string",
+            result=TestCaseResultWithStdout(
+                result=TestCaseResult(),
+                stdout="string",
+            ),
+            trace_responses=[
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -744,6 +1119,43 @@ class AsyncAdminClient:
             - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TracedFile,
+            TraceResponseV2,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.store_traced_test_case_v_2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            test_case_id="string",
+            request=[
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(),
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -799,6 +1211,50 @@ class AsyncAdminClient:
             - trace_responses: typing.Sequence[TraceResponse].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExceptionInfo,
+            ExceptionV2_Generic,
+            ExpressionLocation,
+            StackInformation,
+            TraceResponse,
+            WorkspaceRunDetails,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.store_traced_workspace(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            workspace_run_details=WorkspaceRunDetails(
+                exception_v_2=ExceptionV2_Generic(
+                    type="generic",
+                ),
+                exception=ExceptionInfo(),
+                stdout="string",
+            ),
+            trace_responses=[
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -851,6 +1307,42 @@ class AsyncAdminClient:
             - request: typing.Sequence[TraceResponseV2].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed import (
+            DebugVariableValue_IntegerValue,
+            ExpressionLocation,
+            StackInformation,
+            TracedFile,
+            TraceResponseV2,
+        )
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.admin.store_traced_workspace_v_2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            request=[
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(),
+                    return_value=DebugVariableValue_IntegerValue(
+                        type="integerValue", value=1
+                    ),
+                    expression_location=ExpressionLocation(),
+                    stack=StackInformation(),
+                    stdout="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

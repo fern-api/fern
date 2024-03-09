@@ -260,7 +260,7 @@ class SnippetTestFactory:
             successful_examples = list(
                 filter(
                     lambda ex: ir_types.ExampleResponse.visit(
-                        ex.response,
+                        ex.get_as_union().response,
                         ok=lambda _: True,
                         error=lambda _: False,
                     ),
@@ -286,7 +286,7 @@ class SnippetTestFactory:
                 continue
 
             response = ir_types.ExampleResponse.visit(
-                example.response,
+                example.get_as_union().response,
                 ok=lambda ok_example: ok_example,
                 error=lambda _: None,
             )

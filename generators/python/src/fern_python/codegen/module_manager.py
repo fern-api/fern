@@ -105,7 +105,9 @@ class ModuleManager:
                     all_exports.update(module_exports_line.exports)
             if len(all_exports) > 0:
                 writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")
-            writer.write_to_file(os.path.join(filepath if module_info.from_src else base_filepath, *module, "__init__.py"))
+            writer.write_to_file(
+                os.path.join(filepath if module_info.from_src else base_filepath, *module, "__init__.py")
+            )
 
     def _build_sorted_exports(self, module_info: ModuleInfo) -> List[ModuleExportsLine]:
         modules = [

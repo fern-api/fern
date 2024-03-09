@@ -37,6 +37,17 @@
                 "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
                 "type": "python"
             }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "type": "python"
+            }
         }
     ]
 }

@@ -50,7 +50,7 @@ class UndiscriminatedUnionSnippetGenerator:
         self.name = name
         self.example = example
 
-    def generate_snippet(self) -> AST.Expression:
+    def generate_snippet(self) -> Optional[AST.Expression]:
         return self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=self.example.single_union_type,
         )

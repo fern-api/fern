@@ -55,6 +55,13 @@ class ServiceClient:
             - list_of_objects: typing.List[MyObject].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.post()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -121,6 +128,13 @@ class ServiceClient:
             - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.just_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -183,6 +197,19 @@ class ServiceClient:
             - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.just_file_with_query_params(
+            maybe_string="string",
+            integer=1,
+            maybe_integer=1,
+            list_of_strings="string",
+            optional_list_of_strings="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -272,6 +299,13 @@ class AsyncServiceClient:
             - list_of_objects: typing.List[MyObject].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.post()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -338,6 +372,13 @@ class AsyncServiceClient:
             - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.just_file()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -400,6 +441,19 @@ class AsyncServiceClient:
             - file: core.File. See core.File for more documentation
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.just_file_with_query_params(
+            maybe_string="string",
+            integer=1,
+            maybe_integer=1,
+            list_of_strings="string",
+            optional_list_of_strings="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

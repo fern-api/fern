@@ -29,6 +29,16 @@ class MigrationClient:
             - admin_key_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.migration.get_attempted_migrations(
+            admin_key_header="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -72,6 +82,16 @@ class AsyncMigrationClient:
             - admin_key_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.migration.get_attempted_migrations(
+            admin_key_header="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

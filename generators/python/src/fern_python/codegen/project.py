@@ -1,5 +1,4 @@
 from __future__ import annotations
-from email.mime import base
 
 import os
 from dataclasses import dataclass
@@ -79,9 +78,7 @@ class Project:
 
         def on_finish(source_file: SourceFileImpl) -> None:
             self._module_manager.register_exports(
-                filepath=filepath,
-                exports=source_file.get_exports() if from_src else set(),
-                from_src=from_src
+                filepath=filepath, exports=source_file.get_exports() if from_src else set(), from_src=from_src
             )
 
         module = filepath.to_module()
@@ -141,7 +138,7 @@ class Project:
         file.write_text(contents)
 
     def finish(self) -> None:
-        self._module_manager.write_modules(base_filepath= self._root_filepath, filepath=self._project_filepath)
+        self._module_manager.write_modules(base_filepath=self._root_filepath, filepath=self._project_filepath)
         if self._project_config is not None:
             # generate pyproject.toml
             py_project_toml = PyProjectToml(
