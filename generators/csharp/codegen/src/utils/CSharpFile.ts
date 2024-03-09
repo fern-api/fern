@@ -1,13 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
-import { Class } from "../ast";
+import { Class, Enum } from "../ast";
 import { File } from "./File";
 
 export declare namespace CSharpFile {
     interface Args {
         /* The class to be written to the CSharp File */
-        clazz: Class;
+        clazz: Class | Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
     }

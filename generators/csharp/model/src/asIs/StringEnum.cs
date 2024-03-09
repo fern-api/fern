@@ -15,7 +15,9 @@
 // [JsonConverter(typeof(TolerantEnumConverter))]
 // public enum RealtimeTranscriptType
 // {
+//     [EnumMember(Value = "partial_transcript")]
 //     PartialTranscript,
+//     [EnumMember(Value = "final//transcript")]
 //     FinalTranscript,
 //     Unknown
 // }
