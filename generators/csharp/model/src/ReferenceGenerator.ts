@@ -13,10 +13,12 @@ import {
 export class ReferenceGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private references: Map<TypeReference, csharp.Type>;
+    public classReferences: Map<TypeId, csharp.ClassReference>;
 
     constructor(types: Map<TypeId, TypeDeclaration>) {
         this.types = types;
         this.references = new Map();
+        this.classReferences = new Map();
     }
 
     private typeFromContainerReference(rootModule: string, containerType: ContainerType): csharp.Type {
@@ -52,12 +54,14 @@ export class ReferenceGenerator {
                     throw new Error(`Type ${value.name.pascalCase.safeName} not found`);
                 }
 
-                const objectReference = csharp.Type.reference(
-                    new csharp.ClassReference({
-                        name: value.name.pascalCase.safeName,
-                        namespace: csharp.Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath)
-                    })
-                );
+                // TODO: For enums we want to make a new Type, to include the StringEnum<ActualEnum>
+                // situation, similar to oneOfs below
+                const objectClassReference = new csharp.ClassReference({
+                    name: value.name.pascalCase.safeName,
+                    namespace: csharp.Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath)
+                });
+                const objectReference = csharp.Type.reference(objectClassReference);
+                this.classReferences.set(value.typeId, objectClassReference);
 
                 return underlyingType.shape._visit({
                     alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),

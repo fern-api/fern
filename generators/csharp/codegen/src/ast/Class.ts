@@ -6,6 +6,7 @@ import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
+import { Interface } from "./Interface";
 import { Method } from "./Method";
 
 export declare namespace Class {
@@ -22,6 +23,8 @@ export declare namespace Class {
         partial?: boolean;
         /* The class to inherit from if any */
         parentClassReference?: ClassReference;
+        /* Any interfaces the class extends */
+        interfaceReferences?: ClassReference[];
     }
 }
 
@@ -33,18 +36,23 @@ export class Class extends AstNode {
     public readonly partial: boolean;
     public readonly reference: ClassReference;
     public readonly parentClassReference: ClassReference | undefined;
+    public readonly interfaceReferences: ClassReference[];
 
     private fields: Field[] = [];
     private methods: Method[] = [];
     private nestedClasses: Class[] = [];
+    private nestedInterfaces: Interface[] = [];
 
-    constructor({ name, namespace, access, sealed, partial }: Class.Args) {
+    constructor({ name, namespace, access, sealed, partial, parentClassReference, interfaceReferences }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
+
+        this.parentClassReference = parentClassReference;
+        this.interfaceReferences = interfaceReferences ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
@@ -64,6 +72,10 @@ export class Class extends AstNode {
         this.nestedClasses.push(subClass);
     }
 
+    public addNestedInterface(subInterface: Interface): void {
+        this.nestedInterfaces.push(subInterface);
+    }
+
     public write(writer: Writer): void {
         writer.writeLine(`namespace ${this.namespace}`);
         writer.newLine();
@@ -76,9 +88,21 @@ export class Class extends AstNode {
         }
         writer.write("class ");
         writer.writeLine(`${this.name}`);
-        if (this.parentClassReference != null) {
+        if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
             writer.write(" : ");
-            this.parentClassReference.write(writer);
+            if (this.parentClassReference != null) {
+                this.parentClassReference.write(writer);
+                if (this.interfaceReferences.length > 0) {
+                    writer.write(", ");
+                }
+            }
+            this.interfaceReferences.forEach((interfaceReference, index) => {
+                interfaceReference.write(writer);
+                // Don't write a comma after the last interface
+                if (index < this.interfaceReferences.length - 2) {
+                    writer.write(", ");
+                }
+            });
         }
         writer.writeLine("{");
 
