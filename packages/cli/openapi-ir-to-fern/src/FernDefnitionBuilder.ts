@@ -4,6 +4,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/proje
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
+import { TypeDeclarationSchemaDeduper } from "./TypeDeclarationSchemaDeduper";
 
 export interface FernDefinitionBuilder {
     addNavigation({ navigation }: { navigation: string[] }): void;
@@ -71,6 +72,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
+    private deduper: TypeDeclarationSchemaDeduper = new TypeDeclarationSchemaDeduper();
 
     public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
         this.rootApiFile = {
@@ -209,6 +211,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.types = {};
         }
         fernFile.types[name] = schema;
+
+        this.deduper.registerSchema({ name, schema, location: file });
     }
 
     public addError(
@@ -368,6 +372,9 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             packageMarkerFile: this.packageMarkerFile,
             definitionFiles: this.definitionFiles
         };
+
+        this.deduper.dedupe(definition);
+
         return definition;
     }
 
