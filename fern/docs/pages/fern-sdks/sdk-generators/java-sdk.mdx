@@ -39,7 +39,7 @@ groups:
         version: 0.6.1
         output:
           location: npm.buildwithfern.com
-          package-name: @fern-imdb/api # replace with your package name
+          package-name: @fern-petstore/api # replace with your package name
 ```
 </CodeBlock>
 
@@ -56,12 +56,12 @@ groups:
         version: 0.6.1
         output:
           location: maven
-          # replace with your coordinate
+          # replace petstore below with your coordinate
           # e.g., com.example.my-api:my-api
-          coordinate: io.github.imdb:imdb 
+          coordinate: io.github.petstore:petstore 
           username: ${MAVEN_USERNAME}
           password: ${MAVEN_PASSWORD}
         github:
-          repository: imdb/imdb-java # replace imdb your organization     
+          repository: petstore/petstore-java # replace package & org
 ```
 </CodeBlock>

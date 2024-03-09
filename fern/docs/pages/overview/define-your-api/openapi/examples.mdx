@@ -11,22 +11,23 @@ Examples can be placed directly within the operation definition under `paths`. H
 
 ```yaml
 paths:
-  /movies:
+  /pet:
     post:
-      summary: Create a new movie
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Movie'
-            examples:
-              movieExample:
-                summary: This is an example of a movie
-                value:
-                  name: Schindler's List
-                  rating: 5.0
-                  id: tt0108052
+      summary: Add a new pet to the store
+      operationId: addPet
+      responses:
+        '200':
+          description: A Pet object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                PetExample:
+                  summary: This is an example of a Pet
+                  value: 
+                    name: Markley
+                    id: 44
 ```
 
 ## Reusable examples
@@ -36,50 +37,43 @@ For more general examples that apply to multiple parts of the API, you can defin
 ```yaml
 components:
   examples:
-    MovieExample:
-      summary: Example of a movie object
+    PetExample:
+      summary: Example of a Pet object
       value:
-        name: Shawshank Redemption
-        rating: 5.0
-        id: tt0111161
+        name: Markley
+        id: 44
 
 paths:
-  /movies/{movieId}:
-    get:
-      summary: Get movie by ID
-      parameters:
-        - name: movieId
-          in: path
-          required: true
-          schema:
-            type: string
+  /pet:
+    post:
+      summary: Add a new pet to the store
+      operationId: addPet
       responses:
         '200':
-          description: A movie object
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/Pet'
               examples:
-                MovieExample:
-                  $ref: '#/components/examples/MovieExample'
+                PetExample:
+                  $ref: '#/components/examples/PetExample'
 ```
 
 ## How Examples are used in Fern SDKs
 
 Fern SDKs use examples from your OpenAPI document to generate comments that show up in your IDE. For example, in a Node.js SDK:
 
-<CodeBlock title = "resources/movies/types/Movie.ts">
+<CodeBlock title="resources/pets/types/Pet.ts">
 ```ts
 
-import * as IMDb from "../../..";
+import * as Petstore from "../../..";
 
 /**
  * @example
  *     {
- *         title: "Shawshank Redemption",
- *         rating: "5.0",
- *         id: "tt0111161"
+ *         name: "Markley",
+ *         id: "44"
  *     }
  */
 ```
@@ -91,7 +85,7 @@ Here's an [example in GitHub](https://github.com/FlatFilers/flatfile-node/blob/a
 
 In the request and response code snippets, you'll see the example values used.
 
-![Example in Fern Docs](https://fern-image-hosting.s3.amazonaws.com/movie+example.png)
+![Screenshot of an example used in response code in Fern Docs API reference](https://fern-image-hosting.s3.amazonaws.com/movie+example.png)
 
 If you generate SDKs with Fern, the code examples for each language will also be populated with the example values. [Check out Flatfile's Docs to see this in action](https://reference.flatfile.com/api-reference/documents/create). Change the language toggle to see the examples in different languages.
 

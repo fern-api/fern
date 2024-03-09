@@ -1,27 +1,38 @@
 ---
-title: The TypeScript Node.js SDK generator
-description: Use Fern's TypeScript Node.js SDK generator and your API definition to output a fully functional SDK locally, and publish the package internally or to NPM.
+title: Fern | How to use Fern's TypeScript SDK Generator
+description: Use Fern's TypeScript SDK generator and your API definition to output a fully functional SDK locally, and publish the package internally or to NPM.
 ---
 
 [Source code](https://github.com/fern-api/fern/tree/main/generators/typescript)<br/>
-**Latest version**: `0.11.5`
+**Latest version**: `0.12.5`
 
-The TypeScript Node.js SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side use. It can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository).
+The TypeScript SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side use. It can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository).
+
+## Runtimes
+
+The TypeScript SDK generator supports the following runtimes:
+- Node.js 15+
+- Vercel Edge Functions
+- Cloudflare Workers
+- AWS Lambda
+- Deno 1.25+
+- Bun 1.0+
+- AWS Lambda
 
 ## Local
 
 Dump the generated SDK to the local file system. Available on the open source plan.
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```yaml
 groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.x.x  # declare your desired version
         output:
           location: local-file-system
-          path: ../generated/sdk/node
+          path: ../sdks/typescript
 ```
 </CodeBlock>
 
@@ -29,16 +40,16 @@ groups:
 
 Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```yaml
 groups:
   internal:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.x.x # declare your desired version
         output:
           location: npm.buildwithfern.com
-          package-name: @fern-imdb/api # replace imdb with your org name
+          package-name: @fern-petstore/api # replace petstore with your org name
 ```
 </CodeBlock>
 
@@ -46,34 +57,34 @@ groups:
 
 Publish the generated SDK to [npmjs.com](https://www.npmjs.com/). Available on the Starter plan.
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```yaml
 groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.x.x # declare your desired version
         output:
           location: npm
-          package-name: imdb # replace with your package name
+          package-name: petstore # replace with your package name
           token: ${NPM_TOKEN}
         github:
-          repository: imdb/imdb-node # replace imdb with your org & package name
+          repository: petstore/petstore-node # replace petstore with your org & package name
 ```
 </CodeBlock>
 
 You can override the registry using the `url` key.
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```diff
 generators:
   groups:
     public:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.x.x # declare your desired version
         output:
           location: npm
-          package-name: imdb # replace with your package name
+          package-name: petstore # replace with your package name
           token: ${NPM_TOKEN}
 +       url: your-npm-registry.com
 ```
@@ -85,17 +96,17 @@ You can customize the behavior of the TypeScript generator in `generators.yml`.
 
 You can include one or more options for `config`, such as:
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.9.5
+  version: 0.x.x # declare your desired version
   output:
     location: npm
-    package-name: imdb
+    package-name: petstore
   github:
-    repository: imdb/imdb-node 
+    repository: petstore/petstore-node 
 + config: 
-+   namespaceExport: IMDb
++   namespaceExport: Petstore
 +   timeoutInSeconds: 120
 +   noSerdeLayer: true
 +   outputEsm: true
@@ -111,46 +122,41 @@ The following options are available:
 **Type**: string
 
 ```
-import { IMDbApi, IMDbApiClient } from "imdb";
+import { PetstoreApi, PetstoreApiClient } from 'petstore';
 ```
 
 To customize these names, you can use `namespaceExport`:
 
-<CodeBlock title="generators.yml">
+<CodeBlock title='generators.yml'>
 ```diff
 - name: fernapi/fern-typescript-node-sdk
-  version: 0.9.5
+  version: 0.x.x # declare your desired version
   output:
     location: npm
-    package-name: imdb
+    package-name: petstore
   github:
-    repository: imdb/imdb-node 
+    repository: petstore/petstore-node 
 + config: 
-+   namespaceExport: IMDb
++   namespaceExport: Petstore
 ```
 </CodeBlock>
 
 The result would be:
 
 ```
-import { IMDb, IMDbClient } from "imdb";
+import { PetstoreApi, PetstoreApiClient } from 'petstore';
 ```
 
 ### defaultTimeoutInSeconds
 
-- `defaultTimeoutInSeconds`: Allows you to control the timeout of the generated client. The timeout is measured in seconds. This is useful for long-running operations. Set to `"infinity"` to disable timeouts.
+- `defaultTimeoutInSeconds`: Allows you to control the timeout of the generated client. The timeout is measured in seconds. This is useful for long-running operations. Set to `'infinity'` to disable timeouts.
 
-**Type**: integer or `"infinity"`<br />
+**Type**: integer or `'infinity'`<br />
 **Default**: `60`
 
 ```yaml 
 config: 
-  timeoutInSeconds: 120
-```
-
-```yaml 
-config: 
-  defaultTimeoutInSeconds: "infinity"
+  defaultTimeoutInSeconds: 'infinity'
 ```
 
 ### noSerdeLayer
@@ -198,9 +204,9 @@ When disabled (the default), the generator outputs .js and d.ts files.
 
 When enabled, the generator outputs raw TypeScript files.
 
-<Callout intent="warn">
+<Warning>
 This config is only applied when dumping the generated SDK to the local file system. It does not apply when publishing to GitHub or npm.
-</Callout>
+</Warning>
 
 ```yaml
 config: 
@@ -234,7 +240,7 @@ config:
 ```
 
 ```typescript
-const imdb = new IMDbClient({
+const petstore = new PetstoreClient({
   fetcher: (args) => {
     ...
   },
@@ -256,8 +262,8 @@ config:
 When disabled (the default), the generated client includes an option to override the server URL:
 
 ```typescript
-const imdb = new IMDbClient({
-  environment: "localhost:8080",
+const petstore = new PetstoreClient({
+  environment: 'localhost:8080',
 });
 ```
 
@@ -282,18 +288,18 @@ config:
 **Type**: `map<string,string>`<br />
 **Default**: `{}`
 
-<Callout intent="warn">
+<Warning>
 This only applies when publishing to GitHub.
-</Callout>
+</Warning>
 
 You can use extraDependencies to specify extra dependencies in the generated `package.json`. This is useful when you utilize `.fernignore` to supplement the generated client with custom code.
 
 ```yaml
 config: 
   extraDependencies: 
-    jest: "^29.7.0" # <-- examples
-    "@types/jest": "^29.5.5"
-    ts-jest: "^29.1.1"
+    jest: '^29.7.0' # <-- examples
+    '@types/jest': '^29.5.5'
+    ts-jest: '^29.1.1'
 ```
 
 ### treatUnknownAsAny
@@ -321,7 +327,7 @@ When enabled, the generated properties are never optional. Instead, the type is 
 
 For example, let's say you have the following Fern Definition:
 
-<CodeBlock title="person.yml">
+<CodeBlock title='person.yml'>
 ```yaml
 types:
   Person:
@@ -358,7 +364,7 @@ interface Person {
 
 For example, let's say you have the following Fern Definition:
 
-<CodeBlock title="movies.yml">
+<CodeBlock title='pet.yml'>
 ```yaml
 types:
   MyString: string
@@ -366,7 +372,7 @@ types:
 ```
 </CodeBlock>
 
-<CodeBlock title="generated code">
+<CodeBlock title='generated code'>
 ```typescript
 export type MyString = string & { __MyString: void };
 export const MyString = (value: string): MyString => value as MyString;
@@ -376,28 +382,28 @@ export const OtherString = (value: string): OtherString => value as OtherString;
 ```
 </CodeBlock>
 
-<CodeBlock title="consuming the generated type">
+<CodeBlock title='consuming the generated type'>
 ```typescript
 function printMyString(s: MyString): void {
-  console.log("MyString: " + s);
+  console.log('MyString: ' + s);
 }
 
-// doesn't compile, "foo" is not assignable to MyString
-printMyString("foo");
+// doesn't compile, 'foo' is not assignable to MyString
+printMyString('foo');
 
-const otherString = OtherString("other-string");
+const otherString = OtherString('other-string');
 // doesn't compile, otherString is not assignable to MyString
 printMyString(otherString);
 
 // compiles
-const myString = MyString("my-string");
+const myString = MyString('my-string');
 printMyString(myString);
 ```
 </CodeBlock>
 
 When `useBrandedStringAliases` is disabled (the default), string aliases are generated as normal TypeScript aliases:
 
-<CodeBlock title="generated code">
+<CodeBlock title='generated code'>
 ```typescript
 export type MyString = string;
 
@@ -412,7 +418,7 @@ export type OtherString = string;
 **Type**: `boolean`<br />
 **Default**: `false`
 
-<CodeBlock title="APIResponse.ts">
+<CodeBlock title='APIResponse.ts'>
 ```typescript
 const response = await client.callEndpoint(...);
 if (response.ok) {
