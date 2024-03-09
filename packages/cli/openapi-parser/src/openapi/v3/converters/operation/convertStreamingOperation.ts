@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
@@ -43,6 +44,9 @@ export function convertStreamingOperation({
                 streamingExtension,
                 isStreaming: true
             });
+            if (streamingRequestBody?.schemaReference != null) {
+                context.excludeSchema(getSchemaIdFromReference(streamingRequestBody.schemaReference));
+            }
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
@@ -59,7 +63,7 @@ export function convertStreamingOperation({
                             : undefined,
                     operation: {
                         ...operationContext.operation,
-                        requestBody: streamingRequestBody,
+                        requestBody: streamingRequestBody?.requestBody,
                         responses: streamingResponses
                     },
                     baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
@@ -84,7 +88,7 @@ export function convertStreamingOperation({
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
-                        requestBody: nonStreamingRequestBody,
+                        requestBody: nonStreamingRequestBody?.requestBody,
                         responses: nonStreamingResponses
                     }
                 },
@@ -101,6 +105,11 @@ export function convertStreamingOperation({
     }
 }
 
+interface RequestBody {
+    requestBody: OpenAPIV3.RequestBodyObject;
+    schemaReference: OpenAPIV3.ReferenceObject | undefined;
+}
+
 function getRequestBody({
     context,
     operation,
@@ -111,7 +120,7 @@ function getRequestBody({
     operation: OpenAPIV3.OperationObject;
     streamingExtension: StreamConditionEndpoint;
     isStreaming: boolean;
-}): OpenAPIV3.RequestBodyObject | undefined {
+}): RequestBody | undefined {
     if (operation.requestBody == null) {
         return undefined;
     }
@@ -150,15 +159,21 @@ function getRequestBody({
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any
         },
+        // Set to undefined because we inline both the streaming and non-streaming request schemas
+        // and title would cause conflicting names
+        title: undefined,
         required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
 
     return {
-        content: {
-            "application/json": {
-                schema: requestBodySchemaWithLiteralProperty
+        requestBody: {
+            content: {
+                "application/json": {
+                    schema: requestBodySchemaWithLiteralProperty
+                }
             }
-        }
+        },
+        schemaReference: isReferenceObject(jsonMediaObject.schema) ? jsonMediaObject.schema : undefined
     };
 }
 
