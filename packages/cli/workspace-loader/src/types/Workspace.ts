@@ -15,17 +15,24 @@ export interface DocsWorkspace {
     config: DocsConfiguration;
 }
 
-export type APIWorkspace = FernWorkspace | OpenAPIWorkspace;
+export type APIWorkspace = FernWorkspace | OSSWorkspace;
 
-export interface OpenAPIWorkspace {
-    type: "openapi";
+/**
+ * An OSS workspace is a workspace that contains an OpenAPI or AsyncAPI document.
+ */
+export interface OSSWorkspace {
+    type: "oss";
+    absoluteFilepath: AbsoluteFilePath;
     workspaceName: string | undefined;
     name: string;
-    absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration | undefined;
-    absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
+    specs: Spec[];
     changelog: APIChangelog | undefined;
+    generatorsConfiguration: GeneratorsConfiguration | undefined;
+}
+
+export interface Spec {
+    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
 }
 
 export interface APIChangelog {

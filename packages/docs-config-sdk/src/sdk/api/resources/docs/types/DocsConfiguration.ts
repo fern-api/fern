@@ -15,7 +15,7 @@ export interface DocsConfiguration {
     logo?: FernDocsConfig.LogoConfiguration;
     favicon?: string;
     /** This background image is used to customize the appearance of your docs site. */
-    backgroundImage?: string;
+    backgroundImage?: FernDocsConfig.BackgroundImageConfiguration;
     colors?: FernDocsConfig.ColorsConfiguration;
     navbarLinks?: FernDocsConfig.NavbarLink[];
     typography?: FernDocsConfig.DocsTypographyConfig;

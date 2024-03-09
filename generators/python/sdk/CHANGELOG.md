@@ -8,6 +8,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.12.0] - 2024-03-06
 
 - Beta, feature: The SDK now generates tests leveraging auto-generated data to test typing, as well as wire-formatting (e.g. the SDKs are sending and receiving data as expected). This comes out of the box within the generated github workflow, as well as through the fern cli: `fern test --command "your test command"`.
+  **Note**: You must be on the enterprise tier to enable this mode.
+
+## [0.11.10] - 2024-03-08
+
+- feature: Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK. This allows for easier forward compatibility should your SDK drift behind your spec.
+
+  Config:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      ...
+      config:
+        pydantic_config:
+          extra_fields: "allow"
+  ```
+
+  Example generated code:
+
+  ```python
+  # my_object.py
+  class MyObject(pydantic.BaseModel):
+      string: typing.Optional[str] = None
+      ...
+
+  # main.py
+  o = pydantic.parse_obj_as(MyObject, {"string": "string", "my_new_property": "custom_value"})
+
+  print(o.my_new_property) # <--- "custom_value"
+  ```
 
 ## [0.11.9] - 2024-03-04
 

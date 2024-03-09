@@ -12,15 +12,4 @@ export interface ApiSectionConfiguration {
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
-    /**
-     * Defaults to the changelog directory in the API workspace if present.
-     *
-     * > fern/
-     *
-     *     changelog/
-     *       ...
-     *     definition/
-     *       ...
-     */
-    changelog?: FernDocsConfig.ChangelogConfiguration;
 }

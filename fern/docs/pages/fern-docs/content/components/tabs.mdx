@@ -1,0 +1,36 @@
+---
+title: Display related content with Tabs 
+description: The Tabs and Tab components allow you to display related content in a tabbed view.
+---
+
+The `Tabs` and `Tab` components are used when you want to display related content in a tabbed view. Use the `Tabs` component as the outer wrapper around multiple `Tab` components.
+
+## Props
+
+| prop       | type   | description                             | default |
+|------------|--------|-----------------------------------------|---------|
+| *title*    | string | Displayed title for the Tab             | none    | 
+
+The `title` prop is required for the tabbed view to render correctly.
+
+## Usage
+
+<CodeBlock title='Tabs example'>
+```mdx
+<Tabs>
+  <Tab title='Tab 1'>Content in Tab 1.</Tab>
+  <Tab title='Tab 2'>
+    Related content in Tab 2.
+  </Tab>
+</Tabs>
+```
+</CodeBlock>
+
+This renders as:
+
+<Tabs>
+  <Tab title='Tab 1'>Content in Tab 1.</Tab>
+  <Tab title='Tab 2'>
+    Related content in Tab 2.
+  </Tab>
+</Tabs>

@@ -1,57 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`x-fern-type > x-fern-type > parse open api 1`] = `
-{
-  "channel": [],
-  "description": null,
-  "endpoints": [],
-  "errors": {},
-  "globalHeaders": [],
-  "hasEndpointsMarkedInternal": false,
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "BaseUser": {
-      "description": null,
-      "generatedName": "BaseUser",
-      "groupName": null,
-      "key": {
-        "description": null,
-        "generatedName": "BaseUser",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-      },
-      "nameOverride": null,
-      "type": "map",
-      "value": {
-        "description": null,
-        "generatedName": "BaseUser",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-  },
-  "securitySchemes": {},
-  "servers": [],
-  "tags": {
-    "orderedTagIds": null,
-    "tagsById": {},
-  },
-  "title": "Test extension \`x-fern-type\`",
-  "variables": {},
-  "webhooks": [],
-}
-`;
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`x-fern-type x-fern-type parse open api 1`] = `
 {
@@ -59,7 +6,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {

@@ -6,6 +6,11 @@ import typing
 from ...core.datetime_utils import serialize_datetime
 from ...root_type import RootType
 
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
+
 
 class A(RootType):
     def json(self, **kwargs: typing.Any) -> str:
@@ -18,5 +23,9 @@ class A(RootType):
 
     class Config:
         allow_population_by_field_name = True
+<<<<<<< HEAD
         populate_by_name = True
+=======
+        extra = pydantic.Extra.allow
+>>>>>>> main
         json_encoders = {dt.datetime: serialize_datetime}

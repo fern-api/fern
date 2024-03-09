@@ -1,5 +1,6 @@
 {
   "ignores": [
+    "@types/jest",
     "@types/node",
     "webpack",
     "webpack-cli",

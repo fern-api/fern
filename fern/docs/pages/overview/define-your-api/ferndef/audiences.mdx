@@ -1,3 +1,8 @@
+---
+title: Audiences in Fern Definition 
+description: Use audiences in your Fern Definition to segment your API for different groups of consumers.
+---
+
 Audiences are a useful tool for segmenting your API for different consumers. Common audiences include:
 
 - Internal consumers (e.g., frontend developers who use the API)
@@ -10,7 +15,7 @@ Fern has a first-class concept for marking different endpoints, types, and prope
 
 To prevent typos, you must specify all your audiences in `api.yml`:
 
-<CodeBlock title="api.yml">
+<CodeBlock title='api.yml'>
 ```yaml 
 name: api 
 audiences: 
@@ -22,7 +27,7 @@ audiences:
 In `generators.yml`, you can apply audience filters so that only certain
 endpoints are passed to the generators:
 
-<CodeBlock title = "generators.yml">
+<CodeBlock title='generators.yml'>
 ```yaml
 groups:
   external:
@@ -38,7 +43,7 @@ By default, if no audiences are specified, then all endpoints, types, and proper
 
 In this example, the `sendEmail` endpoint is only available to internal consumers:
 
-<CodeBlock title="user.yml">
+<CodeBlock title='user.yml'>
 ```yaml
 service:
   base-path: /users
@@ -56,7 +61,7 @@ service:
 
 We can mark types for different audiences. In this example, the `Email` type is available to internal and beta consumers:
 
-<CodeBlock title = "user.yml">
+<CodeBlock title='user.yml'>
 ```yaml 
 Email: 
   properties:
@@ -72,7 +77,7 @@ Email:
 
 We can mark the properties of a type for different audiences. In this example, the `to` property is available to beta consumers:
 
-<CodeBlock title = "user.yml">
+<CodeBlock title='user.yml'>
 ```yaml
 Email: 
   properties:

@@ -7,6 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
+    HttpEndpointExample,
     Name,
     SupportedSdkLanguage
 } from "@fern-api/ir-sdk";
@@ -45,7 +46,7 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleEndpointCall {
+}): HttpEndpointExample {
     const convertedPathParameters = convertPathParameters({
         service,
         endpoint,
@@ -56,7 +57,7 @@ export function convertExampleEndpointCall({
         file,
         workspace
     });
-    return {
+    return HttpEndpointExample.userProvided({
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
@@ -127,7 +128,7 @@ export function convertExampleEndpointCall({
                     })
             });
         })
-    };
+    });
 }
 
 function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {

@@ -110,7 +110,37 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": "SGVsbG8gd29ybGQh",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "SGVsbG8gd29ybGQh",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "",
+            },
+          ],
           "fullPath": {
             "head": "",
             "parts": [],

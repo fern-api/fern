@@ -6,6 +6,11 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from .json import Json
 
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
+
 
 class NestedType(Json):
     """
@@ -33,4 +38,5 @@ class NestedType(Json):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

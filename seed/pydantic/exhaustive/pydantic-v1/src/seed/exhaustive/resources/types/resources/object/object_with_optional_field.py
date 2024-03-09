@@ -12,16 +12,16 @@ from .....core.datetime_utils import serialize_datetime
 class ObjectWithOptionalField(pydantic.BaseModel):
     string: typing.Optional[str]
     integer: typing.Optional[int]
-    long: typing.Optional[int]
+    long_: typing.Optional[int] = pydantic.Field(alias="long")
     double: typing.Optional[float]
-    bool: typing.Optional[bool]
+    bool_: typing.Optional[bool] = pydantic.Field(alias="bool")
     datetime: typing.Optional[dt.datetime]
     date: typing.Optional[dt.date]
-    uuid: typing.Optional[uuid.UUID]
+    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid")
     base_64: typing.Optional[str] = pydantic.Field(alias="base64")
-    list: typing.Optional[typing.List[str]]
-    set: typing.Optional[typing.Set[str]]
-    map: typing.Optional[typing.Dict[int, str]]
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list")
+    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set")
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -33,5 +33,9 @@ class ObjectWithOptionalField(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+<<<<<<< HEAD
         populate_by_name = True
+=======
+        extra = pydantic.Extra.allow
+>>>>>>> main
         json_encoders = {dt.datetime: serialize_datetime}

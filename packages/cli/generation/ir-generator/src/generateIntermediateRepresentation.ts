@@ -28,6 +28,7 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { ExampleGenerator } from "./examples/ExampleGenerator";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
@@ -342,9 +343,13 @@ export async function generateIntermediateRepresentation({
 
     intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
+    const intermediateRepresentationWithGeneratedExamples = new ExampleGenerator(
+        intermediateRepresentation
+    ).enrichWithExamples();
+
     const filteredIr = !irGraph.hasNoAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
-        intermediateRepresentation,
+        intermediateRepresentationWithGeneratedExamples,
         filteredIr
     );
 

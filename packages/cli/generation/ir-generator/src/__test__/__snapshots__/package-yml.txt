@@ -182,6 +182,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
+              "exampleType": "userProvided",
               "name": null,
               "queryParameters": [],
               "request": {
@@ -250,6 +251,81 @@ exports[`generate IR 1`] = `
               "serviceHeaders": [],
               "servicePathParameters": [],
               "url": "/",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": "Hello world!",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "Hello world!",
+                    },
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": "Hello world!",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "Hello world!",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "",
             },
           ],
           "fullPath": {
@@ -469,6 +545,7 @@ exports[`generate IR 1`] = `
                   },
                 },
               ],
+              "exampleType": "userProvided",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -514,6 +591,92 @@ exports[`generate IR 1`] = `
               "serviceHeaders": [],
               "servicePathParameters": [],
               "url": "//id-219xca8",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "nestedID",
+                      "unsafeName": "nestedID",
+                    },
+                    "originalName": "nestedId",
+                    "pascalCase": {
+                      "safeName": "NestedID",
+                      "unsafeName": "NestedID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_ID",
+                      "unsafeName": "NESTED_ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_id",
+                      "unsafeName": "nested_id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/",
             },
           ],
           "fullPath": {

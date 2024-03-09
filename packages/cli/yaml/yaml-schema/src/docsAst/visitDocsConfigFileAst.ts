@@ -26,12 +26,31 @@ export async function visitDocsConfigFileYamlAst(
     );
 
     if (contents.backgroundImage != null) {
-        await visitFilepath({
-            absoluteFilepathToConfiguration,
-            rawUnresolvedFilepath: contents.backgroundImage,
-            visitor,
-            nodePath: ["background-image"]
-        });
+        if (typeof contents.backgroundImage === "string") {
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: contents.backgroundImage,
+                visitor,
+                nodePath: ["background-image"]
+            });
+        } else {
+            if (contents.backgroundImage.dark != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: contents.backgroundImage.dark,
+                    visitor,
+                    nodePath: ["background-image", "dark"]
+                });
+            }
+            if (contents.backgroundImage.light != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: contents.backgroundImage.light,
+                    visitor,
+                    nodePath: ["background-image", "light"]
+                });
+            }
+        }
     }
     if (contents.favicon != null) {
         await visitFilepath({

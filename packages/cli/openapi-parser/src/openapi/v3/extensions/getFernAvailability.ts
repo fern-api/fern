@@ -17,5 +17,8 @@ export function getFernAvailability(operationObject: OpenAPIV3.OperationObject):
     } else if (availability === "deprecated") {
         return EndpointAvailability.Deprecated;
     }
+    if (operationObject.deprecated) {
+        return EndpointAvailability.Deprecated;
+    }
     return undefined;
 }

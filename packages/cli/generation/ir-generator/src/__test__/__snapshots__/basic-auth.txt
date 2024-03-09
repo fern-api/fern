@@ -477,7 +477,118 @@ exports[`generate IR 1`] = `
               },
             },
           ],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": {
+                  "jsonExample": true,
+                  "shape": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/basic-auth",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "error": {
+                  "errorId": "error_errors:UnauthorizedRequest",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                        "originalName": "errors",
+                        "pascalCase": {
+                          "safeName": "Errors",
+                          "unsafeName": "Errors",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ERRORS",
+                          "unsafeName": "ERRORS",
+                        },
+                        "snakeCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                      "originalName": "errors",
+                      "pascalCase": {
+                        "safeName": "Errors",
+                        "unsafeName": "Errors",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ERRORS",
+                        "unsafeName": "ERRORS",
+                      },
+                      "snakeCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "unauthorizedRequest",
+                      "unsafeName": "unauthorizedRequest",
+                    },
+                    "originalName": "UnauthorizedRequest",
+                    "pascalCase": {
+                      "safeName": "UnauthorizedRequest",
+                      "unsafeName": "UnauthorizedRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "UNAUTHORIZED_REQUEST",
+                      "unsafeName": "UNAUTHORIZED_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "unauthorized_request",
+                      "unsafeName": "unauthorized_request",
+                    },
+                  },
+                },
+                "type": "error",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/basic-auth",
+            },
+          ],
           "fullPath": {
             "head": "basic-auth",
             "parts": [],
@@ -671,7 +782,234 @@ exports[`generate IR 1`] = `
               },
             },
           ],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "key": "value",
+                },
+                "shape": {
+                  "type": "unknown",
+                  "unknown": {
+                    "key": "value",
+                  },
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": true,
+                  "shape": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/basic-auth",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "key": "value",
+                },
+                "shape": {
+                  "type": "unknown",
+                  "unknown": {
+                    "key": "value",
+                  },
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": null,
+                "error": {
+                  "errorId": "error_errors:UnauthorizedRequest",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                        "originalName": "errors",
+                        "pascalCase": {
+                          "safeName": "Errors",
+                          "unsafeName": "Errors",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ERRORS",
+                          "unsafeName": "ERRORS",
+                        },
+                        "snakeCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                      "originalName": "errors",
+                      "pascalCase": {
+                        "safeName": "Errors",
+                        "unsafeName": "Errors",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ERRORS",
+                        "unsafeName": "ERRORS",
+                      },
+                      "snakeCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "unauthorizedRequest",
+                      "unsafeName": "unauthorizedRequest",
+                    },
+                    "originalName": "UnauthorizedRequest",
+                    "pascalCase": {
+                      "safeName": "UnauthorizedRequest",
+                      "unsafeName": "UnauthorizedRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "UNAUTHORIZED_REQUEST",
+                      "unsafeName": "UNAUTHORIZED_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "unauthorized_request",
+                      "unsafeName": "unauthorized_request",
+                    },
+                  },
+                },
+                "type": "error",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/basic-auth",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "key": "value",
+                },
+                "shape": {
+                  "type": "unknown",
+                  "unknown": {
+                    "key": "value",
+                  },
+                },
+                "type": "reference",
+              },
+              "response": {
+                "body": null,
+                "error": {
+                  "errorId": "error_errors:BadRequest",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                        "originalName": "errors",
+                        "pascalCase": {
+                          "safeName": "Errors",
+                          "unsafeName": "Errors",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ERRORS",
+                          "unsafeName": "ERRORS",
+                        },
+                        "snakeCase": {
+                          "safeName": "errors",
+                          "unsafeName": "errors",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                      "originalName": "errors",
+                      "pascalCase": {
+                        "safeName": "Errors",
+                        "unsafeName": "Errors",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ERRORS",
+                        "unsafeName": "ERRORS",
+                      },
+                      "snakeCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "badRequest",
+                      "unsafeName": "badRequest",
+                    },
+                    "originalName": "BadRequest",
+                    "pascalCase": {
+                      "safeName": "BadRequest",
+                      "unsafeName": "BadRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "BAD_REQUEST",
+                      "unsafeName": "BAD_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "bad_request",
+                      "unsafeName": "bad_request",
+                    },
+                  },
+                },
+                "type": "error",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/basic-auth",
+            },
+          ],
           "fullPath": {
             "head": "basic-auth",
             "parts": [],

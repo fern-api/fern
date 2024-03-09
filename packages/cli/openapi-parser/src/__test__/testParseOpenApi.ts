@@ -20,13 +20,25 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
                 asyncApiFilename != null
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
+            const specs = [];
+            if (absolutePathToOpenAPI != null) {
+                specs.push({
+                    absoluteFilepath: absolutePathToOpenAPI,
+                    absoluteFilepathToOverrides: undefined
+                });
+            }
+            if (absolutePathToAsyncAPI != null) {
+                specs.push({
+                    absoluteFilepath: absolutePathToAsyncAPI,
+                    absoluteFilepathToOverrides: undefined
+                });
+            }
 
             const openApiIr = await parse({
-                absolutePathToAsyncAPI,
-                absolutePathToOpenAPI,
-                absolutePathToOpenAPIOverrides: undefined,
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
-                disableExamples: undefined
+                workspace: {
+                    specs
+                },
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
                 skipValidation: true

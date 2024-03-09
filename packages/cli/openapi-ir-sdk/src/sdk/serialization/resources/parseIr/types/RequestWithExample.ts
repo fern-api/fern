@@ -11,7 +11,7 @@ export const RequestWithExample: core.serialization.Schema<
     FernOpenapiIr.RequestWithExample
 > = core.serialization
     .union("type", {
-        octetStream: core.serialization.lazyObject(async () => (await import("../../..")).OctetStremRequest),
+        octetStream: core.serialization.lazyObject(async () => (await import("../../..")).OctetStreamRequest),
         multipart: core.serialization.lazyObject(async () => (await import("../../..")).MultipartRequest),
         json: core.serialization.lazyObject(async () => (await import("../../..")).JsonRequestWithExample),
     })
@@ -34,7 +34,7 @@ export const RequestWithExample: core.serialization.Schema<
 export declare namespace RequestWithExample {
     type Raw = RequestWithExample.OctetStream | RequestWithExample.Multipart | RequestWithExample.Json;
 
-    interface OctetStream extends serializers.OctetStremRequest.Raw {
+    interface OctetStream extends serializers.OctetStreamRequest.Raw {
         type: "octetStream";
     }
 

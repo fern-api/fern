@@ -1,5 +1,5 @@
 ---
-title: Fern | How to use Fern's Python SDK Generator
+title: The Python SDK generator
 description: Use Fern's Python SDK generator and your API definition to output a fully functional Python SDK (client libraries) to your local filesystem, or publish it to GitHub.
 ---
 
@@ -39,7 +39,7 @@ groups:
         version: 0.8.0
         output:
           location: pypi.buildwithfern.com
-          package-name: imdb # replace with your package name
+          package-name: petstore # replace with your package name
 ```
 </CodeBlock>
 
@@ -56,9 +56,9 @@ groups:
         version: 0.8.0
         output:
           location: pypi
-          package-name: imdb
+          package-name: petstore # replace with your package name
           token: ${PYPI_TOKEN}
         github:
-          repository: imdb/imdb-python    
+          repository: petstore/petstore-python # replace package & org
 ```
 </CodeBlock>

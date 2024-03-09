@@ -1,6 +1,8 @@
 instances:
   - url: fern.docs.buildwithfern.com
 
+title: Fern | Documentation
+
 tabs:
   overview:
     display-name: Overview
@@ -71,6 +73,7 @@ navigation:
           - page: Overview
             path: ./docs/pages/overview/cli/cli-overview.mdx
           - section: CLI commands
+            slug: commands
             contents:
               - page: fern generate
                 path: ./docs/pages/overview/cli/cli-commands/fern-generate.mdx
@@ -120,8 +123,6 @@ navigation:
           - page: TypeScript Node.js SDK
             path: ./docs/pages/fern-sdks/sdk-generators/node-sdk.mdx
             slug: typescript
-          - page: TypeScript Browser SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/browser-sdk.mdx
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
             slug: python
@@ -255,6 +256,12 @@ navigation:
                 path: ./docs/pages/fern-docs/content/components/icons.mdx
               - page: Availability
                 path: ./docs/pages/fern-docs/content/components/availability.mdx
+              - page: Tabs
+                path: ./docs/pages/fern-docs/content/components/tabs.mdx
+              - page: Accordion
+                path: ./docs/pages/fern-docs/content/components/accordion.mdx
+              - page: Steps
+                path: ./docs/pages/fern-docs/content/components/steps.mdx
           - section: Use the Snippets API
             slug: use-snippets-api
             contents:

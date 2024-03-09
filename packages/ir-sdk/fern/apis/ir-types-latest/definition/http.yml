@@ -41,7 +41,7 @@ types:
       auth: boolean
       idempotent: boolean
       pagination: optional<Pagination>
-      examples: list<ExampleEndpointCall>
+      examples: list<HttpEndpointExample>
   EndpointName: commons.Name
   HttpPath:
     properties:
@@ -242,6 +242,11 @@ types:
       property: types.ObjectProperty
 
   # examples
+  HttpEndpointExample:
+    discriminant: exampleType
+    union:
+      userProvided: ExampleEndpointCall
+      generated: ExampleEndpointCall
 
   ExampleEndpointCall:
     extends: commons.WithDocs

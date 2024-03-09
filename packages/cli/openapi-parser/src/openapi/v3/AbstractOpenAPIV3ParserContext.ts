@@ -161,4 +161,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     ): DiscriminatedUnionReference | undefined;
 
     public abstract getErrors(): Record<StatusCode, HttpError>;
+
+    public abstract excludeSchema(schemaId: SchemaId): void;
+
+    public abstract isSchemaExcluded(schemaId: SchemaId): boolean;
 }

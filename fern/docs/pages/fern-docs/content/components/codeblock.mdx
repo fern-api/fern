@@ -1,64 +1,77 @@
 ---
-title: Fern | Display code snippets using the CodeBlock component
+title: Display code snippets using CodeBlock
 description: The CodeBlock component displays a code snippet, with an optional title and language. Use the CodeBlocks component to show multiple snippets in a tabbed view. 
 ---
 
+The `CodeBlock` component is used when you want to display a code snippet along with a title, or in a tabbed view. 
 
-The `CodeBlock` component is used when you want to display a code snippet.
+Within the `CodeBlock` component, use [Markdown fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) along with optional [syntax highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting).
 
-CodeBlock Props:
+The `CodeBlock` component allows you to add a `title` to the fenced code block. To provide a tabbed view of multiple `CodeBlock` components, use the [`CodeBlocks`](#codeblocks) component. If you wish to add neither a title nor a tabbed view to your code block, you do not need to use the `CodeBlock` component.
 
-- *title*: string
-- *language*: a string representing the language of the code snippet
+## Props
 
-## Single CodeBlock
+| prop       | type   | description                             | default             | 
+|------------|--------|-----------------------------------------|---------------------|
+| *title*    | string | Displayed title for the CodeBlock       | none or `Untitled`* |
 
-This would look like:
+\* If you do not provide a `title` prop for a `CodeBlock` component that is *not* inside a `CodeBlocks` component, it renders as a normal Markdown fenced code block without a visible title. `CodeBlock` components that *are* inside a `CodeBlocks` component display as `Untitled` if you do not provide them with `title` props.<br />
+\*\* Thus, while the `title` prop is technically optional, in practice you should always add a `title` to all `CodeBlock` components.
+
+## Usage
+
+### Single CodeBlock
 
 ````mdx
-<CodeBlock title="Node.js SDK">
+<CodeBlock title='Install the Fern CLI tool globally'>
 ```bash
-$ npm install --save @fern-api/node-sdk
+npm install -g fern-api
 ```
 </CodeBlock>
 ````
 
-<CodeBlock title="Node.js SDK">
+This renders as:
+
+<CodeBlock title='Install the Fern CLI tool globally'>
 ```bash
-$ npm install --save @fern-api/node-sdk
+npm install -g fern-api
 ```
 </CodeBlock>
 
-## Multiple CodeBlocks
+### CodeBlocks
 
-If you'd like to have tabs to show multiple CodeBlocks at a time, you can use the `CodeBlocks` component.
+Create a tabbed view containing multiple `CodeBlock` components with the `CodeBlocks` component.
 
-This would look like:
+<Note>The `CodeBlocks` component does not take any props. For `CodeBlock` components inside a `CodeBlocks` component, be sure to set their `title` props to give descriptive titles to the tabs. Otherwise, the tabs by default display `Untitled`.</Note>
+
+Example:
 
 ````mdx
 <CodeBlocks>
-    <CodeBlock title="Install the Fern CLI">
+    <CodeBlock title='Install the Fern CLI tool for a single project'>
     ```bash
-    $ npm install fern-api
+    npm install fern-api
     ```
     </CodeBlock>
-    <CodeBlock title = "Global install">
+    <CodeBlock title='Install the Fern CLI tool globally'>
     ```bash
-    $ npm install -global fern-api
+    npm install -g fern-api
     ```
     </CodeBlock>
 </CodeBlocks>
 ````
 
+This renders as:
+
 <CodeBlocks>
-    <CodeBlock title="Install the Fern CLI">
+    <CodeBlock title='Install the Fern CLI tool for a single project'>
     ```bash
-    $ npm install fern-api
+    npm install fern-api
     ```
     </CodeBlock>
-    <CodeBlock title="Global install">
+    <CodeBlock title='Install the Fern CLI tool globally'>
     ```bash
-    $ npm install -global fern-api
+    npm install -g fern-api
     ```
     </CodeBlock>
 </CodeBlocks>

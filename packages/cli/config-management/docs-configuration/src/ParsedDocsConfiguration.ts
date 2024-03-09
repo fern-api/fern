@@ -1,7 +1,7 @@
 import { Audiences } from "@fern-api/config-management-commons";
+import { DocsInstances, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsInstances, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 
 export declare type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
@@ -15,7 +15,7 @@ export interface ParsedDocsConfiguration {
     title: string | undefined;
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
-    backgroundImage: ImageReference | undefined;
+    backgroundImage: BackgroundImage | undefined;
     colors: DocsV1Write.ColorsConfigV3 | undefined;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
@@ -44,12 +44,12 @@ export interface DocsColorsConfiguration {
 export type ColorConfiguration =
     | {
           type: "themed";
-          dark: DocsV1Write.RgbColor | undefined;
-          light: DocsV1Write.RgbColor | undefined;
+          dark: DocsV1Write.RgbaColor | undefined;
+          light: DocsV1Write.RgbaColor | undefined;
       }
     | {
           type: "unthemed";
-          color: DocsV1Write.RgbColor | undefined;
+          color: DocsV1Write.RgbaColor | undefined;
       };
 
 export interface Logo {
@@ -57,6 +57,11 @@ export interface Logo {
     light: ImageReference | undefined;
     height: DocsV1Write.Height | undefined;
     href: DocsV1Write.Url | undefined;
+}
+
+export interface BackgroundImage {
+    dark: ImageReference | undefined;
+    light: ImageReference | undefined;
 }
 
 export interface FontConfig {
