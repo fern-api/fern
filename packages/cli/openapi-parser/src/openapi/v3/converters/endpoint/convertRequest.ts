@@ -21,10 +21,8 @@ function getMultipartFormDataRequest(
     return requestBody.content[MULTIPART_CONTENT]?.schema;
 }
 
-function getOctetStreamRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return requestBody.content[OCTET_STREAM]?.schema;
+function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
+    return requestBody.content[OCTET_STREAM] != null;
 }
 
 function multipartRequestHasFile(
@@ -60,11 +58,10 @@ export function convertRequest({
         : requestBody;
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
-    const octetStreamSchema = getOctetStreamRequest(resolvedRequestBody);
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
 
     // convert as application/octet-stream
-    if (octetStreamSchema != null) {
+    if (isOctetStreamRequest(resolvedRequestBody)) {
         return RequestWithExample.octetStream({
             description: undefined
         });
