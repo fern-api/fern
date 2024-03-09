@@ -114,7 +114,26 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "",
+            },
+          ],
           "fullPath": {
             "head": "",
             "parts": [],
@@ -603,7 +622,26 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/just-file",
+            },
+          ],
           "fullPath": {
             "head": "/just-file",
             "parts": [],
@@ -763,7 +801,203 @@ exports[`generate IR 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "maybeString",
+                        "unsafeName": "maybeString",
+                      },
+                      "originalName": "maybeString",
+                      "pascalCase": {
+                        "safeName": "MaybeString",
+                        "unsafeName": "MaybeString",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "MAYBE_STRING",
+                        "unsafeName": "MAYBE_STRING",
+                      },
+                      "snakeCase": {
+                        "safeName": "maybe_string",
+                        "unsafeName": "maybe_string",
+                      },
+                    },
+                    "wireValue": "maybeString",
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "integer",
+                        "unsafeName": "integer",
+                      },
+                      "originalName": "integer",
+                      "pascalCase": {
+                        "safeName": "Integer",
+                        "unsafeName": "Integer",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "INTEGER",
+                        "unsafeName": "INTEGER",
+                      },
+                      "snakeCase": {
+                        "safeName": "integer",
+                        "unsafeName": "integer",
+                      },
+                    },
+                    "wireValue": "integer",
+                  },
+                  "value": {
+                    "jsonExample": 1,
+                    "shape": {
+                      "primitive": {
+                        "integer": 1,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "maybeInteger",
+                        "unsafeName": "maybeInteger",
+                      },
+                      "originalName": "maybeInteger",
+                      "pascalCase": {
+                        "safeName": "MaybeInteger",
+                        "unsafeName": "MaybeInteger",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "MAYBE_INTEGER",
+                        "unsafeName": "MAYBE_INTEGER",
+                      },
+                      "snakeCase": {
+                        "safeName": "maybe_integer",
+                        "unsafeName": "maybe_integer",
+                      },
+                    },
+                    "wireValue": "maybeInteger",
+                  },
+                  "value": {
+                    "jsonExample": 1,
+                    "shape": {
+                      "primitive": {
+                        "integer": 1,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "listOfStrings",
+                        "unsafeName": "listOfStrings",
+                      },
+                      "originalName": "listOfStrings",
+                      "pascalCase": {
+                        "safeName": "ListOfStrings",
+                        "unsafeName": "ListOfStrings",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LIST_OF_STRINGS",
+                        "unsafeName": "LIST_OF_STRINGS",
+                      },
+                      "snakeCase": {
+                        "safeName": "list_of_strings",
+                        "unsafeName": "list_of_strings",
+                      },
+                    },
+                    "wireValue": "listOfStrings",
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "optionalListOfStrings",
+                        "unsafeName": "optionalListOfStrings",
+                      },
+                      "originalName": "optionalListOfStrings",
+                      "pascalCase": {
+                        "safeName": "OptionalListOfStrings",
+                        "unsafeName": "OptionalListOfStrings",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OPTIONAL_LIST_OF_STRINGS",
+                        "unsafeName": "OPTIONAL_LIST_OF_STRINGS",
+                      },
+                      "snakeCase": {
+                        "safeName": "optional_list_of_strings",
+                        "unsafeName": "optional_list_of_strings",
+                      },
+                    },
+                    "wireValue": "optionalListOfStrings",
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/just-file-with-query-params",
+            },
+          ],
           "fullPath": {
             "head": "/just-file-with-query-params",
             "parts": [],

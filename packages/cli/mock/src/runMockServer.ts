@@ -17,10 +17,8 @@ import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
 
-// TODO: There are a few gaps in what the mock server can
+// TODO(FER-673): There are a few gaps in what the mock server can
 // validate, which will require changes to the example IR.
-//
-// See https://github.com/fern-api/fern/issues/2620
 export async function runMockServer({
     context,
     ir,
@@ -66,7 +64,7 @@ export async function runMockServer({
 
     context.logger.info(`Running mock server on localhost:${port}`);
 
-    // await infiinitely
+    // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
 }

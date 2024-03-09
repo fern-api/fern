@@ -37,6 +37,7 @@ export * from "./Pagination";
 export * from "./CursorPagination";
 export * from "./OffsetPagination";
 export * from "./PaginationProperty";
+export * from "./HttpEndpointExample";
 export * from "./ExampleEndpointCall";
 export * from "./ExampleCodeSample";
 export * from "./ExampleCodeSampleLanguage";
