@@ -1,7 +1,7 @@
 import { addPrefixToString } from "@fern-api/core-utils";
 import { DocsConfiguration, DocsConfiguration as RawDocsConfiguration, Serializer } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";

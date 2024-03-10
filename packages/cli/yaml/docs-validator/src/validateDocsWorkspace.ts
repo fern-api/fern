@@ -7,8 +7,7 @@ import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAs
 import { getAllRules } from "./getAllRules";
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
-
-export async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Logger): Promise<ValidationViolation[]> {
+async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), logger });
 }
 

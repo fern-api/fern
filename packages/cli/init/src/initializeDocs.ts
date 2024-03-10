@@ -5,8 +5,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
-
-export async function initializeDocs({
+async function initializeDocs({
     organization,
     taskContext,
     versionOfCli

@@ -13,7 +13,7 @@ import {
     Type,
     TypeId
 } from "@fern-api/ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";

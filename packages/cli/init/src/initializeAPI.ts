@@ -4,7 +4,7 @@ import {
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/project-configuration";
+} from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import fs from "fs-extra";

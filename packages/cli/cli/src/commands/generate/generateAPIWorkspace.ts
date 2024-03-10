@@ -7,8 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-
-export async function generateWorkspace({
+async function generateWorkspace({
     workspace,
     organization,
     context,

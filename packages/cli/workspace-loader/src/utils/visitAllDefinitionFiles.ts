@@ -5,8 +5,7 @@ import { DefinitionFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
 import { FernWorkspace } from "../types/Workspace";
 import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
-
-export async function visitAllDefinitionFiles(
+async function visitAllDefinitionFiles(
     workspace: FernWorkspace,
     visitor: (
         filepath: RelativeFilePath,

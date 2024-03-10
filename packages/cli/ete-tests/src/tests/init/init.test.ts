@@ -2,8 +2,7 @@ import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFi
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
-
-const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+IXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern init", () => {
     it("no existing fern directory", async () => {

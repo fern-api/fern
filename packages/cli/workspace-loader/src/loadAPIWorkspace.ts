@@ -12,8 +12,7 @@ import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
 import { APIChangelog, FernWorkspace, Spec } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-
-export async function loadAPIWorkspace({
+async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,

@@ -7,8 +7,7 @@ import { ZodError } from "zod";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { OnDiskNamedDefinitionFile } from "./types/Workspace";
-
-export declare namespace validateStructureOfYamlFiles {
+declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {

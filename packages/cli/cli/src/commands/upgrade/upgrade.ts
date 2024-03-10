@@ -8,8 +8,7 @@ import produce from "immer";
 import { CliContext } from "../../cli-context/CliContext";
 import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
-
-const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
+REVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
 /**
  * there are 3 relevant versions:

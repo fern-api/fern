@@ -13,8 +13,7 @@ import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-
-export async function writeDefinitionForWorkspaces({
+async function writeDefinitionForWorkspaces({
     project,
     cliContext
 }: {

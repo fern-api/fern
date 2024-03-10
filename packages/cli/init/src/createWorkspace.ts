@@ -12,8 +12,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
-
-export async function createFernWorkspace({
+async function createFernWorkspace({
     directoryOfWorkspace
 }: {
     directoryOfWorkspace: AbsoluteFilePath;

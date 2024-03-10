@@ -12,8 +12,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
-
-export async function createFernDirectoryAndWorkspace({
+async function createFernDirectoryAndWorkspace({
     organization,
     taskContext,
     versionOfCli

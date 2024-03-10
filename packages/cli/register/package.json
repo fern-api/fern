@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/auth": "workspace:*",
-    "@fern-api/config-management-commons": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fdr-sdk": "0.54.1-1-g293e7bf",

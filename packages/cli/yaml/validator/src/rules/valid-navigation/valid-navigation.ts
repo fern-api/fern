@@ -4,8 +4,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
-
-export const ValidNavigationRule: Rule = {
+const ValidNavigationRule: Rule = {
     name: "valid-navigation",
     create: ({ workspace }) => {
         const allDefinitionFilepaths = keys(getAllDefinitionFiles(workspace.definition));

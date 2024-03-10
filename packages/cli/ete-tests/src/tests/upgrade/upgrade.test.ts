@@ -5,8 +5,7 @@ import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
-
-const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
+ENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     groups: {
         internal: {
             generators: [

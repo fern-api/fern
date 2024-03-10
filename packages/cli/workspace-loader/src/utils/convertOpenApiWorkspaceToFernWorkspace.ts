@@ -6,11 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
-
-export async function convertToFernWorkspace(
-    openapiWorkspace: OSSWorkspace,
-    context: TaskContext
-): Promise<FernWorkspace> {
+async function convertToFernWorkspace(openapiWorkspace: OSSWorkspace, context: TaskContext): Promise<FernWorkspace> {
     const openApiIr = await parse({
         workspace: openapiWorkspace,
         taskContext: context
