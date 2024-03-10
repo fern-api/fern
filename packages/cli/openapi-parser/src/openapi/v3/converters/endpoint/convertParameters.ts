@@ -106,7 +106,9 @@ export function convertParameters({
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
-            parameterNameOverride: getParameterName(resolvedParameter)
+            parameterNameOverride: getParameterName(resolvedParameter),
+            style: resolvedParameter.style ?? "form",
+            explode: resolvedParameter.explode ?? false
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

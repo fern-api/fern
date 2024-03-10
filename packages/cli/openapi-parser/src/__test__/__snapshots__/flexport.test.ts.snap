@@ -1615,6 +1615,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -1634,9 +1635,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -1656,9 +1659,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc" (ascending) or "desc"  (descending)",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -1701,9 +1706,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for all booking line items from a purchase order",
+          "explode": false,
           "name": "f.purchase_order.id",
           "parameterNameOverride": null,
           "schema": {
@@ -1723,9 +1730,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for all booking line items from a specific booking",
+          "explode": false,
           "name": "f.booking.id",
           "parameterNameOverride": null,
           "schema": {
@@ -1745,9 +1754,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for all booking line items from a specific purchase order line item.",
+          "explode": false,
           "name": "f.purchase_order_line_item.id",
           "parameterNameOverride": null,
           "schema": {
@@ -1767,6 +1778,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4149,6 +4161,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -4168,9 +4181,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -4190,9 +4205,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Sort results by the specified field.",
+          "explode": false,
           "name": "sort",
           "parameterNameOverride": null,
           "schema": {
@@ -4235,9 +4252,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -4280,9 +4299,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter the list based on status of the booking",
+          "explode": false,
           "name": "f.status",
           "parameterNameOverride": null,
           "schema": {
@@ -4325,9 +4346,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by the shipment resulting from the booking",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -4347,9 +4370,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the booking's consignee",
+          "explode": false,
           "name": "f.consignee_entity_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -4371,9 +4396,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the booking's shipper",
+          "explode": false,
           "name": "f.shipper_entity_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -4395,9 +4422,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "f.name",
           "parameterNameOverride": null,
           "schema": {
@@ -4419,9 +4448,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with the specified cargo ready date",
+          "explode": false,
           "name": "f.cargo_ready_date",
           "parameterNameOverride": null,
           "schema": {
@@ -4443,9 +4474,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with cargo ready date after the specified date",
+          "explode": false,
           "name": "f.cargo_ready_date.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -4467,9 +4500,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with cargo ready date after the specified date, inclusive",
+          "explode": false,
           "name": "f.cargo_ready_date.gte",
           "parameterNameOverride": null,
           "schema": {
@@ -4491,9 +4526,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with cargo ready date before the specified date",
+          "explode": false,
           "name": "f.cargo_ready_date.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -4515,9 +4552,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with cargo ready date before the specified date, inclusive",
+          "explode": false,
           "name": "f.cargo_ready_date.lte",
           "parameterNameOverride": null,
           "schema": {
@@ -4539,9 +4578,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings with the specified created_at",
+          "explode": false,
           "name": "f.created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -4563,9 +4604,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings created after the specified date",
+          "explode": false,
           "name": "f.created_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -4587,9 +4630,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings created after the specified date, inclusive",
+          "explode": false,
           "name": "f.created_at.gte",
           "parameterNameOverride": null,
           "schema": {
@@ -4611,9 +4656,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings created before the specified date",
+          "explode": false,
           "name": "f.created_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -4635,9 +4682,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings created before the specified date, inclusive",
+          "explode": false,
           "name": "f.created_at.lte",
           "parameterNameOverride": null,
           "schema": {
@@ -4659,10 +4708,12 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for bookings that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return bookings matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: \`f.metadata.PO #=123\` is invalid. It should instead be \`f.metadata.PO%20%23\`
 ",
+          "explode": false,
           "name": "f.metadata.YOUR_METADATA_KEY",
           "parameterNameOverride": null,
           "schema": {
@@ -4684,6 +4735,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -10335,6 +10387,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -10354,9 +10407,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -10376,9 +10431,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The unique id for the shipment.",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -10400,9 +10457,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters results based on the invoice number.",
+          "explode": false,
           "name": "f.invoice_number",
           "parameterNameOverride": null,
           "schema": {
@@ -10424,9 +10483,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters results based on the involved party seller ID.",
+          "explode": false,
           "name": "f.involved_party_seller_id",
           "parameterNameOverride": null,
           "schema": {
@@ -10448,9 +10509,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters results based on the invoolved party seller ref.",
+          "explode": false,
           "name": "f.involved_party_seller_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -10472,6 +10535,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13612,6 +13676,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -13631,9 +13696,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -13653,9 +13720,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The unique id for the shipment.",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -13677,6 +13746,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14414,6 +14484,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -14433,9 +14504,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -14455,9 +14528,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that belong to the given shipment",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -14479,9 +14554,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that are the given type",
+          "explode": false,
           "name": "f.document_type",
           "parameterNameOverride": null,
           "schema": {
@@ -14503,9 +14580,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that have been archived",
+          "explode": false,
           "name": "f.archived_at.exists",
           "parameterNameOverride": null,
           "schema": {
@@ -14527,9 +14606,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that where uploaded after the given time",
+          "explode": false,
           "name": "f.uploaded_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -14551,9 +14632,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that where uploaded before the given time",
+          "explode": false,
           "name": "f.uploaded_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -14575,9 +14658,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that where uploaded on or after the given time",
+          "explode": false,
           "name": "f.uploaded_at.gte",
           "parameterNameOverride": null,
           "schema": {
@@ -14599,9 +14684,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for documents that where uploaded on or before the given time",
+          "explode": false,
           "name": "f.uploaded_at.lte",
           "parameterNameOverride": null,
           "schema": {
@@ -14623,6 +14710,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15664,6 +15752,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "queryParameters": [
         {
           "description": "Filter by the type of the event",
+          "explode": false,
           "name": "f.type",
           "parameterNameOverride": null,
           "schema": {
@@ -15685,9 +15774,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by events which occurred on or after this datetime",
+          "explode": false,
           "name": "f.occurred_at.gte",
           "parameterNameOverride": null,
           "schema": {
@@ -15709,9 +15800,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by events which occurred on or before this datetime",
+          "explode": false,
           "name": "f.occurred_at.lte",
           "parameterNameOverride": null,
           "schema": {
@@ -15733,9 +15826,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Get all events which involved the shipment with this ID",
+          "explode": false,
           "name": "f.data.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -15755,9 +15850,11 @@ we still recommend setting the Content-Type header to the value \`application/js
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Get all events which involved a resource of this type. The key for this filter will be the '_object' value for your target resource",
+          "explode": false,
           "name": "f.data.resource._object",
           "parameterNameOverride": null,
           "schema": {
@@ -15848,6 +15945,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18160,6 +18258,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -18179,9 +18278,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -18201,9 +18302,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Sort results by the specified field.",
+          "explode": false,
           "name": "sort",
           "parameterNameOverride": null,
           "schema": {
@@ -18224,9 +18327,11 @@ Other details about this invoice",
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -18269,9 +18374,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the status of the invoice",
+          "explode": false,
           "name": "f.status",
           "parameterNameOverride": null,
           "schema": {
@@ -18338,9 +18445,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for invoices associated with a shipment",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -18360,11 +18469,13 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for invoices that are billed directly to the client, rather than invoices that are billed to a shipment.
 This parameter is mutually exclusive with the f.shipment.id filter.
 ",
+          "explode": false,
           "name": "f.billed_directly_to_client",
           "parameterNameOverride": null,
           "schema": {
@@ -18384,9 +18495,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the ID of the company entity that receives the invoice",
+          "explode": false,
           "name": "f.entity.id",
           "parameterNameOverride": null,
           "schema": {
@@ -18406,9 +18519,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the ref of the company entity that receives the invoice",
+          "explode": false,
           "name": "f.entity.ref",
           "parameterNameOverride": null,
           "schema": {
@@ -18430,9 +18545,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the name of the invoice",
+          "explode": false,
           "name": "f.name",
           "parameterNameOverride": null,
           "schema": {
@@ -18454,9 +18571,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for invoices issued after the specified date",
+          "explode": false,
           "name": "f.issued_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -18478,9 +18597,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for invoices issued before the specified date",
+          "explode": false,
           "name": "f.issued_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -18502,9 +18623,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for invoices last updated after the specified date",
+          "explode": false,
           "name": "f.last_updated_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -18526,9 +18649,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for invoices last updated before the specified date",
+          "explode": false,
           "name": "f.last_updated_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -18550,9 +18675,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "[DEPRECATED] Filters the list for invoices billed directly to a client",
+          "explode": false,
           "name": "f.client_id",
           "parameterNameOverride": null,
           "schema": {
@@ -18572,9 +18699,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "[DEPRECATED] Filters the list for invoices associated with a shipment",
+          "explode": false,
           "name": "f.shipment_id",
           "parameterNameOverride": null,
           "schema": {
@@ -18594,6 +18723,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -20722,6 +20852,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -20741,9 +20872,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -20763,9 +20896,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for the company.",
+          "explode": false,
           "name": "f.ref",
           "parameterNameOverride": null,
           "schema": {
@@ -20787,9 +20922,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return companies that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return companies matching any of the specified metadata values for that metadata key.",
+          "explode": false,
           "name": "f.metadata.YOUR_METADATA_KEY",
           "parameterNameOverride": null,
           "schema": {
@@ -20811,6 +20948,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -22967,6 +23105,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -22986,9 +23125,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -23008,9 +23149,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for the company entity",
+          "explode": false,
           "name": "f.ref",
           "parameterNameOverride": null,
           "schema": {
@@ -23032,9 +23175,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The id for the company entity's parent company",
+          "explode": false,
           "name": "f.company_id",
           "parameterNameOverride": null,
           "schema": {
@@ -23056,9 +23201,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for the company entity's parent company",
+          "explode": false,
           "name": "f.company_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -23080,6 +23227,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -24835,6 +24983,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -24854,9 +25003,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -24876,9 +25027,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for the company.",
+          "explode": false,
           "name": "f.company_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -24900,9 +25053,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The id for the company.",
+          "explode": false,
           "name": "f.company.id",
           "parameterNameOverride": null,
           "schema": {
@@ -24924,9 +25079,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters out all contacts not related to this location.",
+          "explode": false,
           "name": "f.location.id",
           "parameterNameOverride": null,
           "schema": {
@@ -24948,6 +25105,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -26464,6 +26622,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -26483,9 +26642,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -26505,9 +26666,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for the location.",
+          "explode": false,
           "name": "f.ref",
           "parameterNameOverride": null,
           "schema": {
@@ -26529,9 +26692,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The ref for a company.",
+          "explode": false,
           "name": "f.company_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -26553,9 +26718,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The id for a company.",
+          "explode": false,
           "name": "f.company.id",
           "parameterNameOverride": null,
           "schema": {
@@ -26577,9 +26744,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The id for a contact at this location.",
+          "explode": false,
           "name": "f.contact.id",
           "parameterNameOverride": null,
           "schema": {
@@ -26601,9 +26770,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return locations that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return locations matching any of the specified metadata values for that metadata key.",
+          "explode": false,
           "name": "f.metadata.YOUR_METADATA_KEY",
           "parameterNameOverride": null,
           "schema": {
@@ -26625,6 +26796,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -28939,6 +29111,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -28958,9 +29131,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -28980,9 +29155,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers legs associated with the shipment leg specified by this id.",
+          "explode": false,
           "name": "f.leg.id",
           "parameterNameOverride": null,
           "schema": {
@@ -29002,9 +29179,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers legs associated with the shipment container specified by this id.",
+          "explode": false,
           "name": "f.shipment_container.id",
           "parameterNameOverride": null,
           "schema": {
@@ -29024,9 +29203,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers legs associated with the given container number.",
+          "explode": false,
           "name": "f.shipment_container.container_number",
           "parameterNameOverride": null,
           "schema": {
@@ -29048,6 +29229,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -30105,6 +30287,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -30124,9 +30307,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -30146,9 +30331,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers associated with the shipment specified by this id.",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -30168,9 +30355,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers associated with the given container number.",
+          "explode": false,
           "name": "f.container_number",
           "parameterNameOverride": null,
           "schema": {
@@ -30192,9 +30381,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return containers that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return containers matching any of the specified metadata values for that metadata key.",
+          "explode": false,
           "name": "f.metadata.YOUR_METADATA_KEY",
           "parameterNameOverride": null,
           "schema": {
@@ -30216,6 +30407,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -31698,6 +31890,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -31717,9 +31910,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -31739,9 +31934,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by the type of port. Ports can have more than one type",
+          "explode": false,
           "name": "f.port_type",
           "parameterNameOverride": null,
           "schema": {
@@ -31808,9 +32005,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by unlocode.",
+          "explode": false,
           "name": "f.unlocode",
           "parameterNameOverride": null,
           "schema": {
@@ -31832,6 +32031,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -32499,6 +32699,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Find the products having this SKU. SKUs are unique among active products, but there may be archived products that share the same sku.",
+          "explode": false,
           "name": "f.sku",
           "parameterNameOverride": null,
           "schema": {
@@ -32520,9 +32721,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter out all archived products (f.archived_at.exists=false) or filter out all unarchived products (f.archived_at.exists=true)",
+          "explode": false,
           "name": "f.archived_at.exists",
           "parameterNameOverride": null,
           "schema": {
@@ -32542,9 +32745,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Search for product properties that are key-value pairs. The key (TYPE) is appended at the end of the parameter name. Multiple property filters can be added to the same query. E.G. f.product_properties.color=blue",
+          "explode": false,
           "name": "f.product_properties.TYPE",
           "parameterNameOverride": null,
           "schema": {
@@ -32566,6 +32771,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -35228,6 +35434,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -35247,9 +35454,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -35269,9 +35478,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -35314,9 +35525,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the purchase order id",
+          "explode": false,
           "name": "f.purchase_order.id",
           "parameterNameOverride": null,
           "schema": {
@@ -35336,9 +35549,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on line item number",
+          "explode": false,
           "name": "f.line_item_number",
           "parameterNameOverride": null,
           "schema": {
@@ -35360,9 +35575,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on item key",
+          "explode": false,
           "name": "f.item_key",
           "parameterNameOverride": null,
           "schema": {
@@ -35384,9 +35601,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
+          "explode": false,
           "name": "f.purchase_order_version.id",
           "parameterNameOverride": null,
           "schema": {
@@ -35406,6 +35625,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -38364,6 +38584,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -38383,9 +38604,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page Should be between 1 and 100 (inclusive)",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -38405,9 +38628,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Sort results by the specified field (only \`id\` is supported at this time)",
+          "explode": false,
           "name": "sort",
           "parameterNameOverride": null,
           "schema": {
@@ -38428,9 +38653,11 @@ Other details about this invoice",
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -38473,9 +38700,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter out all archived purchase orders (f.archived_at.exists=false) or filter out all unarchived purchase orders (f.archived_at.exists=true)",
+          "explode": false,
           "name": "f.archived_at.exists",
           "parameterNameOverride": null,
           "schema": {
@@ -38495,9 +38724,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the PO status",
+          "explode": false,
           "name": "f.status",
           "parameterNameOverride": null,
           "schema": {
@@ -38552,9 +38783,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on PO buyer",
+          "explode": false,
           "name": "f.buyer_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -38576,9 +38809,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the PO seller",
+          "explode": false,
           "name": "f.seller_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -38600,9 +38835,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the PO seller entity",
+          "explode": false,
           "name": "f.seller_entity_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -38624,9 +38861,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the PO buyer entity",
+          "explode": false,
           "name": "f.buyer_entity_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -38648,9 +38887,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on which role you take in the PO. You can state multiple roles with a comma.",
+          "explode": true,
           "name": "f.roles",
           "parameterNameOverride": null,
           "schema": {
@@ -38820,9 +39061,11 @@ Other details about this invoice",
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter the list based on whether a PO is on the shipment matching the provided ID",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -38842,9 +39085,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter the list based on PO name",
+          "explode": false,
           "name": "f.name",
           "parameterNameOverride": null,
           "schema": {
@@ -38866,9 +39111,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter the list for POs last updated before the provided time",
+          "explode": false,
           "name": "f.updated_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -38890,9 +39137,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter the list for POs last updated after the provided time",
+          "explode": false,
           "name": "f.updated_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -38914,6 +39163,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -41581,6 +41831,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
+          "explode": false,
           "name": "f.purchase_order_version.id",
           "parameterNameOverride": null,
           "schema": {
@@ -41600,6 +41851,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -44008,6 +44260,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -44027,9 +44280,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -44049,9 +44304,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return legs for the shipment specified by this id.",
+          "explode": false,
           "name": "f.shipment.id",
           "parameterNameOverride": null,
           "schema": {
@@ -44071,9 +44328,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Only return legs that match the given transportation mode",
+          "explode": false,
           "name": "f.transportation_mode",
           "parameterNameOverride": null,
           "schema": {
@@ -44093,9 +44352,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Returns legs including deleted legs",
+          "explode": false,
           "name": "f.include_deleted",
           "parameterNameOverride": null,
           "schema": {
@@ -44115,6 +44376,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -45438,6 +45700,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Retrieves the leg even if it was deleted",
+          "explode": false,
           "name": "f.include_deleted",
           "parameterNameOverride": null,
           "schema": {
@@ -45457,6 +45720,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -47579,6 +47843,7 @@ Other details about this invoice",
       "queryParameters": [
         {
           "description": "Page number of the page to retrieve",
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -47598,9 +47863,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
+          "explode": false,
           "name": "per",
           "parameterNameOverride": null,
           "schema": {
@@ -47620,9 +47887,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Sort results by the specified field.",
+          "explode": false,
           "name": "sort",
           "parameterNameOverride": null,
           "schema": {
@@ -47701,9 +47970,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Set sort order. Allows "asc" (ascending) or "desc" (descending).",
+          "explode": false,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -47746,9 +48017,11 @@ Other details about this invoice",
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the shipment's \`transportation_mode\`. One of \`ocean\` or \`air\`.",
+          "explode": false,
           "name": "f.transportation_mode",
           "parameterNameOverride": null,
           "schema": {
@@ -47766,9 +48039,11 @@ Other details about this invoice",
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on the shipment's \`status\`. Cannot be used with \`f.statuses.any\`",
+          "explode": false,
           "name": "f.status",
           "parameterNameOverride": null,
           "schema": {
@@ -47786,9 +48061,11 @@ Other details about this invoice",
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for all shipments whose \`status\` is one of the passed in statuses. Can pass in multiple comma-separated statuses.",
+          "explode": false,
           "name": "f.statuses.any",
           "parameterNameOverride": null,
           "schema": {
@@ -47806,9 +48083,11 @@ Other details about this invoice",
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that are associated with a container specified by the given container number.",
+          "explode": false,
           "name": "f.container_number",
           "parameterNameOverride": null,
           "schema": {
@@ -47830,9 +48109,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that are associated with the given purchase order number",
+          "explode": false,
           "name": "f.purchase_order",
           "parameterNameOverride": null,
           "schema": {
@@ -47854,9 +48135,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that are associated a product identified by the given SKU.",
+          "explode": false,
           "name": "f.sku",
           "parameterNameOverride": null,
           "schema": {
@@ -47878,9 +48161,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that where updated after the given time",
+          "explode": false,
           "name": "f.updated_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -47902,9 +48187,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that where updated before the given time",
+          "explode": false,
           "name": "f.updated_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -47926,9 +48213,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that where archived after the given time",
+          "explode": false,
           "name": "f.archived_at.gt",
           "parameterNameOverride": null,
           "schema": {
@@ -47950,9 +48239,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that where archived before the given time",
+          "explode": false,
           "name": "f.archived_at.lt",
           "parameterNameOverride": null,
           "schema": {
@@ -47974,9 +48265,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that are associated with the given master bill number",
+          "explode": false,
           "name": "f.master_bill_number",
           "parameterNameOverride": null,
           "schema": {
@@ -47998,9 +48291,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that are associated with the given house bill number",
+          "explode": false,
           "name": "f.house_bill_number",
           "parameterNameOverride": null,
           "schema": {
@@ -48022,9 +48317,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that have the specified company entity (denoted by external ref) as a consignee",
+          "explode": false,
           "name": "f.consignee_external_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -48046,9 +48343,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that have a shipment leg with the same origin address ref",
+          "explode": false,
           "name": "f.origin_address_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -48070,9 +48369,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that have a shipment leg with the same destination address ref",
+          "explode": false,
           "name": "f.destination_address_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -48094,10 +48395,12 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list for shipments that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return shipments matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: \`f.metadata.PO #=123\` is invalid. It should instead be \`f.metadata.PO%20%23\`
 ",
+          "explode": false,
           "name": "f.metadata.YOUR_METADATA_KEY",
           "parameterNameOverride": null,
           "schema": {
@@ -48119,9 +48422,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_freight_management_bco",
+          "explode": false,
           "name": "f.wants_freight_management_bco",
           "parameterNameOverride": null,
           "schema": {
@@ -48141,9 +48446,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_flexport_freight",
+          "explode": false,
           "name": "f.wants_flexport_freight",
           "parameterNameOverride": null,
           "schema": {
@@ -48163,9 +48470,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_import_customs_service",
+          "explode": false,
           "name": "f.wants_import_customs_service",
           "parameterNameOverride": null,
           "schema": {
@@ -48185,9 +48494,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_export_customs_service",
+          "explode": false,
           "name": "f.wants_export_customs_service",
           "parameterNameOverride": null,
           "schema": {
@@ -48207,9 +48518,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_commercial_invoice_transcription",
+          "explode": false,
           "name": "f.wants_commercial_invoice_transcription",
           "parameterNameOverride": null,
           "schema": {
@@ -48229,9 +48542,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_flexport_insurance",
+          "explode": false,
           "name": "f.wants_flexport_insurance",
           "parameterNameOverride": null,
           "schema": {
@@ -48251,9 +48566,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_pickup_service",
+          "explode": false,
           "name": "f.wants_pickup_service",
           "parameterNameOverride": null,
           "schema": {
@@ -48273,9 +48590,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_trade_declaration_service",
+          "explode": false,
           "name": "f.wants_trade_declaration_service",
           "parameterNameOverride": null,
           "schema": {
@@ -48295,9 +48614,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's visibility_only flag",
+          "explode": false,
           "name": "f.visibility_only",
           "parameterNameOverride": null,
           "schema": {
@@ -48317,9 +48638,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on shipment's wants_delivery_service flag",
+          "explode": false,
           "name": "f.wants_delivery_service",
           "parameterNameOverride": null,
           "schema": {
@@ -48339,9 +48662,11 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters the list based on whether the shipment belongs to a buyer's consolidation",
+          "explode": false,
           "name": "f.belongs_to_a_buyers_consol",
           "parameterNameOverride": null,
           "schema": {
@@ -48361,6 +48686,7 @@ Other details about this invoice",
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

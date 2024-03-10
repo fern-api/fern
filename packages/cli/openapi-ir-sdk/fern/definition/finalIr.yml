@@ -248,6 +248,8 @@ types:
     properties:
       name: string
       schema: Schema
+      style: optional<string>
+      explode: optional<boolean>
       parameterNameOverride:
         type: optional<string>
         docs: |

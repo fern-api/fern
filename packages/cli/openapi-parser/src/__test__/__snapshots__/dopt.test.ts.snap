@@ -209,6 +209,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "version",
           "parameterNameOverride": null,
           "schema": {
@@ -221,9 +222,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "userIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -238,6 +241,7 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -770,6 +774,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "transitions",
           "parameterNameOverride": null,
           "schema": {
@@ -791,9 +796,11 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "version",
           "parameterNameOverride": null,
           "schema": {
@@ -806,9 +813,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "userIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -823,9 +832,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "groupIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -847,6 +858,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1127,6 +1139,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "version",
           "parameterNameOverride": null,
           "schema": {
@@ -1139,9 +1152,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "include",
           "parameterNameOverride": null,
           "schema": {
@@ -1162,9 +1177,11 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "userIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -1179,9 +1196,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "groupIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -1203,6 +1222,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2029,6 +2049,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "version",
           "parameterNameOverride": null,
           "schema": {
@@ -2041,9 +2062,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "userIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -2058,9 +2081,11 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "groupIdentifier",
           "parameterNameOverride": null,
           "schema": {
@@ -2082,6 +2107,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

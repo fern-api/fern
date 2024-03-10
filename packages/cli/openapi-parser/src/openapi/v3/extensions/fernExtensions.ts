@@ -317,28 +317,7 @@ export const FernOpenAPIExtension = {
      *    name: version
      *    type: literal<"2.10"> # The type of the header to use
      */
-    FERN_GLOBAL_HEADERS: "x-fern-global-headers",
-
-    /**
-     * Updates query parameters to specify the way they should be represented within the resultant HTTP request.
-     * Specifically, for parameters that are lists, we allow for two types of representations:
-     *  - `exploded` = `a="one"&a="two"&a="three"`
-     *  - `comma-separated` = `a=one,two,three,four`
-     *
-     *     get:
-     *      summary: List endpoint
-     *      operationId: list
-     *      description: Retrieve a list
-     *      parameters:
-     *          - name: id
-     *            in: query
-     *            description: Ids to retrieve
-     *            x-fern-query-parameter-representation: EXPLODED
-     *            schema:
-     *              type: array
-     *              items: string
-     */
-    FERN_QUERY_PARAMETER_REPRESENTATION: "x-fern-query-parameter-representation"
+    FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

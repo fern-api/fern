@@ -621,6 +621,7 @@ Used to list documents. Optionally filter on supported fields.
       "queryParameters": [
         {
           "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+          "explode": false,
           "name": "document_index_id",
           "parameterNameOverride": null,
           "schema": {
@@ -642,9 +643,11 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -664,9 +667,11 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The initial index from which to return the results.",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -686,9 +691,11 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which field to use when ordering the results.",
+          "explode": false,
           "name": "ordering",
           "parameterNameOverride": null,
           "schema": {
@@ -710,6 +717,7 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

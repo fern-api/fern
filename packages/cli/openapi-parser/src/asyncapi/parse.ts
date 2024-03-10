@@ -81,7 +81,10 @@ export function parseAsyncAPI({
                     name,
                     schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
                     description: resolvedQueryParameter.description,
-                    parameterNameOverride: undefined
+                    parameterNameOverride: undefined,
+                    // Just default these to form/un-exploded for now
+                    style: "form",
+                    explode: false
                 });
             }
         }

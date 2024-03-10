@@ -79,7 +79,9 @@ types:
   QueryParameterRepresentation:
     enum:
       - EXPLODED
-      - COMMA_SEPARATED
+      - COMMA_DELIMITED
+      - SPACE_DELIMITED
+      - PIPE_DELIMITED
   QueryParameter:
     extends: commons.Declaration
     properties:

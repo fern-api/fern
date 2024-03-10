@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const QueryParameterRepresentation: core.serialization.Schema<
     serializers.QueryParameterRepresentation.Raw,
     FernIr.QueryParameterRepresentation
-> = core.serialization.enum_(["EXPLODED", "COMMA_SEPARATED"]);
+> = core.serialization.enum_(["EXPLODED", "COMMA_DELIMITED", "SPACE_DELIMITED", "PIPE_DELIMITED"]);
 
 export declare namespace QueryParameterRepresentation {
-    type Raw = "EXPLODED" | "COMMA_SEPARATED";
+    type Raw = "EXPLODED" | "COMMA_DELIMITED" | "SPACE_DELIMITED" | "PIPE_DELIMITED";
 }

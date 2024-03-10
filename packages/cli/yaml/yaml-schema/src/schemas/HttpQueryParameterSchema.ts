@@ -4,8 +4,14 @@ import { extendTypeReferenceSchema } from "./TypeReferenceSchema";
 
 export const HttpQueryParameterSchema = extendTypeReferenceSchema(
     DeclarationWithNameSchema.extend({
-        "allow-multiple": z.optional(z.boolean()),
-        "query-parameter-representation": z.optional(z.enum(["EXPLODED", "COMMA_SEPARATED"]))
+        "allow-multiple": z.optional(
+            z.union([
+                z.boolean(),
+                z.strictObject({
+                    encoding: z.enum(["exploded", "comma_delimited", "space_delimited", "pipe_delimited"])
+                })
+            ])
+        )
     }).shape
 );
 

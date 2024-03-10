@@ -29,6 +29,7 @@ import {
     getQueryParameterName,
     resolvePathParameterOrThrow
 } from "./services/convertHttpService";
+import { convertQueryParameterRepresentation } from "./services/utils";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
@@ -101,12 +102,15 @@ export async function convertChannel({
                               valueType,
                               allowMultiple:
                                   typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
-                                      ? queryParameter["allow-multiple"]
+                                      ? typeof queryParameter["allow-multiple"] === "boolean"
+                                          ? queryParameter["allow-multiple"]
+                                          : true
                                       : false,
                               listRepresentation:
                                   typeof queryParameter !== "string" &&
-                                  queryParameter["query-parameter-representation"] != null
-                                      ? queryParameter["query-parameter-representation"]
+                                  queryParameter["allow-multiple"] != null &&
+                                  typeof queryParameter["allow-multiple"] !== "boolean"
+                                      ? convertQueryParameterRepresentation(queryParameter["allow-multiple"].encoding)
                                       : QueryParameterRepresentation.Exploded
                           };
                       })

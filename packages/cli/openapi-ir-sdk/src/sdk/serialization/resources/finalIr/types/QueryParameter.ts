@@ -13,6 +13,8 @@ export const QueryParameter: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
+        style: core.serialization.string().optional(),
+        explode: core.serialization.boolean().optional(),
         parameterNameOverride: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
@@ -21,6 +23,8 @@ export declare namespace QueryParameter {
     interface Raw extends serializers.WithDescription.Raw {
         name: string;
         schema: serializers.Schema.Raw;
+        style?: string | null;
+        explode?: boolean | null;
         parameterNameOverride?: string | null;
     }
 }

@@ -157,7 +157,9 @@ export function generateIr({
                     description: queryParameter.description,
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
-                    parameterNameOverride: queryParameter.parameterNameOverride
+                    parameterNameOverride: queryParameter.parameterNameOverride,
+                    style: queryParameter.style,
+                    explode: queryParameter.explode
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {

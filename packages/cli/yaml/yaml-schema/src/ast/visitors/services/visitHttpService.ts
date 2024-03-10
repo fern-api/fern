@@ -124,7 +124,6 @@ async function visitEndpoint({
                                     await visitTypeReference(type, [...nodePathForQueryParameter, "type"]);
                                 },
                                 "allow-multiple": noop,
-                                "query-parameter-representation": noop,
                                 audiences: noop
                             });
                         }

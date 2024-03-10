@@ -4102,6 +4102,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -4123,9 +4124,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -4147,9 +4150,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -4169,9 +4174,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -4191,6 +4198,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4622,6 +4630,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "The Entitlement Term ID, if not given, return the UsageRecordReports under the Entitlement",
+          "explode": false,
           "name": "entitlementTermId",
           "parameterNameOverride": null,
           "schema": {
@@ -4643,9 +4652,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -4667,9 +4678,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -4691,9 +4704,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -4713,9 +4728,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -4735,6 +4752,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9451,6 +9469,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "filter by offerId",
+          "explode": false,
           "name": "offerId",
           "parameterNameOverride": null,
           "schema": {
@@ -9472,9 +9491,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "filter by entitlementId",
+          "explode": false,
           "name": "entitlementId",
           "parameterNameOverride": null,
           "schema": {
@@ -9496,9 +9517,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "filter by crmOpportunityId",
+          "explode": false,
           "name": "crmOpportunityId",
           "parameterNameOverride": null,
           "schema": {
@@ -9520,9 +9543,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "filter by partnerOpportunityId",
+          "explode": false,
           "name": "partnerOpportunityId",
           "parameterNameOverride": null,
           "schema": {
@@ -9544,6 +9569,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -11025,6 +11051,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Filter revenue record details by the given product ID",
+          "explode": false,
           "name": "productId",
           "parameterNameOverride": null,
           "schema": {
@@ -11046,9 +11073,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter revenue record details by the given entitlement ID",
+          "explode": false,
           "name": "entitlementId",
           "parameterNameOverride": null,
           "schema": {
@@ -11070,9 +11099,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter revenue record details by the given buyer ID",
+          "explode": false,
           "name": "buyerId",
           "parameterNameOverride": null,
           "schema": {
@@ -11094,9 +11125,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -11118,9 +11151,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -11142,9 +11177,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -11164,9 +11201,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -11186,6 +11225,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -11347,6 +11387,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Filter revenue record details by the given product ID",
+          "explode": false,
           "name": "productId",
           "parameterNameOverride": null,
           "schema": {
@@ -11368,9 +11409,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter revenue record details by the given entitlement ID",
+          "explode": false,
           "name": "entitlementId",
           "parameterNameOverride": null,
           "schema": {
@@ -11392,9 +11435,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter revenue record details by the given buyer ID",
+          "explode": false,
           "name": "buyerId",
           "parameterNameOverride": null,
           "schema": {
@@ -11416,9 +11461,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -11440,9 +11487,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -11464,9 +11513,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -11486,9 +11537,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -11508,6 +11561,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13964,6 +14018,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -13985,9 +14040,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -14009,9 +14066,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -14031,9 +14090,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -14053,6 +14114,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14227,6 +14289,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -14248,9 +14311,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -14272,9 +14337,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -14294,9 +14361,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -14316,6 +14385,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14820,6 +14890,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -14841,9 +14912,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -14865,9 +14938,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -14887,9 +14962,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -14909,6 +14986,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15263,6 +15341,7 @@ exports[`open api parser suger parse open api 1`] = `
       "queryParameters": [
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
+          "explode": false,
           "name": "startDate",
           "parameterNameOverride": null,
           "schema": {
@@ -15284,9 +15363,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
+          "explode": false,
           "name": "endDate",
           "parameterNameOverride": null,
           "schema": {
@@ -15308,9 +15389,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination size, default 20, max value is 1000",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -15330,9 +15413,11 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List pagination offset, default 0",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -15352,6 +15437,7 @@ exports[`open api parser suger parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

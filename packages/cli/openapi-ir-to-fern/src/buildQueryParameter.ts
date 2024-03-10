@@ -50,6 +50,22 @@ export function buildQueryParameter({
         queryParameterSchema["allow-multiple"] = true;
     }
 
+    if (queryParameter.explode === true) {
+        queryParameterSchema["allow-multiple"] = { encoding: "exploded" };
+    } else if (queryParameter.style != null) {
+        switch (queryParameter.style) {
+            case "spaceDelimited":
+                queryParameterSchema["allow-multiple"] = { encoding: "space_delimited" };
+                break;
+            case "pipeDelimited":
+                queryParameterSchema["allow-multiple"] = { encoding: "pipe_delimited" };
+                break;
+            default:
+                queryParameterSchema["allow-multiple"] = { encoding: "comma_delimited" };
+                break;
+        }
+    }
+
     if (queryParameter.description != null) {
         queryParameterSchema.docs = queryParameter.description;
     }
@@ -66,8 +82,6 @@ interface QueryParameterTypeReference {
     allowMultiple: boolean;
 }
 
-// TODO(dsinghvi): list query parameters are automatically converted to exploded=true,
-// this may be the incorrect wire format
 function getQueryParameterTypeReference({
     schema,
     context,

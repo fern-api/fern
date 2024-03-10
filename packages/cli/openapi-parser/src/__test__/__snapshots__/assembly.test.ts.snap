@@ -85,6 +85,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "queryParameters": [
           {
             "description": "The sample rate of the streamed audio.",
+            "explode": false,
             "name": "sample_rate",
             "parameterNameOverride": null,
             "schema": {
@@ -104,11 +105,13 @@ exports[`open api parser assembly parse open api 1`] = `
                 "type": "primitive",
               },
             },
+            "style": "form",
           },
           {
             "description": "Add up to 2500 characters of custom vocabulary.
 The parameter should map to a JSON encoded list of strings.
 ",
+            "explode": false,
             "name": "word_boost",
             "parameterNameOverride": null,
             "schema": {
@@ -134,9 +137,11 @@ The parameter should map to a JSON encoded list of strings.
                 "type": "primitive",
               },
             },
+            "style": "form",
           },
           {
             "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+            "explode": false,
             "name": "token",
             "parameterNameOverride": null,
             "schema": {
@@ -158,6 +163,7 @@ The parameter should map to a JSON encoded list of strings.
                 "type": "primitive",
               },
             },
+            "style": "form",
           },
         ],
       },
@@ -429,6 +435,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [
         {
           "description": "Maximum amount of transcripts to retrieve",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -455,9 +462,11 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by transcript status",
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -531,9 +540,11 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Only get transcripts created on this date",
+          "explode": false,
           "name": "created_on",
           "parameterNameOverride": null,
           "schema": {
@@ -562,9 +573,11 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Get transcripts that were created before this transcript ID",
+          "explode": false,
           "name": "before_id",
           "parameterNameOverride": null,
           "schema": {
@@ -593,9 +606,11 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Get transcripts that were created after this transcript ID",
+          "explode": false,
           "name": "after_id",
           "parameterNameOverride": null,
           "schema": {
@@ -624,9 +639,11 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Only get throttled transcripts, overrides the status filter",
+          "explode": false,
           "name": "throttled_only",
           "parameterNameOverride": null,
           "schema": {
@@ -653,6 +670,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3586,6 +3604,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [
         {
           "description": "The maximum number of characters per caption",
+          "explode": false,
           "name": "chars_per_caption",
           "parameterNameOverride": null,
           "schema": {
@@ -3605,6 +3624,7 @@ The parameter should map to a JSON encoded list of strings.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4050,6 +4070,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [
         {
           "description": "Keywords to search for",
+          "explode": false,
           "name": "words",
           "parameterNameOverride": null,
           "schema": {
@@ -4071,6 +4092,7 @@ The parameter should map to a JSON encoded list of strings.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

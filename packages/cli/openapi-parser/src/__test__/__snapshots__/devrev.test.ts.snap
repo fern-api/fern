@@ -70,6 +70,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "queryParameters": [
         {
           "description": "The ID of the artifact to get the URL for.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -84,6 +85,7 @@ exports[`open api parser devrev parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -550,6 +552,7 @@ given Dev organization.
         {
           "description": "The unique identifier of the token under a given Dev organization.
 ",
+          "explode": false,
           "name": "token_id",
           "parameterNameOverride": null,
           "schema": {
@@ -564,6 +567,7 @@ given Dev organization.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -725,6 +729,7 @@ token type issued for a given subject.
           "description": "An identifier that represents the application, which requested the
 token. Only relevant for application access tokens.
 ",
+          "explode": false,
           "name": "client_id",
           "parameterNameOverride": null,
           "schema": {
@@ -746,11 +751,13 @@ token. Only relevant for application access tokens.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The type of the requested token. If no value is specified, the
 response will include tokens of all the types.
 ",
+          "explode": false,
           "name": "requested_token_type",
           "parameterNameOverride": null,
           "schema": {
@@ -768,12 +775,14 @@ response will include tokens of all the types.
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "The subject associated with the token. In the absence of this
 parameter, the ID of the authenticated entity is treated as the
 subject.
 ",
+          "explode": false,
           "name": "subject",
           "parameterNameOverride": null,
           "schema": {
@@ -795,6 +804,7 @@ subject.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1219,6 +1229,7 @@ connections can not be deleted using this method.
       "queryParameters": [
         {
           "description": "ID of the authentication connection.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -1233,6 +1244,7 @@ connections can not be deleted using this method.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1608,6 +1620,7 @@ disabled.
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -1629,9 +1642,11 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters Dev users based on email addresses.",
+          "explode": false,
           "name": "email",
           "parameterNameOverride": null,
           "schema": {
@@ -1660,10 +1675,12 @@ starts from the beginning.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of Dev users to return. The default is '50'.
 ",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -1683,11 +1700,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -1705,10 +1724,12 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Fields to sort the Dev users by and the direction to sort them.
 ",
+          "explode": false,
           "name": "sort_by",
           "parameterNameOverride": null,
           "schema": {
@@ -1737,9 +1758,11 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters Dev users based on state.",
+          "explode": false,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -1764,6 +1787,7 @@ used.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2134,6 +2158,7 @@ used.
       "queryParameters": [
         {
           "description": "The ID of the part to retrieve.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -2148,6 +2173,7 @@ used.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2230,6 +2256,7 @@ used.
       "queryParameters": [
         {
           "description": "Filters for parts created by any of these users.",
+          "explode": false,
           "name": "created_by",
           "parameterNameOverride": null,
           "schema": {
@@ -2258,11 +2285,13 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -2284,10 +2313,12 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of parts to return. The default is '50'.
 ",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -2307,11 +2338,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -2329,9 +2362,11 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for parts of the provided name(s).",
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -2360,9 +2395,11 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for parts owned by any of these users.",
+          "explode": false,
           "name": "owned_by",
           "parameterNameOverride": null,
           "schema": {
@@ -2391,9 +2428,11 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for parts of the provided type(s).",
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -2418,6 +2457,7 @@ used.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2864,6 +2904,7 @@ organization.
       "queryParameters": [
         {
           "description": "The ID of the required Rev organization.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -2878,6 +2919,7 @@ organization.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3025,6 +3067,7 @@ to access.
       "queryParameters": [
         {
           "description": "Filters by creator.",
+          "explode": false,
           "name": "created_by",
           "parameterNameOverride": null,
           "schema": {
@@ -3053,10 +3096,12 @@ to access.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
+          "explode": false,
           "name": "created_date.after",
           "parameterNameOverride": null,
           "schema": {
@@ -3076,11 +3121,13 @@ to access.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
+          "explode": false,
           "name": "created_date.before",
           "parameterNameOverride": null,
           "schema": {
@@ -3100,11 +3147,13 @@ to access.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -3126,9 +3175,11 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List of external refs to filter Rev organizations for.",
+          "explode": false,
           "name": "external_ref",
           "parameterNameOverride": null,
           "schema": {
@@ -3157,10 +3208,12 @@ starts from the beginning.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of Rev organizations to be retrieved per page.
 ",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -3180,11 +3233,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -3202,10 +3257,12 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
+          "explode": false,
           "name": "modified_date.after",
           "parameterNameOverride": null,
           "schema": {
@@ -3225,11 +3282,13 @@ used.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
+          "explode": false,
           "name": "modified_date.before",
           "parameterNameOverride": null,
           "schema": {
@@ -3249,11 +3308,13 @@ used.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Fields to sort the Rev organizations by and the direction to sort
 them.
 ",
+          "explode": false,
           "name": "sort_by",
           "parameterNameOverride": null,
           "schema": {
@@ -3282,6 +3343,7 @@ them.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3810,6 +3872,7 @@ and a logical concept denoted by the tag's name.
       "queryParameters": [
         {
           "description": "The requested tag's ID.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -3824,6 +3887,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3967,6 +4031,7 @@ and a logical concept denoted by the tag's name.
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -3988,9 +4053,11 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of tags to return. The default is '50'.",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -4010,11 +4077,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -4032,6 +4101,7 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4279,6 +4349,7 @@ used.
       "queryParameters": [
         {
           "description": "The ID of the timeline entry to get.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -4293,6 +4364,7 @@ used.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4386,6 +4458,7 @@ used.
       "queryParameters": [
         {
           "description": "The ID of the object to list timeline entries for.",
+          "explode": false,
           "name": "object",
           "parameterNameOverride": null,
           "schema": {
@@ -4400,11 +4473,13 @@ used.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -4426,11 +4501,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of entries to return. If not set, then this
 defaults to \`50\`.
 ",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -4450,11 +4527,13 @@ defaults to \`50\`.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -4472,6 +4551,7 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4912,6 +4992,7 @@ used.
       "queryParameters": [
         {
           "description": "ID for the webhook.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -4926,6 +5007,7 @@ used.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5425,6 +5507,7 @@ used.
       "queryParameters": [
         {
           "description": "Filters for work belonging to any of the provided parts.",
+          "explode": false,
           "name": "applies_to_part",
           "parameterNameOverride": null,
           "schema": {
@@ -5453,9 +5536,11 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work created by any of these users.",
+          "explode": false,
           "name": "created_by",
           "parameterNameOverride": null,
           "schema": {
@@ -5484,11 +5569,13 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The number of work items to return. The default is '50', the maximum
 is '5000'.
 ",
+          "explode": false,
           "name": "first",
           "parameterNameOverride": null,
           "schema": {
@@ -5508,9 +5595,11 @@ is '5000'.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for issues with any of the provided priorities.",
+          "explode": false,
           "name": "issue.priority",
           "parameterNameOverride": null,
           "schema": {
@@ -5535,10 +5624,12 @@ is '5000'.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
+          "explode": false,
           "name": "issue.rev_orgs",
           "parameterNameOverride": null,
           "schema": {
@@ -5567,9 +5658,11 @@ is '5000'.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work owned by any of these users.",
+          "explode": false,
           "name": "owned_by",
           "parameterNameOverride": null,
           "schema": {
@@ -5598,9 +5691,11 @@ is '5000'.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for records in the provided stage(s).",
+          "explode": false,
           "name": "stage.name",
           "parameterNameOverride": null,
           "schema": {
@@ -5629,11 +5724,13 @@ is '5000'.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
+          "explode": false,
           "name": "ticket.rev_org",
           "parameterNameOverride": null,
           "schema": {
@@ -5662,9 +5759,11 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for tickets with any of the provided severities.",
+          "explode": false,
           "name": "ticket.severity",
           "parameterNameOverride": null,
           "schema": {
@@ -5689,9 +5788,11 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work of the provided types.",
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -5716,6 +5817,7 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5765,6 +5867,7 @@ organizations.
       "queryParameters": [
         {
           "description": "The work's ID.",
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -5779,6 +5882,7 @@ organizations.
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5860,6 +5964,7 @@ organizations.
       "queryParameters": [
         {
           "description": "Filters for work belonging to any of the provided parts.",
+          "explode": false,
           "name": "applies_to_part",
           "parameterNameOverride": null,
           "schema": {
@@ -5888,9 +5993,11 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work created by any of these users.",
+          "explode": false,
           "name": "created_by",
           "parameterNameOverride": null,
           "schema": {
@@ -5919,11 +6026,13 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -5945,9 +6054,11 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for issues with any of the provided priorities.",
+          "explode": false,
           "name": "issue.priority",
           "parameterNameOverride": null,
           "schema": {
@@ -5972,10 +6083,12 @@ starts from the beginning.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
+          "explode": false,
           "name": "issue.rev_orgs",
           "parameterNameOverride": null,
           "schema": {
@@ -6004,10 +6117,12 @@ starts from the beginning.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The maximum number of works to return. The default is '50'.
 ",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -6027,11 +6142,13 @@ starts from the beginning.
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+          "explode": false,
           "name": "mode",
           "parameterNameOverride": null,
           "schema": {
@@ -6049,9 +6166,11 @@ used.
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work owned by any of these users.",
+          "explode": false,
           "name": "owned_by",
           "parameterNameOverride": null,
           "schema": {
@@ -6080,9 +6199,11 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for records in the provided stage(s).",
+          "explode": false,
           "name": "stage.name",
           "parameterNameOverride": null,
           "schema": {
@@ -6111,11 +6232,13 @@ used.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
+          "explode": false,
           "name": "ticket.rev_org",
           "parameterNameOverride": null,
           "schema": {
@@ -6144,9 +6267,11 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for tickets with any of the provided severities.",
+          "explode": false,
           "name": "ticket.severity",
           "parameterNameOverride": null,
           "schema": {
@@ -6171,9 +6296,11 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Filters for work of the provided types.",
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -6198,6 +6325,7 @@ organizations.
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

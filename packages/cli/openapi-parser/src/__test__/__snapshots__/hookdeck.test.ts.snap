@@ -163,6 +163,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -184,9 +185,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -204,9 +207,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "disabled_at",
           "parameterNameOverride": null,
           "schema": {
@@ -399,9 +404,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -485,9 +492,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -571,9 +580,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -593,9 +604,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -617,9 +630,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -641,6 +656,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2324,6 +2340,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "event_id",
           "parameterNameOverride": null,
           "schema": {
@@ -2376,9 +2393,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -2429,9 +2448,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -2515,9 +2536,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -2537,9 +2560,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -2561,9 +2586,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -2585,6 +2612,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2984,6 +3012,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -3036,9 +3065,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -3091,9 +3122,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "webhook_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3146,9 +3179,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "event_data_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3201,9 +3236,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "label",
           "parameterNameOverride": null,
           "schema": {
@@ -3256,9 +3293,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "last_used_at",
           "parameterNameOverride": null,
           "schema": {
@@ -3451,9 +3490,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -3504,9 +3545,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -3590,9 +3633,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -3612,9 +3657,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -3636,9 +3683,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -3660,6 +3709,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5051,6 +5101,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -5103,9 +5154,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -5298,9 +5351,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived",
           "parameterNameOverride": null,
           "schema": {
@@ -5320,9 +5375,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived_at",
           "parameterNameOverride": null,
           "schema": {
@@ -5515,9 +5572,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "url",
           "parameterNameOverride": null,
           "schema": {
@@ -5570,9 +5629,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "cli_path",
           "parameterNameOverride": null,
           "schema": {
@@ -5659,9 +5720,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -5712,9 +5775,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -5798,9 +5863,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -5820,9 +5887,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -5844,9 +5913,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -5868,6 +5939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -7691,6 +7763,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -7743,9 +7816,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -7790,9 +7865,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "issue_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7845,9 +7922,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "webhook_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7900,9 +7979,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "destination_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7955,9 +8036,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "source_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8010,9 +8093,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "attempts",
           "parameterNameOverride": null,
           "schema": {
@@ -8193,9 +8278,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "response_status",
           "parameterNameOverride": null,
           "schema": {
@@ -8393,9 +8480,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "successful_at",
           "parameterNameOverride": null,
           "schema": {
@@ -8553,9 +8642,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -8713,9 +8804,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "error_code",
           "parameterNameOverride": null,
           "schema": {
@@ -8768,9 +8861,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "cli_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8857,9 +8952,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "cli_user_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8912,9 +9009,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "last_attempt_at",
           "parameterNameOverride": null,
           "schema": {
@@ -9072,9 +9171,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "event_data_id",
           "parameterNameOverride": null,
           "schema": {
@@ -9127,9 +9228,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "headers",
           "parameterNameOverride": null,
           "schema": {
@@ -9173,9 +9276,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "body",
           "parameterNameOverride": null,
           "schema": {
@@ -9219,9 +9324,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "parsed_query",
           "parameterNameOverride": null,
           "schema": {
@@ -9265,9 +9372,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "bulk_retry_id",
           "parameterNameOverride": null,
           "schema": {
@@ -9320,9 +9429,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "path",
           "parameterNameOverride": null,
           "schema": {
@@ -9344,9 +9455,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "include",
           "parameterNameOverride": null,
           "schema": {
@@ -9367,9 +9480,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -9476,9 +9591,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -9562,9 +9679,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -9584,9 +9703,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -9608,9 +9729,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -9632,6 +9755,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -10830,6 +10954,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "cancelled_at",
           "parameterNameOverride": null,
           "schema": {
@@ -11022,9 +11147,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "completed_at",
           "parameterNameOverride": null,
           "schema": {
@@ -11217,9 +11344,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -11412,9 +11541,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -11467,9 +11598,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -13495,9 +13628,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query_partial_match",
           "parameterNameOverride": null,
           "schema": {
@@ -13517,9 +13652,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "in_progress",
           "parameterNameOverride": null,
           "schema": {
@@ -13539,9 +13676,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -13592,9 +13731,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -13678,9 +13819,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -13700,9 +13843,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -13724,9 +13869,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -13748,6 +13895,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15763,6 +15911,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -17494,6 +17643,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18125,6 +18275,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "cancelled_at",
           "parameterNameOverride": null,
           "schema": {
@@ -18317,9 +18468,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "completed_at",
           "parameterNameOverride": null,
           "schema": {
@@ -18512,9 +18665,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -18707,9 +18862,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -18762,9 +18919,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -18922,9 +19081,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query_partial_match",
           "parameterNameOverride": null,
           "schema": {
@@ -18944,9 +19105,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "in_progress",
           "parameterNameOverride": null,
           "schema": {
@@ -18966,9 +19129,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -19019,9 +19184,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -19105,9 +19272,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -19127,9 +19296,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -19151,9 +19322,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -19175,6 +19348,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -19616,6 +19790,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -19773,6 +19948,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -20393,6 +20569,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "label",
           "parameterNameOverride": null,
           "schema": {
@@ -20414,9 +20591,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "provider",
           "parameterNameOverride": null,
           "schema": {
@@ -20434,6 +20613,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -21704,6 +21884,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -21756,9 +21937,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "issue_trigger_id",
           "parameterNameOverride": null,
           "schema": {
@@ -21811,9 +21994,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -21920,9 +22105,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -22052,9 +22239,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "merged_with",
           "parameterNameOverride": null,
           "schema": {
@@ -22107,9 +22296,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "aggregation_keys",
           "parameterNameOverride": null,
           "schema": {
@@ -22286,9 +22477,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -22481,9 +22674,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "first_seen_at",
           "parameterNameOverride": null,
           "schema": {
@@ -22676,9 +22871,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "last_seen_at",
           "parameterNameOverride": null,
           "schema": {
@@ -22871,9 +23068,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dismissed_at",
           "parameterNameOverride": null,
           "schema": {
@@ -23066,9 +23265,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -23221,9 +23422,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -23307,9 +23510,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -23329,9 +23534,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -23353,9 +23560,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -23377,6 +23586,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -23473,6 +23683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -23525,9 +23736,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "issue_trigger_id",
           "parameterNameOverride": null,
           "schema": {
@@ -23580,9 +23793,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "type",
           "parameterNameOverride": null,
           "schema": {
@@ -23689,9 +23904,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -23821,9 +24038,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "merged_with",
           "parameterNameOverride": null,
           "schema": {
@@ -23876,9 +24095,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "aggregation_keys",
           "parameterNameOverride": null,
           "schema": {
@@ -24055,9 +24276,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -24250,9 +24473,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "first_seen_at",
           "parameterNameOverride": null,
           "schema": {
@@ -24445,9 +24670,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "last_seen_at",
           "parameterNameOverride": null,
           "schema": {
@@ -24640,9 +24867,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dismissed_at",
           "parameterNameOverride": null,
           "schema": {
@@ -24835,9 +25064,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -24990,9 +25221,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -25076,9 +25309,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -25098,9 +25333,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -25122,9 +25359,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -25146,6 +25385,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -25627,6 +25867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -25679,9 +25920,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -25724,9 +25967,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "rejection_cause",
           "parameterNameOverride": null,
           "schema": {
@@ -25910,9 +26155,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "ignored_count",
           "parameterNameOverride": null,
           "schema": {
@@ -26110,9 +26357,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "events_count",
           "parameterNameOverride": null,
           "schema": {
@@ -26310,9 +26559,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "source_id",
           "parameterNameOverride": null,
           "schema": {
@@ -26365,9 +26616,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "verified",
           "parameterNameOverride": null,
           "schema": {
@@ -26387,9 +26640,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "headers",
           "parameterNameOverride": null,
           "schema": {
@@ -26433,9 +26688,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "body",
           "parameterNameOverride": null,
           "schema": {
@@ -26479,9 +26736,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "parsed_query",
           "parameterNameOverride": null,
           "schema": {
@@ -26525,9 +26784,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "path",
           "parameterNameOverride": null,
           "schema": {
@@ -26549,9 +26810,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -26709,9 +26972,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "ingested_at",
           "parameterNameOverride": null,
           "schema": {
@@ -26869,9 +27134,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "bulk_retry_id",
           "parameterNameOverride": null,
           "schema": {
@@ -26924,9 +27191,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "include",
           "parameterNameOverride": null,
           "schema": {
@@ -26947,9 +27216,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -27033,9 +27304,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -27119,9 +27392,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -27141,9 +27416,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -27165,9 +27442,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -27189,6 +27468,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -28237,6 +28517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -28289,9 +28570,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -28336,9 +28619,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "issue_id",
           "parameterNameOverride": null,
           "schema": {
@@ -28391,9 +28676,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "webhook_id",
           "parameterNameOverride": null,
           "schema": {
@@ -28446,9 +28733,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "destination_id",
           "parameterNameOverride": null,
           "schema": {
@@ -28501,9 +28790,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "source_id",
           "parameterNameOverride": null,
           "schema": {
@@ -28556,9 +28847,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "attempts",
           "parameterNameOverride": null,
           "schema": {
@@ -28739,9 +29032,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "response_status",
           "parameterNameOverride": null,
           "schema": {
@@ -28939,9 +29234,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "successful_at",
           "parameterNameOverride": null,
           "schema": {
@@ -29099,9 +29396,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -29259,9 +29558,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "error_code",
           "parameterNameOverride": null,
           "schema": {
@@ -29314,9 +29615,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "cli_id",
           "parameterNameOverride": null,
           "schema": {
@@ -29403,9 +29706,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "cli_user_id",
           "parameterNameOverride": null,
           "schema": {
@@ -29458,9 +29763,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "last_attempt_at",
           "parameterNameOverride": null,
           "schema": {
@@ -29618,9 +29925,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "event_data_id",
           "parameterNameOverride": null,
           "schema": {
@@ -29673,9 +29982,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "headers",
           "parameterNameOverride": null,
           "schema": {
@@ -29719,9 +30030,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "body",
           "parameterNameOverride": null,
           "schema": {
@@ -29765,9 +30078,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "parsed_query",
           "parameterNameOverride": null,
           "schema": {
@@ -29811,9 +30126,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "bulk_retry_id",
           "parameterNameOverride": null,
           "schema": {
@@ -29866,9 +30183,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "path",
           "parameterNameOverride": null,
           "schema": {
@@ -29890,9 +30209,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "include",
           "parameterNameOverride": null,
           "schema": {
@@ -29913,9 +30234,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -30022,9 +30345,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -30108,9 +30433,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -30130,9 +30457,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -30154,9 +30483,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -30178,6 +30509,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -30371,6 +30703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -30423,9 +30756,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -30476,9 +30811,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -30562,9 +30899,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -30584,9 +30923,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -30608,9 +30949,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -30632,6 +30975,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -30843,6 +31187,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "cancelled_at",
           "parameterNameOverride": null,
           "schema": {
@@ -31035,9 +31380,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "completed_at",
           "parameterNameOverride": null,
           "schema": {
@@ -31230,9 +31577,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -31425,9 +31774,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -31480,9 +31831,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "in_progress",
           "parameterNameOverride": null,
           "schema": {
@@ -31502,9 +31855,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -33117,9 +33472,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "query_partial_match",
           "parameterNameOverride": null,
           "schema": {
@@ -33139,9 +33496,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -33192,9 +33551,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -33278,9 +33639,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -33300,9 +33663,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -33324,9 +33689,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -33348,6 +33715,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -34973,6 +35341,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -36314,6 +36683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "object",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -36917,6 +37287,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -36969,9 +37340,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -37434,9 +37807,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived",
           "parameterNameOverride": null,
           "schema": {
@@ -37456,9 +37831,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived_at",
           "parameterNameOverride": null,
           "schema": {
@@ -37651,9 +38028,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -37704,9 +38083,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -37790,9 +38171,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -37812,9 +38195,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -37836,9 +38221,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -37860,6 +38247,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -39323,6 +39711,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -39375,9 +39764,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -39570,9 +39961,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived",
           "parameterNameOverride": null,
           "schema": {
@@ -39592,9 +39985,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived_at",
           "parameterNameOverride": null,
           "schema": {
@@ -39787,9 +40182,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "integration_id",
           "parameterNameOverride": null,
           "schema": {
@@ -39864,9 +40261,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -39917,9 +40316,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -40003,9 +40404,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -40025,9 +40428,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -40049,9 +40454,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -40073,6 +40480,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -41544,6 +41952,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -41596,9 +42005,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -41665,9 +42076,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -41718,9 +42131,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -41804,9 +42219,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -41826,9 +42243,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -41850,9 +42269,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -41874,6 +42295,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -43572,6 +43994,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "log_level",
           "parameterNameOverride": null,
           "schema": {
@@ -43731,9 +44154,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "webhook_id",
           "parameterNameOverride": null,
           "schema": {
@@ -43786,9 +44211,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "issue_id",
           "parameterNameOverride": null,
           "schema": {
@@ -43841,9 +44268,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "created_at",
           "parameterNameOverride": null,
           "schema": {
@@ -44001,9 +44430,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -44054,9 +44485,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -44140,9 +44573,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -44162,9 +44597,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -44186,9 +44623,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -44210,6 +44649,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -44861,6 +45301,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -44913,9 +45354,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "name",
           "parameterNameOverride": null,
           "schema": {
@@ -45108,9 +45551,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "destination_id",
           "parameterNameOverride": null,
           "schema": {
@@ -45163,9 +45608,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "source_id",
           "parameterNameOverride": null,
           "schema": {
@@ -45218,9 +45665,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived",
           "parameterNameOverride": null,
           "schema": {
@@ -45240,9 +45689,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "archived_at",
           "parameterNameOverride": null,
           "schema": {
@@ -45435,9 +45886,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "full_name",
           "parameterNameOverride": null,
           "schema": {
@@ -45459,9 +45912,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "paused_at",
           "parameterNameOverride": null,
           "schema": {
@@ -45654,9 +46109,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -45707,9 +46164,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "dir",
           "parameterNameOverride": null,
           "schema": {
@@ -45793,9 +46252,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -45815,9 +46276,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "next",
           "parameterNameOverride": null,
           "schema": {
@@ -45839,9 +46302,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "prev",
           "parameterNameOverride": null,
           "schema": {
@@ -45863,6 +46328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
