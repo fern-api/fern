@@ -8,6 +8,7 @@ import {
     ExampleWebSocketSession,
     Name,
     PathParameterLocation,
+    QueryParameterRepresentation,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
@@ -101,7 +102,12 @@ export async function convertChannel({
                               allowMultiple:
                                   typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
                                       ? queryParameter["allow-multiple"]
-                                      : false
+                                      : false,
+                              listRepresentation:
+                                  typeof queryParameter !== "string" &&
+                                  queryParameter["query-parameter-representation"] != null
+                                      ? queryParameter["query-parameter-representation"]
+                                      : QueryParameterRepresentation.Exploded
                           };
                       })
                   )

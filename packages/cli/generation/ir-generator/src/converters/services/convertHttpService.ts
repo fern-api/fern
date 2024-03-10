@@ -6,6 +6,7 @@ import {
     HttpService,
     PathParameter,
     PathParameterLocation,
+    QueryParameterRepresentation,
     ResponseErrors,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -112,7 +113,12 @@ export async function convertHttpService({
                                                   typeof queryParameter !== "string" &&
                                                   queryParameter["allow-multiple"] != null
                                                       ? queryParameter["allow-multiple"]
-                                                      : false
+                                                      : false,
+                                              listRepresentation:
+                                                  typeof queryParameter !== "string" &&
+                                                  queryParameter["query-parameter-representation"] != null
+                                                      ? queryParameter["query-parameter-representation"]
+                                                      : QueryParameterRepresentation.Exploded
                                           };
                                       }
                                   )
