@@ -48,7 +48,7 @@ async function parseMarkdown({ markdown }: { markdown: string }): Promise<Markdo
                 remarkPlugins: REMARK_PLUGINS,
                 format: "detect"
             },
-            parseFrontmatter: false
+            parseFrontmatter: true
         });
         return {
             type: "success"
