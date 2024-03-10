@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
-import { ClassReference, OneOfClassReference } from "./ClassReference";
+import { ClassReference, OneOfClassReference, StringEnumClassReference } from "./ClassReference";
 
 type InternalType =
     | Integer
@@ -18,7 +18,8 @@ type InternalType =
     | Map
     | Optional
     | Reference
-    | OneOf;
+    | OneOf
+    | StringEnum;
 
 interface Integer {
     type: "integer";
@@ -85,6 +86,11 @@ interface Reference {
 interface OneOf {
     type: "oneOf";
     memberValues: Type[];
+}
+
+interface StringEnum {
+    type: "stringEnum";
+    value: ClassReference;
 }
 
 /* A C# parameter to a method */
@@ -156,6 +162,12 @@ export class Type extends AstNode {
                     }
                     value.write(writer);
                 });
+                writer.write(">");
+                break;
+            case "stringEnum":
+                writer.addReference(StringEnumClassReference);
+                writer.write("StringEnum<");
+                this.internalType.value.write(writer);
                 writer.write(">");
                 break;
             default:
@@ -258,6 +270,13 @@ export class Type extends AstNode {
         return new this({
             type: "oneOf",
             memberValues
+        });
+    }
+
+    public static stringEnum(value: ClassReference): Type {
+        return new this({
+            type: "stringEnum",
+            value
         });
     }
 }
