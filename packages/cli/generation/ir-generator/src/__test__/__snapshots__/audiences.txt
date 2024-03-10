@@ -1256,6 +1256,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
