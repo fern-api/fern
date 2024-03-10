@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`query-parameters query-parameters parse open api 1`] = `
+{
+  "channel": [],
+  "description": null,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": null,
+      "description": "Retrieve a list of users from the system.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
+      "generatedRequestName": "GetUsersRequest",
+      "headers": [],
+      "internal": null,
+      "method": "GET",
+      "operationId": null,
+      "path": "/users",
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": null,
+          "explode": true,
+          "name": "categories",
+          "parameterNameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "GetUsersRequestCategories",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "nullable",
+            "value": {
+              "description": null,
+              "generatedName": "GetUsersRequestCategories",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "array",
+              "value": {
+                "description": null,
+                "generatedName": "GetUsersRequestCategoriesItem",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "maxLength": null,
+                  "minLength": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+          "style": "pipeDelimited",
+        },
+      ],
+      "request": null,
+      "requestNameOverride": null,
+      "response": null,
+      "sdkName": null,
+      "server": [],
+      "summary": "Get a list of users",
+      "tags": [],
+    },
+  ],
+  "errors": {
+    "500": {
+      "description": null,
+      "generatedName": "InternalServerError",
+      "nameOverride": null,
+      "schema": {
+        "generatedName": "InternalServerErrorBody",
+        "nameOverride": null,
+        "type": "unknown",
+      },
+    },
+  },
+  "globalHeaders": [],
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {},
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "User API",
+  "variables": {},
+  "webhooks": [],
+}
+`;
