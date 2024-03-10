@@ -5,7 +5,6 @@ import {
     DeclaredTypeName,
     EnumTypeDeclaration,
     IntermediateRepresentation,
-    Name,
     ObjectProperty,
     ObjectTypeDeclaration,
     Type,
@@ -13,6 +12,7 @@ import {
     TypeId,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { getNameFromIrName } from "./GeneratorUtilities";
 import { ReferenceGenerator } from "./ReferenceGenerator";
 
 export class ModelGenerator {
@@ -43,11 +43,6 @@ export class ModelGenerator {
         }
 
         this.referenceGenerator = new ReferenceGenerator(this.types);
-    }
-
-    // Field and Class names follow pascal case, so just make a utility
-    private _getNameFromIrName(name: Name): string {
-        return name.pascalCase.safeName;
     }
 
     // STOLEN FROM: ruby/TypesGenerator.ts
@@ -112,7 +107,7 @@ export class ModelGenerator {
 
     private generateEnumClass(enumTypeDeclaration: EnumTypeDeclaration, typeDeclaration: TypeDeclaration): csharp.Enum {
         const enum_ = csharp.enum_({
-            name: this._getNameFromIrName(typeDeclaration.name.name),
+            name: getNameFromIrName(typeDeclaration.name.name),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
             access: "public"
         });
@@ -130,7 +125,7 @@ export class ModelGenerator {
         typeDeclaration: TypeDeclaration
     ): csharp.Class {
         const class_ = csharp.class_({
-            name: this._getNameFromIrName(typeDeclaration.name.name),
+            name: getNameFromIrName(typeDeclaration.name.name),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
             partial: false,
             access: "public"
@@ -166,7 +161,7 @@ export class ModelGenerator {
         // 3b. If a sub-class is also an existing object (`samePropertiesAsObject`), the sub-class will extend that object
         const namespace = csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath);
         const class_ = csharp.class_({
-            name: this._getNameFromIrName(typeDeclaration.name.name),
+            name: getNameFromIrName(typeDeclaration.name.name),
             namespace,
             partial: false,
             access: "public"
@@ -183,7 +178,7 @@ export class ModelGenerator {
         baseProperties.forEach((property) => {
             baseInterface.addField(
                 csharp.field({
-                    name: this._getNameFromIrName(property.name.name),
+                    name: getNameFromIrName(property.name.name),
                     type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.valueType),
                     access: "public",
                     get: true,
@@ -198,7 +193,7 @@ export class ModelGenerator {
             .map<csharp.Class | undefined>((member) => {
                 const discriminantFieldJsonPropertyName = unionTypeDeclaration.discriminant.wireValue;
                 const discriminantField = csharp.field({
-                    name: this._getNameFromIrName(unionTypeDeclaration.discriminant.name),
+                    name: getNameFromIrName(unionTypeDeclaration.discriminant.name),
                     type: csharp.Types.string(),
                     access: "public",
                     get: true,
@@ -220,7 +215,7 @@ export class ModelGenerator {
                             return;
                         }
                         const nestedClass = csharp.class_({
-                            name: this._getNameFromIrName(objectType.name),
+                            name: getNameFromIrName(objectType.name),
                             namespace,
                             partial: false,
                             access: "public",
@@ -233,7 +228,7 @@ export class ModelGenerator {
                     },
                     singleProperty: (property) => {
                         const nestedClass = csharp.class_({
-                            name: this._getNameFromIrName(property.name.name),
+                            name: getNameFromIrName(property.name.name),
                             namespace,
                             partial: false,
                             access: "public",
@@ -242,7 +237,7 @@ export class ModelGenerator {
                         nestedClass.addField(discriminantField);
 
                         const singlePropertyField = csharp.field({
-                            name: this._getNameFromIrName(property.name.name),
+                            name: getNameFromIrName(property.name.name),
                             type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.type),
                             access: "public",
                             get: true,
@@ -254,7 +249,7 @@ export class ModelGenerator {
                     },
                     noProperties: () => {
                         const nestedClass = csharp.class_({
-                            name: this._getNameFromIrName(member.discriminantValue.name),
+                            name: getNameFromIrName(member.discriminantValue.name),
                             namespace,
                             partial: false,
                             access: "public",

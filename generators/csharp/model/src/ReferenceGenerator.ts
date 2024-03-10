@@ -9,6 +9,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { getNameFromIrName } from "./GeneratorUtilities";
 
 export class ReferenceGenerator {
     private types: Map<TypeId, TypeDeclaration>;
@@ -42,23 +43,22 @@ export class ReferenceGenerator {
     }
 
     public typeFromTypeReference(rootModule: string, typeReference: TypeReference): csharp.Type {
-        if (this.references.has(typeReference)) {
-            return this.references.get(typeReference)!;
+        const maybeReference = this.references.get(typeReference);
+        if (maybeReference != null) {
+            return maybeReference;
         }
         const type = typeReference._visit<csharp.Type>({
             container: (value: ContainerType) => this.typeFromContainerReference(rootModule, value),
             named: (value: DeclaredTypeName) => {
-                // If it's an alias resolve the reference, otherwise get the type from the reference
                 const underlyingType = this.types.get(value.typeId);
                 if (underlyingType == null) {
                     throw new Error(`Type ${value.name.pascalCase.safeName} not found`);
                 }
 
-                // TODO: For enums we want to make a new Type, to include the StringEnum<ActualEnum>
-                // situation, similar to oneOfs below
+                const objectNamespace = csharp.Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath);
                 const objectClassReference = new csharp.ClassReference({
-                    name: value.name.pascalCase.safeName,
-                    namespace: csharp.Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath)
+                    name: getNameFromIrName(value.name),
+                    namespace: objectNamespace
                 });
                 const objectReference = csharp.Type.reference(objectClassReference);
                 this.classReferences.set(value.typeId, objectClassReference);
@@ -66,11 +66,35 @@ export class ReferenceGenerator {
                 return underlyingType.shape._visit({
                     alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),
                     object: () => objectReference,
-                    enum: () => objectReference,
+                    enum: () => csharp.Type.stringEnum(objectClassReference),
                     union: (union) =>
-                        // TODO: Actually get the union types, since we'll need to create new classes like we do in Typescript
+                        // TODO: we could do a better job sharing classreferences between this and the
+                        // ultimate created class, maybe class should have a classReference as opposed to
+                        // name and namespace that we then store
                         csharp.Type.oneOf(
-                            union.types.map((member) => this.typeFromTypeReference(rootModule, member.shape))
+                            union.types
+                                .map<csharp.Type | undefined>((member) => {
+                                    const t = member.shape._visit<csharp.ClassReference | undefined>({
+                                        samePropertiesAsObject: (objectType) =>
+                                            new csharp.ClassReference({
+                                                name: getNameFromIrName(objectType.name),
+                                                namespace: objectNamespace
+                                            }),
+                                        singleProperty: (property) =>
+                                            new csharp.ClassReference({
+                                                name: getNameFromIrName(property.name.name),
+                                                namespace: objectNamespace
+                                            }),
+                                        noProperties: () =>
+                                            new csharp.ClassReference({
+                                                name: getNameFromIrName(member.discriminantValue.name),
+                                                namespace: objectNamespace
+                                            }),
+                                        _other: () => undefined
+                                    });
+                                    return t != null ? csharp.Type.reference(t) : undefined;
+                                })
+                                .filter((c): c is csharp.Type => c !== undefined)
                         ),
                     undiscriminatedUnion: (union) =>
                         csharp.Type.oneOf(
