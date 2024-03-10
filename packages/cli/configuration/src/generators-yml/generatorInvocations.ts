@@ -1,4 +1,5 @@
-import { GeneratorInvocationSchema, GeneratorName } from "@fern-api/generators-configuration";
+import { GeneratorName } from "./GeneratorName";
+import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {

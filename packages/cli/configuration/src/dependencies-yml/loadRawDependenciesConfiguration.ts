@@ -1,9 +1,9 @@
-import { validateSchema } from "@fern-api/config-management-commons";
-import { DEPENDENCIES_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { validateSchema } from "../commons/validateSchema";
+import { DEPENDENCIES_CONFIGURATION_FILENAME } from "../constants";
 import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
 
 export async function loadRawDependenciesConfiguration({

@@ -1,10 +1,10 @@
+import { TaskContext } from "@fern-api/task-context";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GeneratorName,
     GeneratorsConfigurationSchema,
     updateGeneratorGroup
-} from "@fern-api/generators-configuration";
-import { TaskContext } from "@fern-api/task-context";
+} from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
 export function addGenerator({

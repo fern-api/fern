@@ -1,4 +1,4 @@
-api: 
- slugs: 
-   - endpoint: POST /a/b/c
-     urls: /a/b/c
+export * from "./sdk";
+export * from "./sdk/api";
+export * from "./sdk/core";
+export * as Serializer from "./sdk/serialization";

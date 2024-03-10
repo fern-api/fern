@@ -1,9 +1,9 @@
-import { validateSchema } from "@fern-api/config-management-commons";
-import { PROJECT_CONFIG_FILENAME } from "@fern-api/configuration/src/constants";
-import { ProjectConfigSchema } from "@fern-api/configuration/src/schemas/ProjectConfigSchema";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
+import { validateSchema } from "../commons/validateSchema";
+import { PROJECT_CONFIG_FILENAME } from "../constants";
+import { ProjectConfigSchema } from "./schema/ProjectConfigSchema";
 
 export interface ProjectConfig {
     _absolutePath: AbsoluteFilePath;

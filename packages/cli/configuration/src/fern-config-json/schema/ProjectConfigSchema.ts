@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FernConfigJson = z.strictObject({
+export const ProjectConfigSchema = z.strictObject({
     organization: z.string(),
     version: z.string()
 });
