@@ -42,7 +42,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.459",
+    "@fern-fern/fiddle-sdk": "^0.0.461",
     "@types/pretty-ms": "^5.0.1",
     "chalk": "^5.0.1",
     "console-table-printer": "^2.12.0",

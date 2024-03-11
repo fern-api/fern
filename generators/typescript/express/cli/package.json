@@ -28,7 +28,7 @@
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "dependencies": {
-    "@fern-fern/generator-exec-sdk": "0.0.571",
+    "@fern-fern/generator-exec-sdk": "0.0.619",
     "@fern-fern/ir-sdk": "0.0.16",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",

@@ -31,7 +31,7 @@
     "@fern-api/fdr-sdk": "0.55.0-2-gd14a0f0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.459",
+    "@fern-fern/fiddle-sdk": "^0.0.461",
     "find-up": "^6.3.0",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",

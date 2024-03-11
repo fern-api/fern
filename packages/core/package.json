@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/fdr-sdk": "0.55.0-2-gd14a0f0",
     "@fern-api/venus-api-sdk": "0.0.38",
-    "@fern-fern/fiddle-sdk": "^0.0.459"
+    "@fern-fern/fiddle-sdk": "^0.0.461"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
