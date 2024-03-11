@@ -117,25 +117,40 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                     });
 
-                    // Write .mock folder if present
-                    await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
-                        cp(`${config.output.path}/.mock`, `${pathToProject}/.mock`, { recursive: true }, (err) => {
-                            if (err) {
-                                // eslint-disable-next-line no-console
-                                throw Error(`Failed to copy config to project: ${err.message}`);
-                            }
-                        });
-                        rm(`${config.output.path}/.mock`, { recursive: true }, (err) => {
-                            if (err) {
-                                // eslint-disable-next-line no-console
-                                throw Error(`Failed to delete config to project: ${err.message}`);
-                            }
-                        });
-                    });
-                    await typescriptProject.copyProjectAsZipTo({
-                        logger,
-                        destinationZip
-                    });
+                    if (config.writeUnitTests) {
+                        try {
+                            // Write .mock folder if present
+                            await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
+                                cp(
+                                    `${config.output.path}/.mock`,
+                                    `${pathToProject}/.mock`,
+                                    { recursive: true },
+                                    (err) => {
+                                        if (err) {
+                                            // eslint-disable-next-line no-console
+                                            generatorContext.logger.debug(
+                                                `Failed to copy config to project: ${err.message}`
+                                            );
+                                        }
+                                    }
+                                );
+                                rm(`${config.output.path}/.mock`, { recursive: true }, (err) => {
+                                    if (err) {
+                                        // eslint-disable-next-line no-console
+                                        generatorContext.logger.debug(
+                                            `Failed to delete config to project: ${err.message}`
+                                        );
+                                    }
+                                });
+                            });
+                            await typescriptProject.copyProjectAsZipTo({
+                                logger,
+                                destinationZip
+                            });
+                        } catch {
+                            generatorContext.logger.debug("Could not write .mock folder to project");
+                        }
+                    }
                 },
                 downloadFiles: async () => {
                     if (this.outputSourceFiles(customConfig)) {
