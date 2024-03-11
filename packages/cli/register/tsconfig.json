@@ -7,7 +7,7 @@
     { "path": "../../core" },
     { "path": "../../ir-sdk" },
     { "path": "../auth" },
-    { "path": "../config-management/commons" },
+    { "path": "../configuration" },
     { "path": "../generation/ir-generator" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }

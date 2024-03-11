@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, Examples } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FullExample,
@@ -259,6 +259,7 @@ export class ExampleTypeFactory {
             case "array": {
                 const fullExample = getFullExampleAsArray(example);
                 const itemExamples = [];
+                // If you have an example use that
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
@@ -272,17 +273,20 @@ export class ExampleTypeFactory {
                             itemExamples.push(itemExample);
                         }
                     }
+                } else {
+                    // Otherwise, generate an example
+                    const itemExample = this.buildExampleHelper({
+                        example: undefined,
+                        schema: schema.value,
+                        depth: depth + 1,
+                        visitedSchemaIds,
+                        options
+                    });
+                    if (itemExample != null) {
+                        itemExamples.push(itemExample);
+                    }
                 }
-                const itemExample = this.buildExampleHelper({
-                    example: undefined,
-                    schema: schema.value,
-                    depth: depth + 1,
-                    visitedSchemaIds,
-                    options
-                });
-                if (itemExample != null) {
-                    itemExamples.push(itemExample);
-                }
+
                 return FullExample.array(itemExamples);
             }
             case "map": {
@@ -521,7 +525,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.string(schema.example);
                 } else {
-                    return PrimitiveExample.string(options.name ?? "string");
+                    return PrimitiveExample.string(options.name ?? Examples.STRING);
                 }
             case "base64":
                 if (example != null && typeof example === "string") {
@@ -529,7 +533,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.base64(schema.example);
                 } else {
-                    return PrimitiveExample.base64("SGVsbG8gd29ybGQh");
+                    return PrimitiveExample.base64(Examples.BASE64);
                 }
             case "boolean":
                 if (example != null && typeof example === "boolean") {
@@ -537,7 +541,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.boolean(schema.example);
                 } else {
-                    return PrimitiveExample.boolean(true);
+                    return PrimitiveExample.boolean(Examples.BOOLEAN);
                 }
             case "date":
                 if (example != null && typeof example === "string") {
@@ -545,7 +549,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.date(schema.example);
                 } else {
-                    return PrimitiveExample.date("2023-01-15");
+                    return PrimitiveExample.date(Examples.DATE);
                 }
             case "datetime":
                 if (example != null && typeof example === "string") {
@@ -553,7 +557,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.datetime(schema.example);
                 } else {
-                    return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
+                    return PrimitiveExample.datetime(Examples.DATE_TIME);
                 }
             case "double":
                 if (example != null && typeof example === "number") {
@@ -561,7 +565,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.double(schema.example);
                 } else {
-                    return PrimitiveExample.double(1.1);
+                    return PrimitiveExample.double(Examples.DOUBLE);
                 }
             case "float":
                 if (example != null && typeof example === "number") {
@@ -569,7 +573,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.float(schema.example);
                 } else {
-                    return PrimitiveExample.float(1.1);
+                    return PrimitiveExample.float(Examples.FLOAT);
                 }
             case "int":
                 if (example != null && typeof example === "number") {
@@ -577,7 +581,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.int(schema.example);
                 } else {
-                    return PrimitiveExample.int(1);
+                    return PrimitiveExample.int(Examples.INT);
                 }
             case "int64":
                 if (example != null && typeof example === "number") {
@@ -585,7 +589,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.int64(schema.example);
                 } else {
-                    return PrimitiveExample.int64(1000000);
+                    return PrimitiveExample.int64(Examples.INT64);
                 }
             default:
                 assertNever(schema);

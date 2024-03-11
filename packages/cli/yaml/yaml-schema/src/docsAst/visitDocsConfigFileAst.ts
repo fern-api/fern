@@ -1,11 +1,4 @@
-import {
-    DocsConfiguration,
-    NavigationConfig,
-    NavigationItem,
-    PageConfiguration,
-    SectionConfiguration,
-    TabbedNavigationConfig
-} from "@fern-api/docs-config-sdk";
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -14,7 +7,7 @@ import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 
 export async function visitDocsConfigFileYamlAst(
-    contents: DocsConfiguration,
+    contents: docsYml.RawSchemas.DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
     absoluteFilepathToConfiguration: AbsoluteFilePath
 ): Promise<void> {
@@ -201,7 +194,7 @@ async function visitNavigation({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigation: NavigationConfig;
+    navigation: docsYml.RawSchemas.NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -241,7 +234,7 @@ async function visitNavigationItem({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigationItem: NavigationItem;
+    navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -258,7 +251,8 @@ async function visitNavigationItem({
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
-                    content: (await readFile(absoluteFilepath)).toString()
+                    content: (await readFile(absoluteFilepath)).toString(),
+                    absoluteFilepath
                 },
                 [...nodePath, "page", navigationItem.path]
             );
@@ -279,16 +273,20 @@ async function visitNavigationItem({
     }
 }
 
-function navigationItemIsPage(item: NavigationItem): item is PageConfiguration {
+function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as PageConfiguration).page != null;
+    return (item as docsYml.RawSchemas.PageConfiguration).page != null;
 }
 
-function navigationItemIsSection(item: NavigationItem): item is SectionConfiguration {
+function navigationItemIsSection(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as SectionConfiguration).section != null;
+    return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
 }
 
-function navigationConfigIsTabbed(config: NavigationConfig): config is TabbedNavigationConfig {
-    return (config as TabbedNavigationConfig)[0]?.tab != null;
+function navigationConfigIsTabbed(
+    config: docsYml.RawSchemas.NavigationConfig
+): config is docsYml.RawSchemas.TabbedNavigationConfig {
+    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
 }

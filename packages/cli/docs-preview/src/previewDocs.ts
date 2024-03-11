@@ -1,12 +1,5 @@
+import { docsYml } from "@fern-api/configuration";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
-import {
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    ParsedDocsConfiguration,
-    parseDocsConfiguration,
-    UnversionedNavigationConfiguration
-} from "@fern-api/docs-configuration";
 import {
     APIV1Read,
     convertAPIDefinitionToDb,
@@ -34,7 +27,7 @@ export async function getPreviewDocsDefinition({
     apiWorkspaces: APIWorkspace[];
     context: TaskContext;
 }): Promise<DocsV1Read.DocsDefinition> {
-    const parsedDocsConfig = await parseDocsConfiguration({
+    const parsedDocsConfig = await docsYml.parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
@@ -69,11 +62,11 @@ export async function getPreviewDocsDefinition({
 type APIDefinitionID = string;
 
 class ReferencedAPICollector {
-    private readonly apis: Record<APIDefinitionID, DocsNavigationItem.ApiSection> = {};
+    private readonly apis: Record<APIDefinitionID, docsYml.DocsNavigationItem.ApiSection> = {};
 
     constructor(private readonly apiWorkspaces: APIWorkspace[], private readonly context: TaskContext) {}
 
-    public addReferencedAPI(api: DocsNavigationItem.ApiSection): APIDefinitionID {
+    public addReferencedAPI(api: docsYml.DocsNavigationItem.ApiSection): APIDefinitionID {
         const id = uuidv4();
         this.apis[id] = api;
         return id;
@@ -122,7 +115,7 @@ async function constructWriteDocsDefinition({
     context,
     apiCollector
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.DocsDefinition> {
@@ -147,7 +140,7 @@ async function convertDocsConfiguration({
     context,
     apiCollector
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.DocsConfig> {
@@ -178,9 +171,9 @@ async function convertNavigationConfig({
     context,
     apiCollector
 }: {
-    navigationConfig: DocsNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    navigationConfig: docsYml.DocsNavigationConfiguration;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.NavigationConfig> {
@@ -253,7 +246,7 @@ async function convertNavigationConfig({
     }
 }
 
-function convertAvailability(availability: VersionAvailability): DocsV1Write.VersionAvailability {
+function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
     switch (availability) {
         case "beta":
             return DocsV1Write.VersionAvailability.Beta;
@@ -275,9 +268,9 @@ async function convertUnversionedNavigationConfig({
     context,
     apiCollector
 }: {
-    navigationConfig: UnversionedNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    navigationConfig: docsYml.UnversionedNavigationConfiguration;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     version: string | undefined;
     apiCollector: ReferencedAPICollector;
@@ -332,8 +325,8 @@ async function convertNavigationItem({
     context,
     apiCollector
 }: {
-    item: DocsNavigationItem;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    item: docsYml.DocsNavigationItem;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.NavigationItem> {

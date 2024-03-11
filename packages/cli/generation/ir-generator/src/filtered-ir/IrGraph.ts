@@ -1,4 +1,4 @@
-import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
+import { Audiences as ConfigAudiences } from "@fern-api/configuration";
 import { assertNever, noop } from "@fern-api/core-utils";
 import {
     ContainerType,

@@ -49,4 +49,12 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
     public getErrors(): Record<StatusCode, HttpError> {
         return {};
     }
+
+    public excludeSchema(_schemaId: SchemaId): void {
+        // noop
+    }
+
+    public isSchemaExcluded(_schemaId: SchemaId): boolean {
+        return false;
+    }
 }

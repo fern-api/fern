@@ -6,8 +6,7 @@ description: Use Fern's Python SDK generator and your API definition to output a
 [Source code](https://github.com/fern-api/fern/tree/main/generators/python)<br />
 **Latest version**: `0.8.0`
 
-The Python SDK generator outputs a fully functional Python
-SDK. It can publish the SDK to [the Python Package Index at PyPI.org](https://pypi.org) or to a private repository hosted by Fern.
+The Python SDK generator outputs a fully functional Python SDK. It can publish the SDK to [the Python Package Index at PyPI.org](https://pypi.org) or to a private repository hosted by Fern.
 
 ## Local
 
@@ -39,7 +38,7 @@ groups:
         version: 0.8.0
         output:
           location: pypi.buildwithfern.com
-          package-name: imdb # replace with your package name
+          package-name: petstore # replace with your package name
 ```
 </CodeBlock>
 
@@ -56,9 +55,9 @@ groups:
         version: 0.8.0
         output:
           location: pypi
-          package-name: imdb
+          package-name: petstore # replace with your package name
           token: ${PYPI_TOKEN}
         github:
-          repository: imdb/imdb-python    
+          repository: petstore/petstore-python # replace package & org
 ```
 </CodeBlock>

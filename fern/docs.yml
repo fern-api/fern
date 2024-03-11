@@ -123,9 +123,6 @@ navigation:
           - page: TypeScript Node.js SDK
             path: ./docs/pages/fern-sdks/sdk-generators/node-sdk.mdx
             slug: typescript
-          - page: TypeScript Browser SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/browser-sdk.mdx
-            slug: browser
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
             slug: python
@@ -156,18 +153,6 @@ navigation:
                 slug: fastapi
               - page: Spring
                 path: ./docs/pages/fern-sdks/other-generators/server-side/spring.mdx
-              - page: Go
-                path: ./docs/pages/fern-sdks/other-generators/server-side/go.mdx
-              - page: DotNet
-                path: ./docs/pages/fern-sdks/other-generators/server-side/dotnet.mdx
-                slug: dotnet
-              - page: Ruby on Rails
-                path: ./docs/pages/fern-sdks/other-generators/server-side/ruby-on-rails.mdx
-                slug: ruby
-              - page: Flask
-                path: ./docs/pages/fern-sdks/other-generators/server-side/flask.mdx
-              - page: Django
-                path: ./docs/pages/fern-sdks/other-generators/server-side/django.mdx
           - section: Specification
             slug: spec
             contents:

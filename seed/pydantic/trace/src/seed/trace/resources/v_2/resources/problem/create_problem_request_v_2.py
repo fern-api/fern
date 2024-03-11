@@ -35,4 +35,5 @@ class CreateProblemRequestV2(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -360,18 +360,6 @@ If `doNotHandleUnrecognizedErrors` is enabled and you throw a non-Fern error, th
 and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles
 the error and returns a response to the client.
 
-## Dependencies
-
-The generated TypeScript code has the following dependencies:
-
-- [@ungap/url-search-params](https://www.npmjs.com/package/@ungap/url-search-params)
-- [url-join](https://www.npmjs.com/package/url-join)
-- [form-data](https://www.npmjs.com/package/form-data)
-- [axios](https://www.npmjs.com/package/axios)
-- [js-base64](https://www.npmjs.com/package/js-base64)
-
-If you are packaging your code manually, make sure to include them in your `package.json`.
-
 ## Versions
 
 Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.

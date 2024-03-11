@@ -1,6 +1,6 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { keys } from "@fern-api/core-utils";
 import { dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";

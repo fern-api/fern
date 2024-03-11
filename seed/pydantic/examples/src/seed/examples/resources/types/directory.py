@@ -53,6 +53,7 @@ class Directory(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 

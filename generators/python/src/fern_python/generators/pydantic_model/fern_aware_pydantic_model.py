@@ -61,7 +61,7 @@ class FernAwarePydanticModel:
             else None,
             docstring=docstring,
             snippet=snippet,
-            forbid_extra_fields=custom_config.forbid_extra_fields,
+            extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,

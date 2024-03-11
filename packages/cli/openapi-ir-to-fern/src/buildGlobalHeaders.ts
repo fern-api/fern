@@ -1,5 +1,5 @@
+import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";

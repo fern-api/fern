@@ -1,7 +1,6 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import {
     ExampleType,
     HttpEndpoint,
@@ -13,7 +12,6 @@ import {
     Type,
     TypeId
 } from "@fern-api/ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -28,6 +26,7 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { ExampleGenerator } from "./examples/ExampleGenerator";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
@@ -50,7 +49,7 @@ export async function generateIntermediateRepresentation({
     audiences
 }: {
     workspace: FernWorkspace;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
@@ -342,9 +341,13 @@ export async function generateIntermediateRepresentation({
 
     intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
+    const intermediateRepresentationWithGeneratedExamples = new ExampleGenerator(
+        intermediateRepresentation
+    ).enrichWithExamples();
+
     const filteredIr = !irGraph.hasNoAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
-        intermediateRepresentation,
+        intermediateRepresentationWithGeneratedExamples,
         filteredIr
     );
 

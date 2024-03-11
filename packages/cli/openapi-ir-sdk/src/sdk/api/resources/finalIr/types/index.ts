@@ -24,7 +24,7 @@ export * from "./PathParameter";
 export * from "./QueryParameter";
 export * from "./Header";
 export * from "./Request";
-export * from "./OctetStremRequest";
+export * from "./OctetStreamRequest";
 export * from "./JsonRequest";
 export * from "./MultipartRequest";
 export * from "./MultipartRequestProperty";

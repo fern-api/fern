@@ -285,6 +285,17 @@ export function convertSchemaObject(
             groupName
         });
     }
+    if (schema === "float") {
+        return convertNumber({
+            nameOverride,
+            generatedName,
+            format: "float",
+            description,
+            wrapAsNullable,
+            example: getExampleAsNumber(schema),
+            groupName
+        });
+    }
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({

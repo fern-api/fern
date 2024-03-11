@@ -1,4 +1,4 @@
-import { GeneratorName } from "@fern-api/generators-configuration";
+import { GeneratorName } from "@fern-api/configuration";
 import { commons } from "@fern-api/ir-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";

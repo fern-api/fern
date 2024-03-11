@@ -1,6 +1,6 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -19,7 +19,7 @@ export declare namespace RemoteTaskHandler {
         job: FernFiddle.remoteGen.CreateJobResponse;
         taskId: FernFiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: InteractiveTaskContext;
-        generatorInvocation: GeneratorInvocation;
+        generatorInvocation: generatorsYml.GeneratorInvocation;
     }
     export interface Response {
         createdSnippets: boolean;
@@ -28,7 +28,7 @@ export declare namespace RemoteTaskHandler {
 
 export class RemoteTaskHandler {
     private context: InteractiveTaskContext;
-    private generatorInvocation: GeneratorInvocation;
+    private generatorInvocation: generatorsYml.GeneratorInvocation;
     private lengthOfLastLogs = 0;
 
     constructor({ interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {

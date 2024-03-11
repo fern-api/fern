@@ -15,6 +15,7 @@ generators/**/build
 generators/**/lib
 generators/**/dist
 generators/**/tsconfig*tsbuildinfo
+seed/**/tsconfig*tsbuildinfo
 generators/**/out
 
 # don't ignore the ruby lib within the playground
