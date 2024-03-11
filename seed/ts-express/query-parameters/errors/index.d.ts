@@ -1,1 +1,0 @@
-export { SeedQueryParametersError } from "./SeedQueryParametersError";

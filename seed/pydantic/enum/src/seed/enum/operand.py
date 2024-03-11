@@ -13,7 +13,7 @@ class Operand(str, enum.Enum):
     ---
     from seed.enum import Operand
 
-    Operand.
+    Operand.GREATER_THAN
     """
 
     GREATER_THAN = ">"

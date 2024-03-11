@@ -272,17 +272,19 @@ export class ExampleTypeFactory {
                             itemExamples.push(itemExample);
                         }
                     }
+                } else {
+                    const itemExample = this.buildExampleHelper({
+                        example: undefined,
+                        schema: schema.value,
+                        depth: depth + 1,
+                        visitedSchemaIds,
+                        options
+                    });
+                    if (itemExample != null) {
+                        itemExamples.push(itemExample);
+                    }
                 }
-                const itemExample = this.buildExampleHelper({
-                    example: undefined,
-                    schema: schema.value,
-                    depth: depth + 1,
-                    visitedSchemaIds,
-                    options
-                });
-                if (itemExample != null) {
-                    itemExamples.push(itemExample);
-                }
+
                 return FullExample.array(itemExamples);
             }
             case "map": {

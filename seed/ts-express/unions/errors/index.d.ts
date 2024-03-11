@@ -1,1 +1,0 @@
-export { SeedUnionsError } from "./SeedUnionsError";

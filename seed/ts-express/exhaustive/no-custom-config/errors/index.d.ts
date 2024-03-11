@@ -1,1 +1,0 @@
-export { SeedExhaustiveError } from "./SeedExhaustiveError";

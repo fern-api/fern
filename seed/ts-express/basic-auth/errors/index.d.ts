@@ -1,1 +1,0 @@
-export { SeedBasicAuthError } from "./SeedBasicAuthError";

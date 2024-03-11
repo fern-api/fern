@@ -1,0 +1,8 @@
+name: bearer-token-environment-variable
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: apiKey
+      env: COURIER_API_KEY
