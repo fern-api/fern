@@ -1,5 +1,5 @@
 FROM mwalbeck/python-poetry:1.7-3.11
 
-RUN apt update && apt upgrade -y
+RUN apt update
 RUN apt install nodejs npm -y
 RUN npm install -g fern-api
