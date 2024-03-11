@@ -97,10 +97,10 @@ jobs:
           echo "$(yarn seed:local test $workspaces --parallel 20)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Commit seed changes
-        uses: EndBug/add-and-commit@v9
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          add: "seed"
+          commit_message: Seed Changes
+          add_options: '-A'
 
       - name: Comment seed output
         uses: thollander/actions-comment-pull-request@v2.4.3
@@ -108,5 +108,8 @@ jobs:
           message: |
             ## :seedling: Seed Ran :runner:
             <details><summary>Run output...</summary>
+              ```bash
+              
               ${{ steps.run_tests.outputs.seed_output }}
+              ```
             </details>
