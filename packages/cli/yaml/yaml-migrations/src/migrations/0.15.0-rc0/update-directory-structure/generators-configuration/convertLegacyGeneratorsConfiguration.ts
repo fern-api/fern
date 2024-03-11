@@ -1,12 +1,12 @@
-import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LegacyGenerators, MigratedGenerators } from ".";
+import { DocsURL } from "../docs-config";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "./legacy/GeneratorsConfigurationSchema";
 
 export interface ConvertedGeneratorsConfiguration {
     value: MigratedGenerators.GeneratorsConfigurationSchema;
-    docsURLs: docsYml.RawSchemas.DocsInstances[];
+    docsURLs: DocsURL[];
 }
 
 export type PathModificationStrategy = typeof PathModificationStrategy[keyof typeof PathModificationStrategy];
@@ -22,7 +22,7 @@ export function convertLegacyGeneratorsConfiguration({
     generatorsConfiguration: LegacyGenerators.GeneratorsConfigurationSchema;
     pathModificationStrategy: PathModificationStrategy;
 }): ConvertedGeneratorsConfiguration {
-    const docsURLs: docsYml.RawSchemas.DocsInstances[] = [];
+    const docsURLs: DocsURL[] = [];
     const convertedGeneratorsConfiguration: MigratedGenerators.GeneratorsConfigurationSchema = {
         "default-group": generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
         groups: Object.fromEntries(
