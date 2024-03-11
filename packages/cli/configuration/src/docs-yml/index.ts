@@ -2,3 +2,4 @@ export { getColorFromRawConfig, getColorType } from "./convertColorsConfiguratio
 export { getReferencedApiSections } from "./getReferencedApiSections";
 export * from "./ParsedDocsConfiguration";
 export { parseDocsConfiguration } from "./parseDocsConfiguration";
+export * as RawSchemas from "./schemas";

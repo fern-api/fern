@@ -1,6 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import {
     APIV1Read,
     convertAPIDefinitionToDb,
@@ -173,7 +172,7 @@ async function convertNavigationConfig({
     apiCollector
 }: {
     navigationConfig: docsYml.DocsNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     apiCollector: ReferencedAPICollector;
@@ -247,7 +246,7 @@ async function convertNavigationConfig({
     }
 }
 
-function convertAvailability(availability: VersionAvailability): DocsV1Write.VersionAvailability {
+function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
     switch (availability) {
         case "beta":
             return DocsV1Write.VersionAvailability.Beta;
@@ -270,7 +269,7 @@ async function convertUnversionedNavigationConfig({
     apiCollector
 }: {
     navigationConfig: docsYml.UnversionedNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     context: TaskContext;
     version: string | undefined;

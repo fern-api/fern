@@ -30,7 +30,6 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-config-sdk": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/openapi-parser": "workspace:*",

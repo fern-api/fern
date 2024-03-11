@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../commons/fs-utils" },
     { "path": "../../core" },
-    { "path": "../../docs-config-sdk" },
     { "path": "../auth" },
     { "path": "../configuration" },
     { "path": "../login" },

@@ -2,7 +2,6 @@ import { FernToken } from "@fern-api/auth";
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
-import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
@@ -39,8 +38,8 @@ export async function publishDocs({
     version: string | undefined;
     preview: boolean;
     // TODO: implement audience support in generateIR
-    audiences: FernDocsConfig.AudiencesConfig | undefined;
-    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
+    audiences: docsYml.RawSchemas.FernDocsConfig.AudiencesConfig | undefined;
+    editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -199,7 +198,7 @@ async function constructRegisterDocsRequest({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
+    editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
     const convertedDocsConfiguration = await convertDocsConfiguration({
         parsedDocsConfig,
@@ -231,7 +230,7 @@ async function constructRegisterDocsRequest({
 }
 
 function createEditThisPageUrl(
-    editThisPage: FernDocsConfig.EditThisPageConfig | undefined,
+    editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
 ): string | undefined {
     if (editThisPage?.github == null) {
@@ -326,7 +325,7 @@ async function convertNavigationConfig({
     version
 }: {
     navigationConfig: docsYml.DocsNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -433,7 +432,7 @@ async function convertNavigationConfig({
     };
 }
 
-function convertAvailability(availability: VersionAvailability): DocsV1Write.VersionAvailability {
+function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
     switch (availability) {
         case "beta":
             return DocsV1Write.VersionAvailability.Beta;
@@ -464,7 +463,7 @@ async function convertUnversionedNavigationConfig({
     version
 }: {
     navigationConfig: docsYml.UnversionedNavigationConfiguration;
-    tabs?: Record<string, TabConfig>;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -897,7 +896,7 @@ async function convertNavigationItem({
 function convertDocsSnippetsConfigurationToFdr({
     snippetsConfiguration
 }: {
-    snippetsConfiguration: SnippetsConfiguration;
+    snippetsConfiguration: docsYml.RawSchemas.SnippetsConfiguration;
 }): APIV1Write.SnippetsConfig {
     return {
         pythonSdk:

@@ -1,6 +1,6 @@
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration/src/constants";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
+import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "./constants";
 
 export async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> {
     const fernDirectoryStr = await findUp(FERN_DIRECTORY, { type: "directory" });

@@ -30,7 +30,6 @@
     "@fern-api/auth": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
-    "@fern-api/docs-config-sdk": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/task-context": "workspace:*",

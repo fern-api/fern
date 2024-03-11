@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/docs-config-sdk": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

@@ -1,5 +1,4 @@
-import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
-import { DocsConfiguration } from "@fern-api/docs-config-sdk";
+import { dependenciesYml, docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { ParsedFernFile } from "./FernFile";
@@ -11,7 +10,7 @@ export interface DocsWorkspace {
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
-    config: DocsConfiguration;
+    config: docsYml.RawSchemas.DocsConfiguration;
 }
 
 export type APIWorkspace = FernWorkspace | OSSWorkspace;
