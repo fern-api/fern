@@ -53,13 +53,15 @@ jobs:
           node-version: 18
           cache: "yarn"
 
-      - name: Install Seed
-        env:
-          FORCE_COLOR: "2"
-        run: npm install -g @fern-api/seed-cli
-
       - name: Yarn Install
         run: yarn install
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
 
       - name: Seed Test
         id: run_tests
