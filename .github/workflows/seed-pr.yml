@@ -91,7 +91,9 @@ jobs:
             fi
           fi
 
-          echo "SEED_OUTPUT=$(yarn seed:local test $workspaces --parallel 20)" >> $GITHUB_OUTPUT
+          echo "seed_output<<EOF" >> $GITHUB_ENV
+          echo "$(yarn seed:local test $workspaces --parallel 20)" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Commit seed changes
         uses: EndBug/add-and-commit@v9
@@ -104,5 +106,5 @@ jobs:
           message: |
             ## :seedling: Seed Ran :runner:
             <details><summary>Run output...</summary>
-              ${{ steps.run_tests.outputs.SEED_OUTPUT }}
+              ${{ steps.run_tests.outputs.seed_output }}
             </details>
