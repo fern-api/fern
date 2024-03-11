@@ -3284,6 +3284,7 @@ __metadata:
     "@types/lodash-es": ^4.17.9
     "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
+    "@types/tar": ^6.1.7
     "@types/terminal-link": ^1.2.0
     axios: ^0.28.0
     chalk: ^5.0.1
@@ -3298,6 +3299,7 @@ __metadata:
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    tar: ^6.2.0
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
