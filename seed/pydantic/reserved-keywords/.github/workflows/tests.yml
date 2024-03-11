@@ -38,5 +38,4 @@ jobs:
 
       - name: Test
         run: |
-            # Run tests
-            fern test --command "poetry run pytest -rP ."
+            $fern test --command "poetry run pytest -rP ."
