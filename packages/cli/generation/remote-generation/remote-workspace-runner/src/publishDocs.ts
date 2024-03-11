@@ -2,6 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
+import { getReferencedMarkdownFiles } from "@fern-api/docs-validator";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
@@ -10,6 +11,7 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
+import matter from "gray-matter";
 import { imageSize } from "image-size";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
@@ -200,6 +202,13 @@ async function constructRegisterDocsRequest({
     version: string | undefined;
     editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
+    const fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }> = Object.fromEntries(
+        Object.entries(parsedDocsConfig.pages).map(([pageId, pageContent]) => {
+            const frontmatter = matter(pageContent);
+            const fullSlug = frontmatter.data.slug;
+            return [pageId, { fullSlug }];
+        })
+    );
     const convertedDocsConfiguration = await convertDocsConfiguration({
         parsedDocsConfig,
         organization,
@@ -207,23 +216,44 @@ async function constructRegisterDocsRequest({
         context,
         token,
         uploadUrls,
-        version
+        version,
+        fullSlugs
     });
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {
+        ...entries(parsedDocsConfig.pages).reduce(
+            (pages, [pageFilepath, pageContents]) => ({
+                ...pages,
+                [pageFilepath]: {
+                    markdown: pageContents,
+                    editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
+                }
+            }),
+            {}
+        ),
+        ...convertedDocsConfiguration.pages
+    };
+    pages = Object.fromEntries(
+        Object.entries(pages).map(([pageId, pageContent]) => {
+            const slug = fullSlugs[pageId]?.fullSlug;
+            const references = getReferencedMarkdownFiles({
+                content: pageContent.markdown,
+                absoluteFilepath: AbsoluteFilePath.of(pageId)
+            });
+            let markdown = pageContent.markdown;
+            for (const reference of references) {
+                const referenceSlug = fullSlugs[reference.absolutePath]?.fullSlug;
+                if (referenceSlug == null) {
+                    context.logger.error(`${reference.path} has no slug defined but is referenced by ${pageId}.`);
+                    continue;
+                }
+                markdown = markdown.replace(reference.path, referenceSlug);
+            }
+            return [pageId, { markdown, editThisPageUrl: pageContent.editThisPageUrl }];
+        })
+    );
     return {
         docsDefinition: {
-            pages: {
-                ...entries(parsedDocsConfig.pages).reduce(
-                    (pages, [pageFilepath, pageContents]) => ({
-                        ...pages,
-                        [pageFilepath]: {
-                            markdown: pageContents,
-                            editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
-                        }
-                    }),
-                    {}
-                ),
-                ...convertedDocsConfiguration.pages
-            },
+            pages,
             config: convertedDocsConfiguration.config
         }
     };
@@ -254,7 +284,8 @@ async function convertDocsConfiguration({
     context,
     token,
     uploadUrls,
-    version
+    version,
+    fullSlugs
 }: {
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
@@ -263,6 +294,7 @@ async function convertDocsConfiguration({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
 }): Promise<ConvertedDocsConfiguration> {
     const convertedNavigation = await convertNavigationConfig({
         navigationConfig: parsedDocsConfig.navigation,
@@ -272,7 +304,8 @@ async function convertDocsConfiguration({
         fernWorkspaces,
         context,
         token,
-        version
+        version,
+        fullSlugs
     });
     const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
         title: parsedDocsConfig.title,
@@ -295,7 +328,8 @@ async function convertDocsConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
             parsedDocsConfig,
             uploadUrls,
-            context
+            context,
+            fullSlugs
         }),
         layout: parsedDocsConfig.layout,
         css: parsedDocsConfig.css,
@@ -322,7 +356,8 @@ async function convertNavigationConfig({
     fernWorkspaces,
     context,
     token,
-    version
+    version,
+    fullSlugs
 }: {
     navigationConfig: docsYml.DocsNavigationConfiguration;
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
@@ -332,6 +367,7 @@ async function convertNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
 }): Promise<ConvertedNavigationConfig> {
     let config: DocsV1Write.NavigationConfig;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -346,7 +382,8 @@ async function convertNavigationConfig({
                         fernWorkspaces,
                         context,
                         token,
-                        version
+                        version,
+                        fullSlugs
                     })
                 )
             );
@@ -378,7 +415,8 @@ async function convertNavigationConfig({
                                     fernWorkspaces,
                                     context,
                                     token,
-                                    version
+                                    version,
+                                    fullSlugs
                                 })
                             )
                         );
@@ -403,7 +441,8 @@ async function convertNavigationConfig({
                                 fernWorkspaces,
                                 context,
                                 token,
-                                version: version.version
+                                version: version.version,
+                                fullSlugs
                             });
                             pages = {
                                 ...pages,
@@ -460,7 +499,8 @@ async function convertUnversionedNavigationConfig({
     fernWorkspaces,
     context,
     token,
-    version
+    version,
+    fullSlugs
 }: {
     navigationConfig: docsYml.UnversionedNavigationConfiguration;
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
@@ -470,6 +510,7 @@ async function convertUnversionedNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
 }): Promise<ConvertedUnversionedNavigationConfig> {
     let config: DocsV1Write.UnversionedNavigationConfig;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -484,7 +525,8 @@ async function convertUnversionedNavigationConfig({
                         fernWorkspaces,
                         context,
                         token,
-                        version
+                        version,
+                        fullSlugs
                     })
                 )
             );
@@ -516,7 +558,8 @@ async function convertUnversionedNavigationConfig({
                                     fernWorkspaces,
                                     context,
                                     token,
-                                    version
+                                    version,
+                                    fullSlugs
                                 })
                             )
                         );
@@ -550,12 +593,14 @@ function convertDocsTypographyConfiguration({
     typographyConfiguration,
     parsedDocsConfig,
     uploadUrls,
-    context
+    context,
+    fullSlugs
 }: {
     typographyConfiguration?: docsYml.TypographyConfig;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
 }): DocsV1Write.DocsTypographyConfigV2 | undefined {
     if (typographyConfiguration == null) {
         return;
@@ -781,7 +826,8 @@ async function convertNavigationItem({
     fernWorkspaces,
     context,
     token,
-    version
+    version,
+    fullSlugs
 }: {
     item: docsYml.DocsNavigationItem;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
@@ -790,6 +836,7 @@ async function convertNavigationItem({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
 }): Promise<ConvertedNavigationItem> {
     let convertedItem: DocsV1Write.NavigationItem;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -799,7 +846,8 @@ async function convertNavigationItem({
                 type: "page",
                 title: item.title,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
-                urlSlugOverride: item.slug
+                urlSlugOverride: item.slug,
+                fullSlug: fullSlugs[item.absolutePath]?.fullSlug?.split("/")
             };
             break;
         }
@@ -813,7 +861,8 @@ async function convertNavigationItem({
                         fernWorkspaces,
                         context,
                         token,
-                        version
+                        version,
+                        fullSlugs
                     })
                 )
             );

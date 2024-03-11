@@ -31,7 +31,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.54.1-1-g293e7bf",
+    "@fern-api/fdr-sdk": "0.55.0-2-gd14a0f0",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",

@@ -35,7 +35,8 @@
     "@types/tinycolor2": "^1.4.6",
     "next-mdx-remote": "^4.4.1",
     "remark-gfm": "^3.0.1",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
