@@ -4396,7 +4396,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/jsonwebtoken", "npm:9.0.5"],\
+            ["@types/jsonwebtoken", "npm:9.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -8610,10 +8610,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:9.0.5", {\
-          "packageLocation": "./.yarn/cache/@types-jsonwebtoken-npm-9.0.5-523ec98552-07ab6fee60.zip/node_modules/@types/jsonwebtoken/",\
+        ["npm:9.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-jsonwebtoken-npm-9.0.6-fd96c11a58-a568e7cb1c.zip/node_modules/@types/jsonwebtoken/",\
           "packageDependencies": [\
-            ["@types/jsonwebtoken", "npm:9.0.5"],\
+            ["@types/jsonwebtoken", "npm:9.0.6"],\
             ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
