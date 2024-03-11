@@ -289,7 +289,7 @@ export function convertSchemaObject(
         return convertNumber({
             nameOverride,
             generatedName,
-            format: schema,
+            format: "float",
             description,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
