@@ -1,6 +1,5 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -63,7 +62,7 @@ export async function testWorkspaceFixtures({
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
     scripts: ScriptConfig[] | undefined;
@@ -211,7 +210,7 @@ export async function acquireLocksAndRunTest({
     lock: Semaphore;
     irVersion: string | undefined;
     outputVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
@@ -273,7 +272,7 @@ async function testWithWriteToDisk({
     fixture: string;
     irVersion: string | undefined;
     outputVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
     selectAudiences?: string[];

@@ -1,19 +1,8 @@
 import { FernToken } from "@fern-api/auth";
+import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
 import { FernDocsConfig, SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-api/docs-config-sdk";
-import {
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    FontConfig,
-    ImageReference,
-    JavascriptConfig,
-    ParsedDocsConfiguration,
-    parseDocsConfiguration,
-    TypographyConfig,
-    UnversionedNavigationConfiguration,
-    WithoutQuestionMarks
-} from "@fern-api/docs-configuration";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
@@ -56,7 +45,7 @@ export async function publishDocs({
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
 
-    const parsedDocsConfig = await parseDocsConfiguration({
+    const parsedDocsConfig = await docsYml.parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
@@ -203,7 +192,7 @@ async function constructRegisterDocsRequest({
     version,
     editThisPage
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
@@ -268,7 +257,7 @@ async function convertDocsConfiguration({
     uploadUrls,
     version
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
@@ -336,9 +325,9 @@ async function convertNavigationConfig({
     token,
     version
 }: {
-    navigationConfig: DocsNavigationConfiguration;
+    navigationConfig: docsYml.DocsNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
@@ -474,9 +463,9 @@ async function convertUnversionedNavigationConfig({
     token,
     version
 }: {
-    navigationConfig: UnversionedNavigationConfiguration;
+    navigationConfig: docsYml.UnversionedNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
@@ -564,8 +553,8 @@ function convertDocsTypographyConfiguration({
     uploadUrls,
     context
 }: {
-    typographyConfiguration?: TypographyConfig;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    typographyConfiguration?: docsYml.TypographyConfig;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
 }): DocsV1Write.DocsTypographyConfigV2 | undefined {
@@ -598,9 +587,9 @@ function convertDocsTypographyConfiguration({
 }
 
 function convertJavascriptConfiguration(
-    jsConfiguration: JavascriptConfig | undefined,
+    jsConfiguration: docsYml.JavascriptConfig | undefined,
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>,
-    parsedDocsConfig: ParsedDocsConfiguration
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration
 ): DocsV1Write.JsConfig | undefined {
     if (jsConfiguration == null) {
         return;
@@ -629,8 +618,8 @@ function convertFont({
     context,
     label
 }: {
-    font: FontConfig | undefined;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    font: docsYml.FontConfig | undefined;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
     label: string;
@@ -676,7 +665,7 @@ function convertColorConfigImageReferences({
     uploadUrls,
     context
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
 }): DocsV1Write.ColorsConfigV3 | undefined {
@@ -735,7 +724,7 @@ function convertLogoAndBackgroundImage({
     context,
     theme
 }: {
-    parsedDocsConfig: ParsedDocsConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
     theme: "dark" | "light";
@@ -765,8 +754,8 @@ function convertImageReference({
     uploadUrls,
     context
 }: {
-    imageReference: ImageReference | undefined;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    imageReference: docsYml.ImageReference | undefined;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
 }): DocsV1Write.FileId | undefined {
@@ -795,8 +784,8 @@ async function convertNavigationItem({
     token,
     version
 }: {
-    item: DocsNavigationItem;
-    parsedDocsConfig: ParsedDocsConfiguration;
+    item: docsYml.DocsNavigationItem;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
@@ -942,7 +931,7 @@ function getFernWorkspaceForApiSection({
     apiSection,
     fernWorkspaces
 }: {
-    apiSection: DocsNavigationItem.ApiSection;
+    apiSection: docsYml.DocsNavigationItem.ApiSection;
     fernWorkspaces: FernWorkspace[];
 }): FernWorkspace {
     if (fernWorkspaces.length === 1 && fernWorkspaces[0] != null) {
@@ -986,7 +975,7 @@ interface AbsoluteImageFilePath {
 }
 
 async function getImageFilepathsToUpload(
-    parsedDocsConfig: ParsedDocsConfiguration
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration
 ): Promise<[AbsoluteImageFilePath[], AbsoluteFilePath[]]> {
     const filepaths: AbsoluteFilePath[] = [];
 
@@ -1037,7 +1026,7 @@ async function getImageFilepathsToUpload(
     return [imagesWithSize, imagesWithoutSize];
 }
 
-function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): AbsoluteFilePath[] {
+function getFilepathsToUpload(parsedDocsConfig: docsYml.ParsedDocsConfiguration): AbsoluteFilePath[] {
     const filepaths: AbsoluteFilePath[] = [];
 
     const typographyConfiguration = parsedDocsConfig.typography;
@@ -1061,7 +1050,10 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
     return filepaths;
 }
 
-function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsedDocsConfig: ParsedDocsConfiguration) {
+function convertAbsoluteFilepathToFdrFilepath(
+    filepath: AbsoluteFilePath,
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration
+) {
     return relative(dirname(parsedDocsConfig.absoluteFilepath), filepath);
 }
 

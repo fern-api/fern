@@ -1,4 +1,5 @@
-export { DEFAULT_GROUP_NAME } from "./constants";
+export { DEFAULT_GROUP_NAME } from "../constants";
+export { addGenerator } from "./addGenerator";
 export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,

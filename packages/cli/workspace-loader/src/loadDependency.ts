@@ -1,11 +1,6 @@
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
-import {
-    DependenciesConfiguration,
-    Dependency,
-    LocalApiDependency,
-    VersionedDependency
-} from "@fern-api/dependencies-configuration";
+import { dependenciesYml} from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -47,7 +42,7 @@ export async function loadDependency({
     cliVersion
 }: {
     dependencyName: string;
-    dependenciesConfiguration: DependenciesConfiguration;
+    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
@@ -103,7 +98,7 @@ async function validateLocalDependencyAndGetDefinition({
     context,
     cliVersion
 }: {
-    dependency: LocalApiDependency;
+    dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
@@ -133,7 +128,7 @@ async function validateVersionedDependencyAndGetDefinition({
     context,
     cliVersion
 }: {
-    dependency: VersionedDependency;
+    dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
@@ -313,7 +308,7 @@ async function downloadDependency({
     await tar.extract({ file: outputTarPath, cwd: absolutePathToLocalOutput });
 }
 
-function stringifyDependency(dependency: Dependency): string {
+function stringifyDependency(dependency: dependenciesYml.Dependency): string {
     switch (dependency.type) {
         case "version":
             return `@${dependency.organization}/${dependency.apiName}`;

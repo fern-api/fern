@@ -1,6 +1,6 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
@@ -23,7 +23,7 @@ export async function generateIrForWorkspaces({
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
     smartCasing: boolean;
@@ -68,7 +68,7 @@ async function getIntermediateRepresentation({
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;

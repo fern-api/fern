@@ -1,13 +1,14 @@
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { visitDocsConfigFileYamlAst } from "@fern-api/yaml-schema";
 import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules";
 import { getAllRules } from "./getAllRules";
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
-async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Logger): Promise<ValidationViolation[]> {
+
+export async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), logger });
 }
 

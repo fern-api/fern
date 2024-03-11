@@ -1,18 +1,18 @@
 import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
+import {
+    FERN_DIRECTORY,
+    PROJECT_CONFIG_FILENAME,
+    fernConfigJson
+} from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import {
-    FERN_DIRECTORY,
-    loadProjectConfig,
-    ProjectConfigSchema,
-    PROJECT_CONFIG_FILENAME
-} from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
-async function createFernDirectoryAndWorkspace({
+
+export async function createFernDirectoryAndWorkspace({
     organization,
     taskContext,
     versionOfCli
@@ -57,7 +57,7 @@ async function createFernDirectoryAndWorkspace({
             versionOfCli
         });
     } else {
-        const projectConfig = await loadProjectConfig({ directory: pathToFernDirectory, context: taskContext });
+        const projectConfig = await fernConfigJson.loadProjectConfig({ directory: pathToFernDirectory, context: taskContext });
         organization = projectConfig.organization;
     }
 
@@ -76,7 +76,7 @@ async function writeProjectConfig({
     filepath: AbsoluteFilePath;
     versionOfCli: string;
 }): Promise<void> {
-    const projectConfig: ProjectConfigSchema = {
+    const projectConfig: fernConfigJson.ProjectConfigSchema = {
         organization,
         version: versionOfCli
     };

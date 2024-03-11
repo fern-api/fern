@@ -1,7 +1,6 @@
-import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
+import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
 import { DocsConfiguration } from "@fern-api/docs-config-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { ParsedFernFile } from "./FernFile";
 
@@ -27,7 +26,7 @@ export interface OSSWorkspace {
     name: string;
     specs: Spec[];
     changelog: APIChangelog | undefined;
-    generatorsConfiguration: GeneratorsConfiguration | undefined;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
 }
 
 export interface Spec {
@@ -59,8 +58,8 @@ export interface FernWorkspace {
     name: string;
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration | undefined;
-    dependenciesConfiguration: DependenciesConfiguration;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     definition: FernDefinition;
     changelog: APIChangelog | undefined;
 }

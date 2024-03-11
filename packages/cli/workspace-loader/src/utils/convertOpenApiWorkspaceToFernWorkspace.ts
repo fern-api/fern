@@ -1,12 +1,13 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
-async function convertToFernWorkspace(openapiWorkspace: OSSWorkspace, context: TaskContext): Promise<FernWorkspace> {
+
+export async function convertToFernWorkspace(openapiWorkspace: OSSWorkspace, context: TaskContext): Promise<FernWorkspace> {
     const openApiIr = await parse({
         workspace: openapiWorkspace,
         taskContext: context

@@ -1,12 +1,12 @@
 import { FernToken } from "@fern-api/auth";
-import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
-    snippetsProducedBy: GeneratorInvocation[];
+    snippetsProducedBy: generatorsYml.GeneratorInvocation[];
 }
 
 export async function runRemoteGenerationForAPIWorkspace({
@@ -22,7 +22,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
-    generatorGroup: GeneratorGroup;
+    generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -34,7 +34,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     }
 
     const interactiveTasks: Promise<boolean>[] = [];
-    const snippetsProducedBy: GeneratorInvocation[] = [];
+    const snippetsProducedBy: generatorsYml.GeneratorInvocation[] = [];
 
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>

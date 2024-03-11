@@ -1,5 +1,5 @@
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import {
@@ -13,7 +13,8 @@ import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-async function writeDefinitionForWorkspaces({
+
+export async function writeDefinitionForWorkspaces({
     project,
     cliContext
 }: {

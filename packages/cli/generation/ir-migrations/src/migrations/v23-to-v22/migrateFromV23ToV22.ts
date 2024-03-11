@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import {

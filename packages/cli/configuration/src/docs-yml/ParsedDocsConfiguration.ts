@@ -1,11 +1,8 @@
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
-
-export declare type WithoutQuestionMarks<T> = {
-    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
-};
 
 export interface ParsedDocsConfiguration {
     absoluteFilepath: AbsoluteFilePath;

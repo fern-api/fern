@@ -1,7 +1,6 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import {
     ExampleType,
     HttpEndpoint,
@@ -13,7 +12,6 @@ import {
     Type,
     TypeId
 } from "@fern-api/ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -51,7 +49,7 @@ export async function generateIntermediateRepresentation({
     audiences
 }: {
     workspace: FernWorkspace;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;

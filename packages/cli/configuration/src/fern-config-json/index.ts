@@ -1,2 +1,2 @@
-export { loadProjectConfig } from "./loadProjectConfig";
+export * from "./loadProjectConfig";
 export { ProjectConfigSchema } from "./schema/ProjectConfigSchema";

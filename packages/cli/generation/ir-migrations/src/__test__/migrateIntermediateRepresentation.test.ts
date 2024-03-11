@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorName } from "@fern-api/generators-configuration";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";

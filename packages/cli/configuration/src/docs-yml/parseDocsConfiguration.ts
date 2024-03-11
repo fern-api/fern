@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages } from "./getAllPages";
 import {
@@ -18,9 +18,9 @@ import {
     TabbedDocsNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
-    VersionInfo,
-    WithoutQuestionMarks
+    VersionInfo
 } from "./ParsedDocsConfiguration";
+import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
