@@ -1,0 +1,107 @@
+name: seed run
+
+on:
+  pull_request:
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.filter.outputs.changes }}
+      seed: ${{ steps.filter.outputs.seed }}
+      ruby: ${{ steps.filter.outputs.ruby }}
+      openapi: ${{ steps.filter.outputs.openapi }}
+      python: ${{ steps.filter.outputs.python }}
+      postman: ${{ steps.filter.outputs.postman }}
+      java: ${{ steps.filter.outputs.java }}
+      typescript: ${{ steps.filter.outputs.typescript }}
+      go: ${{ steps.filter.outputs.go }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            seed: 
+              - '.github/workflows/seed.yml'
+              - 'packages/seed/**'
+              - 'test-definitions/**'
+            ruby: 'generators/ruby/**'
+            openapi: 'generators/openapi/**'
+            python: 'generators/python/**'
+            postman: 'generators/postman/**'
+            java: 'generators/java/**'
+            typescript: 'generators/typescript/**'
+            go: 'generators/go/**'
+
+  run-and-commit-seed:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains( github.event.pull_request.labels.*.name, 'run seed') && needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install Seed
+        env:
+          FORCE_COLOR: "2"
+        run: npm install -g @fern-api/seed-cli
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Seed Test
+        id: run_tests
+        run: |
+          workspaces="--workspace "
+          if [ ${{needs.changes.outputs.seed}} == 'true' ]; then
+            workspaces=""
+          else
+            if [ ${{needs.changes.outputs.ruby}} == 'true' ]; then
+              workspaces+="ruby-sdk ruby-model "
+            fi
+            if [ ${{needs.changes.outputs.openapi}} == 'true' ]; then
+              workspaces+="openapi "
+            fi
+            if [ ${{needs.changes.outputs.python}} == 'true' ]; then
+              workspaces+="python pydantic fastapi "
+            fi
+            if [ ${{needs.changes.outputs.postman}} == 'true' ]; then
+              workspaces+="postman "
+            fi
+            if [ ${{needs.changes.outputs.java}} == 'true' ]; then
+              workspaces+="java java-model java-spring"
+            fi
+            if [ ${{needs.changes.outputs.typescript}} == 'true' ]; then
+              workspaces+="typescript-sdk typescript-express "
+            fi
+            if [ ${{needs.changes.outputs.go}} == 'true' ]; then
+              workspaces+="go-fiber go-model go-sdk "
+            fi
+          fi
+
+          echo "SEED_OUTPUT=$(yarn seed:local test $workspaces --parallel 20)" >> $GITHUB_OUTPUT
+
+      - name: Commit seed changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "seed"
+
+      - name: Comment seed output
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## :seedling: Seed Ran :runner:
+            <details><summary>Run output...</summary>
+              ${{ steps.run_tests.outputs.SEED_OUTPUT }}
+            </details>
