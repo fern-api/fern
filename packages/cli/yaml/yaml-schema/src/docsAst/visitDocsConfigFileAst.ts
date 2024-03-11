@@ -251,7 +251,8 @@ async function visitNavigationItem({
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
-                    content: (await readFile(absoluteFilepath)).toString()
+                    content: (await readFile(absoluteFilepath)).toString(),
+                    absoluteFilepath
                 },
                 [...nodePath, "page", navigationItem.path]
             );
