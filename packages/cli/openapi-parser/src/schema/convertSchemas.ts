@@ -286,13 +286,14 @@ export function convertSchemaObject(
         });
     }
     if (schema === "float") {
-        const inferredValue = schema.example ?? schema.default;
-        return SchemaWithExample.unknown({
+        return convertNumber({
             nameOverride,
             generatedName,
+            format: schema,
             description,
-            groupName,
-            example: inferredValue
+            wrapAsNullable,
+            example: getExampleAsNumber(schema),
+            groupName
         });
     }
     if (schema === "string" || schema.type === "string") {
