@@ -19901,54 +19901,6 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "object",
                       },
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                },
-                "type": "object",
-              },
-              {
-                "properties": {
-                  "linked_account_conditions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                     ],
                   },
                 },
@@ -20111,54 +20063,6 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "string",
                                 "value": "2022-01-01T00:00:00Z",
                               },
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                },
-                "type": "object",
-              },
-              {
-                "properties": {
-                  "linked_account_conditions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
                             },
                           },
                         },
@@ -20366,63 +20270,6 @@ exports[`open api parser merge parse open api 1`] = `
                                 },
                               },
                             },
-                            "type": "object",
-                          },
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "common_model": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "common_model",
-                        },
-                      },
-                      "condition_type": {
-                        "type": "enum",
-                        "value": "BOOLEAN",
-                      },
-                      "field_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "field_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "is_unique": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "native_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "native_name",
-                        },
-                      },
-                      "operators": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
                             "type": "object",
                           },
                         ],
