@@ -105,6 +105,7 @@ jobs:
       - name: Comment seed output
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
+          comment_tag: seed_output
           message: |
             ## :seedling: Seed Ran :runner:
             <details><summary>Run output...</summary>
