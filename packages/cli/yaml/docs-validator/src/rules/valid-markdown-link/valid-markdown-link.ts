@@ -11,27 +11,14 @@ export const ValidMarkdownLinks: Rule = {
                 // Find all matches in the Markdown text
                 const violations: RuleViolation[] = [];
 
-                const matches = content.matchAll(LINK_PATTERN);
-
-                // Extract the second group from each match (the file path)
-                const links: string[] = [];
-                for (const match of matches) {
-                    if (match[2] != null) {
-                        links.push(match[2]);
-                    }
-                }
+                const links = getReferencedMarkdownFiles({ content, absoluteFilepath });
 
                 for (const link of links) {
-                    if (link.endsWith("md") || link.endsWith("mdx")) {
-                        const linkFilepath = link.startsWith("/")
-                            ? AbsoluteFilePath.of(link)
-                            : join(dirname(absoluteFilepath), RelativeFilePath.of(link));
-                        if (!(await doesPathExist(linkFilepath))) {
-                            violations.push({
-                                severity: "error",
-                                message: `Link to non-existent file: ${link}`
-                            });
-                        }
+                    if (!(await doesPathExist(link.absolutePath))) {
+                        violations.push({
+                            severity: "error",
+                            message: `Link to non-existent file: ${link.path}`
+                        });
                     }
                 }
 
@@ -40,3 +27,38 @@ export const ValidMarkdownLinks: Rule = {
         };
     }
 };
+
+export interface MarkdownLink {
+    path: string;
+    absolutePath: AbsoluteFilePath;
+}
+
+export function getReferencedMarkdownFiles({
+    content,
+    absoluteFilepath
+}: {
+    content: string;
+    absoluteFilepath: AbsoluteFilePath;
+}): MarkdownLink[] {
+    const matches = content.matchAll(LINK_PATTERN);
+
+    // Extract the second group from each match (the file path)
+    const links: MarkdownLink[] = [];
+    for (const match of matches) {
+        if (match[2] == null) {
+            continue;
+        } else if (!match[2].endsWith("md") && !match[2].endsWith("mdx")) {
+            continue;
+        }
+        const link = match[2];
+        const linkFilepath = link.startsWith("/")
+            ? AbsoluteFilePath.of(link)
+            : join(dirname(absoluteFilepath), RelativeFilePath.of(link));
+        links.push({
+            path: link,
+            absolutePath: linkFilepath
+        });
+    }
+
+    return links;
+}
