@@ -12,6 +12,8 @@ export declare namespace Enum {
         namespace: string;
         /* The access level of the C# enum */
         access: Access;
+        /* Enum declaration annotations */
+        annotations?: Annotation[];
     }
 
     interface Member {
@@ -35,13 +37,16 @@ export class Enum extends AstNode {
     public readonly access: Access;
     public readonly reference: ClassReference;
 
+    private annotations: Annotation[];
     private fields: Enum._Member[] = [];
 
-    constructor({ name, namespace, access }: Enum.Args) {
+    constructor({ name, namespace, access, annotations }: Enum.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
+
+        this.annotations = annotations ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
@@ -65,6 +70,15 @@ export class Enum extends AstNode {
     public write(writer: Writer): void {
         writer.writeLine(`namespace ${this.namespace}`);
         writer.newLine();
+
+        if (this.annotations.length > 0) {
+            writer.write("[");
+            for (const annotation of this.annotations) {
+                annotation.write(writer);
+            }
+            writer.writeLine("]");
+        }
+
         writer.write(`${this.access} `);
         writer.write("enum ");
         writer.writeLine(`${this.name}`);
