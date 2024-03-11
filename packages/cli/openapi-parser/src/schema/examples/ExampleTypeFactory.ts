@@ -259,6 +259,7 @@ export class ExampleTypeFactory {
             case "array": {
                 const fullExample = getFullExampleAsArray(example);
                 const itemExamples = [];
+                // If you have an example use that
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
@@ -273,6 +274,7 @@ export class ExampleTypeFactory {
                         }
                     }
                 } else {
+                    // Otherwise, generate an example
                     const itemExample = this.buildExampleHelper({
                         example: undefined,
                         schema: schema.value,

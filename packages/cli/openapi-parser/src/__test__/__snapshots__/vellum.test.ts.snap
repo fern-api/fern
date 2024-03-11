@@ -1812,18 +1812,6 @@ or overwritten with default values.",
                     },
                     "type": "object",
                   },
-                  {
-                    "properties": {
-                      "key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "key",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
                 ],
               },
               "label": {
