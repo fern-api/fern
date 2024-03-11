@@ -6,13 +6,13 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe("fern mock", () => {
     it("mock request/response", async () => {
-        void runFernCli(["mock", "--api", "simple", "--port", "3001"], {
+        void runFernCli(["mock", "--api", "simple", "--port", "3003"], {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
         await sleep(5000);
 
-        const getResponse = await fetch("http://localhost:3001/test/root/movies/id-123?movieName=hello", {
+        const getResponse = await fetch("http://localhost:3003/test/root/movies/id-123?movieName=hello", {
             method: "GET"
         });
 
@@ -22,7 +22,7 @@ describe("fern mock", () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect(Object.keys(getResponseBody as any)).toEqual(["id", "title", "rating"]);
 
-        const postResponse = await fetch("http://localhost:3001/test/root/movies", {
+        const postResponse = await fetch("http://localhost:3003/test/root/movies", {
             method: "POST",
             body: JSON.stringify({
                 title: "Shrek",
