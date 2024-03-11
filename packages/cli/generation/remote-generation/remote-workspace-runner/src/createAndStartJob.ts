@@ -84,38 +84,40 @@ async function createJob({
     const remoteGenerationService = createFiddleService({ token: token.value });
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
-    try {
-        const tmpDir = await tmp.dir();
-        const tarPath = path.join(tmpDir.path, "definition.tgz");
-        context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-        await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
+    // Only write definition if output mode is github
+    if (generatorInvocation.outputMode.type.startsWith("github")) {
+        try {
+            const tmpDir = await tmp.dir();
+            const tarPath = path.join(tmpDir.path, "definition.tgz");
+            context.logger.debug(`Compressing definition at ${tmpDir.path}`);
+            await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
 
-        // Upload definition to S3
-        context.logger.debug("Getting upload URL for Fern definition.");
-        const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-            apiName: workspace.name,
-            organizationName: organization,
-            version
-        });
+            // Upload definition to S3
+            context.logger.debug("Getting upload URL for Fern definition.");
+            const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
+                apiName: workspace.name,
+                organizationName: organization,
+                version
+            });
 
-        if (!definitionUploadUrlRequest.ok) {
-            context.logger.debug(
-                `Failed to get upload URL, continuing: ${definitionUploadUrlRequest.error.content.reason}`
-            );
-        } else {
-            context.logger.debug("Uploading definition...");
-            await axios.put(definitionUploadUrlRequest.body, await readFile(tarPath));
+            if (!definitionUploadUrlRequest.ok) {
+                context.logger.debug(
+                    `Failed to get upload URL, continuing: ${definitionUploadUrlRequest.error.content.reason}`
+                );
+            } else {
+                context.logger.debug("Uploading definition...");
+                await axios.put(definitionUploadUrlRequest.body, await readFile(tarPath));
 
-            // Create definition metadata
-            fernDefinitionMetadata = {
-                definitionS3DownloadUrl: "undefined",
-                outputPath: ".mock"
-            };
+                // Create definition metadata
+                fernDefinitionMetadata = {
+                    definitionS3DownloadUrl: "undefined",
+                    outputPath: ".mock"
+                };
+            }
+        } catch (error) {
+            context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
         }
-    } catch (error) {
-        context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
     }
-
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,

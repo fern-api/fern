@@ -20,13 +20,15 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     keepDocker,
-    context
+    context,
+    writeUnitTests
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
+    writeUnitTests: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -50,7 +52,8 @@ export async function runLocalGenerationForWorkspace({
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
                         outputVersionOverride: undefined,
-                        writeSnippets: false
+                        writeSnippets: false,
+                        writeUnitTests: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -106,7 +109,8 @@ export async function runLocalGenerationForSeed({
                         context: interactiveTaskContext,
                         irVersionOverride,
                         outputVersionOverride,
-                        writeSnippets: true
+                        writeSnippets: true,
+                        writeUnitTests: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -142,7 +146,8 @@ async function writeFilesToDiskAndRunGenerator({
     context,
     irVersionOverride,
     outputVersionOverride,
-    writeSnippets
+    writeSnippets,
+    writeUnitTests
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -156,6 +161,7 @@ async function writeFilesToDiskAndRunGenerator({
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
     writeSnippets: boolean;
+    writeUnitTests: boolean;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -202,7 +208,8 @@ async function writeFilesToDiskAndRunGenerator({
         outputVersion: outputVersionOverride,
         keepDocker,
         generatorInvocation,
-        context
+        context,
+        writeUnitTests
     });
 
     const taskHandler = new LocalTaskHandler({

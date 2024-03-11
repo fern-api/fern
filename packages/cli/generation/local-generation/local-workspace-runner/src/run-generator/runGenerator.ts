@@ -23,6 +23,7 @@ export declare namespace runGenerator {
         keepDocker: boolean;
         context: TaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
+        writeUnitTests: boolean;
     }
 }
 
@@ -38,40 +39,42 @@ export async function runGenerator({
     absolutePathToWriteConfigJson,
     keepDocker,
     generatorInvocation,
-    context
+    context,
+    writeUnitTests
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
 
     // Copy Fern definition to output directory
-    if (absolutePathToFernDefinition != null) {
-        cp(
-            `${absolutePathToFernDefinition}`,
-            `${absolutePathToOutput}/.mock/definition`,
-            { recursive: true },
-            (err) => {
-                if (err) {
-                    context.logger.error(`Failed to copy Fern definition to output directory: ${err.message}`);
+    if (writeUnitTests) {
+        if (absolutePathToFernDefinition != null) {
+            cp(
+                `${absolutePathToFernDefinition}`,
+                `${absolutePathToOutput}/.mock/definition`,
+                { recursive: true },
+                (err) => {
+                    if (err) {
+                        context.logger.error(`Failed to copy Fern definition to output directory: ${err.message}`);
+                    }
                 }
-            }
-        );
+            );
+        }
+        if (absolutePathToFernConfig != null) {
+            // Copy Fern config
+            cp(`${absolutePathToFernConfig}`, `${absolutePathToOutput}/.mock`, (err) => {
+                if (err) {
+                    context.logger.error(`Failed to copy Fern config to output directory: ${err.message}`);
+                }
+            });
+        } else if (absolutePathToFernDefinition != null) {
+            // If for whatever reason we don't have the fern config, just write a dummy ones
+            mkdirSync(`${absolutePathToOutput}/.mock`, { recursive: true });
+            writeFileSync(
+                `${absolutePathToOutput}/.mock/fern.config.json`,
+                '{"organization": "fern-test", "version": "0.19.0"}'
+            );
+        }
     }
-    if (absolutePathToFernConfig != null) {
-        // Copy Fern config
-        cp(`${absolutePathToFernConfig}`, `${absolutePathToOutput}/.mock`, (err) => {
-            if (err) {
-                context.logger.error(`Failed to copy Fern config to output directory: ${err.message}`);
-            }
-        });
-    } else if (absolutePathToFernDefinition != null) {
-        // If for whatever reason we don't have the fern config, just write a dummy ones
-        mkdirSync(`${absolutePathToOutput}/.mock`, { recursive: true });
-        writeFileSync(
-            `${absolutePathToOutput}/.mock/fern.config.json`,
-            '{"organization": "fern-test", "version": "0.19.0"}'
-        );
-    }
-
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
@@ -83,7 +86,8 @@ export async function runGenerator({
         workspaceName,
         outputVersion,
         organization,
-        absolutePathToSnippet
+        absolutePathToSnippet,
+        writeUnitTests
     });
     binds.push(...bindsForGenerators);
 
