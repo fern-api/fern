@@ -72,7 +72,7 @@ export class MockServer {
     }
 
     public async start(): Promise<number> {
-        this.port = await getPort();
+        this.port = this.port ?? (await getPort());
         this.server = this.app.listen(this.port);
 
         this.context.logger.info(`Running Fern mock server on localhost: ${this.port}`);
