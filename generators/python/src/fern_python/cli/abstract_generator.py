@@ -58,7 +58,7 @@ class AbstractGenerator(ABC):
             generator_config.output.mode.visit(
                 download_files=lambda: None,
                 github=lambda github_output_mode: self._write_files_for_github_repo(
-                    project=project, output_mode=github_output_mode
+                    project=project, output_mode=github_output_mode, write_unit_tests=generator_config.write_unit_tests
                 ),
                 publish=lambda x: None,
             )
@@ -115,7 +115,7 @@ class AbstractGenerator(ABC):
         )
         publisher.publish_package(publish_config=publish_config)
 
-    def _write_files_for_github_repo(self, project: Project, output_mode: GithubOutputMode) -> None:
+    def _write_files_for_github_repo(self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool) -> None:
         project.add_file(
             ".gitignore",
             """dist/
@@ -124,11 +124,11 @@ __pycache__/
 poetry.toml
 """,
         )
-        self._get_github_workflow(project, output_mode)
+        self._get_github_workflow(project, output_mode, write_unit_tests)
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
-    def _get_github_workflow(self, project: Project, output_mode: GithubOutputMode) -> None:
-        workflow_yaml = """name: Test SDK
+    def _get_github_workflow(self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool) -> None:
+        workflow_yaml = f"""name: Test SDK
 
 on: [push]
 jobs:
@@ -168,8 +168,7 @@ jobs:
 
       - name: Test
         run: |
-            # Run tests
-            fern test --command "poetry run pytest -rP ."
+            ${'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
 """
         project.add_file(".github/workflows/tests.yml", workflow_yaml)
 
@@ -211,7 +210,7 @@ jobs:
           {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
           {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
 """
-        project.add_file(".github/workflows/ci.yml", workflow_yaml)
+            project.add_file(".github/workflows/ci.yml", workflow_yaml)
 
     def _get_client_test(self) -> str:
         return """import pytest
