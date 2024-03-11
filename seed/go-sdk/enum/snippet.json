@@ -12,7 +12,7 @@
         },
         {
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "path": "/path/test/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 "method": "POST"
             },
             "snippet": {
