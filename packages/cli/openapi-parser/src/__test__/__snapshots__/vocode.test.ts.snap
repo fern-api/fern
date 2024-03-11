@@ -122,6 +122,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -141,9 +142,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -163,6 +166,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -206,6 +210,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "phone_number",
           "parameterNameOverride": null,
           "schema": {
@@ -220,6 +225,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -300,6 +306,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "phone_number",
           "parameterNameOverride": null,
           "schema": {
@@ -314,6 +321,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -369,6 +377,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "phone_number",
           "parameterNameOverride": null,
           "schema": {
@@ -383,6 +392,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -553,6 +563,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -572,9 +583,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -594,6 +607,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -637,6 +651,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -651,6 +666,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -694,6 +710,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -708,6 +725,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -841,6 +859,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -855,6 +874,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -972,6 +992,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -986,6 +1007,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1099,6 +1121,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -1118,9 +1141,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -1140,6 +1165,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1264,6 +1290,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -1278,6 +1305,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -1363,6 +1391,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -1377,6 +1406,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1535,6 +1565,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -1554,9 +1585,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -1576,6 +1609,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1670,6 +1704,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -1684,6 +1719,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -1739,6 +1775,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -1753,6 +1790,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1874,6 +1912,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -1893,9 +1932,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -1915,6 +1956,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2047,6 +2089,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -2061,6 +2104,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -2214,6 +2258,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -2228,6 +2273,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2351,6 +2397,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "page",
           "parameterNameOverride": null,
           "schema": {
@@ -2370,9 +2417,11 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "size",
           "parameterNameOverride": null,
           "schema": {
@@ -2392,6 +2441,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2618,6 +2668,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -2632,6 +2683,7 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": {

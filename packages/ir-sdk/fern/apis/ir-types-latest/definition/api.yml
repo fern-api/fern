@@ -1,5 +1,6 @@
 name: ir
 docs: |
- Adds the concept of generated vs. provided examples. This allows us to be able to easily identify
- which examples the user provided. Gives us flexibility in the future to run tests on either kind,
- differentiate them in the UI, etc.
+ Updates query parameters to specify the way they should be represented within the resultant HTTP request.
+ Specifically, for parameters that are lists, we allow for two types of representations:
+ - `exploded` = `a="one"&a="two"&a="three"`
+ - `comma-separated` = `a=one,two,three,four`

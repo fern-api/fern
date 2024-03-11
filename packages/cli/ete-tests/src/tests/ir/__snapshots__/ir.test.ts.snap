@@ -27565,6 +27565,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "primitive": "STRING"
                             },
                             "allowMultiple": true,
+                            "listRepresentation": "EXPLODED",
                             "availability": null,
                             "docs": null
                         }

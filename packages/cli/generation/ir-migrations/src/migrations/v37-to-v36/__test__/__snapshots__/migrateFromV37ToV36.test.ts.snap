@@ -877,6 +877,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -909,6 +910,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -941,6 +943,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1035,6 +1038,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1080,6 +1084,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1120,6 +1125,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": true,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1214,6 +1220,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": true,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1246,6 +1253,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {

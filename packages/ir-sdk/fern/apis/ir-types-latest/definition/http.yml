@@ -76,12 +76,19 @@ types:
       - ROOT
       - SERVICE
       - ENDPOINT
+  QueryParameterRepresentation:
+    enum:
+      - EXPLODED
+      - COMMA_DELIMITED
+      - SPACE_DELIMITED
+      - PIPE_DELIMITED
   QueryParameter:
     extends: commons.Declaration
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       allowMultiple: boolean
+      listRepresentation: optional<QueryParameterRepresentation>
   HttpRequestBody:
     union:
       inlinedRequestBody: InlinedRequestBody

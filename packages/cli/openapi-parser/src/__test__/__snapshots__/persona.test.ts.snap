@@ -9677,6 +9677,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
       "queryParameters": [
         {
           "description": "Inquiry ID for pagination cursor",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -9698,9 +9699,11 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Inquiry ID for pagination cursor",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -9722,9 +9725,11 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of inquiries returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -9746,9 +9751,11 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter inquiries by account ID",
+          "explode": false,
           "name": "filter[account-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -9770,9 +9777,11 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter inquiries by reference ID",
+          "explode": false,
           "name": "filter[reference-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -9794,6 +9803,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -12105,6 +12115,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "queryParameters": [
         {
           "description": "Account ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -12126,9 +12137,11 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Account ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -12150,9 +12163,11 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of accounts returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -12174,9 +12189,11 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter accounts by reference ID",
+          "explode": false,
           "name": "filter[reference-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -12198,6 +12215,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13506,6 +13524,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "queryParameters": [
         {
           "description": "API Log ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -13527,9 +13546,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "API Log ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -13551,9 +13572,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of API Logs returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -13575,6 +13598,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -19889,6 +19913,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "queryParameters": [
         {
           "description": "Event ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -19910,9 +19935,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Event ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -19934,9 +19961,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of Events returned.",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -19958,9 +19987,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Comma separated list of event names",
+          "explode": false,
           "name": "filter[name]",
           "parameterNameOverride": null,
           "schema": {
@@ -19982,9 +20013,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Comma separated list of object ids",
+          "explode": false,
           "name": "filter[object_id]",
           "parameterNameOverride": null,
           "schema": {
@@ -20006,9 +20039,11 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Comma separated list of event ids",
+          "explode": false,
           "name": "filter[id]",
           "parameterNameOverride": null,
           "schema": {
@@ -20030,6 +20065,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -32570,6 +32606,7 @@ The columns we allow are
       "queryParameters": [
         {
           "description": "List ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -32591,9 +32628,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -32615,9 +32654,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of lists returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -32639,9 +32680,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter lists by status",
+          "explode": false,
           "name": "filter[status]",
           "parameterNameOverride": null,
           "schema": {
@@ -32663,6 +32706,7 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -41536,6 +41580,7 @@ The columns we allow are
       "queryParameters": [
         {
           "description": "Report ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -41557,9 +41602,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Report ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -41581,9 +41628,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of reports returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -41605,9 +41654,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter reports by reference ID",
+          "explode": false,
           "name": "filter[reference-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -41629,9 +41680,11 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter reports by account ID",
+          "explode": false,
           "name": "filter[account-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -41653,6 +41706,7 @@ The columns we allow are
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -42474,6 +42528,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "queryParameters": [
         {
           "description": "Case ID for pagination cursor",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -42495,9 +42550,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Case ID for pagination cursor",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -42519,9 +42576,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of cases returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -42543,9 +42602,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by status",
+          "explode": false,
           "name": "filter[status]",
           "parameterNameOverride": null,
           "schema": {
@@ -42567,9 +42628,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by resolution",
+          "explode": false,
           "name": "filter[resolution]",
           "parameterNameOverride": null,
           "schema": {
@@ -42591,9 +42654,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by case template ID",
+          "explode": false,
           "name": "filter[case-template-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -42615,9 +42680,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by account ID",
+          "explode": false,
           "name": "filter[account-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -42639,9 +42706,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by inquiry ID",
+          "explode": false,
           "name": "filter[inquiry-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -42663,9 +42732,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter cases by report ID",
+          "explode": false,
           "name": "filter[report-id]",
           "parameterNameOverride": null,
           "schema": {
@@ -42687,6 +42758,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -60357,6 +60429,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "queryParameters": [
         {
           "description": "User audit log ID for cursor pagination",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -60378,9 +60451,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "User audit log ID for cursor pagination",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -60402,9 +60477,11 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of User audit logs returned",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -60426,6 +60503,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -77416,6 +77494,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "queryParameters": [
         {
           "description": "APK key ID for pagination cursor",
+          "explode": false,
           "name": "page[after]",
           "parameterNameOverride": null,
           "schema": {
@@ -77437,9 +77516,11 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "APK key ID for pagination cursor",
+          "explode": false,
           "name": "page[before]",
           "parameterNameOverride": null,
           "schema": {
@@ -77461,9 +77542,11 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Limit on the number of APK keys returned (between 1 and 100)",
+          "explode": false,
           "name": "page[size]",
           "parameterNameOverride": null,
           "schema": {
@@ -77485,9 +77568,11 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter APK keys by name",
+          "explode": false,
           "name": "filter[name]",
           "parameterNameOverride": null,
           "schema": {
@@ -77509,6 +77594,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

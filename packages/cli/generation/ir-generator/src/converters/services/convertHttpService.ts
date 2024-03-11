@@ -6,6 +6,7 @@ import {
     HttpService,
     PathParameter,
     PathParameterLocation,
+    QueryParameterRepresentation,
     ResponseErrors,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -25,6 +26,7 @@ import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertQueryParameterRepresentation } from "./utils";
 
 export async function convertHttpService({
     rootPathParameters,
@@ -111,8 +113,18 @@ export async function convertHttpService({
                                               allowMultiple:
                                                   typeof queryParameter !== "string" &&
                                                   queryParameter["allow-multiple"] != null
-                                                      ? queryParameter["allow-multiple"]
-                                                      : false
+                                                      ? typeof queryParameter["allow-multiple"] === "boolean"
+                                                          ? queryParameter["allow-multiple"]
+                                                          : true
+                                                      : false,
+                                              listRepresentation:
+                                                  typeof queryParameter !== "string" &&
+                                                  queryParameter["allow-multiple"] != null &&
+                                                  typeof queryParameter["allow-multiple"] !== "boolean"
+                                                      ? convertQueryParameterRepresentation(
+                                                            queryParameter["allow-multiple"].encoding
+                                                        )
+                                                      : QueryParameterRepresentation.Exploded
                                           };
                                       }
                                   )

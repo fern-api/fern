@@ -12,6 +12,9 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
             name: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
             valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
             allowMultiple: core.serialization.boolean(),
+            listRepresentation: core.serialization
+                .lazy(async () => (await import("../../..")).QueryParameterRepresentation)
+                .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).Declaration));
 
@@ -20,5 +23,6 @@ export declare namespace QueryParameter {
         name: serializers.NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;
+        listRepresentation?: serializers.QueryParameterRepresentation.Raw | null;
     }
 }

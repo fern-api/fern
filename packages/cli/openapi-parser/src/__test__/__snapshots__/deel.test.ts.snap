@@ -3928,6 +3928,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Return next page of results after given cursor.",
+          "explode": false,
           "name": "after_cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -3949,9 +3950,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records.",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -3971,9 +3974,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Order direction of results; ascending or descending.",
+          "explode": false,
           "name": "order_direction",
           "parameterNameOverride": null,
           "schema": {
@@ -3991,9 +3996,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "You can filter contracts by type, a contract is included in results if its type is in this list.",
+          "explode": false,
           "name": "types",
           "parameterNameOverride": null,
           "schema": {
@@ -4011,9 +4018,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "You can filter contracts by current status, a contract is included in results if its status is in this list.",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -4031,9 +4040,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "team_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4053,9 +4064,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter contracts for given external ID",
+          "explode": false,
           "name": "external_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4077,9 +4090,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Country codes of contracts to filter.",
+          "explode": false,
           "name": "countries",
           "parameterNameOverride": null,
           "schema": {
@@ -4097,9 +4112,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Currency codes of contracts to filter.",
+          "explode": false,
           "name": "currencies",
           "parameterNameOverride": null,
           "schema": {
@@ -4117,9 +4134,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Include a contract if by name or contractor name contains given search term.",
+          "explode": false,
           "name": "search",
           "parameterNameOverride": null,
           "schema": {
@@ -4141,9 +4160,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Sort contracts by given field name.",
+          "explode": false,
           "name": "sort_by",
           "parameterNameOverride": null,
           "schema": {
@@ -4161,6 +4182,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5899,6 +5921,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "ID of an existing contract template.",
+          "explode": false,
           "name": "templateId",
           "parameterNameOverride": null,
           "schema": {
@@ -5920,6 +5943,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -6837,6 +6861,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Reason for deleting an existing task",
+          "explode": false,
           "name": "reason",
           "parameterNameOverride": null,
           "schema": {
@@ -6858,6 +6883,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -7941,6 +7967,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Types of contracts to filter.",
+          "explode": false,
           "name": "contract_types",
           "parameterNameOverride": null,
           "schema": {
@@ -7958,9 +7985,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Statuses of timesheets to filter.",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -7978,9 +8007,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "reporter_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8000,9 +8031,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filtered results will include records created on or after the provided date.",
+          "explode": false,
           "name": "date_from",
           "parameterNameOverride": null,
           "schema": {
@@ -8020,9 +8053,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filtered results will include records created before the provided date.",
+          "explode": false,
           "name": "date_to",
           "parameterNameOverride": null,
           "schema": {
@@ -8040,9 +8075,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -8062,9 +8099,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results after given index of row",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -8084,6 +8123,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9914,6 +9954,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Reason for deleting an existing Deel Premium from a contract.",
+          "explode": false,
           "name": "reason",
           "parameterNameOverride": null,
           "schema": {
@@ -9935,6 +9976,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -10095,6 +10137,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "The day to end the contract.",
+          "explode": false,
           "name": "end_date",
           "parameterNameOverride": null,
           "schema": {
@@ -10112,9 +10155,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "The days to calculate.",
+          "explode": false,
           "name": "calculation_type",
           "parameterNameOverride": null,
           "schema": {
@@ -10181,9 +10226,11 @@ exports[`open api parser deel parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The day the work week starts, 0 to 6",
+          "explode": false,
           "name": "workweek_start",
           "parameterNameOverride": null,
           "schema": {
@@ -10205,9 +10252,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The day the work week ends, 0 to 6",
+          "explode": false,
           "name": "workweek_end",
           "parameterNameOverride": null,
           "schema": {
@@ -10229,6 +10278,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -12483,6 +12533,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Id of a Deel contract.",
+          "explode": false,
           "name": "contract_id",
           "parameterNameOverride": null,
           "schema": {
@@ -12504,9 +12555,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Types of contracts to filter.",
+          "explode": false,
           "name": "contract_types",
           "parameterNameOverride": null,
           "schema": {
@@ -12524,9 +12577,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Statuses of timesheets to filter.",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -12544,9 +12599,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "reporter_id",
           "parameterNameOverride": null,
           "schema": {
@@ -12566,9 +12623,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filtered results will include records created on or after the provided date.",
+          "explode": false,
           "name": "date_from",
           "parameterNameOverride": null,
           "schema": {
@@ -12586,9 +12645,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filtered results will include records created before the provided date.",
+          "explode": false,
           "name": "date_to",
           "parameterNameOverride": null,
           "schema": {
@@ -12606,9 +12667,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -12628,9 +12691,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results after given index of row",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -12650,6 +12715,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13255,6 +13321,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Reason for deleting an existing timesheet",
+          "explode": false,
           "name": "reason",
           "parameterNameOverride": null,
           "schema": {
@@ -13276,6 +13343,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13999,6 +14067,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "types of contracts to filter",
+          "explode": false,
           "name": "contract_types",
           "parameterNameOverride": null,
           "schema": {
@@ -14016,9 +14085,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "types of invoice adjustments to filter",
+          "explode": false,
           "name": "types",
           "parameterNameOverride": null,
           "schema": {
@@ -14036,9 +14107,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "statuses of invoice adjustment to filter",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -14056,9 +14129,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "invoice_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14078,9 +14153,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "reporter_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14100,9 +14177,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "to get invoice adjustments submitted on or after given start date (inclusive)",
+          "explode": false,
           "name": "date_from",
           "parameterNameOverride": null,
           "schema": {
@@ -14120,9 +14199,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
+          "explode": false,
           "name": "date_to",
           "parameterNameOverride": null,
           "schema": {
@@ -14140,9 +14221,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -14162,9 +14245,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -14184,6 +14269,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14511,6 +14597,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Id of an Deel contract.",
+          "explode": false,
           "name": "contract_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14532,9 +14619,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "types of contracts to filter",
+          "explode": false,
           "name": "contract_types",
           "parameterNameOverride": null,
           "schema": {
@@ -14552,9 +14641,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "types of invoice adjustments to filter",
+          "explode": false,
           "name": "types",
           "parameterNameOverride": null,
           "schema": {
@@ -14572,9 +14663,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "statuses of invoice adjustment to filter",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -14592,9 +14685,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "invoice_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14614,9 +14709,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "reporter_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14636,9 +14733,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "to get invoice adjustments submitted on or after given start date (inclusive)",
+          "explode": false,
           "name": "date_from",
           "parameterNameOverride": null,
           "schema": {
@@ -14656,9 +14755,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
+          "explode": false,
           "name": "date_to",
           "parameterNameOverride": null,
           "schema": {
@@ -14676,9 +14777,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -14698,9 +14801,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -14720,6 +14825,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14976,6 +15082,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Reason for deleting an existing invoice adjustment",
+          "explode": false,
           "name": "reason",
           "parameterNameOverride": null,
           "schema": {
@@ -14997,6 +15104,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15765,6 +15873,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -15784,9 +15893,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return next page of results after given cursor",
+          "explode": false,
           "name": "after_cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -15808,6 +15919,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15903,6 +16015,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -15922,6 +16035,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -16429,6 +16543,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Deel contract id.",
+          "explode": false,
           "name": "contract_id",
           "parameterNameOverride": null,
           "schema": {
@@ -16450,9 +16565,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Maximum number of records to return.",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -16470,9 +16587,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Offset/index of record for the next page of records to return.",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -16490,6 +16609,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -17444,6 +17564,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "to get records created after given issue date",
+          "explode": false,
           "name": "issued_from_date",
           "parameterNameOverride": null,
           "schema": {
@@ -17465,9 +17586,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "to get records created before given issued date",
+          "explode": false,
           "name": "issued_to_date",
           "parameterNameOverride": null,
           "schema": {
@@ -17489,9 +17612,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "statuses of invoices to filter",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -17509,9 +17634,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by legal entity type; company, or individual",
+          "explode": false,
           "name": "entities",
           "parameterNameOverride": null,
           "schema": {
@@ -17529,6 +17656,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -17911,6 +18039,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Filtered results will include records created on or after the provided date.",
+          "explode": false,
           "name": "date_from",
           "parameterNameOverride": null,
           "schema": {
@@ -17928,9 +18057,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filtered results will include records created before the provided date.",
+          "explode": false,
           "name": "date_to",
           "parameterNameOverride": null,
           "schema": {
@@ -17948,9 +18079,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Currency codes of contracts to filter.",
+          "explode": false,
           "name": "currencies",
           "parameterNameOverride": null,
           "schema": {
@@ -17968,9 +18101,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "statuses of payments to filter",
+          "explode": false,
           "name": "statuses",
           "parameterNameOverride": null,
           "schema": {
@@ -17988,9 +18123,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by legal entity type; company, or individual",
+          "explode": false,
           "name": "entities",
           "parameterNameOverride": null,
           "schema": {
@@ -18008,6 +18145,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18381,6 +18519,7 @@ exports[`open api parser deel parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Return a page of results with given number of records.",
+          "explode": false,
           "name": "offset",
           "parameterNameOverride": null,
           "schema": {
@@ -18400,9 +18539,11 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Return a page of results with given number of records.",
+          "explode": false,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -18422,6 +18563,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

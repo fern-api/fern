@@ -36,6 +36,7 @@ exports[`open api parser hume parse open api 1`] = `
       "queryParameters": [
         {
           "description": "The maximum number of jobs to include in the response.",
+          "explode": true,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
@@ -55,9 +56,11 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Include only jobs with these statuses.",
+          "explode": true,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -82,9 +85,11 @@ exports[`open api parser hume parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Include only jobs that were created before or after \`timestamp_ms\`.",
+          "explode": true,
           "name": "when",
           "parameterNameOverride": null,
           "schema": {
@@ -102,9 +107,11 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "Defaults to the current date and time. See \`when\`.",
+          "explode": true,
           "name": "timestamp_ms",
           "parameterNameOverride": null,
           "schema": {
@@ -124,9 +131,11 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The job timestamp to sort by.",
+          "explode": true,
           "name": "sort_by",
           "parameterNameOverride": null,
           "schema": {
@@ -144,9 +153,11 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
         {
           "description": "The sort direction.",
+          "explode": true,
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
@@ -164,6 +175,7 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "reference",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,

@@ -510,6 +510,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "queryParameters": [
         {
           "description": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
+          "explode": false,
           "name": "validateOriginUserId",
           "parameterNameOverride": null,
           "schema": {
@@ -531,9 +532,11 @@ Here are some of the most used payload fields explained (you can find the full p
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
+          "explode": false,
           "name": "validateDestinationUserId",
           "parameterNameOverride": null,
           "schema": {
@@ -555,6 +558,7 @@ Here are some of the most used payload fields explained (you can find the full p
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {

@@ -8,6 +8,7 @@ export * from "./HttpMethod";
 export * from "./HttpHeader";
 export * from "./PathParameter";
 export * from "./PathParameterLocation";
+export * from "./QueryParameterRepresentation";
 export * from "./QueryParameter";
 export * from "./HttpRequestBody";
 export * from "./InlinedRequestBody";

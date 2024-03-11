@@ -156,6 +156,7 @@ exports[`migrateFromV35ToV34 snapshot 1`] = `
               "allowMultiple": false,
               "availability": undefined,
               "docs": undefined,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {

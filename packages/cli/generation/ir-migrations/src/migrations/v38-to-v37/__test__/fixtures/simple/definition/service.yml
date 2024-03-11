@@ -1,0 +1,31 @@
+types:
+  User:
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    check:
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: string
+      request:
+        name: CheckRequest
+        query-parameters:
+          id: uuid
+          limit: integer
+          user: User
+          map: map<string, string>
+          optionalString: optional<string>
+          multipleUser:
+            type: User
+            allow-multiple: true
+            query-parameter-representation: EXPLODED
+          filter:
+            type: string
+            allow-multiple: true
+            query-parameter-representation: EXPLODED
+          any: optional<unknown>

@@ -1132,6 +1132,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Alias",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -1153,9 +1154,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Connection protocol used",
+          "explode": true,
           "name": "connection_protocol",
           "parameterNameOverride": null,
           "schema": {
@@ -1198,9 +1201,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "invitation key",
+          "explode": true,
           "name": "invitation_key",
           "parameterNameOverride": null,
           "schema": {
@@ -1222,9 +1227,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Identifier of the associated Invitation Mesage",
+          "explode": true,
           "name": "invitation_msg_id",
           "parameterNameOverride": null,
           "schema": {
@@ -1246,9 +1253,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "My DID",
+          "explode": true,
           "name": "my_did",
           "parameterNameOverride": null,
           "schema": {
@@ -1270,9 +1279,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Connection state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -1399,9 +1410,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Their DID",
+          "explode": true,
           "name": "their_did",
           "parameterNameOverride": null,
           "schema": {
@@ -1423,9 +1436,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Their Public DID",
+          "explode": true,
           "name": "their_public_did",
           "parameterNameOverride": null,
           "schema": {
@@ -1447,9 +1462,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Their role in the connection protocol",
+          "explode": true,
           "name": "their_role",
           "parameterNameOverride": null,
           "schema": {
@@ -1516,6 +1533,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1762,6 +1780,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Alias",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -1783,9 +1802,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
+          "explode": true,
           "name": "auto_accept",
           "parameterNameOverride": null,
           "schema": {
@@ -1805,9 +1826,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create invitation for multiple use (default false)",
+          "explode": true,
           "name": "multi_use",
           "parameterNameOverride": null,
           "schema": {
@@ -1827,9 +1850,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create invitation from public DID (default false)",
+          "explode": true,
           "name": "public",
           "parameterNameOverride": null,
           "schema": {
@@ -1849,6 +1874,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -2429,6 +2455,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Alias",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -2450,9 +2477,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
+          "explode": true,
           "name": "auto_accept",
           "parameterNameOverride": null,
           "schema": {
@@ -2472,9 +2501,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -2496,6 +2527,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -3029,6 +3061,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3050,9 +3083,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -3074,9 +3109,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Label for connection",
+          "explode": true,
           "name": "my_label",
           "parameterNameOverride": null,
           "schema": {
@@ -3098,6 +3135,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3308,6 +3346,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -3329,6 +3368,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3640,6 +3680,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Key to retrieve.",
+          "explode": true,
           "name": "key",
           "parameterNameOverride": null,
           "schema": {
@@ -3661,6 +3702,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4120,6 +4162,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Target connection identifier",
+          "explode": true,
           "name": "target_connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4134,9 +4177,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Message",
+          "explode": true,
           "name": "message",
           "parameterNameOverride": null,
           "schema": {
@@ -4158,6 +4203,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4462,6 +4508,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4483,9 +4530,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -4505,6 +4554,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -4599,6 +4649,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Credential definition id",
+          "explode": true,
           "name": "cred_def_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4620,9 +4671,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Issuer DID",
+          "explode": true,
           "name": "issuer_did",
           "parameterNameOverride": null,
           "schema": {
@@ -4644,9 +4697,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema identifier",
+          "explode": true,
           "name": "schema_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4668,9 +4723,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema issuer DID",
+          "explode": true,
           "name": "schema_issuer_did",
           "parameterNameOverride": null,
           "schema": {
@@ -4692,9 +4749,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema name",
+          "explode": true,
           "name": "schema_name",
           "parameterNameOverride": null,
           "schema": {
@@ -4716,9 +4775,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema version",
+          "explode": true,
           "name": "schema_version",
           "parameterNameOverride": null,
           "schema": {
@@ -4740,6 +4801,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -5457,6 +5519,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Earliest epoch of revocation status interval of interest",
+          "explode": true,
           "name": "from",
           "parameterNameOverride": null,
           "schema": {
@@ -5478,9 +5541,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Latest epoch of revocation status interval of interest",
+          "explode": true,
           "name": "to",
           "parameterNameOverride": null,
           "schema": {
@@ -5502,6 +5567,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -6331,6 +6397,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Maximum number to retrieve",
+          "explode": true,
           "name": "count",
           "parameterNameOverride": null,
           "schema": {
@@ -6352,9 +6419,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Start index",
+          "explode": true,
           "name": "start",
           "parameterNameOverride": null,
           "schema": {
@@ -6376,9 +6445,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "(JSON) WQL query",
+          "explode": true,
           "name": "wql",
           "parameterNameOverride": null,
           "schema": {
@@ -6400,6 +6471,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -7156,6 +7228,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Maximum number to retrieve",
+          "explode": true,
           "name": "count",
           "parameterNameOverride": null,
           "schema": {
@@ -7177,9 +7250,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Start index",
+          "explode": true,
           "name": "start",
           "parameterNameOverride": null,
           "schema": {
@@ -7201,9 +7276,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "(JSON) WQL query",
+          "explode": true,
           "name": "wql",
           "parameterNameOverride": null,
           "schema": {
@@ -7225,6 +7302,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -7429,6 +7507,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Qualified public DID to which to request connection",
+          "explode": true,
           "name": "their_public_did",
           "parameterNameOverride": null,
           "schema": {
@@ -7443,9 +7522,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Alias for connection",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -7467,9 +7548,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7491,9 +7574,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -7515,9 +7600,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Label for connection request",
+          "explode": true,
           "name": "my_label",
           "parameterNameOverride": null,
           "schema": {
@@ -7539,9 +7626,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Use public DID for this connection",
+          "explode": true,
           "name": "use_public_did",
           "parameterNameOverride": null,
           "schema": {
@@ -7561,6 +7650,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -7866,6 +7956,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Alias for connection",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -7887,9 +7978,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
+          "explode": true,
           "name": "auto_accept",
           "parameterNameOverride": null,
           "schema": {
@@ -7909,9 +8002,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7933,9 +8028,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -7957,6 +8054,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -8179,6 +8277,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -8200,9 +8299,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Label for connection request",
+          "explode": true,
           "name": "my_label",
           "parameterNameOverride": null,
           "schema": {
@@ -8224,6 +8325,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -8434,6 +8536,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8455,9 +8558,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "My URL endpoint",
+          "explode": true,
           "name": "my_endpoint",
           "parameterNameOverride": null,
           "schema": {
@@ -8479,6 +8584,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -8657,6 +8763,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier, if none specified, then the query will provide features for this agent.",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8678,9 +8785,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Goal-code feature-type query",
+          "explode": true,
           "name": "query_goal_code",
           "parameterNameOverride": null,
           "schema": {
@@ -8702,9 +8811,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Protocol feature-type query",
+          "explode": true,
           "name": "query_protocol",
           "parameterNameOverride": null,
           "schema": {
@@ -8726,6 +8837,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9090,6 +9202,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -9111,6 +9224,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9285,6 +9399,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Comment",
+          "explode": true,
           "name": "comment",
           "parameterNameOverride": null,
           "schema": {
@@ -9306,9 +9421,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Connection identifier, if none specified, then the query will provide features for this agent.",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -9330,9 +9447,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Protocol feature query",
+          "explode": true,
           "name": "query",
           "parameterNameOverride": null,
           "schema": {
@@ -9354,6 +9473,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9763,6 +9883,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -9784,6 +9905,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15740,6 +15862,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -15761,9 +15884,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Role assigned in credential exchange",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -15806,9 +15931,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Credential exchange state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -15959,9 +16086,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Thread identifier",
+          "explode": true,
           "name": "thread_id",
           "parameterNameOverride": null,
           "schema": {
@@ -15983,6 +16112,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -31407,6 +31537,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -31428,9 +31559,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Role assigned in credential exchange",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -31473,9 +31606,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Credential exchange state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -31626,9 +31761,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Thread identifier",
+          "explode": true,
           "name": "thread_id",
           "parameterNameOverride": null,
           "schema": {
@@ -31650,6 +31787,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -39125,6 +39263,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -39139,9 +39278,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Endpoint type of interest (default 'Endpoint')",
+          "explode": true,
           "name": "endpoint_type",
           "parameterNameOverride": null,
           "schema": {
@@ -39196,6 +39337,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -39270,6 +39412,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -39284,6 +39427,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -39355,6 +39499,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -39369,6 +39514,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -39893,6 +40039,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID to register",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -39907,9 +40054,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Verification key",
+          "explode": true,
           "name": "verkey",
           "parameterNameOverride": null,
           "schema": {
@@ -39924,9 +40073,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Alias",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -39948,9 +40099,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -39972,9 +40125,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -39994,9 +40149,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Role",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -40075,6 +40232,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -41012,6 +41170,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier (optional)",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -41033,9 +41192,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -41078,6 +41239,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -41199,6 +41361,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "limit number of results",
+          "explode": true,
           "name": "paginate_limit",
           "parameterNameOverride": null,
           "schema": {
@@ -41218,9 +41381,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "offset to use in pagination",
+          "explode": true,
           "name": "paginate_offset",
           "parameterNameOverride": null,
           "schema": {
@@ -41240,6 +41405,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -42202,6 +42368,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier (optional)",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -42223,9 +42390,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "List of mediator rules for recipient",
+          "explode": true,
           "name": "mediator_terms",
           "parameterNameOverride": null,
           "schema": {
@@ -42254,9 +42423,11 @@ exports[`open api parser aries parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "List of recipient rules for mediation",
+          "explode": true,
           "name": "recipient_terms",
           "parameterNameOverride": null,
           "schema": {
@@ -42285,9 +42456,11 @@ exports[`open api parser aries parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Mediation state (optional)",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -42342,6 +42515,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -44357,6 +44531,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Wallet name",
+          "explode": true,
           "name": "wallet_name",
           "parameterNameOverride": null,
           "schema": {
@@ -44378,6 +44553,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -45136,6 +45312,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Auto-accept connection (defaults to configuration)",
+          "explode": true,
           "name": "auto_accept",
           "parameterNameOverride": null,
           "schema": {
@@ -45155,9 +45332,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create invitation for multiple use (default false)",
+          "explode": true,
           "name": "multi_use",
           "parameterNameOverride": null,
           "schema": {
@@ -45177,6 +45356,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -46376,6 +46556,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Alias for connection",
+          "explode": true,
           "name": "alias",
           "parameterNameOverride": null,
           "schema": {
@@ -46397,9 +46578,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
+          "explode": true,
           "name": "auto_accept",
           "parameterNameOverride": null,
           "schema": {
@@ -46419,9 +46602,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Identifier for active mediation record to be used",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -46443,9 +46628,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Use an existing connection, if possible",
+          "explode": true,
           "name": "use_existing_connection",
           "parameterNameOverride": null,
           "schema": {
@@ -46465,6 +46652,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -49080,6 +49268,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -49101,9 +49290,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Role assigned in presentation exchange",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -49146,9 +49337,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Presentation exchange state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -49263,9 +49456,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Thread identifier",
+          "explode": true,
           "name": "thread_id",
           "parameterNameOverride": null,
           "schema": {
@@ -49287,6 +49482,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -50219,6 +50415,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Maximum number to retrieve",
+          "explode": true,
           "name": "count",
           "parameterNameOverride": null,
           "schema": {
@@ -50240,9 +50437,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
+          "explode": true,
           "name": "extra_query",
           "parameterNameOverride": null,
           "schema": {
@@ -50264,9 +50463,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Proof request referents of interest, comma-separated",
+          "explode": true,
           "name": "referent",
           "parameterNameOverride": null,
           "schema": {
@@ -50288,9 +50489,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Start index",
+          "explode": true,
           "name": "start",
           "parameterNameOverride": null,
           "schema": {
@@ -50312,6 +50515,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -57550,6 +57754,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "connection_id",
           "parameterNameOverride": null,
           "schema": {
@@ -57571,9 +57776,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Role assigned in presentation exchange",
+          "explode": true,
           "name": "role",
           "parameterNameOverride": null,
           "schema": {
@@ -57616,9 +57823,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Presentation exchange state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -57745,9 +57954,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Thread identifier",
+          "explode": true,
           "name": "thread_id",
           "parameterNameOverride": null,
           "schema": {
@@ -57769,6 +57980,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -58946,6 +59158,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Maximum number to retrieve",
+          "explode": true,
           "name": "count",
           "parameterNameOverride": null,
           "schema": {
@@ -58967,9 +59180,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
+          "explode": true,
           "name": "extra_query",
           "parameterNameOverride": null,
           "schema": {
@@ -58991,9 +59206,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Proof request referents of interest, comma-separated",
+          "explode": true,
           "name": "referent",
           "parameterNameOverride": null,
           "schema": {
@@ -59015,9 +59232,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Start index",
+          "explode": true,
           "name": "start",
           "parameterNameOverride": null,
           "schema": {
@@ -59039,6 +59258,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -65145,6 +65365,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Credential exchange identifier",
+          "explode": true,
           "name": "cred_ex_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65166,9 +65387,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Credential revocation identifier",
+          "explode": true,
           "name": "cred_rev_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65190,9 +65413,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Revocation registry identifier",
+          "explode": true,
           "name": "rev_reg_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65214,6 +65439,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -65647,6 +65873,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Credential definition identifier",
+          "explode": true,
           "name": "cred_def_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65668,9 +65895,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Revocation registry state",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -65749,6 +65978,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -65812,6 +66042,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Credential definition identifier",
+          "explode": true,
           "name": "cred_def_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65833,9 +66064,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Revocation registry identifier",
+          "explode": true,
           "name": "rev_reg_id",
           "parameterNameOverride": null,
           "schema": {
@@ -65857,6 +66090,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -66941,6 +67175,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -66962,9 +67197,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -66984,6 +67221,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -67288,6 +67526,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -67309,9 +67548,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -67331,6 +67572,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -67426,6 +67668,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Apply updated accumulator transaction to ledger",
+          "explode": true,
           "name": "apply_ledger_update",
           "parameterNameOverride": null,
           "schema": {
@@ -67438,6 +67681,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -68208,6 +68452,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Revocation registry state to set",
+          "explode": true,
           "name": "state",
           "parameterNameOverride": null,
           "schema": {
@@ -68279,6 +68524,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -68964,6 +69210,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -68985,9 +69232,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -69007,6 +69256,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -69101,6 +69351,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Schema identifier",
+          "explode": true,
           "name": "schema_id",
           "parameterNameOverride": null,
           "schema": {
@@ -69122,9 +69373,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema issuer DID",
+          "explode": true,
           "name": "schema_issuer_did",
           "parameterNameOverride": null,
           "schema": {
@@ -69146,9 +69399,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema name",
+          "explode": true,
           "name": "schema_name",
           "parameterNameOverride": null,
           "schema": {
@@ -69170,9 +69425,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Schema version",
+          "explode": true,
           "name": "schema_version",
           "parameterNameOverride": null,
           "schema": {
@@ -69194,6 +69451,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -71101,6 +71359,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Transaction identifier",
+          "explode": true,
           "name": "tran_id",
           "parameterNameOverride": null,
           "schema": {
@@ -71115,9 +71374,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Endorser will write the transaction after endorsing it",
+          "explode": true,
           "name": "endorser_write_txn",
           "parameterNameOverride": null,
           "schema": {
@@ -71137,6 +71398,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -71259,6 +71521,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Endorser DID",
+          "explode": true,
           "name": "endorser_did",
           "parameterNameOverride": null,
           "schema": {
@@ -71273,9 +71536,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Endorser Name",
+          "explode": true,
           "name": "endorser_name",
           "parameterNameOverride": null,
           "schema": {
@@ -71297,6 +71562,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -71390,6 +71656,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Transaction related jobs",
+          "explode": true,
           "name": "transaction_my_job",
           "parameterNameOverride": null,
           "schema": {
@@ -71444,6 +71711,7 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -72288,6 +72556,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Endorser DID",
+          "explode": true,
           "name": "endorser_did",
           "parameterNameOverride": null,
           "schema": {
@@ -72309,6 +72578,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -73032,6 +73302,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -73053,9 +73324,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Key type to query for.",
+          "explode": true,
           "name": "key_type",
           "parameterNameOverride": null,
           "schema": {
@@ -73098,9 +73371,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "DID method to query for. e.g. sov to only fetch indy/sov DIDs",
+          "explode": true,
           "name": "method",
           "parameterNameOverride": null,
           "schema": {
@@ -73143,9 +73418,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether DID is current public DID, posted to ledger but current public DID, or local to the wallet",
+          "explode": true,
           "name": "posture",
           "parameterNameOverride": null,
           "schema": {
@@ -73200,9 +73477,11 @@ exports[`open api parser aries parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Verification key of interest",
+          "explode": true,
           "name": "verkey",
           "parameterNameOverride": null,
           "schema": {
@@ -73224,6 +73503,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -73431,6 +73711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -73445,6 +73726,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -73632,6 +73914,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -73646,9 +73929,11 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -73670,9 +73955,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -73692,9 +73979,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Mediation identifier",
+          "explode": true,
           "name": "mediation_id",
           "parameterNameOverride": null,
           "schema": {
@@ -73716,6 +74005,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -73797,6 +74087,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "DID of interest",
+          "explode": true,
           "name": "did",
           "parameterNameOverride": null,
           "schema": {
@@ -73811,6 +74102,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -73913,6 +74205,7 @@ exports[`open api parser aries parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Connection identifier",
+          "explode": true,
           "name": "conn_id",
           "parameterNameOverride": null,
           "schema": {
@@ -73934,9 +74227,11 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Create Transaction For Endorser's signature",
+          "explode": true,
           "name": "create_transaction_for_endorser",
           "parameterNameOverride": null,
           "schema": {
@@ -73956,6 +74251,7 @@ exports[`open api parser aries parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {

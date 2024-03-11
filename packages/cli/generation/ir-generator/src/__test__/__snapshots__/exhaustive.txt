@@ -38322,6 +38322,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -38353,6 +38354,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -38583,6 +38585,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": true,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -38614,6 +38617,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": true,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {
@@ -38912,6 +38916,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "listRepresentation": "EXPLODED",
               "name": {
                 "name": {
                   "camelCase": {

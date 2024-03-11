@@ -93,6 +93,8 @@ types:
     properties:
       name: string
       schema: SchemaWithExample
+      style: optional<string>
+      explode: optional<boolean>
       parameterNameOverride:
         type: optional<string>
         docs: |

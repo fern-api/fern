@@ -727,6 +727,7 @@ exports[`open api parser merge parse open api 1`] = `
 
 * \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
+          "explode": false,
           "name": "account_type",
           "parameterNameOverride": null,
           "schema": {
@@ -769,9 +770,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return BankInfo's with this bank name.",
+          "explode": false,
           "name": "bank_name",
           "parameterNameOverride": null,
           "schema": {
@@ -793,9 +796,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -815,9 +820,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -837,9 +844,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -861,9 +870,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return bank accounts for this employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -885,9 +896,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -908,9 +921,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -930,9 +945,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -952,9 +969,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -974,9 +993,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -996,9 +1017,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Overrides the default ordering for this endpoint.",
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -1041,9 +1064,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -1063,9 +1088,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -1086,9 +1113,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -1110,9 +1139,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -1133,6 +1164,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1361,6 +1393,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -1381,9 +1414,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -1403,9 +1438,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -1426,9 +1463,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -1449,6 +1488,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -1653,6 +1693,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -1672,9 +1713,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -1694,9 +1737,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -1718,9 +1763,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will return the benefits associated with the employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -1742,9 +1789,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -1765,9 +1814,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -1787,9 +1838,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -1809,9 +1862,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -1831,9 +1886,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -1853,9 +1910,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -1875,9 +1934,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -1899,6 +1960,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2137,6 +2199,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -2157,9 +2220,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -2179,6 +2244,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2348,6 +2414,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -2367,9 +2434,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -2389,9 +2458,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -2413,9 +2484,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -2435,9 +2508,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -2457,9 +2532,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -2479,9 +2556,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -2501,9 +2580,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -2523,9 +2604,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -2547,6 +2630,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -2762,6 +2846,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -2781,6 +2866,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3123,6 +3209,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -3142,9 +3229,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -3164,9 +3253,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -3188,9 +3279,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs for this employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3212,9 +3305,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs ended after this datetime.",
+          "explode": false,
           "name": "ended_after",
           "parameterNameOverride": null,
           "schema": {
@@ -3234,9 +3329,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs ended before this datetime.",
+          "explode": false,
           "name": "ended_before",
           "parameterNameOverride": null,
           "schema": {
@@ -3256,9 +3353,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -3313,9 +3412,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -3335,9 +3436,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -3357,9 +3460,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -3379,9 +3484,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -3401,9 +3508,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -3423,9 +3532,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs for this employee.",
+          "explode": false,
           "name": "payroll_run_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3447,9 +3558,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -3471,9 +3584,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs started after this datetime.",
+          "explode": false,
           "name": "started_after",
           "parameterNameOverride": null,
           "schema": {
@@ -3493,9 +3608,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employee payroll runs started before this datetime.",
+          "explode": false,
           "name": "started_before",
           "parameterNameOverride": null,
           "schema": {
@@ -3515,6 +3632,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -3992,6 +4110,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -4046,9 +4165,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -4068,6 +4189,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -4386,6 +4508,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return employees for this company.",
+          "explode": false,
           "name": "company_id",
           "parameterNameOverride": null,
           "schema": {
@@ -4407,9 +4530,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -4429,9 +4554,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -4451,9 +4578,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -4475,9 +4604,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees with this display name.",
+          "explode": false,
           "name": "display_full_name",
           "parameterNameOverride": null,
           "schema": {
@@ -4499,6 +4630,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees with this employment status.
@@ -4506,6 +4638,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`ACTIVE\` - ACTIVE
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
+          "explode": false,
           "name": "employment_status",
           "parameterNameOverride": null,
           "schema": {
@@ -4560,9 +4693,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -7641,9 +7776,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees with this first name.",
+          "explode": false,
           "name": "first_name",
           "parameterNameOverride": null,
           "schema": {
@@ -7665,9 +7802,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees matching the group ids; multiple groups can be separated by commas.",
+          "explode": false,
           "name": "groups",
           "parameterNameOverride": null,
           "schema": {
@@ -7689,9 +7828,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -7711,9 +7852,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -7733,9 +7876,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include sensitive fields (such as social security numbers) in the response.",
+          "explode": false,
           "name": "include_sensitive_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -7755,9 +7900,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees with this last name.",
+          "explode": false,
           "name": "last_name",
           "parameterNameOverride": null,
           "schema": {
@@ -7779,9 +7926,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees for this manager.",
+          "explode": false,
           "name": "manager_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7803,9 +7952,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -7825,9 +7976,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -7847,9 +8000,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -7869,9 +8024,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees for this pay group",
+          "explode": false,
           "name": "pay_group_id",
           "parameterNameOverride": null,
           "schema": {
@@ -7893,9 +8050,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return Employees with this personal email",
+          "explode": false,
           "name": "personal_email",
           "parameterNameOverride": null,
           "schema": {
@@ -7917,9 +8076,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -8118,9 +8279,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8142,9 +8305,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -8343,9 +8508,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees that started after this datetime.",
+          "explode": false,
           "name": "started_after",
           "parameterNameOverride": null,
           "schema": {
@@ -8365,9 +8532,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees that started before this datetime.",
+          "explode": false,
           "name": "started_before",
           "parameterNameOverride": null,
           "schema": {
@@ -8387,9 +8556,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees for this team.",
+          "explode": false,
           "name": "team_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8411,9 +8582,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees that were terminated after this datetime.",
+          "explode": false,
           "name": "terminated_after",
           "parameterNameOverride": null,
           "schema": {
@@ -8433,9 +8606,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees that were terminated before this datetime.",
+          "explode": false,
           "name": "terminated_before",
           "parameterNameOverride": null,
           "schema": {
@@ -8455,9 +8630,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return Employees with this work email",
+          "explode": false,
           "name": "work_email",
           "parameterNameOverride": null,
           "schema": {
@@ -8479,9 +8656,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employees for this location.",
+          "explode": false,
           "name": "work_location_id",
           "parameterNameOverride": null,
           "schema": {
@@ -8503,6 +8682,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -9028,6 +9208,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include debug fields (such as log file links) in the response.",
+          "explode": false,
           "name": "is_debug_mode",
           "parameterNameOverride": null,
           "schema": {
@@ -9047,9 +9228,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether or not third-party updates should be run asynchronously.",
+          "explode": false,
           "name": "run_async",
           "parameterNameOverride": null,
           "schema": {
@@ -9069,6 +9252,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -9486,6 +9670,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -12564,9 +12749,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -12586,9 +12773,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include sensitive fields (such as social security numbers) in the response.",
+          "explode": false,
           "name": "include_sensitive_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -12608,9 +12797,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -12809,9 +13000,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -13010,6 +13203,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -13515,6 +13709,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -13534,9 +13729,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -13556,9 +13753,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -13580,9 +13779,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return employments for this employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -13604,9 +13805,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -13661,9 +13864,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -13683,9 +13888,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -13705,9 +13912,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -13727,9 +13936,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -13749,9 +13960,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Overrides the default ordering for this endpoint.",
+          "explode": false,
           "name": "order_by",
           "parameterNameOverride": null,
           "schema": {
@@ -13794,9 +14007,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -13816,9 +14031,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -14017,9 +14234,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -14041,9 +14260,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -14242,6 +14463,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -14486,6 +14708,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -14540,9 +14763,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -14562,9 +14787,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -14763,9 +14990,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -14964,6 +15193,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15226,6 +15456,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -15245,9 +15476,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -15267,9 +15500,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -15291,9 +15526,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -15313,9 +15550,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -15335,9 +15574,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -15357,9 +15598,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -15379,9 +15622,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -15401,9 +15646,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -15424,9 +15671,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -15448,9 +15697,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -15471,9 +15722,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return groups of these types. Multiple values can be separated by commas.",
+          "explode": false,
           "name": "types",
           "parameterNameOverride": null,
           "schema": {
@@ -15495,6 +15748,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15702,6 +15956,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -15721,9 +15976,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -15744,9 +16001,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -15767,6 +16026,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -15898,6 +16158,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "account_token",
           "parameterNameOverride": null,
           "schema": {
@@ -15919,9 +16180,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -15943,9 +16206,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If included, will only include issues whose most recent action occurred before this time",
+          "explode": false,
           "name": "end_date",
           "parameterNameOverride": null,
           "schema": {
@@ -15967,9 +16232,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "end_user_organization_name",
           "parameterNameOverride": null,
           "schema": {
@@ -15991,9 +16258,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return issues whose first incident time was after this datetime.",
+          "explode": false,
           "name": "first_incident_time_after",
           "parameterNameOverride": null,
           "schema": {
@@ -16013,9 +16282,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return issues whose first incident time was before this datetime.",
+          "explode": false,
           "name": "first_incident_time_before",
           "parameterNameOverride": null,
           "schema": {
@@ -16035,9 +16306,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If True, will include muted issues",
+          "explode": false,
           "name": "include_muted",
           "parameterNameOverride": null,
           "schema": {
@@ -16059,9 +16332,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "integration_name",
           "parameterNameOverride": null,
           "schema": {
@@ -16083,9 +16358,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return issues whose last incident time was after this datetime.",
+          "explode": false,
           "name": "last_incident_time_after",
           "parameterNameOverride": null,
           "schema": {
@@ -16105,9 +16382,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return issues whose last incident time was before this datetime.",
+          "explode": false,
           "name": "last_incident_time_before",
           "parameterNameOverride": null,
           "schema": {
@@ -16127,9 +16406,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -16149,9 +16430,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If included, will only include issues whose most recent action occurred after this time",
+          "explode": false,
           "name": "start_date",
           "parameterNameOverride": null,
           "schema": {
@@ -16173,12 +16456,14 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
 
 * \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -16221,6 +16506,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -16741,6 +17027,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`crm\` - crm
 * \`mktg\` - mktg
 * \`filestorage\` - filestorage",
+          "explode": false,
           "name": "category",
           "parameterNameOverride": null,
           "schema": {
@@ -16843,9 +17130,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -16867,9 +17156,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return linked accounts associated with the given email address.",
+          "explode": false,
           "name": "end_user_email_address",
           "parameterNameOverride": null,
           "schema": {
@@ -16891,9 +17182,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return linked accounts associated with the given organization name.",
+          "explode": false,
           "name": "end_user_organization_name",
           "parameterNameOverride": null,
           "schema": {
@@ -16915,9 +17208,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return linked accounts associated with the given origin ID.",
+          "explode": false,
           "name": "end_user_origin_id",
           "parameterNameOverride": null,
           "schema": {
@@ -16939,9 +17234,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
+          "explode": false,
           "name": "end_user_origin_ids",
           "parameterNameOverride": null,
           "schema": {
@@ -16963,9 +17260,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": null,
+          "explode": false,
           "name": "id",
           "parameterNameOverride": null,
           "schema": {
@@ -16987,9 +17286,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
+          "explode": false,
           "name": "ids",
           "parameterNameOverride": null,
           "schema": {
@@ -17011,9 +17312,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If \`true\`, will include complete production duplicates of the account specified by the \`id\` query parameter in the response. \`id\` must be for a complete production linked account.",
+          "explode": false,
           "name": "include_duplicates",
           "parameterNameOverride": null,
           "schema": {
@@ -17033,9 +17336,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return linked accounts associated with the given integration name.",
+          "explode": false,
           "name": "integration_name",
           "parameterNameOverride": null,
           "schema": {
@@ -17057,9 +17362,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If included, will only include test linked accounts. If not included, will only include non-test linked accounts.",
+          "explode": false,
           "name": "is_test_account",
           "parameterNameOverride": null,
           "schema": {
@@ -17081,9 +17388,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -17103,9 +17412,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Filter by status. Options: \`COMPLETE\`, \`INCOMPLETE\`, \`RELINK_NEEDED\`",
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -17127,6 +17438,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -17339,6 +17651,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -17358,9 +17671,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -17380,9 +17695,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -17404,9 +17721,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -17426,9 +17745,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -17448,9 +17769,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -17470,9 +17793,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -17492,9 +17817,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -17514,9 +17841,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -17537,9 +17866,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -17561,9 +17892,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -17584,6 +17917,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -17830,6 +18164,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -17849,9 +18184,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -17872,9 +18209,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -17895,6 +18234,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18267,6 +18607,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -18286,9 +18627,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -18308,9 +18651,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -18332,9 +18677,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -18354,9 +18701,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -18376,9 +18725,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -18398,9 +18749,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -18420,9 +18773,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -18442,9 +18797,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -18466,6 +18823,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18662,6 +19020,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -18681,6 +19040,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -18865,6 +19225,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -18884,9 +19245,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -18906,9 +19269,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -18930,9 +19295,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return payroll runs ended after this datetime.",
+          "explode": false,
           "name": "ended_after",
           "parameterNameOverride": null,
           "schema": {
@@ -18952,9 +19319,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return payroll runs ended before this datetime.",
+          "explode": false,
           "name": "ended_before",
           "parameterNameOverride": null,
           "schema": {
@@ -18974,9 +19343,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -18996,9 +19367,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -19018,9 +19391,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -19040,9 +19415,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -19062,9 +19439,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -19084,9 +19463,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -19141,9 +19522,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -19165,6 +19548,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return PayrollRun's with this status. Options: ('REGULAR', 'OFF_CYCLE', 'CORRECTION', 'TERMINATION', 'SIGN_ON_BONUS')
@@ -19174,6 +19558,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`CORRECTION\` - CORRECTION
 * \`TERMINATION\` - TERMINATION
 * \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
+          "explode": false,
           "name": "run_type",
           "parameterNameOverride": null,
           "schema": {
@@ -19252,9 +19637,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -19309,9 +19696,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return payroll runs started after this datetime.",
+          "explode": false,
           "name": "started_after",
           "parameterNameOverride": null,
           "schema": {
@@ -19331,9 +19720,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return payroll runs started before this datetime.",
+          "explode": false,
           "name": "started_before",
           "parameterNameOverride": null,
           "schema": {
@@ -19353,6 +19744,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -19571,6 +19963,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -19590,9 +19983,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -19647,9 +20042,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -19704,6 +20101,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -20466,6 +20864,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": null,
+          "explode": false,
           "name": "common_model",
           "parameterNameOverride": null,
           "schema": {
@@ -20487,9 +20886,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -20511,9 +20912,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -20533,6 +20936,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -20686,6 +21090,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -20707,9 +21112,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -20729,6 +21136,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -21035,6 +21443,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -21054,9 +21463,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -21076,9 +21487,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -21100,9 +21513,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -21123,9 +21538,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -21145,9 +21562,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -21167,9 +21586,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -21189,9 +21610,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -21211,9 +21634,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -21233,9 +21658,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return teams with this parent team.",
+          "explode": false,
           "name": "parent_team_id",
           "parameterNameOverride": null,
           "schema": {
@@ -21257,9 +21684,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -21281,6 +21710,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -21484,6 +21914,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -21504,9 +21935,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -21526,6 +21959,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -21735,6 +22169,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return time off for this approver.",
+          "explode": false,
           "name": "approver_id",
           "parameterNameOverride": null,
           "schema": {
@@ -21756,9 +22191,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -21778,9 +22215,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -21800,9 +22239,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -21824,9 +22265,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return time off for this employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -21848,9 +22291,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -21905,9 +22350,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -21927,9 +22374,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -21949,9 +22398,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -21971,9 +22422,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -21993,9 +22446,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -22015,9 +22470,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -22120,9 +22577,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -22144,6 +22603,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return TimeOff with this request type. Options: ('VACATION', 'SICK', 'PERSONAL', 'JURY_DUTY', 'VOLUNTEER', 'BEREAVEMENT')
@@ -22154,6 +22614,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`JURY_DUTY\` - JURY_DUTY
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
+          "explode": false,
           "name": "request_type",
           "parameterNameOverride": null,
           "schema": {
@@ -22244,9 +22705,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -22349,6 +22812,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return TimeOff with this status. Options: ('REQUESTED', 'APPROVED', 'DECLINED', 'CANCELLED', 'DELETED')
@@ -22358,6 +22822,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`DECLINED\` - DECLINED
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
+          "explode": false,
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
@@ -22436,6 +22901,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -22799,6 +23265,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Whether to include debug fields (such as log file links) in the response.",
+          "explode": false,
           "name": "is_debug_mode",
           "parameterNameOverride": null,
           "schema": {
@@ -22818,9 +23285,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether or not third-party updates should be run asynchronously.",
+          "explode": false,
           "name": "run_async",
           "parameterNameOverride": null,
           "schema": {
@@ -22840,6 +23309,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
       ],
       "request": {
@@ -23032,6 +23502,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "If provided, will only return objects created after this datetime.",
+          "explode": false,
           "name": "created_after",
           "parameterNameOverride": null,
           "schema": {
@@ -23051,9 +23522,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return objects created before this datetime.",
+          "explode": false,
           "name": "created_before",
           "parameterNameOverride": null,
           "schema": {
@@ -23073,9 +23546,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "The pagination cursor value.",
+          "explode": false,
           "name": "cursor",
           "parameterNameOverride": null,
           "schema": {
@@ -23097,9 +23572,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return time off balances for this employee.",
+          "explode": false,
           "name": "employee_id",
           "parameterNameOverride": null,
           "schema": {
@@ -23121,9 +23598,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -23144,9 +23623,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
+          "explode": false,
           "name": "include_deleted_data",
           "parameterNameOverride": null,
           "schema": {
@@ -23166,9 +23647,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -23188,9 +23671,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
+          "explode": false,
           "name": "modified_after",
           "parameterNameOverride": null,
           "schema": {
@@ -23210,9 +23695,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
+          "explode": false,
           "name": "modified_before",
           "parameterNameOverride": null,
           "schema": {
@@ -23232,9 +23719,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Number of results to return per page.",
+          "explode": false,
           "name": "page_size",
           "parameterNameOverride": null,
           "schema": {
@@ -23254,6 +23743,7 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "If provided, will only return TimeOffBalance with this policy type. Options: ('VACATION', 'SICK', 'PERSONAL', 'JURY_DUTY', 'VOLUNTEER', 'BEREAVEMENT')
@@ -23264,6 +23754,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`JURY_DUTY\` - JURY_DUTY
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
+          "explode": false,
           "name": "policy_type",
           "parameterNameOverride": null,
           "schema": {
@@ -23354,9 +23845,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -23377,9 +23870,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "The API provider's ID for the given object.",
+          "explode": false,
           "name": "remote_id",
           "parameterNameOverride": null,
           "schema": {
@@ -23401,9 +23896,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -23424,6 +23921,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -23638,6 +24136,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -23658,9 +24157,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -23680,9 +24181,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -23703,9 +24206,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -23726,6 +24231,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
@@ -23969,6 +24475,7 @@ exports[`open api parser merge parse open api 1`] = `
       "queryParameters": [
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+          "explode": false,
           "name": "expand",
           "parameterNameOverride": null,
           "schema": {
@@ -24023,9 +24530,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+          "explode": false,
           "name": "include_remote_data",
           "parameterNameOverride": null,
           "schema": {
@@ -24045,9 +24554,11 @@ exports[`open api parser merge parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "style": "form",
         },
         {
           "description": "Deprecated. Use show_enum_origins.",
+          "explode": false,
           "name": "remote_fields",
           "parameterNameOverride": null,
           "schema": {
@@ -24150,9 +24661,11 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
         {
           "description": "Which fields should be returned in non-normalized form.",
+          "explode": false,
           "name": "show_enum_origins",
           "parameterNameOverride": null,
           "schema": {
@@ -24255,6 +24768,7 @@ exports[`open api parser merge parse open api 1`] = `
               ],
             },
           },
+          "style": "form",
         },
       ],
       "request": null,
