@@ -1,5 +1,5 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
 
@@ -11,7 +11,7 @@ export declare namespace getGeneratorConfig {
         organization: string;
         outputVersion?: string | undefined;
         customConfig: unknown;
-        generatorInvocation: GeneratorInvocation;
+        generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
     }
 

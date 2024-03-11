@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import {
     DefinitionFileSchema,

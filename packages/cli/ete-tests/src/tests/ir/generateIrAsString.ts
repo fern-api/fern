@@ -1,5 +1,5 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { readFile, rm } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
 
@@ -11,7 +11,7 @@ export async function generateIrAsString({
     version
 }: {
     fixturePath: AbsoluteFilePath;
-    language?: GenerationLanguage;
+    language?: generatorsYml.GenerationLanguage;
     audiences?: string[];
     apiName?: string;
     version?: string;

@@ -1,7 +1,6 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage, GeneratorGroup } from "@fern-api/generators-configuration";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -29,7 +28,7 @@ export async function runDockerForWorkspace({
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
@@ -40,7 +39,7 @@ export async function runDockerForWorkspace({
     fixtureName: string;
     keepDocker: boolean | undefined;
 }): Promise<void> {
-    const generatorGroup: GeneratorGroup = {
+    const generatorGroup: generatorsYml.GeneratorGroup = {
         groupName: "test",
         audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
         generators: [
@@ -73,7 +72,7 @@ function getOutputMode({
     fixtureName
 }: {
     outputMode: OutputMode;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixtureName: string;
 }): FernFiddle.OutputMode {
     switch (outputMode) {
@@ -98,7 +97,7 @@ function getGithubPublishInfo({
     language,
     fixtureName
 }: {
-    language: GenerationLanguage;
+    language: generatorsYml.GenerationLanguage;
     fixtureName: string;
 }): GithubPublishInfo | undefined {
     switch (language) {
@@ -133,7 +132,7 @@ function getPublishInfo({
     language,
     fixtureName
 }: {
-    language: GenerationLanguage;
+    language: generatorsYml.GenerationLanguage;
     fixtureName: string;
 }): PublishOutputModeV2 {
     switch (language) {

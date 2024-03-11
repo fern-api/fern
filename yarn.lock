@@ -2334,13 +2334,12 @@ __metadata:
   resolution: "@fern-api/cli@workspace:packages/cli/cli"
   dependencies:
     "@fern-api/auth": "workspace:*"
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-preview": "workspace:*"
     "@fern-api/docs-validator": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
@@ -2349,13 +2348,11 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/login": "workspace:*"
-    "@fern-api/manage-generator": "workspace:*"
     "@fern-api/mock": "workspace:*"
     "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
     "@fern-api/register": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
@@ -2408,19 +2405,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/config-management-commons@workspace:*, @fern-api/config-management-commons@workspace:packages/cli/config-management/commons":
+"@fern-api/configuration@workspace:*, @fern-api/configuration@workspace:packages/cli/configuration":
   version: 0.0.0-use.local
-  resolution: "@fern-api/config-management-commons@workspace:packages/cli/config-management/commons"
+  resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
+    "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-fern/fiddle-sdk": ^0.0.411
     "@types/jest": ^29.0.3
+    "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
+    "@types/tinycolor2": ^1.4.6
     depcheck: ^1.4.6
     eslint: ^8.56.0
+    find-up: ^6.3.0
+    immer: ^9.0.15
     jest: ^29.7.0
+    js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    tinycolor2: ^1.6.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2501,28 +2507,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/dependencies-configuration@workspace:*, @fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration"
-  dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.8
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    jest: ^29.7.0
-    js-yaml: ^4.1.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    zod: ^3.22.3
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils"
@@ -2542,53 +2526,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docs-config-sdk@workspace:*, @fern-api/docs-config-sdk@workspace:packages/docs-config-sdk":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/docs-config-sdk@workspace:packages/docs-config-sdk"
-  dependencies:
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    jest: ^29.7.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/docs-configuration@workspace:*, @fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration"
-  dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
-    "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.8
-    "@types/node": ^18.7.18
-    "@types/tinycolor2": ^1.4.6
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    jest: ^29.7.0
-    js-yaml: ^4.1.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    tinycolor2: ^1.6.0
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/docs-preview@workspace:*, @fern-api/docs-preview@workspace:packages/cli/docs-preview":
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-preview@workspace:packages/cli/docs-preview"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
-    "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -2616,11 +2559,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-validator@workspace:packages/cli/yaml/docs-validator"
   dependencies:
-    "@fern-api/docs-config-sdk": "workspace:*"
-    "@fern-api/docs-configuration": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -2642,10 +2583,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ete-tests@workspace:packages/cli/ete-tests"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2828,42 +2768,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generators-configuration@workspace:*, @fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration"
-  dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
-    "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.8
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    immer: ^9.0.15
-    jest: ^29.7.0
-    js-yaml: ^4.1.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    zod: ^3.22.3
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/init@workspace:*, @fern-api/init@workspace:packages/cli/init":
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/cli/init"
   dependencies:
     "@fern-api/auth": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/login": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
@@ -2891,12 +2804,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-generator@workspace:packages/cli/generation/ir-generator"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
@@ -2923,9 +2834,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-migrations@workspace:packages/cli/generation/ir-migrations"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3036,14 +2947,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/local-workspace-runner@workspace:packages/cli/generation/local-generation/local-workspace-runner"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.571
@@ -3126,24 +3035,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/manage-generator@workspace:*, @fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator"
-  dependencies:
-    "@fern-api/generators-configuration": "workspace:*"
-    "@fern-api/logger": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    jest: ^29.7.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/mock@workspace:*, @fern-api/mock@workspace:packages/cli/mock":
   version: 0.0.0-use.local
   resolution: "@fern-api/mock@workspace:packages/cli/mock"
@@ -3218,12 +3109,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-ir-to-fern@workspace:packages/cli/openapi-ir-to-fern"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/openapi-ir-sdk": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3317,34 +3208,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/project-configuration@workspace:*, @fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration"
-  dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    find-up: ^6.3.0
-    jest: ^29.7.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    zod: ^3.22.3
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/project-loader@workspace:*, @fern-api/project-loader@workspace:packages/cli/project-loader":
   version: 0.0.0-use.local
   resolution: "@fern-api/project-loader@workspace:packages/cli/project-loader"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3367,7 +3238,7 @@ __metadata:
   resolution: "@fern-api/register@workspace:packages/cli/register"
   dependencies:
     "@fern-api/auth": "workspace:*"
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
@@ -3393,14 +3264,11 @@ __metadata:
   resolution: "@fern-api/remote-workspace-runner@workspace:packages/cli/generation/remote-generation/remote-workspace-runner"
   dependencies:
     "@fern-api/auth": "workspace:*"
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
-    "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
@@ -3510,14 +3378,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/seed-cli@workspace:packages/seed"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.411
@@ -3597,11 +3463,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
@@ -3636,15 +3502,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/workspace-loader@workspace:packages/cli/workspace-loader"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/dependencies-configuration": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
@@ -3697,9 +3560,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-migrations@workspace:packages/cli/yaml/yaml-migrations"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3730,8 +3592,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema"
   dependencies:
+    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-config-sdk": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@types/jest": ^29.0.3
@@ -11414,7 +11276,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.1.0
+    mrlint: 0.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -16318,7 +16180,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.1.0":
+"mrlint@npm:0.1.0":
   version: 0.1.0
   resolution: "mrlint@npm:0.1.0"
   bin:

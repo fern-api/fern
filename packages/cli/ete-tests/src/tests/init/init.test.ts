@@ -1,5 +1,5 @@
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 

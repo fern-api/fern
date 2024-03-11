@@ -1,4 +1,4 @@
-import { validateSchema } from "@fern-api/config-management-commons";
+import { validateSchema } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";

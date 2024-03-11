@@ -1,12 +1,11 @@
+import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
-const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
+const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
     groups: {
         internal: {
             generators: [

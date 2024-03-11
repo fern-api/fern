@@ -1,4 +1,4 @@
-import { GeneratorName } from "@fern-api/generators-configuration";
+import { GeneratorName } from "@fern-api/configuration";
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
 
 export function getMinimumVersionForGenerator({ generatorName }: { generatorName: string }): string | undefined {

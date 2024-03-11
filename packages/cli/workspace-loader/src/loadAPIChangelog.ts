@@ -1,5 +1,5 @@
+import { CHANGELOG_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CHANGELOG_DIRECTORY } from "@fern-api/project-configuration";
 import { listFiles } from "./listFiles";
 import { APIChangelog } from "./types/Workspace";
 

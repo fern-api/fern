@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { generateFdrApiDefinitionAsString } from "./generateFdrApiDefinitionAsString";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
@@ -16,7 +16,7 @@ const FIXTURES: Fixture[] = [
 interface Fixture {
     name: string;
     audiences?: string[];
-    language?: GenerationLanguage;
+    language?: generatorsYml.GenerationLanguage;
     version?: string;
     only?: boolean;
 }

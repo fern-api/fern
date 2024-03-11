@@ -1,6 +1,5 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -25,7 +24,7 @@ export async function runLocalGenerationForWorkspace({
 }: {
     organization: string;
     workspace: FernWorkspace;
-    generatorGroup: GeneratorGroup;
+    generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
 }): Promise<void> {
@@ -76,7 +75,7 @@ export async function runLocalGenerationForSeed({
 }: {
     organization: string;
     workspace: FernWorkspace;
-    generatorGroup: GeneratorGroup;
+    generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
@@ -143,7 +142,7 @@ async function writeFilesToDiskAndRunGenerator({
     organization: string;
     workspace: FernWorkspace;
     audiences: Audiences;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     workspaceTempDir: DirectoryResult;
     keepDocker: boolean;
@@ -214,7 +213,7 @@ async function writeIrToFile({
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
     irVersionOverride: string | undefined;

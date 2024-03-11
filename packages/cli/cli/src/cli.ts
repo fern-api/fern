@@ -1,14 +1,14 @@
+import {
+    generatorsYml,
+    fernConfigJson,
+    GENERATORS_CONFIGURATION_FILENAME,
+    getFernDirectory,
+    PROJECT_CONFIG_FILENAME
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import {
-    GENERATORS_CONFIGURATION_FILENAME,
-    getFernDirectory,
-    loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
-} from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import { Argv } from "yargs";
@@ -165,7 +165,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
-            loadProjectConfig({ directory: fernDirectory, context })
+            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
@@ -423,7 +423,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The version of IR to produce"
                 })
                 .option("language", {
-                    choices: Object.values(GenerationLanguage),
+                    choices: Object.values(generatorsYml.GenerationLanguage),
                     description: "Generate IR for a particular language"
                 })
                 .option("audience", {

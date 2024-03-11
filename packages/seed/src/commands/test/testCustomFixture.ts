@@ -1,5 +1,5 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
@@ -22,7 +22,7 @@ export async function testCustomFixture({
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
     irVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
     logLevel: LogLevel;
     numDockers: number;

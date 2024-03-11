@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";

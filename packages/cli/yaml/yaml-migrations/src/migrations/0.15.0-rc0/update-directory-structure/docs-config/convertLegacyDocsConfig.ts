@@ -1,4 +1,5 @@
-import { DocsURL, LegacyDocs, MigratedDocs } from ".";
+import { docsYml } from "@fern-api/configuration";
+import { LegacyDocs } from ".";
 
 export function convertLegacyDocsConfig({
     docsConfiguration,
@@ -6,9 +7,9 @@ export function convertLegacyDocsConfig({
     apiName
 }: {
     docsConfiguration: LegacyDocs.DocsConfiguration;
-    docsURLs: DocsURL[];
+    docsURLs: docsYml.RawSchemas.DocsInstances[];
     apiName: string | undefined;
-}): MigratedDocs.DocsConfiguration {
+}): docsYml.RawSchemas.DocsConfiguration {
     return {
         ...docsConfiguration,
         navbarLinks: docsConfiguration.navbarLinks?.map((link) => ({ ...link, href: link.url })),
@@ -27,7 +28,7 @@ function addApiNameToNavigationConfig({
 }: {
     navigation: LegacyDocs.NavigationItem[];
     apiName: string | undefined;
-}): MigratedDocs.NavigationItem[] {
+}): docsYml.RawSchemas.NavigationItem[] {
     return navigation.map((item) => {
         if (isAPIReferenceSection(item)) {
             return {
