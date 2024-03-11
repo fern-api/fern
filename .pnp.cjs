@@ -3937,6 +3937,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@balena/dockerignore", [\
+        ["npm:1.0.2", {\
+          "packageLocation": "./.yarn/cache/@balena-dockerignore-npm-1.0.2-1128560642-0d39f8fbcf.zip/node_modules/@balena/dockerignore/",\
+          "packageDependencies": [\
+            ["@balena/dockerignore", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@bcoe/v8-coverage", [\
         ["npm:0.2.3", {\
           "packageLocation": "./.yarn/cache/@bcoe-v8-coverage-npm-0.2.3-9e27b3c57e-850f930553.zip/node_modules/@bcoe/v8-coverage/",\
@@ -4688,7 +4697,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
-            ["dockerode", "npm:3.3.2"],\
+            ["dockerode", "npm:4.0.2"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -11557,10 +11566,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["buildcheck", [\
-        ["npm:0.0.3", {\
-          "packageLocation": "./.yarn/cache/buildcheck-npm-0.0.3-ac31c4ae43-baf30605c5.zip/node_modules/buildcheck/",\
+        ["npm:0.0.6", {\
+          "packageLocation": "./.yarn/cache/buildcheck-npm-0.0.6-46e0f23ecf-ad61759dc9.zip/node_modules/buildcheck/",\
           "packageDependencies": [\
-            ["buildcheck", "npm:0.0.3"]\
+            ["buildcheck", "npm:0.0.6"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -12678,12 +12687,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["cpu-features", [\
-        ["npm:0.0.4", {\
-          "packageLocation": "./.yarn/unplugged/cpu-features-npm-0.0.4-b474ef5da3/node_modules/cpu-features/",\
+        ["npm:0.0.9", {\
+          "packageLocation": "./.yarn/unplugged/cpu-features-npm-0.0.9-b608362c8d/node_modules/cpu-features/",\
           "packageDependencies": [\
-            ["cpu-features", "npm:0.0.4"],\
-            ["buildcheck", "npm:0.0.3"],\
-            ["nan", "npm:2.16.0"],\
+            ["cpu-features", "npm:0.0.9"],\
+            ["buildcheck", "npm:0.0.6"],\
+            ["nan", "npm:2.19.0"],\
             ["node-gyp", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -13361,24 +13370,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["docker-modem", [\
-        ["npm:3.0.5", {\
-          "packageLocation": "./.yarn/cache/docker-modem-npm-3.0.5-f3577eede7-79027f8e71.zip/node_modules/docker-modem/",\
+        ["npm:5.0.3", {\
+          "packageLocation": "./.yarn/cache/docker-modem-npm-5.0.3-49494b2140-68f4948591.zip/node_modules/docker-modem/",\
           "packageDependencies": [\
-            ["docker-modem", "npm:3.0.5"],\
+            ["docker-modem", "npm:5.0.3"],\
             ["debug", "virtual:4758feee42453c0e31b0d2032a7b1362d6b06281699830d2da9a056f2cca72bd2c5cfdb74005fdf03a64876be8eaca2dd7b0fc2dc59d14318badf19cb22ba18e#npm:4.3.4"],\
             ["readable-stream", "npm:3.6.0"],\
             ["split-ca", "npm:1.0.1"],\
-            ["ssh2", "npm:1.11.0"]\
+            ["ssh2", "npm:1.15.0"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["dockerode", [\
-        ["npm:3.3.2", {\
-          "packageLocation": "./.yarn/cache/dockerode-npm-3.3.2-a858a190a1-69b60547ed.zip/node_modules/dockerode/",\
+        ["npm:4.0.2", {\
+          "packageLocation": "./.yarn/cache/dockerode-npm-4.0.2-18c529e4b9-4d36633d04.zip/node_modules/dockerode/",\
           "packageDependencies": [\
-            ["dockerode", "npm:3.3.2"],\
-            ["docker-modem", "npm:3.0.5"],\
+            ["dockerode", "npm:4.0.2"],\
+            ["@balena/dockerignore", "npm:1.0.2"],\
+            ["docker-modem", "npm:5.0.3"],\
             ["tar-fs", "npm:2.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -20557,10 +20567,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["nan", [\
-        ["npm:2.16.0", {\
-          "packageLocation": "./.yarn/unplugged/nan-npm-2.16.0-cac314a230/node_modules/nan/",\
+        ["npm:2.19.0", {\
+          "packageLocation": "./.yarn/unplugged/nan-npm-2.19.0-2f5da4a528/node_modules/nan/",\
           "packageDependencies": [\
-            ["nan", "npm:2.16.0"],\
+            ["nan", "npm:2.19.0"],\
             ["node-gyp", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -24333,14 +24343,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["ssh2", [\
-        ["npm:1.11.0", {\
-          "packageLocation": "./.yarn/unplugged/ssh2-npm-1.11.0-ba52882820/node_modules/ssh2/",\
+        ["npm:1.15.0", {\
+          "packageLocation": "./.yarn/unplugged/ssh2-npm-1.15.0-ae0f64364d/node_modules/ssh2/",\
           "packageDependencies": [\
-            ["ssh2", "npm:1.11.0"],\
+            ["ssh2", "npm:1.15.0"],\
             ["asn1", "npm:0.2.6"],\
             ["bcrypt-pbkdf", "npm:1.0.2"],\
-            ["cpu-features", "npm:0.0.4"],\
-            ["nan", "npm:2.16.0"]\
+            ["cpu-features", "npm:0.0.9"],\
+            ["nan", "npm:2.19.0"]\
           ],\
           "linkType": "HARD"\
         }]\
