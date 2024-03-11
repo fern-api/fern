@@ -1,12 +1,10 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationThroughVersion
 } from "@fern-api/ir-migrations";
-import { ProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -24,9 +22,9 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     context
 }: {
-    projectConfig: ProjectConfig;
+    projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
-    generatorGroup: GeneratorGroup;
+    generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
 }): Promise<void> {
@@ -79,8 +77,8 @@ export async function runLocalGenerationForSeed({
 }: {
     organization: string;
     workspace: FernWorkspace;
-    generatorGroup: GeneratorGroup;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
+    generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
@@ -149,8 +147,8 @@ async function writeFilesToDiskAndRunGenerator({
     organization: string;
     workspace: FernWorkspace;
     audiences: Audiences;
-    generatorInvocation: GeneratorInvocation;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     workspaceTempDir: DirectoryResult;
     keepDocker: boolean;
@@ -226,7 +224,7 @@ async function writeIrToFile({
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
     irVersionOverride: string | undefined;

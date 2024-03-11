@@ -1,11 +1,12 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
+    DEFAULT_GROUP_NAME,
     DEFINITION_DIRECTORY,
+    generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
     OPENAPI_DIRECTORY,
     ROOT_API_FILENAME
-} from "@fern-api/project-configuration";
+} from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -50,7 +51,7 @@ export async function createOpenAPIWorkspace({
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
-const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
+const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
     "default-group": DEFAULT_GROUP_NAME,
     groups: {
         [DEFAULT_GROUP_NAME]: {

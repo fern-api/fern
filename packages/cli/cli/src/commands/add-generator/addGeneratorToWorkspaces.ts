@@ -1,5 +1,4 @@
-import { getPathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { addGenerator } from "@fern-api/manage-generator";
+import { generatorsYml } from "@fern-api/configuration";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -21,16 +20,23 @@ export async function addGeneratorToWorkspaces({
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration =
-                    (await loadRawGeneratorsConfiguration({
+                    (await generatorsYml.loadRawGeneratorsConfiguration({
                         absolutePathToWorkspace: workspace.absoluteFilepath,
                         context
                     })) ?? {};
 
-                const newConfiguration = addGenerator({ generatorName, generatorsConfiguration, groupName, context });
+                const newConfiguration = generatorsYml.addGenerator({
+                    generatorName,
+                    generatorsConfiguration,
+                    groupName,
+                    context
+                });
 
                 await writeFile(
                     workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                        getPathToGeneratorsConfiguration({ absolutePathToWorkspace: workspace.absoluteFilepath }),
+                        generatorsYml.getPathToGeneratorsConfiguration({
+                            absolutePathToWorkspace: workspace.absoluteFilepath
+                        }),
                     yaml.dump(newConfiguration)
                 );
                 context.logger.info(chalk.green(`Added ${generatorName} generator`));

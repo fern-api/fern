@@ -171,13 +171,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.570"
+version = "0.0.618"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.570-py3-none-any.whl", hash = "sha256:b3bac82638f3373913c89ce64b9c2e48ca2953b7b8a9d99efed038ade3d2ffc8"},
-    {file = "fern_fern_generator_exec_sdk-0.0.570.tar.gz", hash = "sha256:b1f6eecad436ed816046c667236e1dbb2c343fbb86e9c789f216e78801705cac"},
+    {file = "fern_fern_generator_exec_sdk-0.0.618-py3-none-any.whl", hash = "sha256:a0e994f5929d7d0e67a8fc9c78881dee234bfbb8735caa91a67cd49375b45a1e"},
+    {file = "fern_fern_generator_exec_sdk-0.0.618.tar.gz", hash = "sha256:b5ba69bb3a98d3a208c8153e0b9334eb99b4384b063938cf04731358880672a1"},
 ]
 
 [package.dependencies]
@@ -441,13 +441,13 @@ dev = ["black", "mypy", "pytest"]
 
 [[package]]
 name = "packaging"
-version = "23.2"
+version = "24.0"
 description = "Core utilities for Python packages"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
-    {file = "packaging-23.2.tar.gz", hash = "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5"},
+    {file = "packaging-24.0-py3-none-any.whl", hash = "sha256:2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5"},
+    {file = "packaging-24.0.tar.gz", hash = "sha256:eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"},
 ]
 
 [[package]]
@@ -939,4 +939,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "a2e9a628eb195ec28eb63b33bbcc930e8c045cd2cf9a3cb6cc54cf144d298e00"
+content-hash = "8044e701ebfc5dd3b4a0b8a2af7e5313c79e6ff96d11c9ea23de682bacf515fc"

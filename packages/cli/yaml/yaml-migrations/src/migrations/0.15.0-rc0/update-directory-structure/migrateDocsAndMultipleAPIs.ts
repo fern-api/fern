@@ -1,12 +1,8 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import {
-    DocsURL,
-    getAbsolutePathToDocsFolder,
-    getAbsolutePathToDocsYaml,
-    loadRawDocsConfiguration
-} from "./docs-config";
+import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import {
     convertLegacyGeneratorsConfiguration,
@@ -68,7 +64,7 @@ async function migrateAndWriteGeneratorsYml({
     absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-}): Promise<DocsURL[]> {
+}): Promise<docsYml.RawSchemas.DocsInstances[]> {
     const generatorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace });
     if (generatorsConfiguration == null) {
         return [];
@@ -88,7 +84,7 @@ async function migrateAndWriteDocsYml({
     apiName
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-    docsURLs: DocsURL[];
+    docsURLs: docsYml.RawSchemas.DocsInstances[];
     apiName: string;
 }): Promise<void> {
     const docsConfiguration = await loadRawDocsConfiguration({ absolutePathToWorkspace });

@@ -1,5 +1,4 @@
-import { ColorsConfiguration } from "@fern-api/docs-config-sdk";
-import { getColorFromRawConfig, getColorType } from "@fern-api/docs-configuration";
+import { docsYml } from "@fern-api/configuration";
 import tinycolor from "tinycolor2";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -12,7 +11,7 @@ export const AccentColorContrastRule: Rule = {
                     return [];
                 }
 
-                const colorType = getColorType(config.colors);
+                const colorType = docsYml.getColorType(config.colors);
 
                 if (colorType === "dark") {
                     return validateTheme(config.colors, "dark");
@@ -27,14 +26,17 @@ export const AccentColorContrastRule: Rule = {
     }
 };
 
-export function validateTheme(colors: ColorsConfiguration, theme: "dark" | "light"): RuleViolation[] {
-    const accentPrimaryColor = getColorFromRawConfig(
+export function validateTheme(
+    colors: docsYml.RawSchemas.ColorsConfiguration,
+    theme: "dark" | "light"
+): RuleViolation[] {
+    const accentPrimaryColor = docsYml.getColorFromRawConfig(
         colors.accentPrimary ?? colors.accentPrimaryDeprecated,
         "accent-primary",
         theme
     );
     let backgroundColor =
-        getColorFromRawConfig(colors.background, "background", theme) ?? (theme === "dark" ? "#000" : "#FFF");
+        docsYml.getColorFromRawConfig(colors.background, "background", theme) ?? (theme === "dark" ? "#000" : "#FFF");
 
     const ruleViolations: RuleViolation[] = [];
 

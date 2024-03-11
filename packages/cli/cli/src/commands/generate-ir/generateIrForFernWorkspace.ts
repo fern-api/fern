@@ -1,5 +1,4 @@
-import { Audiences } from "@fern-api/config-management-commons";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,7 +15,7 @@ export async function generateIrForFernWorkspace({
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;

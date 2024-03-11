@@ -1,6 +1,6 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { DefinitionFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
 import { FernWorkspace } from "../types/Workspace";

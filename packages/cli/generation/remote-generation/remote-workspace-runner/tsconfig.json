@@ -6,16 +6,14 @@
     { "path": "../../../../commons/core-utils" },
     { "path": "../../../../commons/fs-utils" },
     { "path": "../../../../core" },
-    { "path": "../../../../docs-config-sdk" },
     { "path": "../../../../ir-sdk" },
     { "path": "../../../auth" },
-    { "path": "../../../config-management/commons" },
-    { "path": "../../../config-management/docs-configuration" },
-    { "path": "../../../config-management/generators-configuration" },
+    { "path": "../../../configuration" },
     { "path": "../../../logger" },
     { "path": "../../../register" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },
+    { "path": "../../../yaml/docs-validator" },
     { "path": "../../ir-generator" },
     { "path": "../../ir-migrations" }
   ]

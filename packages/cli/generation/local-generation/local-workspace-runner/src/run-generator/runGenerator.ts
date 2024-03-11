@@ -1,6 +1,6 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { cp, mkdirSync, writeFileSync } from "fs";
@@ -20,12 +20,9 @@ export declare namespace runGenerator {
         absolutePathToFernDefinition: AbsoluteFilePath | undefined;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
-
         keepDocker: boolean;
-
-        generatorInvocation: GeneratorInvocation;
-
         context: TaskContext;
+        generatorInvocation: generatorsYml.GeneratorInvocation;
     }
 }
 

@@ -1,5 +1,6 @@
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
+import { z } from "zod";
 import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
@@ -40,16 +41,35 @@ interface MarkdownParseFailure {
     message: string | undefined;
 }
 
+export const FrontmatterSchema = z.object({
+    title: z.optional(z.string()),
+    description: z.optional(z.string()),
+    slug: z.optional(z.string()),
+    redirects: z.optional(z.array(z.string())),
+    editThisPageUrl: z.optional(z.string()),
+    image: z.optional(z.string()),
+    excerpt: z.optional(z.string())
+});
+
 async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
     try {
-        await serialize(markdown, {
+        const parsed = await serialize(markdown, {
             scope: {},
             mdxOptions: {
                 remarkPlugins: REMARK_PLUGINS,
                 format: "detect"
             },
-            parseFrontmatter: false
+            parseFrontmatter: true
         });
+        const frontmatterParseResult = FrontmatterSchema.safeParse(parsed.frontmatter);
+        if (!frontmatterParseResult.success) {
+            return {
+                type: "failure",
+                message: `Failed to parse frontmatter: ${frontmatterParseResult.error.errors
+                    .map((error) => error.message)
+                    .join("\n")}`
+            };
+        }
         return {
             type: "success"
         };

@@ -176,11 +176,13 @@ class SdkGenerator(AbstractGenerator):
             generated_root_client=generated_root_client,
         )
 
-        self._write_snippet_tests(
-            snippet_test_factory=test_fac,
-            snippet_writer=snippet_writer,
-            ir=ir,
-        )
+        # Only write unit tests if specified in config
+        if generator_config.write_unit_tests:
+            self._write_snippet_tests(
+                snippet_test_factory=test_fac,
+                snippet_writer=snippet_writer,
+                ir=ir,
+            )
 
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
