@@ -41,6 +41,7 @@ jobs:
 
   run-and-commit-seed:
     runs-on: ubuntu-latest
+    permissions: write-all
     needs: changes
     if: ${{ contains( github.event.pull_request.labels.*.name, 'run seed') && needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]'}}
     steps:
