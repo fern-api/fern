@@ -2,6 +2,13 @@ name: ci
 
 on:
   push:
+    paths:
+      - "packages/**"
+      # Add any generators that are written in TypeScript
+      - "generators/openapi/**"
+      - "generators/postman/**"
+      - "generators/ruby/**"
+      - "generators/typescript/**"
     branches:
       - main
   pull_request:
@@ -17,7 +24,7 @@ on:
 
 # Cancel previous workflows on previous push
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
