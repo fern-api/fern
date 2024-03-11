@@ -9,7 +9,7 @@ export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
 export interface DocsConfigFileAstNodeTypes {
     file: { config: docsYml.RawSchemas.DocsConfiguration };
     filepath: { absoluteFilepath: AbsoluteFilePath; value: string /* User defined value for filepath */ };
-    markdownPage: { title: string; content: string };
+    markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
     versionFile: { path: string; content: unknown };
 }
 

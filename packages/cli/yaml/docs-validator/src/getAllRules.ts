@@ -3,6 +3,7 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
 import { ValidMarkdownRule } from "./rules/valid-markdown";
+import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 export function getAllRules(): Rule[] {
@@ -11,6 +12,7 @@ export function getAllRules(): Rule[] {
         ValidMarkdownRule,
         OnlyVersionedNavigation,
         ValidateVersionFileRule,
-        AccentColorContrastRule
+        AccentColorContrastRule,
+        ValidMarkdownLinks
     ];
 }
