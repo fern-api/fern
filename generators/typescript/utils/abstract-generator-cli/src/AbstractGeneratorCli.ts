@@ -122,13 +122,13 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         cp(`${config.output.path}/.mock`, `${pathToProject}/.mock`, { recursive: true }, (err) => {
                             if (err) {
                                 // eslint-disable-next-line no-console
-                                console.error(`Failed to copy config to project: ${err.message}`);
+                                throw Error(`Failed to copy config to project: ${err.message}`);
                             }
                         });
                         rm(`${config.output.path}/.mock`, { recursive: true }, (err) => {
                             if (err) {
                                 // eslint-disable-next-line no-console
-                                console.error(`Failed to delete config to project: ${err.message}`);
+                                throw Error(`Failed to delete config to project: ${err.message}`);
                             }
                         });
                     });

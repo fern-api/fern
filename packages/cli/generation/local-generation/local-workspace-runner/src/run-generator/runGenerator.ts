@@ -46,7 +46,7 @@ export async function runGenerator({
     const imageName = `${name}:${version}`;
 
     // Copy Fern definition to output directory
-    if (writeUnitTests) {
+    if (writeUnitTests && (generatorInvocation.outputMode.type ?? "").startsWith("github")) {
         if (absolutePathToFernDefinition != null) {
             cp(
                 `${absolutePathToFernDefinition}`,
