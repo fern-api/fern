@@ -66,32 +66,32 @@ jobs:
       - name: Seed Test
         id: run_tests
         run: |
-          workspaces="--workspace pydantic"
-          # if [ ${{needs.changes.outputs.seed}} == 'true' ]; then
-          #   workspaces=""
-          # else
-          #   if [ ${{needs.changes.outputs.ruby}} == 'true' ]; then
-          #     workspaces+="ruby-sdk ruby-model "
-          #   fi
-          #   if [ ${{needs.changes.outputs.openapi}} == 'true' ]; then
-          #     workspaces+="openapi "
-          #   fi
-          #   if [ ${{needs.changes.outputs.python}} == 'true' ]; then
-          #     workspaces+="python pydantic fastapi "
-          #   fi
-          #   if [ ${{needs.changes.outputs.postman}} == 'true' ]; then
-          #     workspaces+="postman "
-          #   fi
-          #   if [ ${{needs.changes.outputs.java}} == 'true' ]; then
-          #     workspaces+="java java-model java-spring"
-          #   fi
-          #   if [ ${{needs.changes.outputs.typescript}} == 'true' ]; then
-          #     workspaces+="typescript-sdk typescript-express "
-          #   fi
-          #   if [ ${{needs.changes.outputs.go}} == 'true' ]; then
-          #     workspaces+="go-fiber go-model go-sdk "
-          #   fi
-          # fi
+          workspaces="--workspace "
+          if [ ${{needs.changes.outputs.seed}} == 'true' ]; then
+            workspaces=""
+          else
+            if [ ${{needs.changes.outputs.ruby}} == 'true' ]; then
+              workspaces+="ruby-sdk ruby-model "
+            fi
+            if [ ${{needs.changes.outputs.openapi}} == 'true' ]; then
+              workspaces+="openapi "
+            fi
+            if [ ${{needs.changes.outputs.python}} == 'true' ]; then
+              workspaces+="python pydantic fastapi "
+            fi
+            if [ ${{needs.changes.outputs.postman}} == 'true' ]; then
+              workspaces+="postman "
+            fi
+            if [ ${{needs.changes.outputs.java}} == 'true' ]; then
+              workspaces+="java java-model java-spring"
+            fi
+            if [ ${{needs.changes.outputs.typescript}} == 'true' ]; then
+              workspaces+="typescript-sdk typescript-express "
+            fi
+            if [ ${{needs.changes.outputs.go}} == 'true' ]; then
+              workspaces+="go-fiber go-model go-sdk "
+            fi
+          fi
 
           echo "seed_output<<EOF" >> $GITHUB_OUTPUT
           echo "$(yarn seed:local test $workspaces --parallel 20)" >> $GITHUB_OUTPUT
@@ -109,8 +109,9 @@ jobs:
           message: |
             ## :seedling: Seed Ran :runner:
             <details><summary>Run output...</summary>
-              ```bash
               
+              ```
               ${{ steps.run_tests.outputs.seed_output }}
               ```
+              
             </details>
