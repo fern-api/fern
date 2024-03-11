@@ -27,7 +27,7 @@ export declare namespace Field {
 }
 
 export class Field extends AstNode {
-    private name: string;
+    public readonly name: string;
     private type: Type;
     private get: boolean;
     private init: boolean;
