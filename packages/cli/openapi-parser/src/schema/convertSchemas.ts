@@ -285,6 +285,16 @@ export function convertSchemaObject(
             groupName
         });
     }
+    if (schema === "float") {
+        const inferredValue = schema.example ?? schema.default;
+        return SchemaWithExample.unknown({
+            nameOverride,
+            generatedName,
+            description,
+            groupName,
+            example: inferredValue
+        });
+    }
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
