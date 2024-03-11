@@ -30,3 +30,9 @@ export const OneOfClassReference = new ClassReference({
     name: "OneOf",
     namespace: "OneOf"
 });
+
+// TODO: remove this in favor of the one in PrebuiltUtilities
+export const StringEnumClassReference = new ClassReference({
+    name: "StringEnum",
+    namespace: "StringEnum"
+});

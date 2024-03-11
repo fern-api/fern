@@ -1,4 +1,4 @@
-import { csharp, CSharpFile } from "@fern-api/csharp-codegen";
+import { csharp, CSharpFile, PrebuiltUtilities } from "@fern-api/csharp-codegen";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import {
     AliasTypeDeclaration,
@@ -22,6 +22,7 @@ export class ModelGenerator {
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
     private generatorContext: GeneratorContext;
     private referenceGenerator: ReferenceGenerator;
+    private prebuiltUtilities: PrebuiltUtilities;
 
     constructor(
         rootModule: string,
@@ -43,6 +44,7 @@ export class ModelGenerator {
         }
 
         this.referenceGenerator = new ReferenceGenerator(this.types);
+        this.prebuiltUtilities = new PrebuiltUtilities(this.rootModule);
     }
 
     // STOLEN FROM: ruby/TypesGenerator.ts
@@ -109,7 +111,8 @@ export class ModelGenerator {
         const enum_ = csharp.enum_({
             name: getNameFromIrName(typeDeclaration.name.name),
             namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
-            access: "public"
+            access: "public",
+            annotations: [this.prebuiltUtilities.enumConverterAnnotation()]
         });
 
         enumTypeDeclaration.values.forEach((member) =>
