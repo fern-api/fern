@@ -10,6 +10,7 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
+import matter from "gray-matter";
 import { imageSize } from "image-size";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
@@ -209,21 +210,34 @@ async function constructRegisterDocsRequest({
         uploadUrls,
         version
     });
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {
+        ...entries(parsedDocsConfig.pages).reduce(
+            (pages, [pageFilepath, pageContents]) => ({
+                ...pages,
+                [pageFilepath]: {
+                    markdown: pageContents,
+                    editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
+                }
+            }),
+            {}
+        ),
+        ...convertedDocsConfiguration.pages
+    };
+    const slugs = Object.fromEntries(
+        Object.entries(pages).map(([pageId, pageContent]) => {
+            const frontmatter = matter(pageContent.markdown);
+            const slug = frontmatter.data.slug;
+            return [pageId, { slug }];
+        })
+    );
+    pages = Object.fromEntries(
+        Object.entries(pages).map(([pageId, pageContent]) => {
+            const frontmatter = matter(pageContent.markdown);
+        })
+    );
     return {
         docsDefinition: {
-            pages: {
-                ...entries(parsedDocsConfig.pages).reduce(
-                    (pages, [pageFilepath, pageContents]) => ({
-                        ...pages,
-                        [pageFilepath]: {
-                            markdown: pageContents,
-                            editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
-                        }
-                    }),
-                    {}
-                ),
-                ...convertedDocsConfiguration.pages
-            },
+            pages,
             config: convertedDocsConfiguration.config
         }
     };
