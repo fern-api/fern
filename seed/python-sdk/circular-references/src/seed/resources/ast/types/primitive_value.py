@@ -4,14 +4,13 @@ import enum
 import typing
 
 T_Result = typing.TypeVar("T_Result")
-
-
 class PrimitiveValue(str, enum.Enum):
     STRING = "STRING"
     NUMBER = "NUMBER"
-
     def visit(self, string: typing.Callable[[], T_Result], number: typing.Callable[[], T_Result]) -> T_Result:
         if self is PrimitiveValue.STRING:
-            return string()
+            return string(
+            )
         if self is PrimitiveValue.NUMBER:
-            return number()
+            return number(
+            )

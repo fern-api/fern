@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedBytes, SeedBytes
+from seed.client import SeedBytes, AsyncSeedBytes
 
 
 @pytest.fixture
 def client() -> SeedBytes:
-    return SeedBytes(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedBytes(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedBytes:
-    return AsyncSeedBytes(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedBytes(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

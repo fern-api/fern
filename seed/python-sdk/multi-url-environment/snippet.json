@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.ec_2.boot_instance(\n    size=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nawait client.ec_2.boot_instance(\n    size=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedMultiUrlEnvironment\nclient = SeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nclient.ec_2.boot_instance(size=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironment\nclient = AsyncSeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nawait client.ec_2.boot_instance(size=\"string\", )\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.s_3.get_presigned_url(\n    s_3_key=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nawait client.s_3.get_presigned_url(\n    s_3_key=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedMultiUrlEnvironment\nclient = SeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nclient.s_3.get_presigned_url(s_3_key=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironment\nclient = AsyncSeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nawait client.s_3.get_presigned_url(s_3_key=\"string\", )\n",
                 "type": "python"
             }
         }

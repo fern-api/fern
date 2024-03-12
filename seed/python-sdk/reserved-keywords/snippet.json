@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedNurseryApi\n\nclient = SeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.package.test(\n    for_=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedNurseryApi\n\nclient = AsyncSeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.package.test(\n    for_=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedNurseryApi\nclient = SeedNurseryApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.package.test(for_=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedNurseryApi\nclient = AsyncSeedNurseryApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.package.test(for_=\"string\", )\n",
                 "type": "python"
             }
         }

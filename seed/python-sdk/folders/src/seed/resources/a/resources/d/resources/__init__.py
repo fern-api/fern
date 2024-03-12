@@ -2,5 +2,4 @@
 
 from .types import Foo
 from . import types
-
 __all__ = ["Foo", "types"]

@@ -4,41 +4,30 @@ from __future__ import annotations
 
 import typing
 
-from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
+from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
 
 
 class FunctionSignature_Void(VoidFunctionSignature):
     type: typing.Literal["void"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
     type: typing.Literal["nonVoid"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
     type: typing.Literal["voidThatTakesActualResult"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
-FunctionSignature = typing.Union[
-    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
-]
+FunctionSignature = typing.Union[FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult]

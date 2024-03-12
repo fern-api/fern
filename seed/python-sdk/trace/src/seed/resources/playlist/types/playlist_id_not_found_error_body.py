@@ -10,15 +10,11 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):
     type: typing.Literal["playlistId"]
     value: PlaylistId
-
     class Config:
         frozen = True
         smart_union = True
-
-
 PlaylistIdNotFoundErrorBody = typing.Union[PlaylistIdNotFoundErrorBody_PlaylistId]

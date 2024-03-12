@@ -2,5 +2,4 @@
 
 from .types import CreateMovieRequest, Movie, MovieId
 from .errors import MovieDoesNotExistError
-
 __all__ = ["CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId"]

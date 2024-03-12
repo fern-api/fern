@@ -3,11 +3,7 @@
 from .bar import Bar
 from .foo import Foo
 from .union import Union, Union_Bar, Union_Foo
-from .union_with_base_properties import (
-    UnionWithBaseProperties,
-    UnionWithBaseProperties_Integer,
-    UnionWithBaseProperties_String,
-)
+from .union_with_base_properties import UnionWithBaseProperties, UnionWithBaseProperties_Integer, UnionWithBaseProperties_String
 from .union_with_discriminant import UnionWithDiscriminant, UnionWithDiscriminant_Bar, UnionWithDiscriminant_Foo
 from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
 from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte
@@ -15,35 +11,4 @@ from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer
 from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
 from .union_with_unknown import UnionWithUnknown, UnionWithUnknown_Foo, UnionWithUnknown_Unknown
 from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
-
-__all__ = [
-    "Bar",
-    "Foo",
-    "Union",
-    "UnionWithBaseProperties",
-    "UnionWithBaseProperties_Integer",
-    "UnionWithBaseProperties_String",
-    "UnionWithDiscriminant",
-    "UnionWithDiscriminant_Bar",
-    "UnionWithDiscriminant_Foo",
-    "UnionWithLiteral",
-    "UnionWithLiteral_Fern",
-    "UnionWithOptionalTime",
-    "UnionWithOptionalTime_Date",
-    "UnionWithOptionalTime_Dateimte",
-    "UnionWithPrimitive",
-    "UnionWithPrimitive_Integer",
-    "UnionWithPrimitive_String",
-    "UnionWithTime",
-    "UnionWithTime_Date",
-    "UnionWithTime_Datetime",
-    "UnionWithTime_Value",
-    "UnionWithUnknown",
-    "UnionWithUnknown_Foo",
-    "UnionWithUnknown_Unknown",
-    "UnionWithoutKey",
-    "UnionWithoutKey_Bar",
-    "UnionWithoutKey_Foo",
-    "Union_Bar",
-    "Union_Foo",
-]
+__all__ = ["Bar", "Foo", "Union", "UnionWithBaseProperties", "UnionWithBaseProperties_Integer", "UnionWithBaseProperties_String", "UnionWithDiscriminant", "UnionWithDiscriminant_Bar", "UnionWithDiscriminant_Foo", "UnionWithLiteral", "UnionWithLiteral_Fern", "UnionWithOptionalTime", "UnionWithOptionalTime_Date", "UnionWithOptionalTime_Dateimte", "UnionWithPrimitive", "UnionWithPrimitive_Integer", "UnionWithPrimitive_String", "UnionWithTime", "UnionWithTime_Date", "UnionWithTime_Datetime", "UnionWithTime_Value", "UnionWithUnknown", "UnionWithUnknown_Foo", "UnionWithUnknown_Unknown", "UnionWithoutKey", "UnionWithoutKey_Bar", "UnionWithoutKey_Foo", "Union_Bar", "Union_Foo"]

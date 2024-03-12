@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedAlias, SeedAlias
+from seed.client import SeedAlias, AsyncSeedAlias
 
 
 @pytest.fixture
 def client() -> SeedAlias:
-    return SeedAlias(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedAlias(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedAlias:
-    return AsyncSeedAlias(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedAlias(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

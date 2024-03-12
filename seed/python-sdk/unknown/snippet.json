@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "from seed.client import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.unknown.post(\n    request={\"key\": \"value\"},\n)\n",
+                "sync_client": "from seed.client import SeedUnknownAsAny\nclient = SeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )\nclient.unknown.post(request={\"key\": \"value\"}, )\n",
+                "async_client": "from seed.client import AsyncSeedUnknownAsAny\nclient = AsyncSeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.unknown.post(request={\"key\": \"value\"}, )\n",
                 "type": "python"
             }
         }

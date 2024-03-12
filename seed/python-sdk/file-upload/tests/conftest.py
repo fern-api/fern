@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedFileUpload, SeedFileUpload
+from seed.client import SeedFileUpload, AsyncSeedFileUpload
 
 
 @pytest.fixture
 def client() -> SeedFileUpload:
-    return SeedFileUpload(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedFileUpload(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedFileUpload:
-    return AsyncSeedFileUpload(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedFileUpload(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

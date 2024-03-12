@@ -11,11 +11,11 @@ typer = {extras = ["all"], version = "^0.6.1"}
 fern-fern-generator-exec-sdk = {version = "0.0.618", source = "fern-prod"}
 ordered-set = "^4.1.0"
 fern_fern_ir_v37 = "^0.0.3433"
+ruff = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.2"
 mypy = "^0.971"
-black = "^22.6.0"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
@@ -30,13 +30,21 @@ secondary = true
 [tool.poetry.group.dev.dependencies]
 pytest-only = "^2.0.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 120
-target-version = ['py38']
-include = '\.pyi?$'
+target-version = 'py38'
+# Add isort + bugbear
+select = ["I", "B"]
 
-[tool.isort]
-profile = "black"
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+length-sort = true
+length-sort-straight = true
+combine-as-imports = true
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]

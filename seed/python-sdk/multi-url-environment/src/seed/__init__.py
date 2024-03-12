@@ -2,5 +2,4 @@
 
 from .resources import ec_2, s_3
 from .environment import SeedMultiUrlEnvironmentEnvironment
-
 __all__ = ["SeedMultiUrlEnvironmentEnvironment", "ec_2", "s_3"]

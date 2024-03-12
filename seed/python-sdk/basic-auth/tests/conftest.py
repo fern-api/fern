@@ -3,22 +3,18 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedBasicAuth, SeedBasicAuth
+from seed.client import SeedBasicAuth, AsyncSeedBasicAuth
 
 
 @pytest.fixture
 def client() -> SeedBasicAuth:
-    return SeedBasicAuth(
-        username=os.getenv("ENV_USERNAME", "username"),
-        password=os.getenv("ENV_PASSWORD", "password"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    return SeedBasicAuth(username=os.getenv("ENV_USERNAME", "username")
+    , password=os.getenv("ENV_PASSWORD", "password")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )
-
-
 @pytest.fixture
 def async_client() -> AsyncSeedBasicAuth:
-    return AsyncSeedBasicAuth(
-        username=os.getenv("ENV_USERNAME", "username"),
-        password=os.getenv("ENV_PASSWORD", "password"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    return AsyncSeedBasicAuth(username=os.getenv("ENV_USERNAME", "username")
+    , password=os.getenv("ENV_PASSWORD", "password")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )

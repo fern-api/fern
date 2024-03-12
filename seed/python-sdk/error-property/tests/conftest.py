@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedErrorProperty, SeedErrorProperty
+from seed.client import SeedErrorProperty, AsyncSeedErrorProperty
 
 
 @pytest.fixture
 def client() -> SeedErrorProperty:
-    return SeedErrorProperty(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedErrorProperty(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedErrorProperty:
-    return AsyncSeedErrorProperty(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedErrorProperty(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

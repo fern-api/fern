@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedVariables\n\nclient = SeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.post(\n    endpoint_param=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedVariables\n\nclient = AsyncSeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.service.post(\n    endpoint_param=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedVariables\nclient = SeedVariables(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.post(endpoint_param=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedVariables\nclient = AsyncSeedVariables(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.service.post(endpoint_param=\"string\", )\n",
                 "type": "python"
             }
         }

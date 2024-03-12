@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import CreateMovieRequest\nfrom seed.client import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.imdb.create_movie(\n    request=CreateMovieRequest(\n        title=\"string\",\n        rating=1.1,\n    ),\n)\n",
-                "async_client": "from seed import CreateMovieRequest\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.imdb.create_movie(\n    request=CreateMovieRequest(\n        title=\"string\",\n        rating=1.1,\n    ),\n)\n",
+                "sync_client": "from seed.client import SeedApi\nfrom seed import CreateMovieRequest\nclient = SeedApi(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.imdb.create_movie(request=CreateMovieRequest(title=\"string\", rating=1.1, ), )\n",
+                "async_client": "from seed.client import AsyncSeedApi\nfrom seed import CreateMovieRequest\nclient = AsyncSeedApi(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.imdb.create_movie(request=CreateMovieRequest(title=\"string\", rating=1.1, ), )\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.imdb.get_movie(\n    movie_id=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.imdb.get_movie(\n    movie_id=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.imdb.get_movie(movie_id=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.imdb.get_movie(movie_id=\"string\", )\n",
                 "type": "python"
             }
         }

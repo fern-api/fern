@@ -10,26 +10,17 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
     type: typing.Literal["html"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
     type: typing.Literal["paramId"]
     value: ParameterId
-
     class Config:
         frozen = True
         smart_union = True
-
-
-TestCaseImplementationDescriptionBoard = typing.Union[
-    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
-]
+TestCaseImplementationDescriptionBoard = typing.Union[TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId]

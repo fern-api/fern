@@ -11,26 +11,19 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class ContainerValue_List(pydantic.BaseModel):
     type: typing.Literal["list"]
     value: typing.List[FieldValue]
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class ContainerValue_Optional(pydantic.BaseModel):
     type: typing.Literal["optional"]
     value: typing.Optional[FieldValue]
-
     class Config:
         frozen = True
         smart_union = True
-
-
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
 from .field_value import FieldValue  # noqa: E402
 

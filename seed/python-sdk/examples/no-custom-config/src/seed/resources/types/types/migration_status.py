@@ -4,36 +4,29 @@ import enum
 import typing
 
 T_Result = typing.TypeVar("T_Result")
-
-
 class MigrationStatus(str, enum.Enum):
     """
     from seed import MigrationStatus
-
     MigrationStatus.RUNNING
     """
-
     RUNNING = "RUNNING"
     """
     The migration is running.
     """
-
+    
     FAILED = "FAILED"
     """
     The migration failed.
     """
-
+    
     FINISHED = "FINISHED"
-
-    def visit(
-        self,
-        running: typing.Callable[[], T_Result],
-        failed: typing.Callable[[], T_Result],
-        finished: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, running: typing.Callable[[], T_Result], failed: typing.Callable[[], T_Result], finished: typing.Callable[[], T_Result]) -> T_Result:
         if self is MigrationStatus.RUNNING:
-            return running()
+            return running(
+            )
         if self is MigrationStatus.FAILED:
-            return failed()
+            return failed(
+            )
         if self is MigrationStatus.FINISHED:
-            return finished()
+            return finished(
+            )

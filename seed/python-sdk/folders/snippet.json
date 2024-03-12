@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo()\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.foo()\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.foo()\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.foo()\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.b.foo()\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.a.b.foo()\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.a.b.foo()\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.a.b.foo()\n",
                 "type": "python"
             }
         },
@@ -29,8 +29,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.c.foo()\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.a.c.foo()\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.a.c.foo()\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.a.c.foo()\n",
                 "type": "python"
             }
         },
@@ -40,8 +40,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.foo()\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.folder.foo()\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.folder.foo()\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.folder.foo()\n",
                 "type": "python"
             }
         },
@@ -51,8 +51,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.endpoint()\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.folder.service.endpoint()\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.folder.service.endpoint()\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.folder.service.endpoint()\n",
                 "type": "python"
             }
         },
@@ -62,8 +62,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.unknown_request(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.folder.service.unknown_request(\n    request={\"key\": \"value\"},\n)\n",
+                "sync_client": "from seed.client import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.folder.service.unknown_request(request={\"key\": \"value\"}, )\n",
+                "async_client": "from seed.client import AsyncSeedApi\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.folder.service.unknown_request(request={\"key\": \"value\"}, )\n",
                 "type": "python"
             }
         }

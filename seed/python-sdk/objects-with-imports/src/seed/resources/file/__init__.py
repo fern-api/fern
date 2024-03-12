@@ -2,5 +2,4 @@
 
 from .types import File, FileInfo
 from .resources import Directory, directory
-
 __all__ = ["Directory", "File", "FileInfo", "directory"]

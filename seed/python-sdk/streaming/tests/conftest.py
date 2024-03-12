@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedStreaming, SeedStreaming
+from seed.client import SeedStreaming, AsyncSeedStreaming
 
 
 @pytest.fixture
 def client() -> SeedStreaming:
-    return SeedStreaming(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedStreaming(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedStreaming:
-    return AsyncSeedStreaming(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedStreaming(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

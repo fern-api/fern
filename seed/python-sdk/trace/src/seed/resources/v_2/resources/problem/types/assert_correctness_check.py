@@ -10,22 +10,16 @@ from .void_function_definition_that_takes_actual_result import VoidFunctionDefin
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
     type: typing.Literal["deepEquality"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
     type: typing.Literal["custom"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

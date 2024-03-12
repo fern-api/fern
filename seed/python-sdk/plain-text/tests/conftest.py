@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedPlainText, SeedPlainText
+from seed.client import SeedPlainText, AsyncSeedPlainText
 
 
 @pytest.fixture
 def client() -> SeedPlainText:
-    return SeedPlainText(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedPlainText(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedPlainText:
-    return AsyncSeedPlainText(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedPlainText(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

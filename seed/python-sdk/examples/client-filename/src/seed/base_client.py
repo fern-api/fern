@@ -5,208 +5,130 @@ from json.decoder import JSONDecodeError
 
 import httpx
 
-from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.jsonable_encoder import jsonable_encoder
-from .core.remove_none_from_dict import remove_none_from_dict
-from .core.request_options import RequestOptions
 from .environment import SeedExhaustiveEnvironment
-from .resources.file.client import AsyncFileClient, FileClient
-from .resources.health.client import AsyncHealthClient, HealthClient
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .core.api_error import ApiError
+from .core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
+from .core.request_options import RequestOptions
+from .core.jsonable_encoder import jsonable_encoder
+from .resources.file.client import FileClient, AsyncFileClient
+from .resources.health.client import HealthClient, AsyncHealthClient
+from .resources.service.client import ServiceClient, AsyncServiceClient
+from .core.remove_none_from_dict import remove_none_from_dict
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
+            
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
-
-
 class BaseSeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
-
+        
         - environment: typing.Optional[SeedExhaustiveEnvironment]. The environment to use for requests from the client.
-
+        
         - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
-
-    client = SeedExhaustive(
-        token="YOUR_TOKEN",
-        environment=SeedExhaustiveEnvironment.PRODUCTION,
-    )
+    client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExhaustiveEnvironment] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.Client] = None
-    ):
-        self._client_wrapper = SyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
-            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+    def __init__(self, *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None):
+        self._client_wrapper = SyncClientWrapper(base_url=_get_base_url(base_url=base_url, environment=environment), token=token, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.file = FileClient(client_wrapper=self._client_wrapper)
         self.health = HealthClient(client_wrapper=self._client_wrapper)
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
-
     def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - request: str.
-
+            
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
-        )
-        client.echo(
-            request="Hello world!",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+        client.echo(request="Hello world!", )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
+        _response = self._client_wrapper.httpx_client.request("POST", self._client_wrapper.get_base_url(), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
             json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(str, _response.json())# type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
 class AsyncBaseSeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
-
+        
         - environment: typing.Optional[SeedExhaustiveEnvironment]. The environment to use for requests from the client.
-
+        
         - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
-
-    client = AsyncSeedExhaustive(
-        token="YOUR_TOKEN",
-        environment=SeedExhaustiveEnvironment.PRODUCTION,
-    )
+    client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExhaustiveEnvironment] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.AsyncClient] = None
-    ):
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
-            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+    def __init__(self, *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.AsyncClient] = None):
+        self._client_wrapper = AsyncClientWrapper(base_url=_get_base_url(base_url=base_url, environment=environment), token=token, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.file = AsyncFileClient(client_wrapper=self._client_wrapper)
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
-
     async def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - request: str.
-
+            
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
-        )
-        await client.echo(
-            request="Hello world!",
-        )
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+        await client.echo(request="Hello world!", )
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
+        _response = await self._client_wrapper.httpx_client.request("POST", self._client_wrapper.get_base_url(), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
             json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(str, _response.json())# type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None
-) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\n\nclient = SeedSingleUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nclient.dummy.get_dummy()\n",
-                "async_client": "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedSingleUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nawait client.dummy.get_dummy()\n",
+                "sync_client": "from seed.client import SeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\nclient = SeedSingleUrlEnvironmentNoDefault(token=\"YOUR_TOKEN\", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )\nclient.dummy.get_dummy()\n",
+                "async_client": "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\nclient = AsyncSeedSingleUrlEnvironmentNoDefault(token=\"YOUR_TOKEN\", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )\nawait client.dummy.get_dummy()\n",
                 "type": "python"
             }
         }

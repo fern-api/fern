@@ -6,74 +6,48 @@ import typing
 
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
-from .recorded_test_case_update import RecordedTestCaseUpdate
 from .running_submission_state import RunningSubmissionState
+from .recorded_test_case_update import RecordedTestCaseUpdate
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class TestSubmissionUpdateInfo_Running(pydantic.BaseModel):
     type: typing.Literal["running"]
     value: RunningSubmissionState
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class TestSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
     type: typing.Literal["stopped"]
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class TestSubmissionUpdateInfo_Errored(pydantic.BaseModel):
     type: typing.Literal["errored"]
     value: ErrorInfo
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
     type: typing.Literal["gradedTestCase"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
     type: typing.Literal["recordedTestCase"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
     type: typing.Literal["finished"]
-
     class Config:
         frozen = True
         smart_union = True
-
-
-TestSubmissionUpdateInfo = typing.Union[
-    TestSubmissionUpdateInfo_Running,
-    TestSubmissionUpdateInfo_Stopped,
-    TestSubmissionUpdateInfo_Errored,
-    TestSubmissionUpdateInfo_GradedTestCase,
-    TestSubmissionUpdateInfo_RecordedTestCase,
-    TestSubmissionUpdateInfo_Finished,
-]
+TestSubmissionUpdateInfo = typing.Union[TestSubmissionUpdateInfo_Running, TestSubmissionUpdateInfo_Stopped, TestSubmissionUpdateInfo_Errored, TestSubmissionUpdateInfo_GradedTestCase, TestSubmissionUpdateInfo_RecordedTestCase, TestSubmissionUpdateInfo_Finished]

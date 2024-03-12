@@ -4,15 +4,4 @@ from .container_value import ContainerValue, ContainerValue_List, ContainerValue
 from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
-
-__all__ = [
-    "ContainerValue",
-    "ContainerValue_List",
-    "ContainerValue_Optional",
-    "FieldValue",
-    "FieldValue_ContainerValue",
-    "FieldValue_ObjectValue",
-    "FieldValue_PrimitiveValue",
-    "ObjectValue",
-    "PrimitiveValue",
-]
+__all__ = ["ContainerValue", "ContainerValue_List", "ContainerValue_Optional", "FieldValue", "FieldValue_ContainerValue", "FieldValue_ObjectValue", "FieldValue_PrimitiveValue", "ObjectValue", "PrimitiveValue"]

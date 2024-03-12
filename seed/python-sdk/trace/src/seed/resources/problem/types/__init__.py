@@ -6,33 +6,9 @@ from .create_problem_response import CreateProblemResponse, CreateProblemRespons
 from .generic_create_problem_error import GenericCreateProblemError
 from .get_default_starter_files_response import GetDefaultStarterFilesResponse
 from .problem_description import ProblemDescription
-from .problem_description_board import (
-    ProblemDescriptionBoard,
-    ProblemDescriptionBoard_Html,
-    ProblemDescriptionBoard_TestCaseId,
-    ProblemDescriptionBoard_Variable,
-)
+from .problem_description_board import ProblemDescriptionBoard, ProblemDescriptionBoard_Html, ProblemDescriptionBoard_TestCaseId, ProblemDescriptionBoard_Variable
 from .problem_files import ProblemFiles
 from .problem_info import ProblemInfo
 from .update_problem_response import UpdateProblemResponse
 from .variable_type_and_name import VariableTypeAndName
-
-__all__ = [
-    "CreateProblemError",
-    "CreateProblemError_Generic",
-    "CreateProblemRequest",
-    "CreateProblemResponse",
-    "CreateProblemResponse_Error",
-    "CreateProblemResponse_Success",
-    "GenericCreateProblemError",
-    "GetDefaultStarterFilesResponse",
-    "ProblemDescription",
-    "ProblemDescriptionBoard",
-    "ProblemDescriptionBoard_Html",
-    "ProblemDescriptionBoard_TestCaseId",
-    "ProblemDescriptionBoard_Variable",
-    "ProblemFiles",
-    "ProblemInfo",
-    "UpdateProblemResponse",
-    "VariableTypeAndName",
-]
+__all__ = ["CreateProblemError", "CreateProblemError_Generic", "CreateProblemRequest", "CreateProblemResponse", "CreateProblemResponse_Error", "CreateProblemResponse_Success", "GenericCreateProblemError", "GetDefaultStarterFilesResponse", "ProblemDescription", "ProblemDescriptionBoard", "ProblemDescriptionBoard_Html", "ProblemDescriptionBoard_TestCaseId", "ProblemDescriptionBoard_Variable", "ProblemFiles", "ProblemInfo", "UpdateProblemResponse", "VariableTypeAndName"]

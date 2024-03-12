@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedNoEnvironment\n\nclient = SeedNoEnvironment(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.get_dummy()\n",
-                "async_client": "from seed.client import AsyncSeedNoEnvironment\n\nclient = AsyncSeedNoEnvironment(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.dummy.get_dummy()\n",
+                "sync_client": "from seed.client import SeedNoEnvironment\nclient = SeedNoEnvironment(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.dummy.get_dummy()\n",
+                "async_client": "from seed.client import AsyncSeedNoEnvironment\nclient = AsyncSeedNoEnvironment(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.dummy.get_dummy()\n",
                 "type": "python"
             }
         }

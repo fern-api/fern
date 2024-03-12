@@ -5,38 +5,29 @@ from __future__ import annotations
 import typing
 
 from .compile_error import CompileError
-from .internal_error import InternalError
 from .runtime_error import RuntimeError
+from .internal_error import InternalError
 
 
 class ErrorInfo_CompileError(CompileError):
     type: typing.Literal["compileError"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class ErrorInfo_RuntimeError(RuntimeError):
     type: typing.Literal["runtimeError"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class ErrorInfo_InternalError(InternalError):
     type: typing.Literal["internalError"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

@@ -7,168 +7,108 @@ from json.decoder import JSONDecodeError
 import httpx
 
 from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.jsonable_encoder import jsonable_encoder
-from .core.remove_none_from_dict import remove_none_from_dict
+from .core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
 from .core.request_options import RequestOptions
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .core.jsonable_encoder import jsonable_encoder
+from .resources.service.client import ServiceClient, AsyncServiceClient
+from .core.remove_none_from_dict import remove_none_from_dict
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
+            
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
-
-
 class SeedPackageYml:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedPackageYml
-
-    client = SeedPackageYml(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
-    ):
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None):
+        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
-
     def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - id: str.
-
+            
             - request: str.
-
+            
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedPackageYml
-
-        client = SeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.echo(
-            id="id-ksfd9c1",
-            request="Hello world!",
-        )
+        client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
+        client.echo(id="id-ksfd9c1", request="Hello world!", )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
+        _response = self._client_wrapper.httpx_client.request("POST", urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
             json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(str, _response.json())# type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
 class AsyncSeedPackageYml:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedPackageYml
-
-    client = AsyncSeedPackageYml(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedPackageYml(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.AsyncClient] = None,
-    ):
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.AsyncClient] = None):
+        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
-
     async def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - id: str.
-
+            
             - request: str.
-
+            
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedPackageYml
-
-        client = AsyncSeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        await client.echo(
-            id="id-ksfd9c1",
-            request="Hello world!",
-        )
+        client = AsyncSeedPackageYml(base_url="https://yourhost.com/path/to/api", )
+        await client.echo(id="id-ksfd9c1", request="Hello world!", )
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
+        _response = await self._client_wrapper.httpx_client.request("POST", urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
             json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(str, _response.json())# type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

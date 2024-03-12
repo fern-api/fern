@@ -90,28 +90,6 @@ class WriterImpl(AST.Writer):
     def to_str(self) -> str:
         content = self._content
 
-        if self._should_format:
-            import black
-            import isort
-
-            try:
-                if self._should_sort_imports:
-                    content = isort.code(self._content, quiet=True)
-
-                content = black.format_file_contents(
-                    content,
-                    fast=True,
-                    # todo read their config?
-                    mode=black.FileMode(
-                        magic_trailing_comma=self._should_format_as_snippet, line_length=self._line_length
-                    ),
-                )
-            except black.report.NothingChanged:
-                pass
-            except Exception as e:
-                print("Failed to format", e)
-                pass
-
         if self._should_include_header:
             if self._whitelable:
                 content = "# This file was auto-generated from our API Definition.\n\n" + content

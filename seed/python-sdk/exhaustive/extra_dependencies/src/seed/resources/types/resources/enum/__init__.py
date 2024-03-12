@@ -2,5 +2,4 @@
 
 from .types import WeatherReport
 from .errors import ErrorWithEnumBody
-
 __all__ = ["ErrorWithEnumBody", "WeatherReport"]

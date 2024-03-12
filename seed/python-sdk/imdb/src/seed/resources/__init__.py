@@ -2,5 +2,4 @@
 
 from . import imdb
 from .imdb import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId
-
 __all__ = ["CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId", "imdb"]

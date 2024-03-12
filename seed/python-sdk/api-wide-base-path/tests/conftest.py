@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedApiWideBasePath, SeedApiWideBasePath
+from seed.client import SeedApiWideBasePath, AsyncSeedApiWideBasePath
 
 
 @pytest.fixture
 def client() -> SeedApiWideBasePath:
-    return SeedApiWideBasePath(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedApiWideBasePath(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedApiWideBasePath:
-    return AsyncSeedApiWideBasePath(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedApiWideBasePath(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

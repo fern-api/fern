@@ -3,22 +3,18 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedAuthEnvironmentVariables, SeedAuthEnvironmentVariables
+from seed.client import SeedAuthEnvironmentVariables, AsyncSeedAuthEnvironmentVariables
 
 
 @pytest.fixture
 def client() -> SeedAuthEnvironmentVariables:
-    return SeedAuthEnvironmentVariables(
-        x_another_header=os.getenv("ENV_X_ANOTHER_HEADER", "x_another_header"),
-        api_key=os.getenv("ENV_API_KEY", "api_key"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    return SeedAuthEnvironmentVariables(x_another_header=os.getenv("ENV_X_ANOTHER_HEADER", "x_another_header")
+    , api_key=os.getenv("ENV_API_KEY", "api_key")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )
-
-
 @pytest.fixture
 def async_client() -> AsyncSeedAuthEnvironmentVariables:
-    return AsyncSeedAuthEnvironmentVariables(
-        x_another_header=os.getenv("ENV_X_ANOTHER_HEADER", "x_another_header"),
-        api_key=os.getenv("ENV_API_KEY", "api_key"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    return AsyncSeedAuthEnvironmentVariables(x_another_header=os.getenv("ENV_X_ANOTHER_HEADER", "x_another_header")
+    , api_key=os.getenv("ENV_API_KEY", "api_key")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )

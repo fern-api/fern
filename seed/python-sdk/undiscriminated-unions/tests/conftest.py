@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
+from seed.client import SeedUndiscriminatedUnions, AsyncSeedUndiscriminatedUnions
 
 
 @pytest.fixture
 def client() -> SeedUndiscriminatedUnions:
-    return SeedUndiscriminatedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedUndiscriminatedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedUndiscriminatedUnions:
-    return AsyncSeedUndiscriminatedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedUndiscriminatedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

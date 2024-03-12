@@ -2,5 +2,4 @@
 
 from . import payment
 from .payment import Currency
-
 __all__ = ["Currency", "payment"]

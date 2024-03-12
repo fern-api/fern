@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.custom_auth.get_with_custom_auth()\n",
-                "async_client": "from seed.client import AsyncSeedCustomAuth\n\nclient = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.custom_auth.get_with_custom_auth()\n",
+                "sync_client": "from seed.client import SeedCustomAuth\nclient = SeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.custom_auth.get_with_custom_auth()\n",
+                "async_client": "from seed.client import AsyncSeedCustomAuth\nclient = AsyncSeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.custom_auth.get_with_custom_auth()\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.custom_auth.post_with_custom_auth(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "from seed.client import AsyncSeedCustomAuth\n\nclient = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.custom_auth.post_with_custom_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "sync_client": "from seed.client import SeedCustomAuth\nclient = SeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.custom_auth.post_with_custom_auth(request={\"key\": \"value\"}, )\n",
+                "async_client": "from seed.client import AsyncSeedCustomAuth\nclient = AsyncSeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.custom_auth.post_with_custom_auth(request={\"key\": \"value\"}, )\n",
                 "type": "python"
             }
         }

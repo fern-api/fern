@@ -6,75 +6,50 @@ from json.decoder import JSONDecodeError
 import httpx
 
 from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.jsonable_encoder import jsonable_encoder
-from .core.remove_none_from_dict import remove_none_from_dict
-from .core.request_options import RequestOptions
 from .resources.a.client import AClient, AsyncAClient
-from .resources.folder.client import AsyncFolderClient, FolderClient
+from .core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
+from .core.request_options import RequestOptions
+from .core.jsonable_encoder import jsonable_encoder
+from .resources.folder.client import FolderClient, AsyncFolderClient
+from .core.remove_none_from_dict import remove_none_from_dict
 
 
 class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedApi
-
-    client = SeedApi(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedApi(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
-    ):
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None):
+        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.a = AClient(client_wrapper=self._client_wrapper)
         self.folder = FolderClient(client_wrapper=self._client_wrapper)
-
     def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
+        client = SeedApi(base_url="https://yourhost.com/path/to/api", )
         client.foo()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+        _response = self._client_wrapper.httpx_client.request("POST", self._client_wrapper.get_base_url(), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get('additional_body_parameters', {}))) if request_options is not None else None,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -83,73 +58,42 @@ class SeedApi:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
 class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedApi
-
-    client = AsyncSeedApi(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.AsyncClient] = None
-    ):
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.AsyncClient] = None):
+        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.a = AsyncAClient(client_wrapper=self._client_wrapper)
         self.folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
-
     async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
+        client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
         await client.foo()
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+        _response = await self._client_wrapper.httpx_client.request("POST", self._client_wrapper.get_base_url(), 
+            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get('additional_body_parameters', {}))) if request_options is not None else None,
+            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
+            )),
+            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

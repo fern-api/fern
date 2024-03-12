@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedUnknownAsAny, SeedUnknownAsAny
+from seed.client import SeedUnknownAsAny, AsyncSeedUnknownAsAny
 
 
 @pytest.fixture
 def client() -> SeedUnknownAsAny:
-    return SeedUnknownAsAny(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedUnknownAsAny(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedUnknownAsAny:
-    return AsyncSeedUnknownAsAny(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedUnknownAsAny(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
