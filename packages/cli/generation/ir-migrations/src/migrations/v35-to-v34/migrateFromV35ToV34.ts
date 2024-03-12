@@ -25,7 +25,7 @@ export const V35_TO_V34_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: "0.11.6",
+        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: "0.18.0",
         [GeneratorName.GO_MODEL]: "0.18.0",
         [GeneratorName.GO_SDK]: "0.18.0",
