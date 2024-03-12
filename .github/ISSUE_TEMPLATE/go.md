@@ -1,9 +1,9 @@
 ---
-name: Python Generator Bug report
-about: Report a bug with the Python Generator
+name: Go Generator Bug report
+about: Report a bug with the Go Generator
 title: "[Bug]"
-labels: python
-assignees: armandobelardo
+labels: go
+assignees: amckinney
 ---
 
 ## Describe the Bug
@@ -19,8 +19,7 @@ using (found in `fern.config.json`).
 
 ### Generator Version
 
-The version of the generator you are using (found in `generators.yml`).
-Plus any custom configuration required to reproduce the bug (found in `generators.yml`).
+The version of the generator you are using (found in `generators.yml`). Plus any custom configuration required to reproduce the bug (found in `generators.yml`).
 
 ### API Definition
 
@@ -37,25 +36,16 @@ types:
 
 The buggy SDK that is produced:
 
-```python
-# client.py
-
-class PetStore:
-  def __init__(self):
-    self._client = None # <-------- This part is buggy
+```go
+# TODO
 ```
 
 ### Expected SDK
 
 The expected SDK
 
-```python
-import httpx
-
-# client.py
-class PetStore:
-  def __init__(self):
-    self._client = new httpx.Client() # <----- This is the fix
+```go
+# TODO
 ```
 
 ## Additional Context
