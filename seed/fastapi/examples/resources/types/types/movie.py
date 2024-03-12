@@ -25,6 +25,11 @@ class Movie(pydantic.BaseModel):
         rating=8.0,
         type="movie",
         tag="tag-wf9as23d",
+        metadata={
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
     )
     """
 
@@ -40,6 +45,7 @@ class Movie(pydantic.BaseModel):
     type: typing.Literal["movie"]
     tag: Tag
     book: typing.Optional[str]
+    metadata: typing.Dict[str, typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

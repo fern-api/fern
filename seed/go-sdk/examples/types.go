@@ -288,11 +288,12 @@ type ExtendedMovie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating float64     `json:"rating" url:"rating"`
-	Tag    commons.Tag `json:"tag" url:"tag"`
-	Book   *string     `json:"book,omitempty" url:"book,omitempty"`
-	Cast   []string    `json:"cast,omitempty" url:"cast,omitempty"`
-	type_  string
+	Rating   float64                `json:"rating" url:"rating"`
+	Tag      commons.Tag            `json:"tag" url:"tag"`
+	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
+	type_    string
 
 	_rawJSON json.RawMessage
 }
@@ -585,10 +586,11 @@ type Movie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating float64     `json:"rating" url:"rating"`
-	Tag    commons.Tag `json:"tag" url:"tag"`
-	Book   *string     `json:"book,omitempty" url:"book,omitempty"`
-	type_  string
+	Rating   float64                `json:"rating" url:"rating"`
+	Tag      commons.Tag            `json:"tag" url:"tag"`
+	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	type_    string
 
 	_rawJSON json.RawMessage
 }

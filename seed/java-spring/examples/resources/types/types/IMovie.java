@@ -4,7 +4,9 @@
 
 package resources.types.types;
 
+import java.lang.Object;
 import java.lang.String;
+import java.util.Map;
 import java.util.Optional;
 import resources.commons.types.types.Tag;
 
@@ -24,4 +26,6 @@ public interface IMovie {
   Tag getTag();
 
   Optional<String> getBook();
+
+  Map<String, Object> getMetadata();
 }

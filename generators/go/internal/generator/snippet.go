@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -359,18 +358,61 @@ func (s *SnippetWriter) getSnippetForMap(
 func (s *SnippetWriter) getSnippetForUnknown(
 	unknownExample interface{},
 ) ast.Expr {
-	// Serialize the unknown as a JSON object, and simply
-	// specify the object literal in-line.
-	bytes, err := json.Marshal(unknownExample)
-	if err != nil {
-		// If we fail to serialize as JSON, we can still use 'nil'
-		// as a valid example.
+	// Unmarshal stores one of the following types in the interface value (re: https://pkg.go.dev/encoding/json#Unmarshal).
+	switch v := unknownExample.(type) {
+	case bool:
 		return &ast.BasicLit{
-			Value: "nil",
+			Value: strconv.FormatBool(v),
+		}
+	case string:
+		value := fmt.Sprintf("%q", v)
+		if strings.Contains(v, `"`) {
+			value = fmt.Sprintf("`%s`", value)
+		}
+		return &ast.BasicLit{
+			Value: value,
+		}
+	case float64:
+		return &ast.BasicLit{
+			Value: strconv.FormatFloat(v, 'f', -1, 64),
+		}
+	case []interface{}:
+		values := make([]ast.Expr, 0, len(v))
+		for _, value := range v {
+			values = append(values, s.getSnippetForUnknown(value))
+		}
+		return &ast.ArrayLit{
+			Type: &ast.ArrayType{
+				Expr: &ast.LocalReference{
+					Name: "interface{}",
+				},
+			},
+			Values: values,
+		}
+	case map[string]interface{}:
+		var (
+			keys   = make([]ast.Expr, 0, len(v))
+			values = make([]ast.Expr, 0, len(v))
+		)
+		for key, value := range v {
+			keys = append(keys, s.getSnippetForUnknown(key))
+			values = append(values, s.getSnippetForUnknown(value))
+		}
+		return &ast.MapLit{
+			Type: &ast.MapType{
+				Key: &ast.LocalReference{
+					Name: "string",
+				},
+				Value: &ast.LocalReference{
+					Name: "interface{}",
+				},
+			},
+			Keys:   keys,
+			Values: values,
 		}
 	}
 	return &ast.BasicLit{
-		Value: fmt.Sprintf("%q", string(bytes)),
+		Value: "nil",
 	}
 }
 
