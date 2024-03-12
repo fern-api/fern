@@ -110,12 +110,29 @@ python = "^{self.python_version}"
 mypy = "^1.8.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
+ruff = "^0.3.2"
 """
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
         def to_string(self) -> str:
             return """
+[tool.ruff]
+line-length = 120
+target-version = 'py38'
+# Add isort + bugbear
+select = ["I", "B"]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+length-sort = true
+length-sort-straight = true
+combine-as-imports = true
+
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"

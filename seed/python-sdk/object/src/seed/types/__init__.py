@@ -2,5 +2,4 @@
 
 from .name import Name
 from .type import Type
-
 __all__ = ["Name", "Type"]

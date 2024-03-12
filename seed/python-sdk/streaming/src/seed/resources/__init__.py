@@ -2,5 +2,4 @@
 
 from . import dummy
 from .dummy import StreamResponse
-
 __all__ = ["StreamResponse", "dummy"]

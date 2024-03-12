@@ -10,22 +10,16 @@ from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 
 class SubmissionStatusV2_Test(TestSubmissionStatusV2):
     type: typing.Literal["test"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
     type: typing.Literal["workspace"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]

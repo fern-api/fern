@@ -2,5 +2,4 @@
 
 from .types import SendResponse
 from .resources import SendRequest, headers, inlined, path, query, reference
-
 __all__ = ["SendRequest", "SendResponse", "headers", "inlined", "path", "query", "reference"]

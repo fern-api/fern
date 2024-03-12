@@ -4,42 +4,32 @@ from __future__ import annotations
 
 import typing
 
-from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
+from .exception_info import ExceptionInfo
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class ActualResult_Value(pydantic.BaseModel):
     type: typing.Literal["value"]
     value: VariableValue
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class ActualResult_Exception(ExceptionInfo):
     type: typing.Literal["exception"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class ActualResult_ExceptionV2(pydantic.BaseModel):
     type: typing.Literal["exceptionV2"]
     value: ExceptionV2
-
     class Config:
         frozen = True
         smart_union = True
-
-
 ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
 from ...commons.types.variable_value import VariableValue  # noqa: E402

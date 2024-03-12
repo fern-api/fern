@@ -4,72 +4,52 @@ import typing
 
 import httpx
 
-from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.headers.client import AsyncHeadersClient, HeadersClient
-from .resources.inlined.client import AsyncInlinedClient, InlinedClient
-from .resources.path.client import AsyncPathClient, PathClient
-from .resources.query.client import AsyncQueryClient, QueryClient
-from .resources.reference.client import AsyncReferenceClient, ReferenceClient
+from .core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
+from .resources.path.client import PathClient, AsyncPathClient
+from .resources.query.client import QueryClient, AsyncQueryClient
+from .resources.headers.client import HeadersClient, AsyncHeadersClient
+from .resources.inlined.client import InlinedClient, AsyncInlinedClient
+from .resources.reference.client import ReferenceClient, AsyncReferenceClient
 
 
 class SeedLiteral:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedLiteral
-
-    client = SeedLiteral(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
-    ):
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None):
+        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.headers = HeadersClient(client_wrapper=self._client_wrapper)
         self.inlined = InlinedClient(client_wrapper=self._client_wrapper)
         self.path = PathClient(client_wrapper=self._client_wrapper)
         self.query = QueryClient(client_wrapper=self._client_wrapper)
         self.reference = ReferenceClient(client_wrapper=self._client_wrapper)
-
-
 class AsyncSeedLiteral:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedLiteral
-
-    client = AsyncSeedLiteral(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.AsyncClient] = None
-    ):
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.AsyncClient] = None):
+        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.headers = AsyncHeadersClient(client_wrapper=self._client_wrapper)
         self.inlined = AsyncInlinedClient(client_wrapper=self._client_wrapper)

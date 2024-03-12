@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedObjectsWithImports, SeedObjectsWithImports
+from seed.client import SeedObjectsWithImports, AsyncSeedObjectsWithImports
 
 
 @pytest.fixture
 def client() -> SeedObjectsWithImports:
-    return SeedObjectsWithImports(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedObjectsWithImports(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedObjectsWithImports:
-    return AsyncSeedObjectsWithImports(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedObjectsWithImports(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

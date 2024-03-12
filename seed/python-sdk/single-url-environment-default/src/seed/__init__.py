@@ -2,5 +2,4 @@
 
 from .resources import dummy
 from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
-
 __all__ = ["SeedSingleUrlEnvironmentDefaultEnvironment", "dummy"]

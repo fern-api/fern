@@ -11,24 +11,17 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class Union_Foo(pydantic.BaseModel):
     type: typing.Literal["foo"]
     foo: Foo
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class Union_Bar(pydantic.BaseModel):
     type: typing.Literal["bar"]
     bar: Bar
-
     class Config:
         frozen = True
         smart_union = True
-
-
 Union = typing.Union[Union_Foo, Union_Bar]

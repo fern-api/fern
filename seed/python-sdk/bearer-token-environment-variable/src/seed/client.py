@@ -6,87 +6,51 @@ import typing
 import httpx
 
 from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
+from .resources.service.client import ServiceClient, AsyncServiceClient
 
 
 class SeedBearerTokenEnvironmentVariable:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedBearerTokenEnvironmentVariable
-
-    client = SeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.Client] = None
-    ):
+    def __init__(self, *, base_url: str, api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"), timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None):
         if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            api_key=api_key,
-            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY")
+        self._client_wrapper = SyncClientWrapper(base_url=base_url, api_key=api_key, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
-
-
 class AsyncSeedBearerTokenEnvironmentVariable:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-
+    
     Parameters:
         - base_url: str. The base url to use for requests from the client.
-
+        
         - api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
-
+        
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
-
+        
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedBearerTokenEnvironmentVariable
-
-    client = AsyncSeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
     """
-
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.AsyncClient] = None
-    ):
+    def __init__(self, *, base_url: str, api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"), timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.AsyncClient] = None):
         if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url,
-            api_key=api_key,
-            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY")
+        self._client_wrapper = AsyncClientWrapper(base_url=base_url, api_key=api_key, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)

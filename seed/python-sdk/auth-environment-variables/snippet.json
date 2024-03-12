@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedAuthEnvironmentVariables\n\nclient = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_with_api_key()\n",
-                "async_client": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.service.get_with_api_key()\n",
+                "sync_client": "from seed.client import SeedAuthEnvironmentVariables\nclient = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.get_with_api_key()\n",
+                "async_client": "from seed.client import AsyncSeedAuthEnvironmentVariables\nclient = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.service.get_with_api_key()\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedAuthEnvironmentVariables\n\nclient = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_with_header(\n    x_endpoint_header=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.service.get_with_header(\n    x_endpoint_header=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedAuthEnvironmentVariables\nclient = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.get_with_header(x_endpoint_header=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedAuthEnvironmentVariables\nclient = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.service.get_with_header(x_endpoint_header=\"string\", )\n",
                 "type": "python"
             }
         }

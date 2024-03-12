@@ -4,69 +4,47 @@ from __future__ import annotations
 
 import typing
 
-from .initialize_problem_request import InitializeProblemRequest
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
+from .initialize_problem_request import InitializeProblemRequest
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
     type: typing.Literal["initializeProblemRequest"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
     type: typing.Literal["initializeWorkspaceRequest"]
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class SubmissionRequest_SubmitV2(SubmitRequestV2):
     type: typing.Literal["submitV2"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
     type: typing.Literal["workspaceSubmit"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class SubmissionRequest_Stop(StopRequest):
     type: typing.Literal["stop"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
-SubmissionRequest = typing.Union[
-    SubmissionRequest_InitializeProblemRequest,
-    SubmissionRequest_InitializeWorkspaceRequest,
-    SubmissionRequest_SubmitV2,
-    SubmissionRequest_WorkspaceSubmit,
-    SubmissionRequest_Stop,
-]
+SubmissionRequest = typing.Union[SubmissionRequest_InitializeProblemRequest, SubmissionRequest_InitializeWorkspaceRequest, SubmissionRequest_SubmitV2, SubmissionRequest_WorkspaceSubmit, SubmissionRequest_Stop]

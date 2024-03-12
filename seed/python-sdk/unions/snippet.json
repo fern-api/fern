@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    id=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.union.get(\n    id=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedUnions\nclient = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.get(id=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedUnions\nclient = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.union.get(id=\"string\", )\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "PATCH"
             },
             "snippet": {
-                "sync_client": "from seed import Shape_Circle\nfrom seed.client import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=Shape_Circle(\n        type=\"circle\",\n        radius=1.1,\n    ),\n)\n",
-                "async_client": "from seed import Shape_Circle\nfrom seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.union.update(\n    request=Shape_Circle(\n        type=\"circle\",\n        radius=1.1,\n    ),\n)\n",
+                "sync_client": "from seed.client import SeedUnions\nfrom seed import Shape_Circle\nclient = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.update(request=Shape_Circle(type=\"circle\", radius=1.1, ), )\n",
+                "async_client": "from seed.client import AsyncSeedUnions\nfrom seed import Shape_Circle\nclient = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.union.update(request=Shape_Circle(type=\"circle\", radius=1.1, ), )\n",
                 "type": "python"
             }
         }

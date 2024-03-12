@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder_a.service.get_direct_thread()\n",
-                "async_client": "from seed.client import AsyncSeedAudiences\n\nclient = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.folder_a.service.get_direct_thread()\n",
+                "sync_client": "from seed.client import SeedAudiences\nclient = SeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )\nclient.folder_a.service.get_direct_thread()\n",
+                "async_client": "from seed.client import AsyncSeedAudiences\nclient = AsyncSeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.folder_a.service.get_direct_thread()\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo.find(\n    optional_string=\"string\",\n    public_property=\"string\",\n    private_property=1,\n)\n",
-                "async_client": "from seed.client import AsyncSeedAudiences\n\nclient = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.foo.find(\n    optional_string=\"string\",\n    public_property=\"string\",\n    private_property=1,\n)\n",
+                "sync_client": "from seed.client import SeedAudiences\nclient = SeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )\nclient.foo.find(optional_string=\"string\", public_property=\"string\", private_property=1, )\n",
+                "async_client": "from seed.client import AsyncSeedAudiences\nclient = AsyncSeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.foo.find(optional_string=\"string\", public_property=\"string\", private_property=1, )\n",
                 "type": "python"
             }
         }

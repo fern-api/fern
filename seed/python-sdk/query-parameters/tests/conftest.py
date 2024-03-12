@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedQueryParameters, SeedQueryParameters
+from seed.client import SeedQueryParameters, AsyncSeedQueryParameters
 
 
 @pytest.fixture
 def client() -> SeedQueryParameters:
-    return SeedQueryParameters(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedQueryParameters(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedQueryParameters:
-    return AsyncSeedQueryParameters(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedQueryParameters(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

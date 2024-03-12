@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedWebsocket, SeedWebsocket
+from seed.client import SeedWebsocket, AsyncSeedWebsocket
 
 
 @pytest.fixture
 def client() -> SeedWebsocket:
-    return SeedWebsocket(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedWebsocket(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedWebsocket:
-    return AsyncSeedWebsocket(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedWebsocket(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

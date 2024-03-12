@@ -8,36 +8,24 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class ProblemDescriptionBoard_Html(pydantic.BaseModel):
     type: typing.Literal["html"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
     type: typing.Literal["variable"]
     value: VariableValue
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
     type: typing.Literal["testCaseId"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
-ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
-]
+ProblemDescriptionBoard = typing.Union[ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId]
 from ...commons.types.variable_value import VariableValue  # noqa: E402

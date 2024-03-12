@@ -137,8 +137,7 @@ shape.visit(
 )
 ```
 
-When enabled, the python generator will not run Black formatting in the generated code.
-Black is slow so this can potentially speed up code generation quite a bit.
+When enabled, the python generator will not run Ruff to lint and format the generated code.
 
 #### ✨ `pydantic_config.wrapped_aliases`
 

@@ -2,5 +2,4 @@
 
 from .playlist_id_not_found_error import PlaylistIdNotFoundError
 from .unauthorized_error import UnauthorizedError
-
 __all__ = ["PlaylistIdNotFoundError", "UnauthorizedError"]

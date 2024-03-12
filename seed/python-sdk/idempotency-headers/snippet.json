@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed import Currency\nfrom seed.client import SeedIdempotencyHeaders\n\nclient = SeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.payment.create(\n    amount=1,\n    currency=Currency.USD,\n)\n",
-                "async_client": "from seed import Currency\nfrom seed.client import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.payment.create(\n    amount=1,\n    currency=Currency.USD,\n)\n",
+                "sync_client": "from seed.client import SeedIdempotencyHeaders\nfrom seed import Currency\nclient = SeedIdempotencyHeaders(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.payment.create(amount=1, currency=Currency.USD, )\n",
+                "async_client": "from seed.client import AsyncSeedIdempotencyHeaders\nfrom seed import Currency\nclient = AsyncSeedIdempotencyHeaders(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.payment.create(amount=1, currency=Currency.USD, )\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "DELETE"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedIdempotencyHeaders\n\nclient = SeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.payment.delete(\n    payment_id=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.payment.delete(\n    payment_id=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedIdempotencyHeaders\nclient = SeedIdempotencyHeaders(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.payment.delete(payment_id=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedIdempotencyHeaders\nclient = AsyncSeedIdempotencyHeaders(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nawait client.payment.delete(payment_id=\"string\", )\n",
                 "type": "python"
             }
         }

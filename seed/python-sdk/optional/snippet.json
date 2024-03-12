@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedObjectsWithImports\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_body(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
-                "async_client": "from seed.client import AsyncSeedObjectsWithImports\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.optional.send_optional_body(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
+                "sync_client": "from seed.client import SeedObjectsWithImports\nclient = SeedObjectsWithImports(base_url=\"https://yourhost.com/path/to/api\", )\nclient.optional.send_optional_body(request={\"string\": {\"key\": \"value\"}}, )\n",
+                "async_client": "from seed.client import AsyncSeedObjectsWithImports\nclient = AsyncSeedObjectsWithImports(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.optional.send_optional_body(request={\"string\": {\"key\": \"value\"}}, )\n",
                 "type": "python"
             }
         }

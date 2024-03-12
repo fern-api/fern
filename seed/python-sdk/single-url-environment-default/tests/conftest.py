@@ -3,18 +3,16 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedSingleUrlEnvironmentDefault, SeedSingleUrlEnvironmentDefault
+from seed.client import SeedSingleUrlEnvironmentDefault, AsyncSeedSingleUrlEnvironmentDefault
 
 
 @pytest.fixture
 def client() -> SeedSingleUrlEnvironmentDefault:
-    return SeedSingleUrlEnvironmentDefault(
-        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    return SeedSingleUrlEnvironmentDefault(token=os.getenv("ENV_TOKEN", "token")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )
-
-
 @pytest.fixture
 def async_client() -> AsyncSeedSingleUrlEnvironmentDefault:
-    return AsyncSeedSingleUrlEnvironmentDefault(
-        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    return AsyncSeedSingleUrlEnvironmentDefault(token=os.getenv("ENV_TOKEN", "token")
+    , base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )

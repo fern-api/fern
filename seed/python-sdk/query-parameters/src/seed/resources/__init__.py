@@ -2,5 +2,4 @@
 
 from . import user
 from .user import NestedUser, User
-
 __all__ = ["NestedUser", "User", "user"]

@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate_stream(\n    num_events=1,\n)\n",
-                "async_client": "from seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.dummy.generate_stream(\n    num_events=1,\n)\n",
+                "sync_client": "from seed.client import SeedStreaming\nclient = SeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )\nclient.dummy.generate_stream(num_events=1, )\n",
+                "async_client": "from seed.client import AsyncSeedStreaming\nclient = AsyncSeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.dummy.generate_stream(num_events=1, )\n",
                 "type": "python"
             }
         }

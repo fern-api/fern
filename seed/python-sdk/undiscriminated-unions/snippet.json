@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    request=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.union.get(\n    request=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedUndiscriminatedUnions\nclient = SeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.get(request=\"string\", )\n",
+                "async_client": "from seed.client import AsyncSeedUndiscriminatedUnions\nclient = AsyncSeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.union.get(request=\"string\", )\n",
                 "type": "python"
             }
         }

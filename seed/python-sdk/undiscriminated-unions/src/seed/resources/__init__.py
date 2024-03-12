@@ -2,5 +2,4 @@
 
 from . import union
 from .union import MyUnion
-
 __all__ = ["MyUnion", "union"]

@@ -2,5 +2,4 @@
 
 from . import service
 from .service import NotFoundError
-
 __all__ = ["NotFoundError", "service"]

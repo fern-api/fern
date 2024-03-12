@@ -8,24 +8,17 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class UnionWithPrimitive_Integer(pydantic.BaseModel):
     type: typing.Literal["integer"]
     value: int
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class UnionWithPrimitive_String(pydantic.BaseModel):
     type: typing.Literal["string"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
 UnionWithPrimitive = typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String]

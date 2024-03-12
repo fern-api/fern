@@ -1,8 +1,8 @@
 {
     "types": {
-        "type_:TypeId": "\"type-kaljhv87\"\n",
-        "type_:Type": "from seed import Type\n\nType(\n    id=\"type-df89sdg1\",\n    name=\"foo\",\n)\n",
-        "type_:Object": "from seed import Type\n\nType(\n    id=\"kljasc85\",\n    name=\"bar\",\n)\n"
+        "type_:TypeId": "\"type-kaljhv87\"",
+        "type_:Type": "from seed import Type\nType(id=\"type-df89sdg1\", name=\"foo\", )",
+        "type_:Object": "from seed import Type\nType(id=\"kljasc85\", name=\"bar\", )"
     },
     "endpoints": []
 }

@@ -2,5 +2,4 @@
 
 from .types import PropertyBasedErrorTestBody
 from .errors import PropertyBasedErrorTest
-
 __all__ = ["PropertyBasedErrorTest", "PropertyBasedErrorTestBody"]

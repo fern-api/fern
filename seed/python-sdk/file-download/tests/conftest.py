@@ -3,14 +3,14 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedFileDownload, SeedFileDownload
+from seed.client import SeedFileDownload, AsyncSeedFileDownload
 
 
 @pytest.fixture
 def client() -> SeedFileDownload:
-    return SeedFileDownload(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
-
-
+    return SeedFileDownload(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 @pytest.fixture
 def async_client() -> AsyncSeedFileDownload:
-    return AsyncSeedFileDownload(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedFileDownload(base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedErrorProperty\n\nclient = SeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.property_based_error.throw_error()\n",
-                "async_client": "from seed.client import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.property_based_error.throw_error()\n",
+                "sync_client": "from seed.client import SeedErrorProperty\nclient = SeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )\nclient.property_based_error.throw_error()\n",
+                "async_client": "from seed.client import AsyncSeedErrorProperty\nclient = AsyncSeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.property_based_error.throw_error()\n",
                 "type": "python"
             }
         }

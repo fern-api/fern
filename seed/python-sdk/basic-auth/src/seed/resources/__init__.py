@@ -2,5 +2,4 @@
 
 from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
 from . import basic_auth, errors
-
 __all__ = ["BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody", "basic_auth", "errors"]

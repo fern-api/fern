@@ -10,24 +10,17 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class ExceptionV2_Generic(ExceptionInfo):
     type: typing.Literal["generic"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class ExceptionV2_Timeout(pydantic.BaseModel):
     type: typing.Literal["timeout"]
-
     class Config:
         frozen = True
         smart_union = True
-
-
 ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

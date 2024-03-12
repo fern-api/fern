@@ -2,5 +2,4 @@
 
 from . import service
 from .service import MyObject
-
 __all__ = ["MyObject", "service"]

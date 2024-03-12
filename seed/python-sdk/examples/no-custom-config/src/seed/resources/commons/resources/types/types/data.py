@@ -8,29 +8,21 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
-
-
+            
 class Data_String(pydantic.BaseModel):
     type: typing.Literal["string"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
 class Data_Base64(pydantic.BaseModel):
     type: typing.Literal["base64"]
     value: str
-
     class Config:
         frozen = True
         smart_union = True
-
-
 """
 from seed.resources.commons import Data_String
-
 Data_String(type="string", value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

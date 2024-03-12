@@ -7,8 +7,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.echo(\n    id=\"id-ksfd9c1\",\n    request=\"Hello world!\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.echo(\n    id=\"id-ksfd9c1\",\n    request=\"Hello world!\",\n)\n",
+                "sync_client": "from seed.client import SeedPackageYml\nclient = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nclient.echo(id=\"id-ksfd9c1\", request=\"Hello world!\", )\n",
+                "async_client": "from seed.client import AsyncSeedPackageYml\nclient = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.echo(id=\"id-ksfd9c1\", request=\"Hello world!\", )\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.nop(\n    id=\"id-a2ijs82\",\n    nested_id=\"id-219xca8\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.service.nop(\n    id=\"id-a2ijs82\",\n    nested_id=\"id-219xca8\",\n)\n",
+                "sync_client": "from seed.client import SeedPackageYml\nclient = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.nop(id=\"id-a2ijs82\", nested_id=\"id-219xca8\", )\n",
+                "async_client": "from seed.client import AsyncSeedPackageYml\nclient = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.service.nop(id=\"id-a2ijs82\", nested_id=\"id-219xca8\", )\n",
                 "type": "python"
             }
         }

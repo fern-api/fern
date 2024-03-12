@@ -10,22 +10,16 @@ from .dog import Dog
 
 class Animal_Dog(Dog):
     animal: typing.Literal["dog"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 class Animal_Cat(Cat):
     animal: typing.Literal["cat"]
-
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-
-
 Animal = typing.Union[Animal_Dog, Animal_Cat]

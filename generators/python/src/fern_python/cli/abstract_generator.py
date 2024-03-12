@@ -63,6 +63,8 @@ class AbstractGenerator(ABC):
                 publish=lambda x: None,
             )
 
+            self.format_files(generator_config.output.path)
+
         generator_config.output.mode.visit(
             download_files=lambda: None,
             github=lambda _: self._poetry_install(
@@ -222,6 +224,14 @@ jobs:
 def test_client() -> None:
     assert True == True
 """
+
+    def format_files(self, directory: str)-> None:
+        import subprocess
+        # Run lint
+        subprocess.run(["ruff", "check", directory, "--fix"], capture_output=True) 
+        # Run format
+        subprocess.run(["ruff", "format", directory, "--fix"], capture_output=True)  
+
 
     @abstractmethod
     def run(

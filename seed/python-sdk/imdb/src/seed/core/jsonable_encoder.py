@@ -8,13 +8,13 @@ Taken from FastAPI, and made a bit simpler
 https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
 """
 
-import dataclasses
 import datetime as dt
-from collections import defaultdict
+import dataclasses
 from enum import Enum
-from pathlib import PurePath
 from types import GeneratorType
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
+from typing import Any, Set, Dict, List, Tuple, Union, Callable, Optional
+from pathlib import PurePath
+from collections import defaultdict
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -39,7 +39,10 @@ def generate_encoders_by_class_tuples(
 encoders_by_class_tuples = generate_encoders_by_class_tuples(pydantic.json.ENCODERS_BY_TYPE)
 
 
-def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any], Any]]] = None) -> Any:
+def jsonable_encoder(
+    obj: Any,
+    custom_encoder: Optional[Dict[Any, Callable[[Any], Any]]] = None,
+) -> Any:
     custom_encoder = custom_encoder or {}
     if custom_encoder:
         if type(obj) in custom_encoder:
