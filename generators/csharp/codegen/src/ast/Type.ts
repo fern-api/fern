@@ -95,7 +95,7 @@ interface StringEnum {
 
 /* A C# parameter to a method */
 export class Type extends AstNode {
-    private constructor(private readonly internalType: InternalType) {
+    private constructor(public readonly internalType: InternalType) {
         super();
     }
 

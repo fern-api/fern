@@ -1,4 +1,4 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, PrebuiltUtilities } from "@fern-api/csharp-codegen";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -12,14 +12,19 @@ import {
 import { getNameFromIrName } from "./GeneratorUtilities";
 
 export class ReferenceGenerator {
+    private prebuiltUtilities: PrebuiltUtilities;
+
     private types: Map<TypeId, TypeDeclaration>;
     private references: Map<TypeReference, csharp.Type>;
     public classReferences: Map<TypeId, csharp.ClassReference>;
+    public annotations: Map<TypeReference, csharp.Annotation>;
 
-    constructor(types: Map<TypeId, TypeDeclaration>) {
+    constructor(types: Map<TypeId, TypeDeclaration>, prebuiltUtilities: PrebuiltUtilities) {
+        this.prebuiltUtilities = prebuiltUtilities;
         this.types = types;
         this.references = new Map();
         this.classReferences = new Map();
+        this.annotations = new Map();
     }
 
     private typeFromContainerReference(rootModule: string, containerType: ContainerType): csharp.Type {
@@ -66,12 +71,16 @@ export class ReferenceGenerator {
                 return underlyingType.shape._visit({
                     alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),
                     object: () => objectReference,
-                    enum: () => csharp.Type.stringEnum(objectClassReference),
-                    union: (union) =>
+                    enum: () => {
+                        this.annotations.set(typeReference, this.prebuiltUtilities.stringEnumConverterAnnotation());
+                        return csharp.Type.stringEnum(objectClassReference);
+                    },
+                    union: (union) => {
+                        this.annotations.set(typeReference, this.prebuiltUtilities.oneOfConverterAnnotation());
                         // TODO: we could do a better job sharing classreferences between this and the
                         // ultimate created class, maybe class should have a classReference as opposed to
                         // name and namespace that we then store
-                        csharp.Type.oneOf(
+                        return csharp.Type.oneOf(
                             union.types
                                 .map<csharp.Type | undefined>((member) => {
                                     const t = member.shape._visit<csharp.ClassReference | undefined>({
@@ -95,11 +104,14 @@ export class ReferenceGenerator {
                                     return t != null ? csharp.Type.reference(t) : undefined;
                                 })
                                 .filter((c): c is csharp.Type => c !== undefined)
-                        ),
-                    undiscriminatedUnion: (union) =>
-                        csharp.Type.oneOf(
+                        );
+                    },
+                    undiscriminatedUnion: (union) => {
+                        this.annotations.set(typeReference, this.prebuiltUtilities.oneOfConverterAnnotation());
+                        return csharp.Type.oneOf(
                             union.members.map((member) => this.typeFromTypeReference(rootModule, member.type))
-                        ),
+                        );
+                    },
                     _other: () => objectReference
                 });
             },

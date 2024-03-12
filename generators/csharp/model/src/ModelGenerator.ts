@@ -43,8 +43,8 @@ export class ModelGenerator {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
 
-        this.referenceGenerator = new ReferenceGenerator(this.types);
         this.prebuiltUtilities = new PrebuiltUtilities(this.rootModule);
+        this.referenceGenerator = new ReferenceGenerator(this.types, this.prebuiltUtilities);
     }
 
     // STOLEN FROM: ruby/TypesGenerator.ts
@@ -136,6 +136,7 @@ export class ModelGenerator {
 
         const properties = this.flattenedProperties.get(typeId) ?? objectTypeDeclaration.properties;
         properties.forEach((property) => {
+            const maybeAnnotation = this.referenceGenerator.annotations.get(property.valueType);
             class_.addField(
                 csharp.field({
                     name: property.name.name.pascalCase.safeName,
@@ -143,7 +144,9 @@ export class ModelGenerator {
                     access: "public",
                     get: true,
                     init: true,
-                    summary: property.docs
+                    summary: property.docs,
+                    jsonPropertyName: property.name.wireValue,
+                    annotations: maybeAnnotation ? [maybeAnnotation] : undefined
                 })
             );
         });
@@ -179,6 +182,7 @@ export class ModelGenerator {
             partial: false
         });
         baseProperties.forEach((property) => {
+            const maybeAnnotation = this.referenceGenerator.annotations.get(property.valueType);
             baseInterface.addField(
                 csharp.field({
                     name: getNameFromIrName(property.name.name),
@@ -186,7 +190,8 @@ export class ModelGenerator {
                     access: "public",
                     get: true,
                     init: true,
-                    jsonPropertyName: property.name.wireValue
+                    jsonPropertyName: property.name.wireValue,
+                    annotations: maybeAnnotation ? [maybeAnnotation] : undefined
                 })
             );
         });
@@ -239,13 +244,15 @@ export class ModelGenerator {
                         });
                         nestedClass.addField(discriminantField);
 
+                        const maybeAnnotation = this.referenceGenerator.annotations.get(property.type);
                         const singlePropertyField = csharp.field({
                             name: getNameFromIrName(property.name.name),
                             type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.type),
                             access: "public",
                             get: true,
                             init: true,
-                            jsonPropertyName: property.name.wireValue
+                            jsonPropertyName: property.name.wireValue,
+                            annotations: maybeAnnotation ? [maybeAnnotation] : undefined
                         });
                         nestedClass.addField(singlePropertyField);
                         return nestedClass;
