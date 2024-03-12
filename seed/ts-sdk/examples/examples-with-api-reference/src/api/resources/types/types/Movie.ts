@@ -13,7 +13,19 @@ import * as SeedExamples from "../../..";
  *         from: "Hayao Miyazaki",
  *         rating: 8,
  *         type: "movie",
- *         tag: "tag-wf9as23d"
+ *         tag: "tag-wf9as23d",
+ *         metadata: {
+ *             "actors": [
+ *                 "Christian Bale",
+ *                 "Florence Pugh",
+ *                 "Willem Dafoe"
+ *             ],
+ *             "releaseDate": "2023-12-08",
+ *             "ratings": {
+ *                 "rottenTomatoes": 97,
+ *                 "imdb": 7.6
+ *             }
+ *         }
  *     }
  */
 export interface Movie {
@@ -26,4 +38,5 @@ export interface Movie {
     type: "movie";
     tag: SeedExamples.commons.Tag;
     book?: string;
+    metadata: Record<string, unknown>;
 }

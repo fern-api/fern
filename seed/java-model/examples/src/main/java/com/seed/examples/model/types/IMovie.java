@@ -3,6 +3,7 @@
  */
 package com.seed.examples.model.types;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface IMovie {
@@ -21,4 +22,6 @@ public interface IMovie {
     String getTag();
 
     Optional<String> getBook();
+
+    Map<String, Object> getMetadata();
 }

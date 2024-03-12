@@ -38,6 +38,7 @@ module SeedExamplesClient
     #   * :type (String)
     #   * :tag (Commons::Types::TAG)
     #   * :book (String)
+    #   * :metadata (Hash{String => Object})
     # @param request_options [RequestOptions]
     # @return [Types::MOVIE_ID]
     def create_movie(request:, request_options: nil)
@@ -103,6 +104,7 @@ module SeedExamplesClient
     #   * :type (String)
     #   * :tag (Commons::Types::TAG)
     #   * :book (String)
+    #   * :metadata (Hash{String => Object})
     # @param request_options [RequestOptions]
     # @return [Types::MOVIE_ID]
     def create_movie(request:, request_options: nil)

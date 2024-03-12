@@ -15,5 +15,6 @@ export declare namespace Movie {
         type: "movie";
         tag: serializers.commons.Tag.Raw;
         book?: string | null;
+        metadata: Record<string, unknown>;
     }
 }

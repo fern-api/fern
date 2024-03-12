@@ -46,4 +46,5 @@ exports.Movie = core.serialization.object({
     type: core.serialization.stringLiteral("movie"),
     tag: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../..")))).commons.Tag; })),
     book: core.serialization.string().optional(),
+    metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
 });

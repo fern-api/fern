@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,6 +37,8 @@ public final class ExtendedMovie implements IMovie {
 
     private final Optional<String> book;
 
+    private final Map<String, Object> metadata;
+
     private final List<String> cast;
 
     private final Map<String, Object> additionalProperties;
@@ -48,6 +51,7 @@ public final class ExtendedMovie implements IMovie {
             double rating,
             String tag,
             Optional<String> book,
+            Map<String, Object> metadata,
             List<String> cast,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -57,6 +61,7 @@ public final class ExtendedMovie implements IMovie {
         this.rating = rating;
         this.tag = tag;
         this.book = book;
+        this.metadata = metadata;
         this.cast = cast;
         this.additionalProperties = additionalProperties;
     }
@@ -112,6 +117,12 @@ public final class ExtendedMovie implements IMovie {
         return book;
     }
 
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
     @JsonProperty("cast")
     public List<String> getCast() {
         return cast;
@@ -136,12 +147,22 @@ public final class ExtendedMovie implements IMovie {
                 && rating == other.rating
                 && tag.equals(other.tag)
                 && book.equals(other.book)
+                && metadata.equals(other.metadata)
                 && cast.equals(other.cast);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.cast);
+        return Objects.hash(
+                this.id,
+                this.prequel,
+                this.title,
+                this.from,
+                this.rating,
+                this.tag,
+                this.book,
+                this.metadata,
+                this.cast);
     }
 
     @java.lang.Override
@@ -186,6 +207,12 @@ public final class ExtendedMovie implements IMovie {
 
         _FinalStage book(String book);
 
+        _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage putAllMetadata(Map<String, Object> metadata);
+
+        _FinalStage metadata(String key, Object value);
+
         _FinalStage cast(List<String> cast);
 
         _FinalStage addCast(String cast);
@@ -207,6 +234,8 @@ public final class ExtendedMovie implements IMovie {
 
         private List<String> cast = new ArrayList<>();
 
+        private Map<String, Object> metadata = new LinkedHashMap<>();
+
         private Optional<String> book = Optional.empty();
 
         private Optional<String> prequel = Optional.empty();
@@ -225,6 +254,7 @@ public final class ExtendedMovie implements IMovie {
             rating(other.getRating());
             tag(other.getTag());
             book(other.getBook());
+            metadata(other.getMetadata());
             cast(other.getCast());
             return this;
         }
@@ -289,6 +319,26 @@ public final class ExtendedMovie implements IMovie {
         }
 
         @java.lang.Override
+        public _FinalStage metadata(String key, Object value) {
+            this.metadata.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage putAllMetadata(Map<String, Object> metadata) {
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Map<String, Object> metadata) {
+            this.metadata.clear();
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage book(String book) {
             this.book = Optional.of(book);
             return this;
@@ -316,7 +366,7 @@ public final class ExtendedMovie implements IMovie {
 
         @java.lang.Override
         public ExtendedMovie build() {
-            return new ExtendedMovie(id, prequel, title, from, rating, tag, book, cast, additionalProperties);
+            return new ExtendedMovie(id, prequel, title, from, rating, tag, book, metadata, cast, additionalProperties);
         }
     }
 }
