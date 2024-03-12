@@ -87,6 +87,7 @@ export async function publishDocs({
     if (preview) {
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
             orgId: organization,
+            authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
             filepaths: relativeFilepathsToUpload,
             images: relativeImageFilepathsWithSizesToUpload
         });
