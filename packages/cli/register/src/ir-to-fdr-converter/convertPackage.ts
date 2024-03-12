@@ -332,14 +332,54 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                 }
             };
         },
-        fileUpload: () => {
-            return {
-                type: "fileUpload"
-            };
-        },
-        bytes: () => {
-            return undefined;
-        },
+        fileUpload: (fileUpload) => ({
+            type: "fileUpload",
+            value: {
+                name: fileUpload.name.originalName,
+                // TODO: support description and availability
+                description: undefined,
+                availability: undefined,
+                properties: fileUpload.properties
+                    .map((property) => {
+                        return property._visit<APIV1Write.FileUploadRequestProperty | undefined>({
+                            file: (file) => {
+                                const fileValue = file._visit<APIV1Write.FileProperty | undefined>({
+                                    file: (singleFile) => ({
+                                        type: "file",
+                                        key: singleFile.key.wireValue,
+                                        isOptional: singleFile.isOptional
+                                    }),
+                                    fileArray: (multipleFiles) => ({
+                                        type: "file",
+                                        key: multipleFiles.key.wireValue,
+                                        isOptional: multipleFiles.isOptional
+                                    }),
+                                    _other: () => undefined
+                                });
+                                if (fileValue == null) {
+                                    return;
+                                }
+                                return { type: "file", value: fileValue };
+                            },
+                            bodyProperty: (bodyProperty) => ({
+                                type: "bodyProperty",
+                                key: bodyProperty.name.wireValue,
+                                valueType: convertTypeReference(bodyProperty.valueType)
+                            }),
+                            _other: () => undefined
+                        });
+                    })
+                    .filter(isNonNullish)
+            }
+        }),
+        bytes: (bytes) => ({
+            type: "bytes",
+            // TODO: support description and availability
+            description: undefined,
+            availability: undefined,
+            isOptional: bytes.isOptional,
+            contentType: bytes.contentType
+        }),
         _other: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);
         }
