@@ -28,6 +28,13 @@ class ServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder.service.endpoint()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -63,6 +70,15 @@ class ServiceClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder.service.unknown_request(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -109,6 +125,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder.service.endpoint()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -146,6 +169,15 @@ class AsyncServiceClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder.service.unknown_request(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -24,6 +24,7 @@ class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Running(RunningResponse):
@@ -33,6 +34,7 @@ class CodeExecutionUpdate_Running(RunningResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Errored(ErroredResponse):
@@ -42,6 +44,7 @@ class CodeExecutionUpdate_Errored(ErroredResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Stopped(StoppedResponse):
@@ -51,6 +54,7 @@ class CodeExecutionUpdate_Stopped(StoppedResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Graded(GradedResponse):
@@ -60,6 +64,7 @@ class CodeExecutionUpdate_Graded(GradedResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_GradedV2(GradedResponseV2):
@@ -69,6 +74,7 @@ class CodeExecutionUpdate_GradedV2(GradedResponseV2):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
@@ -78,6 +84,7 @@ class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Recording(RecordingResponseNotification):
@@ -87,6 +94,7 @@ class CodeExecutionUpdate_Recording(RecordingResponseNotification):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
@@ -96,6 +104,7 @@ class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
@@ -105,6 +114,7 @@ class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class CodeExecutionUpdate_Finished(FinishedResponse):
@@ -114,6 +124,7 @@ class CodeExecutionUpdate_Finished(FinishedResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 CodeExecutionUpdate = typing.Union[

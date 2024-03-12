@@ -28,6 +28,13 @@ class PropertyBasedErrorClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedErrorProperty
+
+        client = SeedErrorProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.property_based_error.throw_error()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -73,6 +80,13 @@ class AsyncPropertyBasedErrorClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedErrorProperty
+
+        client = AsyncSeedErrorProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.property_based_error.throw_error()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

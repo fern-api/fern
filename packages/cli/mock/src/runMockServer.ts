@@ -10,7 +10,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";
 import getPort from "get-port";
-import { IncomingHttpHeaders } from "http";
+import { IncomingHttpHeaders, Server } from "http";
 import { isEqual } from "lodash-es";
 import qs from "qs";
 import urlJoin from "url-join";
@@ -19,54 +19,71 @@ type RequestHandler = (req: Request, res: Response) => void;
 
 // TODO(FER-673): There are a few gaps in what the mock server can
 // validate, which will require changes to the example IR.
-export async function runMockServer({
-    context,
-    ir,
-    port
-}: {
-    context: TaskContext;
-    ir: IntermediateRepresentation;
-    port: number | undefined;
-}): Promise<void> {
-    const app = express();
-    app.use(express.json({ limit: "50mb", strict: false }));
+//
+// See https://github.com/fern-api/fern/issues/2620
+export class MockServer {
+    private app = express();
+    private context: TaskContext;
+    private server: Server | undefined = undefined;
+    public port: number | undefined = undefined;
 
-    for (const service of Object.values(ir.services)) {
-        for (const endpoint of service.endpoints) {
-            const endpointPath = getFullPathForEndpoint(endpoint);
-            context.logger.info(`Registering ${endpoint.method} ${endpointPath} ...`);
-            switch (endpoint.method) {
-                case "GET":
-                    app.get(endpointPath, getRequestHandler(endpoint));
-                    break;
-                case "POST":
-                    app.post(endpointPath, getRequestHandler(endpoint));
-                    break;
-                case "PUT":
-                    app.put(endpointPath, getRequestHandler(endpoint));
-                    break;
-                case "PATCH":
-                    app.patch(endpointPath, getRequestHandler(endpoint));
-                    break;
-                case "DELETE":
-                    app.delete(endpointPath, getRequestHandler(endpoint));
-                    break;
-                default:
-                    assertNever(endpoint.method);
+    constructor({
+        context,
+        ir,
+        port
+    }: {
+        context: TaskContext;
+        ir: IntermediateRepresentation;
+        port: number | undefined;
+    }) {
+        this.context = context;
+        this.app.use(express.json({ limit: "50mb", strict: false }));
+        this.port = port;
+
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                const endpointPath = getFullPathForEndpoint(endpoint);
+                context.logger.debug(`Registering ${endpoint.method} ${endpointPath} ...`);
+                switch (endpoint.method) {
+                    case "GET":
+                        this.app.get(endpointPath, getRequestHandler(endpoint));
+                        break;
+                    case "POST":
+                        this.app.post(endpointPath, getRequestHandler(endpoint));
+                        break;
+                    case "PUT":
+                        this.app.put(endpointPath, getRequestHandler(endpoint));
+                        break;
+                    case "PATCH":
+                        this.app.patch(endpointPath, getRequestHandler(endpoint));
+                        break;
+                    case "DELETE":
+                        this.app.delete(endpointPath, getRequestHandler(endpoint));
+                        break;
+                    default:
+                        assertNever(endpoint.method);
+                }
             }
         }
     }
 
-    if (port == null) {
-        port = await getPort();
+    public stop(): void {
+        this.server?.close();
     }
-    app.listen(port);
 
-    context.logger.info(`Running mock server on localhost:${port}`);
+    public async start(): Promise<number> {
+        this.port = this.port ?? (await getPort());
+        this.server = this.app.listen(this.port);
 
-    // await infinitely
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    await new Promise(() => {});
+        this.context.logger.info(`Running Fern mock server on localhost: ${this.port}`);
+        return this.port;
+    }
+
+    public async keepAlive(): Promise<void> {
+        // await infiinitely
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        await new Promise(() => {});
+    }
 }
 
 function getFullPathForEndpoint(endpoint: HttpEndpoint): string {

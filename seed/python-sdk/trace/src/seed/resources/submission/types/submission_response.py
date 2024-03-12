@@ -47,6 +47,7 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
@@ -65,6 +66,7 @@ class SubmissionResponse_Terminated(TerminatedResponse):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionResponse = typing.Union[

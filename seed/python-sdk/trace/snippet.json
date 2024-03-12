@@ -1,0 +1,390 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.test()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.test()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import TestSubmissionStatus\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.update_test_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=TestSubmissionStatus(),\n)\n",
+                "async_client": "import uuid\n\nfrom seed import TestSubmissionStatus\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.update_test_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=TestSubmissionStatus(),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import (\n    RunningSubmissionState,\n    TestSubmissionUpdate,\n    TestSubmissionUpdateInfo_Running,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.send_test_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=TestSubmissionUpdate(\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=TestSubmissionUpdateInfo_Running(\n            type=\"running\", value=RunningSubmissionState.QUEUEING_SUBMISSION\n        ),\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed import (\n    RunningSubmissionState,\n    TestSubmissionUpdate,\n    TestSubmissionUpdateInfo_Running,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.send_test_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=TestSubmissionUpdate(\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=TestSubmissionUpdateInfo_Running(\n            type=\"running\", value=RunningSubmissionState.QUEUEING_SUBMISSION\n        ),\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import WorkspaceSubmissionStatus\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.update_workspace_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=WorkspaceSubmissionStatus(),\n)\n",
+                "async_client": "import uuid\n\nfrom seed import WorkspaceSubmissionStatus\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.update_workspace_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=WorkspaceSubmissionStatus(),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import (\n    RunningSubmissionState,\n    WorkspaceSubmissionUpdate,\n    WorkspaceSubmissionUpdateInfo_Running,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.send_workspace_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=WorkspaceSubmissionUpdate(\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=WorkspaceSubmissionUpdateInfo_Running(\n            type=\"running\", value=RunningSubmissionState.QUEUEING_SUBMISSION\n        ),\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed import (\n    RunningSubmissionState,\n    WorkspaceSubmissionUpdate,\n    WorkspaceSubmissionUpdateInfo_Running,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.send_workspace_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=WorkspaceSubmissionUpdate(\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=WorkspaceSubmissionUpdateInfo_Running(\n            type=\"running\", value=RunningSubmissionState.QUEUEING_SUBMISSION\n        ),\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TestCaseResult,\n    TestCaseResultWithStdout,\n    TraceResponse,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_test_case(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"string\",\n    result=TestCaseResultWithStdout(\n        result=TestCaseResult(),\n        stdout=\"string\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TestCaseResult,\n    TestCaseResultWithStdout,\n    TraceResponse,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.store_traced_test_case(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"string\",\n    result=TestCaseResultWithStdout(\n        result=TestCaseResult(),\n        stdout=\"string\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_test_case_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"string\",\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(),\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.store_traced_test_case_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"string\",\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(),\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExceptionInfo,\n    ExceptionV2_Generic,\n    ExpressionLocation,\n    StackInformation,\n    TraceResponse,\n    WorkspaceRunDetails,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_workspace(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    workspace_run_details=WorkspaceRunDetails(\n        exception_v_2=ExceptionV2_Generic(\n            type=\"generic\",\n        ),\n        exception=ExceptionInfo(),\n        stdout=\"string\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExceptionInfo,\n    ExceptionV2_Generic,\n    ExpressionLocation,\n    StackInformation,\n    TraceResponse,\n    WorkspaceRunDetails,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.store_traced_workspace(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    workspace_run_details=WorkspaceRunDetails(\n        exception_v_2=ExceptionV2_Generic(\n            type=\"generic\",\n        ),\n        exception=ExceptionInfo(),\n        stdout=\"string\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_workspace_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(),\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import uuid\n\nfrom seed import (\n    DebugVariableValue_IntegerValue,\n    ExpressionLocation,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.admin.store_traced_workspace_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(),\n            return_value=DebugVariableValue_IntegerValue(\n                type=\"integerValue\", value=1\n            ),\n            expression_location=ExpressionLocation(),\n            stack=StackInformation(),\n            stdout=\"string\",\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.homepage.get_homepage_problems()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.homepage.get_homepage_problems()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.homepage.set_homepage_problems(\n    request=[\"string\"],\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.homepage.set_homepage_problems(\n    request=[\"string\"],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.migration.get_attempted_migrations(\n    admin_key_header=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.migration.get_attempted_migrations(\n    admin_key_header=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import PlaylistCreateRequest\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.create_playlist(\n    service_param=1,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    optional_datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    request=PlaylistCreateRequest(\n        name=\"string\",\n        problems=[\"string\"],\n    ),\n)\n",
+                "async_client": "import datetime\n\nfrom seed import PlaylistCreateRequest\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.playlist.create_playlist(\n    service_param=1,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    optional_datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    request=PlaylistCreateRequest(\n        name=\"string\",\n        problems=[\"string\"],\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.get_playlists(\n    service_param=1,\n    limit=1,\n    other_field=\"string\",\n    multi_line_docs=\"string\",\n    optional_multiple_field=\"string\",\n    multiple_field=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.playlist.get_playlists(\n    service_param=1,\n    limit=1,\n    other_field=\"string\",\n    multi_line_docs=\"string\",\n    optional_multiple_field=\"string\",\n    multiple_field=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.get_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.playlist.get_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "sync_client": "from seed import UpdatePlaylistRequest\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.update_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n    request=UpdatePlaylistRequest(\n        name=\"string\",\n        problems=[\"string\"],\n    ),\n)\n",
+                "async_client": "from seed import UpdatePlaylistRequest\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.playlist.update_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n    request=UpdatePlaylistRequest(\n        name=\"string\",\n        problems=[\"string\"],\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.delete_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.playlist.delete_playlist(\n    service_param=1,\n    playlist_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import (\n    CreateProblemRequest,\n    FileInfo,\n    Language,\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableTypeAndName,\n    VariableValue_IntegerValue,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.create_problem(\n    request=CreateProblemRequest(\n        problem_name=\"string\",\n        problem_description=ProblemDescription(\n            boards=[ProblemDescriptionBoard_Html(type=\"html\", value=\"string\")],\n        ),\n        files={\n            Language.JAVA: ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"string\",\n                    contents=\"string\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"string\",\n                        contents=\"string\",\n                    )\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"string\",\n            )\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"string\",\n                    params=[\n                        VariableValue_IntegerValue(type=\"integerValue\", value=1)\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(\n                    type=\"integerValue\", value=1\n                ),\n            )\n        ],\n        method_name=\"string\",\n    ),\n)\n",
+                "async_client": "from seed import (\n    CreateProblemRequest,\n    FileInfo,\n    Language,\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableTypeAndName,\n    VariableValue_IntegerValue,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.problem.create_problem(\n    request=CreateProblemRequest(\n        problem_name=\"string\",\n        problem_description=ProblemDescription(\n            boards=[ProblemDescriptionBoard_Html(type=\"html\", value=\"string\")],\n        ),\n        files={\n            Language.JAVA: ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"string\",\n                    contents=\"string\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"string\",\n                        contents=\"string\",\n                    )\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"string\",\n            )\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"string\",\n                    params=[\n                        VariableValue_IntegerValue(type=\"integerValue\", value=1)\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(\n                    type=\"integerValue\", value=1\n                ),\n            )\n        ],\n        method_name=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import (\n    CreateProblemRequest,\n    FileInfo,\n    Language,\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableTypeAndName,\n    VariableValue_IntegerValue,\n)\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.update_problem(\n    problem_id=\"string\",\n    request=CreateProblemRequest(\n        problem_name=\"string\",\n        problem_description=ProblemDescription(\n            boards=[ProblemDescriptionBoard_Html(type=\"html\", value=\"string\")],\n        ),\n        files={\n            Language.JAVA: ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"string\",\n                    contents=\"string\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"string\",\n                        contents=\"string\",\n                    )\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"string\",\n            )\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"string\",\n                    params=[\n                        VariableValue_IntegerValue(type=\"integerValue\", value=1)\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(\n                    type=\"integerValue\", value=1\n                ),\n            )\n        ],\n        method_name=\"string\",\n    ),\n)\n",
+                "async_client": "from seed import (\n    CreateProblemRequest,\n    FileInfo,\n    Language,\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableTypeAndName,\n    VariableValue_IntegerValue,\n)\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.problem.update_problem(\n    problem_id=\"string\",\n    request=CreateProblemRequest(\n        problem_name=\"string\",\n        problem_description=ProblemDescription(\n            boards=[ProblemDescriptionBoard_Html(type=\"html\", value=\"string\")],\n        ),\n        files={\n            Language.JAVA: ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"string\",\n                    contents=\"string\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"string\",\n                        contents=\"string\",\n                    )\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"string\",\n            )\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"string\",\n                    params=[\n                        VariableValue_IntegerValue(type=\"integerValue\", value=1)\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(\n                    type=\"integerValue\", value=1\n                ),\n            )\n        ],\n        method_name=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.delete_problem(\n    problem_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.problem.delete_problem(\n    problem_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import VariableType, VariableTypeAndName\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.get_default_starter_files(\n    input_params=[\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"string\",\n        )\n    ],\n    output_type=VariableType(),\n    method_name=\"string\",\n)\n",
+                "async_client": "from seed import VariableType, VariableTypeAndName\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.problem.get_default_starter_files(\n    input_params=[\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"string\",\n        )\n    ],\n    output_type=VariableType(),\n    method_name=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import Language\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.create_execution_session(\n    language=Language.JAVA,\n)\n",
+                "async_client": "from seed import Language\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.submission.create_execution_session(\n    language=Language.JAVA,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.get_execution_session(\n    session_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.submission.get_execution_session(\n    session_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.stop_execution_session(\n    session_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.submission.stop_execution_session(\n    session_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.get_execution_sessions_state()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.submission.get_execution_sessions_state()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "sync_client": "from seed import Language\nfrom seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.sysprop.set_num_warm_instances(\n    language=Language.JAVA,\n    num_warm_instances=1,\n)\n",
+                "async_client": "from seed import Language\nfrom seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.sysprop.set_num_warm_instances(\n    language=Language.JAVA,\n    num_warm_instances=1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.sysprop.get_num_warm_instances()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.sysprop.get_num_warm_instances()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_lightweight_problems()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.problem.get_lightweight_problems()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_problems()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.problem.get_problems()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_latest_problem(\n    problem_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.problem.get_latest_problem(\n    problem_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_problem_version(\n    problem_id=\"string\",\n    problem_version=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.problem.get_problem_version(\n    problem_id=\"string\",\n    problem_version=1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_lightweight_problems()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.v_3.problem.get_lightweight_problems()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_problems()\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.v_3.problem.get_problems()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_latest_problem(\n    problem_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.v_3.problem.get_latest_problem(\n    problem_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_problem_version(\n    problem_id=\"string\",\n    problem_version=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nawait client.v_2.v_3.problem.get_problem_version(\n    problem_id=\"string\",\n    problem_version=1,\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

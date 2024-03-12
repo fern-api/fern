@@ -126,12 +126,14 @@ class _TestSubmissionUpdateInfo:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing.Literal["recordedTestCase"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Finished(pydantic.BaseModel):
         type: typing.Literal["finished"]

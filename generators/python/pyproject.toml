@@ -8,9 +8,9 @@ authors = []
 python = "^3.8"
 pydantic = "^1.9.2"
 typer = {extras = ["all"], version = "^0.6.1"}
-fern-fern-generator-exec-sdk = {version = "0.0.570", source = "fern-prod"}
+fern-fern-generator-exec-sdk = {version = "0.0.618", source = "fern-prod"}
 ordered-set = "^4.1.0"
-fern_fern_ir_v36 = "^0.0.3413"
+fern_fern_ir_v37 = "^0.0.3433"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.2"

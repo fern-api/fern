@@ -46,6 +46,8 @@ class PathParamClient:
         client.path_param.send(
             operand=">",
             maybe_operand="less_than",
+            operand_or_color="red",
+            maybe_operand_or_color="red",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -116,6 +118,8 @@ class AsyncPathParamClient:
         await client.path_param.send(
             operand=">",
             maybe_operand="less_than",
+            operand_or_color="red",
+            maybe_operand_or_color="red",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

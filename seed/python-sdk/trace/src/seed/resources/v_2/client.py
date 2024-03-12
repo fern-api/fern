@@ -22,6 +22,14 @@ class V2Client:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.v_2.test()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -62,6 +70,14 @@ class AsyncV2Client:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.v_2.test()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

@@ -24,6 +24,13 @@ class ServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAudiences
+
+        client = SeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder_a.service.get_direct_thread()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -62,6 +69,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAudiences
+
+        client = AsyncSeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder_a.service.get_direct_thread()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

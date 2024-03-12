@@ -41,6 +41,15 @@ pydantic = "^1.10.2"
 [tool.poetry.dev-dependencies]
 mypy = "^1.8.0"
 pytest = "^7.4.0"
+pytest-asyncio = "^0.23.5"
+
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+asyncio_mode = "auto"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
 
 [build-system]
 requires = ["poetry-core"]

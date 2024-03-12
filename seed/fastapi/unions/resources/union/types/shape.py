@@ -66,12 +66,14 @@ class _Shape:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Square(resources_union_types_square_Square):
         type: typing.Literal["square"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 Shape.update_forward_refs()

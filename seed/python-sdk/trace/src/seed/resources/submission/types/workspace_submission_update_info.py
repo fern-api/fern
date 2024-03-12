@@ -31,6 +31,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
@@ -56,6 +57,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):

@@ -22,6 +22,7 @@ class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
@@ -39,6 +40,7 @@ class SubmissionRequest_SubmitV2(SubmitRequestV2):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
@@ -48,6 +50,7 @@ class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_Stop(StopRequest):
@@ -57,6 +60,7 @@ class SubmissionRequest_Stop(StopRequest):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionRequest = typing.Union[

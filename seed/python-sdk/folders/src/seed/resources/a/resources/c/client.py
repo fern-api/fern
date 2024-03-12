@@ -18,6 +18,13 @@ class CClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.a.c.foo()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -59,6 +66,13 @@ class AsyncCClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.a.c.foo()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -31,6 +31,16 @@ class PrimitiveClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_string(
+            request="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -67,6 +77,16 @@ class PrimitiveClient:
             - request: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_int(
+            request=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -103,6 +123,16 @@ class PrimitiveClient:
             - request: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_long(
+            request=1000000,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -146,6 +176,16 @@ class PrimitiveClient:
             - request: float.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_double(
+            request=1.1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -182,6 +222,16 @@ class PrimitiveClient:
             - request: bool.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_bool(
+            request=True,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -220,6 +270,20 @@ class PrimitiveClient:
             - request: dt.datetime.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_datetime(
+            request=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -263,6 +327,20 @@ class PrimitiveClient:
             - request: dt.date.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_date(
+            request=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -306,6 +384,20 @@ class PrimitiveClient:
             - request: uuid.UUID.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_uuid(
+            request=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -347,6 +439,16 @@ class PrimitiveClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.primitive.get_and_return_base_64(
+            request="SGVsbG8gd29ybGQh",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -395,6 +497,16 @@ class AsyncPrimitiveClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_string(
+            request="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -431,6 +543,16 @@ class AsyncPrimitiveClient:
             - request: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_int(
+            request=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -469,6 +591,16 @@ class AsyncPrimitiveClient:
             - request: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_long(
+            request=1000000,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -512,6 +644,16 @@ class AsyncPrimitiveClient:
             - request: float.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_double(
+            request=1.1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -550,6 +692,16 @@ class AsyncPrimitiveClient:
             - request: bool.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_bool(
+            request=True,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -588,6 +740,20 @@ class AsyncPrimitiveClient:
             - request: dt.datetime.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_datetime(
+            request=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -631,6 +797,20 @@ class AsyncPrimitiveClient:
             - request: dt.date.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_date(
+            request=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -674,6 +854,20 @@ class AsyncPrimitiveClient:
             - request: uuid.UUID.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import uuid
+
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_uuid(
+            request=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -717,6 +911,16 @@ class AsyncPrimitiveClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.primitive.get_and_return_base_64(
+            request="SGVsbG8gd29ybGQh",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

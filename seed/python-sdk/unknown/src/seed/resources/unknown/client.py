@@ -30,6 +30,15 @@ class UnknownClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedUnknownAsAny
+
+        client = SeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.unknown.post(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -78,6 +87,15 @@ class AsyncUnknownClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedUnknownAsAny
+
+        client = AsyncSeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.unknown.post(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

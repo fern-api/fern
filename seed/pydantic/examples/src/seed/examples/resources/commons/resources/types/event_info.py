@@ -18,6 +18,7 @@ class EventInfo_Metadata(Metadata):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class EventInfo_Tag(pydantic.BaseModel):

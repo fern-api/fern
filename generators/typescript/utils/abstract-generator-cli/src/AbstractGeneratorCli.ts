@@ -5,6 +5,7 @@ import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serializati
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
+import { cp, rm } from "fs";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
@@ -115,10 +116,41 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             pathToProject
                         });
                     });
-                    await typescriptProject.copyProjectAsZipTo({
-                        logger,
-                        destinationZip
-                    });
+
+                    if (config.writeUnitTests) {
+                        try {
+                            // Write .mock folder if present
+                            await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
+                                cp(
+                                    `${config.output.path}/.mock`,
+                                    `${pathToProject}/.mock`,
+                                    { recursive: true },
+                                    (err) => {
+                                        if (err) {
+                                            // eslint-disable-next-line no-console
+                                            generatorContext.logger.debug(
+                                                `Failed to copy config to project: ${err.message}`
+                                            );
+                                        }
+                                    }
+                                );
+                                rm(`${config.output.path}/.mock`, { recursive: true }, (err) => {
+                                    if (err) {
+                                        // eslint-disable-next-line no-console
+                                        generatorContext.logger.debug(
+                                            `Failed to delete config to project: ${err.message}`
+                                        );
+                                    }
+                                });
+                            });
+                            await typescriptProject.copyProjectAsZipTo({
+                                logger,
+                                destinationZip
+                            });
+                        } catch {
+                            generatorContext.logger.debug("Could not write .mock folder to project");
+                        }
+                    }
                 },
                 downloadFiles: async () => {
                     if (this.outputSourceFiles(customConfig)) {

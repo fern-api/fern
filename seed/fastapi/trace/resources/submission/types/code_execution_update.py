@@ -178,66 +178,77 @@ class _CodeExecutionUpdate:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Running(RunningResponse):
         type: typing.Literal["running"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Errored(ErroredResponse):
         type: typing.Literal["errored"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Stopped(StoppedResponse):
         type: typing.Literal["stopped"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Graded(GradedResponse):
         type: typing.Literal["graded"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class GradedV2(GradedResponseV2):
         type: typing.Literal["gradedV2"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class WorkspaceRan(WorkspaceRanResponse):
         type: typing.Literal["workspaceRan"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Recording(RecordingResponseNotification):
         type: typing.Literal["recording"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Recorded(RecordedResponseNotification):
         type: typing.Literal["recorded"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class InvalidRequest(InvalidRequestResponse):
         type: typing.Literal["invalidRequest"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Finished(FinishedResponse):
         type: typing.Literal["finished"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 CodeExecutionUpdate.update_forward_refs()

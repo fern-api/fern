@@ -20,6 +20,13 @@ class FolderClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder.foo()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -62,6 +69,13 @@ class AsyncFolderClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder.foo()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

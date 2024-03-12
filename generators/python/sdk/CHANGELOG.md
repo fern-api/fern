@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2024-03-06
+
+- Beta, feature: The SDK now generates tests leveraging auto-generated data to test typing, as well as wire-formatting (e.g. the SDKs are sending and receiving data as expected). This comes out of the box within the generated github workflow, as well as through the fern cli: `fern test --command "your test command"`.
+  **Note**: You must be on the enterprise tier to enable this mode.
+
 ## [0.11.10] - 2024-03-08
 
 - feature: Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK. This allows for easier forward compatibility should your SDK drift behind your spec.

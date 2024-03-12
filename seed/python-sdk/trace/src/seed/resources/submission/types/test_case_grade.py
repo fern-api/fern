@@ -15,6 +15,7 @@ class TestCaseGrade_Hidden(TestCaseHiddenGrade):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
@@ -24,6 +25,7 @@ class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]

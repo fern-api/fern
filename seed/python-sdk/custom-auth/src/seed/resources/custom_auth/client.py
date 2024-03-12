@@ -32,6 +32,14 @@ class CustomAuthClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedCustomAuth
+
+        client = SeedCustomAuth(
+            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.custom_auth.get_with_custom_auth()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -75,6 +83,16 @@ class CustomAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedCustomAuth
+
+        client = SeedCustomAuth(
+            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.custom_auth.post_with_custom_auth(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -127,6 +145,14 @@ class AsyncCustomAuthClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedCustomAuth
+
+        client = AsyncSeedCustomAuth(
+            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.custom_auth.get_with_custom_auth()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -170,6 +196,16 @@ class AsyncCustomAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedCustomAuth
+
+        client = AsyncSeedCustomAuth(
+            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.custom_auth.post_with_custom_auth(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

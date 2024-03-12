@@ -1,4 +1,4 @@
-import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
@@ -16,17 +16,19 @@ import { LocalTaskHandler } from "./LocalTaskHandler";
 import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
-    organization,
+    projectConfig,
     workspace,
     generatorGroup,
     keepDocker,
-    context
+    context,
+    writeUnitTests
 }: {
-    organization: string;
+    projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
+    writeUnitTests: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -39,7 +41,8 @@ export async function runLocalGenerationForWorkspace({
                     );
                 } else {
                     await writeFilesToDiskAndRunGenerator({
-                        organization,
+                        organization: projectConfig.organization,
+                        absolutePathToFernConfig: projectConfig._absolutePath,
                         workspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
@@ -49,7 +52,8 @@ export async function runLocalGenerationForWorkspace({
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
                         outputVersionOverride: undefined,
-                        writeSnippets: false
+                        writeSnippets: false,
+                        writeUnitTests: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -66,6 +70,7 @@ export async function runLocalGenerationForWorkspace({
 
 export async function runLocalGenerationForSeed({
     organization,
+    absolutePathToFernConfig,
     workspace,
     generatorGroup,
     keepDocker,
@@ -75,6 +80,7 @@ export async function runLocalGenerationForSeed({
 }: {
     organization: string;
     workspace: FernWorkspace;
+    absolutePathToFernConfig: AbsoluteFilePath | undefined;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
@@ -93,6 +99,7 @@ export async function runLocalGenerationForSeed({
                 } else {
                     await writeFilesToDiskAndRunGenerator({
                         organization,
+                        absolutePathToFernConfig,
                         workspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
@@ -102,7 +109,8 @@ export async function runLocalGenerationForSeed({
                         context: interactiveTaskContext,
                         irVersionOverride,
                         outputVersionOverride,
-                        writeSnippets: true
+                        writeSnippets: true,
+                        writeUnitTests: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -131,17 +139,20 @@ async function writeFilesToDiskAndRunGenerator({
     workspace,
     generatorInvocation,
     absolutePathToLocalOutput,
+    absolutePathToFernConfig,
     audiences,
     workspaceTempDir,
     keepDocker,
     context,
     irVersionOverride,
     outputVersionOverride,
-    writeSnippets
+    writeSnippets,
+    writeUnitTests
 }: {
     organization: string;
     workspace: FernWorkspace;
     audiences: Audiences;
+    absolutePathToFernConfig: AbsoluteFilePath | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     workspaceTempDir: DirectoryResult;
@@ -150,6 +161,7 @@ async function writeFilesToDiskAndRunGenerator({
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
     writeSnippets: boolean;
+    writeUnitTests: boolean;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -173,6 +185,8 @@ async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
+    const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
+
     let absolutePathToTmpSnippetJSON = undefined;
     if (writeSnippets) {
         const snippetJsonFile = await tmp.file({
@@ -186,12 +200,16 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToIr,
+        absolutePathToFernDefinition,
+        absolutePathToFernConfig,
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
         organization,
         outputVersion: outputVersionOverride,
         keepDocker,
-        generatorInvocation
+        generatorInvocation,
+        context,
+        writeUnitTests
     });
 
     const taskHandler = new LocalTaskHandler({

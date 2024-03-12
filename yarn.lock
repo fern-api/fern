@@ -2364,7 +2364,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.2
@@ -2413,7 +2413,7 @@ __metadata:
     "@fern-api/fdr-sdk": 0.57.0-1-ge86efe6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2456,7 +2456,7 @@ __metadata:
   dependencies:
     "@fern-api/fdr-sdk": 0.57.0-1-ge86efe6
     "@fern-api/venus-api-sdk": 0.0.38
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2493,7 +2493,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2625,7 +2625,7 @@ __metadata:
   dependencies:
     "@fern-api/csharp-generator-cli": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2650,7 +2650,7 @@ __metadata:
   dependencies:
     "@fern-api/csharp-generator-cli": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2677,7 +2677,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2708,7 +2708,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -2754,7 +2754,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2956,7 +2956,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3067,7 +3067,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.2828
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3186,7 +3186,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
@@ -3278,12 +3278,13 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
+    "@types/tar": ^6.1.7
     "@types/terminal-link": ^1.2.0
     axios: ^0.28.0
     chalk: ^5.0.1
@@ -3298,6 +3299,7 @@ __metadata:
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    tar: ^6.2.0
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -3310,7 +3312,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -3333,7 +3335,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3389,7 +3391,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3514,7 +3516,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.411
+    "@fern-fern/fiddle-sdk": ^0.0.461
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.9
@@ -3621,31 +3623,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.411":
-  version: 0.0.411
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.411"
+"@fern-fern/fiddle-sdk@npm:^0.0.461":
+  version: 0.0.461
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.461"
   dependencies:
-    "@types/basic-auth": ^1.1.3
-    "@types/url-join": 4.0.1
-    axios: ^0.27.2
-    basic-auth: ^2.0.1
-    buffer: ^6.0.3
-    js-base64: ^3.7.2
+    form-data: 4.0.0
+    js-base64: 3.7.2
+    node-fetch: 2.7.0
+    qs: 6.11.2
     url-join: 4.0.1
-  checksum: 8c4243eaa717cc6576b88b52f8409745daf68ad1e6616ad675578f5b015cc1d8e08743d19601cb487d9a2709760abb3ff1e910653c15d022bdb6670144d8354c
+  checksum: 34881e46741eabe88c20377210f4067247fa2fc9df1ff4746d1b43adcad4f58e61193e275e5eaaa796cc991e1e37221ceee855be082960e5701b323c414fc310
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:0.0.571":
-  version: 0.0.571
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.571"
+"@fern-fern/generator-exec-sdk@npm:0.0.619":
+  version: 0.0.619
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.619"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: b04a35e67b3fc807e9a560759931a32e9386b5a643a33afea10c5f65e0d4192bb7bdd4bc088196e6ef9cbd1404817f269c6077c60d4b67e3635685303bdd2781
+  checksum: 3c872608e69a925341ba6a40bdd1bedb085b37fd0654b2cb4628e0a4312a166c7668b8a8db65997345bd16bb0a49d988ebebf8bf8193c989bfce50153b49bcb6
   languageName: node
   linkType: hard
 
@@ -3978,7 +3978,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.16
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4221,7 +4221,7 @@ __metadata:
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.16
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4566,7 +4566,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.16
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4601,7 +4601,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/generator-exec-sdk": 0.0.619
     "@fern-fern/ir-sdk": 0.0.16
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5706,15 +5706,6 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.3.0"
   checksum: 8992d8c1eaaf1c793e9184b930767883446939d2744c40ea4e9591086e79b631189dc519931ed8864f1e016742a189703c217db59b800aca84870b865009d8b4
-  languageName: node
-  linkType: hard
-
-"@types/basic-auth@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@types/basic-auth@npm:1.1.3"
-  dependencies:
-    "@types/node": "*"
-  checksum: 9fe87b9dabdfffaf883489ad69f95d91fffc5922bb7b6f8b8f3605a6a5e63377d80c5eac5c1b6a61a59689ad4fdb7d5e73b9d26255cac6aee91147809740037f
   languageName: node
   linkType: hard
 
@@ -7773,7 +7764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:0.27.2, axios@npm:^0.27.0, axios@npm:^0.27.2":
+"axios@npm:0.27.2, axios@npm:^0.27.0":
   version: 0.27.2
   resolution: "axios@npm:0.27.2"
   dependencies:
@@ -7931,15 +7922,6 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
-  languageName: node
-  linkType: hard
-
-"basic-auth@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "basic-auth@npm:2.0.1"
-  dependencies:
-    safe-buffer: 5.1.2
-  checksum: 3419b805d5dfc518f3a05dcf42aa53aa9ce820e50b6df5097f9e186322e1bc733c36722b624802cd37e791035aa73b828ed814d8362333d42d7f5cd04d7a5e48
   languageName: node
   linkType: hard
 
@@ -14039,7 +14021,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"js-base64@npm:3.7.2, js-base64@npm:^3.7.2":
+"js-base64@npm:3.7.2":
   version: 3.7.2
   resolution: "js-base64@npm:3.7.2"
   checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
@@ -16381,6 +16363,20 @@ env-cmd@toddbluhm/env-cmd:
     json-parse-better-errors: ^1.0.0
     safe-buffer: ^5.1.1
   checksum: 601cf96bcfff04995bb484a55cc9f354657c041013d0d5d92a48765df29d36a0df8a0b3ba26b76ffbe3eb824df743996c5a1806cd8e45a11da352e2904c4aaab
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:2.7.0":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: d76d2f5edb451a3f05b15115ec89fc6be39de37c6089f1b6368df03b91e1633fd379a7e01b7ab05089a25034b2023d959b47e59759cb38d88341b2459e89d6e5
   languageName: node
   linkType: hard
 
@@ -19095,17 +19091,17 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:5.1.2, safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
-  version: 5.1.2
-  resolution: "safe-buffer@npm:5.1.2"
-  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
-  languageName: node
-  linkType: hard
-
 "safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.1, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.0, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
+  languageName: node
+  linkType: hard
+
+"safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
+  version: 5.1.2
+  resolution: "safe-buffer@npm:5.1.2"
+  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
   languageName: node
   linkType: hard
 

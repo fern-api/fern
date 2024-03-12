@@ -10,6 +10,10 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
+import { readFile } from "fs/promises";
+import path from "path";
+import tar from "tar";
+import tmp from "tmp-promise";
 import urlJoin from "url-join";
 import { substituteEnvVariables } from "./substituteEnvVariables";
 
@@ -79,13 +83,49 @@ async function createJob({
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
+    let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
+    // Only write definition if output mode is github
+    if (generatorInvocation.outputMode.type.startsWith("github")) {
+        try {
+            const tmpDir = await tmp.dir();
+            const tarPath = path.join(tmpDir.path, "definition.tgz");
+            context.logger.debug(`Compressing definition at ${tmpDir.path}`);
+            await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
+
+            // Upload definition to S3
+            context.logger.debug("Getting upload URL for Fern definition.");
+            const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
+                apiName: workspace.name,
+                organizationName: organization,
+                version
+            });
+
+            if (!definitionUploadUrlRequest.ok) {
+                context.logger.debug(
+                    `Failed to get upload URL, continuing: ${definitionUploadUrlRequest.error.content.reason}`
+                );
+            } else {
+                context.logger.debug("Uploading definition...");
+                await axios.put(definitionUploadUrlRequest.body, await readFile(tarPath));
+
+                // Create definition metadata
+                fernDefinitionMetadata = {
+                    definitionS3DownloadUrl: "undefined",
+                    outputPath: ".mock"
+                };
+            }
+        } catch (error) {
+            context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
+        }
+    }
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
         uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
-        whitelabel: whitelabelWithEnvVarSubstiutions
+        whitelabel: whitelabelWithEnvVarSubstiutions,
+        fernDefinitionMetadata
     });
 
     if (!createResponse.ok) {

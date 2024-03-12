@@ -13,6 +13,7 @@ export declare namespace getGeneratorConfig {
         customConfig: unknown;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
+        writeUnitTests: boolean;
     }
 
     export interface Return {
@@ -27,7 +28,8 @@ export function getGeneratorConfig({
     workspaceName,
     organization,
     outputVersion = DEFAULT_OUTPUT_VERSION,
-    absolutePathToSnippet
+    absolutePathToSnippet,
+    writeUnitTests
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -94,7 +96,8 @@ export function getGeneratorConfig({
             organization,
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
             dryRun: false,
-            whitelabel: false
+            whitelabel: false,
+            writeUnitTests
         }
     };
 }

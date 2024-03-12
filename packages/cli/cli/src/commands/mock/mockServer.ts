@@ -1,5 +1,5 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { runMockServer } from "@fern-api/mock";
+import { MockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
 import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
@@ -44,10 +44,13 @@ export async function mockServer({
             disableExamples: false
         });
 
-        await runMockServer({
+        const mockServer = new MockServer({
             context,
             ir,
             port
         });
+
+        await mockServer.start();
+        await mockServer.keepAlive();
     });
 }

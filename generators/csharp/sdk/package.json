@@ -33,7 +33,7 @@
   "dependencies": {
     "@fern-api/csharp-generator-cli": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "0.0.571",
+    "@fern-fern/generator-exec-sdk": "0.0.619",
     "@fern-fern/ir-sdk": "0.0.3318",
     "zod": "^3.22.3"
   },

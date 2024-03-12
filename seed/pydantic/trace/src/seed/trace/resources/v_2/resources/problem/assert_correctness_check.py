@@ -13,6 +13,7 @@ class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
@@ -20,6 +21,7 @@ class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult)
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

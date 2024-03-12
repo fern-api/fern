@@ -26,6 +26,14 @@ class ServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedBearerTokenEnvironmentVariable
+
+        client = SeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_with_bearer_token()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -66,6 +74,14 @@ class AsyncServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedBearerTokenEnvironmentVariable
+
+        client = AsyncSeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_with_bearer_token()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

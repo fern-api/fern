@@ -20,6 +20,15 @@ class PackageClient:
             - for_: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedNurseryApi
+
+        client = SeedNurseryApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.package.test(
+            for_="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -72,6 +81,15 @@ class AsyncPackageClient:
             - for_: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedNurseryApi
+
+        client = AsyncSeedNurseryApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.package.test(
+            for_="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

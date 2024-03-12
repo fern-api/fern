@@ -17,6 +17,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
@@ -167,6 +168,21 @@ class SdkGenerator(AbstractGenerator):
             snippet_registry=snippet_registry,
             project=project,
         )
+
+        test_fac = SnippetTestFactory(
+            project=project,
+            context=context,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generated_root_client=generated_root_client,
+        )
+
+        # Only write unit tests if specified in config
+        if generator_config.write_unit_tests:
+            self._write_snippet_tests(
+                snippet_test_factory=test_fac,
+                snippet_writer=snippet_writer,
+                ir=ir,
+            )
 
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
@@ -343,6 +359,15 @@ pip install --upgrade {project._project_config.package_name}
             if snippets is None:
                 return
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+
+    def _write_snippet_tests(
+        self,
+        snippet_test_factory: SnippetTestFactory,
+        snippet_writer: SnippetWriter,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> None:
+        # Write tests
+        snippet_test_factory.tests(ir, snippet_writer)
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

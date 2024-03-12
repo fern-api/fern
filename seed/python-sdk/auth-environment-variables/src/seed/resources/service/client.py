@@ -27,6 +27,15 @@ class ServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAuthEnvironmentVariables
+
+        client = SeedAuthEnvironmentVariables(
+            x_another_header="YOUR_X_ANOTHER_HEADER",
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_with_api_key()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -69,6 +78,17 @@ class ServiceClient:
             - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAuthEnvironmentVariables
+
+        client = SeedAuthEnvironmentVariables(
+            x_another_header="YOUR_X_ANOTHER_HEADER",
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_with_header(
+            x_endpoint_header="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -110,6 +130,15 @@ class AsyncServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAuthEnvironmentVariables
+
+        client = AsyncSeedAuthEnvironmentVariables(
+            x_another_header="YOUR_X_ANOTHER_HEADER",
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_with_api_key()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -152,6 +181,17 @@ class AsyncServiceClient:
             - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAuthEnvironmentVariables
+
+        client = AsyncSeedAuthEnvironmentVariables(
+            x_another_header="YOUR_X_ANOTHER_HEADER",
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_with_header(
+            x_endpoint_header="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

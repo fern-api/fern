@@ -25,6 +25,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
@@ -40,6 +41,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):

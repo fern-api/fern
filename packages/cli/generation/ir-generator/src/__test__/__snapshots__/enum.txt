@@ -167,21 +167,21 @@ exports[`generate IR 1`] = `
                           "value": {
                             "name": {
                               "camelCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "greaterThan",
+                                "unsafeName": "greaterThan",
                               },
-                              "originalName": ">",
+                              "originalName": "GREATER_THAN",
                               "pascalCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "GreaterThan",
+                                "unsafeName": "GreaterThan",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "GREATER_THAN",
+                                "unsafeName": "GREATER_THAN",
                               },
                               "snakeCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "greater_than",
+                                "unsafeName": "greater_than",
                               },
                             },
                             "wireValue": ">",
@@ -258,7 +258,7 @@ exports[`generate IR 1`] = `
                                       "safeName": "red",
                                       "unsafeName": "red",
                                     },
-                                    "originalName": "red",
+                                    "originalName": "RED",
                                     "pascalCase": {
                                       "safeName": "Red",
                                       "unsafeName": "Red",
@@ -396,21 +396,21 @@ exports[`generate IR 1`] = `
                           "value": {
                             "name": {
                               "camelCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "greaterThan",
+                                "unsafeName": "greaterThan",
                               },
-                              "originalName": ">",
+                              "originalName": "GREATER_THAN",
                               "pascalCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "GreaterThan",
+                                "unsafeName": "GreaterThan",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "GREATER_THAN",
+                                "unsafeName": "GREATER_THAN",
                               },
                               "snakeCase": {
-                                "safeName": "",
-                                "unsafeName": "",
+                                "safeName": "greater_than",
+                                "unsafeName": "greater_than",
                               },
                             },
                             "wireValue": ">",
@@ -487,7 +487,7 @@ exports[`generate IR 1`] = `
                                       "safeName": "red",
                                       "unsafeName": "red",
                                     },
-                                    "originalName": "red",
+                                    "originalName": "RED",
                                     "pascalCase": {
                                       "safeName": "Red",
                                       "unsafeName": "Red",
@@ -1248,21 +1248,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -1423,7 +1423,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -1543,7 +1543,7 @@ exports[`generate IR 1`] = `
                                           "safeName": "red",
                                           "unsafeName": "red",
                                         },
-                                        "originalName": "red",
+                                        "originalName": "RED",
                                         "pascalCase": {
                                           "safeName": "Red",
                                           "unsafeName": "Red",
@@ -1675,21 +1675,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -1754,21 +1754,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -1841,7 +1841,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -1957,7 +1957,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -2450,21 +2450,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -2540,7 +2540,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -2670,21 +2670,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -2752,21 +2752,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -2842,7 +2842,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -2961,7 +2961,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -3433,21 +3433,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -3515,21 +3515,21 @@ exports[`generate IR 1`] = `
                         "value": {
                           "name": {
                             "camelCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greaterThan",
+                              "unsafeName": "greaterThan",
                             },
-                            "originalName": ">",
+                            "originalName": "GREATER_THAN",
                             "pascalCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GreaterThan",
+                              "unsafeName": "GreaterThan",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "GREATER_THAN",
+                              "unsafeName": "GREATER_THAN",
                             },
                             "snakeCase": {
-                              "safeName": "",
-                              "unsafeName": "",
+                              "safeName": "greater_than",
+                              "unsafeName": "greater_than",
                             },
                           },
                           "wireValue": ">",
@@ -3605,7 +3605,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -3724,7 +3724,7 @@ exports[`generate IR 1`] = `
                                     "safeName": "red",
                                     "unsafeName": "red",
                                   },
-                                  "originalName": "red",
+                                  "originalName": "RED",
                                   "pascalCase": {
                                     "safeName": "Red",
                                     "unsafeName": "Red",
@@ -4454,7 +4454,7 @@ exports[`generate IR 1`] = `
                   "safeName": "red",
                   "unsafeName": "red",
                 },
-                "originalName": "red",
+                "originalName": "RED",
                 "pascalCase": {
                   "safeName": "Red",
                   "unsafeName": "Red",
@@ -4598,7 +4598,7 @@ exports[`generate IR 1`] = `
                         "safeName": "red",
                         "unsafeName": "red",
                       },
-                      "originalName": "red",
+                      "originalName": "RED",
                       "pascalCase": {
                         "safeName": "Red",
                         "unsafeName": "Red",
@@ -4780,21 +4780,21 @@ different.",
             "value": {
               "name": {
                 "camelCase": {
-                  "safeName": "",
-                  "unsafeName": "",
+                  "safeName": "greaterThan",
+                  "unsafeName": "greaterThan",
                 },
-                "originalName": ">",
+                "originalName": "GREATER_THAN",
                 "pascalCase": {
-                  "safeName": "",
-                  "unsafeName": "",
+                  "safeName": "GreaterThan",
+                  "unsafeName": "GreaterThan",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "",
-                  "unsafeName": "",
+                  "safeName": "GREATER_THAN",
+                  "unsafeName": "GREATER_THAN",
                 },
                 "snakeCase": {
-                  "safeName": "",
-                  "unsafeName": "",
+                  "safeName": "greater_than",
+                  "unsafeName": "greater_than",
                 },
               },
               "wireValue": ">",

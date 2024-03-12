@@ -23,6 +23,7 @@ class ActualResult_Exception(ExceptionInfo):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):

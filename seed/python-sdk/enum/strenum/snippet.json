@@ -1,7 +1,8 @@
 {
     "types": {
         "type_:Operand": "\">\"\n",
-        "type_:Color": "\"red\"\n"
+        "type_:Color": "\"red\"\n",
+        "type_:ColorOrOperand": "\"red\"\n"
     },
     "endpoints": [
         {
@@ -10,8 +11,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=\">\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.inlined_request.send(\n    operand=\">\",\n)\n",
+                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
                 "type": "python"
             }
         },
@@ -21,8 +22,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n)\n",
+                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
                 "type": "python"
             }
         },
@@ -32,8 +33,19 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=\">\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send(\n    operand=\">\",\n)\n",
+                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
                 "type": "python"
             }
         }

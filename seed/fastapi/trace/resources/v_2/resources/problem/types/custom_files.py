@@ -65,6 +65,7 @@ class _CustomFiles:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Custom(pydantic.BaseModel):
         type: typing.Literal["custom"]

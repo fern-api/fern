@@ -32,6 +32,16 @@ class ContainerClient:
             - request: typing.Sequence[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_list_of_primitives(
+            request=["string"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -78,6 +88,21 @@ class ContainerClient:
             - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_list_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -121,6 +146,16 @@ class ContainerClient:
             - request: typing.Set[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_set_of_primitives(
+            request=["string"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -167,6 +202,21 @@ class ContainerClient:
             - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_set_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                )
+            ],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -210,6 +260,16 @@ class ContainerClient:
             - request: typing.Dict[str, str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_prim_to_prim(
+            request={"string": "string"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -256,6 +316,21 @@ class ContainerClient:
             - request: typing.Dict[str, ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_of_prim_to_object(
+            request={
+                "string": ObjectWithRequiredField(
+                    string="string",
+                )
+            },
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -302,6 +377,19 @@ class ContainerClient:
             - request: typing.Optional[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_optional(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -350,6 +438,16 @@ class AsyncContainerClient:
             - request: typing.Sequence[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_list_of_primitives(
+            request=["string"],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -396,6 +494,21 @@ class AsyncContainerClient:
             - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_list_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -439,6 +552,16 @@ class AsyncContainerClient:
             - request: typing.Set[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_set_of_primitives(
+            request=["string"],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -485,6 +608,21 @@ class AsyncContainerClient:
             - request: typing.Sequence[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_set_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                )
+            ],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -528,6 +666,16 @@ class AsyncContainerClient:
             - request: typing.Dict[str, str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_map_prim_to_prim(
+            request={"string": "string"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -574,6 +722,21 @@ class AsyncContainerClient:
             - request: typing.Dict[str, ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_map_of_prim_to_object(
+            request={
+                "string": ObjectWithRequiredField(
+                    string="string",
+                )
+            },
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -620,6 +783,19 @@ class AsyncContainerClient:
             - request: typing.Optional[ObjectWithRequiredField].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import ObjectWithRequiredField
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.container.get_and_return_optional(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -33,6 +33,17 @@ class SubmissionClient:
             - language: Language.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Language
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.create_execution_session(
+            language=Language.JAVA,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -77,6 +88,16 @@ class SubmissionClient:
             - session_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.get_execution_session(
+            session_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -116,6 +137,16 @@ class SubmissionClient:
             - session_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.stop_execution_session(
+            session_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -153,6 +184,14 @@ class SubmissionClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.get_execution_sessions_state()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -197,6 +236,17 @@ class AsyncSubmissionClient:
             - language: Language.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Language
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.submission.create_execution_session(
+            language=Language.JAVA,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -241,6 +291,16 @@ class AsyncSubmissionClient:
             - session_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.submission.get_execution_session(
+            session_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -280,6 +340,16 @@ class AsyncSubmissionClient:
             - session_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.submission.stop_execution_session(
+            session_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -317,6 +387,14 @@ class AsyncSubmissionClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.submission.get_execution_sessions_state()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

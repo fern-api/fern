@@ -64,12 +64,14 @@ class _UnionWithoutKey:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Bar(resources_types_types_bar_Bar):
         type: typing.Literal["bar"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 UnionWithoutKey.update_forward_refs()

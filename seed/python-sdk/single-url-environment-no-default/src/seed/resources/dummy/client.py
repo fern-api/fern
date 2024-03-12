@@ -24,6 +24,15 @@ class DummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+        client = SeedSingleUrlEnvironmentNoDefault(
+            token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        )
+        client.dummy.get_dummy()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -62,6 +71,15 @@ class AsyncDummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+        client = AsyncSeedSingleUrlEnvironmentNoDefault(
+            token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        )
+        await client.dummy.get_dummy()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

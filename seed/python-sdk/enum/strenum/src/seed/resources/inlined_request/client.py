@@ -48,6 +48,7 @@ class InlinedRequestClient:
         )
         client.inlined_request.send(
             operand=">",
+            operand_or_color="red",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}
@@ -122,6 +123,7 @@ class AsyncInlinedRequestClient:
         )
         await client.inlined_request.send(
             operand=">",
+            operand_or_color="red",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"operand": operand, "operandOrColor": operand_or_color}

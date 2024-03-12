@@ -70,6 +70,7 @@ class VariableValue_MapValue(MapValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_ListValue(pydantic.BaseModel):
@@ -88,6 +89,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
@@ -97,6 +99,7 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
@@ -106,6 +109,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableValue_NullValue(pydantic.BaseModel):

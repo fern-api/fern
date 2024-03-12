@@ -84,18 +84,21 @@ class _ErrorInfo:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class RuntimeError(resources_submission_types_runtime_error_RuntimeError):
         type: typing.Literal["runtimeError"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing.Literal["internalError"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 ErrorInfo.update_forward_refs()

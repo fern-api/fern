@@ -66,12 +66,14 @@ class _SubmissionStatusV2:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing.Literal["workspace"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 SubmissionStatusV2.update_forward_refs()

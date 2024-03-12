@@ -38,11 +38,16 @@ class QueryParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import SeedEnum
 
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send(operand=Operand., )
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query_param.send(
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -107,6 +112,19 @@ class QueryParamClient:
             - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Color, Operand
+        from seed.client import SeedEnum
+
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query_param.send_list(
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -177,11 +195,16 @@ class AsyncQueryParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import AsyncSeedEnum
 
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.query_param.send(operand=Operand., )
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.query_param.send(
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -246,6 +269,19 @@ class AsyncQueryParamClient:
             - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Color, Operand
+        from seed.client import AsyncSeedEnum
+
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.query_param.send_list(
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

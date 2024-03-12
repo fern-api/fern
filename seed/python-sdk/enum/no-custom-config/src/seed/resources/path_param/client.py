@@ -38,11 +38,18 @@ class PathParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import SeedEnum
 
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.path_param.send(
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.LESS_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -104,11 +111,18 @@ class AsyncPathParamClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from seed import Operand
+        from seed import Color, Operand
         from seed.client import AsyncSeedEnum
 
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
-        await client.path_param.send(operand=Operand., maybe_operand=Operand.LESS_THAN, )
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.path_param.send(
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.LESS_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

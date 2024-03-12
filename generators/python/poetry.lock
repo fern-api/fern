@@ -171,13 +171,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.570"
+version = "0.0.618"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.570-py3-none-any.whl", hash = "sha256:b3bac82638f3373913c89ce64b9c2e48ca2953b7b8a9d99efed038ade3d2ffc8"},
-    {file = "fern_fern_generator_exec_sdk-0.0.570.tar.gz", hash = "sha256:b1f6eecad436ed816046c667236e1dbb2c343fbb86e9c789f216e78801705cac"},
+    {file = "fern_fern_generator_exec_sdk-0.0.618-py3-none-any.whl", hash = "sha256:a0e994f5929d7d0e67a8fc9c78881dee234bfbb8735caa91a67cd49375b45a1e"},
+    {file = "fern_fern_generator_exec_sdk-0.0.618.tar.gz", hash = "sha256:b5ba69bb3a98d3a208c8153e0b9334eb99b4384b063938cf04731358880672a1"},
 ]
 
 [package.dependencies]
@@ -192,18 +192,18 @@ url = "https://pypi.buildwithfern.com"
 reference = "fern-prod"
 
 [[package]]
-name = "fern-fern-ir-v36"
-version = "0.0.3413"
+name = "fern-fern-ir-v37"
+version = "0.0.3433"
 description = ""
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_ir_v36-0.0.3413-py3-none-any.whl", hash = "sha256:13b93f0790f0b381525443520234e8eda7fad191834bbb69783414f46faf9faf"},
-    {file = "fern_fern_ir_v36-0.0.3413.tar.gz", hash = "sha256:a6244797e848e7e2ee32eb5f63ac4a02bdb996f35cf6702c756755aede799c2f"},
+    {file = "fern_fern_ir_v37-0.0.3433-py3-none-any.whl", hash = "sha256:3c5406d0ca0b52ff7d2d751dde1f19b7fd5997589f5ba29ff08ec2bf9572a85c"},
+    {file = "fern_fern_ir_v37-0.0.3433.tar.gz", hash = "sha256:d29ad3a3f5d34b15739613219dd4f1ffc6622df3179633143c43ca782cca6de3"},
 ]
 
 [package.dependencies]
-pydantic = ">=1.9.2,<2.5.0"
+pydantic = ">=1.9.2"
 
 [package.source]
 type = "legacy"
@@ -441,13 +441,13 @@ dev = ["black", "mypy", "pytest"]
 
 [[package]]
 name = "packaging"
-version = "23.2"
+version = "24.0"
 description = "Core utilities for Python packages"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
-    {file = "packaging-23.2.tar.gz", hash = "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5"},
+    {file = "packaging-24.0-py3-none-any.whl", hash = "sha256:2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5"},
+    {file = "packaging-24.0.tar.gz", hash = "sha256:eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"},
 ]
 
 [[package]]
@@ -622,13 +622,13 @@ testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "no
 
 [[package]]
 name = "pytest-only"
-version = "2.0.0"
+version = "2.1.1"
 description = "Use @pytest.mark.only to run a single test"
 optional = false
-python-versions = ">=3.6.2,<4"
+python-versions = ">=3.7.2,<4"
 files = [
-    {file = "pytest-only-2.0.0.tar.gz", hash = "sha256:0467eefac714a920b2df2e3c1d2fbf61cf2cd65583ccd2e3233f107862a5fc77"},
-    {file = "pytest_only-2.0.0-py3-none-any.whl", hash = "sha256:1f344d15d6495ca108b341ca12ca90eb1695bebb3bd3978c8efd4a0e121bdb8f"},
+    {file = "pytest_only-2.1.1-py3-none-any.whl", hash = "sha256:1bb74ae95ac44366da85ccf7da0815f11ae0bb0d07754d0def7f14584ead5988"},
+    {file = "pytest_only-2.1.1.tar.gz", hash = "sha256:d417e8d9f962fc772b7e130ab2319fe056f9191ff555fc178f4b66d6a18e248c"},
 ]
 
 [package.dependencies]
@@ -939,4 +939,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "ba979504c145a05a48e778d2868447dcddad0e9ff0d594c15708b6f8c4d53cc1"
+content-hash = "8044e701ebfc5dd3b4a0b8a2af7e5313c79e6ff96d11c9ea23de682bacf515fc"

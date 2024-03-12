@@ -29,6 +29,7 @@ import { mockServer } from "./commands/mock/mockServer";
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
@@ -141,7 +142,7 @@ async function tryRunCli(cliContext: CliContext) {
     addPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
-
+    addTestCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -681,6 +682,37 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 shouldFix: !argv.ci
+            });
+        }
+    );
+}
+
+function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "test",
+        "Runs tests specified in --command, this spins up a mock server in the background that is terminated upon completion of the tests.",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "The API to mock."
+                })
+                .option("command", {
+                    string: true,
+                    description: "The command to run to test your SDK."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern test"
+            });
+            await testOutput({
+                cliContext,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
+                    nameOverride: ".mock"
+                }),
+                testCommand: argv.command
             });
         }
     );

@@ -29,6 +29,7 @@ class FieldValue_ObjectValue(ObjectValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class FieldValue_ContainerValue(pydantic.BaseModel):

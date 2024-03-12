@@ -36,6 +36,7 @@ class Shape_Circle(Circle, Base):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class Shape_Square(Square, Base):
@@ -43,6 +44,7 @@ class Shape_Square(Square, Base):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 Shape = typing.Union[Shape_Circle, Shape_Square]

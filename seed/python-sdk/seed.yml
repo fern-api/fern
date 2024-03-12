@@ -1,4 +1,4 @@
-irVersion: v36
+irVersion: v37
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -58,15 +58,17 @@ fixtures:
         improved_imports: true
       outputFolder: improved_imports
 scripts:
-  - docker: mwalbeck/python-poetry:1.7-3.11
+  # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+  - docker: fernapi/python-seed
     commands:
       # The global python version is 3.8
-      # - mypy --cache-dir /tmp . --cache-fine-grained
-      # - eval "$(pyenv init -)" && pyenv shell 3.9 && mypy --cache-dir /tmp . --cache-fine-grained
       - poetry install
       - poetry run mypy .
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports
+  # TODO(FER-1070): mypy fails on aliases here even though it's a red herring
+  - examples

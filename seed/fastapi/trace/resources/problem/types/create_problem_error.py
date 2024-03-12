@@ -54,6 +54,7 @@ class _CreateProblemError:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 CreateProblemError.update_forward_refs()

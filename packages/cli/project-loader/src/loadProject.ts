@@ -18,6 +18,7 @@ export declare namespace loadProject {
          */
         defaultToAllApiWorkspaces: boolean;
         context: TaskContext;
+        nameOverride?: string;
     }
 }
 
@@ -26,11 +27,12 @@ export async function loadProject({
     cliVersion,
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
-    context
+    context,
+    nameOverride
 }: loadProject.Args): Promise<Project> {
-    const fernDirectory = await getFernDirectory();
+    const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
     const apiWorkspaces = await loadApis({

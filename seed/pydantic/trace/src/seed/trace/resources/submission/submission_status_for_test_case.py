@@ -19,6 +19,7 @@ class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
@@ -31,6 +32,7 @@ class SubmissionStatusForTestCase_Traced(TracedTestCase):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionStatusForTestCase = typing.Union[

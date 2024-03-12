@@ -20,6 +20,7 @@ class EventInfo_Metadata(Metadata):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class EventInfo_Tag(pydantic.BaseModel):

@@ -66,12 +66,14 @@ class _SubmissionTypeState:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Workspace(WorkspaceSubmissionState):
         type: typing.Literal["workspace"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 SubmissionTypeState.update_forward_refs()

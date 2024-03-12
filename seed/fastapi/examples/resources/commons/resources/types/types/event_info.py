@@ -77,6 +77,7 @@ class _EventInfo:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Tag(pydantic.BaseModel):
         type: typing.Literal["tag"]

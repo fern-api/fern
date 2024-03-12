@@ -16,6 +16,7 @@ class ErrorInfo_CompileError(CompileError):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class ErrorInfo_RuntimeError(RuntimeError):
@@ -25,6 +26,7 @@ class ErrorInfo_RuntimeError(RuntimeError):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class ErrorInfo_InternalError(InternalError):
@@ -34,6 +36,7 @@ class ErrorInfo_InternalError(InternalError):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

@@ -32,6 +32,17 @@ class EnumClient:
             - request: WeatherReport.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import WeatherReport
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.enum.get_and_return_enum(
+            request=WeatherReport.SUNNY,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -75,6 +86,17 @@ class AsyncEnumClient:
             - request: WeatherReport.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import WeatherReport
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.enum.get_and_return_enum(
+            request=WeatherReport.SUNNY,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

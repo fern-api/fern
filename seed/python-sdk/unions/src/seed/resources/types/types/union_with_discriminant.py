@@ -21,6 +21,7 @@ class UnionWithDiscriminant_Foo(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithDiscriminant_Bar(pydantic.BaseModel):
@@ -31,6 +32,7 @@ class UnionWithDiscriminant_Bar(pydantic.BaseModel):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

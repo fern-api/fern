@@ -70,12 +70,14 @@ class _Animal:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 Animal.update_forward_refs()

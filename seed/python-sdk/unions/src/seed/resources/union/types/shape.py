@@ -40,6 +40,7 @@ class Shape_Circle(Circle, Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class Shape_Square(Square, Base):
@@ -49,6 +50,7 @@ class Shape_Square(Square, Base):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 Shape = typing.Union[Shape_Circle, Shape_Square]
