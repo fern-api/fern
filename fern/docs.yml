@@ -205,7 +205,7 @@ navigation:
           - page: Audiences
             path: ./docs/pages/fern-docs/config/audiences.mdx
           - page: SDK snippets
-            path: ./docs/pages/fern-docs/config/snippets.mdx
+            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
             path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
           - section: Customize branding
