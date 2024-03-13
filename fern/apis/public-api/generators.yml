@@ -19,13 +19,14 @@ groups:
       - external
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.7.6
+        version: 0.12.0
         output:
           location: pypi
           package-name: fern-api
-          token: ${PYPI_TOKEN}
+        #   token: ${PYPI_TOKEN}
         github:
-          repository: fern-api/python-sdk
+          repository: fern-api/github-app-test
+          mode: pull-request
           license: MIT
         config:
           client_class_name: Fern

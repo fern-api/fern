@@ -83,6 +83,7 @@ async function createJob({
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
+    context.logger.debug(`Fiddle origin: ${process.env.FERN_FIDDLE_ORIGIN ?? "origin not found"}`);
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
     // Only write definition if output mode is github
     if (generatorInvocation.outputMode.type.startsWith("github")) {
@@ -101,16 +102,26 @@ async function createJob({
             });
 
             if (!definitionUploadUrlRequest.ok) {
-                context.logger.debug(
-                    `Failed to get upload URL, continuing: ${definitionUploadUrlRequest.error.content.reason}`
-                );
+                if (definitionUploadUrlRequest.error.content.reason === "status-code") {
+                    context.logger.debug(
+                        `Failed with status-code to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.body}`
+                    );
+                } else if (definitionUploadUrlRequest.error.content.reason === "non-json") {
+                    context.logger.debug(
+                        `Failed with non-json to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.rawBody}`
+                    );
+                } else if (definitionUploadUrlRequest.error.content.reason === "unknown") {
+                    context.logger.debug(
+                        `Failed to get upload URL as unknown error occurred continuing: ${definitionUploadUrlRequest.error.content.errorMessage}`
+                    );
+                }
             } else {
                 context.logger.debug("Uploading definition...");
-                await axios.put(definitionUploadUrlRequest.body, await readFile(tarPath));
+                await axios.put(definitionUploadUrlRequest.body.s3Url, await readFile(tarPath));
 
                 // Create definition metadata
                 fernDefinitionMetadata = {
-                    definitionS3DownloadUrl: "undefined",
+                    definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
                     outputPath: ".mock"
                 };
             }
@@ -118,6 +129,7 @@ async function createJob({
             context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
         }
     }
+    context.logger.debug("Fern def metadata: " + JSON.stringify(fernDefinitionMetadata));
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,
