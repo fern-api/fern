@@ -245,6 +245,8 @@ navigation:
                 path: ./docs/pages/fern-docs/content/components/accordion.mdx
               - page: Steps
                 path: ./docs/pages/fern-docs/content/components/steps.mdx
+              - page: Endpoint Snippets
+                path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
           - section: Use the Snippets API
             slug: use-snippets-api
             contents:
