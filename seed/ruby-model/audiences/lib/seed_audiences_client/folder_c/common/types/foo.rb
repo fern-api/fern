@@ -8,11 +8,11 @@ module SeedAudiencesClient
       class Foo
         attr_reader :bar_property, :additional_properties
 
-        # @param bar_property [UUID]
+        # @param bar_property [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [FolderC::Common::Foo]
         def initialize(bar_property:, additional_properties: nil)
-          # @type [UUID]
+          # @type [String]
           @bar_property = bar_property
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
@@ -41,7 +41,7 @@ module SeedAudiencesClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.bar_property.is_a?(UUID) != false || raise("Passed value for field obj.bar_property is not the expected type, validation failed.")
+          obj.bar_property.is_a?(String) != false || raise("Passed value for field obj.bar_property is not the expected type, validation failed.")
         end
       end
     end

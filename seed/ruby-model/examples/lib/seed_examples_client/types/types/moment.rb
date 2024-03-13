@@ -8,13 +8,13 @@ module SeedExamplesClient
     class Moment
       attr_reader :id, :date, :datetime, :additional_properties
 
-      # @param id [UUID]
+      # @param id [String]
       # @param date [Date]
       # @param datetime [DateTime]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Moment]
       def initialize(id:, date:, datetime:, additional_properties: nil)
-        # @type [UUID]
+        # @type [String]
         @id = id
         # @type [Date]
         @date = date
@@ -49,7 +49,7 @@ module SeedExamplesClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.id.is_a?(UUID) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+        obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
         obj.date.is_a?(Date) != false || raise("Passed value for field obj.date is not the expected type, validation failed.")
         obj.datetime.is_a?(DateTime) != false || raise("Passed value for field obj.datetime is not the expected type, validation failed.")
       end

@@ -46,7 +46,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
+        obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.state.is_a?(Submission::RunningSubmissionState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       end
     end

@@ -18,7 +18,7 @@ module SeedObjectClient
     # @param five [Long]
     # @param six [DateTime]
     # @param seven [Date]
-    # @param eight [UUID]
+    # @param eight [String]
     # @param nine [String]
     # @param ten [Array<Integer>]
     # @param eleven [Set<Float>]
@@ -27,7 +27,7 @@ module SeedObjectClient
     # @param fourteen [Object]
     # @param fifteen [Array<Array<Integer>>]
     # @param sixteen [Array<Hash{String => Integer}>]
-    # @param seventeen [Array<UUID>]
+    # @param seventeen [Array<String>]
     # @param eighteen [String]
     # @param nineteen [Name]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -48,7 +48,7 @@ module SeedObjectClient
       @six = six
       # @type [Date]
       @seven = seven
-      # @type [UUID]
+      # @type [String]
       @eight = eight
       # @type [String]
       @nine = nine
@@ -66,7 +66,7 @@ module SeedObjectClient
       @fifteen = fifteen
       # @type [Array<Hash{String => Integer}>]
       @sixteen = sixteen
-      # @type [Array<UUID>]
+      # @type [Array<String>]
       @seventeen = seventeen
       # @type [String]
       @eighteen = eighteen
@@ -155,7 +155,7 @@ module SeedObjectClient
       obj.five.is_a?(Long) != false || raise("Passed value for field obj.five is not the expected type, validation failed.")
       obj.six.is_a?(DateTime) != false || raise("Passed value for field obj.six is not the expected type, validation failed.")
       obj.seven.is_a?(Date) != false || raise("Passed value for field obj.seven is not the expected type, validation failed.")
-      obj.eight.is_a?(UUID) != false || raise("Passed value for field obj.eight is not the expected type, validation failed.")
+      obj.eight.is_a?(String) != false || raise("Passed value for field obj.eight is not the expected type, validation failed.")
       obj.nine.is_a?(String) != false || raise("Passed value for field obj.nine is not the expected type, validation failed.")
       obj.ten.is_a?(Array) != false || raise("Passed value for field obj.ten is not the expected type, validation failed.")
       obj.eleven.is_a?(Set) != false || raise("Passed value for field obj.eleven is not the expected type, validation failed.")
