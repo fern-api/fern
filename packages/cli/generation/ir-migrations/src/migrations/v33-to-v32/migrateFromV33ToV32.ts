@@ -69,9 +69,19 @@ class Converter {
     public convertEndpoint(endpoint: IrVersions.V33.HttpEndpoint): IrVersions.V32.HttpEndpoint {
         return {
             ...endpoint,
-            queryParameters: endpoint.queryParameters.filter(
-                // Filter out all the object query parameters.
-                (queryParameter) => !this.isTypeReferenceObject(queryParameter.valueType)
+            queryParameters: endpoint.queryParameters.map(
+                // Object based query parameters are reverse migrated to optional string query parameters.
+                (queryParameter) =>
+                    this.isTypeReferenceObject(queryParameter.valueType)
+                        ? {
+                              ...queryParameter,
+                              valueType: IrVersions.V33.TypeReference.container(
+                                  IrVersions.V33.ContainerType.optional(
+                                      IrVersions.V33.TypeReference.primitive("STRING")
+                                  )
+                              )
+                          }
+                        : queryParameter
             ),
             examples: convertExamples({
                 examples: endpoint.examples,
