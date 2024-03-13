@@ -18,7 +18,7 @@ module SeedIdempotencyHeadersClient
     # @param amount [Integer]
     # @param currency [Payment::Currency]
     # @param request_options [IdempotencyRequestOptions]
-    # @return [UUID]
+    # @return [String]
     def create(amount:, currency:, request_options: nil)
       response = @request_client.conn.post("/payment") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -58,7 +58,7 @@ module SeedIdempotencyHeadersClient
     # @param amount [Integer]
     # @param currency [Payment::Currency]
     # @param request_options [IdempotencyRequestOptions]
-    # @return [UUID]
+    # @return [String]
     def create(amount:, currency:, request_options: nil)
       Async do
         response = @request_client.conn.post("/payment") do |req|

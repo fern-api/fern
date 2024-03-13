@@ -17,7 +17,7 @@ module SeedQueryParametersClient
     end
 
     # @param limit [Integer]
-    # @param id [UUID]
+    # @param id [String]
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
@@ -55,7 +55,7 @@ module SeedQueryParametersClient
     end
 
     # @param limit [Integer]
-    # @param id [UUID]
+    # @param id [String]
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
