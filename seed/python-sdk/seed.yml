@@ -4,24 +4,6 @@ dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fer
 language: python
 generatorType: sdk
 defaultOutputMode: github
-customFixture:
-  config:
-    improved_imports: true
-    pydantic_config:
-      require_optional_fields: false
-      extra_fields: "allow"
-      use_str_enums: true
-    client:
-      class_name: BaseCohere
-      filename: base_client.py
-      exported_class_name: Cohere
-      exported_filename: client.py
-    additional_init_exports:
-      - from: client
-        imports:
-          - Client
-          - AsyncClient
-  outputFolder: cohere
 fixtures:
   examples: 
     - customConfig: null

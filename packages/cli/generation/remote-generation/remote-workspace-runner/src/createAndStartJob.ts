@@ -83,7 +83,6 @@ async function createJob({
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
-    context.logger.debug(`Fiddle origin: ${process.env.FERN_FIDDLE_ORIGIN ?? "origin not found"}`);
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
     // Only write definition if output mode is github
     if (generatorInvocation.outputMode.type.startsWith("github")) {
@@ -129,7 +128,7 @@ async function createJob({
             context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
         }
     }
-    context.logger.debug("Fern def metadata: " + JSON.stringify(fernDefinitionMetadata));
+
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,
