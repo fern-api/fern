@@ -111,9 +111,9 @@ module SeedExhaustiveClient
         Date.parse(response.body)
       end
 
-      # @param request [UUID]
+      # @param request [String]
       # @param request_options [RequestOptions]
-      # @return [UUID]
+      # @return [String]
       def get_and_return_uuid(request:, request_options: nil)
         response = @request_client.conn.post("/primitive/uuid") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -253,9 +253,9 @@ module SeedExhaustiveClient
         end
       end
 
-      # @param request [UUID]
+      # @param request [String]
       # @param request_options [RequestOptions]
-      # @return [UUID]
+      # @return [String]
       def get_and_return_uuid(request:, request_options: nil)
         Async do
           response = @request_client.conn.post("/primitive/uuid") do |req|
