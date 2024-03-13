@@ -1,5 +1,5 @@
 ---
-title: Generate SDK snippets for your docs
+title: Generate SDK snippets
 description: From examples in your API definition, Fern generates SDK code sample snippets in cURL and other languages that are automatically populated in your Fern Docs.
 ---
 
@@ -20,11 +20,11 @@ TypeScript and Python are the SDK code snippet languages supported today. Our de
 
 To configure SDK snippets, you'll need to name your SDKs in `generators.yml` and then reference that name in `docs.yml`. In the following example, We'll use `your-organization` as the package name because it is a common practice. For example, Stripe calls their npm package `stripe` and Twilio calls their PyPI package `twilio`.
 
-### Step 0: Add examples to your API definition.
+### Step 1: Add examples to your API definition.
 
 In order to generate code snippets, Fern needs to read request examples from your API definition. If you're using a Fern Definition, you can follow [these instructions](/overview/define-your-api/ferndef/examples). If you're using an OpenAPI Specification, you can follow [these instructions](https://swagger.io/docs/specification/adding-examples/).
 
-### Step 1: Define a package name for your SDK(s).
+### Step 2: Define a package name for your SDK(s).
 
 <CodeBlock title="generators.yml">
 ```yaml
@@ -48,7 +48,7 @@ groups:
 ```
 </CodeBlock>
 
-### Step 2: Add the package name to your docs configuration.
+### Step 3: Add the package name to your docs configuration.
 
 <CodeBlock title="docs.yml">
 ```yaml 
@@ -62,6 +62,10 @@ navigation:
 
 ## Access via API
 
-If you'd like to bring SDK snippets into your own documentation, you can use the [Snippets API](/fern-docs/content/use-snippets-api/introduction). API access requires a [SDK Business plan](https://buildwithfern.com/pricing).
+If you'd like to bring SDK snippets into your own documentation, you can use the [Snippets API](/fern-docs/content/use-snippets-api/introduction). API access requires a [SDK Business plan](https://buildwithfern.com/pricing) or above.
 
 Merge.dev is an example of a Fern customer that uses the Snippets API to bring Python code samples [into their API Reference](https://docs.merge.dev/hris/employees/#employees_list).
+
+## Endpoint request and response snippets
+
+Looking for information on generating API endpoint request and response snippets? See our documentation on [Endpoint Snippets](/fern-docs/content/components/endpoint-snippets).
