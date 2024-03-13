@@ -4,7 +4,7 @@ import { createFdrService } from "@fern-api/core";
 import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
 import { getReferencedMarkdownFiles } from "@fern-api/docs-validator";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -235,10 +235,11 @@ async function constructRegisterDocsRequest({
     };
     pages = Object.fromEntries(
         Object.entries(pages).map(([pageId, pageContent]) => {
-            const slug = fullSlugs[pageId]?.fullSlug;
             const references = getReferencedMarkdownFiles({
                 content: pageContent.markdown,
-                absoluteFilepath: AbsoluteFilePath.of(pageId)
+                absoluteFilepath: pageId.startsWith("/")
+                    ? AbsoluteFilePath.of(pageId)
+                    : convertFdrFilepathToAbsoluteFilepath(RelativeFilePath.of(pageId), parsedDocsConfig)
             });
             let markdown = pageContent.markdown;
             for (const reference of references) {
@@ -1104,6 +1105,13 @@ function convertAbsoluteFilepathToFdrFilepath(
     parsedDocsConfig: docsYml.ParsedDocsConfiguration
 ) {
     return relative(dirname(parsedDocsConfig.absoluteFilepath), filepath);
+}
+
+function convertFdrFilepathToAbsoluteFilepath(
+    filepath: RelativeFilePath,
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration
+) {
+    return join(dirname(parsedDocsConfig.absoluteFilepath), filepath);
 }
 
 function wrapWithHttps(url: string): string {
