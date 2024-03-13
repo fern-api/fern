@@ -529,6 +529,86 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               "name": {
                 "name": {
                   "camelCase": {
+                    "safeName": "user",
+                    "unsafeName": "user",
+                  },
+                  "originalName": "user",
+                  "pascalCase": {
+                    "safeName": "User",
+                    "unsafeName": "User",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "USER",
+                    "unsafeName": "USER",
+                  },
+                  "snakeCase": {
+                    "safeName": "user",
+                    "unsafeName": "user",
+                  },
+                },
+                "wireValue": "user",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
+                    "_visit": [Function],
+                    "primitive": "STRING",
+                    "type": "primitive",
+                  },
+                  "type": "optional",
+                },
+                "type": "container",
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "map",
+                    "unsafeName": "map",
+                  },
+                  "originalName": "map",
+                  "pascalCase": {
+                    "safeName": "Map",
+                    "unsafeName": "Map",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "MAP",
+                    "unsafeName": "MAP",
+                  },
+                  "snakeCase": {
+                    "safeName": "map",
+                    "unsafeName": "map",
+                  },
+                },
+                "wireValue": "map",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
+                    "_visit": [Function],
+                    "primitive": "STRING",
+                    "type": "primitive",
+                  },
+                  "type": "optional",
+                },
+                "type": "container",
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
                     "safeName": "optionalString",
                     "unsafeName": "optionalString",
                   },
@@ -547,6 +627,46 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   },
                 },
                 "wireValue": "optionalString",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
+                    "_visit": [Function],
+                    "primitive": "STRING",
+                    "type": "primitive",
+                  },
+                  "type": "optional",
+                },
+                "type": "container",
+              },
+            },
+            {
+              "allowMultiple": true,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "multipleUser",
+                    "unsafeName": "multipleUser",
+                  },
+                  "originalName": "multipleUser",
+                  "pascalCase": {
+                    "safeName": "MultipleUser",
+                    "unsafeName": "MultipleUser",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "MULTIPLE_USER",
+                    "unsafeName": "MULTIPLE_USER",
+                  },
+                  "snakeCase": {
+                    "safeName": "multiple_user",
+                    "unsafeName": "multiple_user",
+                  },
+                },
+                "wireValue": "multipleUser",
               },
               "valueType": {
                 "_visit": [Function],
@@ -592,6 +712,46 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "_visit": [Function],
                 "primitive": "STRING",
                 "type": "primitive",
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "any",
+                    "unsafeName": "any",
+                  },
+                  "originalName": "any",
+                  "pascalCase": {
+                    "safeName": "Any",
+                    "unsafeName": "Any",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "ANY",
+                    "unsafeName": "ANY",
+                  },
+                  "snakeCase": {
+                    "safeName": "any",
+                    "unsafeName": "any",
+                  },
+                },
+                "wireValue": "any",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
+                    "_visit": [Function],
+                    "primitive": "STRING",
+                    "type": "primitive",
+                  },
+                  "type": "optional",
+                },
+                "type": "container",
               },
             },
           ],
