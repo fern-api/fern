@@ -2445,7 +2445,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/ua-parser-js": ^0.7.36
+    "@types/ua-parser-js": ^0.7.39
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -6449,10 +6449,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ua-parser-js@npm:^0.7.36":
-  version: 0.7.36
-  resolution: "@types/ua-parser-js@npm:0.7.36"
-  checksum: 8c24d4dc12ed1b8b98195838093391c358c81bf75e9cae0ecec8f7824b441e069daaa17b974a3e257172caddb671439f0c0b44bf43bfcf409b7a574a25aab948
+"@types/ua-parser-js@npm:^0.7.39":
+  version: 0.7.39
+  resolution: "@types/ua-parser-js@npm:0.7.39"
+  checksum: 81046605eb2815b098228743b7dfde887cc8990369f2ad56e71f1400b4cef5078481c7ca91ca3dddf2e8d4e183fe93224bfdeee13bfe034a1e62d55cfbac9e26
   languageName: node
   linkType: hard
 

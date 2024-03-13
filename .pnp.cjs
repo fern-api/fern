@@ -4583,7 +4583,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/ua-parser-js", "npm:0.7.36"],\
+            ["@types/ua-parser-js", "npm:0.7.39"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -9028,10 +9028,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/ua-parser-js", [\
-        ["npm:0.7.36", {\
-          "packageLocation": "./.yarn/cache/@types-ua-parser-js-npm-0.7.36-f5ace9ead6-8c24d4dc12.zip/node_modules/@types/ua-parser-js/",\
+        ["npm:0.7.39", {\
+          "packageLocation": "./.yarn/cache/@types-ua-parser-js-npm-0.7.39-23053990d8-81046605eb.zip/node_modules/@types/ua-parser-js/",\
           "packageDependencies": [\
-            ["@types/ua-parser-js", "npm:0.7.36"]\
+            ["@types/ua-parser-js", "npm:0.7.39"]\
           ],\
           "linkType": "HARD"\
         }]\
