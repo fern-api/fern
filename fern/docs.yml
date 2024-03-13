@@ -228,6 +228,7 @@ navigation:
           - page: Front matter
             path: ./docs/pages/fern-docs/content/front-matter.mdx
           - section: Component Library
+            slug: components
             contents:
               - page: Cards
                 path: ./docs/pages/fern-docs/content/components/card.mdx
