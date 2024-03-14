@@ -10,7 +10,7 @@ from .utilities import validate_response
 
 
 async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeedQueryParameters) -> None:
-    expected_response = {}
+    expected_response = {"name": "string", "tags": ["string"]}
     response = client.user.get_username(
         limit=1,
         id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),

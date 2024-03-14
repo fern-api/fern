@@ -6,7 +6,7 @@ from .utilities import validate_response
 
 
 async def test_generate_stream(client: SeedStreaming, async_client: AsyncSeedStreaming) -> None:
-    expected_response = {}
+    expected_response = {"id": "string", "name": "string"}
     response = client.dummy.generate_stream(num_events=1)
     validate_response(response, expected_response)
 

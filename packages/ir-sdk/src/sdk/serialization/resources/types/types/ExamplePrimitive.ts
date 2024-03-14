@@ -18,6 +18,9 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
             string: core.serialization.object({
                 string: core.serialization.lazyObject(async () => (await import("../../..")).EscapedString),
             }),
+            text: core.serialization.object({
+                string: core.serialization.lazyObject(async () => (await import("../../..")).EscapedString),
+            }),
             boolean: core.serialization.object({
                 boolean: core.serialization.boolean(),
             }),
@@ -43,6 +46,8 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                         return FernIr.ExamplePrimitive.double(value.double);
                     case "string":
                         return FernIr.ExamplePrimitive.string(value.string);
+                    case "text":
+                        return FernIr.ExamplePrimitive.text(value.string);
                     case "boolean":
                         return FernIr.ExamplePrimitive.boolean(value.boolean);
                     case "long":
@@ -65,6 +70,7 @@ export declare namespace ExamplePrimitive {
         | ExamplePrimitive.Integer
         | ExamplePrimitive.Double
         | ExamplePrimitive.String
+        | ExamplePrimitive.Text
         | ExamplePrimitive.Boolean
         | ExamplePrimitive.Long
         | ExamplePrimitive.Datetime
@@ -83,6 +89,11 @@ export declare namespace ExamplePrimitive {
 
     interface String {
         type: "string";
+        string: serializers.EscapedString.Raw;
+    }
+
+    interface Text {
+        type: "text";
         string: serializers.EscapedString.Raw;
     }
 

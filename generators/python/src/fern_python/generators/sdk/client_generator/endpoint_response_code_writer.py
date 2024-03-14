@@ -90,7 +90,7 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
     ) -> None:
         writer.write("return ")
-        writer.write_node(AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}"))
+        writer.write_node(AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.text"))
         writer.write("  # type: ignore ")
         writer.write_newline_if_last_line_not()
 

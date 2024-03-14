@@ -79,7 +79,7 @@ class ImdbClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(MovieId, _response.text)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -190,7 +190,7 @@ class AsyncImdbClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(MovieId, _response.text)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

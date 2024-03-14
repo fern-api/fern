@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Union
 
 import fern.ir.resources as ir_types
 
@@ -21,6 +21,9 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     RootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.environment_generators.generated_environment import GeneratedEnvironment
+from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import MultipleBaseUrlsEnvironmentGenerator
+from fern_python.generators.sdk.environment_generators.single_base_url_environment_generator import SingleBaseUrlEnvironmentGenerator
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
@@ -37,11 +40,13 @@ class SnippetTestFactory:
         context: SdkGeneratorContext,
         generator_exec_wrapper: GeneratorExecWrapper,
         generated_root_client: GeneratedRootClient,
+        generated_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]]
     ) -> None:
         self._project = project
         self._context = context
         self._generator_exec_wrapper = generator_exec_wrapper
-        self._generated_root_client: GeneratedRootClient = generated_root_client
+        self._generated_root_client = generated_root_client
+        self._generated_environment = generated_environment if generated_environment is not None and type(generated_environment) is MultipleBaseUrlsEnvironmentGenerator else None
 
         self._test_base_path = Filepath.DirectoryFilepathPart(
             module_name="tests",
@@ -79,6 +84,34 @@ class SnippetTestFactory:
             writer.write_newline_if_last_line_not()
 
         return AST.Expression(AST.CodeWriter(envvar_writer))
+    
+    def _enviroment(self) -> AST.ClassInstantiation:
+        args = [AST.Expression(f'"{self.TEST_URL_ENVVAR}"'), AST.Expression('"base_url"')]
+        os_get = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                    qualified_name_excluding_import=("getenv",),
+                ),
+                args=args,
+            )
+        )
+
+        class_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.snippet(
+                    module_path=self._context.get_module_path_in_project(
+                        self._context.get_filepath_for_environments_enum().to_module().path
+                    ),
+                ),
+                named_import=self._generated_environment.class_name,
+            ),
+        )
+        return AST.ClassInstantiation(
+            class_=class_reference,
+            kwargs=[(env, os_get) for env in self._generated_environment.args],
+        )
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
         non_url_params = [
@@ -90,11 +123,13 @@ class SnippetTestFactory:
             for param in client.parameters
             if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"
         ]
-        non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
+        if self._generated_environment is None:
+            non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
         return AST.ClassInstantiation(
             class_=client.class_reference,
             # TODO: how can we do this in a more connected + typesafe way
             args=non_url_params,
+            kwargs=[("environment", self._enviroment(),)] if self._generated_environment is not None else None,
         )
 
     def _generate_client_fixture(self) -> None:
@@ -253,6 +288,17 @@ class SnippetTestFactory:
         source_file = self._service_test_files.get(filepath)
 
         for endpoint in service.endpoints:
+            if (
+                endpoint.idempotent or  
+                endpoint.pagination is not None or
+                (endpoint.response is not None and
+                    (endpoint.response.get_as_union().type == "streaming" or 
+                    endpoint.response.get_as_union().type == "fileDownload")) or
+                (endpoint.request_body is not None and 
+                    (endpoint.request_body.get_as_union().type == "fileUpload" or 
+                    endpoint.request_body.get_as_union().type == "bytes"))
+            ):
+                continue
             endpoint_name = endpoint.name.get_as_name().snake_case.unsafe_name
 
             # TODO: We should make the mock server return the specified error response

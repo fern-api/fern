@@ -12,15 +12,12 @@ import express, { Request, Response } from "express";
 import getPort from "get-port";
 import { IncomingHttpHeaders, Server } from "http";
 import { isEqual } from "lodash-es";
-import qs from "qs";
 import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
 
 // TODO(FER-673): There are a few gaps in what the mock server can
 // validate, which will require changes to the example IR.
-//
-// See https://github.com/fern-api/fern/issues/2620
 export class MockServer {
     private app = express();
     private context: TaskContext;
@@ -117,6 +114,13 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
                     res.sendStatus(200);
                     return;
                 }
+
+                // TODO: make text different object
+                if (example.response.body.shape.type === "primitive") {
+                    res.contentType("text/plain");
+                    res.send(example.response.body.jsonExample);
+                    return;
+                }
                 res.json(example.response.body.jsonExample);
                 return;
             }
@@ -156,18 +160,29 @@ function validateQueryParameters(example: ExampleEndpointCall, req: Request): bo
     if (Object.keys(exampleQueryParameters).length !== Object.keys(req.query).length) {
         return false;
     }
-    if (Object.keys(exampleQueryParameters).length > 0) {
-        return stringifyQuery(req.query) === stringifyQuery(exampleQueryParameters);
+
+    const stringifiedQueryParams: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(req.query)) {
+        if (value instanceof Date && value != null) {
+            stringifiedQueryParams[key] = value.toISOString();
+        } else {
+            stringifiedQueryParams[key] = value;
+        }
     }
-    return true;
+
+    // TODO: confirm how deep-object query params works with this.
+    return isEqual(req.query, stringifiedQueryParams);
 }
 
 function validateHeaders(example: ExampleEndpointCall, headers: IncomingHttpHeaders): boolean {
     // For headers, we're slightly more permissive. We allow more headers
     // than what are specified in the example (e.g. Accept, Content-Type, etc).
     const exampleHeaders = examplesWithWireValueToRecord([...example.serviceHeaders, ...example.endpointHeaders]);
+
     for (const [key, value] of Object.entries(exampleHeaders)) {
-        if (headers[key.toLowerCase()] !== (value as string)) {
+        const stringValue =
+            typeof value === "string" ? value : typeof value === "boolean" ? `"${value}"` : JSON.stringify(value);
+        if (headers[key.toLowerCase()] !== stringValue) {
             return false;
         }
     }
@@ -179,6 +194,12 @@ function validateRequestBody(example: ExampleEndpointCall, req: Request): boolea
         // By default, express interprets an empty request body as '{}'.
         return isObject(req.body) && Object.keys(req.body).length === 0;
     }
+    for (const [key, value] of Object.entries(req.body)) {
+        if (value instanceof Date && value != null) {
+            req.body[key] = value.toISOString();
+        }
+    }
+    // throw new Error(`FML ${JSON.stringify(req.body)} ${JSON.stringify(example.request.jsonExample)}`);
     return isEqual(req.body, example.request.jsonExample);
 }
 
@@ -191,7 +212,9 @@ interface ExampleWithWireValue {
 function examplesWithWireValueToRecord(examplesWithWireValue: ExampleWithWireValue[]): Record<string, unknown> {
     const result: Record<string, unknown> = {};
     examplesWithWireValue.forEach((exampleWithWireValue) => {
-        result[exampleWithWireValue.name.wireValue] = exampleWithWireValue.value.jsonExample;
+        const value = exampleWithWireValue.value.jsonExample;
+        const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+        result[exampleWithWireValue.name.wireValue] = stringValue;
     });
     return result;
 }
@@ -199,18 +222,11 @@ function examplesWithWireValueToRecord(examplesWithWireValue: ExampleWithWireVal
 function examplePathParametersToRecord(examplePathParameters: ExamplePathParameter[]): Record<string, unknown> {
     const result: Record<string, unknown> = {};
     examplePathParameters.forEach((examplePathParameter) => {
-        result[examplePathParameter.name.originalName] = examplePathParameter.value.jsonExample;
+        const value = examplePathParameter.value.jsonExample;
+        const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+        result[examplePathParameter.name.originalName] = stringValue;
     });
     return result;
-}
-
-function stringifyQuery(q: unknown): string {
-    return qs.stringify(q, {
-        arrayFormat: "repeat",
-        sort: (a, b) => {
-            return a > b ? 0 : 1;
-        }
-    });
 }
 
 function isObject(value: unknown): value is object {

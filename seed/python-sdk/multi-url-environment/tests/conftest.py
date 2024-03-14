@@ -4,17 +4,24 @@ import os
 
 import pytest
 from seed.client import AsyncSeedMultiUrlEnvironment, SeedMultiUrlEnvironment
+from seed.environment import SeedMultiUrlEnvironmentEnvironment
 
 
 @pytest.fixture
 def client() -> SeedMultiUrlEnvironment:
     return SeedMultiUrlEnvironment(
-        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+        token=os.getenv("ENV_TOKEN", "token"),
+        environment=SeedMultiUrlEnvironmentEnvironment(
+            ec_2=os.getenv("TESTS_BASE_URL", "base_url"), s_3=os.getenv("TESTS_BASE_URL", "base_url")
+        ),
     )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedMultiUrlEnvironment:
     return AsyncSeedMultiUrlEnvironment(
-        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+        token=os.getenv("ENV_TOKEN", "token"),
+        environment=SeedMultiUrlEnvironmentEnvironment(
+            ec_2=os.getenv("TESTS_BASE_URL", "base_url"), s_3=os.getenv("TESTS_BASE_URL", "base_url")
+        ),
     )

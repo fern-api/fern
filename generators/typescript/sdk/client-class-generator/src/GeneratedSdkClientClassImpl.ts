@@ -873,10 +873,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const statements: ts.Statement[] = [];
 
         if (this.bearerAuthScheme != null) {
-            if (
-                this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                this.bearerAuthScheme.tokenEnvVar != null
-            ) {
+            if (this.bearerAuthScheme.tokenEnvVar != null) {
                 const BEARER_TOKEN_VARIABLE_NAME = "bearer";
                 statements.push(
                     ts.factory.createVariableStatement(
@@ -911,40 +908,65 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 );
 
-                statements.push(
-                    ts.factory.createIfStatement(
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
-                            ts.factory.createNull()
-                        ),
-                        ts.factory.createBlock(
-                            [
-                                ts.factory.createThrowStatement(
-                                    context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                        message: ts.factory.createStringLiteral(
-                                            `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
-                                        ),
-                                        statusCode: undefined,
-                                        responseBody: undefined
-                                    })
-                                )
-                            ],
-                            true
-                        )
-                    )
-                );
-
-                statements.push(
-                    ts.factory.createReturnStatement(
-                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
-                            ts.factory.createTemplateSpan(
+                if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
+                    statements.push(
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
                                 ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                ts.factory.createTemplateTail("", "")
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
                             )
-                        ])
-                    )
-                );
+                        )
+                    );
+
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                                ts.factory.createTemplateSpan(
+                                    ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                    ts.factory.createTemplateTail("", "")
+                                )
+                            ])
+                        )
+                    );
+                } else {
+                    statements.push(
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createReturnStatement(
+                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                                            ts.factory.createTemplateSpan(
+                                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                                ts.factory.createTemplateTail("", "")
+                                            )
+                                        ])
+                                    )
+                                ],
+                                true
+                            )
+                        )
+                    );
+                }
             } else if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
                 statements.push(
                     ts.factory.createReturnStatement(

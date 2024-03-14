@@ -292,6 +292,9 @@ types:
       string:
         type: commons.EscapedString
         key: string
+      text:
+        type: commons.EscapedString
+        key: string
       boolean:
         type: boolean
         key: boolean
