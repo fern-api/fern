@@ -10,7 +10,12 @@ export interface UserServiceMethods {
         date: string;
         deadline: Date;
         bytes: string;
+        user?: string;
+        keyValue?: string;
         optionalString?: string;
+        nestedUser?: string;
+        optionalUser?: string;
+        excludeUser?: string;
         filter: string;
     }>, res: {
         send: (responseBody: SeedQueryParameters.User) => Promise<void>;
