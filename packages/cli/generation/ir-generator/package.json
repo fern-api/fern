@@ -36,7 +36,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "lodash-es": "^4.17.21",
-    "prettier": "^2.7.1",
+    "prettier": "^3.2.5",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "@types/jest-specific-snapshot": "^0.5.7",
     "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
-    "@types/prettier": "^2.7.1",
+    "@types/prettier": "^3.0.0",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
