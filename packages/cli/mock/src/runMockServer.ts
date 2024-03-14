@@ -115,8 +115,7 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
                     return;
                 }
 
-                // TODO: make text different object
-                if (example.response.body.shape.type === "primitive") {
+                if (endpoint.response?.type === "text") {
                     res.contentType("text/plain");
                     res.send(example.response.body.jsonExample);
                     return;

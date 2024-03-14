@@ -8,7 +8,6 @@ export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.Integer
     | FernIr.ExamplePrimitive.Double
     | FernIr.ExamplePrimitive.String
-    | FernIr.ExamplePrimitive.Text
     | FernIr.ExamplePrimitive.Boolean
     | FernIr.ExamplePrimitive.Long
     | FernIr.ExamplePrimitive.Datetime
@@ -28,11 +27,6 @@ export declare namespace ExamplePrimitive {
 
     interface String extends _Utils {
         type: "string";
-        string: FernIr.EscapedString;
-    }
-
-    interface Text extends _Utils {
-        type: "text";
         string: FernIr.EscapedString;
     }
 
@@ -69,7 +63,6 @@ export declare namespace ExamplePrimitive {
         integer: (value: number) => _Result;
         double: (value: number) => _Result;
         string: (value: FernIr.EscapedString) => _Result;
-        text: (value: FernIr.EscapedString) => _Result;
         boolean: (value: boolean) => _Result;
         long: (value: number) => _Result;
         datetime: (value: Date) => _Result;
@@ -112,19 +105,6 @@ export const ExamplePrimitive = {
             type: "string",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.String,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
-            ) {
-                return FernIr.ExamplePrimitive._visit(this, visitor);
-            },
-        };
-    },
-
-    text: (value: FernIr.EscapedString): FernIr.ExamplePrimitive.Text => {
-        return {
-            string: value,
-            type: "text",
-            _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.Text,
                 visitor: FernIr.ExamplePrimitive._Visitor<_Result>
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
@@ -205,8 +185,6 @@ export const ExamplePrimitive = {
                 return visitor.double(value.double);
             case "string":
                 return visitor.string(value.string);
-            case "text":
-                return visitor.text(value.string);
             case "boolean":
                 return visitor.boolean(value.boolean);
             case "long":
