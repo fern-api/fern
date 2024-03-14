@@ -54,9 +54,16 @@ export function generateHeaders({
 
     elements.push(...additionalHeaders);
 
-    return elements.map(({ header, value }) =>
+    const objectToReturn: ts.ObjectLiteralElementLike[] = elements.map(({ header, value }) =>
         ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
     );
+
+    const customAuthorizationHeaderValue = generatedSdkClientClass.getCustomAuthorizationHeadersValue();
+    if (customAuthorizationHeaderValue != null) {
+        objectToReturn.push(ts.factory.createSpreadAssignment(customAuthorizationHeaderValue));
+    }
+
+    return objectToReturn;
 }
 
 function getValueExpressionForHeader({
