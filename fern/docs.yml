@@ -141,6 +141,12 @@ navigation:
           - page: PHP SDK
             path: ./docs/pages/fern-sdks/sdk-generators/php-sdk.mdx
             slug: php
+          - page: The Swift SDK Generator
+            path: ./docs/pages/fern-sdks/sdk-generators/swift-sdk.mdx
+            slug: swift
+          - page: The Rust SDK Generator
+            path: ./docs/pages/fern-sdks/sdk-generators/rust-sdk.mdx
+            slug: rust
       - section: Other generators
         contents:
           - section: Server-side
