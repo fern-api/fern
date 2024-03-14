@@ -18,7 +18,7 @@ module SeedExhaustiveClient
         # @param bool [Boolean]
         # @param datetime [DateTime]
         # @param date [Date]
-        # @param uuid [UUID]
+        # @param uuid [String]
         # @param base_64 [String]
         # @param list [Array<String>]
         # @param set [Set<String>]
@@ -41,7 +41,7 @@ module SeedExhaustiveClient
           @datetime = datetime
           # @type [Date]
           @date = date
-          # @type [UUID]
+          # @type [String]
           @uuid = uuid
           # @type [String]
           @base_64 = base_64
@@ -115,7 +115,7 @@ module SeedExhaustiveClient
           obj.bool&.is_a?(Boolean) != false || raise("Passed value for field obj.bool is not the expected type, validation failed.")
           obj.datetime&.is_a?(DateTime) != false || raise("Passed value for field obj.datetime is not the expected type, validation failed.")
           obj.date&.is_a?(Date) != false || raise("Passed value for field obj.date is not the expected type, validation failed.")
-          obj.uuid&.is_a?(UUID) != false || raise("Passed value for field obj.uuid is not the expected type, validation failed.")
+          obj.uuid&.is_a?(String) != false || raise("Passed value for field obj.uuid is not the expected type, validation failed.")
           obj.base_64&.is_a?(String) != false || raise("Passed value for field obj.base_64 is not the expected type, validation failed.")
           obj.list&.is_a?(Array) != false || raise("Passed value for field obj.list is not the expected type, validation failed.")
           obj.set&.is_a?(Set) != false || raise("Passed value for field obj.set is not the expected type, validation failed.")

@@ -3383,6 +3383,18 @@ exports[`generate IR 1`] = `
                   "jsonExample": {
                     "from": "Hayao Miyazaki",
                     "id": "movie-c06a4ad7",
+                    "metadata": {
+                      "actors": [
+                        "Christian Bale",
+                        "Florence Pugh",
+                        "Willem Dafoe",
+                      ],
+                      "ratings": {
+                        "imdb": 7.6,
+                        "rottenTomatoes": 97,
+                      },
+                      "releaseDate": "2023-12-08",
+                    },
                     "prequel": "movie-cv9b914f",
                     "rating": 8,
                     "tag": "tag-wf9as23d",
@@ -4364,6 +4376,194 @@ exports[`generate IR 1`] = `
                                 },
                                 "typeId": "type_commons/types:Tag",
                               },
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "metadata",
+                                "unsafeName": "metadata",
+                              },
+                              "originalName": "metadata",
+                              "pascalCase": {
+                                "safeName": "Metadata",
+                                "unsafeName": "Metadata",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "METADATA",
+                                "unsafeName": "METADATA",
+                              },
+                              "snakeCase": {
+                                "safeName": "metadata",
+                                "unsafeName": "metadata",
+                              },
+                            },
+                            "wireValue": "metadata",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "camelCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                  "originalName": "types",
+                                  "pascalCase": {
+                                    "safeName": "Types",
+                                    "unsafeName": "Types",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "TYPES",
+                                    "unsafeName": "TYPES",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                },
+                              ],
+                              "file": {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                              "originalName": "Movie",
+                              "pascalCase": {
+                                "safeName": "Movie",
+                                "unsafeName": "Movie",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MOVIE",
+                                "unsafeName": "MOVIE",
+                              },
+                              "snakeCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                            },
+                            "typeId": "type_types:Movie",
+                          },
+                          "value": {
+                            "jsonExample": {
+                              "actors": [
+                                "Christian Bale",
+                                "Florence Pugh",
+                                "Willem Dafoe",
+                              ],
+                              "ratings": {
+                                "imdb": 7.6,
+                                "rottenTomatoes": 97,
+                              },
+                              "releaseDate": "2023-12-08",
+                            },
+                            "shape": {
+                              "container": {
+                                "map": [
+                                  {
+                                    "key": {
+                                      "jsonExample": "actors",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "actors",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": [
+                                        "Christian Bale",
+                                        "Florence Pugh",
+                                        "Willem Dafoe",
+                                      ],
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": [
+                                          "Christian Bale",
+                                          "Florence Pugh",
+                                          "Willem Dafoe",
+                                        ],
+                                      },
+                                    },
+                                  },
+                                  {
+                                    "key": {
+                                      "jsonExample": "releaseDate",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "releaseDate",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": "2023-12-08",
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": "2023-12-08",
+                                      },
+                                    },
+                                  },
+                                  {
+                                    "key": {
+                                      "jsonExample": "ratings",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "ratings",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": {
+                                        "imdb": 7.6,
+                                        "rottenTomatoes": 97,
+                                      },
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                          "imdb": 7.6,
+                                          "rottenTomatoes": 97,
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                                "type": "map",
+                              },
+                              "type": "container",
                             },
                           },
                         },
@@ -4567,6 +4767,18 @@ exports[`generate IR 1`] = `
                   "jsonExample": {
                     "from": "Hayao Miyazaki",
                     "id": "movie-c06a4ad7",
+                    "metadata": {
+                      "actors": [
+                        "Christian Bale",
+                        "Florence Pugh",
+                        "Willem Dafoe",
+                      ],
+                      "ratings": {
+                        "imdb": 7.6,
+                        "rottenTomatoes": 97,
+                      },
+                      "releaseDate": "2023-12-08",
+                    },
                     "prequel": "movie-cv9b914f",
                     "rating": 8,
                     "tag": "tag-wf9as23d",
@@ -5548,6 +5760,194 @@ exports[`generate IR 1`] = `
                                 },
                                 "typeId": "type_commons/types:Tag",
                               },
+                            },
+                          },
+                        },
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "metadata",
+                                "unsafeName": "metadata",
+                              },
+                              "originalName": "metadata",
+                              "pascalCase": {
+                                "safeName": "Metadata",
+                                "unsafeName": "Metadata",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "METADATA",
+                                "unsafeName": "METADATA",
+                              },
+                              "snakeCase": {
+                                "safeName": "metadata",
+                                "unsafeName": "metadata",
+                              },
+                            },
+                            "wireValue": "metadata",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "camelCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                  "originalName": "types",
+                                  "pascalCase": {
+                                    "safeName": "Types",
+                                    "unsafeName": "Types",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "TYPES",
+                                    "unsafeName": "TYPES",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                },
+                              ],
+                              "file": {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                              "originalName": "Movie",
+                              "pascalCase": {
+                                "safeName": "Movie",
+                                "unsafeName": "Movie",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MOVIE",
+                                "unsafeName": "MOVIE",
+                              },
+                              "snakeCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                            },
+                            "typeId": "type_types:Movie",
+                          },
+                          "value": {
+                            "jsonExample": {
+                              "actors": [
+                                "Christian Bale",
+                                "Florence Pugh",
+                                "Willem Dafoe",
+                              ],
+                              "ratings": {
+                                "imdb": 7.6,
+                                "rottenTomatoes": 97,
+                              },
+                              "releaseDate": "2023-12-08",
+                            },
+                            "shape": {
+                              "container": {
+                                "map": [
+                                  {
+                                    "key": {
+                                      "jsonExample": "actors",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "actors",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": [
+                                        "Christian Bale",
+                                        "Florence Pugh",
+                                        "Willem Dafoe",
+                                      ],
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": [
+                                          "Christian Bale",
+                                          "Florence Pugh",
+                                          "Willem Dafoe",
+                                        ],
+                                      },
+                                    },
+                                  },
+                                  {
+                                    "key": {
+                                      "jsonExample": "releaseDate",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "releaseDate",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": "2023-12-08",
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": "2023-12-08",
+                                      },
+                                    },
+                                  },
+                                  {
+                                    "key": {
+                                      "jsonExample": "ratings",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": {
+                                            "original": "ratings",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": {
+                                        "imdb": 7.6,
+                                        "rottenTomatoes": 97,
+                                      },
+                                      "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                          "imdb": 7.6,
+                                          "rottenTomatoes": 97,
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                                "type": "map",
+                              },
+                              "type": "container",
                             },
                           },
                         },
@@ -5862,6 +6262,18 @@ exports[`generate IR 1`] = `
                 "jsonExample": {
                   "from": "Hayao Miyazaki",
                   "id": "movie-c06a4ad7",
+                  "metadata": {
+                    "actors": [
+                      "Christian Bale",
+                      "Florence Pugh",
+                      "Willem Dafoe",
+                    ],
+                    "ratings": {
+                      "imdb": 7.6,
+                      "rottenTomatoes": 97,
+                    },
+                    "releaseDate": "2023-12-08",
+                  },
                   "prequel": "movie-cv9b914f",
                   "rating": 8,
                   "tag": "tag-wf9as23d",
@@ -6843,6 +7255,194 @@ exports[`generate IR 1`] = `
                               },
                               "typeId": "type_commons/types:Tag",
                             },
+                          },
+                        },
+                      },
+                      {
+                        "name": {
+                          "name": {
+                            "camelCase": {
+                              "safeName": "metadata",
+                              "unsafeName": "metadata",
+                            },
+                            "originalName": "metadata",
+                            "pascalCase": {
+                              "safeName": "Metadata",
+                              "unsafeName": "Metadata",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "METADATA",
+                              "unsafeName": "METADATA",
+                            },
+                            "snakeCase": {
+                              "safeName": "metadata",
+                              "unsafeName": "metadata",
+                            },
+                          },
+                          "wireValue": "metadata",
+                        },
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                            "originalName": "Movie",
+                            "pascalCase": {
+                              "safeName": "Movie",
+                              "unsafeName": "Movie",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "MOVIE",
+                              "unsafeName": "MOVIE",
+                            },
+                            "snakeCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                          },
+                          "typeId": "type_types:Movie",
+                        },
+                        "value": {
+                          "jsonExample": {
+                            "actors": [
+                              "Christian Bale",
+                              "Florence Pugh",
+                              "Willem Dafoe",
+                            ],
+                            "ratings": {
+                              "imdb": 7.6,
+                              "rottenTomatoes": 97,
+                            },
+                            "releaseDate": "2023-12-08",
+                          },
+                          "shape": {
+                            "container": {
+                              "map": [
+                                {
+                                  "key": {
+                                    "jsonExample": "actors",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "actors",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": [
+                                      "Christian Bale",
+                                      "Florence Pugh",
+                                      "Willem Dafoe",
+                                    ],
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": [
+                                        "Christian Bale",
+                                        "Florence Pugh",
+                                        "Willem Dafoe",
+                                      ],
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "jsonExample": "releaseDate",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "releaseDate",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": "2023-12-08",
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": "2023-12-08",
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "jsonExample": "ratings",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "ratings",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": {
+                                      "imdb": 7.6,
+                                      "rottenTomatoes": 97,
+                                    },
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": {
+                                        "imdb": 7.6,
+                                        "rottenTomatoes": 97,
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
+                              "type": "map",
+                            },
+                            "type": "container",
                           },
                         },
                       },
@@ -7024,6 +7624,18 @@ exports[`generate IR 1`] = `
                 "jsonExample": {
                   "from": "Hayao Miyazaki",
                   "id": "movie-c06a4ad7",
+                  "metadata": {
+                    "actors": [
+                      "Christian Bale",
+                      "Florence Pugh",
+                      "Willem Dafoe",
+                    ],
+                    "ratings": {
+                      "imdb": 7.6,
+                      "rottenTomatoes": 97,
+                    },
+                    "releaseDate": "2023-12-08",
+                  },
                   "prequel": "movie-cv9b914f",
                   "rating": 8,
                   "tag": "tag-wf9as23d",
@@ -8005,6 +8617,194 @@ exports[`generate IR 1`] = `
                               },
                               "typeId": "type_commons/types:Tag",
                             },
+                          },
+                        },
+                      },
+                      {
+                        "name": {
+                          "name": {
+                            "camelCase": {
+                              "safeName": "metadata",
+                              "unsafeName": "metadata",
+                            },
+                            "originalName": "metadata",
+                            "pascalCase": {
+                              "safeName": "Metadata",
+                              "unsafeName": "Metadata",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "METADATA",
+                              "unsafeName": "METADATA",
+                            },
+                            "snakeCase": {
+                              "safeName": "metadata",
+                              "unsafeName": "metadata",
+                            },
+                          },
+                          "wireValue": "metadata",
+                        },
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                            "originalName": "Movie",
+                            "pascalCase": {
+                              "safeName": "Movie",
+                              "unsafeName": "Movie",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "MOVIE",
+                              "unsafeName": "MOVIE",
+                            },
+                            "snakeCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                          },
+                          "typeId": "type_types:Movie",
+                        },
+                        "value": {
+                          "jsonExample": {
+                            "actors": [
+                              "Christian Bale",
+                              "Florence Pugh",
+                              "Willem Dafoe",
+                            ],
+                            "ratings": {
+                              "imdb": 7.6,
+                              "rottenTomatoes": 97,
+                            },
+                            "releaseDate": "2023-12-08",
+                          },
+                          "shape": {
+                            "container": {
+                              "map": [
+                                {
+                                  "key": {
+                                    "jsonExample": "actors",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "actors",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": [
+                                      "Christian Bale",
+                                      "Florence Pugh",
+                                      "Willem Dafoe",
+                                    ],
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": [
+                                        "Christian Bale",
+                                        "Florence Pugh",
+                                        "Willem Dafoe",
+                                      ],
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "jsonExample": "releaseDate",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "releaseDate",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": "2023-12-08",
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": "2023-12-08",
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "jsonExample": "ratings",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "ratings",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "value": {
+                                    "jsonExample": {
+                                      "imdb": 7.6,
+                                      "rottenTomatoes": 97,
+                                    },
+                                    "shape": {
+                                      "type": "unknown",
+                                      "unknown": {
+                                        "imdb": 7.6,
+                                        "rottenTomatoes": 97,
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
+                              "type": "map",
+                            },
+                            "type": "container",
                           },
                         },
                       },
@@ -16879,6 +17679,14 @@ exports[`generate IR 1`] = `
             ],
             "from": "Quentin Tarantino",
             "id": "movie-sda231x",
+            "metadata": {
+              "academyAward": true,
+              "ratings": {
+                "imdb": 7.6,
+                "rottenTomatoes": 97,
+              },
+              "releaseDate": "2023-12-08",
+            },
             "rating": 8.5,
             "tag": "tag-12efs9dv",
             "title": "Pulp Fiction",
@@ -17826,6 +18634,182 @@ exports[`generate IR 1`] = `
                         },
                       ],
                       "type": "list",
+                    },
+                    "type": "container",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                    "originalName": "metadata",
+                    "pascalCase": {
+                      "safeName": "Metadata",
+                      "unsafeName": "Metadata",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "METADATA",
+                      "unsafeName": "METADATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                  },
+                  "wireValue": "metadata",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                    "originalName": "Movie",
+                    "pascalCase": {
+                      "safeName": "Movie",
+                      "unsafeName": "Movie",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE",
+                      "unsafeName": "MOVIE",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                  },
+                  "typeId": "type_types:Movie",
+                },
+                "value": {
+                  "jsonExample": {
+                    "academyAward": true,
+                    "ratings": {
+                      "imdb": 7.6,
+                      "rottenTomatoes": 97,
+                    },
+                    "releaseDate": "2023-12-08",
+                  },
+                  "shape": {
+                    "container": {
+                      "map": [
+                        {
+                          "key": {
+                            "jsonExample": "academyAward",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "academyAward",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": true,
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": true,
+                            },
+                          },
+                        },
+                        {
+                          "key": {
+                            "jsonExample": "releaseDate",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "releaseDate",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": "2023-12-08",
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": "2023-12-08",
+                            },
+                          },
+                        },
+                        {
+                          "key": {
+                            "jsonExample": "ratings",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "ratings",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": {
+                              "imdb": 7.6,
+                              "rottenTomatoes": 97,
+                            },
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": {
+                                "imdb": 7.6,
+                                "rottenTomatoes": 97,
+                              },
+                            },
+                          },
+                        },
+                      ],
+                      "type": "map",
                     },
                     "type": "container",
                   },
@@ -20241,6 +21225,18 @@ exports[`generate IR 1`] = `
           "jsonExample": {
             "from": "Hayao Miyazaki",
             "id": "movie-c06a4ad7",
+            "metadata": {
+              "actors": [
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+              ],
+              "ratings": {
+                "imdb": 7.6,
+                "rottenTomatoes": 97,
+              },
+              "releaseDate": "2023-12-08",
+            },
             "prequel": "movie-cv9b914f",
             "rating": 8,
             "tag": "tag-wf9as23d",
@@ -21243,6 +22239,194 @@ exports[`generate IR 1`] = `
                   },
                 },
               },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                    "originalName": "metadata",
+                    "pascalCase": {
+                      "safeName": "Metadata",
+                      "unsafeName": "Metadata",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "METADATA",
+                      "unsafeName": "METADATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                  },
+                  "wireValue": "metadata",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                    "originalName": "Movie",
+                    "pascalCase": {
+                      "safeName": "Movie",
+                      "unsafeName": "Movie",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE",
+                      "unsafeName": "MOVIE",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                  },
+                  "typeId": "type_types:Movie",
+                },
+                "value": {
+                  "jsonExample": {
+                    "actors": [
+                      "Christian Bale",
+                      "Florence Pugh",
+                      "Willem Dafoe",
+                    ],
+                    "ratings": {
+                      "imdb": 7.6,
+                      "rottenTomatoes": 97,
+                    },
+                    "releaseDate": "2023-12-08",
+                  },
+                  "shape": {
+                    "container": {
+                      "map": [
+                        {
+                          "key": {
+                            "jsonExample": "actors",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "actors",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": [
+                              "Christian Bale",
+                              "Florence Pugh",
+                              "Willem Dafoe",
+                            ],
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": [
+                                "Christian Bale",
+                                "Florence Pugh",
+                                "Willem Dafoe",
+                              ],
+                            },
+                          },
+                        },
+                        {
+                          "key": {
+                            "jsonExample": "releaseDate",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "releaseDate",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": "2023-12-08",
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": "2023-12-08",
+                            },
+                          },
+                        },
+                        {
+                          "key": {
+                            "jsonExample": "ratings",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "ratings",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "value": {
+                            "jsonExample": {
+                              "imdb": 7.6,
+                              "rottenTomatoes": 97,
+                            },
+                            "shape": {
+                              "type": "unknown",
+                              "unknown": {
+                                "imdb": 7.6,
+                                "rottenTomatoes": 97,
+                              },
+                            },
+                          },
+                        },
+                      ],
+                      "type": "map",
+                    },
+                    "type": "container",
+                  },
+                },
+              },
             ],
             "type": "object",
           },
@@ -21800,6 +22984,45 @@ exports[`generate IR 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": "STRING",
+                },
+              },
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "map",
+                "keyType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+                "valueType": {
+                  "_type": "unknown",
                 },
               },
             },

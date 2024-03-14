@@ -16,6 +16,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
         type: core.serialization.stringLiteral("movie"),
         tag: core.serialization.lazy(async () => (await import("../../..")).commons.Tag),
         book: core.serialization.string().optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
     });
 
 export declare namespace Movie {
@@ -28,5 +29,6 @@ export declare namespace Movie {
         type: "movie";
         tag: serializers.commons.Tag.Raw;
         book?: string | null;
+        metadata: Record<string, unknown>;
     }
 }

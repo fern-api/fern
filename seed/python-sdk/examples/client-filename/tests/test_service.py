@@ -15,6 +15,11 @@ async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "rating": 8,
         "type": "movie",
         "tag": "tag-wf9as23d",
+        "metadata": {
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
     }
     response = client.service.get_movie(movie_id="movie-c06a4ad7")
     validate_response(response, expected_response)
@@ -34,6 +39,11 @@ async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhau
             rating=8.0,
             type="movie",
             tag="tag-wf9as23d",
+            metadata={
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
         )
     )
     validate_response(response, expected_response)
@@ -47,6 +57,11 @@ async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhau
             rating=8.0,
             type="movie",
             tag="tag-wf9as23d",
+            metadata={
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
         )
     )
     validate_response(async_response, expected_response)

@@ -7,7 +7,7 @@ require "json"
 module SeedExamplesClient
   class Types
     class Movie
-      attr_reader :id, :prequel, :title, :from, :rating, :type, :tag, :book, :additional_properties
+      attr_reader :id, :prequel, :title, :from, :rating, :type, :tag, :book, :metadata, :additional_properties
 
       # @param id [Types::MOVIE_ID]
       # @param prequel [Types::MOVIE_ID]
@@ -17,9 +17,11 @@ module SeedExamplesClient
       # @param type [String]
       # @param tag [Commons::Types::TAG]
       # @param book [String]
+      # @param metadata [Hash{String => Object}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Movie]
-      def initialize(id:, title:, from:, rating:, type:, tag:, prequel: nil, book: nil, additional_properties: nil)
+      def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, prequel: nil, book: nil,
+                     additional_properties: nil)
         # @type [Types::MOVIE_ID]
         @id = id
         # @type [Types::MOVIE_ID]
@@ -36,6 +38,8 @@ module SeedExamplesClient
         @tag = tag
         # @type [String]
         @book = book
+        # @type [Hash{String => Object}]
+        @metadata = metadata
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
@@ -55,8 +59,9 @@ module SeedExamplesClient
         type = struct.type
         tag = struct.tag
         book = struct.book
+        metadata = struct.metadata
         new(id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
-            additional_properties: struct)
+            metadata: metadata, additional_properties: struct)
       end
 
       # Serialize an instance of Movie to a JSON object
@@ -71,7 +76,8 @@ module SeedExamplesClient
           "rating": @rating,
           "type": @type,
           "tag": @tag,
-          "book": @book
+          "book": @book,
+          "metadata": @metadata
         }.to_json
       end
 
@@ -88,6 +94,7 @@ module SeedExamplesClient
         obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
         obj.tag.is_a?(String) != false || raise("Passed value for field obj.tag is not the expected type, validation failed.")
         obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
+        obj.metadata.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
       end
     end
   end

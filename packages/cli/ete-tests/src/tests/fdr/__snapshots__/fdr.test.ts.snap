@@ -669,6 +669,12 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "request": {
+                        "type": {
+                            "type": "bytes",
+                            "isOptional": false
+                        }
+                    },
                     "errors": [
                         {
                             "statusCode": 400
@@ -1396,6 +1402,12 @@ exports[`fdr {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "request": {
+                        "type": {
+                            "type": "bytes",
+                            "isOptional": false
+                        }
+                    },
                     "errors": [
                         {
                             "statusCode": 400

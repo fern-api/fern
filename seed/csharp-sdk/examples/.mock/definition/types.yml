@@ -25,6 +25,7 @@ types:
       type: literal<"movie">
       tag: commons.Tag
       book: optional<string>
+      metadata: map<string, unknown>
     examples:
       - name: One
         value:
@@ -35,6 +36,15 @@ types:
           rating: 8.0
           type: movie
           tag: $commons.Tag.One
+          metadata:
+            actors:
+              - Christian Bale
+              - Florence Pugh
+              - Willem Dafoe
+            releaseDate: "2023-12-08"
+            ratings:
+              rottenTomatoes: 97
+              imdb: 7.6
   
   CastMember: 
     discriminated: false
@@ -49,7 +59,7 @@ types:
           name: "Brad Pitt"
       - name: Example1
         value: $Actress.Example0
-          
+
   Actor: 
     properties: 
       name: string
@@ -87,6 +97,12 @@ types:
             - Samuel L. Jackson
             - Uma Thurman
             - Bruce Willis
+          metadata:
+            academyAward: true
+            releaseDate: "2023-12-08"
+            ratings:
+              rottenTomatoes: 97
+              imdb: 7.6
 
   Moment:
     properties:

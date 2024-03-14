@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.1] - 2024-03-12
+
+- Fix: use strings instead of UUIDs, which are helper classes in Ruby
+
 ## [0.3.0] - 2024-02-27
 
 - Fix: Ensure the name passed into the 'X-Fern-SDK-Name' header is the name of the gem, not the client class

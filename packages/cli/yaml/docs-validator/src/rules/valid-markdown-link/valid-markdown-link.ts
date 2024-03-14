@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Rule, RuleViolation } from "../../Rule";
 
-const LINK_PATTERN = /\[([^\]]+)\]\((.*?)\)/g;
+const LINK_PATTERN = /\[([^\]]+)\]\(((?!http:\/\/|https:\/\/).*?)\)/gi;
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",

@@ -163,6 +163,15 @@ paths:
                     rating: 8
                     type: movie
                     tag: tag-wf9as23d
+                    metadata:
+                      actors:
+                        - Christian Bale
+                        - Florence Pugh
+                        - Willem Dafoe
+                      releaseDate: '2023-12-08'
+                      ratings:
+                        rottenTomatoes: 97
+                        imdb: 7.6
   /movie:
     post:
       operationId: service_createMovie
@@ -195,6 +204,15 @@ paths:
                   rating: 8
                   type: movie
                   tag: tag-wf9as23d
+                  metadata:
+                    actors:
+                      - Christian Bale
+                      - Florence Pugh
+                      - Willem Dafoe
+                    releaseDate: '2023-12-08'
+                    ratings:
+                      rottenTomatoes: 97
+                      imdb: 7.6
   /metadata:
     get:
       operationId: service_getMetadata
@@ -352,6 +370,9 @@ components:
         book:
           type: string
           nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
       required:
         - id
         - title
@@ -359,6 +380,7 @@ components:
         - rating
         - type
         - tag
+        - metadata
     CastMember:
       title: CastMember
       oneOf:

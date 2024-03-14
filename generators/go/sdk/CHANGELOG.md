@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.18.1 - 2024-03-12]
+
+- Fix: Go snippets correctly handle unknown examples.
+
+```go
+response, err := client.CreateUser(
+  ctx,
+  &acme.CreateUserRequest{
+    Name: "alice",
+    Metadata: map[string]interface{}{
+      "address": "123 Market Street",
+      "age":     28,
+    },
+  },
+)
+```
+
 ## [0.18.0 - 2024-03-04]
 
 - Feature: Add support for simpler unions, which is configurable with `union: v1` (if

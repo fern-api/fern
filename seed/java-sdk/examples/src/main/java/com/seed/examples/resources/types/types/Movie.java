@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,6 +35,8 @@ public final class Movie implements IMovie {
 
     private final Optional<String> book;
 
+    private final Map<String, Object> metadata;
+
     private final Map<String, Object> additionalProperties;
 
     private Movie(
@@ -44,6 +47,7 @@ public final class Movie implements IMovie {
             double rating,
             String tag,
             Optional<String> book,
+            Map<String, Object> metadata,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.prequel = prequel;
@@ -52,6 +56,7 @@ public final class Movie implements IMovie {
         this.rating = rating;
         this.tag = tag;
         this.book = book;
+        this.metadata = metadata;
         this.additionalProperties = additionalProperties;
     }
 
@@ -106,6 +111,12 @@ public final class Movie implements IMovie {
         return book;
     }
 
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -124,12 +135,14 @@ public final class Movie implements IMovie {
                 && from.equals(other.from)
                 && rating == other.rating
                 && tag.equals(other.tag)
-                && book.equals(other.book);
+                && book.equals(other.book)
+                && metadata.equals(other.metadata);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book);
+        return Objects.hash(
+                this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.metadata);
     }
 
     @java.lang.Override
@@ -173,6 +186,12 @@ public final class Movie implements IMovie {
         _FinalStage book(Optional<String> book);
 
         _FinalStage book(String book);
+
+        _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage putAllMetadata(Map<String, Object> metadata);
+
+        _FinalStage metadata(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -186,6 +205,8 @@ public final class Movie implements IMovie {
         private double rating;
 
         private String tag;
+
+        private Map<String, Object> metadata = new LinkedHashMap<>();
 
         private Optional<String> book = Optional.empty();
 
@@ -205,6 +226,7 @@ public final class Movie implements IMovie {
             rating(other.getRating());
             tag(other.getTag());
             book(other.getBook());
+            metadata(other.getMetadata());
             return this;
         }
 
@@ -248,6 +270,26 @@ public final class Movie implements IMovie {
         }
 
         @java.lang.Override
+        public _FinalStage metadata(String key, Object value) {
+            this.metadata.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage putAllMetadata(Map<String, Object> metadata) {
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Map<String, Object> metadata) {
+            this.metadata.clear();
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage book(String book) {
             this.book = Optional.of(book);
             return this;
@@ -275,7 +317,7 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         public Movie build() {
-            return new Movie(id, prequel, title, from, rating, tag, book, additionalProperties);
+            return new Movie(id, prequel, title, from, rating, tag, book, metadata, additionalProperties);
         }
     }
 }

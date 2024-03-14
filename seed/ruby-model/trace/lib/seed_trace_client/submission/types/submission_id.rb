@@ -2,6 +2,6 @@
 
 module SeedTraceClient
   class Submission
-    SUBMISSION_ID = UUID
+    SUBMISSION_ID = String
   end
 end
