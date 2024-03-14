@@ -503,7 +503,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -4413,7 +4413,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonwebtoken", "npm:9.0.2"],\
             ["jwks-rsa", "npm:3.0.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -4438,7 +4438,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-base64", "npm:3.7.6"],\
             ["node-fetch", "npm:3.3.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["qs", "npm:6.11.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:18.2.0"],\
@@ -4517,7 +4517,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["ora", "npm:7.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tar", "npm:6.2.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -4548,7 +4548,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -4570,7 +4570,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -4588,7 +4588,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["strip-ansi", "npm:7.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["ua-parser-js", "npm:1.0.37"]\
@@ -4609,7 +4609,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -4632,7 +4632,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -4653,7 +4653,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -4684,7 +4684,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["express", "npm:4.18.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["uuid", "npm:9.0.1"]\
           ],\
@@ -4709,7 +4709,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["next-mdx-remote", "virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["remark-gfm", "npm:3.0.1"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -4736,7 +4736,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["node-fetch", "npm:3.3.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["strip-ansi", "npm:7.1.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
@@ -4778,7 +4778,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -4803,7 +4803,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -4830,7 +4830,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-loader", "virtual:6279a6bcd054f97c4ec611654ca73e0463708f604bb8fdbb0a4f8c8618a3a25c97220f909d15222cde40ca1b761ecafc3bbf8f2b7907c7ec5bc347340354fbc5#npm:9.5.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["webpack", "virtual:6279a6bcd054f97c4ec611654ca73e0463708f604bb8fdbb0a4f8c8618a3a25c97220f909d15222cde40ca1b761ecafc3bbf8f2b7907c7ec5bc347340354fbc5#npm:5.90.0"],\
@@ -4863,7 +4863,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -4883,7 +4883,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["json-stream-stringify", "npm:3.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -4906,7 +4906,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -4941,7 +4941,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -4965,7 +4965,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest-specific-snapshot", "npm:0.5.7"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/prettier", "npm:2.7.3"],\
+            ["@types/prettier", "npm:3.0.0"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4973,7 +4973,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-specific-snapshot", "virtual:523c1d076d4760bb6eb3bb7029ccc1598c5468536b9d087aaf315373dd2f0ed9160836e4a65555ec77d757e4d087d60f41d8e40b7d78a1773eecf9bea15c6111#npm:8.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"]\
           ],\
@@ -5038,7 +5038,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5055,7 +5055,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5070,12 +5070,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/prettier", "npm:2.7.3"],\
+            ["@types/prettier", "npm:3.0.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"],\
             ["zod-to-json-schema", "virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.14.1"]\
@@ -5095,7 +5095,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5125,7 +5125,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5145,7 +5145,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5164,7 +5164,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5194,7 +5194,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["open", "npm:8.4.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["qs", "npm:6.11.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5222,7 +5222,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["qs", "npm:6.11.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"]\
@@ -5251,7 +5251,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["openapi-types", "npm:12.1.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"]\
           ],\
@@ -5269,7 +5269,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5296,7 +5296,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5327,7 +5327,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["openapi-types", "npm:12.1.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["swagger2openapi", "npm:7.0.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5350,7 +5350,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["posthog-node", "npm:3.1.2"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["uuid", "npm:9.0.1"]\
           ],\
@@ -5377,7 +5377,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -5404,7 +5404,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -5433,7 +5433,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5478,7 +5478,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["mime-types", "npm:2.1.35"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tar", "npm:6.2.0"],\
             ["terminal-link", "npm:3.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
@@ -5504,7 +5504,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5527,7 +5527,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5557,7 +5557,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["yargs", "npm:17.7.2"]\
           ],\
@@ -5597,7 +5597,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["pretty-ms", "npm:9.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -5617,7 +5617,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["semver-diff", "npm:4.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5636,7 +5636,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5676,7 +5676,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["strip-ansi", "npm:7.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -5725,7 +5725,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tar", "npm:6.2.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -5746,13 +5746,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/prettier", "npm:2.7.3"],\
+            ["@types/prettier", "npm:3.0.0"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -5784,7 +5784,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["yaml", "npm:2.3.3"],\
@@ -5810,7 +5810,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
           ],\
@@ -6249,7 +6249,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6273,7 +6273,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6292,7 +6292,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6312,7 +6312,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-base64", "npm:3.7.6"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6329,7 +6329,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6346,7 +6346,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6382,7 +6382,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["memfs", "npm:3.5.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["package-json-type", "npm:1.0.3"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -6405,7 +6405,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6428,7 +6428,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6449,7 +6449,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6472,7 +6472,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6494,7 +6494,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6517,7 +6517,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6553,7 +6553,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6583,7 +6583,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["simple-progress-webpack-plugin", "virtual:7fd4d27628c3743ebc965c3a5559b2f471c2d0ff304c92680b4764724aa0c3780f0f5fda9fc8045c34b169da479e01e8cef2d25c59b27f5ec7b3dc4810e345bc#npm:2.0.0"],\
             ["ts-loader", "virtual:7fd4d27628c3743ebc965c3a5559b2f471c2d0ff304c92680b4764724aa0c3780f0f5fda9fc8045c34b169da479e01e8cef2d25c59b27f5ec7b3dc4810e345bc#npm:9.5.1"],\
             ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
@@ -6610,7 +6610,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6631,7 +6631,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6655,7 +6655,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6677,7 +6677,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6699,7 +6699,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["node-fetch", "npm:3.3.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["qs", "npm:6.11.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6718,7 +6718,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6738,7 +6738,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6759,7 +6759,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6781,7 +6781,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6801,7 +6801,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -6823,7 +6823,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6848,7 +6848,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6870,7 +6870,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6893,7 +6893,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -6934,7 +6934,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"]\
@@ -6966,7 +6966,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["simple-progress-webpack-plugin", "virtual:31d48d25a9165d4ace65b28ad720b6c03d915da1a1953c0a85216d5044dd963dad20e82abda379f323a4584cab49471c162e75b2c1d65364d72ab5baf2cfabe6#npm:2.0.0"],\
             ["ts-loader", "virtual:31d48d25a9165d4ace65b28ad720b6c03d915da1a1953c0a85216d5044dd963dad20e82abda379f323a4584cab49471c162e75b2c1d65364d72ab5baf2cfabe6#npm:9.5.1"],\
             ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
@@ -6994,7 +6994,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7012,7 +7012,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -7033,7 +7033,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7054,7 +7054,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7076,7 +7076,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7099,7 +7099,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7121,7 +7121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7143,7 +7143,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
@@ -7161,7 +7161,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -8815,10 +8815,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/prettier", [\
-        ["npm:2.7.3", {\
-          "packageLocation": "./.yarn/cache/@types-prettier-npm-2.7.3-497316f37c-705384209c.zip/node_modules/@types/prettier/",\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-prettier-npm-3.0.0-6c770110eb-a2a512d304.zip/node_modules/@types/prettier/",\
           "packageDependencies": [\
-            ["@types/prettier", "npm:2.7.3"]\
+            ["@types/prettier", "npm:3.0.0"],\
+            ["prettier", "npm:3.2.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14903,7 +14904,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:3.2.5"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -22276,10 +22277,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["prettier", [\
-        ["npm:2.7.1", {\
-          "packageLocation": "./.yarn/cache/prettier-npm-2.7.1-d1f40f5e1a-55a4409182.zip/node_modules/prettier/",\
+        ["npm:3.2.5", {\
+          "packageLocation": "./.yarn/unplugged/prettier-npm-3.2.5-6859110d6a/node_modules/prettier/",\
           "packageDependencies": [\
-            ["prettier", "npm:2.7.1"]\
+            ["prettier", "npm:3.2.5"]\
           ],\
           "linkType": "HARD"\
         }]\
