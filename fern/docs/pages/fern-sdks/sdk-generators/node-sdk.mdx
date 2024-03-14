@@ -90,6 +90,16 @@ generators:
 ```
 </CodeBlock>
 
+## `X-Fern-*` headers and CORS `Access-Control-Allow-Headers`
+
+By default, Fern adds the following headers to all requests:
+
+- `X-Fern-Language`
+- `X-Fern-SDK-Name`
+- `X-Fern-SDK-Version`
+
+Validate that your `Access-Control-Allow-Headers` is configured to permit these headers.
+
 ## Configuration options
 
 You can customize the behavior of the TypeScript generator in `generators.yml`. 
