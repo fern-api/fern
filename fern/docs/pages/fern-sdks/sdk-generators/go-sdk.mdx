@@ -1,29 +1,12 @@
 ---
 title: The Go SDK generator
-description: Use Fern's Go SDK generator and your API definition to output a fully functional Go SDK (client libraries) to your local filesystem, or publish it to GitHub. 
+description: Use Fern's Go SDK generator and your API definition to output a fully functional Go SDK to your local file system, or publish it to GitHub. 
 ---
 
 [Source code](https://github.com/fern-api/fern/tree/main/generators/go)<br />
 **Latest version**: `0.12.0`
 
-The Go SDK generator outputs a fully functional Go SDK.
-
-## Local
-
-Dump the generated SDK to the local file system.
-
-<CodeBlock title="generators.yml">
-```yaml
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-go-sdk
-        version: 0.12.0
-        output:
-          location: local-file-system
-          path: ../generated/sdk/go
-```
-</CodeBlock>
+Output a fully functional Go SDK. The generator can publish the SDK to [GitHub](https://www.github.com). You can also download the SDK to your local file system.
 
 ## Publish to GitHub 
 
@@ -35,8 +18,25 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.12.0
+        version: 0.x.x # declare your desired version
         github:
-          repository: fern-pestore/petstore-go # replace package & org
+          repository: fern-petstore/petstore-go # replace package & org
+```
+</CodeBlock>
+
+## Local
+
+Download the generated SDK to your local file system.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.x.x # declare your desired version
+        output:
+          location: local-file-system
+          path: ../sdks/go
 ```
 </CodeBlock>

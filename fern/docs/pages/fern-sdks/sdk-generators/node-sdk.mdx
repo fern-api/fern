@@ -1,12 +1,12 @@
 ---
 title: Fern | How to use Fern's TypeScript SDK Generator
-description: Use Fern's TypeScript SDK generator and your API definition to output a fully functional SDK locally, and publish the package internally or to NPM.
+description: Use Fern's TypeScript SDK generator and your API definition to output a fully functional SDK locally, or to a private or public Node package repository.
 ---
 
 [Source code](https://github.com/fern-api/fern/tree/main/generators/typescript)<br/>
 **Latest version**: `0.12.5`
 
-The TypeScript SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side use. It can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository).
+Output a fully functional TypeScript/JavaScript SDK. The generator can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository), or to a private repository hosted by Fern. You can also download the SDK to your local file system.
 
 ## Runtimes
 
@@ -18,40 +18,6 @@ The TypeScript SDK generator supports the following runtimes:
 - Deno 1.25+
 - Bun 1.0+
 - AWS Lambda
-
-## Local
-
-Dump the generated SDK to the local file system.
-
-<CodeBlock title='generators.yml'>
-```yaml
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x  # declare your desired version
-        output:
-          location: local-file-system
-          path: ../sdks/typescript
-```
-</CodeBlock>
-
-## Publish an internal package
-
-Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
-
-<CodeBlock title='generators.yml'>
-```yaml
-groups:
-  internal:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.x.x # declare your desired version
-        output:
-          location: npm.buildwithfern.com
-          package-name: @fern-petstore/api # replace petstore with your org name
-```
-</CodeBlock>
 
 ## Publish a public package
 
@@ -87,6 +53,40 @@ generators:
           package-name: petstore # replace with your package name
           token: ${NPM_TOKEN}
 +       url: your-npm-registry.com
+```
+</CodeBlock>
+
+## Publish an internal package
+
+Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
+
+<CodeBlock title='generators.yml'>
+```yaml
+groups:
+  internal:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x # declare your desired version
+        output:
+          location: npm.buildwithfern.com
+          package-name: @fern-petstore/api # replace petstore with your org name
+```
+</CodeBlock>
+
+## Local
+
+Download the generated SDK to the local file system.
+
+<CodeBlock title='generators.yml'>
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x  # declare your desired version
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
 ```
 </CodeBlock>
 
