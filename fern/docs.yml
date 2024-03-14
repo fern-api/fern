@@ -120,8 +120,8 @@ navigation:
             path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
       - section: SDK generators
         contents:
-          - page: TypeScript Node.js SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/node-sdk.mdx
+          - page: TypeScript SDK
+            path: ./docs/pages/fern-sdks/sdk-generators/typescript-sdk.mdx
             slug: typescript
           - page: Python SDK
             path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
@@ -141,10 +141,10 @@ navigation:
           - page: PHP SDK
             path: ./docs/pages/fern-sdks/sdk-generators/php-sdk.mdx
             slug: php
-          - page: The Swift SDK Generator
+          - page: Swift SDK
             path: ./docs/pages/fern-sdks/sdk-generators/swift-sdk.mdx
             slug: swift
-          - page: The Rust SDK Generator
+          - page: Rust SDK
             path: ./docs/pages/fern-sdks/sdk-generators/rust-sdk.mdx
             slug: rust
       - section: Other generators
