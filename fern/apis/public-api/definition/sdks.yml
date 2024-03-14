@@ -1,0 +1,97 @@
+service:
+  base-path: /sdks
+  auth: true
+  endpoints:
+    generate:
+      path: '/generate-sdk'
+      docs: |
+        Generate a new SDK for a given API. Pass in your own OpenAPI spec to generate an SDK.
+      method: POST
+      request: GenerateSDK
+      response: GenerateSDKResponse
+
+types:
+  GenerateSDK:
+    properties:
+      language: 
+        type: SDKLanguageEnum
+        docs: |
+          Provide a language for the SDK you want to generate. If we do not currently support the language you want, reach out to us at [support@buildwithbuild.com](mailto:support@buildwithfern.com).
+      apiSpec:
+        type: base64
+        docs: |
+          Provide the OpenAPI spec for the API you want to generate an SDK for. The OpenAPI spec should be a JSON or YAML file that has been encoded to base64 format that describes the API you want to generate an SDK for. You can find more information about OpenAPI specs [here](https://swagger.io/docs/specification/about/).
+      generatorVersion:
+        type: optional<double>
+        docs: |
+
+          You can optionally provide a version of the generator for the language you are creating your SDK in. If you do not provide a version, we will use the latest version of the chosen language generator.
+
+          All generator releases are published in the Releases section of the GitHub repository.
+
+          ![Generator Version Example](https://fern-image-hosting.s3.amazonaws.com/releases-github.png)
+      packageName: 
+        type: string
+        docs: |
+          The name of the package you want for your newly created SDK.
+
+          Example:
+
+          ```JSON
+          {
+            "packageName": '@fern-api/node-sdk'
+          }
+          ```
+
+  GenerateSDKResponse:
+    properties:
+      status:
+        type: StatusEnum
+        docs: |
+          The status of the SDK generation. If the status is `success`, the SDK was generated successfully. If the status is `error`, the SDK was not generated successfully.
+      sdk: SDKDetails
+
+  SDKDetails:
+    properties:
+      language: 
+        type: optional<SDKLanguageEnum>
+        docs: |
+          The language of the generated SDK. If the status is `success`, the language will be the language of the generated SDK. If the status is `error`, the language will be `null`.
+      location:
+        type: optional<string>
+        docs: |
+          The location of the generated SDK. If the status is `success`, the location will be the package repository followed by the package name of the generated SDK. If the status is `error`, the location will be `null`.
+
+          Example:
+
+          ```JSON
+          {
+            "location": "npm @fern-api/node-sdk"
+          }
+          ```
+      packageRegistryURL:
+        type: optional<string>
+        docs: |
+          The package registry URL of the generated SDK. If the status is `success`, the packageURL will be the URL of the generated SDK. If the status is `error`, the packageURL will be `null`.
+
+          Example:
+
+          ```JSON
+          {
+            "packageURL": "https://www.npmjs.com/package/@fern-api/node-sdk"
+          }
+          ```
+
+  StatusEnum:
+    enum:
+      - success
+      - error
+
+  SDKLanguageEnum:
+    enum:
+      - python
+      - typescript
+      - ruby
+      - csharp
+      - go
+      - java
