@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple, Union
+from typing import Optional, Sequence, Tuple, Union, cast
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -206,15 +206,14 @@ class SdkGenerator(AbstractGenerator):
         context: SdkGeneratorContext,
         environments: ir_types.Environments,
     ) -> Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]:
-        environment = environments.visit(
+        return cast(Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator], environments.visit(
             single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
                 context=context, environments=single_base_url_environments
             ),
             multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
                 context=context, environments=multiple_base_urls_environments
             ),
-        )
-        return environment
+        ))
 
     def _generate_environments(
         self,

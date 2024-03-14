@@ -85,7 +85,7 @@ class SnippetTestFactory:
 
         return AST.Expression(AST.CodeWriter(envvar_writer))
     
-    def _enviroment(self) -> AST.ClassInstantiation:
+    def _enviroment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
         args = [AST.Expression(f'"{self.TEST_URL_ENVVAR}"'), AST.Expression('"base_url"')]
         os_get = AST.Expression(
             AST.FunctionInvocation(
@@ -105,12 +105,12 @@ class SnippetTestFactory:
                         self._context.get_filepath_for_environments_enum().to_module().path
                     ),
                 ),
-                named_import=self._generated_environment.class_name,
+                named_import=generated_environment.class_name,
             ),
         )
         return AST.ClassInstantiation(
             class_=class_reference,
-            kwargs=[(env, os_get) for env in self._generated_environment.args],
+            kwargs=[(env, os_get) for env in generated_environment.args],
         )
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
@@ -129,7 +129,7 @@ class SnippetTestFactory:
             class_=client.class_reference,
             # TODO: how can we do this in a more connected + typesafe way
             args=non_url_params,
-            kwargs=[("environment", self._enviroment(),)] if self._generated_environment is not None else None,
+            kwargs=[("environment", AST.Expression(self._enviroment(self._generated_environment)),)] if self._generated_environment is not None else None,
         )
 
     def _generate_client_fixture(self) -> None:
