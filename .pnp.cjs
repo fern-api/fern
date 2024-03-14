@@ -4405,7 +4405,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/jsonwebtoken", "npm:9.0.5"],\
+            ["@types/jsonwebtoken", "npm:9.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -4513,7 +4513,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
-            ["latest-version", "npm:7.0.0"],\
+            ["latest-version", "npm:9.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["ora", "npm:7.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -7819,6 +7819,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@pnpm/config.env-replace", [\
+        ["npm:1.1.0", {\
+          "packageLocation": "./.yarn/cache/@pnpm-config.env-replace-npm-1.1.0-cd7057bf65-a3d2b57e35.zip/node_modules/@pnpm/config.env-replace/",\
+          "packageDependencies": [\
+            ["@pnpm/config.env-replace", "npm:1.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@pnpm/network.ca-file", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/@pnpm-network.ca-file-npm-1.0.1-42bfe40bec-c847d86187.zip/node_modules/@pnpm/network.ca-file/",\
@@ -7834,6 +7843,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@pnpm-npm-conf-npm-1.0.5-77075df24d-0c5f1a6378.zip/node_modules/@pnpm/npm-conf/",\
           "packageDependencies": [\
             ["@pnpm/npm-conf", "npm:1.0.5"],\
+            ["@pnpm/network.ca-file", "npm:1.0.1"],\
+            ["config-chain", "npm:1.1.13"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/@pnpm-npm-conf-npm-2.2.2-b8f7ae7bc8-d64aa4464b.zip/node_modules/@pnpm/npm-conf/",\
+          "packageDependencies": [\
+            ["@pnpm/npm-conf", "npm:2.2.2"],\
+            ["@pnpm/config.env-replace", "npm:1.1.0"],\
             ["@pnpm/network.ca-file", "npm:1.0.1"],\
             ["config-chain", "npm:1.1.13"]\
           ],\
@@ -8609,10 +8628,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:9.0.5", {\
-          "packageLocation": "./.yarn/cache/@types-jsonwebtoken-npm-9.0.5-523ec98552-07ab6fee60.zip/node_modules/@types/jsonwebtoken/",\
+        ["npm:9.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-jsonwebtoken-npm-9.0.6-fd96c11a58-a568e7cb1c.zip/node_modules/@types/jsonwebtoken/",\
           "packageDependencies": [\
-            ["@types/jsonwebtoken", "npm:9.0.5"],\
+            ["@types/jsonwebtoken", "npm:9.0.6"],\
             ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
@@ -18278,6 +18297,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["ky", [\
+        ["npm:1.2.2", {\
+          "packageLocation": "./.yarn/cache/ky-npm-1.2.2-c4362f1dcc-dd35c2303e.zip/node_modules/ky/",\
+          "packageDependencies": [\
+            ["ky", "npm:1.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["latest-version", [\
         ["npm:3.1.0", {\
           "packageLocation": "./.yarn/cache/latest-version-npm-3.1.0-deb049c563-1923b097b5.zip/node_modules/latest-version/",\
@@ -18292,6 +18320,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["latest-version", "npm:7.0.0"],\
             ["package-json", "npm:8.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.0.0", {\
+          "packageLocation": "./.yarn/cache/latest-version-npm-9.0.0-34701a5ff8-98f0a33bcb.zip/node_modules/latest-version/",\
+          "packageDependencies": [\
+            ["latest-version", "npm:9.0.0"],\
+            ["package-json", "npm:10.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21577,6 +21613,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["package-json", [\
+        ["npm:10.0.0", {\
+          "packageLocation": "./.yarn/cache/package-json-npm-10.0.0-5b52fec677-e8f61fec8a.zip/node_modules/package-json/",\
+          "packageDependencies": [\
+            ["package-json", "npm:10.0.0"],\
+            ["ky", "npm:1.2.2"],\
+            ["registry-auth-token", "npm:5.0.2"],\
+            ["registry-url", "npm:6.0.1"],\
+            ["semver", "npm:7.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:4.0.1", {\
           "packageLocation": "./.yarn/cache/package-json-npm-4.0.1-c058f67fbc-920bd8280f.zip/node_modules/package-json/",\
           "packageDependencies": [\
@@ -23026,6 +23073,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["registry-auth-token", "npm:5.0.1"],\
             ["@pnpm/npm-conf", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:5.0.2", {\
+          "packageLocation": "./.yarn/cache/registry-auth-token-npm-5.0.2-26eb592d5d-0d7683b71e.zip/node_modules/registry-auth-token/",\
+          "packageDependencies": [\
+            ["registry-auth-token", "npm:5.0.2"],\
+            ["@pnpm/npm-conf", "npm:2.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\
