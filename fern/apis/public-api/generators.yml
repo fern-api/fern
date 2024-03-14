@@ -23,10 +23,9 @@ groups:
         output:
           location: pypi
           package-name: fern-api
-        #   token: ${PYPI_TOKEN}
+          token: ${PYPI_TOKEN}
         github:
-          repository: fern-api/github-app-test
-          mode: pull-request
+          repository: fern-api/python-sdk
           license: MIT
         config:
           client_class_name: Fern
