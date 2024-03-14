@@ -29,7 +29,9 @@ class MultipleBaseUrlsEnvironmentGenerator:
                 AST.VariableDeclaration(
                     name=class_var_name,
                     type_hint=AST.TypeHint(
-                        AST.ClassReference(qualified_name_excluding_import=(self.class_name,), is_forward_reference=True)
+                        AST.ClassReference(
+                            qualified_name_excluding_import=(self.class_name,), is_forward_reference=True
+                        )
                     ),
                     docstring=AST.Docstring(environment.docs) if environment.docs is not None else None,
                 )

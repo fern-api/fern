@@ -12557,7 +12557,9 @@ exports[`ir {"name":"response-property"} 1`] = `
                                             ]
                                         }
                                     },
-                                    "jsonExample": {}
+                                    "jsonExample": {
+                                        "id": "string"
+                                    }
                                 }
                             },
                             "docs": null
@@ -13926,7 +13928,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                         ]
                                     }
                                 },
-                                "jsonExample": {}
+                                "jsonExample": {
+                                    "unknown": {
+                                        "key": "value"
+                                    }
+                                }
                             },
                             "name": null,
                             "codeSamples": null,
@@ -14165,7 +14171,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                         ]
                                     }
                                 },
-                                "jsonExample": {}
+                                "jsonExample": {
+                                    "unknown": {
+                                        "key": "value"
+                                    }
+                                }
                             },
                             "name": null,
                             "codeSamples": null,
@@ -24734,7 +24744,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                         ]
                                     }
                                 },
-                                "jsonExample": {}
+                                "jsonExample": {
+                                    "unknown": {
+                                        "key": "value"
+                                    }
+                                }
                             },
                             "name": null,
                             "codeSamples": null,
@@ -24973,7 +24987,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                         ]
                                     }
                                 },
-                                "jsonExample": {}
+                                "jsonExample": {
+                                    "unknown": {
+                                        "key": "value"
+                                    }
+                                }
                             },
                             "name": null,
                             "codeSamples": null,
@@ -31486,7 +31504,9 @@ exports[`ir {"name":"streaming"} 1`] = `
                                         "originalTypeDeclaration": null
                                     }
                                 ],
-                                "jsonExample": {}
+                                "jsonExample": {
+                                    "stream": true
+                                }
                             },
                             "name": null,
                             "codeSamples": null,

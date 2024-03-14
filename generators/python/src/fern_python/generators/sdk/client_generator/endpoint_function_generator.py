@@ -711,7 +711,7 @@ class EndpointFunctionGenerator:
             elif literal_header_value is not None and type(literal_header_value) is bool:
                 headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
             else:
-                headers.append((header.name.wire_value, AST.Expression(f'str({get_parameter_name(header.name.name)})')))
+                headers.append((header.name.wire_value, AST.Expression(f"str({get_parameter_name(header.name.name)})")))
 
         def write_headers_dict_default(writer: AST.NodeWriter) -> None:
             writer.write("{")

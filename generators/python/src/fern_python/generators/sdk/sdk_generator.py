@@ -114,11 +114,12 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = None
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
-                context=context,
-                environments=ir.environments.environments
+                context=context, environments=ir.environments.environments
             )
             generated_environment = self._generate_environments(
                 context=context,
@@ -206,14 +207,17 @@ class SdkGenerator(AbstractGenerator):
         context: SdkGeneratorContext,
         environments: ir_types.Environments,
     ) -> Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]:
-        return cast(Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator], environments.visit(
-            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                context=context, environments=single_base_url_environments
+        return cast(
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
+            environments.visit(
+                single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                    context=context, environments=single_base_url_environments
+                ),
+                multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                    context=context, environments=multiple_base_urls_environments
+                ),
             ),
-            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                context=context, environments=multiple_base_urls_environments
-            ),
-        ))
+        )
 
     def _generate_environments(
         self,
