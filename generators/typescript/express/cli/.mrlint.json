@@ -4,6 +4,7 @@
   "rules": {
     "package-json": {
       "scripts": {
+        "build": "tsup ./src/cli.ts --format cjs",
         "dockerTagLocal": "./docker/create_docker.sh local",
         "dockerTagVersion": "./docker/create_docker.sh"
       }

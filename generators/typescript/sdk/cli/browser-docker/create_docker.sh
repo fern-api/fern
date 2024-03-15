@@ -10,7 +10,7 @@ ROOT_DIR="$DOCKER_DIR/../../../../.."
 
 export GENERATOR_VERSION="$TAG"
 
-yarn build
+yarn build:browser
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"
 
