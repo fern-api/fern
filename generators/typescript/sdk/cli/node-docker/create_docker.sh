@@ -10,6 +10,7 @@ ROOT_DIR="$DOCKER_DIR/../../../../.."
 
 export GENERATOR_VERSION="$TAG"
 
+yarn install
 yarn build:node
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"
