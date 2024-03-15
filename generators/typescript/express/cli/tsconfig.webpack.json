@@ -6,6 +6,5 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "noUncheckedIndexedAccess": true
-  },
-  "include": ["webpack.config.ts"]
+  }
 }
