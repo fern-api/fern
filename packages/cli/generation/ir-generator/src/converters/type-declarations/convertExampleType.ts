@@ -430,7 +430,7 @@ function convertObject({
     workspace: FernWorkspace;
 }): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
-        throw new Error("Example is not an object");
+        throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
     }
     return ExampleTypeShape.object({
         properties:

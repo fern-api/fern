@@ -2678,7 +2678,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.619
-    "@fern-fern/ir-sdk": 0.0.3277
+    "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2707,7 +2707,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.619
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
@@ -3309,7 +3309,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.619
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
@@ -3332,7 +3332,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.619
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3648,13 +3648,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-sdk@npm:0.0.3277":
-  version: 0.0.3277
-  resolution: "@fern-fern/ir-sdk@npm:0.0.3277"
-  checksum: d9a619d9ed602d34ad0da974b684d877076b420fcf20c43a58cb2a8e270afedb97a61bd610a3726b5977cd1c8f4ca17a0315edb22fbbad047e080742c5ea142a
-  languageName: node
-  linkType: hard
-
 "@fern-fern/ir-sdk@npm:0.0.3294":
   version: 0.0.3294
   resolution: "@fern-fern/ir-sdk@npm:0.0.3294"
@@ -3666,6 +3659,13 @@ __metadata:
   version: 0.0.3318
   resolution: "@fern-fern/ir-sdk@npm:0.0.3318"
   checksum: 1dd2cc9ab77e70b19da1b0d70cc9c912ab94f8e72d43f67ff3ebf10ed26e5b37f73894f1c5f48fa13efd0f32deceab3eb1ff20a6fc980467a8ee2e8c54bdb60b
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:^32":
+  version: 32.0.0
+  resolution: "@fern-fern/ir-sdk@npm:32.0.0"
+  checksum: 6822a030ff7b0a1f2d8965d9b5d8227430c3d4c5e4d4125384c436521b2218fa540f195b7f3f91cd47a80fd4efedd6ba6d67e901f090435416db545086615515
   languageName: node
   linkType: hard
 
