@@ -51,7 +51,7 @@ export function buildEndpointExample({
         example.response = { body: convertFullExample(endpointExample.response) };
     }
 
-    if (endpointExample.codeSamples.length > 0) {
+    if (endpointExample.codeSamples != null && endpointExample.codeSamples.length > 0) {
         example["code-samples"] = endpointExample.codeSamples
             .map((codeSample) => {
                 if (codeSample.type === "language") {

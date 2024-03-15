@@ -100,7 +100,7 @@ components:
 
 ## Global headers
 At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs
-expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to 
+expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to
 plug theirs in easily:
 ```python
 import os
@@ -266,13 +266,13 @@ export interface Person  { # <---- Overridden name
 }
 ```
 
-## Parameter names 
+## Parameter names
 
-The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI 
-parameters. 
+The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI
+parameters.
 
-For example, if you have a header `X-API-Version`, you may want the parameter 
-in code to be called `version`. 
+For example, if you have a header `X-API-Version`, you may want the parameter
+in code to be called `version`.
 
 <CodeBlock title="openapi.yml">
 ```yaml
@@ -293,7 +293,7 @@ paths:
 
 ## Server names
 
-The `x-fern-server-name` extension is used to name your servers. 
+The `x-fern-server-name` extension is used to name your servers.
 
 <CodeBlock title="openapi.yml">
 ```yaml
@@ -320,21 +320,21 @@ export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
-so that you can filter your SDKs and Docs as you would like in Fern.  
+so that you can filter your SDKs and Docs as you would like in Fern.
 
-In the example below, we have marked the `POST /users` endpoint with the `public` audience. 
+In the example below, we have marked the `POST /users` endpoint with the `public` audience.
 
 <CodeBlock title="openapi.yml">
 ```yaml
-paths: 
-  /users: 
-    post: 
+paths:
+  /users:
+    post:
       x-fern-audiences: # <---- mark with the public audience
         - public
       operationId: users_create
       ...
-  /projects: 
-    post: 
+  /projects:
+    post:
       operationId: projects_create
       ...
 ```
@@ -346,11 +346,11 @@ To filter to the public audience when generating code, update your `generators.y
 
 <CodeBlock title="generators.yml">
 ```yaml
-groups: 
-  sdks: 
+groups:
+  sdks:
     audiences: # <---- the generators will now be filtered to the public audience
-      - public 
-    generators: 
+      - public
+    generators:
       - name: fernapi/fern-tyepscript-node-sdk
         version: 0.8.8
         ...
@@ -460,39 +460,39 @@ variant.
 
 ## Ignoring schemas or endpoints
 
-If you want Fern to skip reading any endpoint or schemas, you can use the 
-`x-fern-ignore` extension. 
+If you want Fern to skip reading any endpoint or schemas, you can use the
+`x-fern-ignore` extension.
 
-To skip an endpoint, you must add `x-fern-ignore: true` at the operation 
-level. 
+To skip an endpoint, you must add `x-fern-ignore: true` at the operation
+level.
 
-```yaml openapi.yml 
+```yaml openapi.yml
 paths:
-  /users: 
-    get: 
+  /users:
+    get:
       x-fern-ignore: true # <-----------
       ...
 ```
 
-To skip a schema, you msut add `x-fern-ignore: true` at the schema level. 
+To skip a schema, you msut add `x-fern-ignore: true` at the schema level.
 
-```yaml openapi.yml 
-components: 
-  schemas: 
-    SchemaToSkip: 
+```yaml openapi.yml
+components:
+  schemas:
+    SchemaToSkip:
       x-fern-ignore: true # <-----------
       ...
 ```
 
-## Overlaying extensions 
+## Overlaying extensions
 
-Because of the number of tools that use OpenAPI, it may be more convenient to 
+Because of the number of tools that use OpenAPI, it may be more convenient to
 "overlay" your fern specific OpenAPI extensions onto your original definition. \
 In order to do this you can use the `x-fern-overrides-filepath` extension.
 
-Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and 
-`x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is 
-shown in the third tab. 
+Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and
+`x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is
+shown in the third tab.
 
 <CodeBlocks>
     <CodeBlock title="openapi.yml">
@@ -501,7 +501,7 @@ shown in the third tab.
     info:
       title: User API
       version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml # <--------- 
+    x-fern-overrides-filepath: overrides.yml # <---------
     paths:
       /users:
         get:
@@ -545,72 +545,72 @@ shown in the third tab.
 
 ## Request + response examples
 
-While OpenAPI has several fields for examples, there is no easy way 
-to associate a request with a response. This is expecially useful when 
-you want to show more than one example in your documentation. 
+While OpenAPI has several fields for examples, there is no easy way
+to associate a request with a response. This is expecially useful when
+you want to show more than one example in your documentation.
 
-`x-fern-examples` is an array of examples. Each element of the array 
+`x-fern-examples` is an array of examples. Each element of the array
 can contain `path-parameters`, `query-parameters`, `request` and `response`
-examples values that are all associated. 
-```yaml openapi.yml 
-paths: 
-  /users/{userId}: 
+examples values that are all associated.
+```yaml openapi.yml
+paths:
+  /users/{userId}:
     get:
       x-fern-examples:
         - path-parameters: # <----- Example 1
             userId: user-1234
-          response: 
-            body: 
+          response:
+            body:
               name: Foo
               ssn: 1234
         - path-parameters: # <----- Example 2
             userId: user-4567
-          response: 
-            body: 
+          response:
+            body:
               name: Foo
               ssn: 4567
-components: 
-  schemas: 
-    User: 
+components:
+  schemas:
+    User:
       type: object
-      properties: 
-        name: 
+      properties:
+        name:
           type: string
-        ssn: 
+        ssn:
           type: integer
 ```
 
 ### Code samples
 
-If you'd like to specify custom code samples for your example, 
-use `code-samples`. 
+If you'd like to specify custom code samples for your example,
+use `code-samples`.
 
-```yaml openapi.yml 
-paths: 
-  /users/{userId}: 
+```yaml openapi.yml
+paths:
+  /users/{userId}:
     get:
       x-fern-examples:
-        - path-parameters: 
+        - path-parameters:
             userId: user-1234
-          response: 
-            body: 
+          response:
+            body:
               name: Foo
               ssn: 1234
           code-samples: # <----------- Add your code samples here
-            sdk: typescript
-            code: | 
-              import { UserClient } from "..."; 
+            - sdk: typescript
+              code: |
+                import { UserClient } from "...";
 
-              client.users.get("user-1234")
+                client.users.get("user-1234")
 ```
 
 If you're on the Fern Starter plan or higher for SDKs you won't have to worry about manually adding code samples! Our generators do that for you.
 
 ### Availability
 
-The `x-fern-availability` extension is used to mark the availability of an endpoint. The availability information propagates into the generated Fern Docs website as visual tags. 
+The `x-fern-availability` extension is used to mark the availability of an endpoint. The availability information propagates into the generated Fern Docs website as visual tags.
 
-The options are: 
+The options are:
 - `beta`
 - `generally-available`
 - `deprecated`
@@ -622,7 +622,7 @@ The example below marks that the `POST /pet` endpoint is `deprecated`.
 paths:
   /pet:
     post:
-      x-fern-availability: deprecated <---- 
+      x-fern-availability: deprecated <----
       ...
 ```
 </CodeBlock>

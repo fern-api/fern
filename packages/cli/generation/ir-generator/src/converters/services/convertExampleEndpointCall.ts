@@ -356,8 +356,12 @@ function convertExampleRequestBody({
         );
     }
 
+    if (!example.request) {
+        return undefined;
+    }
+
     if (!isPlainObject(example.request)) {
-        throw new Error("Example is not an object");
+        throw new Error(`Example is not an object. Got: ${JSON.stringify(example.request)}`);
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
@@ -486,8 +490,11 @@ function convertExampleResponseBody({
     if (responseBodyType == null) {
         return undefined;
     }
+    if (example.response?.body == null) {
+        return undefined;
+    }
     return convertTypeReferenceExample({
-        example: example.response?.body,
+        example: example.response.body,
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,

@@ -252,15 +252,15 @@ export const FernOpenAPIExtension = {
      *        response:
      *          body: {}
      *        code-samples:
-     *        - language: typescript
-     *          install: npm install my-client
-     *          code: |
-     *            import { MyClient } from "my-client";
-     *            const client = new MyClient();
-     *            const response = await client.myEndpoint();
-     *            console.log(response);
-     *          name: Console Log My Endpoint
-     *          description: This is a code sample that logs the response
+     *          - language: typescript
+     *            install: npm install my-client
+     *            code: |
+     *              import { MyClient } from "my-client";
+     *              const client = new MyClient();
+     *              const response = await client.myEndpoint();
+     *              console.log(response);
+     *            name: Console Log My Endpoint
+     *            description: This is a code sample that logs the response
      */
     EXAMPLES: "x-fern-examples",
 

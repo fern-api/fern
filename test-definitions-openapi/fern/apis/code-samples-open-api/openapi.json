@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Code Samples API"
+  },
+  "components": {
+    "schemas": {
+      "TelemetryData": {
+        "type": "object",
+        "properties": {
+          "cpu": {
+            "type": "number",
+            "format": "float",
+            "description": "CPU usage"
+          },
+          "memory": {
+            "type": "number",
+            "format": "float",
+            "description": "Memory usage"
+          },
+          "network": {
+            "type": "number",
+            "format": "float",
+            "description": "Network usage"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/telemetry": {
+      "get": {
+        "summary": "Collect telemetry data",
+        "operationId": "telemetry",
+        "parameters": [
+          {
+            "name": "anonymize",
+            "in": "query",
+            "description": "If true, anonymize result",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/TelemetryData"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
