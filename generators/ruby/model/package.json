@@ -37,7 +37,7 @@
     "@fern-api/ruby-codegen": "workspace:*",
     "@fern-api/ruby-generator-cli": "workspace:*",
     "@fern-fern/generator-exec-sdk": "0.0.619",
-    "@fern-fern/ir-sdk": "0.0.3277",
+    "@fern-fern/ir-sdk": "^32",
     "zod": "^3.22.3"
   },
   "devDependencies": {
