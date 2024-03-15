@@ -20,17 +20,32 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "set": ["string"],
         "map": {"42": "string"},
     }
+    expected_types = {
+        "string": None,
+        "integer": None,
+        "long": None,
+        "double": None,
+        "bool": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
+        "base64": None,
+        "list": {0: None},
+        "set": {0: None},
+        "map": {0: (None, None)},
+    }
     response = client.no_req_body.get_with_no_request_body()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.no_req_body.get_with_no_request_body()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_post_with_no_request_body(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.no_req_body.post_with_no_request_body()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.no_req_body.post_with_no_request_body()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

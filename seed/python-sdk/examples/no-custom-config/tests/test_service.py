@@ -21,15 +21,26 @@ async def test_get_movie(client: SeedExamples, async_client: AsyncSeedExamples) 
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
     }
+    expected_types = {
+        "id": None,
+        "prequel": None,
+        "title": None,
+        "from": None,
+        "rating": None,
+        "type": None,
+        "tag": None,
+        "metadata": {0: (None, None), 1: (None, None), 2: (None, None)},
+    }
     response = client.service.get_movie(movie_id="movie-c06a4ad7")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.service.get_movie(movie_id="movie-c06a4ad7")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response = "movie-c06a4ad7"
+    expected_types = None
     response = client.service.create_movie(
         request=Movie(
             id="movie-c06a4ad7",
@@ -46,7 +57,7 @@ async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExample
             },
         )
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.service.create_movie(
         request=Movie(
@@ -64,7 +75,7 @@ async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExample
             },
         )
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
@@ -74,8 +85,9 @@ async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExample
         "tags": ["development", "public"],
         "value": "<head>...</head>",
     }
+    expected_types = None
     response = client.service.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.service.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

@@ -42,6 +42,7 @@ pydantic = "^1.10.2"
 mypy = "^1.8.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
+python-dateutil = "^2.9.0"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]

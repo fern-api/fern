@@ -225,7 +225,7 @@ class HttpMethodsClient:
                 ),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
@@ -514,7 +514,7 @@ class AsyncHttpMethodsClient:
                 ),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )

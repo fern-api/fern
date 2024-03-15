@@ -19,7 +19,7 @@
 <dd>
 
 ```ts
-await seedExamples.echo("Hello world!");
+await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 
 </dd>

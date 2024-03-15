@@ -31,8 +31,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nawait client.echo(\n    request=\"Hello world!\",\n)\n",
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nawait client.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
                 "type": "python"
             }
         },

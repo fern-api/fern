@@ -7,11 +7,12 @@ from ..utilities import validate_response
 
 async def test_get_with_path(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.endpoints.params.get_with_path(param="string")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.params.get_with_path(param="string")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_with_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
@@ -37,8 +38,9 @@ async def test_get_with_path_and_query(client: SeedExhaustive, async_client: Asy
 
 async def test_modify_with_path(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.endpoints.params.modify_with_path(param="string", request="string")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.params.modify_with_path(param="string", request="string")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

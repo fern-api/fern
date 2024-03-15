@@ -185,16 +185,7 @@ class SnippetWriter:
         escaped_string: ir_types.EscapedString,
     ) -> AST.Expression:
         string = escaped_string.original
-        if '"' in string:
-            # There are literal quotes in the given string.
-            # We want to preserve the format and instead surround
-            # the string in single quotes.
-            #
-            # This is especially relevant for JSON examples
-            # specified as a string (e.g. '{"foo": "bar"}').
-            clean = string.replace("'", '"')
-            return AST.Expression(f"'{clean}'")
-        return AST.Expression(f'"{string}"')
+        return AST.Expression(repr(string))
 
     def _get_snippet_for_container(
         self,
@@ -202,10 +193,10 @@ class SnippetWriter:
     ) -> Optional[AST.Expression]:
         return container.visit(
             list=lambda list: self._get_snippet_for_list_or_set(
-                example_type_references=list,
+                example_type_references=list, is_list=True
             ),
             set=lambda set: self._get_snippet_for_list_or_set(
-                example_type_references=set,
+                example_type_references=set, is_list=False
             ),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
                 example_type_reference=optional,
@@ -226,6 +217,7 @@ class SnippetWriter:
     def _get_snippet_for_list_or_set(
         self,
         example_type_references: List[ir_types.ExampleTypeReference],
+        is_list: bool
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
         for example_type_reference in example_type_references:
@@ -234,7 +226,7 @@ class SnippetWriter:
             )
             if expression is not None:
                 values.append(expression)
-        return self._write_list(values=values)
+        return self._write_list(values=values) if is_list else self._write_set(values=values)
 
     def _get_snippet_for_map(
         self,
@@ -265,6 +257,20 @@ class SnippetWriter:
                     writer.write(", ")
                 writer.write_node(value)
             writer.write("]")
+
+        return AST.Expression(AST.CodeWriter(write_list))
+    
+    def _write_set(
+        self,
+        values: List[AST.Expression],
+    ) -> AST.Expression:
+        def write_list(writer: AST.NodeWriter) -> None:
+            writer.write("{")
+            for i, value in enumerate(values):
+                if i > 0:
+                    writer.write(", ")
+                writer.write_node(value)
+            writer.write("}")
 
         return AST.Expression(AST.CodeWriter(write_list))
 

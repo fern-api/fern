@@ -81,7 +81,7 @@ class BaseSeedExhaustive:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         client.echo(
-            request="Hello world!",
+            request="Hello world!\\n\\nwith\\n\\tnewlines",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -171,7 +171,7 @@ class AsyncBaseSeedExhaustive:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         await client.echo(
-            request="Hello world!",
+            request="Hello world!\\n\\nwith\\n\\tnewlines",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

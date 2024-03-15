@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/hello",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCodeSamplesClient } from \"\";\n\nconst seedCodeSamples = new SeedCodeSamplesClient;\nawait seedCodeSamples.service.hello({\n    numEvents: 5\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
