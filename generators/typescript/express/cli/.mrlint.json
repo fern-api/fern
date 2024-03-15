@@ -12,17 +12,7 @@
       "exclude": ["@fern-fern/ir-sdk"]
     },
     "depcheck": {
-      "ignores": [
-        "webpack-cli",
-        "@fern-api/umd-compat-loader",
-        "@ts-morph/common",
-        "ts-loader",
-        "ts-node",
-        "webpack-bundle-analyzer",
-        "@types/webpack-bundle-analyzer",
-        "simple-progress-webpack-plugin",
-        "@types/tmp"
-      ],
+      "ignores": ["@ts-morph/common", "ts-loader", "ts-node", "@types/tmp"],
       "ignore-patterns": ["docker/bundle.js"]
     },
     "ts-config": {

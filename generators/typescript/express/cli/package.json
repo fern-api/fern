@@ -23,39 +23,33 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
+    "build": "tsup ./src/cli.ts --format cjs",
     "depcheck": "depcheck",
     "dockerTagLocal": "./docker/create_docker.sh local",
     "dockerTagVersion": "./docker/create_docker.sh"
   },
-  "dependencies": {
+  "devDependencies": {
     "@fern-fern/generator-exec-sdk": "0.0.619",
     "@fern-fern/ir-sdk": "0.0.16",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-generator": "workspace:*",
-    "lodash-es": "^4.17.21",
-    "zod": "^3.22.3"
-  },
-  "devDependencies": {
-    "@fern-api/umd-compat-loader": "^2.1.4",
     "@ts-morph/common": "^0.21.0",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "@types/tmp": "^0.2.4",
-    "@types/webpack-bundle-analyzer": "^4.6.3",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
+    "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "simple-progress-webpack-plugin": "^2.0.0",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.0.2",
     "typescript": "4.6.4",
-    "webpack": "^5.76.0",
-    "webpack-bundle-analyzer": "4.10.1",
-    "webpack-cli": "5.1.4"
+    "zod": "^3.22.3"
   }
 }

@@ -1,13 +1,4 @@
 {
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "esbuild",
-    "@yarnpkg/esbuild-plugin-pnp",
-    "webpack",
-    "webpack-cli",
-    "ts-loader",
-    "@fern-fern/ir-sdk"
-  ],
+  "ignores": ["@types/jest", "@types/node", "esbuild", "@yarnpkg/esbuild-plugin-pnp", "ts-loader", "@fern-fern/ir-sdk"],
   "ignore-patterns": ["lib", "dist", "docker/bundle.js"]
 }
