@@ -70,5 +70,4 @@ allowedFailures:
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports
-  # TODO(FER-1070): mypy fails on aliases here even though it's a red herring
-  - examples
+  - trace

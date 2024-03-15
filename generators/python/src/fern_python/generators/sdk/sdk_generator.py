@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple, Union, cast
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -114,10 +114,16 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
+            base_environment = self._generate_environments_base(
+                context=context, environments=ir.environments.environments
+            )
             generated_environment = self._generate_environments(
                 context=context,
-                environments=ir.environments.environments,
+                environments=base_environment,
                 generator_exec_wrapper=generator_exec_wrapper,
                 project=project,
             )
@@ -174,6 +180,7 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             generator_exec_wrapper=generator_exec_wrapper,
             generated_root_client=generated_root_client,
+            generated_environment=base_environment,
         )
 
         # Only write unit tests if specified in config
@@ -195,10 +202,27 @@ class SdkGenerator(AbstractGenerator):
             if request_sent:
                 project.set_generate_readme(False)
 
-    def _generate_environments(
+    def _generate_environments_base(
         self,
         context: SdkGeneratorContext,
         environments: ir_types.Environments,
+    ) -> Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]:
+        return cast(
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
+            environments.visit(
+                single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                    context=context, environments=single_base_url_environments
+                ),
+                multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                    context=context, environments=multiple_base_urls_environments
+                ),
+            ),
+        )
+
+    def _generate_environments(
+        self,
+        context: SdkGeneratorContext,
+        environments: Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
         generator_exec_wrapper: GeneratorExecWrapper,
         project: Project,
     ) -> GeneratedEnvironment:
@@ -206,14 +230,7 @@ class SdkGenerator(AbstractGenerator):
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
-        generated_environment = environments.visit(
-            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                context=context, environments=single_base_url_environments
-            ).generate(source_file=source_file),
-            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                context=context, environments=multiple_base_urls_environments
-            ).generate(source_file=source_file),
-        )
+        generated_environment = environments.generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_environment
 

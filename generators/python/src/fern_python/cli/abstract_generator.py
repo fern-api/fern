@@ -170,7 +170,7 @@ jobs:
 
       - name: Test
         run: |
-            ${'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
+            {'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
 """
         project.add_file(".github/workflows/tests.yml", workflow_yaml)
 

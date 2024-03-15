@@ -309,9 +309,9 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "title" => "string",
-                  "rating" => 1.1,
+                "jsonExample": {
+                  "rating": 1.1,
+                  "title": "string",
                 },
                 "shape": {
                   "shape": {
@@ -1245,10 +1245,10 @@ exports[`generate IR 1`] = `
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "id" => "string",
-                    "title" => "string",
-                    "rating" => 1.1,
+                  "jsonExample": {
+                    "id": "string",
+                    "rating": 1.1,
+                    "title": "string",
                   },
                   "shape": {
                     "shape": {

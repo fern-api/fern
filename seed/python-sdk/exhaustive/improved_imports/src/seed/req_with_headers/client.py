@@ -59,8 +59,8 @@ class ReqWithHeadersClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-TEST-SERVICE-HEADER": x_test_service_header,
-                        "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                        "X-TEST-SERVICE-HEADER": str(x_test_service_header),
+                        "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -125,8 +125,8 @@ class AsyncReqWithHeadersClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-TEST-SERVICE-HEADER": x_test_service_header,
-                        "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                        "X-TEST-SERVICE-HEADER": str(x_test_service_header),
+                        "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

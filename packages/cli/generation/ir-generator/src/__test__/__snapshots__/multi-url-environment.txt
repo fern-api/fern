@@ -253,8 +253,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "size" => "string",
+                "jsonExample": {
+                  "size": "string",
                 },
                 "properties": [
                   {
@@ -535,8 +535,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "s3Key" => "string",
+                "jsonExample": {
+                  "s3Key": "string",
                 },
                 "properties": [
                   {

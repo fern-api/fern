@@ -149,9 +149,9 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "id" => "string",
-                    "name" => "string",
+                  "jsonExample": {
+                    "id": "string",
+                    "name": "string",
                   },
                   "shape": {
                     "shape": {
@@ -1403,9 +1403,9 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "id" => "string",
-                    "name" => "string",
+                  "jsonExample": {
+                    "id": "string",
+                    "name": "string",
                   },
                   "shape": {
                     "shape": {

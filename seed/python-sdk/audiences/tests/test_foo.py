@@ -6,7 +6,7 @@ from .utilities import validate_response
 
 
 async def test_find(client: SeedAudiences, async_client: AsyncSeedAudiences) -> None:
-    expected_response = {}
+    expected_response = {"imported": "string"}
     response = client.foo.find(optional_string="string", public_property="string", private_property=1)
     validate_response(response, expected_response)
 

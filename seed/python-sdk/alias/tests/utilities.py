@@ -24,8 +24,6 @@ def validate_response(response: typing.Any, json_expectation: typing.Any) -> Non
         assert key in response_json
         if isinstance(value, dict):
             validate_response(response_json[key], value)
-        elif isinstance(value, list):
-            assert set(response_json[key]) == set(value)
         else:
             assert response_json[key] == value
 

@@ -212,9 +212,9 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "amount" => 1,
-                  "currency" => "USD",
+                "jsonExample": {
+                  "amount": 1,
+                  "currency": "USD",
                 },
                 "properties": [
                   {

@@ -320,9 +320,9 @@ exports[`generate IR 1`] = `
                     "wireValue": "user",
                   },
                   "value": {
-                    "jsonExample": Map {
-                      "name" => "string",
-                      "tags" => [
+                    "jsonExample": {
+                      "name": "string",
+                      "tags": [
                         "string",
                       ],
                     },
@@ -739,11 +739,11 @@ exports[`generate IR 1`] = `
                     "wireValue": "nestedUser",
                   },
                   "value": {
-                    "jsonExample": Map {
-                      "name" => "string",
-                      "user" => Map {
-                        "name" => "string",
-                        "tags" => [
+                    "jsonExample": {
+                      "name": "string",
+                      "user": {
+                        "name": "string",
+                        "tags": [
                           "string",
                         ],
                       },
@@ -941,9 +941,9 @@ exports[`generate IR 1`] = `
                               "typeId": "type_user:NestedUser",
                             },
                             "value": {
-                              "jsonExample": Map {
-                                "name" => "string",
-                                "tags" => [
+                              "jsonExample": {
+                                "name": "string",
+                                "tags": [
                                   "string",
                                 ],
                               },
@@ -1333,9 +1333,9 @@ exports[`generate IR 1`] = `
                     "wireValue": "optionalUser",
                   },
                   "value": {
-                    "jsonExample": Map {
-                      "name" => "string",
-                      "tags" => [
+                    "jsonExample": {
+                      "name": "string",
+                      "tags": [
                         "string",
                       ],
                     },
@@ -1653,9 +1653,9 @@ exports[`generate IR 1`] = `
                     "wireValue": "excludeUser",
                   },
                   "value": {
-                    "jsonExample": Map {
-                      "name" => "string",
-                      "tags" => [
+                    "jsonExample": {
+                      "name": "string",
+                      "tags": [
                         "string",
                       ],
                     },
@@ -1989,9 +1989,9 @@ exports[`generate IR 1`] = `
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "name" => "string",
-                    "tags" => [
+                  "jsonExample": {
+                    "name": "string",
+                    "tags": [
                       "string",
                     ],
                   },

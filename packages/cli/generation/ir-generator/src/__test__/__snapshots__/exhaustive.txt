@@ -1914,16 +1914,16 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": [
-                  Map {
-                    "string" => "string",
+                  {
+                    "string": "string",
                   },
                 ],
                 "shape": {
                   "container": {
                     "list": [
                       {
-                        "jsonExample": Map {
-                          "string" => "string",
+                        "jsonExample": {
+                          "string": "string",
                         },
                         "shape": {
                           "shape": {
@@ -2188,16 +2188,16 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": [
-                    Map {
-                      "string" => "string",
+                    {
+                      "string": "string",
                     },
                   ],
                   "shape": {
                     "container": {
                       "list": [
                         {
-                          "jsonExample": Map {
-                            "string" => "string",
+                          "jsonExample": {
+                            "string": "string",
                           },
                           "shape": {
                             "shape": {
@@ -3077,16 +3077,16 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": [
-                  Map {
-                    "string" => "string",
+                  {
+                    "string": "string",
                   },
                 ],
                 "shape": {
                   "container": {
                     "set": [
                       {
-                        "jsonExample": Map {
-                          "string" => "string",
+                        "jsonExample": {
+                          "string": "string",
                         },
                         "shape": {
                           "shape": {
@@ -3351,16 +3351,16 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": [
-                    Map {
-                      "string" => "string",
+                    {
+                      "string": "string",
                     },
                   ],
                   "shape": {
                     "container": {
                       "set": [
                         {
-                          "jsonExample": Map {
-                            "string" => "string",
+                          "jsonExample": {
+                            "string": "string",
                           },
                           "shape": {
                             "shape": {
@@ -4280,8 +4280,8 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "string": Map {
-                    "string" => "string",
+                  "string": {
+                    "string": "string",
                   },
                 },
                 "shape": {
@@ -4301,8 +4301,8 @@ exports[`generate IR 1`] = `
                           },
                         },
                         "value": {
-                          "jsonExample": Map {
-                            "string" => "string",
+                          "jsonExample": {
+                            "string": "string",
                           },
                           "shape": {
                             "shape": {
@@ -4568,8 +4568,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "string": Map {
-                      "string" => "string",
+                    "string": {
+                      "string": "string",
                     },
                   },
                   "shape": {
@@ -4589,8 +4589,8 @@ exports[`generate IR 1`] = `
                             },
                           },
                           "value": {
-                            "jsonExample": Map {
-                              "string" => "string",
+                            "jsonExample": {
+                              "string": "string",
                             },
                             "shape": {
                               "shape": {
@@ -5299,8 +5299,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
+                "jsonExample": {
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -5558,8 +5558,8 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
+                  "jsonExample": {
+                    "string": "string",
                   },
                   "shape": {
                     "shape": {
@@ -7318,8 +7318,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
+                "jsonExample": {
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -7577,25 +7577,25 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {
@@ -9907,8 +9907,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
+                "jsonExample": {
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -10166,25 +10166,25 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {
@@ -12535,25 +12535,25 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "integer" => 1,
-                  "long" => 1000000,
-                  "double" => 1.1,
-                  "bool" => true,
-                  "datetime" => "2024-01-15T09:30:00Z",
-                  "date" => "2023-01-15",
-                  "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "base64" => "SGVsbG8gd29ybGQh",
-                  "list" => [
+                "jsonExample": {
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "bool": true,
+                  "date": "2023-01-15",
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "double": 1.1,
+                  "integer": 1,
+                  "list": [
                     "string",
                   ],
-                  "set" => [
-                    "string",
-                  ],
-                  "map" => {
+                  "long": 1000000,
+                  "map": {
                     "42": "string",
                   },
+                  "set": [
+                    "string",
+                  ],
+                  "string": "string",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 },
                 "shape": {
                   "shape": {
@@ -14388,25 +14388,25 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {
@@ -16977,25 +16977,25 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "integer" => 1,
-                  "long" => 1000000,
-                  "double" => 1.1,
-                  "bool" => true,
-                  "datetime" => "2024-01-15T09:30:00Z",
-                  "date" => "2023-01-15",
-                  "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "base64" => "SGVsbG8gd29ybGQh",
-                  "list" => [
+                "jsonExample": {
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "bool": true,
+                  "date": "2023-01-15",
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "double": 1.1,
+                  "integer": 1,
+                  "list": [
                     "string",
                   ],
-                  "set" => [
-                    "string",
-                  ],
-                  "map" => {
+                  "long": 1000000,
+                  "map": {
                     "42": "string",
                   },
+                  "set": [
+                    "string",
+                  ],
+                  "string": "string",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 },
                 "shape": {
                   "shape": {
@@ -18830,25 +18830,25 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {
@@ -21097,8 +21097,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
+                "jsonExample": {
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -21356,8 +21356,8 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
+                  "jsonExample": {
+                    "string": "string",
                   },
                   "shape": {
                     "shape": {
@@ -22029,8 +22029,8 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "map" => {
+                "jsonExample": {
+                  "map": {
                     "string": {
                       "string": "string",
                     },
@@ -22348,8 +22348,8 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "map" => {
+                  "jsonExample": {
+                    "map": {
                       "string": {
                         "string": "string",
                       },
@@ -23081,28 +23081,28 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "NestedObject" => Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                "jsonExample": {
+                  "NestedObject": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -23375,25 +23375,25 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types/object:NestedObjectWithOptionalField",
                         },
                         "value": {
-                          "jsonExample": Map {
-                            "string" => "string",
-                            "integer" => 1,
-                            "long" => 1000000,
-                            "double" => 1.1,
-                            "bool" => true,
-                            "datetime" => "2024-01-15T09:30:00Z",
-                            "date" => "2023-01-15",
-                            "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                            "base64" => "SGVsbG8gd29ybGQh",
-                            "list" => [
+                          "jsonExample": {
+                            "base64": "SGVsbG8gd29ybGQh",
+                            "bool": true,
+                            "date": "2023-01-15",
+                            "datetime": "2024-01-15T09:30:00Z",
+                            "double": 1.1,
+                            "integer": 1,
+                            "list": [
                               "string",
                             ],
-                            "set" => [
-                              "string",
-                            ],
-                            "map" => {
+                            "long": 1000000,
+                            "map": {
                               "42": "string",
                             },
+                            "set": [
+                              "string",
+                            ],
+                            "string": "string",
+                            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                           },
                           "shape": {
                             "shape": {
@@ -25339,28 +25339,28 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "NestedObject" => Map {
-                      "string" => "string",
-                      "integer" => 1,
-                      "long" => 1000000,
-                      "double" => 1.1,
-                      "bool" => true,
-                      "datetime" => "2024-01-15T09:30:00Z",
-                      "date" => "2023-01-15",
-                      "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                      "base64" => "SGVsbG8gd29ybGQh",
-                      "list" => [
+                  "jsonExample": {
+                    "NestedObject": {
+                      "base64": "SGVsbG8gd29ybGQh",
+                      "bool": true,
+                      "date": "2023-01-15",
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "double": 1.1,
+                      "integer": 1,
+                      "list": [
                         "string",
                       ],
-                      "set" => [
-                        "string",
-                      ],
-                      "map" => {
+                      "long": 1000000,
+                      "map": {
                         "42": "string",
                       },
+                      "set": [
+                        "string",
+                      ],
+                      "string": "string",
+                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     },
+                    "string": "string",
                   },
                   "shape": {
                     "shape": {
@@ -25633,25 +25633,25 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types/object:NestedObjectWithOptionalField",
                           },
                           "value": {
-                            "jsonExample": Map {
-                              "string" => "string",
-                              "integer" => 1,
-                              "long" => 1000000,
-                              "double" => 1.1,
-                              "bool" => true,
-                              "datetime" => "2024-01-15T09:30:00Z",
-                              "date" => "2023-01-15",
-                              "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                              "base64" => "SGVsbG8gd29ybGQh",
-                              "list" => [
+                            "jsonExample": {
+                              "base64": "SGVsbG8gd29ybGQh",
+                              "bool": true,
+                              "date": "2023-01-15",
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "double": 1.1,
+                              "integer": 1,
+                              "list": [
                                 "string",
                               ],
-                              "set" => [
-                                "string",
-                              ],
-                              "map" => {
+                              "long": 1000000,
+                              "map": {
                                 "42": "string",
                               },
+                              "set": [
+                                "string",
+                              ],
+                              "string": "string",
+                              "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             },
                             "shape": {
                               "shape": {
@@ -28011,28 +28011,28 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "NestedObject" => Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                "jsonExample": {
+                  "NestedObject": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
+                  "string": "string",
                 },
                 "shape": {
                   "shape": {
@@ -28305,25 +28305,25 @@ exports[`generate IR 1`] = `
                           "typeId": "type_types/object:NestedObjectWithRequiredField",
                         },
                         "value": {
-                          "jsonExample": Map {
-                            "string" => "string",
-                            "integer" => 1,
-                            "long" => 1000000,
-                            "double" => 1.1,
-                            "bool" => true,
-                            "datetime" => "2024-01-15T09:30:00Z",
-                            "date" => "2023-01-15",
-                            "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                            "base64" => "SGVsbG8gd29ybGQh",
-                            "list" => [
+                          "jsonExample": {
+                            "base64": "SGVsbG8gd29ybGQh",
+                            "bool": true,
+                            "date": "2023-01-15",
+                            "datetime": "2024-01-15T09:30:00Z",
+                            "double": 1.1,
+                            "integer": 1,
+                            "list": [
                               "string",
                             ],
-                            "set" => [
-                              "string",
-                            ],
-                            "map" => {
+                            "long": 1000000,
+                            "map": {
                               "42": "string",
                             },
+                            "set": [
+                              "string",
+                            ],
+                            "string": "string",
+                            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                           },
                           "shape": {
                             "shape": {
@@ -30269,28 +30269,28 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "NestedObject" => Map {
-                      "string" => "string",
-                      "integer" => 1,
-                      "long" => 1000000,
-                      "double" => 1.1,
-                      "bool" => true,
-                      "datetime" => "2024-01-15T09:30:00Z",
-                      "date" => "2023-01-15",
-                      "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                      "base64" => "SGVsbG8gd29ybGQh",
-                      "list" => [
+                  "jsonExample": {
+                    "NestedObject": {
+                      "base64": "SGVsbG8gd29ybGQh",
+                      "bool": true,
+                      "date": "2023-01-15",
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "double": 1.1,
+                      "integer": 1,
+                      "list": [
                         "string",
                       ],
-                      "set" => [
-                        "string",
-                      ],
-                      "map" => {
+                      "long": 1000000,
+                      "map": {
                         "42": "string",
                       },
+                      "set": [
+                        "string",
+                      ],
+                      "string": "string",
+                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     },
+                    "string": "string",
                   },
                   "shape": {
                     "shape": {
@@ -30563,25 +30563,25 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types/object:NestedObjectWithRequiredField",
                           },
                           "value": {
-                            "jsonExample": Map {
-                              "string" => "string",
-                              "integer" => 1,
-                              "long" => 1000000,
-                              "double" => 1.1,
-                              "bool" => true,
-                              "datetime" => "2024-01-15T09:30:00Z",
-                              "date" => "2023-01-15",
-                              "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                              "base64" => "SGVsbG8gd29ybGQh",
-                              "list" => [
+                            "jsonExample": {
+                              "base64": "SGVsbG8gd29ybGQh",
+                              "bool": true,
+                              "date": "2023-01-15",
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "double": 1.1,
+                              "integer": 1,
+                              "list": [
                                 "string",
                               ],
-                              "set" => [
-                                "string",
-                              ],
-                              "map" => {
+                              "long": 1000000,
+                              "map": {
                                 "42": "string",
                               },
+                              "set": [
+                                "string",
+                              ],
+                              "string": "string",
+                              "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             },
                             "shape": {
                               "shape": {
@@ -32942,56 +32942,56 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": [
-                  Map {
-                    "string" => "string",
-                    "NestedObject" => Map {
-                      "string" => "string",
-                      "integer" => 1,
-                      "long" => 1000000,
-                      "double" => 1.1,
-                      "bool" => true,
-                      "datetime" => "2024-01-15T09:30:00Z",
-                      "date" => "2023-01-15",
-                      "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                      "base64" => "SGVsbG8gd29ybGQh",
-                      "list" => [
+                  {
+                    "NestedObject": {
+                      "base64": "SGVsbG8gd29ybGQh",
+                      "bool": true,
+                      "date": "2023-01-15",
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "double": 1.1,
+                      "integer": 1,
+                      "list": [
                         "string",
                       ],
-                      "set" => [
-                        "string",
-                      ],
-                      "map" => {
+                      "long": 1000000,
+                      "map": {
                         "42": "string",
                       },
+                      "set": [
+                        "string",
+                      ],
+                      "string": "string",
+                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     },
+                    "string": "string",
                   },
                 ],
                 "shape": {
                   "container": {
                     "list": [
                       {
-                        "jsonExample": Map {
-                          "string" => "string",
-                          "NestedObject" => Map {
-                            "string" => "string",
-                            "integer" => 1,
-                            "long" => 1000000,
-                            "double" => 1.1,
-                            "bool" => true,
-                            "datetime" => "2024-01-15T09:30:00Z",
-                            "date" => "2023-01-15",
-                            "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                            "base64" => "SGVsbG8gd29ybGQh",
-                            "list" => [
+                        "jsonExample": {
+                          "NestedObject": {
+                            "base64": "SGVsbG8gd29ybGQh",
+                            "bool": true,
+                            "date": "2023-01-15",
+                            "datetime": "2024-01-15T09:30:00Z",
+                            "double": 1.1,
+                            "integer": 1,
+                            "list": [
                               "string",
                             ],
-                            "set" => [
-                              "string",
-                            ],
-                            "map" => {
+                            "long": 1000000,
+                            "map": {
                               "42": "string",
                             },
+                            "set": [
+                              "string",
+                            ],
+                            "string": "string",
+                            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                           },
+                          "string": "string",
                         },
                         "shape": {
                           "shape": {
@@ -33264,25 +33264,25 @@ exports[`generate IR 1`] = `
                                   "typeId": "type_types/object:NestedObjectWithRequiredField",
                                 },
                                 "value": {
-                                  "jsonExample": Map {
-                                    "string" => "string",
-                                    "integer" => 1,
-                                    "long" => 1000000,
-                                    "double" => 1.1,
-                                    "bool" => true,
-                                    "datetime" => "2024-01-15T09:30:00Z",
-                                    "date" => "2023-01-15",
-                                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                                    "base64" => "SGVsbG8gd29ybGQh",
-                                    "list" => [
+                                  "jsonExample": {
+                                    "base64": "SGVsbG8gd29ybGQh",
+                                    "bool": true,
+                                    "date": "2023-01-15",
+                                    "datetime": "2024-01-15T09:30:00Z",
+                                    "double": 1.1,
+                                    "integer": 1,
+                                    "list": [
                                       "string",
                                     ],
-                                    "set" => [
-                                      "string",
-                                    ],
-                                    "map" => {
+                                    "long": 1000000,
+                                    "map": {
                                       "42": "string",
                                     },
+                                    "set": [
+                                      "string",
+                                    ],
+                                    "string": "string",
+                                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                                   },
                                   "shape": {
                                     "shape": {
@@ -35234,28 +35234,28 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "NestedObject" => Map {
-                      "string" => "string",
-                      "integer" => 1,
-                      "long" => 1000000,
-                      "double" => 1.1,
-                      "bool" => true,
-                      "datetime" => "2024-01-15T09:30:00Z",
-                      "date" => "2023-01-15",
-                      "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                      "base64" => "SGVsbG8gd29ybGQh",
-                      "list" => [
+                  "jsonExample": {
+                    "NestedObject": {
+                      "base64": "SGVsbG8gd29ybGQh",
+                      "bool": true,
+                      "date": "2023-01-15",
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "double": 1.1,
+                      "integer": 1,
+                      "list": [
                         "string",
                       ],
-                      "set" => [
-                        "string",
-                      ],
-                      "map" => {
+                      "long": 1000000,
+                      "map": {
                         "42": "string",
                       },
+                      "set": [
+                        "string",
+                      ],
+                      "string": "string",
+                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     },
+                    "string": "string",
                   },
                   "shape": {
                     "shape": {
@@ -35528,25 +35528,25 @@ exports[`generate IR 1`] = `
                             "typeId": "type_types/object:NestedObjectWithRequiredField",
                           },
                           "value": {
-                            "jsonExample": Map {
-                              "string" => "string",
-                              "integer" => 1,
-                              "long" => 1000000,
-                              "double" => 1.1,
-                              "bool" => true,
-                              "datetime" => "2024-01-15T09:30:00Z",
-                              "date" => "2023-01-15",
-                              "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                              "base64" => "SGVsbG8gd29ybGQh",
-                              "list" => [
+                            "jsonExample": {
+                              "base64": "SGVsbG8gd29ybGQh",
+                              "bool": true,
+                              "date": "2023-01-15",
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "double": 1.1,
+                              "integer": 1,
+                              "list": [
                                 "string",
                               ],
-                              "set" => [
-                                "string",
-                              ],
-                              "map" => {
+                              "long": 1000000,
+                              "map": {
                                 "42": "string",
                               },
+                              "set": [
+                                "string",
+                              ],
+                              "string": "string",
+                              "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             },
                             "shape": {
                               "shape": {
@@ -40681,6 +40681,8 @@ exports[`generate IR 1`] = `
               "request": {
                 "jsonExample": {
                   "animal": "dog",
+                  "likesToWoof": true,
+                  "name": "string",
                 },
                 "shape": {
                   "shape": {
@@ -41130,6 +41132,8 @@ exports[`generate IR 1`] = `
                 "body": {
                   "jsonExample": {
                     "animal": "dog",
+                    "likesToWoof": true,
+                    "name": "string",
                   },
                   "shape": {
                     "shape": {
@@ -42156,29 +42160,29 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "integer" => 1,
-                  "NestedObject" => Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                "jsonExample": {
+                  "NestedObject": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
+                  "integer": 1,
+                  "string": "string",
                 },
                 "properties": [
                   {
@@ -42278,25 +42282,25 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": Map {
-                        "string" => "string",
-                        "integer" => 1,
-                        "long" => 1000000,
-                        "double" => 1.1,
-                        "bool" => true,
-                        "datetime" => "2024-01-15T09:30:00Z",
-                        "date" => "2023-01-15",
-                        "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        "base64" => "SGVsbG8gd29ybGQh",
-                        "list" => [
+                      "jsonExample": {
+                        "base64": "SGVsbG8gd29ybGQh",
+                        "bool": true,
+                        "date": "2023-01-15",
+                        "datetime": "2024-01-15T09:30:00Z",
+                        "double": 1.1,
+                        "integer": 1,
+                        "list": [
                           "string",
                         ],
-                        "set" => [
-                          "string",
-                        ],
-                        "map" => {
+                        "long": 1000000,
+                        "map": {
                           "42": "string",
                         },
+                        "set": [
+                          "string",
+                        ],
+                        "string": "string",
+                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
                       "shape": {
                         "shape": {
@@ -44134,25 +44138,25 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {
@@ -46000,29 +46004,29 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": Map {
-                  "string" => "string",
-                  "integer" => 1,
-                  "NestedObject" => Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                "jsonExample": {
+                  "NestedObject": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
+                  "integer": 1,
+                  "string": "string",
                 },
                 "properties": [
                   {
@@ -46122,25 +46126,25 @@ exports[`generate IR 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": Map {
-                        "string" => "string",
-                        "integer" => 1,
-                        "long" => 1000000,
-                        "double" => 1.1,
-                        "bool" => true,
-                        "datetime" => "2024-01-15T09:30:00Z",
-                        "date" => "2023-01-15",
-                        "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        "base64" => "SGVsbG8gd29ybGQh",
-                        "list" => [
+                      "jsonExample": {
+                        "base64": "SGVsbG8gd29ybGQh",
+                        "bool": true,
+                        "date": "2023-01-15",
+                        "datetime": "2024-01-15T09:30:00Z",
+                        "double": 1.1,
+                        "integer": 1,
+                        "list": [
                           "string",
                         ],
-                        "set" => [
-                          "string",
-                        ],
-                        "map" => {
+                        "long": 1000000,
+                        "map": {
                           "42": "string",
                         },
+                        "set": [
+                          "string",
+                        ],
+                        "string": "string",
+                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
                       "shape": {
                         "shape": {
@@ -48905,25 +48909,25 @@ exports[`generate IR 1`] = `
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "string" => "string",
-                    "integer" => 1,
-                    "long" => 1000000,
-                    "double" => 1.1,
-                    "bool" => true,
-                    "datetime" => "2024-01-15T09:30:00Z",
-                    "date" => "2023-01-15",
-                    "uuid" => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64" => "SGVsbG8gd29ybGQh",
-                    "list" => [
+                  "jsonExample": {
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "bool": true,
+                    "date": "2023-01-15",
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "double": 1.1,
+                    "integer": 1,
+                    "list": [
                       "string",
                     ],
-                    "set" => [
-                      "string",
-                    ],
-                    "map" => {
+                    "long": 1000000,
+                    "map": {
                       "42": "string",
                     },
+                    "set": [
+                      "string",
+                    ],
+                    "string": "string",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   },
                   "shape": {
                     "shape": {

@@ -36,9 +36,24 @@ public class UserClient {
         httpUrl.addQueryParameter("date", request.getDate());
         httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
         httpUrl.addQueryParameter("bytes", request.getBytes().toString());
+        if (request.getUser().isPresent()) {
+            httpUrl.addQueryParameter("user", request.getUser().get());
+        }
+        if (request.getKeyValue().isPresent()) {
+            httpUrl.addQueryParameter("keyValue", request.getKeyValue().get());
+        }
         if (request.getOptionalString().isPresent()) {
             httpUrl.addQueryParameter(
                     "optionalString", request.getOptionalString().get());
+        }
+        if (request.getNestedUser().isPresent()) {
+            httpUrl.addQueryParameter("nestedUser", request.getNestedUser().get());
+        }
+        if (request.getOptionalUser().isPresent()) {
+            httpUrl.addQueryParameter("optionalUser", request.getOptionalUser().get());
+        }
+        if (request.getExcludeUser().isPresent()) {
+            httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().get());
         }
         httpUrl.addQueryParameter("filter", request.getFilter());
         Request.Builder _requestBuilder = new Request.Builder()

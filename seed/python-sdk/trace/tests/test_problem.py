@@ -68,7 +68,7 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
 
 
 async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {"problemVersion": 1}
     response = client.problem.update_problem(
         problem_id="string",
         request=CreateProblemRequest(
@@ -126,7 +126,14 @@ async def test_delete_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
 
 
 async def test_get_default_starter_files(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {
+        "files": {
+            "string": {
+                "solutionFile": {"filename": "string", "contents": "string"},
+                "readOnlyFiles": [{"filename": "string", "contents": "string"}],
+            }
+        }
+    }
     response = client.problem.get_default_starter_files(
         input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
         output_type=VariableType(),

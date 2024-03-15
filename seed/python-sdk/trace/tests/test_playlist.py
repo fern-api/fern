@@ -9,7 +9,7 @@ from .utilities import validate_response
 
 
 async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {"playlist_id": "string", "owner-id": "string", "name": "string", "problems": ["string"]}
     response = client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
@@ -28,7 +28,7 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
 
 
 async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = [{}]
+    expected_response = [{"playlist_id": "string", "owner-id": "string", "name": "string", "problems": ["string"]}]
     response = client.playlist.get_playlists(
         service_param=1,
         limit=1,
@@ -51,7 +51,7 @@ async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) ->
 
 
 async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {"playlist_id": "string", "owner-id": "string", "name": "string", "problems": ["string"]}
     response = client.playlist.get_playlist(service_param=1, playlist_id="string")
     validate_response(response, expected_response)
 
@@ -60,7 +60,7 @@ async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 
 
 async def test_update_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {"playlist_id": "string", "owner-id": "string", "name": "string", "problems": ["string"]}
     response = client.playlist.update_playlist(
         service_param=1, playlist_id="string", request=UpdatePlaylistRequest(name="string", problems=["string"])
     )

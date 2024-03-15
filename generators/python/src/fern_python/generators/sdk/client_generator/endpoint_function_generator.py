@@ -709,9 +709,9 @@ class EndpointFunctionGenerator:
             if literal_header_value is not None and type(literal_header_value) is str:
                 headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
             elif literal_header_value is not None and type(literal_header_value) is bool:
-                headers.append((header.name.wire_value, AST.Expression(f"{literal_header_value}")))
+                headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
             else:
-                headers.append((header.name.wire_value, AST.Expression(get_parameter_name(header.name.name))))
+                headers.append((header.name.wire_value, AST.Expression(f"str({get_parameter_name(header.name.name)})")))
 
         def write_headers_dict_default(writer: AST.NodeWriter) -> None:
             writer.write("{")
@@ -752,8 +752,10 @@ class EndpointFunctionGenerator:
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
-        if possible_query_literal is not None:
+        if possible_query_literal is not None and type(possible_query_literal) is str:
             return AST.Expression(f'"{possible_query_literal}"')
+        elif possible_query_literal is not None and type(possible_query_literal) is bool:
+            return AST.Expression(f"{possible_query_literal}")
         return self._get_reference_to_query_parameter(query_parameter)
 
     def _get_query_parameters_for_endpoint(

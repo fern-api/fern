@@ -16,7 +16,7 @@ async def test_get_and_return_list_of_primitives(client: SeedExhaustive, async_c
 
 
 async def test_get_and_return_list_of_objects(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = [{}]
+    expected_response = [{"string": "string"}]
     response = client.endpoints.container.get_and_return_list_of_objects(
         request=[ObjectWithRequiredField(string="string")]
     )
@@ -38,7 +38,7 @@ async def test_get_and_return_set_of_primitives(client: SeedExhaustive, async_cl
 
 
 async def test_get_and_return_set_of_objects(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = [{}]
+    expected_response = [{"string": "string"}]
     response = client.endpoints.container.get_and_return_set_of_objects(
         request=[ObjectWithRequiredField(string="string")]
     )
@@ -62,7 +62,7 @@ async def test_get_and_return_map_prim_to_prim(client: SeedExhaustive, async_cli
 
 
 async def test_get_and_return_map_of_prim_to_object(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {"string": {}}
+    expected_response = {"string": {"string": "string"}}
     response = client.endpoints.container.get_and_return_map_of_prim_to_object(
         request={"string": ObjectWithRequiredField(string="string")}
     )
@@ -75,7 +75,7 @@ async def test_get_and_return_map_of_prim_to_object(client: SeedExhaustive, asyn
 
 
 async def test_get_and_return_optional(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {}
+    expected_response = {"string": "string"}
     response = client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string="string"))
     validate_response(response, expected_response)
 

@@ -16,7 +16,7 @@ async def test_create_movie(client: SeedApi, async_client: AsyncSeedApi) -> None
 
 
 async def test_get_movie(client: SeedApi, async_client: AsyncSeedApi) -> None:
-    expected_response = {}
+    expected_response = {"id": "string", "title": "string", "rating": 1.1}
     response = client.imdb.get_movie(movie_id="string")
     validate_response(response, expected_response)
 

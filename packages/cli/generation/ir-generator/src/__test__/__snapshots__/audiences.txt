@@ -136,8 +136,8 @@ exports[`generate IR 1`] = `
               "request": null,
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "foo" => {},
+                  "jsonExample": {
+                    "foo": {},
                   },
                   "shape": {
                     "shape": {
@@ -876,9 +876,9 @@ exports[`generate IR 1`] = `
                 },
               ],
               "request": {
-                "jsonExample": Map {
-                  "publicProperty" => "string",
-                  "privateProperty" => 1,
+                "jsonExample": {
+                  "privateProperty": 1,
+                  "publicProperty": "string",
                 },
                 "properties": [
                   {
@@ -958,8 +958,8 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": Map {
-                    "imported" => "string",
+                  "jsonExample": {
+                    "imported": "string",
                   },
                   "shape": {
                     "shape": {
