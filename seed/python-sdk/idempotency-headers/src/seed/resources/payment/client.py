@@ -74,8 +74,8 @@ class PaymentClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "Idempotency-Key": idempotency_key,
-                        "Idempotency-Expiration": idempotency_expiration,
+                        "Idempotency-Key": str(idempotency_key),
+                        "Idempotency-Expiration": str(idempotency_expiration),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -193,8 +193,8 @@ class AsyncPaymentClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "Idempotency-Key": idempotency_key,
-                        "Idempotency-Expiration": idempotency_expiration,
+                        "Idempotency-Key": str(idempotency_key),
+                        "Idempotency-Expiration": str(idempotency_expiration),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

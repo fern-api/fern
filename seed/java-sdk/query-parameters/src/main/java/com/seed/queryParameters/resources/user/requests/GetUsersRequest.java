@@ -32,7 +32,17 @@ public final class GetUsersRequest {
 
     private final byte[] bytes;
 
+    private final Optional<String> user;
+
+    private final Optional<String> keyValue;
+
     private final Optional<String> optionalString;
+
+    private final Optional<String> nestedUser;
+
+    private final Optional<String> optionalUser;
+
+    private final Optional<String> excludeUser;
 
     private final String filter;
 
@@ -44,7 +54,12 @@ public final class GetUsersRequest {
             String date,
             OffsetDateTime deadline,
             byte[] bytes,
+            Optional<String> user,
+            Optional<String> keyValue,
             Optional<String> optionalString,
+            Optional<String> nestedUser,
+            Optional<String> optionalUser,
+            Optional<String> excludeUser,
             String filter,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
@@ -52,7 +67,12 @@ public final class GetUsersRequest {
         this.date = date;
         this.deadline = deadline;
         this.bytes = bytes;
+        this.user = user;
+        this.keyValue = keyValue;
         this.optionalString = optionalString;
+        this.nestedUser = nestedUser;
+        this.optionalUser = optionalUser;
+        this.excludeUser = excludeUser;
         this.filter = filter;
         this.additionalProperties = additionalProperties;
     }
@@ -82,9 +102,34 @@ public final class GetUsersRequest {
         return bytes;
     }
 
+    @JsonProperty("user")
+    public Optional<String> getUser() {
+        return user;
+    }
+
+    @JsonProperty("keyValue")
+    public Optional<String> getKeyValue() {
+        return keyValue;
+    }
+
     @JsonProperty("optionalString")
     public Optional<String> getOptionalString() {
         return optionalString;
+    }
+
+    @JsonProperty("nestedUser")
+    public Optional<String> getNestedUser() {
+        return nestedUser;
+    }
+
+    @JsonProperty("optionalUser")
+    public Optional<String> getOptionalUser() {
+        return optionalUser;
+    }
+
+    @JsonProperty("excludeUser")
+    public Optional<String> getExcludeUser() {
+        return excludeUser;
     }
 
     @JsonProperty("filter")
@@ -109,14 +154,30 @@ public final class GetUsersRequest {
                 && date.equals(other.date)
                 && deadline.equals(other.deadline)
                 && bytes.equals(other.bytes)
+                && user.equals(other.user)
+                && keyValue.equals(other.keyValue)
                 && optionalString.equals(other.optionalString)
+                && nestedUser.equals(other.nestedUser)
+                && optionalUser.equals(other.optionalUser)
+                && excludeUser.equals(other.excludeUser)
                 && filter.equals(other.filter);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.limit, this.id, this.date, this.deadline, this.bytes, this.optionalString, this.filter);
+                this.limit,
+                this.id,
+                this.date,
+                this.deadline,
+                this.bytes,
+                this.user,
+                this.keyValue,
+                this.optionalString,
+                this.nestedUser,
+                this.optionalUser,
+                this.excludeUser,
+                this.filter);
     }
 
     @java.lang.Override
@@ -157,9 +218,29 @@ public final class GetUsersRequest {
     public interface _FinalStage {
         GetUsersRequest build();
 
+        _FinalStage user(Optional<String> user);
+
+        _FinalStage user(String user);
+
+        _FinalStage keyValue(Optional<String> keyValue);
+
+        _FinalStage keyValue(String keyValue);
+
         _FinalStage optionalString(Optional<String> optionalString);
 
         _FinalStage optionalString(String optionalString);
+
+        _FinalStage nestedUser(Optional<String> nestedUser);
+
+        _FinalStage nestedUser(String nestedUser);
+
+        _FinalStage optionalUser(Optional<String> optionalUser);
+
+        _FinalStage optionalUser(String optionalUser);
+
+        _FinalStage excludeUser(Optional<String> excludeUser);
+
+        _FinalStage excludeUser(String excludeUser);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -177,7 +258,17 @@ public final class GetUsersRequest {
 
         private String filter;
 
+        private Optional<String> excludeUser = Optional.empty();
+
+        private Optional<String> optionalUser = Optional.empty();
+
+        private Optional<String> nestedUser = Optional.empty();
+
         private Optional<String> optionalString = Optional.empty();
+
+        private Optional<String> keyValue = Optional.empty();
+
+        private Optional<String> user = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,7 +282,12 @@ public final class GetUsersRequest {
             date(other.getDate());
             deadline(other.getDeadline());
             bytes(other.getBytes());
+            user(other.getUser());
+            keyValue(other.getKeyValue());
             optionalString(other.getOptionalString());
+            nestedUser(other.getNestedUser());
+            optionalUser(other.getOptionalUser());
+            excludeUser(other.getExcludeUser());
             filter(other.getFilter());
             return this;
         }
@@ -239,6 +335,45 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
+        public _FinalStage excludeUser(String excludeUser) {
+            this.excludeUser = Optional.of(excludeUser);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "excludeUser", nulls = Nulls.SKIP)
+        public _FinalStage excludeUser(Optional<String> excludeUser) {
+            this.excludeUser = excludeUser;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalUser(String optionalUser) {
+            this.optionalUser = Optional.of(optionalUser);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optionalUser", nulls = Nulls.SKIP)
+        public _FinalStage optionalUser(Optional<String> optionalUser) {
+            this.optionalUser = optionalUser;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage nestedUser(String nestedUser) {
+            this.nestedUser = Optional.of(nestedUser);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "nestedUser", nulls = Nulls.SKIP)
+        public _FinalStage nestedUser(Optional<String> nestedUser) {
+            this.nestedUser = nestedUser;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage optionalString(String optionalString) {
             this.optionalString = Optional.of(optionalString);
             return this;
@@ -252,8 +387,47 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
+        public _FinalStage keyValue(String keyValue) {
+            this.keyValue = Optional.of(keyValue);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
+        public _FinalStage keyValue(Optional<String> keyValue) {
+            this.keyValue = keyValue;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage user(String user) {
+            this.user = Optional.of(user);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "user", nulls = Nulls.SKIP)
+        public _FinalStage user(Optional<String> user) {
+            this.user = user;
+            return this;
+        }
+
+        @java.lang.Override
         public GetUsersRequest build() {
-            return new GetUsersRequest(limit, id, date, deadline, bytes, optionalString, filter, additionalProperties);
+            return new GetUsersRequest(
+                    limit,
+                    id,
+                    date,
+                    deadline,
+                    bytes,
+                    user,
+                    keyValue,
+                    optionalString,
+                    nestedUser,
+                    optionalUser,
+                    excludeUser,
+                    filter,
+                    additionalProperties);
         }
     }
 }

@@ -97,6 +97,18 @@ paths:
           schema:
             $ref: '#/components/schemas/Operand'
             nullable: true
+        - name: operandOrColor
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: maybeOperandOrColor
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
       responses:
         '204':
           description: ''
@@ -120,6 +132,22 @@ paths:
             type: array
             items:
               $ref: '#/components/schemas/Operand'
+              nullable: true
+        - name: operandOrColor
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: maybeOperandOrColor
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
               nullable: true
       responses:
         '204':

@@ -50,7 +50,7 @@ class MigrationClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "admin-key-header": admin_key_header,
+                        "admin-key-header": str(admin_key_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -103,7 +103,7 @@ class AsyncMigrationClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "admin-key-header": admin_key_header,
+                        "admin-key-header": str(admin_key_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
