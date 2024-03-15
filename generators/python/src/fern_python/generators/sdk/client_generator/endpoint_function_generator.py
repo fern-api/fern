@@ -1081,7 +1081,7 @@ class EndpointFunctionSnippetGenerator:
             return False
         request_body_union = self.endpoint.request_body.get_as_union()
         if request_body_union.type == "inlinedRequestBody":
-            param = next(filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties))
+            param = next(filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties), None)
             if param is not None:
                 return self.context.get_literal_value(param.value_type) is not None
             return False
