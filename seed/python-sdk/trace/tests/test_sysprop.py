@@ -15,8 +15,9 @@ async def test_set_num_warm_instances(client: SeedTrace, async_client: AsyncSeed
 
 async def test_get_num_warm_instances(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response = {"string": 1}
+    expected_types = ("dict", {0: (None, "integer")})
     response = client.sysprop.get_num_warm_instances()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.sysprop.get_num_warm_instances()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

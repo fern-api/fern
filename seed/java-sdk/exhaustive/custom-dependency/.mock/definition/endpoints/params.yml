@@ -36,7 +36,7 @@ service:
 
     getWithPathAndQuery:
       docs: GET with path and query params
-      path: /path/{param}
+      path: /path-query/{param}
       path-parameters:
         param: string
       method: GET

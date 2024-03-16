@@ -20,7 +20,7 @@ async def test_get_and_return_string(client: SeedExhaustive, async_client: Async
 
 async def test_get_and_return_int(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = 1
-    expected_types = None
+    expected_types = "integer"
     response = client.endpoints.primitive.get_and_return_int(request=1)
     validate_response(response, expected_response, expected_types)
 
@@ -61,7 +61,6 @@ async def test_get_and_return_bool(client: SeedExhaustive, async_client: AsyncSe
 async def test_get_and_return_datetime(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "2024-01-15T09:30:00Z"
     expected_types = "datetime"
-    print(datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00").isoformat().replace("+00:00", "Z"))
     response = client.endpoints.primitive.get_and_return_datetime(
         request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
     )

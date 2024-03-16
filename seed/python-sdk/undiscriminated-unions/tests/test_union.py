@@ -7,8 +7,9 @@ from .utilities import validate_response
 
 async def test_get(client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.union.get(request="string")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.union.get(request="string")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

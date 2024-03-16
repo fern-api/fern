@@ -189,6 +189,7 @@ function validateHeaders(example: ExampleEndpointCall, headers: IncomingHttpHead
 }
 
 function validateRequestBody(example: ExampleEndpointCall, req: Request): boolean {
+    // throw new Error(`FML ${JSON.stringify(req.body)} and then ${JSON.stringify(example.request?.jsonExample)}`);
     if (example.request == null) {
         // By default, express interprets an empty request body as '{}'.
         return isObject(req.body) && Object.keys(req.body).length === 0;

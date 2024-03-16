@@ -9,8 +9,9 @@ async def test_get_with_bearer_token(
     client: SeedBearerTokenEnvironmentVariable, async_client: AsyncSeedBearerTokenEnvironmentVariable
 ) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.service.get_with_bearer_token()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.service.get_with_bearer_token()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

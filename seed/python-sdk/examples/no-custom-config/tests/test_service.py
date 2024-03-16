@@ -29,7 +29,7 @@ async def test_get_movie(client: SeedExamples, async_client: AsyncSeedExamples) 
         "rating": None,
         "type": None,
         "tag": None,
-        "metadata": {0: (None, None), 1: (None, None), 2: (None, None)},
+        "metadata": ("dict", {0: (None, None), 1: (None, None), 2: (None, None)}),
     }
     response = client.service.get_movie(movie_id="movie-c06a4ad7")
     validate_response(response, expected_response, expected_types)
@@ -85,7 +85,7 @@ async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExample
         "tags": ["development", "public"],
         "value": "<head>...</head>",
     }
-    expected_types = None
+    expected_types = "no_validate"
     response = client.service.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
     validate_response(response, expected_response, expected_types)
 

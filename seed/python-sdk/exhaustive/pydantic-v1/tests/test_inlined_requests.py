@@ -22,11 +22,11 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
     }
     expected_types = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
@@ -34,9 +34,9 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": {0: None},
-        "set": {0: None},
-        "map": {0: (None, None)},
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.inlined_requests.post_with_object_bodyand_response(
         string="string",

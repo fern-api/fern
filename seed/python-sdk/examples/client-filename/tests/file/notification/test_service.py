@@ -12,7 +12,7 @@ async def test_get_exception(client: SeedExhaustive, async_client: AsyncSeedExha
         "exceptionMessage": "This component is unavailable!",
         "exceptionStacktrace": "<logs>",
     }
-    expected_types = {"exceptionType": None, "exceptionMessage": None, "exceptionStacktrace": None}
+    expected_types = "no_validate"
     response = client.file.notification.service.get_exception(notification_id="notification-hsy129x")
     validate_response(response, expected_response, expected_types)
 

@@ -10295,11 +10295,11 @@
           "idempotent": false,
           "method": "POST",
           "path": {
-            "head": "/get-and-return-nested-with-required-field",
+            "head": "/get-and-return-nested-with-required-field-list",
             "parts": []
           },
           "fullPath": {
-            "head": "/object/get-and-return-nested-with-required-field",
+            "head": "/object/get-and-return-nested-with-required-field-list",
             "parts": []
           },
           "pathParameters": [],
@@ -11227,7 +11227,7 @@
           "idempotent": false,
           "method": "GET",
           "path": {
-            "head": "/path/",
+            "head": "/path-query/",
             "parts": [
               {
                 "pathParameter": "param",
@@ -11236,7 +11236,7 @@
             ]
           },
           "fullPath": {
-            "head": "/params/path/",
+            "head": "/params/path-query/",
             "parts": [
               {
                 "pathParameter": "param",

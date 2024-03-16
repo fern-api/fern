@@ -192,12 +192,8 @@ class SnippetWriter:
         container: ir_types.ExampleContainer,
     ) -> Optional[AST.Expression]:
         return container.visit(
-            list=lambda list: self._get_snippet_for_list_or_set(
-                example_type_references=list, is_list=True
-            ),
-            set=lambda set: self._get_snippet_for_list_or_set(
-                example_type_references=set, is_list=False
-            ),
+            list=lambda list: self._get_snippet_for_list_or_set(example_type_references=list, is_list=True),
+            set=lambda set: self._get_snippet_for_list_or_set(example_type_references=set, is_list=False),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
                 example_type_reference=optional,
             )
@@ -215,9 +211,7 @@ class SnippetWriter:
         return AST.Expression(json.dumps(unknown))
 
     def _get_snippet_for_list_or_set(
-        self,
-        example_type_references: List[ir_types.ExampleTypeReference],
-        is_list: bool
+        self, example_type_references: List[ir_types.ExampleTypeReference], is_list: bool
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
         for example_type_reference in example_type_references:
@@ -259,7 +253,7 @@ class SnippetWriter:
             writer.write("]")
 
         return AST.Expression(AST.CodeWriter(write_list))
-    
+
     def _write_set(
         self,
         values: List[AST.Expression],

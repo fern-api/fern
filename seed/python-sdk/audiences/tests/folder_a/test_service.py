@@ -7,8 +7,9 @@ from ..utilities import validate_response
 
 async def test_get_direct_thread(client: SeedAudiences, async_client: AsyncSeedAudiences) -> None:
     expected_response = {"foo": {}}
+    expected_types = {"foo": {}}
     response = client.folder_a.service.get_direct_thread()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.folder_a.service.get_direct_thread()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

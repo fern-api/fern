@@ -228,7 +228,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
         wrapper.__globals__.update(cls.get_with_path_and_query.__globals__)
 
         router.get(
-            path="/params/path/{param}",
+            path="/params/path-query/{param}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_path_and_query.__doc__,

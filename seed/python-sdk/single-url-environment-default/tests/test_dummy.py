@@ -9,8 +9,9 @@ async def test_get_dummy(
     client: SeedSingleUrlEnvironmentDefault, async_client: AsyncSeedSingleUrlEnvironmentDefault
 ) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.dummy.get_dummy()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.dummy.get_dummy()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

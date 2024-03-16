@@ -223,12 +223,12 @@ class SnippetTestFactory:
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
         )
-    
+
     # Icky icky
     def _generate_type_expectations_for_type_reference(self, reference: ir_types.ExampleTypeReference) -> Any:
         return reference.shape.visit(
             primitive=lambda primitive: primitive.visit(
-                integer=lambda _: None,
+                integer=lambda _: "integer",
                 double=lambda _: None,
                 string=lambda _: None,
                 boolean=lambda _: None,
@@ -238,35 +238,79 @@ class SnippetTestFactory:
                 uuid=lambda _: "uuid",
             ),
             container=lambda container: container.visit(
-                list=lambda item_type: dict([(idx, self._generate_type_expectations_for_type_reference(ex)) for idx, ex in enumerate(item_type)]),
-                set=lambda item_type: dict([(idx, self._generate_type_expectations_for_type_reference(ex)) for idx, ex in enumerate(item_type)]),
-                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type) if item_type is not None else None,
-                map=lambda map_type: dict([(idx, (self._generate_type_expectations_for_type_reference(ex.key), self._generate_type_expectations_for_type_reference(ex.value))) for idx, ex in enumerate(map_type)]),
+                list=lambda item_type: (
+                    "list",
+                    dict(
+                        [
+                            (idx, self._generate_type_expectations_for_type_reference(ex))
+                            for idx, ex in enumerate(item_type)
+                        ]
+                    ),
+                ),
+                set=lambda item_type: (
+                    "set",
+                    dict(
+                        [
+                            (idx, self._generate_type_expectations_for_type_reference(ex))
+                            for idx, ex in enumerate(item_type)
+                        ]
+                    ),
+                ),
+                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type)
+                if item_type is not None
+                else None,
+                map=lambda map_type: (
+                    "dict",
+                    dict(
+                        [
+                            (
+                                idx,
+                                (
+                                    self._generate_type_expectations_for_type_reference(ex.key),
+                                    self._generate_type_expectations_for_type_reference(ex.value),
+                                ),
+                            )
+                            for idx, ex in enumerate(map_type)
+                        ]
+                    ),
+                ),
             ),
             named=lambda named: named.shape.visit(
                 alias=lambda alias: self._generate_type_expectations_for_type_reference(alias.value),
                 enum=lambda _: None,
-                object=lambda obj: dict([(prop.name.wire_value, self._generate_type_expectations_for_type_reference(prop.value)) for prop in obj.properties]),
-                union=lambda union: union.single_union_type.shape.visit(
-                    same_properties_as_object=lambda same_properties_as_object: dict([(prop.name.wire_value, self._generate_type_expectations_for_type_reference(prop.value)) for prop in same_properties_as_object.object.properties]),
-                    single_property=lambda single_property: self._generate_type_expectations_for_type_reference(single_property),
-                    no_properties=lambda _: None,
+                object=lambda obj: dict(
+                    [
+                        (prop.name.wire_value, self._generate_type_expectations_for_type_reference(prop.value))
+                        for prop in obj.properties
+                    ]
                 ),
-                undiscriminated_union=lambda union: self._generate_type_expectations_for_type_reference(union.single_union_type)
+                # HACK(FER-1172): we don't store the base union information in our examples, outside of the JSON example, so you can't really parse through
+                # those properties as you would the other properties of the union. Note this applies to discriminated unions only.
+                union=lambda _: "no_validate",
+                undiscriminated_union=lambda union: self._generate_type_expectations_for_type_reference(
+                    union.single_union_type
+                ),
             ),
             unknown=lambda _: None,
         )
 
     def _test_body(
-        self, sync_expression: Optional[AST.Expression], async_expression: Optional[AST.Expression], response: Optional[ir_types.ExampleResponse]
+        self,
+        sync_expression: Optional[AST.Expression],
+        async_expression: Optional[AST.Expression],
+        example_response: Optional[ir_types.ExampleResponse],
     ) -> AST.CodeWriter:
         expectation_name = "expected_response"
         type_expectation_name = "expected_types"
         response_name = "response"
         async_response_name = "async_response"
 
-        response_json = response.body.json_example if response is not None and response.body is not None else None
-        response_body = response.body if response is not None else None
+        response_json = (
+            example_response.body.json_example
+            if example_response is not None and example_response.body is not None
+            else None
+        )
+        response_body = example_response.body if example_response is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
@@ -281,7 +325,11 @@ class SnippetTestFactory:
                     writer.write_node(sync_expression)
                     writer.write_newline_if_last_line_not()
                     writer.write_node(
-                        self._validate_response(AST.Expression(response_name), AST.Expression(expectation_name), AST.Expression(type_expectation_name))
+                        self._validate_response(
+                            AST.Expression(response_name),
+                            AST.Expression(expectation_name),
+                            AST.Expression(type_expectation_name),
+                        )
                     )
                 else:
                     writer.write_line(
@@ -298,7 +346,11 @@ class SnippetTestFactory:
                     writer.write_node(async_expression)
                     writer.write_newline_if_last_line_not()
                     writer.write_node(
-                        self._validate_response(AST.Expression(async_response_name), AST.Expression(expectation_name), AST.Expression(type_expectation_name))
+                        self._validate_response(
+                            AST.Expression(async_response_name),
+                            AST.Expression(expectation_name),
+                            AST.Expression(type_expectation_name),
+                        )
                     )
                 else:
                     if sync_expression is None:
@@ -418,11 +470,7 @@ class SnippetTestFactory:
                     named_parameters=[],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=self._test_body(
-                    sync_snippet,
-                    async_snippet,
-                    response,
-                ),
+                body=self._test_body(sync_snippet, async_snippet, response),
             )
 
             # At least one endpoint has a snippet, now make the file
@@ -462,7 +510,10 @@ class SnippetTestFactory:
         )
 
     def _validate_response(
-        self, response_expression: AST.Expression, expected_expression: AST.Expression, expected_types_expression: AST.Expression
+        self,
+        response_expression: AST.Expression,
+        expected_expression: AST.Expression,
+        expected_types_expression: AST.Expression,
     ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(

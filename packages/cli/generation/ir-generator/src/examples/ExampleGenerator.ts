@@ -632,7 +632,7 @@ export class ExampleGenerator {
         // NOTE: you will have to manage this within the generator to ensure this number key becomes
         // a number proper, JSON converts this to a string as it cannot have numeric keys.
         if (typeof jsonExample === "number") {
-            return 42;
+            return 1;
         }
         return "string";
     }

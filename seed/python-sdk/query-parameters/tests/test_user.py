@@ -11,6 +11,7 @@ from .utilities import validate_response
 
 async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeedQueryParameters) -> None:
     expected_response = {"name": "string", "tags": ["string"]}
+    expected_types = {"name": None, "tags": ("list", {0: None})}
     response = client.user.get_username(
         limit=1,
         id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -25,7 +26,7 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         exclude_user=User(name="string", tags=["string"]),
         filter="string",
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.user.get_username(
         limit=1,
@@ -41,4 +42,4 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         exclude_user=User(name="string", tags=["string"]),
         filter="string",
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

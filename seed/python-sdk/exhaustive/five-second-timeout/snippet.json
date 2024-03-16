@@ -201,7 +201,7 @@
         },
         {
             "id": {
-                "path": "/object/get-and-return-nested-with-required-field",
+                "path": "/object/get-and-return-nested-with-required-field-list",
                 "method": "POST"
             },
             "snippet": {
@@ -245,7 +245,7 @@
         },
         {
             "id": {
-                "path": "/params/path/{param}",
+                "path": "/params/path-query/{param}",
                 "method": "GET"
             },
             "snippet": {

@@ -20,7 +20,7 @@ async def test_get_and_return_string(client: SeedExhaustive, async_client: Async
 
 async def test_get_and_return_int(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = 1
-    expected_types = None
+    expected_types = "integer"
     response = client.endpoints.primitive.get_and_return_int(request=1)
     validate_response(response, expected_response, expected_types)
 

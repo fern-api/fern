@@ -8,7 +8,7 @@ from ..utilities import validate_response
 
 async def test_get_and_return_union(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = {"animal": "dog", "name": "string", "likesToWoof": True}
-    expected_types = {"name": None, "likesToWoof": None}
+    expected_types = "no_validate"
     response = client.endpoints.union.get_and_return_union(
         request=Animal_Dog(animal="dog", name="string", likes_to_woof=True)
     )

@@ -14,11 +14,22 @@ async def test_get_lightweight_problems(client: SeedTrace, async_client: AsyncSe
             "variableTypes": [{"type": "integerType"}],
         }
     ]
+    expected_types = (
+        "list",
+        {
+            0: {
+                "problemId": None,
+                "problemName": None,
+                "problemVersion": "integer",
+                "variableTypes": ("set", {0: "no_validate"}),
+            }
+        },
+    )
     response = client.v_2.problem.get_lightweight_problems()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.v_2.problem.get_lightweight_problems()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -38,11 +49,28 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
             "isPublic": True,
         }
     ]
+    expected_types = (
+        "list",
+        {
+            0: {
+                "problemId": None,
+                "problemDescription": {"boards": ("list", {0: "no_validate"})},
+                "problemName": None,
+                "problemVersion": "integer",
+                "supportedLanguages": ("set", {0: None}),
+                "customFiles": "no_validate",
+                "generatedFiles": {},
+                "customTestCaseTemplates": ("list", {0: {}}),
+                "testcases": ("list", {0: {}}),
+                "isPublic": None,
+            }
+        },
+    )
     response = client.v_2.problem.get_problems()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.v_2.problem.get_problems()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -60,11 +88,23 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
         "testcases": [{}],
         "isPublic": True,
     }
+    expected_types = {
+        "problemId": None,
+        "problemDescription": {"boards": ("list", {0: "no_validate"})},
+        "problemName": None,
+        "problemVersion": "integer",
+        "supportedLanguages": ("set", {0: None}),
+        "customFiles": "no_validate",
+        "generatedFiles": {},
+        "customTestCaseTemplates": ("list", {0: {}}),
+        "testcases": ("list", {0: {}}),
+        "isPublic": None,
+    }
     response = client.v_2.problem.get_latest_problem(problem_id="string")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.v_2.problem.get_latest_problem(problem_id="string")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -82,8 +122,20 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "testcases": [{}],
         "isPublic": True,
     }
+    expected_types = {
+        "problemId": None,
+        "problemDescription": {"boards": ("list", {0: "no_validate"})},
+        "problemName": None,
+        "problemVersion": "integer",
+        "supportedLanguages": ("set", {0: None}),
+        "customFiles": "no_validate",
+        "generatedFiles": {},
+        "customTestCaseTemplates": ("list", {0: {}}),
+        "testcases": ("list", {0: {}}),
+        "isPublic": None,
+    }
     response = client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

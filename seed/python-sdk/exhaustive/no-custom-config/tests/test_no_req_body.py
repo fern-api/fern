@@ -18,11 +18,11 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
     }
     expected_types = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
@@ -30,9 +30,9 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": {0: None},
-        "set": {0: None},
-        "map": {0: (None, None)},
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.no_req_body.get_with_no_request_body()
     validate_response(response, expected_response, expected_types)

@@ -305,7 +305,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field"
+                "/object/get-and-return-nested-with-required-field-list"
             ),
             method: "POST",
             headers: {

@@ -201,7 +201,7 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path-query/${param}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

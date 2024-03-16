@@ -32,11 +32,11 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
     }
     expected_types = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
@@ -44,9 +44,9 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": {0: None},
-        "set": {0: None},
-        "map": {0: (None, None)},
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.endpoints.http_methods.test_post(request=ObjectWithRequiredField(string="string"))
     validate_response(response, expected_response, expected_types)
@@ -70,11 +70,11 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
     }
     expected_types = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
@@ -82,9 +82,9 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": {0: None},
-        "set": {0: None},
-        "map": {0: (None, None)},
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.endpoints.http_methods.test_put(id="string", request=ObjectWithRequiredField(string="string"))
     validate_response(response, expected_response, expected_types)
@@ -108,11 +108,11 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
     }
     expected_types = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
@@ -120,9 +120,9 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": {0: None},
-        "set": {0: None},
-        "map": {0: (None, None)},
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.endpoints.http_methods.test_patch(
         id="string",

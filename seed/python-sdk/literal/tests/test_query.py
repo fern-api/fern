@@ -7,8 +7,9 @@ from .utilities import validate_response
 
 async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None:
     expected_response = {"message": "The weather is sunny", "status": 200, "success": True}
+    expected_types = {"message": None, "status": "integer", "success": None}
     response = client.query.send(query="What is the weather today")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.query.send(query="What is the weather today")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
