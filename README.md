@@ -7,7 +7,7 @@
 
 <br/>
 
-![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)
+[![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 [![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
@@ -15,17 +15,15 @@
 
 </div>
 
-Fern is a toolkit that allows you to effortlessly generate SDKs and API documentation.
+Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
     <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
 </div>
 
-_Note: Fern requires **Node 18** or higher_
-
 ## 🌿 SDKs
 
-The Fern toolkit is available as a command line interface (CLI). To install it, run:
+The Fern toolkit is available as a command line interface (CLI) and requires Node 18 or higher. To install it, run:
 
 ```bash
 npm install -g fern-api
@@ -36,7 +34,7 @@ Initialize Fern with your OpenAPI spec:
 ```bash
 fern init --openapi ./path/to/openapi.yml
 # or
-fern init --openapi https://petstore.swagger.io/v2/swagger.json
+fern init --openapi https://link.buildwithfern.com/petstore-openapi
 ```
 
 Your directory should look like the following:
