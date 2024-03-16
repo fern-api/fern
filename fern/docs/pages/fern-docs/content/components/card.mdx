@@ -1,11 +1,9 @@
 ---
 title: Use Card to display content in a box
-description: The Card component displays content in a rectangular box, with an optional title, icon, and href (link). Create a grid of boxes using the Cards component. 
+description: The Card component displays content in a box, with an optional title, icon, href (link), and content. Create a grid of boxes using the Cards component. 
 ---
 
-The `Card` component is used when you want to display content in a rectangular box.
-
-<Tip>It is helpful to put `<br />` after each `Card` to make sure they are not too close to each other. We're tracking the [issue here](https://github.com/fern-api/fern/issues/2325).</Tip>
+Use the `Card` component to display content in a rectangular box.
 
 ## Props
 
@@ -15,18 +13,23 @@ The `Card` component is used when you want to display content in a rectangular b
 | *icon*        | string  | Font Awesome icon             | none     |
 | *href*        | string  | A link to another page        | none     |
 
-All props are optional. If no props are specified, a blank `Card` is displayed.
+All props are optional.
+
+### The `icon` prop
+The usage for the `icon` prop for this component is identical to the `icon` prop for the `Icon` component. See [Icons](/fern-docs/content/components/icons#set-icon-and-style) for more information about setting this prop.
 
 ## Usage
 
-### Single card 
+### Single `Card` without content
 
-<CodeBlock title='Single card'>
+For a `Card` that does not contain content, use a single self-closing `<Card />` tag, as shown below:
+
+<CodeBlock title='Single card without content'>
 ```mdx
 <Card 
-  title='Node.js/TypeScript'
-  icon='fa-brands fa-node'
-  href='https://github.com/fern-api/fern/tree/main/generators/typescript'
+  title='Python'
+  icon='brands python'
+  href='https://github.com/fern-api/fern/tree/main/generators/python'
 />
 ```
 </CodeBlock>
@@ -34,30 +37,60 @@ All props are optional. If no props are specified, a blank `Card` is displayed.
 This renders as:
 
 <Card
-  title='Node.js/TypeScript'
-  icon='fa-brands fa-node'
-  href='https://github.com/fern-api/fern/tree/main/generators/typescript'
+  title='Python'
+  icon='brands python'
+  href='https://github.com/fern-api/fern/tree/main/generators/python'
 />
 
-### Multiple cards 
+This `Card` shows the `title` and `icon` passed in via props, but otherwise does not contain any content. When clicked, it will open the link provided to its `href` prop. 
 
-<CodeBlock title='Multiple cards'>
+### Single `Card` with content
+
+For a `Card` that contains content, use both the opening and closing tags (`<Card>` and `</Card>`) around the content, as shown below:
+
+<CodeBlock title='Single card with content'>
+```mdx
+<Card 
+  title='Python'
+  icon='brands python'
+  href='https://github.com/fern-api/fern/tree/main/generators/python'
+>
+  View the source code for Fern's Python SDK generator.
+</Card>
+```
+</CodeBlock>
+
+This renders as:
+
+<Card 
+  title='Python'
+  icon='brands python'
+  href='https://github.com/fern-api/fern/tree/main/generators/python'
+>
+  View the source code for Fern's Python SDK generator.
+</Card>
+
+### Multiple `Cards` 
+
+Use the `Cards` component to display multiple `Card` components in a grid view. Wrap the `<Card>` and `</Card>` tags around the `Card` components as shown below:
+
+<CodeBlock title='The Cards component'>
 ```mdx
 <Cards>
   <Card
-      title='Node.js/TypeScript'
-      icon='fa-brands fa-node'
-      href='https://github.com/fern-api/fern/tree/main/generators/typescript'
-  />
-  <Card
       title='Python'
-      icon='fa-brands fa-python'
+      icon='brands python'
       href='https://github.com/fern-api/fern/tree/main/generators/python'
   />
   <Card
       title='Java'
-      icon='fa-brands fa-java'
+      icon='brands java'
       href='https://github.com/fern-api/fern/tree/main/generators/java'
+  />
+  <Card
+      title='Go'
+      icon='brands golang'
+      href='https://github.com/fern-api/fern/tree/main/generators/go'
   />
 </Cards>
 ```
@@ -67,18 +100,18 @@ This renders as:
 
 <Cards>
   <Card
-    title='Node.js/TypeScript'
-    icon='fa-brands fa-node'
-    href='https://github.com/fern-api/fern/tree/main/generators/typescript'
+      title='Python'
+      icon='brands python'
+      href='https://github.com/fern-api/fern/tree/main/generators/python'
   />
   <Card
-    title='Python'
-    icon='fa-brands fa-python'
-    href='https://github.com/fern-api/fern/tree/main/generators/python'
+      title='Java'
+      icon='brands java'
+      href='https://github.com/fern-api/fern/tree/main/generators/java'
   />
   <Card
-    title='Java'
-    icon='fa-brands fa-java'
-    href='https://github.com/fern-api/fern/tree/main/generators/java'
+      title='Go'
+      icon='brands golang'
+      href='https://github.com/fern-api/fern/tree/main/generators/go'
   />
 </Cards>
