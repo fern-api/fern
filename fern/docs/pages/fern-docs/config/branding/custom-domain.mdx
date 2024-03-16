@@ -1,65 +1,89 @@
 ---
 title: Bring your custom domain
-description: Learn how you can set up your Fern-generated documentation site to use a custom domain or subdomain.
+description: Learn how to set up your Fern-generated documentation site to use a custom domain, subdomain, or subpath.
 ---
 
-Learn how to bring your own custom domain to Fern Docs.
+Bring Fern Docs to your custom domain.
 
-<Callout intent='tip'>
-  Note: Custom domains is a paid feature. Want to get set up? Reach out in
-  [Discord](https://discord.com/invite/JkkXumPzcG) or [email
-  us](mailto:sales@buildwithfern.com).
-</Callout>
+You can use:
+- A custom domain, such as `example.com`
+- A subdomain on your custom domain, such as `docs.example.com`
+- A subpath on your custom domain, such as `example.com/docs`
 
-### 1. Add your domain to `docs.yml`
+<Tip>This feature is available on the Starter plan and above. Want to get set up? Reach out in [Discord](https://discord.com/invite/JkkXumPzcG) or [email us](mailto:sales@buildwithfern.com).</Tip>
 
-First decide what subdomain to use with your documentation.
-The most common options are `https://docs.example.com` or `https://example.com/docs`.
+## Steps
 
-We'll add the following to `docs.yml` to tell Fern Docs to
-publish to `example.docs.buildwithfern.com`:
+<Steps>
 
-<CodeBlock title="docs.yml">
+### Step 1: Open `docs.yml`
+
+Open the `docs.yml` file, which lives in the `fern/` folder of your Fern Docs repository.
+
+<Tip>
+No Fern Docs repository yet? Use our [Fern Docs Quickstart with OpenAPI](/fern-docs/quickstarts/openapi) or [Fern Docs Quickstart with Fern Definition](/fern-docs/quickstarts/ferndef) to set up your starter site, then return to this page. 
+</Tip>
+
+### Step 2: Configure the `url`
+
+The subdomain of the `url` under `instances` must match your custom domain. If you want to use a custom domain of `example.com`, the subdomain must be `example`, as shown below:
+
+<CodeBlock title="docs.yml example">
 ```yaml
 instances: 
   - url: example.docs.buildwithfern.com
 ```
 </CodeBlock>
 
-When ready to publish to a custom domain, add the `custom-domain` key to the instance. Note that this is a paid feature. For example:
+Leave the `.docs.buildwithfern.com` part of the `url` unchanged. 
 
-<CodeBlock title="docs.yml">
-```diff 
+If you intend to use a subpath with your custom domain, such as `example.com/docs`, append that subpath to the end of the `url`:
+
+<CodeBlock title="docs.yml example for subpath">
+```yaml
+instances: 
+  - url: example.docs.buildwithfern.com/docs
+```
+</CodeBlock>
+
+### Step 3: Configure the `custom-domain`
+
+Below the `url`, add a `custom-domain` key as shown in the examples below.
+
+<Tip>The examples use `docs` for the subdomain and subpath specified in `custom-domain`, but you can use any word you like, such as `reference` or `learn`.</Tip>
+
+<CodeBlocks>
+<CodeBlock title="Custom subdomain">
+```yaml 
 instances: 
   - url: example.docs.buildwithfern.com
-+   custom-domain: docs.example.com
+    custom-domain: docs.example.com
 ```
 </CodeBlock>
-
-### 2. Run the generator
-
-In the example above, by running `fern generate --docs`, we'd see:
-
-<CodeBlock title="Terminal">
-```bash
-┌─
-│ ⠂ Publish docs
-└─
+<CodeBlock title="Custom subpath">
+```yaml 
+instances: 
+  - url: example.docs.buildwithfern.com/docs
+    custom-domain: example.com/docs
 ```
 </CodeBlock>
-
-followed by
-
-<CodeBlock title="Terminal">
-```bash
-[api]: Published docs to https://example.docs.buildwithfern.com
-┌─
-│ ✓ Publish docs
-└─
+<CodeBlock title="Custom domain">
+```yaml 
+instances: 
+  - url: example.docs.buildwithfern.com
+    custom-domain: example.com
 ```
 </CodeBlock>
+</CodeBlocks>
 
-### 3. Create DNS records to point at Fern Docs
+### Step 4: Update the Fern Docs site
 
-Next, you'll need to get the DNS records by adding Fern Docs to your subscription.
-You can do this by reaching out [sales@buildwithfern.com](mailto:sales@buildwithfern.com).
+If you created your Fern Docs site using one of our [Docs Quickstarts](/overview/get-started#fern-docs-quickstarts), push the changes you made to your GitHub repository. This runs a GitHub Action to update the site with your new configuration.
+
+If you need to update your Fern Docs site manually, run `fern generate --docs`.
+
+### Step 5: Create DNS records to point at Fern Docs
+
+This feature is available on the Fern Docs Starter plan and above. Reach out to [sales@buildwithfern.com](mailto:sales@buildwithfern.com) to set up your subscription and obtain DNS records information for your domain registrar. 
+
+</Steps>
