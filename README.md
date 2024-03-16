@@ -23,7 +23,7 @@ Fern is a toolkit that allows you to input your API Definition and output SDKs a
 
 ## 🌿 SDKs
 
-The Fern toolkit is available as a command line interface (CLI) and requires Node 18 or higher. To install it, run:
+The Fern toolkit is available as a command line interface (CLI) and requires Node 18+. To install it, run:
 
 ```bash
 npm install -g fern-api
