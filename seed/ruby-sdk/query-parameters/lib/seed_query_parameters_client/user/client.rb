@@ -21,11 +21,17 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
+    # @param user [String]
+    # @param key_value [String]
     # @param optional_string [String]
+    # @param nested_user [String]
+    # @param optional_user [String]
+    # @param exclude_user [String]
     # @param filter [String]
     # @param request_options [RequestOptions]
     # @return [User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, optional_string: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
+                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
       response = @request_client.conn.get("/user") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -36,7 +42,12 @@ module SeedQueryParametersClient
           "date": date,
           "deadline": deadline,
           "bytes": bytes,
+          "user": user,
+          "keyValue": key_value,
           "optionalString": optional_string,
+          "nestedUser": nested_user,
+          "optionalUser": optional_user,
+          "excludeUser": exclude_user,
           "filter": filter
         }.compact
       end
@@ -59,11 +70,17 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
+    # @param user [String]
+    # @param key_value [String]
     # @param optional_string [String]
+    # @param nested_user [String]
+    # @param optional_user [String]
+    # @param exclude_user [String]
     # @param filter [String]
     # @param request_options [RequestOptions]
     # @return [User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, optional_string: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
+                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/user") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -75,7 +92,12 @@ module SeedQueryParametersClient
             "date": date,
             "deadline": deadline,
             "bytes": bytes,
+            "user": user,
+            "keyValue": key_value,
             "optionalString": optional_string,
+            "nestedUser": nested_user,
+            "optionalUser": optional_user,
+            "excludeUser": exclude_user,
             "filter": filter
           }.compact
         end

@@ -292,7 +292,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=",
+              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=&operandOrColor=&maybeOperandOrColor=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -307,6 +307,16 @@
                 },
                 {
                   "key": "maybeOperand",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "operandOrColor",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "maybeOperandOrColor",
                   "value": "",
                   "description": null
                 }

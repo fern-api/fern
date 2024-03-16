@@ -1,3 +1,4 @@
+import { SupportedSdkLanguage } from "@fern-api/ir-sdk";
 import { z } from "zod";
 import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
@@ -22,6 +23,21 @@ export const SupportedSdkLanguageSchema = z.enum([
 ]);
 
 export type SupportedSdkLanguageSchema = z.infer<typeof SupportedSdkLanguageSchema>;
+
+const RESOLVE_ALIAS: Partial<Record<SupportedSdkLanguageSchema, SupportedSdkLanguage>> = {
+    js: "javascript",
+    node: "javascript",
+    ts: "typescript",
+    nodets: "typescript",
+    golang: "go",
+    csharp: "csharp",
+    dotnet: "csharp",
+    jvm: "java"
+};
+
+export function convertSdkLanguageAlias(sdk: SupportedSdkLanguageSchema): SupportedSdkLanguage {
+    return RESOLVE_ALIAS[sdk] ?? (sdk as SupportedSdkLanguage);
+}
 
 export const ExampleCodeSampleSchemaSdk = WithNameAndDocsSchema.extend({
     sdk: SupportedSdkLanguageSchema,

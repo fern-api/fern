@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.12.0] - 2024-03-06
+## [0.12.1] - 2024-03-14
+
+- Improves example generation and snippets for union types, as well as multi-url environments.
+- Fix: Stringifies header arguments, HTTPX was previously hard failing for certain types
+
+## [0.12.0] - 2024-03-11
 
 - Beta, feature: The SDK now generates tests leveraging auto-generated data to test typing, as well as wire-formatting (e.g. the SDKs are sending and receiving data as expected). This comes out of the box within the generated github workflow, as well as through the fern cli: `fern test --command "your test command"`.
   **Note**: You must be on the enterprise tier to enable this mode.

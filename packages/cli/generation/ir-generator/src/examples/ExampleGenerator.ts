@@ -321,8 +321,11 @@ export class ExampleGenerator {
                 ...requestBody.extends.flatMap((eo) => this.flattenedProperties.get(eo.typeId) ?? [])
             ])
         ];
+
+        const jsonExample: Record<string, unknown> = {};
+        exampleProperties.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
         return ExampleRequestBody.inlinedRequestBody({
-            jsonExample: new Map(exampleProperties.map((prop) => [prop.name.wireValue, prop.value.jsonExample])),
+            jsonExample,
             properties: exampleProperties
         });
     }
@@ -409,7 +412,7 @@ export class ExampleGenerator {
             // For both union types, we generate an example for each member of the union.
             // unless it's a property of a larger class, then we just pick the first example.
             case "union":
-                return this.generateExampleTypeForUnion(typeDeclaration.shape, depth);
+                return this.generateExampleTypeForUnion(typeDeclaration.name.typeId, typeDeclaration.shape, depth);
             case "undiscriminatedUnion":
                 return this.generateExampleTypeForUndiscriminatedUnion(typeDeclaration.shape);
             default:
@@ -443,13 +446,13 @@ export class ExampleGenerator {
     private generateExampleTypeForObject(declaredTypeName: DeclaredTypeName): ExampleType | null {
         const providedExample = this.typeExamples.get(declaredTypeName.typeId);
         const exampleProperties = this.flattenedProperties.get(declaredTypeName.typeId);
+
+        const jsonExample: Record<string, unknown> = {};
+        exampleProperties?.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
         return (
             providedExample ??
             this.newNamelessExampleType({
-                jsonExample:
-                    exampleProperties === undefined
-                        ? {}
-                        : new Map(exampleProperties.map((prop) => [prop.name.wireValue, prop.value.jsonExample])),
+                jsonExample,
                 shape: ExampleTypeShape.object({
                     properties: exampleProperties ?? []
                 })
@@ -457,7 +460,11 @@ export class ExampleGenerator {
         );
     }
 
-    private generateSingleUnionType(type: SingleUnionType, depth: number): ExampleSingleUnionType {
+    private generateSingleUnionType(
+        containerProperties: ExampleObjectProperty[],
+        type: SingleUnionType,
+        depth: number
+    ): ExampleSingleUnionType {
         return {
             wireDiscriminantValue: type.discriminantValue,
             shape: type.shape._visit<ExampleSingleUnionTypeProperties>({
@@ -469,7 +476,7 @@ export class ExampleGenerator {
                     return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                         typeId: dtn.typeId,
                         object: {
-                            properties: this.flattenedProperties.get(dtn.typeId) ?? []
+                            properties: [...containerProperties, ...(this.flattenedProperties.get(dtn.typeId) ?? [])]
                         }
                     });
                 },
@@ -483,20 +490,33 @@ export class ExampleGenerator {
         };
     }
 
-    private generateExampleTypeForUnion(unionDeclaration: UnionTypeDeclaration, depth: number): ExampleType[] | null {
+    private generateExampleTypeForUnion(
+        typeId: TypeId,
+        unionDeclaration: UnionTypeDeclaration,
+        depth: number
+    ): ExampleType[] | null {
         return unionDeclaration.types.map((member) => {
-            const singleUnionType = this.generateSingleUnionType(member, depth);
+            const containerProperties = this.flattenedProperties.get(typeId) ?? [];
+            const singleUnionType = this.generateSingleUnionType(containerProperties, member, depth);
+
+            const jsonExample: Record<string, unknown> = {};
             // eslint-disable-next-line @typescript-eslint/ban-types
             const unionExampleProperties = singleUnionType.shape._visit<Object>({
-                samePropertiesAsObject: (ex: ExampleObjectTypeWithTypeId) =>
-                    new Map(ex.object.properties.map((prop) => [prop.name.wireValue, prop.value.jsonExample])),
+                samePropertiesAsObject: (ex: ExampleObjectTypeWithTypeId) => {
+                    const properties = [
+                        ...containerProperties,
+                        ...(this.flattenedProperties.get(ex.typeId) ?? ex.object.properties)
+                    ];
+                    properties.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
+                    return jsonExample;
+                },
                 // eslint-disable-next-line @typescript-eslint/ban-types
                 singleProperty: (ex: ExampleTypeReference) => ex.jsonExample as Object,
                 noProperties: () => {
-                    return {};
+                    return jsonExample;
                 },
                 _other: () => {
-                    return {};
+                    return jsonExample;
                 }
             });
             const unionExample = {
@@ -551,6 +571,7 @@ export class ExampleGenerator {
         if (singleExample == null) {
             throw new Error(`internal error: failed to generate example type with id: ${name.typeId}`);
         }
+
         return {
             jsonExample: singleExample.jsonExample,
             shape: ExampleTypeReferenceShape.named({

@@ -33,12 +33,12 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                "X-FERN-API-KEY": await core.Supplier.get(this._options.apiKey),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -88,13 +88,13 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                "X-FERN-API-KEY": await core.Supplier.get(this._options.apiKey),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-Endpoint-Header": xEndpointHeader,
+                ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -129,5 +129,10 @@ export class Service {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    protected async _getCustomAuthorizationHeaders() {
+        const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["FERN_API_KEY"];
+        return { "X-FERN-API-KEY": apiKeyValue };
     }
 }

@@ -10,13 +10,14 @@ class MultipleBaseUrlsEnvironmentGenerator:
     def __init__(self, context: SdkGeneratorContext, environments: ir_types.MultipleBaseUrlsEnvironments):
         self._context = context
         self._environments = environments
+        self.class_name = self._context.get_class_name_of_environments()
+        self.args = [get_base_url_property_name(base_url) for base_url in self._environments.base_urls]
 
     def generate(
         self,
         source_file: SourceFile,
     ) -> GeneratedEnvironment:
-        class_name = self._context.get_class_name_of_environments()
-        environment_class = AST.ClassDeclaration(name=class_name)
+        environment_class = AST.ClassDeclaration(name=self.class_name)
 
         example_environment = ""
         for i, environment in enumerate(self._environments.environments):
@@ -28,7 +29,9 @@ class MultipleBaseUrlsEnvironmentGenerator:
                 AST.VariableDeclaration(
                     name=class_var_name,
                     type_hint=AST.TypeHint(
-                        AST.ClassReference(qualified_name_excluding_import=(class_name,), is_forward_reference=True)
+                        AST.ClassReference(
+                            qualified_name_excluding_import=(self.class_name,), is_forward_reference=True
+                        )
                     ),
                     docstring=AST.Docstring(environment.docs) if environment.docs is not None else None,
                 )
@@ -59,7 +62,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
                         self._context.get_filepath_for_environments_enum().to_module().path
                     ),
                 ),
-                named_import=class_name,
+                named_import=self.class_name,
             ),
         )
 
@@ -114,13 +117,12 @@ class MultipleBaseUrlsEnvironmentGenerator:
             writer.write_line(f"self.{property_name} = {property_name}")
 
     def _write_bottom_statements(self, writer: AST.NodeWriter) -> None:
-        class_name = self._context.get_class_name_of_environments()
         for environment in self._environments.environments:
             class_var = self._get_class_var_name(environment)
-            writer.write(f"{class_name}.{class_var} = ")
+            writer.write(f"{self.class_name}.{class_var} = ")
             writer.write_node(
                 AST.ClassInstantiation(
-                    class_=AST.ClassReference(qualified_name_excluding_import=(class_name,)),
+                    class_=AST.ClassReference(qualified_name_excluding_import=(self.class_name,)),
                     kwargs=[
                         (
                             get_base_url_property_name(base_url),

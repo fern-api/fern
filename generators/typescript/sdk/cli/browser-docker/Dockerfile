@@ -1,6 +1,8 @@
 FROM node:18.1.0-alpine
 
-RUN apk --no-cache add git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN apk --no-cache add git zip \
+  && git config --global user.name "fern" \
+  && git config --global user.email "hey@buildwithfern.com"
 
 ENV YARN_CACHE_FOLDER=/.yarn
 
@@ -16,6 +18,6 @@ COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
 COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
 RUN find /assets -name __test__ -exec rm -rf {} \+
 
-COPY generators/typescript/sdk/cli/browser-docker/dist/bundle.js /bundle.js
+COPY generators/typescript/sdk/cli/browser-docker/dist/browserCli.cjs /browserCli.cjs
 
-ENTRYPOINT ["node", "/bundle.js"]
+ENTRYPOINT ["node", "/browserCli.cjs"]

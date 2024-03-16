@@ -7,7 +7,12 @@ from .utilities import validate_response
 
 
 async def test_create_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {
+        "sessionId": "string",
+        "executionSessionUrl": "string",
+        "language": "JAVA",
+        "status": "CREATING_CONTAINER",
+    }
     response = client.submission.create_execution_session(language=Language.JAVA)
     validate_response(response, expected_response)
 
@@ -16,7 +21,12 @@ async def test_create_execution_session(client: SeedTrace, async_client: AsyncSe
 
 
 async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {
+        "sessionId": "string",
+        "executionSessionUrl": "string",
+        "language": "JAVA",
+        "status": "CREATING_CONTAINER",
+    }
     response = client.submission.get_execution_session(session_id="string")
     validate_response(response, expected_response)
 
@@ -32,7 +42,20 @@ async def test_stop_execution_session(client: SeedTrace, async_client: AsyncSeed
 
 
 async def test_get_execution_sessions_state(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response = {}
+    expected_response = {
+        "states": {
+            "string": {
+                "lastTimeContacted": "string",
+                "sessionId": "string",
+                "isWarmInstance": True,
+                "awsTaskId": "string",
+                "language": "JAVA",
+                "status": "CREATING_CONTAINER",
+            }
+        },
+        "numWarmingInstances": 1,
+        "warmingSessionIds": ["string"],
+    }
     response = client.submission.get_execution_sessions_state()
     validate_response(response, expected_response)
 

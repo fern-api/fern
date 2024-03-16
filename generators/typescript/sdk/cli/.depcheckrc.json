@@ -1,17 +1,4 @@
 {
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "webpack",
-    "webpack-cli",
-    "@fern-api/umd-compat-loader",
-    "@ts-morph/common",
-    "ts-loader",
-    "ts-node",
-    "webpack-bundle-analyzer",
-    "@types/webpack-bundle-analyzer",
-    "simple-progress-webpack-plugin",
-    "@types/tmp"
-  ],
+  "ignores": ["@types/jest", "@types/node", "@ts-morph/common", "ts-loader", "ts-node", "@types/tmp"],
   "ignore-patterns": ["lib", "docker/bundle.js"]
 }

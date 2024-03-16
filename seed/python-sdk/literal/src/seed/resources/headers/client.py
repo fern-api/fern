@@ -57,7 +57,7 @@ class HeadersClient:
                     {
                         **self._client_wrapper.get_headers(),
                         "X-Endpoint-Version": "02-12-2024",
-                        "X-Async": True,
+                        "X-Async": "true",
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -114,7 +114,7 @@ class AsyncHeadersClient:
                     {
                         **self._client_wrapper.get_headers(),
                         "X-Endpoint-Version": "02-12-2024",
-                        "X-Async": True,
+                        "X-Async": "true",
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

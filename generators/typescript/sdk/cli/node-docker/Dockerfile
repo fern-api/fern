@@ -1,11 +1,8 @@
 FROM node:18.1.0-alpine
 
-RUN apk --no-cache add git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
-
-ENV YARN_CACHE_FOLDER=/.yarn
-
-COPY generators/typescript/sdk/cli/node-docker/cache_heavy_dependencies.sh /
-RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
+RUN apk --no-cache add git zip \
+  && git config --global user.name "fern" \
+  && git config --global user.email "hey@buildwithfern.com"
 
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/stream-utils/src/ /assets/stream-utils
@@ -16,6 +13,6 @@ COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
 COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
 RUN find /assets -name __test__ -exec rm -rf {} \+
 
-COPY generators/typescript/sdk/cli/node-docker/dist/bundle.js /bundle.js
+COPY generators/typescript/sdk/cli/node-docker/dist/nodeCli.cjs /nodeCli.cjs
 
-ENTRYPOINT ["node", "/bundle.js"]
+ENTRYPOINT ["node", "/nodeCli.cjs"]
