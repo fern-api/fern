@@ -1,0 +1,440 @@
+---
+title: Fern | How to use Fern's TypeScript SDK Generator
+description: Use Fern's TypeScript SDK generator and your API definition to output a fully functional SDK locally, and publish the package internally or to NPM.
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/typescript)<br/>
+**Latest version**: `0.12.6`
+
+The TypeScript SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side use. It can publish the SDK to [npmjs.org](https://npmjs.org) (or any other Node package repository).
+
+## Runtimes
+
+The TypeScript SDK generator supports the following runtimes:
+- Node.js 15+
+- Vercel Edge Functions
+- Cloudflare Workers
+- AWS Lambda
+- Deno 1.25+
+- Bun 1.0+
+- AWS Lambda
+
+## Local
+
+Dump the generated SDK to the local file system.
+
+<CodeBlock title='generators.yml'>
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x  # declare your desired version
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+```
+</CodeBlock>
+
+## Publish an internal package
+
+Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
+
+<CodeBlock title='generators.yml'>
+```yaml
+groups:
+  internal:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x # declare your desired version
+        output:
+          location: npm.buildwithfern.com
+          package-name: @fern-petstore/api # replace petstore with your org name
+```
+</CodeBlock>
+
+## Publish a public package
+
+Publish the generated SDK to [npmjs.com](https://www.npmjs.com/). Available on the Starter plan.
+
+<CodeBlock title='generators.yml'>
+```yaml
+groups:
+  publish:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x # declare your desired version
+        output:
+          location: npm
+          package-name: petstore # replace with your package name
+          token: ${NPM_TOKEN}
+        github:
+          repository: petstore/petstore-node # replace petstore with your org & package name
+```
+</CodeBlock>
+
+You can override the registry using the `url` key.
+
+<CodeBlock title='generators.yml'>
+```diff
+generators:
+  groups:
+    public:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x # declare your desired version
+        output:
+          location: npm
+          package-name: petstore # replace with your package name
+          token: ${NPM_TOKEN}
++       url: your-npm-registry.com
+```
+</CodeBlock>
+
+## `X-Fern-*` headers and CORS `Access-Control-Allow-Headers`
+
+By default, Fern adds the following headers to all requests:
+
+- `X-Fern-Language`
+- `X-Fern-SDK-Name`
+- `X-Fern-SDK-Version`
+
+Validate that your `Access-Control-Allow-Headers` is configured to permit these headers.
+
+## Configuration options
+
+You can customize the behavior of the TypeScript generator in `generators.yml`. 
+
+You can include one or more options for `config`, such as:
+
+<CodeBlock title='generators.yml'>
+```diff
+- name: fernapi/fern-typescript-node-sdk
+  version: 0.x.x # declare your desired version
+  output:
+    location: npm
+    package-name: petstore
+  github:
+    repository: petstore/petstore-node 
++ config: 
++   namespaceExport: Petstore
++   timeoutInSeconds: 120
++   noSerdeLayer: true
++   outputEsm: true
+```
+</CodeBlock>
+
+The following options are available:
+
+### namespaceExport
+
+- `namespaceExport`: Allows you to control the name of the generated namespace export and client class. By default, the exported namespace and client are named based on the organization and API names in the Fern Definition.
+
+**Type**: string
+
+```
+import { PetstoreApi, PetstoreApiClient } from 'petstore';
+```
+
+To customize these names, you can use `namespaceExport`:
+
+<CodeBlock title='generators.yml'>
+```diff
+- name: fernapi/fern-typescript-node-sdk
+  version: 0.x.x # declare your desired version
+  output:
+    location: npm
+    package-name: petstore
+  github:
+    repository: petstore/petstore-node 
++ config: 
++   namespaceExport: Petstore
+```
+</CodeBlock>
+
+The result would be:
+
+```
+import { PetstoreApi, PetstoreApiClient } from 'petstore';
+```
+
+### defaultTimeoutInSeconds
+
+- `defaultTimeoutInSeconds`: Allows you to control the timeout of the generated client. The timeout is measured in seconds. This is useful for long-running operations. Set to `'infinity'` to disable timeouts.
+
+**Type**: integer or `'infinity'`<br />
+**Default**: `60`
+
+```yaml 
+config: 
+  defaultTimeoutInSeconds: 'infinity'
+```
+
+### noSerdeLayer
+
+- `noSerdeLayer`: Allows you to control whether (de-)serialization code is generated. When `true`, the client uses JSON.parse() and JSON.stringify() instead.
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+By default, the generated client includes a layer for serializing requests and deserializing responses. This has three benefits:
+
+1. The client validates requests and response at runtime, client-side.
+
+1. The client can support complex types, like `Date` and `Set`.
+
+1. The generated types can stray from the wire/JSON representation to be more idiomatic. For example, when `noSerdeLayer` is disabled, all properties are camelCase, even if the server is expecting snake_case.
+
+```yaml
+config: 
+  noSerdeLayer: true
+```
+
+### outputESM 
+
+- `outputEsm`: Allows you to control whether the generated TypeScript targets `CommonJS` or `esnext`. 
+
+**Type**: `boolean`<br />
+**Default**: `false` 
+
+By default, the generated TypeScript targets `CommonJS`. Set `outputEsm` to `true` to target `esnext` instead.
+
+```yaml
+config: 
+  outputEsm: true
+```
+
+### outputSourceFiles 
+
+- `outputSourceFiles`: Allows you to control whether the generator outputs `.js` and `d.ts` files. 
+
+**Type**: `boolean`<br />
+**Default**: `false` 
+
+When disabled (the default), the generator outputs .js and d.ts files.
+
+When enabled, the generator outputs raw TypeScript files.
+
+<Warning>
+This config is only applied when dumping the generated SDK to the local file system. It does not apply when publishing to GitHub or npm.
+</Warning>
+
+```yaml
+config: 
+  outputSourceFiles: true
+```
+
+### includeCredentialsOnCrossOriginRequests 
+
+- `includeCredentialsOnCrossOriginRequests`: Allows you to set [withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)  to `true` when making network requests.
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+To set `withCredentials` to `true` when making network requests, set this config to `true`. 
+
+```yaml
+config: 
+  includeCredentialsOnCrossOriginRequests: true
+```
+
+### allowCustomFetcher
+
+- `allowCustomFetcher`: Allows the end user to specify a custom fetcher implementation. 
+
+**Type**: `boolean`<br />
+**Default**: `false` 
+
+```yaml
+config: 
+  allowCustomFetcher: true
+```
+
+```typescript
+const petstore = new PetstoreClient({
+  fetcher: (args) => {
+    ...
+  },
+});
+```
+
+### requireDefaultEnvironment
+
+- `requireDefaultEnvironment`: When enabled, the generated client doesn't allow the user to specify a server URL.
+
+**Type**: `boolean`<br />
+**Default**: `false` 
+
+```yaml
+config: 
+  requireDefaultEnvironment: true
+```
+
+When disabled (the default), the generated client includes an option to override the server URL:
+
+```typescript
+const petstore = new PetstoreClient({
+  environment: 'localhost:8080',
+});
+```
+
+### skipResponseValidation
+
+- `skipResponseValidation`: When enabled, the generated client will never throw if the response is misshapen. Rather, the client will log the issue using `console.warn` and return the data (cast to the expected response type).
+
+**Type**: `boolean`<br />
+**Default**: `false` 
+
+By default, this config is set to `false` and the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition). Set this config to `true` to never throw an error and log the issue instead.
+
+```yaml
+config: 
+  skipResponseValidation: true
+```
+
+### extraDependencies
+
+- `extraDependencies`: Allows you to specify extra dependencies in the generated package.json.
+
+**Type**: `map<string,string>`<br />
+**Default**: `{}`
+
+<Warning>
+This only applies when publishing to GitHub.
+</Warning>
+
+You can use extraDependencies to specify extra dependencies in the generated `package.json`. This is useful when you utilize `.fernignore` to supplement the generated client with custom code.
+
+```yaml
+config: 
+  extraDependencies: 
+    jest: '^29.7.0' # <-- examples
+    '@types/jest': '^29.5.5'
+    ts-jest: '^29.1.1'
+```
+
+### treatUnknownAsAny
+
+- `treatUnknownAsAny`: When enabled, unknown types from Fern are generated into TypeScript using `any`.
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+In Fern, there's an `unknown` type that represents data that isn't knowable at runtime. By default, these types are generated into TypeScript as the `unknown` type.
+
+```yaml
+config: 
+  treatUnknownAsAny: true
+```
+
+### noOptionalProperties
+
+- `noOptionalProperties`: Allows you to prevent generating optional properties.
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+When enabled, the generated properties are never optional. Instead, the type is generated with `| undefined`.
+
+For example, let's say you have the following Fern Definition:
+
+<CodeBlock title='person.yml'>
+```yaml
+types:
+  Person:
+    properties:
+      name: string
+      age: optional<integer>
+```
+</CodeBlock>
+
+By default, Fern's `optional<>` properties translate to optional TypeScript properties:
+
+```typescript
+interface Person {
+  name: string;
+  age?: number;
+}
+```
+
+When `noOptionalProperties` is enabled (set to `true`):
+
+```typescript
+interface Person {
+  name: string;
+  age: number | undefined;
+}
+```
+
+### useBrandedStringAliases
+
+- `useBrandedStringAliases`: When enabled, string aliases are generated as branded strings. This makes each alias feel like its own type and improves compile-time safety.
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+For example, let's say you have the following Fern Definition:
+
+<CodeBlock title='pet.yml'>
+```yaml
+types:
+  MyString: string
+  OtherString: string
+```
+</CodeBlock>
+
+<CodeBlock title='generated code'>
+```typescript
+export type MyString = string & { __MyString: void };
+export const MyString = (value: string): MyString => value as MyString;
+
+export type OtherString = string & { __OtherString: void };
+export const OtherString = (value: string): OtherString => value as OtherString;
+```
+</CodeBlock>
+
+<CodeBlock title='consuming the generated type'>
+```typescript
+function printMyString(s: MyString): void {
+  console.log('MyString: ' + s);
+}
+
+// doesn't compile, 'foo' is not assignable to MyString
+printMyString('foo');
+
+const otherString = OtherString('other-string');
+// doesn't compile, otherString is not assignable to MyString
+printMyString(otherString);
+
+// compiles
+const myString = MyString('my-string');
+printMyString(myString);
+```
+</CodeBlock>
+
+When `useBrandedStringAliases` is disabled (the default), string aliases are generated as normal TypeScript aliases:
+
+<CodeBlock title='generated code'>
+```typescript
+export type MyString = string;
+
+export type OtherString = string;
+```
+</CodeBlock>
+
+### neverThrowErrors
+
+- `neverThrowErrors`: When enabled, the client doesn't throw errors when a non-200 response is received from the server. Instead, the response is wrapped in an [ApiResponse](https://github.com/fern-api/fern/blob/main/generators/typescript/utils/core-utilities/fetcher/src/fetcher/APIResponse.ts).
+
+**Type**: `boolean`<br />
+**Default**: `false`
+
+<CodeBlock title='APIResponse.ts'>
+```typescript
+const response = await client.callEndpoint(...);
+if (response.ok) {
+  console.log(response.body)
+} else {
+  console.error(response.error)
+}
+```
+</CodeBlock>
