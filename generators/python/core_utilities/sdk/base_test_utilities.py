@@ -66,7 +66,7 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
     )
 
 
-# type_expectations is a deeply nested structure that matches the response, but with the values replaced with the expected types
+# Arg type_expectations is a deeply nested structure that matches the response, but with the values replaced with the expected types
 def validate_response(response: typing.Any, json_expectation: typing.Any, type_expectations: typing.Any) -> None:
     # Allow for an escape hatch if the object cannot be validated
     if type_expectations == "no_validate":
