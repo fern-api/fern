@@ -67,6 +67,8 @@ navigation:
                 path: ./docs/pages/overview/define-your-api/ferndef/api-yml.mdx
               - page: Packages
                 path: ./docs/pages/overview/define-your-api/ferndef/packages.mdx
+              - page: Comparison with OpenAPI
+                path: ./docs/pages/overview/define-your-api/ferndef/comparison.mdx
       - section: Fern CLI tool
         slug: cli
         contents:
