@@ -2490,16 +2490,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/csharp-generator-cli@workspace:generators/csharp/cli"
   dependencies:
+    "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
+    "@types/lodash": ^4.14.199
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
+    lodash: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -2626,6 +2629,7 @@ __metadata:
   dependencies:
     "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/csharp-generator-cli": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.687
     "@fern-fern/ir-sdk": 0.0.3318

@@ -67,7 +67,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const generatorContext = new GeneratorContextImpl(logger);
             if (!generatorContext.didSucceed()) {
-                throw new Error("Failed to generate TypeScript project.");
+                throw new Error("Failed to generate ruby project.");
             }
 
             await config.output.mode._visit<void | Promise<void>>({

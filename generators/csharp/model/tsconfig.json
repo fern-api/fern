@@ -1,6 +1,6 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*", "../codegen/src/asIs"],
+  "include": ["./src/**/*"],
   "references": [{ "path": "../../../packages/generators/commons" }, { "path": "../cli" }]
 }

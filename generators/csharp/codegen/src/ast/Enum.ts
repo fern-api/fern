@@ -90,6 +90,8 @@ export class Enum extends AstNode {
             field.value.write(writer);
             writer.writeLine("]");
             writer.write(field.name);
+            writer.writeLine(",");
+            writer.writeNewLineIfLastLineNot();
         }
         writer.dedent();
         writer.writeLine("}");

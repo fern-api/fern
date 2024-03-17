@@ -67,9 +67,12 @@ export class Interface extends AstNode {
         }
         writer.dedent();
 
-        // TODO(dsinghvi): add support for methods
-
-        // TODO(dsinghvi): add support for subclasses
+        writer.indent();
+        for (const method of this.methods) {
+            method.write(writer);
+            writer.writeLine("");
+        }
+        writer.dedent();
 
         writer.writeLine("}");
     }

@@ -15,12 +15,19 @@ export declare namespace Parameter {
 
 export class Parameter extends AstNode {
     public readonly name: string;
-    constructor(private readonly args: Parameter.Args) {
+    public readonly docs: string | undefined;
+
+    private type: Type;
+
+    constructor({ name, type, docs }: Parameter.Args) {
         super();
-        this.name = args.name;
+
+        this.name = name;
+        this.type = type;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
-        throw new Error("Method not implemented.");
+        writer.write(`${this.name}: `);
     }
 }
