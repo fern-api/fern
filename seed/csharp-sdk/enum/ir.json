@@ -1235,7 +1235,7 @@
           "idempotent": false,
           "method": "POST",
           "path": {
-            "head": "/path/",
+            "head": "/path/test/",
             "parts": [
               {
                 "pathParameter": "operand",
@@ -1256,7 +1256,7 @@
             ]
           },
           "fullPath": {
-            "head": "path/",
+            "head": "path/test/",
             "parts": [
               {
                 "pathParameter": "operand",
@@ -1701,7 +1701,7 @@
           "errors": [],
           "examples": [
             {
-              "url": "/path/>/less_than/red/red",
+              "url": "/path/test/>/less_than/red/red",
               "rootPathParameters": [],
               "endpointPathParameters": [
                 {

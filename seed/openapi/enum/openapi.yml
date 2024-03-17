@@ -37,7 +37,7 @@ paths:
                 value:
                   operand: '>'
                   operandOrColor: red
-  /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
+  /path/test/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
     post:
       operationId: pathParam_send
       tags:

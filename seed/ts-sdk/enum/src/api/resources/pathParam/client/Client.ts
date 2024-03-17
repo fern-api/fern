@@ -32,7 +32,7 @@ export class PathParam {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path/${await serializers.Operand.jsonOrThrow(
+                `path/test/${await serializers.Operand.jsonOrThrow(
                     operand
                 )}/${maybeOperand}/${await serializers.ColorOrOperand.jsonOrThrow(
                     operandOrColor
