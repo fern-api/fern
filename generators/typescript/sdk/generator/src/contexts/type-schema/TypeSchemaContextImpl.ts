@@ -155,8 +155,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
         let schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema);
 
+        const typeDeclaation = this.typeResolver.getTypeDeclarationFromName(typeName);
+        const isCircular = typeDeclaation.referencedTypes.has(typeName.typeId);
+
         // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
-        if (isGeneratingSchema) {
+        if (isGeneratingSchema && isCircular) {
             schema = this.wrapSchemaWithLazy(schema, typeName);
         }
 
