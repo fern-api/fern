@@ -326,11 +326,11 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "Hello world!",
+                "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "Hello world!",
+                      "original": "Hello world!\\n\\nwith\\n\\tnewlines",
                     },
                     "type": "string",
                   },
@@ -340,11 +340,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "Hello world!",
+                  "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "Hello world!",
+                        "original": "Hello world!\\n\\nwith\\n\\tnewlines",
                       },
                       "type": "string",
                     },
@@ -367,11 +367,11 @@ exports[`generate IR 1`] = `
               "name": null,
               "queryParameters": [],
               "request": {
-                "jsonExample": "Hello world!",
+                "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "Hello world!",
+                      "original": "Hello world!\\n\\nwith\\n\\tnewlines",
                     },
                     "type": "string",
                   },
@@ -381,11 +381,11 @@ exports[`generate IR 1`] = `
               },
               "response": {
                 "body": {
-                  "jsonExample": "Hello world!",
+                  "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines",
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "Hello world!",
+                        "original": "Hello world!\\n\\nwith\\n\\tnewlines",
                       },
                       "type": "string",
                     },
