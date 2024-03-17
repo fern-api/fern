@@ -1,8 +1,8 @@
 instances:
-  - url: fern.docs.buildwithfern.com/docs
-    custom-domain: buildwithfern.com/docs
-  # - url: fern-beta.docs.buildwithfern.com/docs
-  #   custom-domain: staging.buildwithfern.com/docs
+  - url: fern.docs.buildwithfern.com/learn
+    custom-domain: buildwithfern.com/learn
+  # - url: fern-beta.docs.buildwithfern.com/learn
+  #   custom-domain: staging.buildwithfern.com/learn
 title: Fern | Documentation
 
 tabs:
