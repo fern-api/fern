@@ -53,10 +53,19 @@ export async function publishDocs({
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
+    const mdxImageMatches: AbsoluteFilePath[] = [];
+
+    for (const [_, page] of Object.entries(parsedDocsConfig.pages)) {
+        mdxImageMatches.push(...parseImagePaths(page));
+    }
+
+    context.logger.info("MATCHES: ", mdxImageMatches.toString());
+
     // images where sizes cannot be inferred are uploaded as normal files.
     // images where sizes can be inferred are also uploaded as normal files, but their sizes are submitted to the registry.
     const [imageFilepathsWithSizesToUpload, unsizedImageFilepathsToUpload] = await getImageFilepathsToUpload(
-        parsedDocsConfig
+        parsedDocsConfig,
+        mdxImageMatches
     );
     context.logger.debug(
         "Absolute filepaths of images to upload:",
@@ -123,6 +132,8 @@ export async function publishDocs({
 
     const { docsRegistrationId, uploadUrls } = startDocsRegisterResponse.body;
 
+    // const copiedRecord: Record<RelativeFilePath, string> = Object.assign({}, parsedDocsConfig.pages);
+
     await Promise.all([
         ...filepathsToUpload.map(async (filepathToUpload) => {
             const uploadUrl = uploadUrls[convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig)];
@@ -142,6 +153,12 @@ export async function publishDocs({
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, "Upload URL is missing");
             } else {
+                for (const [relativePath, page] of Object.entries(parsedDocsConfig.pages)) {
+                    parsedDocsConfig.pages[relativePath as RelativeFilePath] = page.replace(
+                        imageFilepathToUpload.toString(),
+                        uploadUrl.fileId.toString()
+                    );
+                }
                 const mimeType = mime.lookup(imageFilepathToUpload);
                 await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
                     headers: {
@@ -248,6 +265,7 @@ async function constructRegisterDocsRequest({
                     context.logger.error(`${reference.path} has no slug defined but is referenced by ${pageId}.`);
                     continue;
                 }
+
                 markdown = markdown.replace(reference.path, referenceSlug);
             }
             return [pageId, { markdown, editThisPageUrl: pageContent.editThisPageUrl }];
@@ -1025,7 +1043,8 @@ interface AbsoluteImageFilePath {
 }
 
 async function getImageFilepathsToUpload(
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration,
+    parsedImagePaths: AbsoluteFilePath[]
 ): Promise<[AbsoluteImageFilePath[], AbsoluteFilePath[]]> {
     const filepaths: AbsoluteFilePath[] = [];
 
@@ -1056,6 +1075,8 @@ async function getImageFilepathsToUpload(
     ) {
         filepaths.push(parsedDocsConfig.backgroundImage.light.filepath);
     }
+
+    filepaths.push(...parsedImagePaths);
 
     const imageFilepathsAndSizesToUpload = await Promise.all(
         filepaths.map(async (filePath): Promise<ImageFile> => {
@@ -1116,4 +1137,18 @@ function convertFdrFilepathToAbsoluteFilepath(
 
 function wrapWithHttps(url: string): string {
     return url.startsWith("https://") || url.startsWith("http://") ? url : `https://${url}`;
+}
+
+function parseImagePaths(page: string): AbsoluteFilePath[] {
+    const regex = /!\[.*?\]\(([^)]+)\)/g;
+    let match;
+
+    const filepaths: AbsoluteFilePath[] = [];
+
+    while ((match = regex.exec(page)) != null) {
+        if (match[1] != null) {
+            filepaths.push(AbsoluteFilePath.of(match[1].toString()));
+        }
+    }
+    return filepaths;
 }
