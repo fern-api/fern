@@ -15647,13 +15647,13 @@
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "Hello world!"
+                      "original": "Hello world!\\n\\nwith\\n\\tnewlines"
                     },
                     "type": "string"
                   },
                   "type": "primitive"
                 },
-                "jsonExample": "Hello world!"
+                "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines"
               },
               "response": {
                 "type": "ok",
@@ -15661,13 +15661,13 @@
                   "shape": {
                     "primitive": {
                       "string": {
-                        "original": "Hello world!"
+                        "original": "Hello world!\\n\\nwith\\n\\tnewlines"
                       },
                       "type": "string"
                     },
                     "type": "primitive"
                   },
-                  "jsonExample": "Hello world!"
+                  "jsonExample": "Hello world!\\n\\nwith\\n\\tnewlines"
                 }
               }
             }

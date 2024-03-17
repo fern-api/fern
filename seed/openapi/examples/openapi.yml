@@ -18,7 +18,7 @@ paths:
                 type: string
               examples:
                 Example1:
-                  value: Hello world!
+                  value: Hello world!\n\nwith\n\tnewlines
       requestBody:
         required: true
         content:
@@ -27,7 +27,7 @@ paths:
               type: string
             examples:
               Example1:
-                value: Hello world!
+                value: Hello world!\n\nwith\n\tnewlines
   /file/notification/{notificationId}:
     get:
       operationId: file_notification_service_getException

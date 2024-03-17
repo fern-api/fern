@@ -320,7 +320,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         wrapper.__globals__.update(cls.get_and_return_nested_with_required_field_as_list.__globals__)
 
         router.post(
-            path="/object/get-and-return-nested-with-required-field",
+            path="/object/get-and-return-nested-with-required-field-list",
             response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),

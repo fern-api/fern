@@ -8,6 +8,6 @@ service:
       request: string
       response: string
       examples:
-        - request: Hello world!
+        - request: Hello world!\n\nwith\n\tnewlines
           response:
-            body: Hello world!
+            body: Hello world!\n\nwith\n\tnewlines

@@ -224,7 +224,7 @@ class ObjectService {
                 next(request.errors);
             }
         }));
-        this.router.post("/get-and-return-nested-with-required-field", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/get-and-return-nested-with-required-field-list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const request = yield serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;

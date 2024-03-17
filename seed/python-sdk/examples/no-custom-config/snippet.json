@@ -31,8 +31,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.echo(\n    request=\"Hello world!\",\n)\n",
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
                 "type": "python"
             }
         },

@@ -7589,7 +7589,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -9281,7 +9281,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {
@@ -10178,7 +10178,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -11870,7 +11870,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {
@@ -12547,7 +12547,7 @@ exports[`generate IR 1`] = `
                   ],
                   "long": 1000000,
                   "map": {
-                    "42": "string",
+                    "1": "string",
                   },
                   "set": [
                     "string",
@@ -14239,7 +14239,7 @@ exports[`generate IR 1`] = `
                         },
                         "value": {
                           "jsonExample": {
-                            "42": "string",
+                            "1": "string",
                           },
                           "shape": {
                             "container": {
@@ -14400,7 +14400,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -16092,7 +16092,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {
@@ -16989,7 +16989,7 @@ exports[`generate IR 1`] = `
                   ],
                   "long": 1000000,
                   "map": {
-                    "42": "string",
+                    "1": "string",
                   },
                   "set": [
                     "string",
@@ -18681,7 +18681,7 @@ exports[`generate IR 1`] = `
                         },
                         "value": {
                           "jsonExample": {
-                            "42": "string",
+                            "1": "string",
                           },
                           "shape": {
                             "container": {
@@ -18842,7 +18842,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -20534,7 +20534,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {
@@ -23094,7 +23094,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -23387,7 +23387,7 @@ exports[`generate IR 1`] = `
                             ],
                             "long": 1000000,
                             "map": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "set": [
                               "string",
@@ -25079,7 +25079,7 @@ exports[`generate IR 1`] = `
                                   },
                                   "value": {
                                     "jsonExample": {
-                                      "42": "string",
+                                      "1": "string",
                                     },
                                     "shape": {
                                       "container": {
@@ -25352,7 +25352,7 @@ exports[`generate IR 1`] = `
                       ],
                       "long": 1000000,
                       "map": {
-                        "42": "string",
+                        "1": "string",
                       },
                       "set": [
                         "string",
@@ -25645,7 +25645,7 @@ exports[`generate IR 1`] = `
                               ],
                               "long": 1000000,
                               "map": {
-                                "42": "string",
+                                "1": "string",
                               },
                               "set": [
                                 "string",
@@ -27337,7 +27337,7 @@ exports[`generate IR 1`] = `
                                     },
                                     "value": {
                                       "jsonExample": {
-                                        "42": "string",
+                                        "1": "string",
                                       },
                                       "shape": {
                                         "container": {
@@ -28024,7 +28024,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -28317,7 +28317,7 @@ exports[`generate IR 1`] = `
                             ],
                             "long": 1000000,
                             "map": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "set": [
                               "string",
@@ -30009,7 +30009,7 @@ exports[`generate IR 1`] = `
                                   },
                                   "value": {
                                     "jsonExample": {
-                                      "42": "string",
+                                      "1": "string",
                                     },
                                     "shape": {
                                       "container": {
@@ -30282,7 +30282,7 @@ exports[`generate IR 1`] = `
                       ],
                       "long": 1000000,
                       "map": {
-                        "42": "string",
+                        "1": "string",
                       },
                       "set": [
                         "string",
@@ -30575,7 +30575,7 @@ exports[`generate IR 1`] = `
                               ],
                               "long": 1000000,
                               "map": {
-                                "42": "string",
+                                "1": "string",
                               },
                               "set": [
                                 "string",
@@ -32267,7 +32267,7 @@ exports[`generate IR 1`] = `
                                     },
                                     "value": {
                                       "jsonExample": {
-                                        "42": "string",
+                                        "1": "string",
                                       },
                                       "shape": {
                                         "container": {
@@ -32955,7 +32955,7 @@ exports[`generate IR 1`] = `
                       ],
                       "long": 1000000,
                       "map": {
-                        "42": "string",
+                        "1": "string",
                       },
                       "set": [
                         "string",
@@ -32983,7 +32983,7 @@ exports[`generate IR 1`] = `
                             ],
                             "long": 1000000,
                             "map": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "set": [
                               "string",
@@ -33276,7 +33276,7 @@ exports[`generate IR 1`] = `
                                     ],
                                     "long": 1000000,
                                     "map": {
-                                      "42": "string",
+                                      "1": "string",
                                     },
                                     "set": [
                                       "string",
@@ -34968,7 +34968,7 @@ exports[`generate IR 1`] = `
                                           },
                                           "value": {
                                             "jsonExample": {
-                                              "42": "string",
+                                              "1": "string",
                                             },
                                             "shape": {
                                               "container": {
@@ -35247,7 +35247,7 @@ exports[`generate IR 1`] = `
                       ],
                       "long": 1000000,
                       "map": {
-                        "42": "string",
+                        "1": "string",
                       },
                       "set": [
                         "string",
@@ -35540,7 +35540,7 @@ exports[`generate IR 1`] = `
                               ],
                               "long": 1000000,
                               "map": {
-                                "42": "string",
+                                "1": "string",
                               },
                               "set": [
                                 "string",
@@ -37232,7 +37232,7 @@ exports[`generate IR 1`] = `
                                     },
                                     "value": {
                                       "jsonExample": {
-                                        "42": "string",
+                                        "1": "string",
                                       },
                                       "shape": {
                                         "container": {
@@ -37494,11 +37494,11 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/get-and-return-nested-with-required-field",
+              "url": "/get-and-return-nested-with-required-field-list",
             },
           ],
           "fullPath": {
-            "head": "/object/get-and-return-nested-with-required-field",
+            "head": "/object/get-and-return-nested-with-required-field-list",
             "parts": [],
           },
           "headers": [],
@@ -37526,7 +37526,7 @@ exports[`generate IR 1`] = `
           },
           "pagination": null,
           "path": {
-            "head": "/get-and-return-nested-with-required-field",
+            "head": "/get-and-return-nested-with-required-field-list",
             "parts": [],
           },
           "pathParameters": [],
@@ -38832,11 +38832,11 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/path/",
+              "url": "/path-query/",
             },
           ],
           "fullPath": {
-            "head": "/params/path/",
+            "head": "/params/path-query/",
             "parts": [
               {
                 "pathParameter": "param",
@@ -38869,7 +38869,7 @@ exports[`generate IR 1`] = `
           },
           "pagination": null,
           "path": {
-            "head": "/path/",
+            "head": "/path-query/",
             "parts": [
               {
                 "pathParameter": "param",
@@ -42173,7 +42173,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -42294,7 +42294,7 @@ exports[`generate IR 1`] = `
                         ],
                         "long": 1000000,
                         "map": {
-                          "42": "string",
+                          "1": "string",
                         },
                         "set": [
                           "string",
@@ -43986,7 +43986,7 @@ exports[`generate IR 1`] = `
                               },
                               "value": {
                                 "jsonExample": {
-                                  "42": "string",
+                                  "1": "string",
                                 },
                                 "shape": {
                                   "container": {
@@ -44150,7 +44150,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -45842,7 +45842,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {
@@ -46017,7 +46017,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -46138,7 +46138,7 @@ exports[`generate IR 1`] = `
                         ],
                         "long": 1000000,
                         "map": {
-                          "42": "string",
+                          "1": "string",
                         },
                         "set": [
                           "string",
@@ -47830,7 +47830,7 @@ exports[`generate IR 1`] = `
                               },
                               "value": {
                                 "jsonExample": {
-                                  "42": "string",
+                                  "1": "string",
                                 },
                                 "shape": {
                                   "container": {
@@ -48921,7 +48921,7 @@ exports[`generate IR 1`] = `
                     ],
                     "long": 1000000,
                     "map": {
-                      "42": "string",
+                      "1": "string",
                     },
                     "set": [
                       "string",
@@ -50613,7 +50613,7 @@ exports[`generate IR 1`] = `
                           },
                           "value": {
                             "jsonExample": {
-                              "42": "string",
+                              "1": "string",
                             },
                             "shape": {
                               "container": {

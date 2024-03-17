@@ -629,8 +629,10 @@ export class ExampleGenerator {
     }
 
     private jsonExampleToMapKey(jsonExample: unknown): string | number {
+        // NOTE: you will have to manage this within the generator to ensure this number key becomes
+        // a number proper, JSON converts this to a string as it cannot have numeric keys.
         if (typeof jsonExample === "number") {
-            return 42;
+            return 1;
         }
         return "string";
     }
@@ -638,6 +640,8 @@ export class ExampleGenerator {
     private generateExampleTypeReferenceSet(typeReference: TypeReference, depth: number): ExampleTypeReference {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
         return {
+            // NOTE: you will have to manage this within the generator to ensure this list becomes a set,
+            // as you can't represent a set in JSON.
             jsonExample: [exampleTypeReference.jsonExample],
             shape: ExampleTypeReferenceShape.container(ExampleContainer.set([exampleTypeReference]))
         };

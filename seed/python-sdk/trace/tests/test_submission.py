@@ -13,11 +13,12 @@ async def test_create_execution_session(client: SeedTrace, async_client: AsyncSe
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
+    expected_types = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
     response = client.submission.create_execution_session(language=Language.JAVA)
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.submission.create_execution_session(language=Language.JAVA)
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -27,11 +28,12 @@ async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedT
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
+    expected_types = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
     response = client.submission.get_execution_session(session_id="string")
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.submission.get_execution_session(session_id="string")
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_stop_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -56,8 +58,28 @@ async def test_get_execution_sessions_state(client: SeedTrace, async_client: Asy
         "numWarmingInstances": 1,
         "warmingSessionIds": ["string"],
     }
+    expected_types = {
+        "states": (
+            "dict",
+            {
+                0: (
+                    None,
+                    {
+                        "lastTimeContacted": None,
+                        "sessionId": None,
+                        "isWarmInstance": None,
+                        "awsTaskId": None,
+                        "language": None,
+                        "status": None,
+                    },
+                )
+            },
+        ),
+        "numWarmingInstances": "integer",
+        "warmingSessionIds": ("list", {0: None}),
+    }
     response = client.submission.get_execution_sessions_state()
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.submission.get_execution_sessions_state()
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.echo(\"Hello world!\");\n"
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.echo(\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\");\n"
             }
         },
         {

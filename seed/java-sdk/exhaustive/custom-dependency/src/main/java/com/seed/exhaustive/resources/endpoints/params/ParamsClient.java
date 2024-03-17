@@ -156,7 +156,7 @@ public class ParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("path-query")
                 .addPathSegment(param);
         httpUrl.addQueryParameter("query", request.getQuery());
         Request.Builder _requestBuilder = new Request.Builder()

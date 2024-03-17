@@ -65,7 +65,7 @@ class ObjectClient:
                 ),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
@@ -259,7 +259,7 @@ class ObjectClient:
                     ),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             ),
@@ -340,7 +340,7 @@ class ObjectClient:
                     ),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             ),
@@ -425,7 +425,7 @@ class ObjectClient:
                         ),
                         base_64="SGVsbG8gd29ybGQh",
                         list_=["string"],
-                        set_=["string"],
+                        set_={"string"},
                         map_={1: "string"},
                     ),
                 )
@@ -435,7 +435,7 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -510,7 +510,7 @@ class AsyncObjectClient:
                 ),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
@@ -704,7 +704,7 @@ class AsyncObjectClient:
                     ),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             ),
@@ -785,7 +785,7 @@ class AsyncObjectClient:
                     ),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             ),
@@ -870,7 +870,7 @@ class AsyncObjectClient:
                         ),
                         base_64="SGVsbG8gd29ybGQh",
                         list_=["string"],
-                        set_=["string"],
+                        set_={"string"},
                         map_={1: "string"},
                     ),
                 )
@@ -880,7 +880,7 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None

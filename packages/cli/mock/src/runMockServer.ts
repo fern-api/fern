@@ -198,7 +198,6 @@ function validateRequestBody(example: ExampleEndpointCall, req: Request): boolea
             req.body[key] = value.toISOString();
         }
     }
-    // throw new Error(`FML ${JSON.stringify(req.body)} ${JSON.stringify(example.request.jsonExample)}`);
     return isEqual(req.body, example.request.jsonExample);
 }
 

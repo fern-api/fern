@@ -22,7 +22,21 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
+    }
+    expected_types = {
+        "string": None,
+        "integer": "integer",
+        "long": None,
+        "double": None,
+        "bool": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
+        "base64": None,
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.inlined_requests.post_with_object_bodyand_response(
         string="string",
@@ -38,11 +52,11 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             base_64="SGVsbG8gd29ybGQh",
             list_=["string"],
-            set_=["string"],
+            set_={"string"},
             map_={1: "string"},
         ),
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.inlined_requests.post_with_object_bodyand_response(
         string="string",
@@ -58,8 +72,8 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             base_64="SGVsbG8gd29ybGQh",
             list_=["string"],
-            set_=["string"],
+            set_={"string"},
             map_={1: "string"},
         ),
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

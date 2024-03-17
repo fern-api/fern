@@ -28,7 +28,21 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"42": "string"},
+        "map": {"1": "string"},
+    }
+    expected_types = {
+        "string": None,
+        "integer": "integer",
+        "long": None,
+        "double": None,
+        "bool": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
+        "base64": None,
+        "list": ("list", {0: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
     }
     response = client.endpoints.object.get_and_return_with_optional_field(
         request=ObjectWithOptionalField(
@@ -42,11 +56,11 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             base_64="SGVsbG8gd29ybGQh",
             list_=["string"],
-            set_=["string"],
+            set_={"string"},
             map_={1: "string"},
         )
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_with_optional_field(
         request=ObjectWithOptionalField(
@@ -60,37 +74,39 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             base_64="SGVsbG8gd29ybGQh",
             list_=["string"],
-            set_=["string"],
+            set_={"string"},
             map_={1: "string"},
         )
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_with_required_field(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = {"string": "string"}
+    expected_types = {"string": None}
     response = client.endpoints.object.get_and_return_with_required_field(
         request=ObjectWithRequiredField(string="string")
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_with_required_field(
         request=ObjectWithRequiredField(string="string")
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_with_map_of_map(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = {"map": {"string": {"string": "string"}}}
+    expected_types = {"map": ("dict", {0: (None, ("dict", {0: (None, None)}))})}
     response = client.endpoints.object.get_and_return_with_map_of_map(
         request=ObjectWithMapOfMap(map_={"string": {"string": "string"}})
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_with_map_of_map(
         request=ObjectWithMapOfMap(map_={"string": {"string": "string"}})
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_nested_with_optional_field(
@@ -110,7 +126,24 @@ async def test_get_and_return_nested_with_optional_field(
             "base64": "SGVsbG8gd29ybGQh",
             "list": ["string"],
             "set": ["string"],
-            "map": {"42": "string"},
+            "map": {"1": "string"},
+        },
+    }
+    expected_types = {
+        "string": None,
+        "NestedObject": {
+            "string": None,
+            "integer": "integer",
+            "long": None,
+            "double": None,
+            "bool": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
+            "base64": None,
+            "list": ("list", {0: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_optional_field(
@@ -127,12 +160,12 @@ async def test_get_and_return_nested_with_optional_field(
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_nested_with_optional_field(
         request=NestedObjectWithOptionalField(
@@ -148,12 +181,12 @@ async def test_get_and_return_nested_with_optional_field(
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_nested_with_required_field(
@@ -173,7 +206,24 @@ async def test_get_and_return_nested_with_required_field(
             "base64": "SGVsbG8gd29ybGQh",
             "list": ["string"],
             "set": ["string"],
-            "map": {"42": "string"},
+            "map": {"1": "string"},
+        },
+    }
+    expected_types = {
+        "string": None,
+        "NestedObject": {
+            "string": None,
+            "integer": "integer",
+            "long": None,
+            "double": None,
+            "bool": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
+            "base64": None,
+            "list": ("list", {0: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_required_field(
@@ -190,12 +240,12 @@ async def test_get_and_return_nested_with_required_field(
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_nested_with_required_field(
         request=NestedObjectWithRequiredField(
@@ -211,12 +261,12 @@ async def test_get_and_return_nested_with_required_field(
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=["string"],
-                set_=["string"],
+                set_={"string"},
                 map_={1: "string"},
             ),
         )
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_nested_with_required_field_as_list(
@@ -236,7 +286,24 @@ async def test_get_and_return_nested_with_required_field_as_list(
             "base64": "SGVsbG8gd29ybGQh",
             "list": ["string"],
             "set": ["string"],
-            "map": {"42": "string"},
+            "map": {"1": "string"},
+        },
+    }
+    expected_types = {
+        "string": None,
+        "NestedObject": {
+            "string": None,
+            "integer": "integer",
+            "long": None,
+            "double": None,
+            "bool": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
+            "base64": None,
+            "list": ("list", {0: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_required_field_as_list(
@@ -254,13 +321,13 @@ async def test_get_and_return_nested_with_required_field_as_list(
                     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             )
         ]
     )
-    validate_response(response, expected_response)
+    validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.object.get_and_return_nested_with_required_field_as_list(
         request=[
@@ -277,10 +344,10 @@ async def test_get_and_return_nested_with_required_field_as_list(
                     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     base_64="SGVsbG8gd29ybGQh",
                     list_=["string"],
-                    set_=["string"],
+                    set_={"string"},
                     map_={1: "string"},
                 ),
             )
         ]
     )
-    validate_response(async_response, expected_response)
+    validate_response(async_response, expected_response, expected_types)

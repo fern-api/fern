@@ -154,7 +154,7 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_primitives(
-            request=["string"],
+            request={"string"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -211,11 +211,11 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_objects(
-            request=[
+            request={
                 ObjectWithRequiredField(
                     string="string",
                 )
-            ],
+            },
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -560,7 +560,7 @@ class AsyncContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.endpoints.container.get_and_return_set_of_primitives(
-            request=["string"],
+            request={"string"},
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -617,11 +617,11 @@ class AsyncContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.endpoints.container.get_and_return_set_of_objects(
-            request=[
+            request={
                 ObjectWithRequiredField(
                     string="string",
                 )
-            ],
+            },
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
