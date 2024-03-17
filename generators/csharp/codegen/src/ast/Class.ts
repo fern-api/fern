@@ -113,9 +113,26 @@ export class Class extends AstNode {
         }
         writer.dedent();
 
-        // TODO(dsinghvi): add support for methods
+        writer.indent();
+        for (const nestedClass of this.nestedClasses) {
+            nestedClass.write(writer);
+            writer.writeLine("");
+        }
+        writer.dedent();
 
-        // TODO(dsinghvi): add support for subclasses
+        writer.indent();
+        for (const nestedInterface of this.nestedInterfaces) {
+            nestedInterface.write(writer);
+            writer.writeLine("");
+        }
+        writer.dedent();
+
+        writer.indent();
+        for (const method of this.methods) {
+            method.write(writer);
+            writer.writeLine("");
+        }
+        writer.dedent();
 
         writer.writeLine("}");
     }
@@ -127,7 +144,7 @@ export class Class extends AstNode {
     public getInitializer(args: Map<Field, CodeBlock>): ClassInstantiation {
         return new ClassInstantiation({
             classReference: this.reference,
-            arguments: args
+            arguments_: args
         });
     }
 
@@ -142,7 +159,7 @@ export class Class extends AstNode {
         }
         return new ClassInstantiation({
             classReference: this.reference,
-            arguments: args
+            arguments_: args
         });
     }
 

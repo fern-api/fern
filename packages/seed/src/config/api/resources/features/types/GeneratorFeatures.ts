@@ -61,6 +61,11 @@ export interface GeneratorFeatures {
      */
     additionalProperties: FernSeedConfig.FeatureImplementation;
     /**
+     * The SDK should generate an API reference markdown file (refrence.md at the root level) that shows all the endpoints, their documentation,
+     * their parameters, and their responses.
+     */
+    apiReferenceGeneration: FernSeedConfig.FeatureImplementation;
+    /**
      * Whether the generator supports reading the whitelable configuration.
      * If true, the generator will not mention `fern` in the hader of the
      * generated code.

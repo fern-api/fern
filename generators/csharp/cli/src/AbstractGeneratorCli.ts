@@ -1,3 +1,4 @@
+import { File } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
@@ -5,7 +6,9 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { execSync } from "child_process";
 import { cp, readdir, readFile } from "fs/promises";
+import { template } from "lodash";
 import tmp from "tmp-promise";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
@@ -106,6 +109,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
+            // Some universal work across model and SDK generators
+            // TODO: should probably also write tests here.
+            await this.writeProjectFiles(config, "TODO: project name from IR name");
+            this.formatFiles(config);
+
             await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
@@ -144,6 +152,35 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
+
+    formatFiles(config: FernGeneratorExec.GeneratorConfig): void {
+        // Run lint
+        try {
+            execSync(`dotnet format ${config.output.path}`);
+        } catch {
+            // NOOP, ignore warns
+        }
+    }
+
+    async writeProjectFiles(config: FernGeneratorExec.GeneratorConfig, projectName: string): Promise<void> {
+        const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
+
+        // Create a new solution
+        execSync(`cd ${directoryPrefix} && dotnet new sln`);
+
+        // Create and add the core project
+        const csprojContents = await readFile("./asIs/Template.csproj", "utf8");
+        new File(`${projectName}.csproj`, RelativeFilePath.of(projectName), csprojContents).write(directoryPrefix);
+        execSync(`dotnet sln add ${config.output.path}/${projectName}/${projectName}.csproj`);
+
+        // Create and add the test project
+        const testCsprojContents = template(await readFile("./asIs/Template.csproj", "utf8"))({ projectName });
+        const testProjectName = `${projectName}.Test`;
+        new File(`${testProjectName}.csproj`, RelativeFilePath.of(testProjectName), testCsprojContents).write(
+            directoryPrefix
+        );
+        execSync(`dotnet sln add ${config.output.path}/${testProjectName}/${testProjectName}.csproj`);
+    }
 
     async zipDirectoryContents({
         directoryToZip,
