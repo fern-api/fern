@@ -189,6 +189,13 @@ navigation:
           - page: Update SDKs with Fern's GitHub Bot
             path: ./docs/pages/fern-sdks/guides/github-bot.mdx
             slug: github-bot
+      - api: API Reference
+        api-name: public-api
+        audiences:
+        - external
+        snippets:
+          python: fern-api
+          typescript: "@fern-api/node-sdk"
   - tab: fern-docs
     layout:
       - page: Overview
