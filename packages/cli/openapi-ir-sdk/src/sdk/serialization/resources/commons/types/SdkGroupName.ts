@@ -7,8 +7,8 @@ import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
 export const SdkGroupName: core.serialization.Schema<serializers.SdkGroupName.Raw, FernOpenapiIr.SdkGroupName> =
-    core.serialization.string();
+    core.serialization.list(core.serialization.string());
 
 export declare namespace SdkGroupName {
-    type Raw = string;
+    type Raw = string[];
 }

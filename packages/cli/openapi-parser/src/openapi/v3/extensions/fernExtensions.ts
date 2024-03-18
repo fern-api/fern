@@ -1,8 +1,9 @@
 import { Values } from "@fern-api/core-utils";
+import { TypedExtensionId } from "./id";
 
 export const FernOpenAPIExtension = {
-    SDK_METHOD_NAME: "x-fern-sdk-method-name",
-    SDK_GROUP_NAME: "x-fern-sdk-group-name",
+    SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
+    SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",

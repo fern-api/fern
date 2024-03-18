@@ -12,9 +12,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         path: core.serialization.string(),
-        groupName: core.serialization.list(
-            core.serialization.lazy(async () => (await import("../../..")).SdkGroupName)
-        ),
+        groupName: core.serialization.lazy(async () => (await import("../../..")).SdkGroupName),
         summary: core.serialization.string().optional(),
         handshake: core.serialization.lazyObject(async () => (await import("../../..")).WebsocketHandshake),
         publish: core.serialization.lazy(async () => (await import("../../..")).Schema).optional(),
@@ -28,7 +26,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
 export declare namespace WebsocketChannel {
     interface Raw extends serializers.WithDescription.Raw {
         path: string;
-        groupName: serializers.SdkGroupName.Raw[];
+        groupName: serializers.SdkGroupName.Raw;
         summary?: string | null;
         handshake: serializers.WebsocketHandshake.Raw;
         publish?: serializers.Schema.Raw | null;
