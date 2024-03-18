@@ -96,7 +96,7 @@ This generates all the boilerplate code into [generated/](https://github.com/fer
 
 <CodeBlock title="terminal">
 ```bash
-$ fern generate
+fern generate
 [api]: fernapi/fern-fastapi-starter Downloaded to backend/src/fern_fastapi_starter/api/generated
 ┌─
 │ ✓  fernapi/fern-fastapi-server
@@ -126,7 +126,8 @@ class MoviesService(AbstractMoviesService):
 
 And register your endpoints with Fern, which registers them with FastAPI under the hood:
 
-```python backend/src/fern_fastapi_starter/server.py
+<CodeBlock title="backend/src/fern_fastapi_starter/server.py">
+```python 
 from fastapi import FastAPI
 
 from .generated.fern.register import register
@@ -136,6 +137,7 @@ app = FastAPI()
 
 register(app, imdb=MoviesService())
 ```
+</CodeBlock>
 
 ### Step 4: Compile
 
@@ -151,7 +153,7 @@ You can use the command line to check for compile errors:
 
 <CodeBlock title="terminal">
 ```bash
-$ poetry run mypy
+poetry run mypy
 Success: no issues found in 24 source files
 ```
 </CodeBlock>
@@ -160,7 +162,7 @@ Success: no issues found in 24 source files
 
 <CodeBlock title="terminal">
 ```bash
-$ poetry run start
+poetry run start
 INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
 INFO:     Started reloader process [32816] using StatReload
 INFO:     Started server process [32829]
@@ -173,14 +175,18 @@ INFO:     Application startup complete.
 
 <CodeBlock title="terminal">
 ```bash
-$ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
+curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
 {
   "id": "titantic",
   "title": "Titanic",
   "rating": 9.8
 }
+```
+</CodeBlock>
 
-$ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq .
+<CodeBlock title='terminal'>
+```bash
+curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq .
 {
   "error": "MovieDoesNotExistError",
   "errorInstanceId": "f6e1d69c-bf97-42d5-bc89-5e42773e3880",
@@ -188,4 +194,3 @@ $ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq 
 }
 ```
 </CodeBlock>
-
