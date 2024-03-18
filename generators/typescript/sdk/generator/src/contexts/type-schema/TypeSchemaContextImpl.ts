@@ -135,7 +135,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             importStrategy: {
                 type: isCircular ? "fromRoot" : "direct",
                 useDynamicImport: false,
-                namespaceImport: "serializers",
+                namespaceImport: "serializers"
             },
             // TODO this should not be hardcoded here
             subImport: ["Raw"],

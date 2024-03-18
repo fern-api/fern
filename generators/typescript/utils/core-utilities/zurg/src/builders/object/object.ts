@@ -318,7 +318,7 @@ async function validateAndTransformExtendedObject<PreTransformedExtension, Trans
 }
 
 function isSchemaRequired(schema: Schema<any, any>): boolean {
-    return !(isSchemaOptional(schema));
+    return !isSchemaOptional(schema);
 }
 
 function isSchemaOptional(schema: Schema<any, any>): boolean {
