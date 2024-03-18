@@ -50,11 +50,14 @@ function getGithubPublishConfig(
                       coordinate: value.coordinate,
                       usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ""),
                       passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? ""),
-                      signature: {
-                          keyIdEnvironmentVariable: EnvironmentVariable(value.signature?.keyId ?? ""),
-                          passwordEnvironmentVariable: EnvironmentVariable(value.signature?.password ?? ""),
-                          secretKeyEnvironmentVariable: EnvironmentVariable(value.signature?.secretKey ?? "")
-                      }
+                      signature:
+                          value.signature != null
+                              ? {
+                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature?.keyId ?? ""),
+                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature?.password ?? ""),
+                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature?.secretKey ?? "")
+                                }
+                              : undefined
                   }),
               pypi: (value) =>
                   FernGeneratorExec.GithubPublishInfo.pypi({

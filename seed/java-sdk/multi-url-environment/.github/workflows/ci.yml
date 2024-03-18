@@ -59,6 +59,3 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_PUBLISH_REGISTRY_URL: ""
-          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.MAVEN_SIGNATURE_KID }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.MAVEN_SIGNATURE_SECRET_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.MAVEN_SIGNATURE_PASSWORD }}
