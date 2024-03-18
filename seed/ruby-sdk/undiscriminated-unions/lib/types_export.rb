@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "seed_undiscriminated_unions_client/union/types/my_union"
+require_relative "fern_undiscriminated_unions/union/types/my_union"

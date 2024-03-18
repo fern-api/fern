@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "seed"
-version = "0.0.0"
+name = "fern_idempotency-headers"
+version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = []

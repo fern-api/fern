@@ -15,7 +15,7 @@ module SeedExhaustiveClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_exhaustive_client",
+        "X-Fern-SDK-Name": "fern_exhaustive",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -38,7 +38,7 @@ module SeedExhaustiveClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_exhaustive_client",
+        "X-Fern-SDK-Name": "fern_exhaustive",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
