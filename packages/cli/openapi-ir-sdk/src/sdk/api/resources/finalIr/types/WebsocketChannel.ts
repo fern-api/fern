@@ -6,7 +6,7 @@ import * as FernOpenapiIr from "../../..";
 
 export interface WebsocketChannel extends FernOpenapiIr.WithDescription {
     path: string;
-    groupName: FernOpenapiIr.SdkGroupName[];
+    groupName: FernOpenapiIr.SdkGroupName;
     summary: string | undefined;
     handshake: FernOpenapiIr.WebsocketHandshake;
     publish: FernOpenapiIr.Schema | undefined;
