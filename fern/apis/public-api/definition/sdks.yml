@@ -22,6 +22,24 @@ service:
               docs: |
                 The SDKs to generate. Atleast 1 SDK must be specified.
       response: GenerateSDKResponse
+      examples: 
+        - name: GenerateSDKRequest
+          request: 
+            definitionType: OpenAPI
+            sdks: 
+              - language: typescript
+                packageName: petstore
+                npmToken: <NPM_TOKEN>
+                config: 
+                  bundled: true
+              - language: python
+                pypiUrl: https://pypi.buildwithfern.com
+                packageName: petstore
+                pypiToken: <PYPI_TOKEN>
+          response: 
+            body: 
+              generationID: 123e4567-e89b-12d3-a456-426614174000
+              status: pending
     
     getGenerationStatus:
       path: /generate/{generationId}
@@ -32,7 +50,7 @@ service:
           type: uuid
           docs: |
             The ID of the generation request.
-      response: SDKGenerationStatus
+      response: GenerationStatusResponse
 
 types:
   DefinitionType: 
@@ -45,6 +63,13 @@ types:
         value: Fern
       - name: AsyncAPI
         value: AsyncAPI
+  
+  GenerationStatusResponse: 
+    properties: 
+      status: 
+        type: SDKGenerationStatus
+        docs: |
+          The status of the generation request.
   
   SDKGenerateRequest: 
     discriminant: language
@@ -159,7 +184,7 @@ types:
         docs: |
           The pypi package name for the generated SDK.
       pypiUrl:
-        type: string
+        type: optional<string>
         docs: |
           The URL to the pypi registry where the package is published.
           Defaults to the public pypi registry.
