@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, ZodType } from "zod";
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
 import { GeneratorsOpenAPISchema } from "./GeneratorsOpenAPISchema";
 import { WhitelabelConfigurationSchema } from "./WhitelabelConfigurationSchema";
@@ -37,11 +37,41 @@ export const APIDefintionWithOverridesSchema = z.object({
  */
 export const APIDefinitionList = z.array(z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema]));
 
+// export const NavigationSchema = z.union([z.array(z.string()), z.record(z.array(z.string())), z.array(z.record())]);
+
+/**
+ * NavigationSchema is a recursive schema that can be either a list of strings, or record of strings to NavigationSchema
+ */
+type NavigationSchema = (Record<string, NavigationSchema> | string)[];
+export const NavigationSchema: ZodType<NavigationSchema> = z.lazy(() =>
+    z.array(z.union([z.string(), z.record(NavigationSchema)]))
+);
+
+/**
+ * @example
+ * api:
+ *  navigation:
+ *   groupA: {}
+ *   groupB:
+ *      - methodA
+ *      - methodB
+ *      - groupC:
+ *          - methodC
+ *  definitions:
+ *   - path: openapi.yml
+ *     overrides: overrides.yml
+ */
+export const APIDefinitionListWithNavigation = z.object({
+    navigation: NavigationSchema,
+    definitions: APIDefinitionList
+});
+
 // TODO: Introduce merging configuration with namespaces
 export const APIDefinitionSchema = z.union([
     APIDefinitionPathSchema,
     APIDefintionWithOverridesSchema,
-    APIDefinitionList
+    APIDefinitionList,
+    APIDefinitionListWithNavigation
 ]);
 
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
