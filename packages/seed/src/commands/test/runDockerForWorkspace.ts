@@ -19,6 +19,7 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
+    publishConfig,
     selectAudiences,
     irVersion,
     outputVersion,
@@ -32,6 +33,7 @@ export async function runDockerForWorkspace({
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
+    publishConfig: unknown;
     selectAudiences?: string[];
     irVersion?: string;
     outputVersion?: string;
@@ -47,7 +49,7 @@ export async function runDockerForWorkspace({
                 name: docker.name,
                 version: docker.version,
                 config: customConfig,
-                outputMode: getOutputMode({ outputMode, language, fixtureName }),
+                outputMode: getOutputMode({ outputMode, language, fixtureName, publishConfig }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
                 smartCasing: false,
@@ -70,18 +72,23 @@ export async function runDockerForWorkspace({
 function getOutputMode({
     outputMode,
     language,
-    fixtureName
+    fixtureName,
+    publishConfig
 }: {
     outputMode: OutputMode;
     language: generatorsYml.GenerationLanguage | undefined;
     fixtureName: string;
+    publishConfig: unknown;
 }): FernFiddle.OutputMode {
     switch (outputMode) {
         case "github":
+            const githubPublishInfo = publishConfig != null ? (publishConfig as GithubPublishInfo) : undefined;
             return FernFiddle.OutputMode.github({
                 repo: "fern",
                 owner: fixtureName,
-                publishInfo: language != null ? getGithubPublishInfo({ language, fixtureName }) : undefined
+                publishInfo:
+                    githubPublishInfo ??
+                    (language != null ? getGithubPublishInfo({ language, fixtureName }) : undefined)
             });
         case "local_files":
             return FernFiddle.remoteGen.OutputMode.downloadFiles();
@@ -89,7 +96,10 @@ function getOutputMode({
             if (language == null) {
                 throw new Error("Seed requires a language to be specified to test in publish mode");
             }
-            return FernFiddle.remoteGen.OutputMode.publishV2(getPublishInfo({ language, fixtureName }));
+            const publishOutputModeConfig = publishConfig != null ? (publishConfig as PublishOutputModeV2) : undefined;
+            return FernFiddle.remoteGen.OutputMode.publishV2(
+                publishOutputModeConfig ?? getPublishInfo({ language, fixtureName })
+            );
         }
     }
 }

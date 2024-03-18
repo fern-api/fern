@@ -44,6 +44,8 @@ export interface GeneratorFeatures {
     fileDownload: FernSeedConfig.FeatureImplementation;
     /** Generated code snippets for each endpoint are written to a snippets.json file. */
     snippets: FernSeedConfig.FeatureImplementation;
+    /** Generated tests leveraging snippets, that can be run/tested via `fern test`. */
+    snippetTests: FernSeedConfig.FeatureImplementation;
     /**
      * The SDK should support the creation of custom exceptions and handling them within the SDK. For example, we should be: creating a top level error
      * following the pattern OrganizationError which includes a status code and body, which should be thrown for API errors (e.g. do not throw the generic
@@ -61,6 +63,11 @@ export interface GeneratorFeatures {
      */
     additionalProperties: FernSeedConfig.FeatureImplementation;
     /**
+     * The SDK should generate an API reference markdown file (refrence.md at the root level) that shows all the endpoints, their documentation,
+     * their parameters, and their responses.
+     */
+    apiReferenceGeneration: FernSeedConfig.FeatureImplementation;
+    /**
      * Whether the generator supports reading the whitelable configuration.
      * If true, the generator will not mention `fern` in the hader of the
      * generated code.
@@ -69,4 +76,13 @@ export interface GeneratorFeatures {
      * the header will read `This file was auto-generated from our API Definition`.
      */
     whitelabel: FernSeedConfig.FeatureImplementation;
+    /**
+     * The SDK should support taking in a request and polling endpoint pair, alongside polling
+     * options (polling interval and max attempts) to wrap the endpoint pair and return the final
+     * response type of the polling endpoint.
+     *
+     * This is for convenience to obfuscate the need for two distinct endpoints.
+     * This should support sync and async implementations where available.
+     */
+    polling: FernSeedConfig.FeatureImplementation;
 }

@@ -1,5 +1,21 @@
 package com.fern.java;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -26,30 +42,74 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.immutables.value.Value;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends DownloadFilesCustomConfig> {
 
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    interface MavenPackageCoordinate {
+        static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
+            return ImmutableMavenPackageCoordinate.builder();
+        }
+
+        PackageCoordinate packageCoordinate();
+
+        MavenRegistryConfigV2 mavenRegistryConfig();
+    }
+
     private static final Logger log = LoggerFactory.getLogger(AbstractGeneratorCli.class);
+
+    private static GeneratorConfig getGeneratorConfig(String pluginPath) {
+        try {
+            return ClientObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read plugin configuration", e);
+        }
+    }
+
+    private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
+        try {
+            return ClientObjectMappers.JSON_MAPPER.readValue(
+                    new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read ir", e);
+        }
+    }
+
+    private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
+        try {
+            Process process = runCommandAsync(command, workingDirectory, environment);
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
+            }
+            process.waitFor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Failed to run command", e);
+        }
+    }
+
+    private static Process runCommandAsync(String[] command, Path workingDirectory, Map<String, String> environment) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            pb.environment().putAll(environment);
+            Process process = pb.start();
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+            errorGobbler.start();
+            outputGobbler.start();
+            return process;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to run command: " + Arrays.toString(command), e);
+        }
+    }
 
     private final List<GeneratedFile> generatedFiles = new ArrayList<>();
 
     private Path outputDirectory = null;
 
-    protected AbstractGeneratorCli() {}
+    protected AbstractGeneratorCli() {
+    }
 
     public final void run(String... args) {
         String pluginPath = args[0];
@@ -86,17 +146,14 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                 }
             });
-            generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
+            generatorExecClient.sendUpdate(GeneratorUpdate
+                    .exitStatusUpdate(ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
                     ErrorExitStatusUpdate.builder().message(e.getMessage()).build())));
             throw new RuntimeException(e);
         }
-    }
-
-    protected final void addGeneratedFile(GeneratedFile generatedFile) {
-        generatedFiles.add(generatedFile);
     }
 
     public final void runInDownloadFilesMode(
@@ -124,8 +181,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
                 .flatMap(githubPublishInfo -> githubPublishInfo.getMaven().map(mavenGithubPublishInfo -> {
-                    MavenArtifactAndGroup mavenArtifactAndGroup =
-                            MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
+                    MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
+                            .parse(mavenGithubPublishInfo.getCoordinate());
                     return MavenCoordinate.builder()
                             .group(mavenArtifactAndGroup.group())
                             .artifact(mavenArtifactAndGroup.artifact())
@@ -134,22 +191,25 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 }));
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
-        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo =
-                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
+        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo = githubOutputMode.getPublishInfo()
+                .flatMap(githubPublishInfo -> githubPublishInfo
                         .getMaven());
-        Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent() && mavenGithubPublishInfo.get().getSignature().isPresent();
+        Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent()
+                && mavenGithubPublishInfo.get().getSignature().isPresent();
         // add project level files
         addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
-                mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)
-        ));
+                mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
 
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory,
+                false, Optional.empty()));
 
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory,
+                Collections.emptyMap());
+        runCommandBlocking(new String[] { "gradle", "spotlessApply" },
+                outputDirectory, Collections.emptyMap());
     }
 
     public abstract void runInGithubModeHook(
@@ -166,10 +226,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
             T customConfig,
             GeneratorPublishConfig publishOutputMode) {
         // send publishing update
-        MavenRegistryConfigV2 mavenRegistryConfigV2 =
-                publishOutputMode.getRegistriesV2().getMaven();
-        MavenArtifactAndGroup mavenArtifactAndGroup =
-                MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
+        MavenRegistryConfigV2 mavenRegistryConfigV2 = publishOutputMode.getRegistriesV2().getMaven();
+        MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
+                .parse(mavenRegistryConfigV2.getCoordinate());
         MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
                 .group(mavenArtifactAndGroup.group())
                 .artifact(mavenArtifactAndGroup.artifact())
@@ -183,12 +242,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent());
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] { "gradle", "spotlessApply" }, outputDirectory, Collections.emptyMap());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
-            Map<String, String> publishEnvVars= Map.of(
+            Map<String, String> publishEnvVars = Map.of(
                     GeneratedBuildGradle.MAVEN_USERNAME_ENV_VAR,
                     mavenRegistryConfigV2.getUsername(),
                     GeneratedBuildGradle.MAVEN_PASSWORD_ENV_VAR,
@@ -202,7 +261,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY, signature.getSecretKey());
             }
             runCommandBlocking(
-                    new String[] {"gradle", "publish"},
+                    new String[] { "gradle", "publish" },
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
@@ -220,19 +279,17 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     public abstract List<String> getSubProjects();
 
-    @Value.Immutable
-    @StagedBuilderImmutablesStyle
-    interface MavenPackageCoordinate {
-        PackageCoordinate packageCoordinate();
+    public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
-        MavenRegistryConfigV2 mavenRegistryConfig();
+    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
+            GeneratorConfig generatorConfig);
 
-        static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
-            return ImmutableMavenPackageCoordinate.builder();
-        }
+    protected final void addGeneratedFile(GeneratedFile generatedFile) {
+        generatedFiles.add(generatedFile);
     }
 
-    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock, boolean addSignaturePlugin) {
+    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
+            boolean addSignaturePlugin) {
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
                         GradlePlugin.builder()
@@ -285,55 +342,5 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                         .collect(Collectors.joining("\n")))
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
-    }
-
-    private static GeneratorConfig getGeneratorConfig(String pluginPath) {
-        try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read plugin configuration", e);
-        }
-    }
-
-    public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
-
-    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
-            GeneratorConfig generatorConfig);
-
-    private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
-        try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(
-                    new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read ir", e);
-        }
-    }
-
-    private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
-        try {
-            Process process = runCommandAsync(command, workingDirectory, environment);
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
-            }
-            process.waitFor();
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Failed to run command", e);
-        }
-    }
-
-    private static Process runCommandAsync(String[] command, Path workingDirectory, Map<String, String> environment) {
-        try {
-            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
-            pb.environment().putAll(environment);
-            Process process = pb.start();
-            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
-            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
-            errorGobbler.start();
-            outputGobbler.start();
-            return process;
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to run command: " + Arrays.toString(command), e);
-        }
     }
 }
