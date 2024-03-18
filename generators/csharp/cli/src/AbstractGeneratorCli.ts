@@ -23,6 +23,8 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
 };
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
+    public asIsRootDirectory = AbsoluteFilePath.of("/asIs");
+
     public async runCli(): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
         if (pathToConfig == null) {
@@ -104,7 +106,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
-            await generatorNotificationService.sendUpdate(
+            // Some universal work across model and SDK generators
+            // TODO: should probably also write tests here.
+            await this.writeProjectFiles(config, "TestTODO");
+            this.formatFiles(config);
+
+            await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
@@ -156,20 +163,29 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
 
         // Create a new solution
-        execSync(`cd ${directoryPrefix} && dotnet new sln`);
+        execSync(`cd ${directoryPrefix} && dotnet new sln -n ${projectName}`);
 
         // Create and add the core project
-        const csprojContents = await readFile("./asIs/Template.csproj", "utf8");
-        new File(`${projectName}.csproj`, RelativeFilePath.of(projectName), csprojContents).write(directoryPrefix);
-        execSync(`dotnet sln add ${config.output.path}/${projectName}/${projectName}.csproj`);
-
-        // Create and add the test project
-        const testCsprojContents = template(await readFile("./asIs/Template.csproj", "utf8"))({ projectName });
-        const testProjectName = `${projectName}.Test`;
-        new File(`${testProjectName}.csproj`, RelativeFilePath.of(testProjectName), testCsprojContents).write(
+        const csprojContents = await readFile(
+            join(this.asIsRootDirectory, RelativeFilePath.of("./cli/Template.csproj")),
+            "utf8"
+        );
+        await new File(`${projectName}.csproj`, RelativeFilePath.of(projectName), csprojContents).write(
             directoryPrefix
         );
-        execSync(`dotnet sln add ${config.output.path}/${testProjectName}/${testProjectName}.csproj`);
+        execSync(`cd ${directoryPrefix} && dotnet sln add ./${projectName}/${projectName}.csproj`);
+
+        // Create and add the test project
+        const testCsprojContents = template(
+            await readFile(join(this.asIsRootDirectory, RelativeFilePath.of("./cli/Template.Test.csproj")), "utf8")
+        )({ projectName });
+        const testProjectName = `${projectName}.Test`;
+        await new File(`${testProjectName}.csproj`, RelativeFilePath.of(testProjectName), testCsprojContents).write(
+            directoryPrefix
+        );
+        execSync(`cd ${directoryPrefix} && dotnet sln add ./${testProjectName}/${testProjectName}.csproj`);
+
+        execSync("dotnet new gitignore");
     }
 
     async zipDirectoryContents({
