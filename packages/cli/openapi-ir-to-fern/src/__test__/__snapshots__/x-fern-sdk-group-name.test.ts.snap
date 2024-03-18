@@ -38,6 +38,16 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
         },
       },
     },
+    "ids/person.yml": {
+      "types": {
+        "PersonId": "string",
+      },
+    },
+    "ids/user.yml": {
+      "types": {
+        "UserId": "string",
+      },
+    },
     "user.yml": {
       "imports": {
         "root": "__package__.yml",

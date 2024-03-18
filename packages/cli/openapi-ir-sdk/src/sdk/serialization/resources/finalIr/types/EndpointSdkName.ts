@@ -10,13 +10,13 @@ export const EndpointSdkName: core.serialization.ObjectSchema<
     serializers.EndpointSdkName.Raw,
     FernOpenapiIr.EndpointSdkName
 > = core.serialization.objectWithoutOptionalProperties({
-    groupName: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).SdkGroupName)),
+    groupName: core.serialization.lazy(async () => (await import("../../..")).SdkGroupName),
     methodName: core.serialization.string(),
 });
 
 export declare namespace EndpointSdkName {
     interface Raw {
-        groupName: serializers.SdkGroupName.Raw[];
+        groupName: serializers.SdkGroupName.Raw;
         methodName: string;
     }
 }

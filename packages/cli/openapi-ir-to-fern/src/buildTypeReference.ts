@@ -102,8 +102,8 @@ export function buildReferenceTypeReference({
         context,
         fileContainingReference,
         declarationFile:
-            groupName != null
-                ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
+            groupName != null && groupName.length > 0
+                ? RelativeFilePath.of(`${groupName.map(camelCase).join("/")}.yml`)
                 : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
         type: schemaName
     });

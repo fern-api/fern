@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.1] - 2024-03-18
+
+- Fix: Fix the returned type and value contained within the retrying wrapper for the HTTPX client (http_client.py).
+
 ## [0.12.1] - 2024-03-14
 
 - Improves example generation and snippets for union types, as well as multi-url environments.

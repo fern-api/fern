@@ -309,7 +309,8 @@ async function convertUnversionedNavigationConfig({
                                         apiCollector
                                     })
                                 )
-                            )
+                            ),
+                            urlSlugOverride: tabConfig.slug
                         };
                     })
                 )

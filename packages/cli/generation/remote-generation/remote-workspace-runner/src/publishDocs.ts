@@ -425,7 +425,8 @@ async function convertNavigationConfig({
                         return {
                             title: tabConfig.displayName,
                             icon: tabConfig.icon,
-                            items: tabbedItems.map((tabItem) => tabItem.item)
+                            items: tabbedItems.map((tabItem) => tabItem.item),
+                            urlSlugOverride: tabConfig.slug
                         };
                     })
                 )
