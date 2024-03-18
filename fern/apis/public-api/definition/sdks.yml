@@ -12,11 +12,8 @@ service:
           properties: 
             definitionType: DefinitionType
             definition: 
-              type: file
-              docs: | 
-                A zip file of your entire API Definition. This can be an 
-                OpenAPI spec, gRPC proto files, AsyncAPI spec, 
-                or a Fern definition.
+              type: string
+              docs: A URL to your API Definition.
             sdks: 
               type: list<SDKGenerateRequest>
               docs: |
@@ -26,6 +23,7 @@ service:
         - name: GenerateSDKRequest
           request: 
             definitionType: OpenAPI
+            definition: https://petstore.swagger.io/v2/swagger.json
             sdks: 
               - language: typescript
                 packageName: petstore
