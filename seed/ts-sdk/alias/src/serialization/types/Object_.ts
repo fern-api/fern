@@ -5,10 +5,10 @@
 import * as serializers from "..";
 import * as SeedAlias from "../../api";
 import * as core from "../../core";
+import { Type } from "./Type";
 
-export const Object_: core.serialization.ObjectSchema<serializers.Object_.Raw, SeedAlias.Object_> =
-    core.serialization.lazyObject(async () => (await import("..")).Type);
+export const Object_: core.serialization.ObjectSchema<serializers.Object_.Raw, SeedAlias.Object_> = Type;
 
 export declare namespace Object_ {
-    type Raw = serializers.Type.Raw;
+    type Raw = Type.Raw;
 }

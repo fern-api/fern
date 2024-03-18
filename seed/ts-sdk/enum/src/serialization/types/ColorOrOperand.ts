@@ -5,13 +5,12 @@
 import * as serializers from "..";
 import * as SeedEnum from "../../api";
 import * as core from "../../core";
+import { Color } from "./Color";
+import { Operand } from "./Operand";
 
 export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
-    core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("..")).Color),
-        core.serialization.lazy(async () => (await import("..")).Operand),
-    ]);
+    core.serialization.undiscriminatedUnion([Color, Operand]);
 
 export declare namespace ColorOrOperand {
-    type Raw = serializers.Color.Raw | serializers.Operand.Raw;
+    type Raw = Color.Raw | Operand.Raw;
 }

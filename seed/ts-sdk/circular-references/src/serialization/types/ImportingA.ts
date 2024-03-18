@@ -5,14 +5,15 @@
 import * as serializers from "..";
 import * as SeedApi from "../../api";
 import * as core from "../../core";
+import { A } from "../resources/a/types/A";
 
 export const ImportingA: core.serialization.ObjectSchema<serializers.ImportingA.Raw, SeedApi.ImportingA> =
     core.serialization.object({
-        a: core.serialization.lazyObject(async () => (await import("..")).A).optional(),
+        a: A.optional(),
     });
 
 export declare namespace ImportingA {
     interface Raw {
-        a?: serializers.A.Raw | null;
+        a?: A.Raw | null;
     }
 }

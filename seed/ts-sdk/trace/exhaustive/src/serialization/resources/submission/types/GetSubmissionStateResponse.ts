@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Language } from "../../commons/types/Language";
+import { SubmissionTypeState } from "./SubmissionTypeState";
 
 export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
     serializers.GetSubmissionStateResponse.Raw,
@@ -12,15 +14,15 @@ export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     timeSubmitted: core.serialization.date().optional(),
     submission: core.serialization.string(),
-    language: core.serialization.lazy(async () => (await import("../../..")).Language),
-    submissionTypeState: core.serialization.lazy(async () => (await import("../../..")).SubmissionTypeState),
+    language: Language,
+    submissionTypeState: SubmissionTypeState,
 });
 
 export declare namespace GetSubmissionStateResponse {
     interface Raw {
         timeSubmitted?: string | null;
         submission: string;
-        language: serializers.Language.Raw;
-        submissionTypeState: serializers.SubmissionTypeState.Raw;
+        language: Language.Raw;
+        submissionTypeState: SubmissionTypeState.Raw;
     }
 }

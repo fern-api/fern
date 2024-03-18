@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { MigrationStatus } from "./MigrationStatus";
 
 export const Migration: core.serialization.ObjectSchema<serializers.Migration.Raw, SeedExamples.Migration> =
     core.serialization.object({
         name: core.serialization.string(),
-        status: core.serialization.lazy(async () => (await import("../../..")).MigrationStatus),
+        status: MigrationStatus,
     });
 
 export declare namespace Migration {
     interface Raw {
         name: string;
-        status: serializers.MigrationStatus.Raw;
+        status: MigrationStatus.Raw;
     }
 }

@@ -5,29 +5,31 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { MovieId } from "./MovieId";
+import { Tag } from "../../commons/resources/types/types/Tag";
 
 export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedExamples.Movie> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).MovieId),
-        prequel: core.serialization.lazy(async () => (await import("../../..")).MovieId).optional(),
+        id: MovieId,
+        prequel: MovieId.optional(),
         title: core.serialization.string(),
         from: core.serialization.string(),
         rating: core.serialization.number(),
         type: core.serialization.stringLiteral("movie"),
-        tag: core.serialization.lazy(async () => (await import("../../..")).commons.Tag),
+        tag: Tag,
         book: core.serialization.string().optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
     });
 
 export declare namespace Movie {
     interface Raw {
-        id: serializers.MovieId.Raw;
-        prequel?: serializers.MovieId.Raw | null;
+        id: MovieId.Raw;
+        prequel?: MovieId.Raw | null;
         title: string;
         from: string;
         rating: number;
         type: "movie";
-        tag: serializers.commons.Tag.Raw;
+        tag: Tag.Raw;
         book?: string | null;
         metadata: Record<string, unknown>;
     }

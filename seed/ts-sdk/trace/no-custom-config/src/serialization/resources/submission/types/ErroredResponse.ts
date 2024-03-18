@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
+import { ErrorInfo } from "./ErrorInfo";
 
 export const ErroredResponse: core.serialization.ObjectSchema<
     serializers.ErroredResponse.Raw,
     SeedTrace.ErroredResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    errorInfo: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+    submissionId: SubmissionId,
+    errorInfo: ErrorInfo,
 });
 
 export declare namespace ErroredResponse {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
-        errorInfo: serializers.ErrorInfo.Raw;
+        submissionId: SubmissionId.Raw;
+        errorInfo: ErrorInfo.Raw;
     }
 }

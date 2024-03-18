@@ -5,20 +5,21 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { NodeId } from "./NodeId";
 
 export const SinglyLinkedListNodeValue: core.serialization.ObjectSchema<
     serializers.SinglyLinkedListNodeValue.Raw,
     SeedTrace.SinglyLinkedListNodeValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
+    nodeId: NodeId,
     val: core.serialization.number(),
-    next: core.serialization.lazy(async () => (await import("../../..")).NodeId).optional(),
+    next: NodeId.optional(),
 });
 
 export declare namespace SinglyLinkedListNodeValue {
     interface Raw {
-        nodeId: serializers.NodeId.Raw;
+        nodeId: NodeId.Raw;
         val: number;
-        next?: serializers.NodeId.Raw | null;
+        next?: NodeId.Raw | null;
     }
 }

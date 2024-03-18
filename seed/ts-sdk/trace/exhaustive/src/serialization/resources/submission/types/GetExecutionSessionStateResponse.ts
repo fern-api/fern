@@ -5,22 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ExecutionSessionState } from "./ExecutionSessionState";
 
 export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
     serializers.GetExecutionSessionStateResponse.Raw,
     SeedTrace.GetExecutionSessionStateResponse
 > = core.serialization.object({
-    states: core.serialization.record(
-        core.serialization.string(),
-        core.serialization.lazyObject(async () => (await import("../../..")).ExecutionSessionState)
-    ),
+    states: core.serialization.record(core.serialization.string(), ExecutionSessionState),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
 });
 
 export declare namespace GetExecutionSessionStateResponse {
     interface Raw {
-        states: Record<string, serializers.ExecutionSessionState.Raw>;
+        states: Record<string, ExecutionSessionState.Raw>;
         numWarmingInstances?: number | null;
         warmingSessionIds: string[];
     }

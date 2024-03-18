@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as SeedObject from "../../api";
 import * as core from "../../core";
+import { Name } from "./Name";
 
 export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObject.Type> = core.serialization.object({
     one: core.serialization.number(),
@@ -27,7 +28,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     ),
     seventeen: core.serialization.list(core.serialization.string().optional()),
     eighteen: core.serialization.stringLiteral("eighteen"),
-    nineteen: core.serialization.lazyObject(async () => (await import("..")).Name),
+    nineteen: Name,
 });
 
 export declare namespace Type {
@@ -50,6 +51,6 @@ export declare namespace Type {
         sixteen: Record<string, number>[];
         seventeen: (string | null | undefined)[];
         eighteen: "eighteen";
-        nineteen: serializers.Name.Raw;
+        nineteen: Name.Raw;
     }
 }

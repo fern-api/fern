@@ -5,22 +5,23 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { NodeId } from "./NodeId";
 
 export const BinaryTreeNodeValue: core.serialization.ObjectSchema<
     serializers.BinaryTreeNodeValue.Raw,
     SeedTrace.BinaryTreeNodeValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
+    nodeId: NodeId,
     val: core.serialization.number(),
-    right: core.serialization.lazy(async () => (await import("../../..")).NodeId).optional(),
-    left: core.serialization.lazy(async () => (await import("../../..")).NodeId).optional(),
+    right: NodeId.optional(),
+    left: NodeId.optional(),
 });
 
 export declare namespace BinaryTreeNodeValue {
     interface Raw {
-        nodeId: serializers.NodeId.Raw;
+        nodeId: NodeId.Raw;
         val: number;
-        right?: serializers.NodeId.Raw | null;
-        left?: serializers.NodeId.Raw | null;
+        right?: NodeId.Raw | null;
+        left?: NodeId.Raw | null;
     }
 }

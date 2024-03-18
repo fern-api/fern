@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedResponseProperty from "../../../../api";
 import * as core from "../../../../core";
+import { WithDocs } from "./WithDocs";
 
 export const OptionalWithDocs: core.serialization.Schema<
     serializers.OptionalWithDocs.Raw,
     SeedResponseProperty.OptionalWithDocs
-> = core.serialization.lazyObject(async () => (await import("../../..")).WithDocs).optional();
+> = WithDocs.optional();
 
 export declare namespace OptionalWithDocs {
-    type Raw = serializers.WithDocs.Raw | null | undefined;
+    type Raw = WithDocs.Raw | null | undefined;
 }

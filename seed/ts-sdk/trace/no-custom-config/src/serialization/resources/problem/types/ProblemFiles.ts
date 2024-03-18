@@ -5,18 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { FileInfo } from "../../commons/types/FileInfo";
 
 export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFiles.Raw, SeedTrace.ProblemFiles> =
     core.serialization.object({
-        solutionFile: core.serialization.lazyObject(async () => (await import("../../..")).FileInfo),
-        readOnlyFiles: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).FileInfo)
-        ),
+        solutionFile: FileInfo,
+        readOnlyFiles: core.serialization.list(FileInfo),
     });
 
 export declare namespace ProblemFiles {
     interface Raw {
-        solutionFile: serializers.FileInfo.Raw;
-        readOnlyFiles: serializers.FileInfo.Raw[];
+        solutionFile: FileInfo.Raw;
+        readOnlyFiles: FileInfo.Raw[];
     }
 }

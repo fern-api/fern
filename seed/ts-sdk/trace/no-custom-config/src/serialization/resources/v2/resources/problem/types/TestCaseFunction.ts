@@ -5,16 +5,16 @@
 import * as serializers from "../../../../..";
 import * as SeedTrace from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { TestCaseWithActualResultImplementation } from "./TestCaseWithActualResultImplementation";
+import { VoidFunctionDefinition } from "./VoidFunctionDefinition";
 
 export const TestCaseFunction: core.serialization.Schema<
     serializers.v2.TestCaseFunction.Raw,
     SeedTrace.v2.TestCaseFunction
 > = core.serialization
     .union("type", {
-        withActualResult: core.serialization.lazyObject(
-            async () => (await import("../../../../..")).v2.TestCaseWithActualResultImplementation
-        ),
-        custom: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.VoidFunctionDefinition),
+        withActualResult: TestCaseWithActualResultImplementation,
+        custom: VoidFunctionDefinition,
     })
     .transform<SeedTrace.v2.TestCaseFunction>({
         transform: (value) => value,
@@ -24,11 +24,11 @@ export const TestCaseFunction: core.serialization.Schema<
 export declare namespace TestCaseFunction {
     type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;
 
-    interface WithActualResult extends serializers.v2.TestCaseWithActualResultImplementation.Raw {
+    interface WithActualResult extends TestCaseWithActualResultImplementation.Raw {
         type: "withActualResult";
     }
 
-    interface Custom extends serializers.v2.VoidFunctionDefinition.Raw {
+    interface Custom extends VoidFunctionDefinition.Raw {
         type: "custom";
     }
 }

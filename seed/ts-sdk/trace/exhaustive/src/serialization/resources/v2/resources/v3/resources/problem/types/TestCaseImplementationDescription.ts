@@ -5,20 +5,17 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { TestCaseImplementationDescriptionBoard } from "./TestCaseImplementationDescriptionBoard";
 
 export const TestCaseImplementationDescription: core.serialization.ObjectSchema<
     serializers.v2.v3.TestCaseImplementationDescription.Raw,
     SeedTrace.v2.v3.TestCaseImplementationDescription
 > = core.serialization.object({
-    boards: core.serialization.list(
-        core.serialization.lazy(
-            async () => (await import("../../../../../../..")).v2.v3.TestCaseImplementationDescriptionBoard
-        )
-    ),
+    boards: core.serialization.list(TestCaseImplementationDescriptionBoard),
 });
 
 export declare namespace TestCaseImplementationDescription {
     interface Raw {
-        boards: serializers.v2.v3.TestCaseImplementationDescriptionBoard.Raw[];
+        boards: TestCaseImplementationDescriptionBoard.Raw[];
     }
 }

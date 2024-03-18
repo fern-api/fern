@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemId } from "../../commons/types/ProblemId";
+import { CreateProblemError } from "./CreateProblemError";
 
 export const CreateProblemResponse: core.serialization.Schema<
     serializers.CreateProblemResponse.Raw,
@@ -12,10 +14,10 @@ export const CreateProblemResponse: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         success: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+            value: ProblemId,
         }),
         error: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).CreateProblemError),
+            value: CreateProblemError,
         }),
     })
     .transform<SeedTrace.CreateProblemResponse>({
@@ -28,11 +30,11 @@ export declare namespace CreateProblemResponse {
 
     interface Success {
         type: "success";
-        value: serializers.ProblemId.Raw;
+        value: ProblemId.Raw;
     }
 
     interface Error {
         type: "error";
-        value: serializers.CreateProblemError.Raw;
+        value: CreateProblemError.Raw;
     }
 }

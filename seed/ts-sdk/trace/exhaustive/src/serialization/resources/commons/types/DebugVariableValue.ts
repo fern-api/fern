@@ -5,6 +5,10 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { BinaryTreeNodeAndTreeValue } from "./BinaryTreeNodeAndTreeValue";
+import { SinglyLinkedListNodeAndListValue } from "./SinglyLinkedListNodeAndListValue";
+import { DoublyLinkedListNodeAndListValue } from "./DoublyLinkedListNodeAndListValue";
+import { GenericValue } from "./GenericValue";
 
 export const DebugVariableValue: core.serialization.Schema<
     serializers.DebugVariableValue.Raw,
@@ -32,18 +36,12 @@ export const DebugVariableValue: core.serialization.Schema<
                 core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue)
             ),
         }),
-        binaryTreeNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).BinaryTreeNodeAndTreeValue
-        ),
-        singlyLinkedListNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).SinglyLinkedListNodeAndListValue
-        ),
-        doublyLinkedListNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).DoublyLinkedListNodeAndListValue
-        ),
+        binaryTreeNodeValue: BinaryTreeNodeAndTreeValue,
+        singlyLinkedListNodeValue: SinglyLinkedListNodeAndListValue,
+        doublyLinkedListNodeValue: DoublyLinkedListNodeAndListValue,
         undefinedValue: core.serialization.object({}),
         nullValue: core.serialization.object({}),
-        genericValue: core.serialization.lazyObject(async () => (await import("../../..")).GenericValue),
+        genericValue: GenericValue,
     })
     .transform<SeedTrace.DebugVariableValue>({
         transform: (value) => {
@@ -131,15 +129,15 @@ export declare namespace DebugVariableValue {
         value: serializers.DebugVariableValue.Raw[];
     }
 
-    interface BinaryTreeNodeValue extends serializers.BinaryTreeNodeAndTreeValue.Raw {
+    interface BinaryTreeNodeValue extends BinaryTreeNodeAndTreeValue.Raw {
         type: "binaryTreeNodeValue";
     }
 
-    interface SinglyLinkedListNodeValue extends serializers.SinglyLinkedListNodeAndListValue.Raw {
+    interface SinglyLinkedListNodeValue extends SinglyLinkedListNodeAndListValue.Raw {
         type: "singlyLinkedListNodeValue";
     }
 
-    interface DoublyLinkedListNodeValue extends serializers.DoublyLinkedListNodeAndListValue.Raw {
+    interface DoublyLinkedListNodeValue extends DoublyLinkedListNodeAndListValue.Raw {
         type: "doublyLinkedListNodeValue";
     }
 
@@ -151,7 +149,7 @@ export declare namespace DebugVariableValue {
         type: "nullValue";
     }
 
-    interface GenericValue extends serializers.GenericValue.Raw {
+    interface GenericValue extends GenericValue.Raw {
         type: "genericValue";
     }
 }

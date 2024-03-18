@@ -5,20 +5,20 @@
 import * as serializers from "../../../..";
 import * as SeedTrace from "../../../../../api";
 import * as core from "../../../../../core";
+import { WorkspaceRunDetails } from "../../../submission/types/WorkspaceRunDetails";
+import { TraceResponse } from "../../../submission/types/TraceResponse";
 
 export const StoreTracedWorkspaceRequest: core.serialization.Schema<
     serializers.StoreTracedWorkspaceRequest.Raw,
     SeedTrace.StoreTracedWorkspaceRequest
 > = core.serialization.object({
-    workspaceRunDetails: core.serialization.lazyObject(async () => (await import("../../../..")).WorkspaceRunDetails),
-    traceResponses: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../..")).TraceResponse)
-    ),
+    workspaceRunDetails: WorkspaceRunDetails,
+    traceResponses: core.serialization.list(TraceResponse),
 });
 
 export declare namespace StoreTracedWorkspaceRequest {
     interface Raw {
-        workspaceRunDetails: serializers.WorkspaceRunDetails.Raw;
-        traceResponses: serializers.TraceResponse.Raw[];
+        workspaceRunDetails: WorkspaceRunDetails.Raw;
+        traceResponses: TraceResponse.Raw[];
     }
 }

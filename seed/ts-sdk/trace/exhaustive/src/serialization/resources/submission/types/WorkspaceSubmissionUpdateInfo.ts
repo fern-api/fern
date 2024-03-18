@@ -5,6 +5,10 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { RunningSubmissionState } from "./RunningSubmissionState";
+import { WorkspaceRunDetails } from "./WorkspaceRunDetails";
+import { WorkspaceTracedUpdate } from "./WorkspaceTracedUpdate";
+import { ErrorInfo } from "./ErrorInfo";
 
 export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
     serializers.WorkspaceSubmissionUpdateInfo.Raw,
@@ -12,14 +16,14 @@ export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: RunningSubmissionState,
         }),
-        ran: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
+        ran: WorkspaceRunDetails,
         stopped: core.serialization.object({}),
         traced: core.serialization.object({}),
-        tracedV2: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceTracedUpdate),
+        tracedV2: WorkspaceTracedUpdate,
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: ErrorInfo,
         }),
         finished: core.serialization.object({}),
     })
@@ -59,10 +63,10 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
 
     interface Running {
         type: "running";
-        value: serializers.RunningSubmissionState.Raw;
+        value: RunningSubmissionState.Raw;
     }
 
-    interface Ran extends serializers.WorkspaceRunDetails.Raw {
+    interface Ran extends WorkspaceRunDetails.Raw {
         type: "ran";
     }
 
@@ -74,13 +78,13 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
         type: "traced";
     }
 
-    interface TracedV2 extends serializers.WorkspaceTracedUpdate.Raw {
+    interface TracedV2 extends WorkspaceTracedUpdate.Raw {
         type: "tracedV2";
     }
 
     interface Errored {
         type: "errored";
-        value: serializers.ErrorInfo.Raw;
+        value: ErrorInfo.Raw;
     }
 
     interface Finished {

@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Scope } from "./Scope";
 
 export const StackFrame: core.serialization.ObjectSchema<serializers.StackFrame.Raw, SeedTrace.StackFrame> =
     core.serialization.object({
         methodName: core.serialization.string(),
         lineNumber: core.serialization.number(),
-        scopes: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Scope)),
+        scopes: core.serialization.list(Scope),
     });
 
 export declare namespace StackFrame {
     interface Raw {
         methodName: string;
         lineNumber: number;
-        scopes: serializers.Scope.Raw[];
+        scopes: Scope.Raw[];
     }
 }

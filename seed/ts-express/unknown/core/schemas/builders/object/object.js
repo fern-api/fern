@@ -39,7 +39,7 @@ function object(schemas) {
                     valueSchema,
                 };
                 rawKeyToProperty[rawKey] = property;
-                if (yield isSchemaRequired(valueSchema)) {
+                if (isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -70,7 +70,7 @@ function object(schemas) {
                 const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
-                if (yield isSchemaRequired(valueSchema)) {
+                if (isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey);
                 }
             }
@@ -240,19 +240,15 @@ function validateAndTransformExtendedObject({ extensionKeys, value, transformBas
     });
 }
 function isSchemaRequired(schema) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return !(yield isSchemaOptional(schema));
-    });
+    return !isSchemaOptional(schema);
 }
 function isSchemaOptional(schema) {
-    return __awaiter(this, void 0, void 0, function* () {
-        switch (yield schema.getType()) {
-            case Schema_1.SchemaType.ANY:
-            case Schema_1.SchemaType.UNKNOWN:
-            case Schema_1.SchemaType.OPTIONAL:
-                return true;
-            default:
-                return false;
-        }
-    });
+    switch (schema.getType()) {
+        case Schema_1.SchemaType.ANY:
+        case Schema_1.SchemaType.UNKNOWN:
+        case Schema_1.SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
+    }
 }

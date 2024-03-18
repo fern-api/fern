@@ -5,24 +5,18 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { FunctionImplementation } from "./FunctionImplementation";
+import { Language } from "../../../../../../commons/types/Language";
 
 export const FunctionImplementationForMultipleLanguages: core.serialization.ObjectSchema<
     serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,
     SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages
 > = core.serialization.object({
-    codeByLanguage: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-        core.serialization
-            .lazyObject(async () => (await import("../../../../../../..")).v2.v3.FunctionImplementation)
-            .optional()
-    ),
+    codeByLanguage: core.serialization.record(Language, FunctionImplementation.optional()),
 });
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     interface Raw {
-        codeByLanguage: Record<
-            serializers.Language.Raw,
-            serializers.v2.v3.FunctionImplementation.Raw | null | undefined
-        >;
+        codeByLanguage: Record<Language.Raw, FunctionImplementation.Raw | null | undefined>;
     }
 }

@@ -5,14 +5,13 @@
 import * as serializers from "../../../../..";
 import * as Fiddle from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { NestedObjectWithRequiredField } from "../../../../types/resources/object/types/NestedObjectWithRequiredField";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
     Fiddle.types.NestedObjectWithRequiredField[]
-> = core.serialization.list(
-    core.serialization.lazyObject(async () => (await import("../../../../..")).types.NestedObjectWithRequiredField)
-);
+> = core.serialization.list(NestedObjectWithRequiredField);
 
 export declare namespace Request {
-    type Raw = serializers.types.NestedObjectWithRequiredField.Raw[];
+    type Raw = NestedObjectWithRequiredField.Raw[];
 }

@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 import * as SeedResponseProperty from "../../../../api";
+import { Response } from "../types/Response";
 
 export const Request: core.serialization.Schema<serializers.service.getOptionalMovie.Request.Raw, string> =
     core.serialization.string();
@@ -16,8 +17,8 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.service.getOptionalMovie.Response.Raw,
     SeedResponseProperty.Response | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).Response).optional();
+> = Response.optional();
 
 export declare namespace Response {
-    type Raw = serializers.Response.Raw | null | undefined;
+    type Raw = Response.Raw | null | undefined;
 }

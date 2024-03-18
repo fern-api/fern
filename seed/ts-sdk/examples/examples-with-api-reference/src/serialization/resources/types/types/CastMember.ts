@@ -5,14 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { Actor } from "./Actor";
+import { Actress } from "./Actress";
+import { StuntDouble } from "./StuntDouble";
 
 export const CastMember: core.serialization.Schema<serializers.CastMember.Raw, SeedExamples.CastMember> =
-    core.serialization.undiscriminatedUnion([
-        core.serialization.lazyObject(async () => (await import("../../..")).Actor),
-        core.serialization.lazyObject(async () => (await import("../../..")).Actress),
-        core.serialization.lazyObject(async () => (await import("../../..")).StuntDouble),
-    ]);
+    core.serialization.undiscriminatedUnion([Actor, Actress, StuntDouble]);
 
 export declare namespace CastMember {
-    type Raw = serializers.Actor.Raw | serializers.Actress.Raw | serializers.StuntDouble.Raw;
+    type Raw = Actor.Raw | Actress.Raw | StuntDouble.Raw;
 }

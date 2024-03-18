@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
 
 export const SubmissionIdNotFound: core.serialization.ObjectSchema<
     serializers.SubmissionIdNotFound.Raw,
     SeedTrace.SubmissionIdNotFound
 > = core.serialization.object({
-    missingSubmissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    missingSubmissionId: SubmissionId,
 });
 
 export declare namespace SubmissionIdNotFound {
     interface Raw {
-        missingSubmissionId: serializers.SubmissionId.Raw;
+        missingSubmissionId: SubmissionId.Raw;
     }
 }

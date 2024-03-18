@@ -5,10 +5,11 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Playlist } from "../types/Playlist";
 
 export const Response: core.serialization.Schema<serializers.playlist.getPlaylists.Response.Raw, SeedTrace.Playlist[]> =
-    core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Playlist));
+    core.serialization.list(Playlist);
 
 export declare namespace Response {
-    type Raw = serializers.Playlist.Raw[];
+    type Raw = Playlist.Raw[];
 }

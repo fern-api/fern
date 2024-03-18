@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Language } from "../../commons/types/Language";
 
 export const UnexpectedLanguageError: core.serialization.ObjectSchema<
     serializers.UnexpectedLanguageError.Raw,
     SeedTrace.UnexpectedLanguageError
 > = core.serialization.object({
-    expectedLanguage: core.serialization.lazy(async () => (await import("../../..")).Language),
-    actualLanguage: core.serialization.lazy(async () => (await import("../../..")).Language),
+    expectedLanguage: Language,
+    actualLanguage: Language,
 });
 
 export declare namespace UnexpectedLanguageError {
     interface Raw {
-        expectedLanguage: serializers.Language.Raw;
-        actualLanguage: serializers.Language.Raw;
+        expectedLanguage: Language.Raw;
+        actualLanguage: Language.Raw;
     }
 }

@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemId } from "../../commons/types/ProblemId";
 
 export const Request: core.serialization.Schema<
     serializers.homepage.setHomepageProblems.Request.Raw,
     SeedTrace.ProblemId[]
-> = core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ProblemId));
+> = core.serialization.list(ProblemId);
 
 export declare namespace Request {
-    type Raw = serializers.ProblemId.Raw[];
+    type Raw = ProblemId.Raw[];
 }
