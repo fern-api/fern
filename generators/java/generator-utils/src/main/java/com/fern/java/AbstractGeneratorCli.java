@@ -135,17 +135,14 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
         Optional<MavenGithubPublishInfo> mavenGithubPublishInfo =
-                githubOutputMode.getPublishInfo().get().getMaven();
+                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
+                        .getMaven());
         Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent() && mavenGithubPublishInfo.get().getSignature().isPresent();
         // add project level files
         addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
-                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
-                        .getMaven()
-                        .map(MavenGithubPublishInfo::getRegistryUrl)),
-                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
-                        .getMaven()
-                        .flatMap(MavenGithubPublishInfo::getSignature))
+                mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
+                mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)
         ));
 
         // write files to disk
