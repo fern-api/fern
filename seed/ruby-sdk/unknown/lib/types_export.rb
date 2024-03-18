@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-require_relative "seed_unknown_as_any_client/unknown/types/my_alias"
-require_relative "seed_unknown_as_any_client/unknown/types/my_object"
+require_relative "fern_unknown/unknown/types/my_alias"
+require_relative "fern_unknown/unknown/types/my_object"

@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
-require "seed_enum_client"
+require "fern_enum"

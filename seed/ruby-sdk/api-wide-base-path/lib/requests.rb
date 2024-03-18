@@ -14,7 +14,7 @@ module SeedApiWideBasePathClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_api_wide_base_path_client",
+        "X-Fern-SDK-Name": "fern_api-wide-base-path",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -35,7 +35,7 @@ module SeedApiWideBasePathClient
     def initialize(max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_api_wide_base_path_client",
+        "X-Fern-SDK-Name": "fern_api-wide-base-path",
         "X-Fern-SDK-Version": "0.0.1"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

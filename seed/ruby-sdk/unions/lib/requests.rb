@@ -12,7 +12,7 @@ module SeedUnionsClient
     # @param timeout_in_seconds [Long]
     # @return [RequestClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "seed_unions_client", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_unions", "X-Fern-SDK-Version": "0.0.1" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -29,7 +29,7 @@ module SeedUnionsClient
     # @param timeout_in_seconds [Long]
     # @return [AsyncRequestClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "seed_unions_client", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_unions", "X-Fern-SDK-Version": "0.0.1" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true

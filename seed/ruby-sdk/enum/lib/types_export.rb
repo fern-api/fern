@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "seed_enum_client/types/operand"
-require_relative "seed_enum_client/types/color"
-require_relative "seed_enum_client/types/color_or_operand"
+require_relative "fern_enum/types/operand"
+require_relative "fern_enum/types/color"
+require_relative "fern_enum/types/color_or_operand"

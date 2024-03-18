@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "seed_error_property_client/errors/types/property_based_error_test_body"
+require_relative "fern_error_property/errors/types/property_based_error_test_body"
