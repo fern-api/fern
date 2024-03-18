@@ -2,7 +2,7 @@ import { Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { GeneratorsConfigurationSchema, NavigationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -18,6 +18,7 @@ export type APIDefinition = SingleNamespaceAPIDefinition;
 
 export interface SingleNamespaceAPIDefinition {
     type: "singleNamespace";
+    navigation: NavigationSchema;
     definitions: APIDefinitionLocation[];
 }
 

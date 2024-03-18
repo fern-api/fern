@@ -37,12 +37,10 @@ export const APIDefintionWithOverridesSchema = z.object({
  */
 export const APIDefinitionList = z.array(z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema]));
 
-// export const NavigationSchema = z.union([z.array(z.string()), z.record(z.array(z.string())), z.array(z.record())]);
-
 /**
  * NavigationSchema is a recursive schema that can be either a list of strings, or record of strings to NavigationSchema
  */
-type NavigationSchema = (Record<string, NavigationSchema> | string)[];
+export type NavigationSchema = (Record<string, NavigationSchema> | string)[];
 export const NavigationSchema: ZodType<NavigationSchema> = z.lazy(() =>
     z.array(z.union([z.string(), z.record(NavigationSchema)]))
 );
@@ -65,6 +63,12 @@ export const APIDefinitionListWithNavigation = z.object({
     navigation: NavigationSchema,
     definitions: APIDefinitionList
 });
+
+export function isAPIDefinitionListWithNavigation(
+    value: unknown
+): value is z.infer<typeof APIDefinitionListWithNavigation> {
+    return APIDefinitionListWithNavigation.safeParse(value).success;
+}
 
 // TODO: Introduce merging configuration with namespaces
 export const APIDefinitionSchema = z.union([
