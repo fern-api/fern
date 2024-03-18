@@ -6,7 +6,7 @@ import * as FernOpenapiIr from "../../..";
 
 export interface EndpointSdkName {
     /** This is populated by `x-fern-sdk-method-name` */
-    groupName: FernOpenapiIr.SdkGroupName[];
+    groupName: FernOpenapiIr.SdkGroupName;
     /** This is populated by `x-fern-sdk-group-name` */
     methodName: string;
 }

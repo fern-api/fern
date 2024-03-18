@@ -118,6 +118,7 @@ export async function testWorkspaceFixtures({
                             docker,
                             scripts: runningScripts,
                             customConfig: fixtureConfigInstance.customConfig,
+                            publishConfig: fixtureConfigInstance.publishConfig,
                             selectAudiences: fixtureConfigInstance.audiences,
                             taskContext: taskContextFactory.create(
                                 `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
@@ -147,6 +148,7 @@ export async function testWorkspaceFixtures({
                         docker,
                         scripts: runningScripts,
                         customConfig: undefined,
+                        publishConfig: undefined,
                         taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                         outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                         outputMode: workspace.workspaceConfig.defaultOutputMode,
@@ -196,6 +198,7 @@ export async function acquireLocksAndRunTest({
     fixture,
     docker,
     customConfig,
+    publishConfig,
     selectAudiences,
     scripts,
     taskContext,
@@ -214,6 +217,7 @@ export async function acquireLocksAndRunTest({
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
+    publishConfig: unknown;
     selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
@@ -235,6 +239,7 @@ export async function acquireLocksAndRunTest({
         language,
         docker,
         customConfig,
+        publishConfig,
         selectAudiences,
         scripts,
         taskContext,
@@ -258,6 +263,7 @@ async function testWithWriteToDisk({
     language,
     docker,
     customConfig,
+    publishConfig,
     selectAudiences,
     scripts,
     taskContext,
@@ -275,6 +281,7 @@ async function testWithWriteToDisk({
     language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
+    publishConfig: unknown;
     selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
@@ -318,6 +325,7 @@ async function testWithWriteToDisk({
             workspace: fernWorkspace,
             language,
             customConfig,
+            publishConfig,
             selectAudiences,
             taskContext,
             irVersion,

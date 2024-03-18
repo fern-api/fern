@@ -21,6 +21,6 @@ jobs:
       - name: Release Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          NPM_TOKEN: ${{ secrets.PYPI_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
           fern generate --api public-api --group python-sdk --version ${{ inputs.version }} --log-level debug

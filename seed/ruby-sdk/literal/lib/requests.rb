@@ -14,7 +14,7 @@ module SeedLiteralClient
     # @param audit_logging [Boolean]
     # @return [RequestClient]
     def initialize(version:, audit_logging:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "seed_literal_client", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
       @headers["X-API-Version"] = version unless version.nil?
       @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -35,7 +35,7 @@ module SeedLiteralClient
     # @param audit_logging [Boolean]
     # @return [AsyncRequestClient]
     def initialize(version:, audit_logging:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "seed_literal_client", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
       @headers["X-API-Version"] = version unless version.nil?
       @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|

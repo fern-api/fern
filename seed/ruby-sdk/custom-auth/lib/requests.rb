@@ -15,7 +15,7 @@ module SeedCustomAuthClient
     def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_custom_auth_client",
+        "X-Fern-SDK-Name": "fern_custom-auth",
         "X-Fern-SDK-Version": "0.0.1",
         "X-API-KEY": custom_auth_scheme.to_s
       }
@@ -38,7 +38,7 @@ module SeedCustomAuthClient
     def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_custom_auth_client",
+        "X-Fern-SDK-Name": "fern_custom-auth",
         "X-Fern-SDK-Version": "0.0.1",
         "X-API-KEY": custom_auth_scheme.to_s
       }

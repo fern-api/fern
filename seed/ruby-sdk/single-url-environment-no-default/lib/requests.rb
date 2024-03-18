@@ -19,7 +19,7 @@ module SeedSingleUrlEnvironmentNoDefaultClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_single_url_environment_no_default_client",
+        "X-Fern-SDK-Name": "fern_single-url-environment-no-default",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -45,7 +45,7 @@ module SeedSingleUrlEnvironmentNoDefaultClient
       @base_url = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_single_url_environment_no_default_client",
+        "X-Fern-SDK-Name": "fern_single-url-environment-no-default",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

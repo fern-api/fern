@@ -46,3 +46,10 @@ jobs:
 
       - name: Build
         run: yarn build
+
+      - name: Publish to npm
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --access restricted
+        env:
+          NPM_TOKEN: ${{ secrets. }}

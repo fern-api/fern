@@ -189,6 +189,13 @@ navigation:
           - page: Update SDKs with Fern's GitHub Bot
             path: ./docs/pages/fern-sdks/guides/github-bot.mdx
             slug: github-bot
+      - api: API Reference
+        api-name: public-api
+        # audiences:
+        #   - external
+        snippets:
+          python: fern-api
+          typescript: "@fern-api/node-sdk"
   - tab: fern-docs
     layout:
       - page: Overview
@@ -258,18 +265,6 @@ navigation:
                 path: ./docs/pages/fern-docs/content/components/steps.mdx
               - page: Endpoint Snippets
                 path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
-          - section: Use the Snippets API
-            slug: use-snippets-api
-            contents:
-              - page: Introduction
-                path: ./docs/pages/fern-docs/content/use-snippets-api/introduction.mdx
-              - api: API Reference
-                api-name: public-api
-                audiences:
-                - external
-                snippets:
-                  python: fern-api
-                  typescript: "@fern-api/node-sdk"
 
 navbar-links:
   - type: secondary

@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPackageYmlClient } from \"\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.echo(\"Hello world!\");\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.echo(\"Hello world!\");\n"
             }
         },
         {
@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPackageYmlClient } from \"\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.service.nop(\"id-219xca8\");\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.service.nop(\"id-219xca8\");\n"
             }
         }
     ],

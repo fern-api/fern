@@ -38,7 +38,7 @@ export class Query {
                 "X-API-Version": "02-02-2024",
                 "X-API-Enable-Audit-Logging": "true",
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
