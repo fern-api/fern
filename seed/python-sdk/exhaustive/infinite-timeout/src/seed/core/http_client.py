@@ -5,6 +5,7 @@ import email.utils
 import re
 import time
 import typing
+from contextlib import asynccontextmanager, contextmanager
 from functools import wraps
 from random import random
 
@@ -98,8 +99,10 @@ class HttpClient:
         return response
 
     @wraps(httpx.Client.stream)
+    @contextmanager
     def stream(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> typing.Any:
-        return self.httpx_client.stream(*args, **kwargs)
+        with self.httpx_client.stream(*args, **kwargs) as stream:
+            yield stream
 
 
 class AsyncHttpClient:
@@ -118,8 +121,10 @@ class AsyncHttpClient:
                 return await self.request(max_retries=max_retries, retries=retries + 1, *args, **kwargs)
         return response
 
-    @wraps(httpx.AsyncClient.request)
+    @wraps(httpx.AsyncClient.stream)
+    @asynccontextmanager
     async def stream(
         self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
     ) -> typing.Any:
-        return self.httpx_client.stream(*args, **kwargs)
+        async with self.httpx_client.stream(*args, **kwargs) as stream:
+            yield stream
