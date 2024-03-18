@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.5] - 2024-03-18
+- Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven Central.
+  To sign your artifacts, you must add the below to your publishing config:
+  ```yaml
+  generators:
+    - name: fernapi/fern-java-sdk
+      version: 0.X.Y
+      output:
+        location: maven
+        signature:
+            keyId: ""
+            password: ""
+            secretKey: ""
+  ```
+  and secrets can be used, similar to how API keys are specified today:
+  ```yaml
+  generators:
+    - name: fernapi/fern-java-sdk
+      version: 0.X.Y
+      output:
+        location: maven
+        signature:
+            keyId: ${MY_KID_ENVVAR}
+            password: ${MY_SECRET_ENVVAR}
+            secretKey: ${MY_SECRET_KEY_ENVVAR}
+  ```
+
 ## [0.8.5-rc0] - 2024-02-23
 - Internal: Use gradle:jdk11-jammy instead of bitnami/gradle:latest for the base 
   docker image. 
