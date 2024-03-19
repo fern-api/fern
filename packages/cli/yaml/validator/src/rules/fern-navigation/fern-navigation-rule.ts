@@ -1,10 +1,9 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { NodePath, NodePathItem } from "@fern-api/yaml-schema";
-import chalk from "chalk";
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule } from "../../Rule";
 import { ValidationViolation } from "../../ValidationViolation";
 
 export const ImportFileExistsRule: Rule = {
@@ -19,24 +18,11 @@ export const ImportFileExistsRule: Rule = {
         });
 
         return {
-            definitionFile: {
-                import: async ({ importedAs, importPath }, { relativeFilepath }) => {
-                    const violations: RuleViolation[] = [];
-                    const importAbsoluteFilepath = join(
-                        workspace.definition.absoluteFilepath,
-                        dirname(relativeFilepath),
-                        RelativeFilePath.of(importPath)
-                    );
-                    const isDefinitionFilePresent = absolutePaths.has(importAbsoluteFilepath);
-                    if (!isDefinitionFilePresent) {
-                        violations.push({
-                            severity: "error",
-                            message: `Import ${chalk.bold(importedAs)} points to non-existent path ${chalk.bold(
-                                importPath
-                            )}.`
-                        });
+            generatorFile: {
+                api: async (api, { relativeFilepath }) => {
+                    if (generatorsYml.isAPIDefinitionListWithNavigation(api)) {
+                        validateIrNavigation(ir, api.navigation, relativeFilepath, ["api"]);
                     }
-                    return violations;
                 }
             }
         };
@@ -70,7 +56,8 @@ function validateNavigationSchema(
     navigation: generatorsYml.NavigationSchema,
     defaultItems: APIV1Write.ApiNavigationConfigItem[],
     relativeFilepath: RelativeFilePath,
-    nodePath: NodePath
+    nodePath: NodePath,
+    ir: IntermediateRepresentation
 ): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
     const navigationItemCountError = false;
@@ -86,7 +73,9 @@ function validateNavigationSchema(
     }
 
     const visitedNames = getVisitedNames(navigation);
-    const defaultNames = defaultItems.map((item) => (item.type === "subpackage" ? item.subpackageId : item.value));
+    const defaultNames = defaultItems
+        .map((item) => (item.type === "subpackage" ? ir.subpackages[item.subpackageId]?.name.originalName : item.value))
+        .filter((name) => name != null);
 
     const missingNames = defaultNames.filter((name) => !visitedNames.includes(name));
     if (missingNames.length > 0) {

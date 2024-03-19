@@ -14,7 +14,8 @@ export function convertIrToNavigation(
 
     const items = visitAndSortNavigationSchema(
         Array.isArray(navigation) ? navigation : [navigation],
-        defaultRoot.items
+        defaultRoot.items,
+        ir
     );
 
     return { items };
@@ -69,7 +70,7 @@ function convertPackageToNavigationConfigItems(
         if (subpackage != null) {
             items.push({
                 type: "subpackage",
-                subpackageId: subpackage.name.originalName,
+                subpackageId,
                 items: convertPackageToNavigationConfigItems(subpackage, ir)
             });
         }
@@ -78,17 +79,28 @@ function convertPackageToNavigationConfigItems(
     return items;
 }
 
+function createItemMatcher(key: string, ir: IntermediateRepresentation) {
+    return function (item: APIV1Write.ApiNavigationConfigItem): boolean {
+        if (item.type === "subpackage") {
+            // subpackages are keyed by a generated ID, so we need to look up the original name
+            return ir.subpackages[item.subpackageId]?.name.originalName === key;
+        } else {
+            // endpoints, webhooks, and websockets are keyed by their original name
+            return key === item.value;
+        }
+    };
+}
+
 function visitAndSortNavigationSchema(
     navigationItems: generatorsYml.NavigationSchema,
-    defaultItems: APIV1Write.ApiNavigationConfigItem[]
+    defaultItems: APIV1Write.ApiNavigationConfigItem[],
+    ir: IntermediateRepresentation
 ): APIV1Write.ApiNavigationConfigItem[] {
     const items: APIV1Write.ApiNavigationConfigItem[] = [];
     for (const navigationItem of Array.isArray(navigationItems) ? navigationItems : [navigationItems]) {
         if (typeof navigationItem === "string") {
             // item could either be a group name or method name
-            const foundItem = defaultItems.find((item) =>
-                item.type === "subpackage" ? item.subpackageId === navigationItem : item.value === navigationItem
-            );
+            const foundItem = defaultItems.find(createItemMatcher(navigationItem, ir));
 
             if (foundItem != null && foundItem.type !== "subpackage") {
                 items.push(foundItem);
@@ -98,15 +110,13 @@ function visitAndSortNavigationSchema(
 
             for (const [groupName, group] of Object.entries(navigationItem)) {
                 // item could either be a group name or method name
-                const foundItem = defaultItems.find((item) =>
-                    item.type === "subpackage" ? item.subpackageId === groupName : item.value === groupName
-                );
+                const foundItem = defaultItems.find(createItemMatcher(groupName, ir));
 
                 if (foundItem != null && foundItem.type === "subpackage") {
                     items.push({
                         type: "subpackage",
                         subpackageId: foundItem.subpackageId,
-                        items: visitAndSortNavigationSchema(group, foundItem.items)
+                        items: visitAndSortNavigationSchema(group, foundItem.items, ir)
                     });
                 }
             }
