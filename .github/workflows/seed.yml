@@ -36,13 +36,35 @@ jobs:
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'test-definitions/**'
-            ruby: 'generators/ruby/**'
-            openapi: 'generators/openapi/**'
-            python: 'generators/python/**'
-            postman: 'generators/postman/**'
-            java: 'generators/java/**'
-            typescript: 'generators/typescript/**'
-            go: 'generators/go/**'
+            ruby: 
+              - 'generators/ruby/**'
+              - seed/ruby-sdk/seed.yml
+              - seed/ruby-model/seed.yml
+            openapi: 
+              - 'generators/openapi/**'
+              - seed/openapi/seed.yml
+            python: 
+              - 'generators/python/**'
+              - seed/pydantic/seed.yml
+              - seed/python-sdk/seed.yml
+              - seed/fastapi/seed.yml
+            postman: 
+              - 'generators/postman/**'
+              - seed/postman/seed.yml
+            java: 
+              - 'generators/java/**'
+              - seed/java-sdk/seed.yml
+              - seed/java-model/seed.yml
+              - seed/java-spring/seed.yml
+            typescript: 
+              - 'generators/typescript/**'
+              - seed/ts-sdk/seed.yml
+              - seed/ts-express/seed.yml
+            go: 
+              - 'generators/go/**'
+              - seed/go-sdk/seed.yml
+              - seed/go-model/seed.yml
+              - seed/go-fiber/seed.yml
 
   ruby-model:
     runs-on: ubuntu-latest
