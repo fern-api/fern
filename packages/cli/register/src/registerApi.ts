@@ -34,7 +34,7 @@ export async function registerApi({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi(ir, snippetsConfig);
+    const apiDefinition = convertIrToFdrApi(ir, snippetsConfig, workspace.generatorsConfiguration?.api?.navigation);
     context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: organization,

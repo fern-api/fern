@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -25,6 +26,10 @@ export interface RuleVisitors {
     rootApiFile?: RuleVisitor<RootApiFileAstNodeTypes, RootApiFileSchema>;
     definitionFile?: RuleVisitor<DefinitionFileAstNodeTypes, DefinitionFileSchema>;
     packageMarker?: RuleVisitor<PackageMarkerAstNodeTypes, PackageMarkerFileSchema>;
+    generatorFile?: RuleVisitor<
+        generatorsYml.GeneratorsConfigurationSchema,
+        generatorsYml.GeneratorsConfigurationSchema
+    >;
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {

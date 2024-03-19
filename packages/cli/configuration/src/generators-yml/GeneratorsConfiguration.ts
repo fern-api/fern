@@ -1,5 +1,5 @@
 import { Values } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
 import { GeneratorsConfigurationSchema, NavigationSchema } from "./schemas/GeneratorsConfigurationSchema";
@@ -11,6 +11,7 @@ export interface GeneratorsConfiguration {
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
+    relativePathToConfiguration: RelativeFilePath;
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 

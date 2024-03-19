@@ -26,7 +26,7 @@ export {
 } from "./docsAst/DocsConfigFileAstVisitor";
 export { validateVersionConfigFileSchema } from "./docsAst/validateVersionConfig";
 export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileAst";
-export { type NodePath } from "./NodePath";
+export { type NodePath, type NodePathItem } from "./NodePath";
 export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { getRequestBody } from "./utils/getRequestBody";

@@ -38,12 +38,28 @@ export const APIDefintionWithOverridesSchema = z.object({
 export const APIDefinitionList = z.array(z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema]));
 
 /**
- * NavigationSchema is a recursive schema that can be either a list of strings, or record of strings to NavigationSchema
+ * NavigationSchema is a recursive schema that can be either a record, a list of records, or a list of strings
+ * where the strings are SDK method names and the records are groups of methods or subpackages keyed by the SDK group name.
  */
-export type NavigationSchema = (Record<string, NavigationSchema> | string)[];
-export const NavigationSchema: ZodType<NavigationSchema> = z.lazy(() =>
-    z.array(z.union([z.string(), z.record(NavigationSchema)]))
+// Define a type that represents either a string or a record
+export type NavigationItem = string | NavigationGroupSchema;
+
+// Define your 'NavigationGroupSchema' as a record that will hold either a string or another 'NavigationGroupSchema'
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+export interface NavigationGroupSchema {
+    [key: string]: NavigationItem | NavigationItem[];
+}
+
+// Your 'NavigationSchema' can now hold your recursive `NavigationGroupSchema`
+export type NavigationSchema = NavigationItem | NavigationItem[];
+
+export const NavigationGroupSchema: ZodType<NavigationGroupSchema> = z.lazy(() =>
+    z.record(z.union([NavigationItem, z.array(NavigationItem)]))
 );
+
+export const NavigationItem = z.union([z.string(), NavigationGroupSchema]);
+
+export const NavigationSchema = z.union([NavigationItem, z.array(NavigationGroupSchema)]);
 
 /**
  * @example
@@ -77,6 +93,8 @@ export const APIDefinitionSchema = z.union([
     APIDefinitionList,
     APIDefinitionListWithNavigation
 ]);
+
+export type APIDefinitionSchema = z.infer<typeof APIDefinitionSchema>;
 
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
 export const OPENAPI_LOCATION_KEY = "openapi";

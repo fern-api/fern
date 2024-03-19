@@ -16,6 +16,10 @@ export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSch
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    type GeneratorsConfigurationSchema
+    type GeneratorsConfigurationSchema,
+    type NavigationGroupSchema,
+    type NavigationItem,
+    type NavigationSchema,
+    type APIDefinitionSchema
 } from "./schemas/GeneratorsConfigurationSchema";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

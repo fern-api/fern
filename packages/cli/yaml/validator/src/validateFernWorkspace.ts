@@ -1,7 +1,12 @@
+import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
+import {
+    FernWorkspace,
+    visitAllDefinitionFiles,
+    visitAllGeneratorFiles,
+    visitAllPackageMarkers
+} from "@fern-api/workspace-loader";
 import {
     DefinitionFileSchema,
     PackageMarkerFileSchema,
@@ -53,6 +58,15 @@ export async function runRulesOnWorkspace({
     await visitAllPackageMarkers(workspace, async (relativeFilepath, file) => {
         const violationsForFile = await validatePackageMarker({
             relativeFilepath,
+            contents: file,
+            allRuleVisitors
+        });
+        violations.push(...violationsForFile);
+    });
+
+    await visitAllGeneratorFiles(workspace, async (relativeFilePath, file) => {
+        const violationsForFile = await validateGeneratorFile({
+            relativeFilePath,
             contents: file,
             allRuleVisitors
         });
@@ -128,6 +142,25 @@ async function validatePackageMarker({
         }
     });
     await visitPackageMarkerYamlAst(contents, astVisitor);
+
+    return violations;
+}
+
+async function validateGeneratorFile({
+    relativeFilePath,
+    contents,
+    allRuleVisitors
+}: {
+    relativeFilePath: RelativeFilePath;
+    contents: unknown;
+    allRuleVisitors: RuleVisitors[];
+}): Promise<ValidationViolation[]> {
+    const violations: ValidationViolation[] = [];
+
+    for (const ruleVisitor of allRuleVisitors) {
+        const newViolations = await ruleVisitor.visitGeneratorFile(relativeFilePath, contents);
+        violations.push(...newViolations);
+    }
 
     return violations;
 }
