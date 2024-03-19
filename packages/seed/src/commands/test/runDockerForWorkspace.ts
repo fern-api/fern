@@ -53,7 +53,8 @@ export async function runDockerForWorkspace({
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
                 smartCasing: false,
-                disableExamples: false
+                disableExamples: false,
+                irVersionOverride: irVersion
             }
         ]
     };
