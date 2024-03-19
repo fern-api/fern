@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient", "SeedTraceClient\SeedTraceClient.csproj", "{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient.Test", "SeedTraceClient.Test\SeedTraceClient.Test.csproj", "{AA247CCD-3123-44C7-9F17-C81C08D7A12C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

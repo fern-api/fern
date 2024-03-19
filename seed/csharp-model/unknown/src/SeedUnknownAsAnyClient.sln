@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedUnknownAsAnyClient", "SeedUnknownAsAnyClient\SeedUnknownAsAnyClient.csproj", "{BF2DA3B6-CDD0-4A68-B71F-B3DB4499E822}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedUnknownAsAnyClient.Test", "SeedUnknownAsAnyClient.Test\SeedUnknownAsAnyClient.Test.csproj", "{B1B31467-8D9D-4C51-8FC6-9D07E4A1B083}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF2DA3B6-CDD0-4A68-B71F-B3DB4499E822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2DA3B6-CDD0-4A68-B71F-B3DB4499E822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF2DA3B6-CDD0-4A68-B71F-B3DB4499E822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF2DA3B6-CDD0-4A68-B71F-B3DB4499E822}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B31467-8D9D-4C51-8FC6-9D07E4A1B083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B31467-8D9D-4C51-8FC6-9D07E4A1B083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B31467-8D9D-4C51-8FC6-9D07E4A1B083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B31467-8D9D-4C51-8FC6-9D07E4A1B083}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExhaustiveClient", "SeedExhaustiveClient\SeedExhaustiveClient.csproj", "{189F9E42-C7B9-4130-AA4C-397993110D22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExhaustiveClient.Test", "SeedExhaustiveClient.Test\SeedExhaustiveClient.Test.csproj", "{744E7F7A-3A94-41B9-868A-E425B42D9ECD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{189F9E42-C7B9-4130-AA4C-397993110D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{189F9E42-C7B9-4130-AA4C-397993110D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{189F9E42-C7B9-4130-AA4C-397993110D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{189F9E42-C7B9-4130-AA4C-397993110D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{744E7F7A-3A94-41B9-868A-E425B42D9ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744E7F7A-3A94-41B9-868A-E425B42D9ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744E7F7A-3A94-41B9-868A-E425B42D9ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744E7F7A-3A94-41B9-868A-E425B42D9ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
