@@ -42,13 +42,6 @@ exports[`examples examples parse open api 1`] = `
                           "value": "Main Building",
                         },
                       },
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "building_name_alias",
-                        },
-                      },
                     ],
                   },
                   "city": {
@@ -117,13 +110,6 @@ exports[`examples examples parse open api 1`] = `
                           "value": "123 Main Street",
                         },
                       },
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "street_address_alias",
-                        },
-                      },
                     ],
                   },
                   "year_built": {
@@ -138,112 +124,6 @@ exports[`examples examples parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "94105",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              {
-                "properties": {
-                  "building_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "building_name",
-                    },
-                  },
-                  "building_name_alias": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "building_name_alias",
-                        },
-                      },
-                    ],
-                  },
-                  "city": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "city",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "id",
-                    },
-                  },
-                  "lat": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                  "lon": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                  "number_units": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                  "score": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                  "state": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "state",
-                    },
-                  },
-                  "street_address": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "street_address",
-                    },
-                  },
-                  "street_address_alias": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "street_address_alias",
-                        },
-                      },
-                    ],
-                  },
-                  "year_built": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                  "zip_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "zip_code",
                     },
                   },
                 },
@@ -290,7 +170,7 @@ exports[`examples examples parse open api 1`] = `
     },
   ],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PropertySearchResponse",

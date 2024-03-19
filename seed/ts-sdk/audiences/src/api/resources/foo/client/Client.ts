@@ -26,7 +26,7 @@ export class Foo {
         requestOptions?: Foo.RequestOptions
     ): Promise<SeedAudiences.ImportingType> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }
@@ -36,7 +36,7 @@ export class Foo {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/audiences",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

@@ -254,7 +254,7 @@ public class ObjectClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-required-field")
+                .addPathSegments("get-and-return-nested-with-required-field-list")
                 .build();
         RequestBody body;
         try {

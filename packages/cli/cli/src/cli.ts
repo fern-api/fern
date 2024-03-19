@@ -1,14 +1,14 @@
+import {
+    generatorsYml,
+    fernConfigJson,
+    GENERATORS_CONFIGURATION_FILENAME,
+    getFernDirectory,
+    PROJECT_CONFIG_FILENAME
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import {
-    GENERATORS_CONFIGURATION_FILENAME,
-    getFernDirectory,
-    loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
-} from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import { Argv } from "yargs";
@@ -29,6 +29,7 @@ import { mockServer } from "./commands/mock/mockServer";
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
@@ -141,7 +142,7 @@ async function tryRunCli(cliContext: CliContext) {
     addPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
-
+    addTestCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -165,7 +166,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
-            loadProjectConfig({ directory: fernDirectory, context })
+            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
@@ -423,7 +424,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The version of IR to produce"
                 })
                 .option("language", {
-                    choices: Object.values(GenerationLanguage),
+                    choices: Object.values(generatorsYml.GenerationLanguage),
                     description: "Generate IR for a particular language"
                 })
                 .option("audience", {
@@ -686,6 +687,37 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
+function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "test",
+        "Runs tests specified in --command, this spins up a mock server in the background that is terminated upon completion of the tests.",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "The API to mock."
+                })
+                .option("command", {
+                    string: true,
+                    description: "The command to run to test your SDK."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern test"
+            });
+            await testOutput({
+                cliContext,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
+                    nameOverride: ".mock"
+                }),
+                testCommand: argv.command
+            });
+        }
+    );
+}
+
 function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "mock",
@@ -730,11 +762,6 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 description:
                     "When generating the initial overrides, also stub the models (in addition to the endpoints)",
                 default: false
-            }),
-            yargs.option("existing-overrides", {
-                string: true,
-                description:
-                    "The existing overrides file to add on to instead of writing a new one, we will default to the one specified in generators.yml."
             })
         ],
         async (argv) => {
@@ -747,7 +774,6 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     defaultToAllApiWorkspaces: true
                 }),
                 includeModels: !(argv.excludeModels as boolean),
-                overridesFilepath: argv.existingOverrides as string,
                 cliContext
             });
         }

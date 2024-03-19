@@ -623,12 +623,19 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     ts.factory.createTypeReferenceNode(Schema.getEntityName(), [rawShape, parsedShape])
         ),
 
-        _fromExpression: (expression: ts.Expression): Zurg.Schema => {
+        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): Zurg.Schema => {
             const baseSchema: Zurg.BaseSchema = {
                 isOptional: false,
                 toExpression: () => expression
             };
-
+            if (opts?.isObject) {
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema),
+                    ...this.getObjectLikeUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema)
+                };
+            }
             return {
                 ...baseSchema,
                 ...this.getSchemaUtils(baseSchema)

@@ -121,6 +121,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
     public readonly targetRuntime: JavaScriptRuntime;
+    public readonly includeSerdeLayer: boolean;
 
     constructor({
         npmPackage,
@@ -163,6 +164,7 @@ export class SdkContextImpl implements SdkContext {
         includeSerdeLayer,
         targetRuntime
     }: SdkContextImpl.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
         this.targetRuntime = targetRuntime;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
             camelCase(typeDeclarationReferencer.namespaceExport)

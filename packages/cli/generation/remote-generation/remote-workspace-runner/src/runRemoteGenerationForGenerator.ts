@@ -1,6 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Audiences } from "@fern-api/config-management-commons";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -18,17 +17,19 @@ export async function runRemoteGenerationForGenerator({
     audiences,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    irVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
     interactiveTaskContext: InteractiveTaskContext;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    irVersionOverride: string | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -47,7 +48,8 @@ export async function runRemoteGenerationForGenerator({
         intermediateRepresentation,
         shouldLogS3Url,
         token,
-        whitelabel
+        whitelabel,
+        irVersionOverride
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

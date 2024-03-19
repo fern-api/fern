@@ -37,6 +37,7 @@ class UserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
+        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
@@ -61,11 +62,58 @@ class UserClient:
 
             - nested_user: NestedUser.
 
+            - optional_user: typing.Optional[User].
+
             - exclude_user: typing.Union[User, typing.Sequence[User]].
 
             - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import NestedUser, User
+        from seed.client import SeedQueryParameters
+
+        client = SeedQueryParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.get_username(
+            limit=1,
+            id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            bytes="SGVsbG8gd29ybGQh",
+            user=User(
+                name="string",
+                tags=["string"],
+            ),
+            key_value={"string": "string"},
+            optional_string="string",
+            nested_user=NestedUser(
+                name="string",
+                user=User(
+                    name="string",
+                    tags=["string"],
+                ),
+            ),
+            optional_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            exclude_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            filter="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -82,6 +130,7 @@ class UserClient:
                         "keyValue": jsonable_encoder(key_value),
                         "optionalString": optional_string,
                         "nestedUser": jsonable_encoder(nested_user),
+                        "optionalUser": jsonable_encoder(optional_user),
                         "excludeUser": jsonable_encoder(exclude_user),
                         "filter": filter,
                         **(
@@ -103,6 +152,8 @@ class UserClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(User, _response.json())  # type: ignore
@@ -129,6 +180,7 @@ class AsyncUserClient:
         key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
+        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
@@ -153,11 +205,58 @@ class AsyncUserClient:
 
             - nested_user: NestedUser.
 
+            - optional_user: typing.Optional[User].
+
             - exclude_user: typing.Union[User, typing.Sequence[User]].
 
             - filter: typing.Union[str, typing.Sequence[str]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        import datetime
+        import uuid
+
+        from seed import NestedUser, User
+        from seed.client import AsyncSeedQueryParameters
+
+        client = AsyncSeedQueryParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.user.get_username(
+            limit=1,
+            id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            bytes="SGVsbG8gd29ybGQh",
+            user=User(
+                name="string",
+                tags=["string"],
+            ),
+            key_value={"string": "string"},
+            optional_string="string",
+            nested_user=NestedUser(
+                name="string",
+                user=User(
+                    name="string",
+                    tags=["string"],
+                ),
+            ),
+            optional_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            exclude_user=User(
+                name="string",
+                tags=["string"],
+            ),
+            filter="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -174,6 +273,7 @@ class AsyncUserClient:
                         "keyValue": jsonable_encoder(key_value),
                         "optionalString": optional_string,
                         "nestedUser": jsonable_encoder(nested_user),
+                        "optionalUser": jsonable_encoder(optional_user),
                         "excludeUser": jsonable_encoder(exclude_user),
                         "filter": filter,
                         **(
@@ -195,6 +295,8 @@ class AsyncUserClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(User, _response.json())  # type: ignore

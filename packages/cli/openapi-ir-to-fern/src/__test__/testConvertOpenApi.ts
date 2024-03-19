@@ -20,11 +20,23 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
 
+            const specs = [];
+            specs.push({
+                absoluteFilepath: AbsoluteFilePath.of(openApiPath),
+                absoluteFilepathToOverrides: undefined
+            });
+            if (absolutePathToAsyncAPI != null) {
+                specs.push({
+                    absoluteFilepath: absolutePathToAsyncAPI,
+                    absoluteFilepathToOverrides: undefined
+                });
+            }
+
             const openApiIr = await parse({
-                absolutePathToOpenAPI: AbsoluteFilePath.of(openApiPath),
-                absolutePathToAsyncAPI,
-                absolutePathToOpenAPIOverrides: undefined,
-                taskContext: mockTaskContext
+                workspace: {
+                    specs
+                },
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const fernDefinition = convert({ openApiIr, taskContext: mockTaskContext });
             expect(fernDefinition).toMatchSnapshot();

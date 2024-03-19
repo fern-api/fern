@@ -25,6 +25,11 @@ class Movie(pydantic.BaseModel):
         rating=8.0,
         type="movie",
         tag="tag-wf9as23d",
+        metadata={
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
     )
     """
 
@@ -32,10 +37,15 @@ class Movie(pydantic.BaseModel):
     prequel: typing.Optional[MovieId]
     title: str
     from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field(description="The rating scale is one to five stars")
+    rating: float = pydantic.Field()
+    """
+    The rating scale is one to five stars
+    """
+
     type: typing.Literal["movie"]
     tag: Tag
     book: typing.Optional[str]
+    metadata: typing.Dict[str, typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -47,4 +57,6 @@ class Movie(pydantic.BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

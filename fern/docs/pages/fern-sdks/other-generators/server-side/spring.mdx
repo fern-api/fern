@@ -1,0 +1,30 @@
+---
+title: The Java Spring server-side generator 
+description: Use Fern's Java Spring server-side generator to generate types and networking logic for your back end.
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/java)<br />
+[A starter repo for Spring, using Fern](https://github.com/fern-api/spring-starter/)
+
+**Latest version**: `0.7.1`
+
+The Spring generator generates types and networking logic for your Spring server. This saves you time and add compile-time safety that you are serving the exact API that you specified in your API Definition.
+
+## What Fern generates
+
+- Java classes for your API types
+- Exceptions that you can throw for non-200 responses
+- Abstract classes for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Adding the Java Spring generator
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-java-spring
+  version: 0.7.1
+  output:
+    location: local-file-system
+    path: ../src/main/java/com/fern
+```
+</CodeBlock>

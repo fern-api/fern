@@ -4,214 +4,99 @@
 
 package types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import core.ObjectMappers;
+import java.io.IOException;
+import java.lang.IllegalArgumentException;
+import java.lang.IllegalStateException;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
 
+@JsonDeserialize(
+    using = ColorOrOperand.Deserializer.class
+)
 public final class ColorOrOperand {
-  private final Value value;
+  private final Object value;
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  private ColorOrOperand(Value value) {
+  private final int type;
+
+  private ColorOrOperand(Object value, int type) {
     this.value = value;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public static ColorOrOperand color(Color value) {
-    return new ColorOrOperand(new ColorValue(value));
-  }
-
-  public static ColorOrOperand operand(Operand value) {
-    return new ColorOrOperand(new OperandValue(value));
-  }
-
-  public boolean isColor() {
-    return value instanceof ColorValue;
-  }
-
-  public boolean isOperand() {
-    return value instanceof OperandValue;
-  }
-
-  public boolean _isUnknown() {
-    return value instanceof _UnknownValue;
-  }
-
-  public Optional<Color> getColor() {
-    if (isColor()) {
-      return Optional.of(((ColorValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<Operand> getOperand() {
-    if (isOperand()) {
-      return Optional.of(((OperandValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<Object> _getUnknown() {
-    if (_isUnknown()) {
-      return Optional.of(((_UnknownValue) value).value);
-    }
-    return Optional.empty();
+    this.type = type;
   }
 
   @JsonValue
-  private Value getValue() {
+  public Object get() {
     return this.value;
   }
 
+  public <T> T visit(Visitor<T> visitor) {
+    if(this.type == 0) {
+      return visitor.visit((Color) this.value);
+    } else if(this.type == 1) {
+      return visitor.visit((Operand) this.value);
+    }
+    throw new IllegalStateException("Failed to visit value. This should never happen.");
+  }
+
+  @java.lang.Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof ColorOrOperand && equalTo((ColorOrOperand) other);
+  }
+
+  private boolean equalTo(ColorOrOperand other) {
+    return value.equals(other.value);
+  }
+
+  @java.lang.Override
+  public int hashCode() {
+    return Objects.hash(this.value);
+  }
+
+  @java.lang.Override
+  public String toString() {
+    return this.value.toString();
+  }
+
+  public static ColorOrOperand of(Color value) {
+    return new ColorOrOperand(value, 0);
+  }
+
+  public static ColorOrOperand of(Operand value) {
+    return new ColorOrOperand(value, 1);
+  }
+
   public interface Visitor<T> {
-    T visitColor(Color color);
+    T visit(Color value);
 
-    T visitOperand(Operand operand);
-
-    T _visitUnknown(Object unknownType);
+    T visit(Operand value);
   }
 
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "type",
-      visible = true,
-      defaultImpl = _UnknownValue.class
-  )
-  @JsonSubTypes({
-      @JsonSubTypes.Type(ColorValue.class),
-      @JsonSubTypes.Type(OperandValue.class)
-  })
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  @JsonTypeName("color")
-  private static final class ColorValue implements Value {
-    @JsonProperty("value")
-    private Color value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private ColorValue(@JsonProperty("value") Color value) {
-      this.value = value;
+  static final class Deserializer extends StdDeserializer<ColorOrOperand> {
+    Deserializer() {
+      super(ColorOrOperand.class);
     }
 
     @java.lang.Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitColor(value);
-    }
-
-    @java.lang.Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof ColorValue && equalTo((ColorValue) other);
-    }
-
-    private boolean equalTo(ColorValue other) {
-      return value.equals(other.value);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @java.lang.Override
-    public String toString() {
-      return "ColorOrOperand{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("operand")
-  private static final class OperandValue implements Value {
-    @JsonProperty("value")
-    private Operand value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private OperandValue(@JsonProperty("value") Operand value) {
-      this.value = value;
-    }
-
-    @java.lang.Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOperand(value);
-    }
-
-    @java.lang.Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof OperandValue && equalTo((OperandValue) other);
-    }
-
-    private boolean equalTo(OperandValue other) {
-      return value.equals(other.value);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @java.lang.Override
-    public String toString() {
-      return "ColorOrOperand{" + "value: " + value + "}";
-    }
-  }
-
-  private static final class _UnknownValue implements Value {
-    private String type;
-
-    @JsonValue
-    private Object value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private _UnknownValue(@JsonProperty("value") Object value) {
-    }
-
-    @java.lang.Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitUnknown(value);
-    }
-
-    @java.lang.Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
-    }
-
-    private boolean equalTo(_UnknownValue other) {
-      return type.equals(other.type) && value.equals(other.value);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      return Objects.hash(this.type, this.value);
-    }
-
-    @java.lang.Override
-    public String toString() {
-      return "ColorOrOperand{" + "type: " + type + ", value: " + value + "}";
+    public ColorOrOperand deserialize(JsonParser p, DeserializationContext ctxt) throws
+        IOException {
+      Object value = p.readValueAs(Object.class);
+      try {
+        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Color.class));
+      } catch(IllegalArgumentException e) {
+      }
+      try {
+        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Operand.class));
+      } catch(IllegalArgumentException e) {
+      }
+      throw new JsonParseException(p, "Failed to deserialize");
     }
   }
 }

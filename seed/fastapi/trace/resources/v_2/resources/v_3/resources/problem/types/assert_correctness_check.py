@@ -73,12 +73,14 @@ class _AssertCorrectnessCheck:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing.Literal["custom"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 AssertCorrectnessCheck.update_forward_refs()

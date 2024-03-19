@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
 
 export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: SubmissionId,
     });
 
 export declare namespace StopRequest {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
+        submissionId: SubmissionId.Raw;
     }
 }

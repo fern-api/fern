@@ -35,6 +35,18 @@ class ReqWithHeadersClient:
             - x_test_endpoint_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -47,8 +59,8 @@ class ReqWithHeadersClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-TEST-SERVICE-HEADER": x_test_service_header,
-                        "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                        "X-TEST-SERVICE-HEADER": str(x_test_service_header),
+                        "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -56,6 +68,8 @@ class ReqWithHeadersClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -87,6 +101,18 @@ class AsyncReqWithHeadersClient:
             - x_test_endpoint_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -99,8 +125,8 @@ class AsyncReqWithHeadersClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-TEST-SERVICE-HEADER": x_test_service_header,
-                        "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                        "X-TEST-SERVICE-HEADER": str(x_test_service_header),
+                        "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -108,6 +134,8 @@ class AsyncReqWithHeadersClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

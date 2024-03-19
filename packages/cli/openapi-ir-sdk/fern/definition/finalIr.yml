@@ -27,6 +27,8 @@ types:
       header: string
       name: optional<string>
       optional: optional<boolean>
+      env: optional<string>
+      schema: optional<Schema>
 
   Tags:
     properties:
@@ -54,23 +56,23 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
-  
-  WebsocketChannel: 
+
+  WebsocketChannel:
     extends: commons.WithDescription
-    properties: 
+    properties:
       path: string
-      groupName: list<commons.SdkGroupName>
+      groupName: commons.SdkGroupName
       summary: optional<string>
       handshake: WebsocketHandshake
       publish: optional<Schema>
       subscribe: optional<Schema>
       examples: list<WebsocketSessionExample>
-    
-  WebsocketHandshake: 
-    properties: 
+
+  WebsocketHandshake:
+    properties:
       queryParameters: list<QueryParameter>
       headers: list<Header>
-  
+
   WebsocketSessionExample:
     docs: |
       A complete example associated with the websocket channel.
@@ -80,10 +82,10 @@ types:
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
       messages: list<WebsocketMessageExample>
-  
-  WebsocketMessageExample: 
+
+  WebsocketMessageExample:
     extends: commons.WithDescription
-    properties: 
+    properties:
       messageType: string
       payload: example.FullExample
 
@@ -109,7 +111,7 @@ types:
       path:
         type: string
         docs: |
-          This string includes templated path parameters. 
+          This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
       operationId: optional<string>
@@ -217,7 +219,7 @@ types:
   EndpointSdkName:
     properties:
       groupName:
-        type: list<commons.SdkGroupName>
+        type: commons.SdkGroupName
         docs: This is populated by `x-fern-sdk-method-name`
       methodName:
         type: string
@@ -256,6 +258,7 @@ types:
     properties:
       name: string
       schema: Schema
+      env: optional<string>
       parameterNameOverride:
         type: optional<string>
         docs: |
@@ -263,11 +266,11 @@ types:
 
   Request:
     union:
-      octetStream: OctetStremRequest
+      octetStream: OctetStreamRequest
       multipart: MultipartRequest
       json: JsonRequest
 
-  OctetStremRequest:
+  OctetStreamRequest:
     extends: commons.WithDescription
     properties: {}
 
@@ -470,9 +473,9 @@ types:
         type: string
         docs: Value of the enum
       casing: optional<CasingOverrides>
-  
-  CasingOverrides: 
-    properties: 
+
+  CasingOverrides:
+    properties:
       snake: optional<string>
       camel: optional<string>
       screamingSnake: optional<string>

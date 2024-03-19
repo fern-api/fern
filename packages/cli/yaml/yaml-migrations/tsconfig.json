@@ -1,11 +1,11 @@
 {
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/fs-utils" },
-    { "path": "../../config-management/commons" },
+    { "path": "../../configuration" },
     { "path": "../../semver-utils" },
     { "path": "../../task-context" }
   ]

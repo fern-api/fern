@@ -28,6 +28,23 @@ export async function convertEnumTypeDeclaration({
     });
 }
 
+export function getEnumNameFromEnumValue(
+    enumValue: string,
+    _enum: RawSchemas.EnumSchema
+): {
+    name: string;
+    wasExplicitlySet: boolean;
+} {
+    const maybeEnumDefintion = _enum.enum.find((value) =>
+        typeof value === "string" ? false : value.value === enumValue
+    );
+
+    return {
+        name: typeof maybeEnumDefintion === "string" ? enumValue : maybeEnumDefintion?.name ?? enumValue,
+        wasExplicitlySet: false
+    };
+}
+
 export function getEnumName(enumValue: string | RawSchemas.EnumValueSchema): {
     name: string;
     wasExplicitlySet: boolean;

@@ -30,6 +30,14 @@ class HomepageClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.homepage.get_homepage_problems()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -48,6 +56,8 @@ class HomepageClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -65,6 +75,16 @@ class HomepageClient:
             - request: typing.Sequence[ProblemId].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.homepage.set_homepage_problems(
+            request=["string"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -89,6 +109,8 @@ class HomepageClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -109,6 +131,14 @@ class AsyncHomepageClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.homepage.get_homepage_problems()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -127,6 +157,8 @@ class AsyncHomepageClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -144,6 +176,16 @@ class AsyncHomepageClient:
             - request: typing.Sequence[ProblemId].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.homepage.set_homepage_problems(
+            request=["string"],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -168,6 +210,8 @@ class AsyncHomepageClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

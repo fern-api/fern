@@ -16,12 +16,34 @@ export function getFernTypeExtension({
     schema: OpenAPIV3.SchemaObject;
     description: string | undefined;
 }): SchemaWithExample | undefined {
-    const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
-    const typeDefinition = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
-    if (typeDefinition == null) {
+    const groupName = getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
+    const fernType = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
+    if (fernType == null) {
         return;
     }
-    return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>(typeDefinition, {
+    return getSchemaFromFernType({
+        fernType,
+        nameOverride,
+        generatedName,
+        description,
+        groupName: typeof groupName === "string" ? [groupName] : groupName
+    });
+}
+
+export function getSchemaFromFernType({
+    fernType,
+    nameOverride,
+    generatedName,
+    description,
+    groupName
+}: {
+    fernType: string;
+    nameOverride: string | undefined;
+    generatedName: string;
+    description: string | undefined;
+    groupName: string[] | undefined;
+}): SchemaWithExample | undefined {
+    return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>(fernType, {
         primitive: (primitive) => {
             switch (primitive) {
                 case "BASE_64":

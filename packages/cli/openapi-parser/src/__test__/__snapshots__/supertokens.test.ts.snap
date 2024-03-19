@@ -86,6 +86,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -110,6 +111,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -134,6 +136,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -383,6 +386,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -407,6 +411,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -431,6 +436,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -684,6 +690,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -708,6 +715,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -732,6 +740,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -1020,6 +1029,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -1044,6 +1054,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -1068,6 +1079,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -1283,6 +1295,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -1307,6 +1320,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -1331,6 +1345,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -1589,6 +1604,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -1613,6 +1629,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -1637,6 +1654,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -1931,6 +1949,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -1955,6 +1974,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -1979,6 +1999,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -2256,6 +2277,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -2280,6 +2302,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -2304,6 +2327,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -2590,6 +2614,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -2614,6 +2639,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -2638,6 +2664,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -2906,6 +2933,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -2930,6 +2958,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -2954,6 +2983,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -3240,6 +3270,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -3264,6 +3295,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -3288,6 +3320,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -3765,6 +3798,7 @@ Passing the optional deviceId signifies a resend code flow.
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -3789,6 +3823,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -3813,6 +3848,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -4308,6 +4344,7 @@ Passing the optional deviceId signifies a resend code flow.
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -4332,6 +4369,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -4356,6 +4394,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -4599,6 +4638,7 @@ Passing the optional deviceId signifies a resend code flow.
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -4623,6 +4663,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -4647,6 +4688,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -5068,6 +5110,7 @@ Passing the optional deviceId signifies a resend code flow.
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -5092,6 +5135,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -5116,6 +5160,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -5361,6 +5406,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -5385,6 +5431,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -5409,6 +5456,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -5699,6 +5747,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -5723,6 +5772,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -5747,6 +5797,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -6048,6 +6099,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -6072,6 +6124,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -6096,6 +6149,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -6336,6 +6390,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -6360,6 +6415,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -6384,6 +6440,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -6626,6 +6683,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -6650,6 +6708,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -6674,6 +6733,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -6941,6 +7001,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -6965,6 +7026,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -6989,6 +7051,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -7239,6 +7302,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -7263,6 +7327,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -7287,6 +7352,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -7423,7 +7489,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "User Pagination API
 ",
       "errorStatusCode": [
@@ -7497,6 +7563,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -7521,6 +7588,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -7545,6 +7613,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -7828,6 +7897,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -7852,6 +7922,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -7876,6 +7947,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -8063,7 +8135,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get number of users
 ",
       "errorStatusCode": [
@@ -8106,6 +8178,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -8130,6 +8203,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -8154,6 +8228,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -8342,6 +8417,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -8366,6 +8442,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -8390,6 +8467,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -8730,6 +8808,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -8754,6 +8833,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -8778,6 +8858,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -9081,6 +9162,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -9105,6 +9187,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -9129,6 +9212,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -9451,6 +9535,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -9475,6 +9560,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -9499,6 +9585,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -9623,7 +9710,7 @@ Note that there is an invisible character at the end of the path, this was to av
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get User Pagination data.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -9710,6 +9797,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -9734,6 +9822,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -9758,6 +9847,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -9977,7 +10067,7 @@ Note that there is an invisible character at the end of the path, this was to av
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get number of users.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
 ",
@@ -10021,6 +10111,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -10045,6 +10136,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -10069,6 +10161,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -10234,6 +10327,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -10258,6 +10352,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -10282,6 +10377,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -10450,6 +10546,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -10474,6 +10571,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -10498,6 +10596,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -10655,6 +10754,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -10679,6 +10779,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -10703,6 +10804,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -10915,6 +11017,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -10939,6 +11042,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -10963,6 +11067,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -11200,6 +11305,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -11224,6 +11330,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -11248,6 +11355,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -11417,6 +11525,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -11441,6 +11550,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -11465,6 +11575,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -11666,6 +11777,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -11690,6 +11802,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -11714,6 +11827,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -11917,6 +12031,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -11941,6 +12056,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -11965,6 +12081,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -12143,6 +12260,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -12167,6 +12285,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -12191,6 +12310,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -12400,6 +12520,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -12424,6 +12545,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -12448,6 +12570,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -12652,6 +12775,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -12676,6 +12800,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -12700,6 +12825,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -12886,6 +13012,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -12910,6 +13037,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -12934,6 +13062,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -13125,6 +13254,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -13149,6 +13279,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -13173,6 +13304,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -13397,6 +13529,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -13421,6 +13554,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -13445,6 +13579,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -13636,6 +13771,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -13660,6 +13796,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -13684,6 +13821,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -13882,6 +14020,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -13906,6 +14045,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -13930,6 +14070,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -14112,6 +14253,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -14136,6 +14278,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -14160,6 +14303,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -14338,6 +14482,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -14362,6 +14507,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -14386,6 +14532,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -14632,6 +14779,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -14656,6 +14804,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -14680,6 +14829,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -15074,6 +15224,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -15098,6 +15249,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -15122,6 +15274,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -15470,6 +15623,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -15494,6 +15648,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -15518,6 +15673,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -15849,6 +16005,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -15873,6 +16030,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -15897,6 +16055,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -16345,6 +16504,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -16369,6 +16529,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -16393,6 +16554,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -16756,6 +16918,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -16780,6 +16943,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -16804,6 +16968,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -17052,6 +17217,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -17076,6 +17242,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -17100,6 +17267,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -17278,7 +17446,7 @@ e.g.:
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get session data
 ",
       "errorStatusCode": [
@@ -17357,6 +17525,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -17381,6 +17550,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -17405,6 +17575,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -17540,6 +17711,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -17564,6 +17736,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -17588,6 +17761,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -17791,6 +17965,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -17815,6 +17990,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -17839,6 +18015,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -18205,7 +18382,7 @@ e.g.:
     {
       "audiences": [],
       "authed": false,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "Get JWT data for a session
 ",
       "errorStatusCode": [
@@ -18284,6 +18461,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -18308,6 +18486,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -18332,6 +18511,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -18467,6 +18647,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -18491,6 +18672,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -18515,6 +18697,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -18732,6 +18915,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -18756,6 +18940,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -18780,6 +18965,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -19159,6 +19345,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -19183,6 +19370,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -19207,6 +19395,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -19693,6 +19882,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -19717,6 +19907,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -19741,6 +19932,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -19965,6 +20157,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -19989,6 +20182,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -20013,6 +20207,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -20271,6 +20466,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -20295,6 +20491,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -20319,6 +20516,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -20522,6 +20720,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -20546,6 +20745,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -20570,6 +20770,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -20737,6 +20938,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -20761,6 +20963,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -20785,6 +20988,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -21070,6 +21274,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "rid",
           "parameterNameOverride": null,
           "schema": {
@@ -21094,6 +21299,7 @@ e.g.:
         },
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -21118,6 +21324,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -21364,6 +21571,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -21499,6 +21707,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -21523,6 +21732,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -21982,6 +22192,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -22006,6 +22217,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -22211,6 +22423,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -22235,6 +22448,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -22415,6 +22629,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -22439,6 +22654,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -22690,6 +22906,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -22714,6 +22931,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -23193,6 +23411,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -23217,6 +23436,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -23379,6 +23599,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -23403,6 +23624,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -23590,6 +23812,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -23614,6 +23837,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -23805,6 +24029,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -23829,6 +24054,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -23984,6 +24210,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -24008,6 +24235,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -24173,6 +24401,7 @@ e.g.:
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "api-key",
           "parameterNameOverride": null,
           "schema": {
@@ -24197,6 +24426,7 @@ e.g.:
         },
         {
           "description": "X.Y of the X.Y.Z CDI version.",
+          "env": null,
           "name": "cdi-version",
           "parameterNameOverride": null,
           "schema": {
@@ -24315,7 +24545,7 @@ e.g.:
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "userId",

@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ExceptionInfo } from "./ExceptionInfo";
+import { ExceptionV2 } from "./ExceptionV2";
 
 export const ActualResult: core.serialization.Schema<serializers.ActualResult.Raw, SeedTrace.ActualResult> =
     core.serialization
@@ -12,9 +14,9 @@ export const ActualResult: core.serialization.Schema<serializers.ActualResult.Ra
             value: core.serialization.object({
                 value: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
             }),
-            exception: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+            exception: ExceptionInfo,
             exceptionV2: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../..")).ExceptionV2),
+                value: ExceptionV2,
             }),
         })
         .transform<SeedTrace.ActualResult>({
@@ -30,12 +32,12 @@ export declare namespace ActualResult {
         value: serializers.VariableValue.Raw;
     }
 
-    interface Exception extends serializers.ExceptionInfo.Raw {
+    interface Exception extends ExceptionInfo.Raw {
         type: "exception";
     }
 
     interface ExceptionV2 {
         type: "exceptionV2";
-        value: serializers.ExceptionV2.Raw;
+        value: ExceptionV2.Raw;
     }
 }

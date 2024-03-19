@@ -113,12 +113,14 @@ class _WorkspaceSubmissionStatus:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Traced(WorkspaceRunDetails):
         type: typing.Literal["traced"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 WorkspaceSubmissionStatus.update_forward_refs()

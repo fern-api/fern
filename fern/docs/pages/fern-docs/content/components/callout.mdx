@@ -1,0 +1,200 @@
+---
+title: Highlight content with Callout
+description: Use the Callout component to visually highlight important content within your documentation. Configure the 'intent' as 'info', 'success', or 'warn'. 
+---
+
+The `Callout` component is used when you want to visually highlight important content for the user.
+
+<Tip>
+It is helpful to add a `<br />` tag after the `Callout` component to ensure that the next component is not too close to the callout.
+</Tip>
+
+## Props
+
+| prop     | type   | description                                                                                 | default | 
+|----------|--------|---------------------------------------------------------------------------------------------|---------|
+| *intent* | string | `'info'｜ 'success'｜ 'warning' ｜ 'error' ｜`<br />`'note' ｜ 'launch' ｜ 'tip' ｜ 'check'` | `info`  | 
+| *title*  | string | Displayed title for the callout                                                             | none    | 
+
+All props are optional.
+
+The `Callout` component's `intent` prop alters its color and icon.
+
+Alternatively, you can use each of the `intent` prop values as its own component, such as `<Info>` and `<Success>`. These components take an optional `title` prop. 
+
+## Usage
+
+### Info 
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='info' title='Info example'>
+      This is an info callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Info component'>
+    ```mdx
+    <Info title='Info example'>
+      This is an info callout.
+    </Info>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Info title='Info example'>
+  This is an info callout. 
+</Info>
+
+### Success 
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='success' title='Success example'>
+      This is a success callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Success component'>
+    ```mdx
+    <Success title='Success example'>
+      This is a success callout.
+    </Success>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Success title='Success example'>
+  This is a success callout. 
+</Success>
+
+### Warning
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='warning' title='Warning example'>
+      This is a warning callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Warning component'>
+    ```mdx
+    <Warning title='Warning example'>
+      This is a warning callout.
+    </Warning>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Warning title='Warning example'>
+  This is a warning callout. 
+</Warning>
+
+### Error
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='error' title='Error example'>
+      This is an error callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Error component'>
+    ```mdx
+    <Error title='Error example'>
+      This is an error callout.
+    </Error>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Error title='Error example'>
+  This is an error callout. 
+</Error>
+
+### Note 
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='note' title='Note example'>
+      This is a note callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Note component'>
+    ```mdx
+    <Note title='Note example'>
+      This is a note callout.
+    </Note>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Note title='Note example'>
+  This is a note callout. 
+</Note>
+
+### Launch / LaunchNote
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='launch' title='Launch example'>
+      This is a launch callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='LaunchNote component'>
+    ```mdx
+    <LaunchNote title='Launch example'>
+      This is a launch callout.
+    </LaunchNote>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<LaunchNote title='Launch example'>
+  This is a launch callout. 
+</LaunchNote>
+
+### Tip 
+
+<CodeBlocks>
+  <CodeBlock title='Callout component with intent'>
+    ```mdx
+    <Callout intent='tip' title='Tip example'>
+      This is a tip callout.
+    </Callout>
+    ```
+  </CodeBlock>
+  <CodeBlock title='Tip component'>
+    ```mdx
+    <Tip title='Tip example'>
+      This is a tip callout.
+    </Tip>
+    ```
+  </CodeBlock>
+</CodeBlocks>
+
+Either version of the code above renders as:
+
+<Tip title='Tip example'>
+  This is a tip callout. 
+</Tip>

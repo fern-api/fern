@@ -5,13 +5,15 @@
 import * as serializers from "../../../../..";
 import * as SeedExamples from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { Metadata } from "./Metadata";
+import { Tag } from "./Tag";
 
 export const EventInfo: core.serialization.Schema<serializers.commons.EventInfo.Raw, SeedExamples.commons.EventInfo> =
     core.serialization
         .union("type", {
-            metadata: core.serialization.lazyObject(async () => (await import("../../../../..")).commons.Metadata),
+            metadata: Metadata,
             tag: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../../../..")).commons.Tag),
+                value: Tag,
             }),
         })
         .transform<SeedExamples.commons.EventInfo>({
@@ -22,12 +24,12 @@ export const EventInfo: core.serialization.Schema<serializers.commons.EventInfo.
 export declare namespace EventInfo {
     type Raw = EventInfo.Metadata | EventInfo.Tag;
 
-    interface Metadata extends serializers.commons.Metadata.Raw {
+    interface Metadata extends Metadata.Raw {
         type: "metadata";
     }
 
     interface Tag {
         type: "tag";
-        value: serializers.commons.Tag.Raw;
+        value: Tag.Raw;
     }
 }

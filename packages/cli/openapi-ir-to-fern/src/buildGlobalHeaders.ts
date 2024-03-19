@@ -1,5 +1,5 @@
+import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -24,6 +24,8 @@ const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 const HEADERS_TO_IGNORE = new Set(...["Authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
+    const predefinedGlobalHeaders = new Map(context.ir.globalHeaders?.map((header) => [header.header, header]));
+
     const globalHeaders: Record<string, HeaderWithCount> = {};
     for (const endpoint of context.ir.endpoints) {
         for (const header of endpoint.headers) {
@@ -32,9 +34,14 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             }
             let headerWithCount = globalHeaders[header.name];
             if (headerWithCount == null) {
+                const predefinedHeader = predefinedGlobalHeaders.get(header.name);
                 const convertedHeader = buildHeader({
-                    header,
-                    fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                    header: {
+                        ...header,
+                        schema: predefinedHeader?.schema ?? header.schema,
+                        name: predefinedHeader?.name ?? header.name
+                    },
+                    fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
                     context
                 });
                 headerWithCount = new HeaderWithCount(convertedHeader);
@@ -46,24 +53,24 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
 
     const globalHeaderThreshold = context.ir.endpoints.length * GLOBAL_HEADER_PERCENTAGE_THRESHOLD;
 
-    const predefinedGlobalHeaders = new Map(context.ir.globalHeaders?.map((header) => [header.header, header]));
-
     for (const [headerName, header] of Object.entries(globalHeaders)) {
         const predefinedHeader = predefinedGlobalHeaders.get(headerName);
         let isRequired = header.count === context.ir.endpoints.length;
         const isOptional = header.count >= globalHeaderThreshold;
-        if (predefinedHeader !== undefined) {
+        if (predefinedHeader != null) {
             isRequired = (isRequired && predefinedHeader.optional !== true) || predefinedHeader.optional === false;
-            const convertedHeaderSchema =
-                typeof header.schema === "string"
-                    ? header.schema
-                    : {
-                          ...header.schema,
-                          name: predefinedHeader.name ?? header.schema.name
-                      };
+            let schema: RawSchemas.HttpHeaderSchema;
+            if (typeof header.schema === "string") {
+                schema = header.schema;
+            } else {
+                schema = {
+                    ...header.schema,
+                    env: predefinedHeader.env ?? header.schema.env
+                };
+            }
             context.builder.addGlobalHeader({
                 name: headerName,
-                schema: isRequired ? convertedHeaderSchema : wrapTypeReferenceAsOptional(convertedHeaderSchema)
+                schema: isRequired ? schema : wrapTypeReferenceAsOptional(schema)
             });
         } else if (isRequired) {
             context.builder.addGlobalHeader({

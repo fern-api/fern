@@ -41,6 +41,17 @@ class FooClient:
             - private_property: typing.Optional[int].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedAudiences
+
+        client = SeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.foo.find(
+            optional_string="string",
+            public_property="string",
+            private_property=1,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:
@@ -79,6 +90,8 @@ class FooClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ImportingType, _response.json())  # type: ignore
@@ -110,6 +123,17 @@ class AsyncFooClient:
             - private_property: typing.Optional[int].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedAudiences
+
+        client = AsyncSeedAudiences(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.foo.find(
+            optional_string="string",
+            public_property="string",
+            private_property=1,
+        )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if public_property is not OMIT:
@@ -148,6 +172,8 @@ class AsyncFooClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ImportingType, _response.json())  # type: ignore

@@ -62,6 +62,7 @@ class Animal(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -73,6 +74,7 @@ class _Animal:
             frozen = True
             smart_union = True
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"]
@@ -81,6 +83,7 @@ class _Animal:
             frozen = True
             smart_union = True
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 Animal.update_forward_refs()

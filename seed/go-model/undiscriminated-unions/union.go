@@ -9,7 +9,6 @@ import (
 
 // Several different types are accepted.
 type MyUnion struct {
-	typeName        string
 	String          string
 	StringList      []string
 	Integer         int
@@ -18,53 +17,48 @@ type MyUnion struct {
 }
 
 func NewMyUnionFromString(value string) *MyUnion {
-	return &MyUnion{typeName: "string", String: value}
+	return &MyUnion{String: value}
 }
 
 func NewMyUnionFromStringList(value []string) *MyUnion {
-	return &MyUnion{typeName: "stringList", StringList: value}
+	return &MyUnion{StringList: value}
 }
 
 func NewMyUnionFromInteger(value int) *MyUnion {
-	return &MyUnion{typeName: "integer", Integer: value}
+	return &MyUnion{Integer: value}
 }
 
 func NewMyUnionFromIntegerList(value []int) *MyUnion {
-	return &MyUnion{typeName: "integerList", IntegerList: value}
+	return &MyUnion{IntegerList: value}
 }
 
 func NewMyUnionFromIntegerListList(value [][]int) *MyUnion {
-	return &MyUnion{typeName: "integerListList", IntegerListList: value}
+	return &MyUnion{IntegerListList: value}
 }
 
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
-		m.typeName = "string"
 		m.String = valueString
 		return nil
 	}
 	var valueStringList []string
 	if err := json.Unmarshal(data, &valueStringList); err == nil {
-		m.typeName = "stringList"
 		m.StringList = valueStringList
 		return nil
 	}
 	var valueInteger int
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
-		m.typeName = "integer"
 		m.Integer = valueInteger
 		return nil
 	}
 	var valueIntegerList []int
 	if err := json.Unmarshal(data, &valueIntegerList); err == nil {
-		m.typeName = "integerList"
 		m.IntegerList = valueIntegerList
 		return nil
 	}
 	var valueIntegerListList [][]int
 	if err := json.Unmarshal(data, &valueIntegerListList); err == nil {
-		m.typeName = "integerListList"
 		m.IntegerListList = valueIntegerListList
 		return nil
 	}
@@ -72,20 +66,22 @@ func (m *MyUnion) UnmarshalJSON(data []byte) error {
 }
 
 func (m MyUnion) MarshalJSON() ([]byte, error) {
-	switch m.typeName {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", m.typeName, m)
-	case "string":
+	if m.String != "" {
 		return json.Marshal(m.String)
-	case "stringList":
+	}
+	if m.StringList != nil {
 		return json.Marshal(m.StringList)
-	case "integer":
+	}
+	if m.Integer != 0 {
 		return json.Marshal(m.Integer)
-	case "integerList":
+	}
+	if m.IntegerList != nil {
 		return json.Marshal(m.IntegerList)
-	case "integerListList":
+	}
+	if m.IntegerListList != nil {
 		return json.Marshal(m.IntegerListList)
 	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
 type MyUnionVisitor interface {
@@ -97,18 +93,20 @@ type MyUnionVisitor interface {
 }
 
 func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
-	switch m.typeName {
-	default:
-		return fmt.Errorf("invalid type %s in %T", m.typeName, m)
-	case "string":
+	if m.String != "" {
 		return visitor.VisitString(m.String)
-	case "stringList":
+	}
+	if m.StringList != nil {
 		return visitor.VisitStringList(m.StringList)
-	case "integer":
+	}
+	if m.Integer != 0 {
 		return visitor.VisitInteger(m.Integer)
-	case "integerList":
+	}
+	if m.IntegerList != nil {
 		return visitor.VisitIntegerList(m.IntegerList)
-	case "integerListList":
+	}
+	if m.IntegerListList != nil {
 		return visitor.VisitIntegerListList(m.IntegerListList)
 	}
+	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }

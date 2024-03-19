@@ -7,7 +7,7 @@
 
 <br/>
 
-![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)
+[![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 [![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
@@ -15,17 +15,15 @@
 
 </div>
 
-Fern is a toolkit that allows you to effortlessly generate SDKs and API documentation.
+Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
     <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
 </div>
 
-_Note: Fern requires **Node 18** or higher_
-
 ## 🌿 SDKs
 
-The Fern toolkit is available as a command line interface (CLI). To install it, run:
+The Fern toolkit is available via a command line interface (CLI) and requires Node 18+. To install it, run:
 
 ```bash
 npm install -g fern-api
@@ -36,7 +34,7 @@ Initialize Fern with your OpenAPI spec:
 ```bash
 fern init --openapi ./path/to/openapi.yml
 # or
-fern init --openapi https://petstore.swagger.io/v2/swagger.json
+fern init --openapi https://link.buildwithfern.com/petstore-openapi
 ```
 
 Your directory should look like the following:
@@ -87,11 +85,11 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 ### Server-side Generators
 
 Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers,
-who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
+who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code. Watch a demo [here](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 | Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `fernapi/fern-express-server` | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
+| `fernapi/fern-typescript-express` | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
 | `fernapi/fern-fastapi-server` | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)     | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
 | `fernapi/fern-java-spring`    | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)        | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
 
@@ -118,7 +116,7 @@ Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
 ## 🌿 CLI Commands
 
-Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/cli).
+Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/overview).
 
 `fern init`: adds a new starter API to your repository.
 
@@ -145,7 +143,7 @@ Frameworks currently supported:
 - [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
 
-For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
+For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 ### Fern Definition
 

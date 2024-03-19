@@ -1,5 +1,5 @@
+import { dependenciesYml } from "@fern-api/configuration";
 import { entries, keys } from "@fern-api/core-utils";
-import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
@@ -31,7 +31,7 @@ export async function processPackageMarkers({
     context,
     cliVersion
 }: {
-    dependenciesConfiguration: DependenciesConfiguration;
+    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
     context: TaskContext;
     cliVersion: string;

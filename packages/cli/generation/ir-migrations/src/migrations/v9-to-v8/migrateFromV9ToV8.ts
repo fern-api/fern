@@ -1,4 +1,4 @@
-import { GeneratorName } from "@fern-api/generators-configuration";
+import { GeneratorName } from "@fern-api/configuration";
 import { TaskResult } from "@fern-api/task-context";
 import { IrVersions } from "../../ir-versions";
 import {

@@ -4,16 +4,17 @@ from .sdk_declaration_referencer import SdkDeclarationReferencer
 
 
 class RootClientDeclarationReferencer(SdkDeclarationReferencer[None]):
-    def __init__(self, root_class_name: str, root_client_filename: str, skip_resources_module: bool):
+    def __init__(self, client_class_name: str, client_filename: str, skip_resources_module: bool):
         super().__init__(skip_resources_module=skip_resources_module)
-        self._root_class_name = root_class_name
-        self._root_client_filename = root_client_filename
+        self._client_class_name = client_class_name
+        self._client_filename = client_filename
 
     def get_filepath(self, *, name: None) -> Filepath:
         return Filepath(
             directories=(),
-            file=Filepath.FilepathPart(module_name=self._root_client_filename[:-3]),
+            # the [:-3] removes the .py extension
+            file=Filepath.FilepathPart(module_name=self._client_filename[:-3]),
         )
 
     def get_class_name(self, *, name: None) -> str:
-        return self._root_class_name
+        return self._client_class_name

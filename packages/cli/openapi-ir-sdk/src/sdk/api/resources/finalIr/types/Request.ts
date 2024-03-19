@@ -7,7 +7,7 @@ import * as FernOpenapiIr from "../../..";
 export type Request = FernOpenapiIr.Request.OctetStream | FernOpenapiIr.Request.Multipart | FernOpenapiIr.Request.Json;
 
 export declare namespace Request {
-    interface OctetStream extends FernOpenapiIr.OctetStremRequest, _Utils {
+    interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
         type: "octetStream";
     }
 
@@ -24,7 +24,7 @@ export declare namespace Request {
     }
 
     interface _Visitor<_Result> {
-        octetStream: (value: FernOpenapiIr.OctetStremRequest) => _Result;
+        octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
         multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequest) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -32,7 +32,7 @@ export declare namespace Request {
 }
 
 export const Request = {
-    octetStream: (value: FernOpenapiIr.OctetStremRequest): FernOpenapiIr.Request.OctetStream => {
+    octetStream: (value: FernOpenapiIr.OctetStreamRequest): FernOpenapiIr.Request.OctetStream => {
         return {
             ...value,
             type: "octetStream",

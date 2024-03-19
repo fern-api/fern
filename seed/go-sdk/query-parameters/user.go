@@ -20,6 +20,7 @@ type GetUsersRequest struct {
 	KeyValue       map[string]string `json:"-" url:"keyValue,omitempty"`
 	OptionalString *string           `json:"-" url:"optionalString,omitempty"`
 	NestedUser     *NestedUser       `json:"-" url:"nestedUser,omitempty"`
+	OptionalUser   *User             `json:"-" url:"optionalUser,omitempty"`
 	ExcludeUser    []*User           `json:"-" url:"excludeUser,omitempty"`
 	Filter         []string          `json:"-" url:"filter"`
 }

@@ -109,6 +109,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -508,6 +509,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -635,14 +637,14 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "remote_created_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-12-06T10:11:26.000Z",
+                          "value": "2021-12-06T10:11:26Z",
                         },
                       },
                       "remote_data": {
@@ -697,6 +699,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -1258,14 +1261,14 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "remote_created_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-12-06T10:11:26.000Z",
+                  "value": "2021-12-06T10:11:26Z",
                 },
               },
               "remote_data": {
@@ -1315,6 +1318,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -1548,7 +1552,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-15T00:23:25.309Z",
+                          "value": "2021-10-15 00:23:25.309761+00:00",
                         },
                       },
                       "id": {
@@ -1562,7 +1566,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "provider_name": {
@@ -1607,7 +1611,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-15T00:59:25.309Z",
+                          "value": "2020-11-15 00:59:25.309761+00:00",
                         },
                       },
                     },
@@ -1624,6 +1628,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -1989,7 +1994,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-15T00:23:25.309Z",
+                  "value": "2021-10-15 00:23:25.309761+00:00",
                 },
               },
               "field_mappings": {
@@ -2032,7 +2037,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "provider_name": {
@@ -2077,7 +2082,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-15T00:59:25.309Z",
+                  "value": "2020-11-15 00:59:25.309761+00:00",
                 },
               },
             },
@@ -2089,6 +2094,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2269,7 +2275,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "remote_data": {
@@ -2317,6 +2323,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2669,7 +2676,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "remote_data": {
@@ -2712,6 +2719,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2830,6 +2838,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -2913,7 +2922,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-10T00:00:00.000Z",
+                          "value": "2020-11-10T00:00:00Z",
                         },
                       },
                       "deductions": {
@@ -2932,7 +2941,7 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2021-10-16T00:00:00.000Z",
+                                  "value": "2021-10-16T00:00:00Z",
                                 },
                               },
                             },
@@ -2956,7 +2965,7 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2021-10-16T00:00:00.000Z",
+                                  "value": "2021-10-16T00:00:00Z",
                                 },
                               },
                             },
@@ -2975,7 +2984,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-09T00:00:00.000Z",
+                          "value": "2020-11-09T00:00:00Z",
                         },
                       },
                       "gross_pay": {
@@ -2996,7 +3005,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "net_pay": {
@@ -3048,7 +3057,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-08T00:00:00.000Z",
+                          "value": "2020-11-08T00:00:00Z",
                         },
                       },
                       "taxes": {
@@ -3067,7 +3076,7 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "primitive",
                                 "value": {
                                   "type": "datetime",
-                                  "value": "2021-10-16T00:00:00.000Z",
+                                  "value": "2021-10-16T00:00:00Z",
                                 },
                               },
                             },
@@ -3089,6 +3098,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -3572,7 +3582,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-10T00:00:00.000Z",
+                  "value": "2020-11-10T00:00:00Z",
                 },
               },
               "deductions": {
@@ -3612,7 +3622,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "name": {
@@ -3688,7 +3698,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "remote_data": {
@@ -3742,7 +3752,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-09T00:00:00.000Z",
+                  "value": "2020-11-09T00:00:00Z",
                 },
               },
               "field_mappings": {
@@ -3792,7 +3802,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "net_pay": {
@@ -3844,7 +3854,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-08T00:00:00.000Z",
+                  "value": "2020-11-08T00:00:00Z",
                 },
               },
               "taxes": {
@@ -3884,7 +3894,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "name": {
@@ -3939,6 +3949,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -4146,7 +4157,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "1990-11-10T00:00:00.000Z",
+                          "value": "1990-11-10T00:00:00Z",
                         },
                       },
                       "display_full_name": {
@@ -4186,7 +4197,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-10-10T00:00:00.000Z",
+                          "value": "2020-10-10T00:00:00Z",
                         },
                       },
                       "home_location": {
@@ -4232,7 +4243,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "pay_group": {
@@ -4253,7 +4264,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-10-11T00:00:00.000Z",
+                          "value": "2020-10-11T00:00:00Z",
                         },
                       },
                       "remote_data": {
@@ -4298,7 +4309,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-10-11T00:00:00.000Z",
+                          "value": "2020-10-11T00:00:00Z",
                         },
                       },
                       "team": {
@@ -4312,7 +4323,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-12T00:00:00.000Z",
+                          "value": "2021-10-12T00:00:00Z",
                         },
                       },
                       "username": {
@@ -4350,6 +4361,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -8693,7 +8705,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "1990-11-10T00:00:00.000Z",
+                      "value": "1990-11-10T00:00:00Z",
                     },
                   },
                   "display_full_name": {
@@ -8786,7 +8798,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2020-10-10T00:00:00.000Z",
+                      "value": "2020-10-10T00:00:00Z",
                     },
                   },
                   "home_location": {
@@ -8832,7 +8844,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2021-10-16T00:00:00.000Z",
+                      "value": "2021-10-16T00:00:00Z",
                     },
                   },
                   "pay_group": {
@@ -8853,7 +8865,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2020-10-11T00:00:00.000Z",
+                      "value": "2020-10-11T00:00:00Z",
                     },
                   },
                   "remote_data": {
@@ -8898,7 +8910,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2020-10-11T00:00:00.000Z",
+                      "value": "2020-10-11T00:00:00Z",
                     },
                   },
                   "team": {
@@ -8912,7 +8924,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2021-10-12T00:00:00.000Z",
+                      "value": "2021-10-12T00:00:00Z",
                     },
                   },
                   "username": {
@@ -8991,6 +9003,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -9178,7 +9191,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "1990-11-10T00:00:00.000Z",
+                  "value": "1990-11-10T00:00:00Z",
                 },
               },
               "display_full_name": {
@@ -9271,7 +9284,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-10-10T00:00:00.000Z",
+                  "value": "2020-10-10T00:00:00Z",
                 },
               },
               "home_location": {
@@ -9317,7 +9330,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "pay_group": {
@@ -9338,7 +9351,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-10-11T00:00:00.000Z",
+                  "value": "2020-10-11T00:00:00Z",
                 },
               },
               "remote_data": {
@@ -9383,7 +9396,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-10-11T00:00:00.000Z",
+                  "value": "2020-10-11T00:00:00Z",
                 },
               },
               "team": {
@@ -9397,7 +9410,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-12T00:00:00.000Z",
+                  "value": "2021-10-12T00:00:00Z",
                 },
               },
               "username": {
@@ -9430,6 +9443,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13079,6 +13093,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13269,6 +13284,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -13364,7 +13380,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2023-10-06T18:42:34.000Z",
+                          "value": "2023-10-06T18:42:34Z",
                         },
                       },
                       "employee": {
@@ -13400,7 +13416,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "pay_currency": {
@@ -13474,6 +13490,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -14292,7 +14309,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2023-10-06T18:42:34.000Z",
+                  "value": "2023-10-06T18:42:34Z",
                 },
               },
               "employee": {
@@ -14357,7 +14374,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "pay_currency": {
@@ -14426,6 +14443,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -15117,7 +15135,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "name": {
@@ -15183,6 +15201,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -15579,7 +15598,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "name": {
@@ -15640,6 +15659,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -17204,7 +17224,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "name": {
@@ -17294,6 +17314,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -17681,7 +17702,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "name": {
@@ -17766,6 +17787,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18050,6 +18072,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18164,7 +18187,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "pay_group_name": {
@@ -18219,6 +18242,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18545,7 +18569,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "pay_group_name": {
@@ -18595,6 +18619,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -18731,14 +18756,14 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-15T00:00:00.000Z",
+                          "value": "2020-11-15T00:00:00Z",
                         },
                       },
                       "end_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-15T00:00:00.000Z",
+                          "value": "2020-11-15T00:00:00Z",
                         },
                       },
                       "id": {
@@ -18752,7 +18777,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "remote_data": {
@@ -18798,7 +18823,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-08T00:00:00.000Z",
+                          "value": "2020-11-08T00:00:00Z",
                         },
                       },
                     },
@@ -18815,6 +18840,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -19394,14 +19420,14 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-15T00:00:00.000Z",
+                  "value": "2020-11-15T00:00:00Z",
                 },
               },
               "end_date": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-15T00:00:00.000Z",
+                  "value": "2020-11-15T00:00:00Z",
                 },
               },
               "field_mappings": {
@@ -19444,7 +19470,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "remote_data": {
@@ -19490,7 +19516,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-08T00:00:00.000Z",
+                  "value": "2020-11-08T00:00:00Z",
                 },
               },
             },
@@ -19502,6 +19528,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -19874,54 +19901,6 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "object",
                       },
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                },
-                "type": "object",
-              },
-              {
-                "properties": {
-                  "linked_account_conditions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                     ],
                   },
                 },
@@ -19935,6 +19914,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20088,54 +20068,6 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "object",
                       },
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                },
-                "type": "object",
-              },
-              {
-                "properties": {
-                  "linked_account_conditions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "condition_schema_id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "condition_schema_id",
-                            },
-                          },
-                          "operator": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operator",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                     ],
                   },
                 },
@@ -20149,6 +20081,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20339,63 +20272,6 @@ exports[`open api parser merge parse open api 1`] = `
                             },
                             "type": "object",
                           },
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "common_model": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "common_model",
-                        },
-                      },
-                      "condition_type": {
-                        "type": "enum",
-                        "value": "BOOLEAN",
-                      },
-                      "field_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "field_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "is_unique": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "native_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "native_name",
-                        },
-                      },
-                      "operators": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
                         ],
                       },
                     },
@@ -20412,6 +20288,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20585,7 +20462,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-03-30T19:44:18.695Z",
+                          "value": "2021-03-30T19:44:18.695973Z",
                         },
                       },
                       "model_id": {
@@ -20606,7 +20483,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-03-30T20:44:18.662Z",
+                          "value": "2021-03-30T20:44:18.662942Z",
                         },
                       },
                       "selective_sync_configurations_usage": {
@@ -20631,6 +20508,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20764,7 +20642,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2021-03-30T19:44:18.695Z",
+                      "value": "2021-03-30T19:44:18.695973Z",
                     },
                   },
                   "model_id": {
@@ -20785,7 +20663,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2021-03-30T20:44:18.662Z",
+                      "value": "2021-03-30T20:44:18.662942Z",
                     },
                   },
                   "selective_sync_configurations_usage": {
@@ -20807,6 +20685,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -20916,7 +20795,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "name": {
@@ -20978,6 +20857,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -21351,7 +21231,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "name": {
@@ -21408,6 +21288,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -21595,7 +21476,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-17T00:00:00.000Z",
+                          "value": "2020-11-17T00:00:00Z",
                         },
                       },
                       "id": {
@@ -21609,7 +21490,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "remote_data": {
@@ -21651,7 +21532,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2020-11-10T00:00:00.000Z",
+                          "value": "2020-11-10T00:00:00Z",
                         },
                       },
                       "status": {
@@ -21676,6 +21557,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -22588,7 +22470,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2020-11-17T00:00:00.000Z",
+                      "value": "2020-11-17T00:00:00Z",
                     },
                   },
                   "field_mappings": {
@@ -22631,7 +22513,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2021-10-16T00:00:00.000Z",
+                      "value": "2021-10-16T00:00:00Z",
                     },
                   },
                   "remote_data": {
@@ -22673,7 +22555,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2020-11-10T00:00:00.000Z",
+                      "value": "2020-11-10T00:00:00Z",
                     },
                   },
                   "status": {
@@ -22739,6 +22621,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -22912,7 +22795,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2021-10-16T00:00:00.000Z",
+                          "value": "2021-10-16T00:00:00Z",
                         },
                       },
                       "policy_type": {
@@ -22971,6 +22854,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -23504,7 +23388,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "policy_type": {
@@ -23558,6 +23442,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -23783,7 +23668,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-17T00:00:00.000Z",
+                  "value": "2020-11-17T00:00:00Z",
                 },
               },
               "field_mappings": {
@@ -23826,7 +23711,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2021-10-16T00:00:00.000Z",
+                  "value": "2021-10-16T00:00:00Z",
                 },
               },
               "remote_data": {
@@ -23868,7 +23753,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2020-11-10T00:00:00.000Z",
+                  "value": "2020-11-10T00:00:00Z",
                 },
               },
               "status": {
@@ -23888,6 +23773,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24368,6 +24254,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24475,6 +24362,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24602,6 +24490,7 @@ exports[`open api parser merge parse open api 1`] = `
       "headers": [
         {
           "description": "Token identifying the end user.",
+          "env": null,
           "name": "X-Account-Token",
           "parameterNameOverride": null,
           "schema": {
@@ -24660,7 +24549,7 @@ exports[`open api parser merge parse open api 1`] = `
     },
   ],
   "errors": {},
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "AccountDetails",

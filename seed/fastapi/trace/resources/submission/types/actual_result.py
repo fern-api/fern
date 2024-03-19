@@ -76,6 +76,7 @@ class _ActualResult:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class ExceptionV2(pydantic.BaseModel):
         type: typing.Literal["exceptionV2"]

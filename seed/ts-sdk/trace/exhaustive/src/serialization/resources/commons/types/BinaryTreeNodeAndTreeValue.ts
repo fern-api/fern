@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { NodeId } from "./NodeId";
+import { BinaryTreeValue } from "./BinaryTreeValue";
 
 export const BinaryTreeNodeAndTreeValue: core.serialization.ObjectSchema<
     serializers.BinaryTreeNodeAndTreeValue.Raw,
     SeedTrace.BinaryTreeNodeAndTreeValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
-    fullTree: core.serialization.lazyObject(async () => (await import("../../..")).BinaryTreeValue),
+    nodeId: NodeId,
+    fullTree: BinaryTreeValue,
 });
 
 export declare namespace BinaryTreeNodeAndTreeValue {
     interface Raw {
-        nodeId: serializers.NodeId.Raw;
-        fullTree: serializers.BinaryTreeValue.Raw;
+        nodeId: NodeId.Raw;
+        fullTree: BinaryTreeValue.Raw;
     }
 }

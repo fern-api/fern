@@ -43,7 +43,7 @@ export declare namespace PrimitiveExample {
 
     interface Datetime extends _Utils {
         type: "datetime";
-        value: Date;
+        value: string;
     }
 
     interface Date_ extends _Utils {
@@ -71,7 +71,7 @@ export declare namespace PrimitiveExample {
         float: (value: number) => _Result;
         double: (value: number) => _Result;
         string: (value: string) => _Result;
-        datetime: (value: Date) => _Result;
+        datetime: (value: string) => _Result;
         date: (value: string) => _Result;
         base64: (value: string) => _Result;
         boolean: (value: boolean) => _Result;
@@ -145,7 +145,7 @@ export const PrimitiveExample = {
         };
     },
 
-    datetime: (value: Date): FernOpenapiIr.PrimitiveExample.Datetime => {
+    datetime: (value: string): FernOpenapiIr.PrimitiveExample.Datetime => {
         return {
             value: value,
             type: "datetime",

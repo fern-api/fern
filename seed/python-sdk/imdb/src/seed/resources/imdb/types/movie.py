@@ -15,7 +15,10 @@ except ImportError:
 class Movie(pydantic.BaseModel):
     id: MovieId
     title: str
-    rating: float = pydantic.Field(description="The rating scale is one to five stars")
+    rating: float = pydantic.Field()
+    """
+    The rating scale is one to five stars
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,4 +31,5 @@ class Movie(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

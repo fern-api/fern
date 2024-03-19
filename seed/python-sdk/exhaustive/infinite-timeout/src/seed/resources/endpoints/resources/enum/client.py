@@ -32,6 +32,17 @@ class EnumClient:
             - request: WeatherReport.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import WeatherReport
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.enum.get_and_return_enum(
+            request=WeatherReport.SUNNY,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -51,6 +62,8 @@ class EnumClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(WeatherReport, _response.json())  # type: ignore
@@ -73,6 +86,17 @@ class AsyncEnumClient:
             - request: WeatherReport.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import WeatherReport
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.enum.get_and_return_enum(
+            request=WeatherReport.SUNNY,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -92,6 +116,8 @@ class AsyncEnumClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else None,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(WeatherReport, _response.json())  # type: ignore

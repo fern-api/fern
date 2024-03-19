@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    operand: SeedEnum.Operand.GreaterThan\n});\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
             }
         },
         {
@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, undefined, undefined, undefined);\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, SeedEnum.Color.Red, SeedEnum.Color.Red);\n"
             }
         },
         {
@@ -27,7 +27,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan\n});\n"
+                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
             }
         }
     ],

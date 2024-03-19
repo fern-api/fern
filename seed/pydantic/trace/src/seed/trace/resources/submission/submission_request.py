@@ -20,6 +20,7 @@ class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
@@ -31,6 +32,7 @@ class SubmissionRequest_SubmitV2(SubmitRequestV2):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
@@ -38,6 +40,7 @@ class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class SubmissionRequest_Stop(StopRequest):
@@ -45,6 +48,7 @@ class SubmissionRequest_Stop(StopRequest):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionRequest = typing.Union[

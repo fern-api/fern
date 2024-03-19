@@ -1,6 +1,6 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-api/ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import path, { basename } from "path";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 

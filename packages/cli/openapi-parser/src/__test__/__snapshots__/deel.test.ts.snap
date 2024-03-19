@@ -19826,7 +19826,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": true,
   "nonRequestReferencedSchemas": [
     "HrisDirectEmployeeContainer",

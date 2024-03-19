@@ -1,0 +1,66 @@
+---
+title: The Java SDK generator
+description: Use Fern's Java SDK generator and your API definition to output a fully functional Java SDK locally, or publish it to a private or public Maven repository. 
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/java)<br />
+**Latest version**: `0.8.4`
+
+The Java SDK generator outputs a fully functional Java SDK. It can publish the SDK to [Maven Central](https://central.sonatype.com/) or to a private package manager hosted by Fern.
+
+## Local
+
+Dump the generated SDK to the local file system.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.6.1
+        output:
+          location: local-file-system
+          path: ../generated/sdk/java
+```
+</CodeBlock>
+
+## Publish an internal package
+
+Publish the generated SDK to a private Maven repository hosted by Fern. Available on the Starter plan.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  internal:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.6.1
+        output:
+          location: npm.buildwithfern.com
+          package-name: @fern-petstore/api # replace with your package name
+```
+</CodeBlock>
+
+## Publish a public package
+
+Publish the generated SDK to Maven Central. Available on the Starter plan.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  publish:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.6.1
+        output:
+          location: maven
+          # replace petstore below with your coordinate
+          # e.g., com.example.my-api:my-api
+          coordinate: io.github.petstore:petstore 
+          username: ${MAVEN_USERNAME}
+          password: ${MAVEN_PASSWORD}
+        github:
+          repository: petstore/petstore-java # replace package & org
+```
+</CodeBlock>

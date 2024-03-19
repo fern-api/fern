@@ -1,0 +1,63 @@
+---
+title: The Ruby SDK generator
+description: Use Fern's Ruby SDK generator and your API definition to output a fully functional Ruby SDK (client libraries) locally, or publish it to RubyGems.
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/ruby)<br />
+**Latest version**: `0.3.1`
+
+The Ruby SDK generator outputs a fully functional Ruby SDK. It can publish the SDK to [RubyGems.org](https://RubyGems.org) or to a private package manager hosted by Fern.
+
+## Local
+
+Dump the generated SDK to the local file system.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 0.3.0
+        output:
+          location: local-file-system
+          path: ../generated/sdk/ruby
+```
+</CodeBlock>
+
+## Publish an internal package
+
+Publish the generated SDK to a private RubyGems repository hosted by Fern.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  internal:
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 0.8.0
+        output:
+          location: rubygems.buildwithfern.com
+          package-name: petstore # replace with your package name
+```
+</CodeBlock>
+
+## Publish a public package
+
+Publish the generated SDK to RubyGems.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  public:
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 0.3.0
+        output:
+          location: rubygems
+          package-name: petstore # replace with your package name
+          token: ${RUBYGEMS_TOKEN}
+        github:
+          repository: petstore/petstore-ruby # replace package & org
+```
+</CodeBlock>

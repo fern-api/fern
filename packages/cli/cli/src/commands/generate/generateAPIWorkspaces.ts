@@ -70,8 +70,9 @@ export async function generateAPIWorkspaces({
                         : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
 
                 await generateWorkspace({
-                    workspace: fernWorkspace,
                     organization: project.config.organization,
+                    workspace: fernWorkspace,
+                    projectConfig: project.config,
                     context,
                     version,
                     groupName,

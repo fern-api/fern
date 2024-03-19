@@ -29,7 +29,7 @@ import {
     getUnionDiscriminant,
     getUnionDiscriminantName
 } from "./convertDiscriminatedUnionTypeDeclaration";
-import { getEnumName } from "./convertEnumTypeDeclaration";
+import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
 import { getPropertyName } from "./convertObjectTypeDeclaration";
 
 export function convertTypeExample({
@@ -121,13 +121,13 @@ export function convertTypeExample({
                 })
             });
         },
-        enum: () => {
+        enum: (rawEnum) => {
             if (typeof example !== "string") {
                 throw new Error("Enum example is not a string");
             }
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                    name: getEnumName(example).name,
+                    name: getEnumNameFromEnumValue(example, rawEnum).name,
                     wireValue: example
                 })
             });
@@ -430,7 +430,7 @@ function convertObject({
     workspace: FernWorkspace;
 }): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
-        throw new Error("Example is not an object");
+        throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
     }
     return ExampleTypeShape.object({
         properties:

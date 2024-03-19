@@ -34,6 +34,15 @@ class OptionalClient:
             - request: typing.Optional[typing.Dict[str, typing.Any]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedObjectsWithImports
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_body(
+            request={"string": {"key": "value"}},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -58,6 +67,8 @@ class OptionalClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -83,6 +94,15 @@ class AsyncOptionalClient:
             - request: typing.Optional[typing.Dict[str, typing.Any]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedObjectsWithImports
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.optional.send_optional_body(
+            request={"string": {"key": "value"}},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -107,6 +127,8 @@ class AsyncOptionalClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

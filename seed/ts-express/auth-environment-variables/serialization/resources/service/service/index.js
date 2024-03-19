@@ -23,5 +23,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWithApiKey = void 0;
+exports.getWithHeader = exports.getWithApiKey = void 0;
 exports.getWithApiKey = __importStar(require("./getWithApiKey"));
+exports.getWithHeader = __importStar(require("./getWithHeader"));

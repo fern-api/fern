@@ -13,6 +13,7 @@ class Animal_Dog(Dog):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class Animal_Cat(Cat):
@@ -20,6 +21,7 @@ class Animal_Cat(Cat):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 Animal = typing.Union[Animal_Dog, Animal_Cat]

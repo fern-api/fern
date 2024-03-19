@@ -646,13 +646,13 @@
               "request": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field",
+                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field-list",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "object",
-                    "get-and-return-nested-with-required-field"
+                    "get-and-return-nested-with-required-field-list"
                   ],
                   "query": [],
                   "variable": []
@@ -784,13 +784,13 @@
               "request": {
                 "description": "GET with path and query params",
                 "url": {
-                  "raw": "{{baseUrl}}/params/path/:param?query=",
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "params",
-                    "path",
+                    "path-query",
                     ":param"
                   ],
                   "query": [

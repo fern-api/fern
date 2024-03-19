@@ -7,6 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
+    HttpEndpointExample,
     Name,
     SupportedSdkLanguage
 } from "@fern-api/ir-sdk";
@@ -45,7 +46,7 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleEndpointCall {
+}): HttpEndpointExample {
     const convertedPathParameters = convertPathParameters({
         service,
         endpoint,
@@ -56,7 +57,7 @@ export function convertExampleEndpointCall({
         file,
         workspace
     });
-    return {
+    return HttpEndpointExample.userProvided({
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
@@ -127,7 +128,7 @@ export function convertExampleEndpointCall({
                     })
             });
         })
-    };
+    });
 }
 
 function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
@@ -355,8 +356,12 @@ function convertExampleRequestBody({
         );
     }
 
+    if (!example.request) {
+        return undefined;
+    }
+
     if (!isPlainObject(example.request)) {
-        throw new Error("Example is not an object");
+        throw new Error(`Example is not an object. Got: ${JSON.stringify(example.request)}`);
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
@@ -485,8 +490,11 @@ function convertExampleResponseBody({
     if (responseBodyType == null) {
         return undefined;
     }
+    if (example.response?.body == null) {
+        return undefined;
+    }
     return convertTypeReferenceExample({
-        example: example.response?.body,
+        example: example.response.body,
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,

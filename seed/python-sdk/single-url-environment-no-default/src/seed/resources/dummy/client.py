@@ -24,6 +24,15 @@ class DummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+        client = SeedSingleUrlEnvironmentNoDefault(
+            token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        )
+        client.dummy.get_dummy()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -42,6 +51,8 @@ class DummyClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -60,6 +71,15 @@ class AsyncDummyClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
+
+        client = AsyncSeedSingleUrlEnvironmentNoDefault(
+            token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        )
+        await client.dummy.get_dummy()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -78,6 +98,8 @@ class AsyncDummyClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

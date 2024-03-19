@@ -155,6 +155,7 @@ exports[`open api parser persona parse open api 1`] = `
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -179,6 +180,7 @@ exports[`open api parser persona parse open api 1`] = `
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -1360,6 +1362,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -3414,6 +3417,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -4128,6 +4132,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -4777,6 +4782,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -5374,6 +5380,7 @@ Note that this will only delete the report -- it does not delete associated acco
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Persona-Version",
           "parameterNameOverride": null,
           "schema": {
@@ -5717,6 +5724,7 @@ Note that this will only delete the report -- it does not delete associated acco
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -5915,6 +5923,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -5939,6 +5948,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -6817,6 +6827,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -6841,6 +6852,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -7660,6 +7672,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -8191,6 +8204,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "headers": [
         {
           "description": null,
+          "env": null,
           "name": "Persona-Version",
           "parameterNameOverride": null,
           "schema": {
@@ -8686,6 +8700,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -8710,6 +8725,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -9629,6 +9645,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -10730,6 +10747,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -10754,6 +10772,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -12054,6 +12073,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -12521,6 +12541,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -12545,6 +12566,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -13452,6 +13474,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -13670,6 +13693,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -14350,6 +14374,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -14969,6 +14994,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -14993,6 +15019,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -15665,6 +15692,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -15689,6 +15717,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -16360,6 +16389,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -16384,6 +16414,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -16859,6 +16890,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -16883,6 +16915,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -18007,6 +18040,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -18031,6 +18065,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -19266,6 +19301,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -19290,6 +19326,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -19820,6 +19857,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -20054,6 +20092,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -20292,6 +20331,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -20316,6 +20356,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -21093,6 +21134,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -21117,6 +21159,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -21715,6 +21758,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -21814,6 +21858,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -21838,6 +21883,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -26435,6 +26481,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -26459,6 +26506,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -27734,6 +27782,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -27758,6 +27807,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -29007,6 +29057,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -29031,6 +29082,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -30017,6 +30069,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -30041,6 +30094,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -31348,6 +31402,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -31372,6 +31427,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -32482,6 +32538,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -32668,6 +32725,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -32775,6 +32833,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -32799,6 +32858,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -32898,6 +32958,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -32922,6 +32983,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -33091,6 +33153,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -33115,6 +33178,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -33284,6 +33348,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -33308,6 +33373,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -33477,6 +33543,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -33501,6 +33568,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -33670,6 +33738,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -33694,6 +33763,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -33863,6 +33933,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -33887,6 +33958,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -34056,6 +34128,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -34080,6 +34153,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -34272,6 +34346,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -34296,6 +34371,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -34543,6 +34619,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -34567,6 +34644,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -35064,6 +35142,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -35088,6 +35167,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -35353,6 +35433,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -35377,6 +35458,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -36019,6 +36101,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -36043,6 +36126,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -36628,6 +36712,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -36652,6 +36737,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -36917,6 +37003,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -36941,6 +37028,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -37576,6 +37664,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -37600,6 +37689,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -38147,6 +38237,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -38171,6 +38262,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -38426,6 +38518,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -38450,6 +38543,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -38867,6 +38961,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -38891,6 +38986,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -39058,6 +39154,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -39082,6 +39179,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -39608,6 +39706,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -39632,6 +39731,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -40170,6 +40270,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -40194,6 +40295,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -40636,6 +40738,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -40660,6 +40763,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -40827,6 +40931,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -40851,6 +40956,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -41293,6 +41399,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -41317,6 +41424,7 @@ The columns we allow are
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -41396,6 +41504,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -41586,6 +41695,7 @@ The columns we allow are
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -42332,6 +42442,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -45922,6 +46033,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -48637,6 +48749,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -48661,6 +48774,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -49701,6 +49815,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -49725,6 +49840,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -50301,6 +50417,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -50325,6 +50442,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -50482,6 +50600,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -50506,6 +50625,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -50663,6 +50783,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -50687,6 +50808,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -50851,6 +50973,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -50875,6 +50998,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -51032,6 +51156,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -51056,6 +51181,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -51213,6 +51339,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -51237,6 +51364,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -56300,6 +56428,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -56324,6 +56453,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -56553,6 +56683,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -56577,6 +56708,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "idempotency-key",
           "parameterNameOverride": null,
           "schema": {
@@ -56751,6 +56883,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "key-inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -56775,6 +56908,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent.",
+          "env": null,
           "name": "idempotence-key",
           "parameterNameOverride": null,
           "schema": {
@@ -57578,6 +57712,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -57602,6 +57737,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -58507,6 +58643,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -58531,6 +58668,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -59436,6 +59574,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -59460,6 +59599,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -60185,6 +60325,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -60386,6 +60527,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -62238,6 +62380,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -63554,6 +63697,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -64389,6 +64533,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -64413,6 +64558,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -65077,6 +65223,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -65832,6 +65979,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -65856,6 +66004,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -67106,6 +67255,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -68391,6 +68541,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -68415,6 +68566,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -69073,6 +69225,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -69859,6 +70012,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -69883,6 +70037,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -70641,6 +70796,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -70665,6 +70821,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -71926,6 +72083,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -72663,6 +72821,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -73906,6 +74065,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -74687,6 +74847,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -74711,6 +74872,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -76597,6 +76759,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -77221,6 +77384,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -81525,6 +81689,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -81549,6 +81714,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -83902,6 +84068,7 @@ The inquiry can still be resumed after expiry.",
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -85132,6 +85299,7 @@ The inquiry can still be resumed after expiry.",
       "headers": [
         {
           "description": "Determines casing for the API response",
+          "env": null,
           "name": "Key-Inflection",
           "parameterNameOverride": null,
           "schema": {
@@ -85156,6 +85324,7 @@ The inquiry can still be resumed after expiry.",
         },
         {
           "description": "Ensures the request is idempotent",
+          "env": null,
           "name": "Idempotency-Key",
           "parameterNameOverride": null,
           "schema": {
@@ -88116,7 +88285,7 @@ The inquiry can still be resumed after expiry.",
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {},

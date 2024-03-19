@@ -100,7 +100,10 @@ export function convertSchemaObject(
     referencedAsRequest = false
 ): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
-    const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
+    const mixedGroupName =
+        getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
+        getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
+    const groupName = typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName;
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
@@ -280,6 +283,17 @@ export function convertSchemaObject(
             }),
             wrapAsNullable,
             description,
+            groupName
+        });
+    }
+    if (schema === "float") {
+        return convertNumber({
+            nameOverride,
+            generatedName,
+            format: "float",
+            description,
+            wrapAsNullable,
+            example: getExampleAsNumber(schema),
             groupName
         });
     }
@@ -643,7 +657,7 @@ function isListOfStrings(x: unknown): x is string[] {
 function maybeInjectDescriptionOrGroupName(
     schema: SchemaWithExample,
     description: string | undefined,
-    groupName: string | undefined
+    groupName: string[] | undefined
 ): SchemaWithExample {
     if (schema.type === "reference") {
         return SchemaWithExample.reference({
@@ -717,7 +731,7 @@ export function wrapLiteral({
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
-    groupName: string | undefined;
+    groupName: string[] | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
@@ -755,11 +769,12 @@ export function wrapPrimitive({
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
-    groupName: string | undefined;
+    groupName: string[] | undefined;
     description: string | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
+    groupName = typeof groupName === "string" ? [groupName] : groupName;
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,

@@ -5,6 +5,7 @@
 import * as serializers from "../../../..";
 import * as Fiddle from "../../../../../api";
 import * as core from "../../../../../core";
+import { ObjectWithOptionalField } from "../../../types/resources/object/types/ObjectWithOptionalField";
 
 export const PostWithObjectBody: core.serialization.Schema<
     serializers.PostWithObjectBody.Raw,
@@ -12,16 +13,13 @@ export const PostWithObjectBody: core.serialization.Schema<
 > = core.serialization.object({
     string: core.serialization.string(),
     integer: core.serialization.number(),
-    nestedObject: core.serialization.property(
-        "NestedObject",
-        core.serialization.lazyObject(async () => (await import("../../../..")).types.ObjectWithOptionalField)
-    ),
+    nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField),
 });
 
 export declare namespace PostWithObjectBody {
     interface Raw {
         string: string;
         integer: number;
-        NestedObject: serializers.types.ObjectWithOptionalField.Raw;
+        NestedObject: ObjectWithOptionalField.Raw;
     }
 }

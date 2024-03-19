@@ -4,6 +4,8 @@ import typing
 
 import httpx
 
+from .http_client import AsyncHttpClient, HttpClient
+
 
 class BaseClientWrapper:
     def __init__(self, *, custom_auth_scheme: str, base_url: str):
@@ -13,8 +15,8 @@ class BaseClientWrapper:
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "seed",
-            "X-Fern-SDK-Version": "0.0.0",
+            "X-Fern-SDK-Name": "fern_custom-auth",
+            "X-Fern-SDK-Version": "0.0.1",
         }
         headers["X-API-KEY"] = self.custom_auth_scheme
         return headers
@@ -26,10 +28,10 @@ class BaseClientWrapper:
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(self, *, custom_auth_scheme: str, base_url: str, httpx_client: httpx.Client):
         super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url)
-        self.httpx_client = httpx_client
+        self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
 class AsyncClientWrapper(BaseClientWrapper):
     def __init__(self, *, custom_auth_scheme: str, base_url: str, httpx_client: httpx.AsyncClient):
         super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url)
-        self.httpx_client = httpx_client
+        self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

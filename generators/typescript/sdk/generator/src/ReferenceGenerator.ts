@@ -1,12 +1,11 @@
 export declare namespace ReferenceGenerator {
     export interface Init {
-        clientName: string;
-        apiName?: string;
+        apiName: string;
     }
 }
 export declare namespace ReferenceGeneratorSection {
     export interface Init {
-        clientName: string;
+        apiName: string;
         // Heading is essentially just the endpoint name in the root package OR
         heading: string;
     }
@@ -21,6 +20,7 @@ export interface ReferenceParameterDeclaration {
 export interface EndpointDeclaration {
     functionPath?: string;
     functionName: string;
+    clientPath?: string;
     returnType: string | undefined;
     returnTypePath?: string;
     codeSnippet: string | undefined;
@@ -44,12 +44,12 @@ function writeSignature(parameters: ReferenceParameterDeclaration[]): string {
 }
 
 class ReferenceGeneratorSection {
-    clientName: string;
+    apiName: string;
     heading: string;
     endpoints: EndpointDeclaration[];
 
     constructor(init: ReferenceGeneratorSection.Init) {
-        this.clientName = init.clientName;
+        this.apiName = init.apiName;
         this.heading = init.heading;
         this.endpoints = [];
     }
@@ -89,9 +89,10 @@ class ReferenceGeneratorSection {
                 : "";
 
         return `
-<details><summary> <code>${this.clientName}.${wrapInLink(endpoint.functionName, endpoint.functionPath)}${writeSignature(
-            endpoint.parameters
-        )} -> ${wrapInLink(
+<details><summary> <code>${endpoint.clientPath ?? this.apiName}.${wrapInLink(
+            endpoint.functionName,
+            endpoint.functionPath
+        )}${writeSignature(endpoint.parameters)} -> ${wrapInLink(
             endpoint.returnType === undefined ? "void" : endpoint.returnType,
             endpoint.returnTypePath
         )}</code> </summary>
@@ -112,18 +113,17 @@ ${this.endpoints.map((endpoint) => this.writeEndpoint(endpoint)).join("\n")}
 }
 
 export class ReferenceGenerator {
-    apiName: string | undefined;
-    clientName: string;
+    apiName: string;
     sections: ReferenceGeneratorSection[];
 
     constructor(init: ReferenceGenerator.Init) {
-        this.clientName = init.clientName;
+        this.apiName = init.apiName;
         this.apiName = init.apiName;
         this.sections = [];
     }
 
     public addSection(heading: string): ReferenceGeneratorSection {
-        const section = new ReferenceGeneratorSection({ clientName: this.clientName, heading });
+        const section = new ReferenceGeneratorSection({ apiName: this.apiName, heading });
         this.sections.push(section);
         return section;
     }

@@ -6,6 +6,11 @@ import typing
 from ...core.datetime_utils import serialize_datetime
 from .movie import Movie
 
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
+
 
 class ExtendedMovie(Movie):
     """
@@ -19,6 +24,11 @@ class ExtendedMovie(Movie):
         type="movie",
         tag="tag-12efs9dv",
         cast=["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
+        metadata={
+            "academyAward": true,
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
     )
     """
 
@@ -34,4 +44,6 @@ class ExtendedMovie(Movie):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -5,25 +5,22 @@
 import * as serializers from "../../../../..";
 import * as Fiddle from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnSetOfObjects.Request.Raw,
     Fiddle.types.ObjectWithRequiredField[]
-> = core.serialization.list(
-    core.serialization.lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-);
+> = core.serialization.list(ObjectWithRequiredField);
 
 export declare namespace Request {
-    type Raw = serializers.types.ObjectWithRequiredField.Raw[];
+    type Raw = ObjectWithRequiredField.Raw[];
 }
 
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnSetOfObjects.Response.Raw,
     Fiddle.types.ObjectWithRequiredField[]
-> = core.serialization.list(
-    core.serialization.lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-);
+> = core.serialization.list(ObjectWithRequiredField);
 
 export declare namespace Response {
-    type Raw = serializers.types.ObjectWithRequiredField.Raw[];
+    type Raw = ObjectWithRequiredField.Raw[];
 }

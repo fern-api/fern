@@ -1,11 +1,11 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -23,7 +23,7 @@ export async function generateIrForWorkspaces({
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
     smartCasing: boolean;
@@ -32,7 +32,7 @@ export async function generateIrForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace =
-                    workspace.type === "openapi"
+                    workspace.type === "oss"
                         ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
                         : workspace;
 
@@ -68,7 +68,7 @@ async function getIntermediateRepresentation({
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;

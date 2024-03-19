@@ -19,7 +19,9 @@ features:
   fileUpload: true
   fileDownlaod: true
   snippets: false
+  snippetTests: false
   errors: false
   forwardCompatibleEnums: true
   additionalProperties: true
   whitelabel: false
+  apiReferenceGeneration: false

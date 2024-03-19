@@ -1,13 +1,7 @@
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
-import {
-    DependenciesConfiguration,
-    Dependency,
-    LocalApiDependency,
-    VersionedDependency
-} from "@fern-api/dependencies-configuration";
+import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
@@ -22,7 +16,7 @@ import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition, FernWorkspace } from "./types/Workspace";
-import { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+import { convertToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
 
 const FIDDLE = createFiddleService();
 
@@ -48,7 +42,7 @@ export async function loadDependency({
     cliVersion
 }: {
     dependencyName: string;
-    dependenciesConfiguration: DependenciesConfiguration;
+    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
@@ -74,7 +68,6 @@ export async function loadDependency({
                     case "version":
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
-                            rootApiFile,
                             dependency,
                             cliVersion
                         });
@@ -82,7 +75,6 @@ export async function loadDependency({
                     case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
-                            rootApiFile,
                             dependency,
                             cliVersion
                         });
@@ -104,12 +96,10 @@ export async function loadDependency({
 async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
-    rootApiFile,
     cliVersion
 }: {
-    dependency: LocalApiDependency;
+    dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
-    rootApiFile: RootApiFileSchema;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
     // parse workspace
@@ -128,18 +118,7 @@ async function validateLocalDependencyAndGetDefinition({
     const workspaceOfDependency =
         loadDependencyWorkspaceResult.workspace.type === "fern"
             ? loadDependencyWorkspaceResult.workspace
-            : await convertOpenApiWorkspaceToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
-
-    // ensure root api files are equivalent
-    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!equal) {
-        context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                ", "
-            )}]`
-        );
-        return undefined;
-    }
+            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
 
     return workspaceOfDependency.definition;
 }
@@ -147,12 +126,10 @@ async function validateLocalDependencyAndGetDefinition({
 async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
-    rootApiFile,
     cliVersion
 }: {
-    dependency: VersionedDependency;
+    dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
-    rootApiFile: RootApiFileSchema;
     cliVersion: string;
 }): Promise<FernDefinition | undefined> {
     // load API
@@ -241,30 +218,9 @@ async function validateVersionedDependencyAndGetDefinition({
     }
 
     const workspaceOfDependency = loadDependencyWorkspaceResult.workspace;
-    if (workspaceOfDependency.type === "openapi") {
+    if (workspaceOfDependency.type === "oss") {
         context.failWithoutThrowing("Dependency must be a fern workspace.");
         return undefined;
-    }
-
-    const hasEndpoints =
-        Object.values(workspaceOfDependency.definition.namedDefinitionFiles).filter((file) => {
-            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
-        }).length > 0 ||
-        Object.values(workspaceOfDependency.definition.packageMarkers).filter((file) => {
-            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
-        }).length > 0;
-
-    // ensure root api files are equivalent
-    if (hasEndpoints) {
-        const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-        if (!equal) {
-            context.failWithoutThrowing(
-                `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                    ", "
-                )}]`
-            );
-            return undefined;
-        }
     }
 
     return workspaceOfDependency.definition;
@@ -352,7 +308,7 @@ async function downloadDependency({
     await tar.extract({ file: outputTarPath, cwd: absolutePathToLocalOutput });
 }
 
-function stringifyDependency(dependency: Dependency): string {
+function stringifyDependency(dependency: dependenciesYml.Dependency): string {
     switch (dependency.type) {
         case "version":
             return `@${dependency.organization}/${dependency.apiName}`;

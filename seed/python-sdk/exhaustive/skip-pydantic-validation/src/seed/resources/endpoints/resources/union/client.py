@@ -27,6 +27,21 @@ class UnionClient:
             - request: Animal.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+        from seed.resources.types import Animal_Dog
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.union.get_and_return_union(
+            request=Animal_Dog(
+                animal="dog",
+                name="string",
+                likes_to_woof=True,
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -51,6 +66,8 @@ class UnionClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return Animal.construct(_response.json())
@@ -73,6 +90,21 @@ class AsyncUnionClient:
             - request: Animal.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+        from seed.resources.types import Animal_Dog
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.union.get_and_return_union(
+            request=Animal_Dog(
+                animal="dog",
+                name="string",
+                likes_to_woof=True,
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -97,6 +129,8 @@ class AsyncUnionClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return Animal.construct(_response.json())

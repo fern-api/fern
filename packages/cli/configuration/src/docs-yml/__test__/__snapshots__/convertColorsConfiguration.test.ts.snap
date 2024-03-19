@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convertColorsConfiguration should support accentPrimaryDeprecated 1`] = `
+{
+  "accentPrimary": {
+    "a": 1,
+    "b": 238,
+    "g": 101,
+    "r": 93,
+  },
+  "background": undefined,
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "sidebarBackground": undefined,
+  "type": "light",
+}
+`;

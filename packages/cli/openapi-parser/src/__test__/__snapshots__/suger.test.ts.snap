@@ -42,7 +42,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -96,7 +96,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -223,7 +223,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -337,7 +337,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -381,7 +381,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -401,7 +401,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -539,7 +539,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -653,7 +653,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -697,7 +697,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -717,7 +717,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -874,14 +874,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementTermID": {
@@ -1065,7 +1065,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -1111,7 +1111,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -1249,21 +1249,21 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "endTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "expireTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "externalID": {
@@ -1344,7 +1344,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "acceptanceLinks": {
@@ -1376,7 +1376,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -1390,7 +1390,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "name": {
@@ -1443,7 +1443,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "state": {
@@ -1697,7 +1697,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -1900,14 +1900,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementTermID": {
@@ -2091,7 +2091,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -2137,7 +2137,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -2264,14 +2264,14 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "endTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementTermID": {
@@ -2455,7 +2455,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -2501,7 +2501,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "status": {
@@ -2822,14 +2822,14 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "endTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementTermID": {
@@ -3013,7 +3013,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -3059,7 +3059,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "status": {
@@ -3223,7 +3223,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementID": {
@@ -3434,7 +3434,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "usedCommitAmount": {
@@ -3605,7 +3605,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementID": {
@@ -3816,7 +3816,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "usedCommitAmount": {
@@ -3977,7 +3977,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -3998,7 +3998,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "organizationID": {
@@ -4297,7 +4297,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementID": {
@@ -4318,7 +4318,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "metaInfo": {
@@ -4529,7 +4529,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -4803,14 +4803,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdateTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -4972,7 +4972,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "info": {
@@ -5030,7 +5030,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "mcasFullSyncDone": {
@@ -5178,7 +5178,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "serviceAccountEmail": {
@@ -5339,7 +5339,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -5492,7 +5492,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "info": {
@@ -5550,7 +5550,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "mcasFullSyncDone": {
@@ -5698,7 +5698,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "serviceAccountEmail": {
@@ -5859,7 +5859,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -6305,7 +6305,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "info": {
@@ -6363,7 +6363,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "mcasFullSyncDone": {
@@ -6511,7 +6511,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "serviceAccountEmail": {
@@ -6672,7 +6672,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -7090,21 +7090,21 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "expireTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "externalID": {
@@ -7246,7 +7246,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -7447,21 +7447,21 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "endTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "expireTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "externalID": {
@@ -7542,7 +7542,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "acceptanceLinks": {
@@ -7574,7 +7574,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -7588,7 +7588,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "name": {
@@ -7641,7 +7641,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "state": {
@@ -7895,7 +7895,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -8105,21 +8105,21 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "endTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "expireTime": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "externalID": {
@@ -8200,7 +8200,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "acceptanceLinks": {
@@ -8232,7 +8232,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -8246,7 +8246,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "name": {
@@ -8299,7 +8299,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "state": {
@@ -8553,7 +8553,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -9004,14 +9004,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementTermID": {
@@ -9195,7 +9195,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -9241,7 +9241,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -9371,7 +9371,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -9399,7 +9399,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -9626,14 +9626,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementTermID": {
@@ -9817,7 +9817,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -9863,7 +9863,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -10051,21 +10051,21 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "expireTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "externalID": {
@@ -10207,7 +10207,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -10312,6 +10312,7 @@ exports[`open api parser suger parse open api 1`] = `
       "headers": [
         {
           "description": "Bearer Access Token",
+          "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
@@ -10482,7 +10483,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "externalID": {
@@ -10588,7 +10589,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -10828,7 +10829,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "disburseAmount": {
@@ -10842,7 +10843,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -10870,7 +10871,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "organizationID": {
@@ -10891,7 +10892,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "productID": {
@@ -10912,7 +10913,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "refundInvoiceAmount": {
@@ -10926,7 +10927,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "taxAmount": {
@@ -11575,7 +11576,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "externalID": {
@@ -11681,7 +11682,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -11840,7 +11841,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "externalID": {
@@ -12073,7 +12074,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -12128,7 +12129,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -12436,7 +12437,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "externalID": {
@@ -12669,7 +12670,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -12724,7 +12725,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastUpdatedBy": {
@@ -13068,14 +13069,14 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "entitlementTermID": {
@@ -13259,7 +13260,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -13305,7 +13306,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "status": {
@@ -13452,21 +13453,21 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "endTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "expireTime": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "externalID": {
@@ -13608,7 +13609,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "lastUpdatedBy": {
@@ -13838,7 +13839,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -13859,7 +13860,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "organizationID": {
@@ -14133,7 +14134,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -14435,7 +14436,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "reportType": {
@@ -14479,7 +14480,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "disburseAmount": {
@@ -14493,7 +14494,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -14521,7 +14522,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "organizationID": {
@@ -14542,7 +14543,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "productID": {
@@ -14563,7 +14564,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "refundInvoiceAmount": {
@@ -14577,7 +14578,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "taxAmount": {
@@ -14711,7 +14712,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -14732,7 +14733,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "organizationID": {
@@ -14976,7 +14977,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementID": {
@@ -14997,7 +14998,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "metaInfo": {
@@ -15186,7 +15187,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "entitlementID": {
@@ -15419,7 +15420,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "entitlementID": {
@@ -15543,7 +15544,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "gcpMeteringResponse": {
@@ -15614,7 +15615,7 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "usageRecordGroupIds": {
@@ -15811,7 +15812,7 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "usageRecords": {
@@ -15835,7 +15836,7 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "keys": {
@@ -16101,7 +16102,7 @@ exports[`open api parser suger parse open api 1`] = `
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "shared.IdentityBuyer",

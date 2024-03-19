@@ -5,22 +5,20 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { NonVoidFunctionDefinition } from "./NonVoidFunctionDefinition";
+import { AssertCorrectnessCheck } from "./AssertCorrectnessCheck";
 
 export const TestCaseWithActualResultImplementation: core.serialization.ObjectSchema<
     serializers.v2.v3.TestCaseWithActualResultImplementation.Raw,
     SeedTrace.v2.v3.TestCaseWithActualResultImplementation
 > = core.serialization.object({
-    getActualResult: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.NonVoidFunctionDefinition
-    ),
-    assertCorrectnessCheck: core.serialization.lazy(
-        async () => (await import("../../../../../../..")).v2.v3.AssertCorrectnessCheck
-    ),
+    getActualResult: NonVoidFunctionDefinition,
+    assertCorrectnessCheck: AssertCorrectnessCheck,
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
     interface Raw {
-        getActualResult: serializers.v2.v3.NonVoidFunctionDefinition.Raw;
-        assertCorrectnessCheck: serializers.v2.v3.AssertCorrectnessCheck.Raw;
+        getActualResult: NonVoidFunctionDefinition.Raw;
+        assertCorrectnessCheck: AssertCorrectnessCheck.Raw;
     }
 }

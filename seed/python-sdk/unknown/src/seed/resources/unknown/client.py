@@ -30,6 +30,15 @@ class UnknownClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedUnknownAsAny
+
+        client = SeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.unknown.post(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -54,6 +63,8 @@ class UnknownClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
@@ -76,6 +87,15 @@ class AsyncUnknownClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedUnknownAsAny
+
+        client = AsyncSeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.unknown.post(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -100,6 +120,8 @@ class AsyncUnknownClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore

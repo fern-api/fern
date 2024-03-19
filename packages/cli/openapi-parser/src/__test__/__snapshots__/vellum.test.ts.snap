@@ -81,7 +81,7 @@ Used to retrieve a deployment given its ID or name.
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "environment": {
@@ -106,7 +106,7 @@ Used to retrieve a deployment given its ID or name.
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "model_type": {
@@ -364,7 +364,7 @@ Creates a new document index.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "environment": {
@@ -580,7 +580,7 @@ Used to list documents. Optionally filter on supported fields.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "processing_failure_reason": {
@@ -1091,7 +1091,7 @@ Used to retrieve a model version given its ID.
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "exec_config": {
@@ -1807,18 +1807,6 @@ or overwritten with default values.",
                         "value": {
                           "type": "string",
                           "value": "Why hello, there!",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "key",
                         },
                       },
                     },
@@ -2794,7 +2782,7 @@ Upload a document to be indexed and used for search.
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "DeploymentRead",

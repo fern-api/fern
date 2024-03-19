@@ -3,6 +3,7 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -35,4 +36,21 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
                 name=self._name.name.pascal_case.safe_name,
             ),
             should_export=True,
+        )
+
+
+class UndiscriminatedUnionSnippetGenerator:
+    def __init__(
+        self,
+        snippet_writer: SnippetWriter,
+        name: ir_types.DeclaredTypeName,
+        example: ir_types.ExampleUndiscriminatedUnionType,
+    ):
+        self.snippet_writer = snippet_writer
+        self.name = name
+        self.example = example
+
+    def generate_snippet(self) -> Optional[AST.Expression]:
+        return self.snippet_writer.get_snippet_for_example_type_reference(
+            example_type_reference=self.example.single_union_type,
         )

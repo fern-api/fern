@@ -26,6 +26,14 @@ class ServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedBearerTokenEnvironmentVariable
+
+        client = SeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_with_bearer_token()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -44,6 +52,8 @@ class ServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -64,6 +74,14 @@ class AsyncServiceClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedBearerTokenEnvironmentVariable
+
+        client = AsyncSeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.service.get_with_bearer_token()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -82,6 +100,8 @@ class AsyncServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

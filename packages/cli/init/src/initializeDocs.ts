@@ -1,7 +1,7 @@
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
@@ -27,7 +27,7 @@ export async function initializeDocs({
     );
 }
 
-function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
+function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfiguration {
     return {
         instances: [
             {

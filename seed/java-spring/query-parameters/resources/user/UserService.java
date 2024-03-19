@@ -24,7 +24,11 @@ public interface UserService {
   )
   User getUsername(@RequestParam("limit") Integer limit, @RequestParam("id") UUID id,
       @RequestParam("date") String date, @RequestParam("deadline") OffsetDateTime deadline,
-      @RequestParam("bytes") byte[] bytes,
+      @RequestParam("bytes") byte[] bytes, @RequestParam("user") Optional<String> user,
+      @RequestParam("keyValue") Optional<String> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
+      @RequestParam("nestedUser") Optional<String> nestedUser,
+      @RequestParam("optionalUser") Optional<String> optionalUser,
+      @RequestParam("excludeUser") Optional<String> excludeUser,
       @RequestParam("filter") String filter);
 }

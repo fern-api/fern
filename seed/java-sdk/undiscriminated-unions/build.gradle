@@ -41,3 +41,23 @@ test {
         showStandardStreams = true
     }
 }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fern'
+            artifactId = 'undiscriminated-unions'
+            version = '0.0.1'
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "$System.env.MAVEN_PUBLISH_REGISTRY_URL"
+            credentials {
+                username "$System.env.MAVEN_USERNAME"
+                password "$System.env.MAVEN_PASSWORD"
+            }
+        }
+    }
+}
+

@@ -46,3 +46,10 @@ func WithApiKey(apiKey string) *core.ApiKeyOption {
 		ApiKey: apiKey,
 	}
 }
+
+// WithXAnotherHeader sets the xAnotherHeader request header.
+func WithXAnotherHeader(xAnotherHeader string) *core.XAnotherHeaderOption {
+	return &core.XAnotherHeaderOption{
+		XAnotherHeader: xAnotherHeader,
+	}
+}

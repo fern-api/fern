@@ -122,7 +122,7 @@ class ParamsService {
                 next(error);
             }
         }));
-        this.router.get("/path/:param", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/path-query/:param", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getWithPathAndQuery(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

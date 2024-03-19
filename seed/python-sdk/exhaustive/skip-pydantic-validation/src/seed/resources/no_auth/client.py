@@ -30,6 +30,16 @@ class NoAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.no_auth.post_with_no_auth(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -54,6 +64,8 @@ class NoAuthClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())
@@ -80,6 +92,16 @@ class AsyncNoAuthClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.no_auth.post_with_no_auth(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -104,6 +126,8 @@ class AsyncNoAuthClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())

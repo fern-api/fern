@@ -1,0 +1,49 @@
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /telemetry:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: curl
+              code: >-
+                curl -X GET "http://localhost-custom:8080/telemetry?anonymize=true"
+                  -H "accept: application/json"
+                  -H "Authorization: Bearer token"
+            - sdk: python
+              code: >-
+                import requests
+
+                url = "http://localhost-custom:8080/telemetry"
+
+                querystring = {"anonymize":"true"}
+
+                headers = {
+                    "accept": "application/json",
+                    "Authorization": "Bearer token"
+                }
+
+                response = requests.request("GET", url, headers=headers, params=querystring)
+
+                print(response.text)
+            - sdk: typescript
+              code: >-
+                import axios from 'axios';
+
+                const options = {
+                  method: 'GET',
+                  url: 'http://localhost-custom:8080/telemetry',
+                  params: {anonymize: 'true'},
+                  headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer token'
+                  }
+                };
+
+                axios.request(options).then(function (response) {
+                  console.log(response.data);
+                });

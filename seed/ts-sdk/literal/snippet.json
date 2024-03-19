@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.headers.send({\n    endpointVersion: \"02-12-2024\",\n    async: true,\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.headers.send({\n    endpointVersion: \"02-12-2024\",\n    async: true,\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {
@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.inlined.send({\n    temperature: 10.1,\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.inlined.send({\n    temperature: 10.1,\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {
@@ -27,7 +27,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.path.send(\"123\");\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.path.send(\"123\");\n"
             }
         },
         {
@@ -37,7 +37,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.query.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.query.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {
@@ -47,7 +47,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.reference.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst seedLiteral = new SeedLiteralClient;\nawait seedLiteral.reference.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    query: \"What is the weather today\"\n});\n"
             }
         }
     ],

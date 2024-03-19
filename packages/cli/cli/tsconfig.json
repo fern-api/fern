@@ -1,7 +1,7 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
@@ -9,10 +9,7 @@
     { "path": "../../core" },
     { "path": "../../ir-sdk" },
     { "path": "../auth" },
-    { "path": "../config-management/commons" },
-    { "path": "../config-management/generators-configuration" },
-    { "path": "../config-management/manage-generator" },
-    { "path": "../config-management/project-configuration" },
+    { "path": "../configuration" },
     { "path": "../docs-preview" },
     { "path": "../generation/ir-generator" },
     { "path": "../generation/ir-migrations" },
@@ -24,6 +21,7 @@
     { "path": "../mock" },
     { "path": "../openapi-ir-sdk" },
     { "path": "../openapi-ir-to-fern" },
+    { "path": "../openapi-parser" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../register" },

@@ -35,6 +35,7 @@ class VariableType_ListType(ListType):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableType_MapType(MapType):
@@ -42,6 +43,7 @@ class VariableType_MapType(MapType):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):

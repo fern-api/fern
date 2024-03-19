@@ -1,8 +1,8 @@
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
+import { generatorsYml } from "@fern-api/configuration";
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
@@ -13,13 +13,13 @@ export interface CasingsGenerator {
     }): NameAndWireValue;
 }
 
-const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
+const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
 export function constructCasingsGenerator({
     generationLanguage,
     smartCasing
 }: {
-    generationLanguage: GenerationLanguage | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
     smartCasing: boolean;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
@@ -96,7 +96,10 @@ export function constructCasingsGenerator({
     return casingsGenerator;
 }
 
-function sanitizeNameForLanguage(name: string, generationLanguage: GenerationLanguage | undefined): string {
+function sanitizeNameForLanguage(
+    name: string,
+    generationLanguage: generatorsYml.GenerationLanguage | undefined
+): string {
     if (generationLanguage == null) {
         return name;
     }

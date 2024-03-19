@@ -5,16 +5,15 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { FileInfoV2 } from "./FileInfoV2";
 
 export const Files: core.serialization.ObjectSchema<serializers.v2.v3.Files.Raw, SeedTrace.v2.v3.Files> =
     core.serialization.object({
-        files: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.FileInfoV2)
-        ),
+        files: core.serialization.list(FileInfoV2),
     });
 
 export declare namespace Files {
     interface Raw {
-        files: serializers.v2.v3.FileInfoV2.Raw[];
+        files: FileInfoV2.Raw[];
     }
 }

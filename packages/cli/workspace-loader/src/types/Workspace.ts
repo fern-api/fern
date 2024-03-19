@@ -1,8 +1,6 @@
-import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
+import { dependenciesYml, docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { DocsConfiguration } from "@fern-fern/docs-config/api";
 import { ParsedFernFile } from "./FernFile";
 
 export type Workspace = DocsWorkspace | APIWorkspace;
@@ -12,19 +10,36 @@ export interface DocsWorkspace {
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
-    config: DocsConfiguration;
+    config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export type APIWorkspace = FernWorkspace | OpenAPIWorkspace;
+export type APIWorkspace = FernWorkspace | OSSWorkspace;
 
-export interface OpenAPIWorkspace {
-    type: "openapi";
+/**
+ * An OSS workspace is a workspace that contains an OpenAPI or AsyncAPI document.
+ */
+export interface OSSWorkspace {
+    type: "oss";
+    absoluteFilepath: AbsoluteFilePath;
     workspaceName: string | undefined;
     name: string;
+    specs: Spec[];
+    changelog: APIChangelog | undefined;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+}
+
+export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration | undefined;
-    absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+}
+
+export interface APIChangelog {
+    files: ChangelogFile[];
+}
+
+export interface ChangelogFile {
+    absoluteFilepath: AbsoluteFilePath;
+    contents: string;
 }
 
 export interface OpenAPIFile {
@@ -42,9 +57,10 @@ export interface FernWorkspace {
     name: string;
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: GeneratorsConfiguration | undefined;
-    dependenciesConfiguration: DependenciesConfiguration;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     definition: FernDefinition;
+    changelog: APIChangelog | undefined;
 }
 
 export interface FernDefinition {

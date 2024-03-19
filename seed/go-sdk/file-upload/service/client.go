@@ -37,9 +37,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Post(
 	ctx context.Context,
 	file io.Reader,
-	fileList io.Reader,
+	fileList []io.Reader,
 	maybeFile io.Reader,
-	maybeFileList io.Reader,
+	maybeFileList []io.Reader,
 	request *fern.MyRequest,
 	opts ...option.RequestOption,
 ) error {
@@ -69,16 +69,18 @@ func (c *Client) Post(
 	if _, err := io.Copy(filePart, file); err != nil {
 		return err
 	}
-	fileListFilename := "fileList_filename"
-	if named, ok := fileList.(interface{ Name() string }); ok {
-		fileListFilename = named.Name()
-	}
-	fileListPart, err := writer.CreateFormFile("fileList", fileListFilename)
-	if err != nil {
-		return err
-	}
-	if _, err := io.Copy(fileListPart, fileList); err != nil {
-		return err
+	for i, f := range fileList {
+		fileListFilename := fmt.Sprintf("fileList_filename_%d", i)
+		if named, ok := f.(interface{ Name() string }); ok {
+			fileListFilename = named.Name()
+		}
+		fileListPart, err := writer.CreateFormFile("fileList", fileListFilename)
+		if err != nil {
+			return err
+		}
+		if _, err := io.Copy(fileListPart, f); err != nil {
+			return err
+		}
 	}
 	if maybeFile != nil {
 		maybeFileFilename := "maybeFile_filename"
@@ -93,16 +95,16 @@ func (c *Client) Post(
 			return err
 		}
 	}
-	if maybeFileList != nil {
-		maybeFileListFilename := "maybeFileList_filename"
-		if named, ok := maybeFileList.(interface{ Name() string }); ok {
+	for i, f := range maybeFileList {
+		maybeFileListFilename := fmt.Sprintf("maybeFileList_filename_%d", i)
+		if named, ok := f.(interface{ Name() string }); ok {
 			maybeFileListFilename = named.Name()
 		}
 		maybeFileListPart, err := writer.CreateFormFile("maybeFileList", maybeFileListFilename)
 		if err != nil {
 			return err
 		}
-		if _, err := io.Copy(maybeFileListPart, maybeFileList); err != nil {
+		if _, err := io.Copy(maybeFileListPart, f); err != nil {
 			return err
 		}
 	}

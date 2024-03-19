@@ -18,6 +18,13 @@ class BClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.a.b.foo()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -39,6 +46,8 @@ class BClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -57,6 +66,13 @@ class AsyncBClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.a.b.foo()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -78,6 +94,8 @@ class AsyncBClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

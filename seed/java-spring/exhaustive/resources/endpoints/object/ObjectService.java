@@ -66,7 +66,7 @@ public interface ObjectService {
       @RequestBody NestedObjectWithRequiredField body);
 
   @PostMapping(
-      value = "/get-and-return-nested-with-required-field",
+      value = "/get-and-return-nested-with-required-field-list",
       produces = "application/json",
       consumes = "application/json"
   )

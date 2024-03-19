@@ -456,7 +456,7 @@ exports[`open api parser vocode parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "error_message": {
@@ -491,7 +491,7 @@ exports[`open api parser vocode parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "status": {
@@ -2684,7 +2684,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PhoneNumberPage",

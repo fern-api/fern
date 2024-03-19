@@ -72,40 +72,36 @@ func (a *Actress) String() string {
 }
 
 type CastMember struct {
-	typeName    string
 	Actor       *Actor
 	Actress     *Actress
 	StuntDouble *StuntDouble
 }
 
 func NewCastMemberFromActor(value *Actor) *CastMember {
-	return &CastMember{typeName: "actor", Actor: value}
+	return &CastMember{Actor: value}
 }
 
 func NewCastMemberFromActress(value *Actress) *CastMember {
-	return &CastMember{typeName: "actress", Actress: value}
+	return &CastMember{Actress: value}
 }
 
 func NewCastMemberFromStuntDouble(value *StuntDouble) *CastMember {
-	return &CastMember{typeName: "stuntDouble", StuntDouble: value}
+	return &CastMember{StuntDouble: value}
 }
 
 func (c *CastMember) UnmarshalJSON(data []byte) error {
 	valueActor := new(Actor)
 	if err := json.Unmarshal(data, &valueActor); err == nil {
-		c.typeName = "actor"
 		c.Actor = valueActor
 		return nil
 	}
 	valueActress := new(Actress)
 	if err := json.Unmarshal(data, &valueActress); err == nil {
-		c.typeName = "actress"
 		c.Actress = valueActress
 		return nil
 	}
 	valueStuntDouble := new(StuntDouble)
 	if err := json.Unmarshal(data, &valueStuntDouble); err == nil {
-		c.typeName = "stuntDouble"
 		c.StuntDouble = valueStuntDouble
 		return nil
 	}
@@ -113,16 +109,16 @@ func (c *CastMember) UnmarshalJSON(data []byte) error {
 }
 
 func (c CastMember) MarshalJSON() ([]byte, error) {
-	switch c.typeName {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", c.typeName, c)
-	case "actor":
+	if c.Actor != nil {
 		return json.Marshal(c.Actor)
-	case "actress":
+	}
+	if c.Actress != nil {
 		return json.Marshal(c.Actress)
-	case "stuntDouble":
+	}
+	if c.StuntDouble != nil {
 		return json.Marshal(c.StuntDouble)
 	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type CastMemberVisitor interface {
@@ -132,16 +128,16 @@ type CastMemberVisitor interface {
 }
 
 func (c *CastMember) Accept(visitor CastMemberVisitor) error {
-	switch c.typeName {
-	default:
-		return fmt.Errorf("invalid type %s in %T", c.typeName, c)
-	case "actor":
+	if c.Actor != nil {
 		return visitor.VisitActor(c.Actor)
-	case "actress":
+	}
+	if c.Actress != nil {
 		return visitor.VisitActress(c.Actress)
-	case "stuntDouble":
+	}
+	if c.StuntDouble != nil {
 		return visitor.VisitStuntDouble(c.StuntDouble)
 	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type Directory struct {
@@ -223,7 +219,7 @@ func (e Exception) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExceptionInfo
 		}{
-			Type:          e.Type,
+			Type:          "generic",
 			ExceptionInfo: e.Generic,
 		}
 		return json.Marshal(marshaler)
@@ -232,7 +228,7 @@ func (e Exception) MarshalJSON() ([]byte, error) {
 			Type    string      `json:"type"`
 			Timeout interface{} `json:"timeout,omitempty"`
 		}{
-			Type:    e.Type,
+			Type:    "timeout",
 			Timeout: e.Timeout,
 		}
 		return json.Marshal(marshaler)
@@ -292,11 +288,12 @@ type ExtendedMovie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating float64     `json:"rating" url:"rating"`
-	Tag    commons.Tag `json:"tag" url:"tag"`
-	Book   *string     `json:"book,omitempty" url:"book,omitempty"`
-	Cast   []string    `json:"cast,omitempty" url:"cast,omitempty"`
-	type_  string
+	Rating   float64                `json:"rating" url:"rating"`
+	Tag      commons.Tag            `json:"tag" url:"tag"`
+	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
+	type_    string
 
 	_rawJSON json.RawMessage
 }
@@ -435,7 +432,7 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 			Tags  []string          `json:"tags,omitempty"`
 			Html  string            `json:"value"`
 		}{
-			Type:  m.Type,
+			Type:  "html",
 			Extra: m.Extra,
 			Tags:  m.Tags,
 			Html:  m.Html,
@@ -448,7 +445,7 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 			Tags     []string          `json:"tags,omitempty"`
 			Markdown string            `json:"value"`
 		}{
-			Type:     m.Type,
+			Type:     "markdown",
 			Extra:    m.Extra,
 			Tags:     m.Tags,
 			Markdown: m.Markdown,
@@ -589,10 +586,11 @@ type Movie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating float64     `json:"rating" url:"rating"`
-	Tag    commons.Tag `json:"tag" url:"tag"`
-	Book   *string     `json:"book,omitempty" url:"book,omitempty"`
-	type_  string
+	Rating   float64                `json:"rating" url:"rating"`
+	Tag      commons.Tag            `json:"tag" url:"tag"`
+	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	type_    string
 
 	_rawJSON json.RawMessage
 }
@@ -814,7 +812,7 @@ func (t Test) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			And  bool   `json:"value"`
 		}{
-			Type: t.Type,
+			Type: "and",
 			And:  t.And,
 		}
 		return json.Marshal(marshaler)
@@ -823,7 +821,7 @@ func (t Test) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Or   bool   `json:"value"`
 		}{
-			Type: t.Type,
+			Type: "or",
 			Or:   t.Or,
 		}
 		return json.Marshal(marshaler)

@@ -1,0 +1,196 @@
+---
+title: The FastAPI SDK generator
+description: Use Fern's FastAPI SDK generator to generate types and networking logic for your FastAPI server. 
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/python)<br />
+[A starter repo for FastAPI, using Fern](https://github.com/fern-api/fastapi-starter)
+
+**Latest version**: `0.7.7`
+
+The FastAPI generator generates types and networking logic for your FastAPI server. This saves you time and add compile-time safety that you are serving the exact API that you specified in your API Definition.
+
+## What Fern generates
+
+- Pydantic models for your API types
+- Exceptions that you can throw for non-200 responses
+- Abstract classes for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Adding the FastAPI generator
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-fastapi-server
+  version: 0.7.7
+  output:
+    location: local-file-system
+    path: ../src/fern
+```
+</CodeBlock>
+
+## Example server
+
+[Venus](https://github.com/fern-api/venus) is a FastAPI microservice in production that manages Fern's auth (i.e. users, organizations, tokens).
+
+## Demo video
+
+<div style={{ position: "relative", paddingBottom: "62.5%", height: "0" }}>
+    <iframe 
+        src="https://www.loom.com/embed/42de542022de4e55a1349383c7a465eb?sid=cc873e00-6c91-4a92-9b4f-7466fca4d881" 
+        frameborder="0" 
+        webkitallowfullscreen 
+        mozallowfullscreen 
+        allowfullscreen 
+        style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
+    </iframe>
+</div>
+
+## Getting started
+
+Let's walk through the [Fern FastAPI Starter](https://github.com/fern-api/fastapi-starter).
+
+### Step 1: Define the API
+
+<CodeBlock title="fern/api/definition/imdb.yml">
+```yaml 
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+```
+</CodeBlock>
+
+### Step 2: Run `fern generate`
+
+This generates all the boilerplate code into [generated/](https://github.com/fern-api/fastapi-starter/tree/main/backend/src/fern_fastapi_starter/api/generated).
+
+<CodeBlock title="terminal">
+```bash
+fern generate
+[api]: fernapi/fern-fastapi-starter Downloaded to backend/src/fern_fastapi_starter/api/generated
+┌─
+│ ✓  fernapi/fern-fastapi-server
+└─
+```
+</CodeBlock>
+
+### Step 3: Implement the server
+
+Notice you only need to provide the business logic. Just implement the function, and Fern takes care of the rest.
+
+<CodeBlock title="backend/src/fern_fastapi_starter/movies_service.py">
+```python 
+from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
+
+class MoviesService(AbstractMoviesService):
+    def get_movie(self, *, movie_id: str) -> Movie:
+        if movie_id == "titanic":
+            return Movie(
+                id=MovieId.from_str("titantic"),
+                title="Titanic",
+                rating=9.8,
+            )
+        raise MovieDoesNotExistError(MovieId.from_str(movie_id))
+```
+</CodeBlock>
+
+And register your endpoints with Fern, which registers them with FastAPI under the hood:
+
+<CodeBlock title="backend/src/fern_fastapi_starter/server.py">
+```python 
+from fastapi import FastAPI
+
+from .generated.fern.register import register
+from .movies_service import MoviesService
+
+app = FastAPI()
+
+register(app, imdb=MoviesService())
+```
+</CodeBlock>
+
+### Step 4: Compile
+
+The type checker will warn you if you make mistakes implementing your API:
+
+![Invalid return value](https://fern-image-hosting.s3.amazonaws.com/fern/invalid_return_value.png)
+
+If you change the signature of the endpoint method, you'll get an error:
+
+![Invalid signature](https://fern-image-hosting.s3.amazonaws.com/fern/invalid_signature.png)
+
+You can use the command line to check for compile errors:
+
+<CodeBlock title="terminal">
+```bash
+poetry run mypy
+Success: no issues found in 24 source files
+```
+</CodeBlock>
+
+### Step 5: Run the server
+
+<CodeBlock title="terminal">
+```bash
+poetry run start
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [32816] using StatReload
+INFO:     Started server process [32829]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+```
+</CodeBlock>
+
+### Step 6: Hit the API 🚀
+
+<CodeBlock title="terminal">
+```bash
+curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
+{
+  "id": "titantic",
+  "title": "Titanic",
+  "rating": 9.8
+}
+```
+</CodeBlock>
+
+<CodeBlock title='terminal'>
+```bash
+curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq .
+{
+  "error": "MovieDoesNotExistError",
+  "errorInstanceId": "f6e1d69c-bf97-42d5-bc89-5e42773e3880",
+  "content": "oceans-11"
+}
+```
+</CodeBlock>

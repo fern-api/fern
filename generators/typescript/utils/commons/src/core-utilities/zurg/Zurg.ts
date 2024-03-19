@@ -23,7 +23,7 @@ export interface Zurg {
 
     Schema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
-        _fromExpression: (expression: ts.Expression) => Zurg.Schema;
+        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }) => Zurg.Schema;
         _visitMaybeValid: (
             referenceToMaybeValid: ts.Expression,
             visitor: {

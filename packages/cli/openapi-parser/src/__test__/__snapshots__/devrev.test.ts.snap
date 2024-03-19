@@ -45,7 +45,7 @@ exports[`open api parser devrev parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -459,7 +459,7 @@ given Dev organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -473,7 +473,7 @@ given Dev organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -487,14 +487,14 @@ given Dev organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "modified_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "requested_token_type": {
@@ -631,7 +631,7 @@ token type issued for a given subject.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "display_id": {
@@ -645,7 +645,7 @@ token type issued for a given subject.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "id": {
@@ -659,14 +659,14 @@ token type issued for a given subject.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "modified_date": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "requested_token_type": {
@@ -938,7 +938,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -952,7 +952,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -966,14 +966,14 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "modified_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "requested_token_type": {
@@ -1490,7 +1490,7 @@ disabled.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "display_id": {
@@ -1553,7 +1553,7 @@ disabled.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "phone_numbers": {
@@ -1818,7 +1818,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -1888,7 +1888,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "phone_numbers": {
@@ -2543,7 +2543,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -2592,7 +2592,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -2794,7 +2794,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -2843,7 +2843,7 @@ organization.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -2953,7 +2953,7 @@ to access.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "description": {
@@ -3002,7 +3002,7 @@ to access.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -3348,7 +3348,7 @@ them.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -3397,7 +3397,7 @@ them.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -3505,7 +3505,7 @@ and a logical concept denoted by the tag's name.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -3533,7 +3533,7 @@ and a logical concept denoted by the tag's name.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -3754,7 +3754,7 @@ and a logical concept denoted by the tag's name.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -3782,7 +3782,7 @@ and a logical concept denoted by the tag's name.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -3907,7 +3907,7 @@ and a logical concept denoted by the tag's name.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "description": {
@@ -3935,7 +3935,7 @@ and a logical concept denoted by the tag's name.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "name": {
@@ -4110,7 +4110,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -4138,7 +4138,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -4593,7 +4593,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -4623,7 +4623,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "secret": {
@@ -4843,7 +4843,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -4873,7 +4873,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "secret": {
@@ -4983,7 +4983,7 @@ used.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "display_id": {
@@ -5013,7 +5013,7 @@ used.
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "secret": {
@@ -5116,7 +5116,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "display_id": {
@@ -5146,7 +5146,7 @@ used.
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "secret": {
@@ -6373,7 +6373,7 @@ organizations.
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "artifacts-locate-response",

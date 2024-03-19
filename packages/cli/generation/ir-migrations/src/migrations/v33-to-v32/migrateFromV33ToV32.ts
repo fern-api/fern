@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -11,11 +11,11 @@ export const V33_TO_V32_MIGRATION: IrMigration<
     laterVersion: "v33",
     earlierVersion: "v32",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.12.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.12.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.12.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -69,9 +69,19 @@ class Converter {
     public convertEndpoint(endpoint: IrVersions.V33.HttpEndpoint): IrVersions.V32.HttpEndpoint {
         return {
             ...endpoint,
-            queryParameters: endpoint.queryParameters.filter(
-                // Filter out all the object query parameters.
-                (queryParameter) => !this.isTypeReferenceObject(queryParameter.valueType)
+            queryParameters: endpoint.queryParameters.map(
+                // Object based query parameters are reverse migrated to optional string query parameters.
+                (queryParameter) =>
+                    this.isTypeReferenceObject(queryParameter.valueType)
+                        ? {
+                              ...queryParameter,
+                              valueType: IrVersions.V33.TypeReference.container(
+                                  IrVersions.V33.ContainerType.optional(
+                                      IrVersions.V33.TypeReference.primitive("STRING")
+                                  )
+                              )
+                          }
+                        : queryParameter
             ),
             examples: convertExamples({
                 examples: endpoint.examples,

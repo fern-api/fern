@@ -330,9 +330,9 @@ type SubpackageId = string
 
 type TypeId = string
 
-type WebhookGroupId = string
+type WebSocketChannelId = string
 
-type WebsocketChannelId = string
+type WebhookGroupId = string
 
 type WithDocs struct {
 	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
@@ -1059,11 +1059,103 @@ func (f *FileDownloadResponse) String() string {
 }
 
 type FileProperty struct {
+	Type      string
+	File      *FilePropertySingle
+	FileArray *FilePropertyArray
+}
+
+func NewFilePropertyFromFile(value *FilePropertySingle) *FileProperty {
+	return &FileProperty{Type: "file", File: value}
+}
+
+func NewFilePropertyFromFileArray(value *FilePropertyArray) *FileProperty {
+	return &FileProperty{Type: "fileArray", FileArray: value}
+}
+
+func (f *FileProperty) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	f.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "file":
+		value := new(FilePropertySingle)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.File = value
+	case "fileArray":
+		value := new(FilePropertyArray)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.FileArray = value
+	}
+	return nil
+}
+
+func (f FileProperty) MarshalJSON() ([]byte, error) {
+	switch f.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
+	case "file":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*FilePropertySingle
+		}{
+			Type:               f.Type,
+			FilePropertySingle: f.File,
+		}
+		return json.Marshal(marshaler)
+	case "fileArray":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*FilePropertyArray
+		}{
+			Type:              f.Type,
+			FilePropertyArray: f.FileArray,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type FilePropertyVisitor interface {
+	VisitFile(*FilePropertySingle) error
+	VisitFileArray(*FilePropertyArray) error
+}
+
+func (f *FileProperty) Accept(visitor FilePropertyVisitor) error {
+	switch f.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", f.Type, f)
+	case "file":
+		return visitor.VisitFile(f.File)
+	case "fileArray":
+		return visitor.VisitFileArray(f.FileArray)
+	}
+}
+
+type FilePropertyArray struct {
 	Key        *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
 	IsOptional bool              `json:"isOptional" url:"isOptional"`
 }
 
-func (f *FileProperty) String() string {
+func (f *FilePropertyArray) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FilePropertySingle struct {
+	Key        *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
+	IsOptional bool              `json:"isOptional" url:"isOptional"`
+}
+
+func (f *FilePropertySingle) String() string {
 	if value, err := core.StringifyJSON(f); err == nil {
 		return value
 	}
@@ -1106,11 +1198,13 @@ func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 	f.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "file":
-		value := new(FileProperty)
-		if err := json.Unmarshal(data, &value); err != nil {
+		var valueUnmarshaler struct {
+			File *FileProperty `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		f.File = value
+		f.File = valueUnmarshaler.File
 	case "bodyProperty":
 		value := new(InlinedRequestBodyProperty)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -1127,11 +1221,11 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
 	case "file":
 		var marshaler = struct {
-			Type string `json:"type"`
-			*FileProperty
+			Type string        `json:"type"`
+			File *FileProperty `json:"value,omitempty"`
 		}{
-			Type:         f.Type,
-			FileProperty: f.File,
+			Type: f.Type,
+			File: f.File,
 		}
 		return json.Marshal(marshaler)
 	case "bodyProperty":
@@ -1182,6 +1276,7 @@ type HttpEndpoint struct {
 	Errors            ResponseErrors         `json:"errors,omitempty" url:"errors,omitempty"`
 	Auth              bool                   `json:"auth" url:"auth"`
 	Idempotent        bool                   `json:"idempotent" url:"idempotent"`
+	Pagination        *Pagination            `json:"pagination,omitempty" url:"pagination,omitempty"`
 	Examples          []*ExampleEndpointCall `json:"examples,omitempty" url:"examples,omitempty"`
 }
 
@@ -1680,6 +1775,24 @@ func (j *JsonResponseBodyWithProperty) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", j)
+}
+
+// If set, the endpoint will be generated with auto-pagination features.
+//
+// The page must be defined as a query parameter included in the request,
+// whereas the next page and results are resolved from properties defined
+// on the response.
+type Pagination struct {
+	Page    *QueryParameter `json:"page,omitempty" url:"page,omitempty"`
+	Next    *ObjectProperty `json:"next,omitempty" url:"next,omitempty"`
+	Results *ObjectProperty `json:"results,omitempty" url:"results,omitempty"`
+}
+
+func (p *Pagination) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type PathParameter struct {
@@ -2193,7 +2306,7 @@ type IntermediateRepresentation struct {
 	// The webhooks sent by this API
 	WebhookGroups map[WebhookGroupId]WebhookGroup `json:"webhookGroups,omitempty" url:"webhookGroups,omitempty"`
 	// The websocket channels served by this API
-	WebsocketChannels           map[WebsocketChannelId]*WebsocketChannel `json:"websocketChannels,omitempty" url:"websocketChannels,omitempty"`
+	WebsocketChannels           map[WebSocketChannelId]*WebSocketChannel `json:"websocketChannels,omitempty" url:"websocketChannels,omitempty"`
 	Errors                      map[ErrorId]*ErrorDeclaration            `json:"errors,omitempty" url:"errors,omitempty"`
 	Subpackages                 map[SubpackageId]*Subpackage             `json:"subpackages,omitempty" url:"subpackages,omitempty"`
 	RootPackage                 *Package                                 `json:"rootPackage,omitempty" url:"rootPackage,omitempty"`
@@ -2221,7 +2334,7 @@ type Package struct {
 	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
 	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
 	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
-	Websocket          *WebsocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
+	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
 	Subpackages        []SubpackageId           `json:"subpackages,omitempty" url:"subpackages,omitempty"`
 	HasEndpointsInTree bool                     `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
 	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty" url:"navigationConfig,omitempty"`
@@ -2293,7 +2406,7 @@ type Subpackage struct {
 	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
 	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
 	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
-	Websocket          *WebsocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
+	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
 	Subpackages        []SubpackageId           `json:"subpackages,omitempty" url:"subpackages,omitempty"`
 	HasEndpointsInTree bool                     `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
 	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty" url:"navigationConfig,omitempty"`
@@ -4403,81 +4516,194 @@ func (w *WebhookPayloadReference) String() string {
 	return fmt.Sprintf("%#v", w)
 }
 
-type InlinedWebsocketMessageBody struct {
-	Name       *Name                                  `json:"name,omitempty" url:"name,omitempty"`
-	Extends    []*DeclaredTypeName                    `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*InlinedWebsocketMessageBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
+type ExampleWebSocketMessage struct {
+	Type WebSocketMessageId           `json:"type" url:"type"`
+	Body *ExampleWebSocketMessageBody `json:"body,omitempty" url:"body,omitempty"`
 }
 
-func (i *InlinedWebsocketMessageBody) String() string {
+func (e *ExampleWebSocketMessage) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type ExampleWebSocketMessageBody struct {
+	Type        string
+	InlinedBody *ExampleInlinedRequestBody
+	Reference   *ExampleTypeReference
+}
+
+func NewExampleWebSocketMessageBodyFromInlinedBody(value *ExampleInlinedRequestBody) *ExampleWebSocketMessageBody {
+	return &ExampleWebSocketMessageBody{Type: "inlinedBody", InlinedBody: value}
+}
+
+func NewExampleWebSocketMessageBodyFromReference(value *ExampleTypeReference) *ExampleWebSocketMessageBody {
+	return &ExampleWebSocketMessageBody{Type: "reference", Reference: value}
+}
+
+func (e *ExampleWebSocketMessageBody) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "inlinedBody":
+		value := new(ExampleInlinedRequestBody)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		e.InlinedBody = value
+	case "reference":
+		value := new(ExampleTypeReference)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		e.Reference = value
+	}
+	return nil
+}
+
+func (e ExampleWebSocketMessageBody) MarshalJSON() ([]byte, error) {
+	switch e.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
+	case "inlinedBody":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ExampleInlinedRequestBody
+		}{
+			Type:                      e.Type,
+			ExampleInlinedRequestBody: e.InlinedBody,
+		}
+		return json.Marshal(marshaler)
+	case "reference":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ExampleTypeReference
+		}{
+			Type:                 e.Type,
+			ExampleTypeReference: e.Reference,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type ExampleWebSocketMessageBodyVisitor interface {
+	VisitInlinedBody(*ExampleInlinedRequestBody) error
+	VisitReference(*ExampleTypeReference) error
+}
+
+func (e *ExampleWebSocketMessageBody) Accept(visitor ExampleWebSocketMessageBodyVisitor) error {
+	switch e.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
+	case "inlinedBody":
+		return visitor.VisitInlinedBody(e.InlinedBody)
+	case "reference":
+		return visitor.VisitReference(e.Reference)
+	}
+}
+
+type ExampleWebSocketSession struct {
+	Docs            *string                    `json:"docs,omitempty" url:"docs,omitempty"`
+	Name            *Name                      `json:"name,omitempty" url:"name,omitempty"`
+	Url             string                     `json:"url" url:"url"`
+	PathParameters  []*ExamplePathParameter    `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
+	Headers         []*ExampleHeader           `json:"headers,omitempty" url:"headers,omitempty"`
+	QueryParameters []*ExampleQueryParameter   `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
+	Messages        []*ExampleWebSocketMessage `json:"messages,omitempty" url:"messages,omitempty"`
+}
+
+func (e *ExampleWebSocketSession) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type InlinedWebSocketMessageBody struct {
+	Name       *Name                                  `json:"name,omitempty" url:"name,omitempty"`
+	Extends    []*DeclaredTypeName                    `json:"extends,omitempty" url:"extends,omitempty"`
+	Properties []*InlinedWebSocketMessageBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
+}
+
+func (i *InlinedWebSocketMessageBody) String() string {
 	if value, err := core.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
 }
 
-type InlinedWebsocketMessageBodyProperty struct {
+type InlinedWebSocketMessageBodyProperty struct {
 	Docs      *string           `json:"docs,omitempty" url:"docs,omitempty"`
 	Name      *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
 	ValueType *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 }
 
-func (i *InlinedWebsocketMessageBodyProperty) String() string {
+func (i *InlinedWebSocketMessageBodyProperty) String() string {
 	if value, err := core.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
 }
 
-type WebsocketChannel struct {
+type WebSocketChannel struct {
 	Docs            *string           `json:"docs,omitempty" url:"docs,omitempty"`
 	Availability    *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name            WebSocketName     `json:"name,omitempty" url:"name,omitempty"`
+	DisplayName     *string           `json:"displayName,omitempty" url:"displayName,omitempty"`
 	Path            *HttpPath         `json:"path,omitempty" url:"path,omitempty"`
 	Auth            bool              `json:"auth" url:"auth"`
 	Headers         []*HttpHeader     `json:"headers,omitempty" url:"headers,omitempty"`
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
 	PathParameters  []*PathParameter  `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
 	// The messages that can be sent and received on this channel
-	Messages map[WebsocketMessageId]*WebsocketMessage `json:"messages,omitempty" url:"messages,omitempty"`
+	Messages []*WebSocketMessage        `json:"messages,omitempty" url:"messages,omitempty"`
+	Examples []*ExampleWebSocketSession `json:"examples,omitempty" url:"examples,omitempty"`
 }
 
-func (w *WebsocketChannel) String() string {
+func (w *WebSocketChannel) String() string {
 	if value, err := core.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
 }
 
-type WebsocketMessage struct {
+type WebSocketMessage struct {
 	Docs         *string                `json:"docs,omitempty" url:"docs,omitempty"`
 	Availability *Availability          `json:"availability,omitempty" url:"availability,omitempty"`
+	Type         WebSocketMessageId     `json:"type" url:"type"`
 	DisplayName  *string                `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Origin       WebsocketMessageOrigin `json:"origin,omitempty" url:"origin,omitempty"`
-	Body         *WebsocketMessageBody  `json:"body,omitempty" url:"body,omitempty"`
+	Origin       WebSocketMessageOrigin `json:"origin,omitempty" url:"origin,omitempty"`
+	Body         *WebSocketMessageBody  `json:"body,omitempty" url:"body,omitempty"`
 }
 
-func (w *WebsocketMessage) String() string {
+func (w *WebSocketMessage) String() string {
 	if value, err := core.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
 }
 
-type WebsocketMessageBody struct {
+type WebSocketMessageBody struct {
 	Type        string
-	InlinedBody *InlinedWebsocketMessageBody
-	Reference   *WebsocketMessageBodyReference
+	InlinedBody *InlinedWebSocketMessageBody
+	Reference   *WebSocketMessageBodyReference
 }
 
-func NewWebsocketMessageBodyFromInlinedBody(value *InlinedWebsocketMessageBody) *WebsocketMessageBody {
-	return &WebsocketMessageBody{Type: "inlinedBody", InlinedBody: value}
+func NewWebSocketMessageBodyFromInlinedBody(value *InlinedWebSocketMessageBody) *WebSocketMessageBody {
+	return &WebSocketMessageBody{Type: "inlinedBody", InlinedBody: value}
 }
 
-func NewWebsocketMessageBodyFromReference(value *WebsocketMessageBodyReference) *WebsocketMessageBody {
-	return &WebsocketMessageBody{Type: "reference", Reference: value}
+func NewWebSocketMessageBodyFromReference(value *WebSocketMessageBodyReference) *WebSocketMessageBody {
+	return &WebSocketMessageBody{Type: "reference", Reference: value}
 }
 
-func (w *WebsocketMessageBody) UnmarshalJSON(data []byte) error {
+func (w *WebSocketMessageBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
@@ -4487,13 +4713,13 @@ func (w *WebsocketMessageBody) UnmarshalJSON(data []byte) error {
 	w.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "inlinedBody":
-		value := new(InlinedWebsocketMessageBody)
+		value := new(InlinedWebSocketMessageBody)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		w.InlinedBody = value
 	case "reference":
-		value := new(WebsocketMessageBodyReference)
+		value := new(WebSocketMessageBodyReference)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -4502,37 +4728,37 @@ func (w *WebsocketMessageBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (w WebsocketMessageBody) MarshalJSON() ([]byte, error) {
+func (w WebSocketMessageBody) MarshalJSON() ([]byte, error) {
 	switch w.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", w.Type, w)
 	case "inlinedBody":
 		var marshaler = struct {
 			Type string `json:"type"`
-			*InlinedWebsocketMessageBody
+			*InlinedWebSocketMessageBody
 		}{
 			Type:                        w.Type,
-			InlinedWebsocketMessageBody: w.InlinedBody,
+			InlinedWebSocketMessageBody: w.InlinedBody,
 		}
 		return json.Marshal(marshaler)
 	case "reference":
 		var marshaler = struct {
 			Type string `json:"type"`
-			*WebsocketMessageBodyReference
+			*WebSocketMessageBodyReference
 		}{
 			Type:                          w.Type,
-			WebsocketMessageBodyReference: w.Reference,
+			WebSocketMessageBodyReference: w.Reference,
 		}
 		return json.Marshal(marshaler)
 	}
 }
 
-type WebsocketMessageBodyVisitor interface {
-	VisitInlinedBody(*InlinedWebsocketMessageBody) error
-	VisitReference(*WebsocketMessageBodyReference) error
+type WebSocketMessageBodyVisitor interface {
+	VisitInlinedBody(*InlinedWebSocketMessageBody) error
+	VisitReference(*WebSocketMessageBodyReference) error
 }
 
-func (w *WebsocketMessageBody) Accept(visitor WebsocketMessageBodyVisitor) error {
+func (w *WebSocketMessageBody) Accept(visitor WebSocketMessageBodyVisitor) error {
 	switch w.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", w.Type, w)
@@ -4543,38 +4769,40 @@ func (w *WebsocketMessageBody) Accept(visitor WebsocketMessageBodyVisitor) error
 	}
 }
 
-type WebsocketMessageBodyReference struct {
+type WebSocketMessageBodyReference struct {
 	Docs     *string        `json:"docs,omitempty" url:"docs,omitempty"`
 	BodyType *TypeReference `json:"bodyType,omitempty" url:"bodyType,omitempty"`
 }
 
-func (w *WebsocketMessageBodyReference) String() string {
+func (w *WebSocketMessageBodyReference) String() string {
 	if value, err := core.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
 }
 
-type WebsocketMessageId = string
+type WebSocketMessageId = string
 
-type WebsocketMessageOrigin string
+type WebSocketMessageOrigin string
 
 const (
-	WebsocketMessageOriginClient WebsocketMessageOrigin = "client"
-	WebsocketMessageOriginServer WebsocketMessageOrigin = "server"
+	WebSocketMessageOriginClient WebSocketMessageOrigin = "client"
+	WebSocketMessageOriginServer WebSocketMessageOrigin = "server"
 )
 
-func NewWebsocketMessageOriginFromString(s string) (WebsocketMessageOrigin, error) {
+func NewWebSocketMessageOriginFromString(s string) (WebSocketMessageOrigin, error) {
 	switch s {
 	case "client":
-		return WebsocketMessageOriginClient, nil
+		return WebSocketMessageOriginClient, nil
 	case "server":
-		return WebsocketMessageOriginServer, nil
+		return WebSocketMessageOriginServer, nil
 	}
-	var t WebsocketMessageOrigin
+	var t WebSocketMessageOrigin
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (w WebsocketMessageOrigin) Ptr() *WebsocketMessageOrigin {
+func (w WebSocketMessageOrigin) Ptr() *WebSocketMessageOrigin {
 	return &w
 }
+
+type WebSocketName = *Name

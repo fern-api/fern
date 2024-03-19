@@ -5,20 +5,19 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
 
 export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
     serializers.v2.v3.GetBasicSolutionFileRequest.Raw,
     SeedTrace.v2.v3.GetBasicSolutionFileRequest
 > = core.serialization.object({
     methodName: core.serialization.string(),
-    signature: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.NonVoidFunctionSignature
-    ),
+    signature: NonVoidFunctionSignature,
 });
 
 export declare namespace GetBasicSolutionFileRequest {
     interface Raw {
         methodName: string;
-        signature: serializers.v2.v3.NonVoidFunctionSignature.Raw;
+        signature: NonVoidFunctionSignature.Raw;
     }
 }

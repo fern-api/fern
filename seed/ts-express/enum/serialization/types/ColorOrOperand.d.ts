@@ -6,13 +6,5 @@ import * as SeedEnum from "../../api";
 import * as core from "../../core";
 export declare const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand>;
 export declare namespace ColorOrOperand {
-    type Raw = ColorOrOperand.Color | ColorOrOperand.Operand;
-    interface Color {
-        type: "color";
-        value: serializers.Color.Raw;
-    }
-    interface Operand {
-        type: "operand";
-        value: serializers.Operand.Raw;
-    }
+    type Raw = serializers.Color.Raw | serializers.Operand.Raw;
 }

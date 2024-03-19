@@ -1,15 +1,12 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../../core" },
-    { "path": "../config-management/dependencies-configuration" },
-    { "path": "../config-management/generators-configuration" },
-    { "path": "../config-management/project-configuration" },
-    { "path": "../openapi-ir-sdk" },
+    { "path": "../configuration" },
     { "path": "../openapi-ir-to-fern" },
     { "path": "../openapi-parser" },
     { "path": "../semver-utils" },

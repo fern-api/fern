@@ -19,7 +19,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --report-unused-disable-directives",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/jsonwebtoken": "^9.0.5",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

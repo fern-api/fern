@@ -33,7 +33,7 @@ describe("validateFernWorkspace", () => {
             if (!parseResult.didSucceed) {
                 throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
             }
-            if (parseResult.workspace.type === "openapi") {
+            if (parseResult.workspace.type === "oss") {
                 throw new Error("Expected fern workspace, but received openapi");
             }
 

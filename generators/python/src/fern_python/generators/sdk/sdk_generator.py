@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple, Union, cast
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -17,6 +17,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
@@ -69,8 +70,14 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
 
-        if not custom_config.client_filename.endswith(".py"):
+        if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
+
+        if not custom_config.client.filename.endswith(".py"):
+            raise RuntimeError("client_location.filename must end in .py")
+
+        if not custom_config.client.exported_filename.endswith(".py"):
+            raise RuntimeError("client_location.exported_filename must end in .py")
 
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
@@ -94,6 +101,7 @@ class SdkGenerator(AbstractGenerator):
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
             improved_imports=custom_config.improved_imports,
+            use_str_enums=custom_config.pydantic_config.use_str_enums,
         )
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -106,10 +114,16 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
+            base_environment = self._generate_environments_base(
+                context=context, environments=ir.environments.environments
+            )
             generated_environment = self._generate_environments(
                 context=context,
-                environments=ir.environments.environments,
+                environments=base_environment,
                 generator_exec_wrapper=generator_exec_wrapper,
                 project=project,
             )
@@ -161,6 +175,22 @@ class SdkGenerator(AbstractGenerator):
             project=project,
         )
 
+        test_fac = SnippetTestFactory(
+            project=project,
+            context=context,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generated_root_client=generated_root_client,
+            generated_environment=base_environment,
+        )
+
+        # Only write unit tests if specified in config
+        if generator_config.write_unit_tests:
+            self._write_snippet_tests(
+                snippet_test_factory=test_fac,
+                snippet_writer=snippet_writer,
+                ir=ir,
+            )
+
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
             request_sent = self._generate_readme(
@@ -172,10 +202,27 @@ class SdkGenerator(AbstractGenerator):
             if request_sent:
                 project.set_generate_readme(False)
 
-    def _generate_environments(
+    def _generate_environments_base(
         self,
         context: SdkGeneratorContext,
         environments: ir_types.Environments,
+    ) -> Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]:
+        return cast(
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
+            environments.visit(
+                single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                    context=context, environments=single_base_url_environments
+                ),
+                multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                    context=context, environments=multiple_base_urls_environments
+                ),
+            ),
+        )
+
+    def _generate_environments(
+        self,
+        context: SdkGeneratorContext,
+        environments: Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
         generator_exec_wrapper: GeneratorExecWrapper,
         project: Project,
     ) -> GeneratedEnvironment:
@@ -183,14 +230,7 @@ class SdkGenerator(AbstractGenerator):
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
-        generated_environment = environments.visit(
-            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                context=context, environments=single_base_url_environments
-            ).generate(source_file=source_file),
-            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                context=context, environments=multiple_base_urls_environments
-            ).generate(source_file=source_file),
-        )
+        generated_environment = environments.generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_environment
 
@@ -224,7 +264,7 @@ class SdkGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> GeneratedRootClient:
-        filepath = context.get_filepath_for_root_client()
+        filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
@@ -232,8 +272,8 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
-            class_name=context.get_class_name_for_root_client(),
-            async_class_name="Async" + context.get_class_name_for_root_client(),
+            class_name=context.get_class_name_for_generated_root_client(),
+            async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
         ).generate(source_file=source_file)
@@ -336,6 +376,15 @@ pip install --upgrade {project._project_config.package_name}
             if snippets is None:
                 return
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+
+    def _write_snippet_tests(
+        self,
+        snippet_test_factory: SnippetTestFactory,
+        snippet_writer: SnippetWriter,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> None:
+        # Write tests
+        snippet_test_factory.tests(ir, snippet_writer)
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

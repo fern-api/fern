@@ -5,7 +5,9 @@
 import * as FernSeedConfig from "../../..";
 
 export interface FixtureConfigurations {
+    publishConfig?: unknown;
     customConfig?: unknown;
+    audiences?: string[];
     outputFolder: string;
     outputVersion?: string;
     /** Overrides the default output mode */

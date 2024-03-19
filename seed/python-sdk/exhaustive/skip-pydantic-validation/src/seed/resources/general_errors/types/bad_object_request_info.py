@@ -6,6 +6,11 @@ import typing
 from ....core.datetime_utils import serialize_datetime
 from ....core.unchecked_base_model import UncheckedBaseModel
 
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
+
 
 class BadObjectRequestInfo(UncheckedBaseModel):
     message: str
@@ -21,4 +26,5 @@ class BadObjectRequestInfo(UncheckedBaseModel):
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -55,6 +55,7 @@ class FastApiGenerator(AbstractGenerator):
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
             forbid_extra_fields=True,
+            extra_fields="forbid",
             wrapped_aliases=True,
             include_union_utils=True,
             include_validators=custom_config.include_validators,
@@ -76,8 +77,7 @@ class FastApiGenerator(AbstractGenerator):
 
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
-            context=context.pydantic_generator_context,
-            improved_imports=False,
+            context=context.pydantic_generator_context, improved_imports=False, use_str_enums=False
         )
 
         PydanticModelGenerator().generate_types(

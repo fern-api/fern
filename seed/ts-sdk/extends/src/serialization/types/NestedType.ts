@@ -5,16 +5,17 @@
 import * as serializers from "..";
 import * as SeedExtends from "../../api";
 import * as core from "../../core";
+import { Json } from "./Json";
 
 export const NestedType: core.serialization.ObjectSchema<serializers.NestedType.Raw, SeedExtends.NestedType> =
     core.serialization
         .object({
             name: core.serialization.string(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("..")).Json));
+        .extend(Json);
 
 export declare namespace NestedType {
-    interface Raw extends serializers.Json.Raw {
+    interface Raw extends Json.Raw {
         name: string;
     }
 }

@@ -5,23 +5,19 @@
 import * as serializers from "../../../../..";
 import * as SeedExhaustive from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { ObjectWithOptionalField } from "./ObjectWithOptionalField";
 
 export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<
     serializers.types.NestedObjectWithOptionalField.Raw,
     SeedExhaustive.types.NestedObjectWithOptionalField
 > = core.serialization.object({
     string: core.serialization.string().optional(),
-    nestedObject: core.serialization.property(
-        "NestedObject",
-        core.serialization
-            .lazyObject(async () => (await import("../../../../..")).types.ObjectWithOptionalField)
-            .optional()
-    ),
+    nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField.optional()),
 });
 
 export declare namespace NestedObjectWithOptionalField {
     interface Raw {
         string?: string | null;
-        NestedObject?: serializers.types.ObjectWithOptionalField.Raw | null;
+        NestedObject?: ObjectWithOptionalField.Raw | null;
     }
 }

@@ -1,0 +1,51 @@
+---
+title: Use Steps to display instructions
+description: The Steps component helps you display a set of instructions to the user. 
+---
+
+The `Steps` component is used when you want to display a set of instructions for the user to follow. 
+
+## Usage
+
+Within the `<Steps>` component, preface each step heading with `###` as shown below:
+
+<CodeBlock title="Steps example">
+```mdx
+<Steps>
+  ### Step 1
+  Initial instructions.
+
+  ### Step 2
+  More instructions.
+
+  ### Step 3
+  More instructions.
+</Steps>
+```
+</CodeBlock>
+
+This renders as:
+
+<Steps>
+  ### Step 1
+  Initial instructions.
+
+  ### Step 2
+  More instructions.
+
+  ### Step 3
+  More instructions.
+</Steps>
+
+You can use your choice of text for each step's heading. For example:
+
+<Steps>
+  ### 1: Do something.
+  Initial instructions.
+
+  ### Next: Do something else.
+  More instructions.
+
+  ### Three.
+  More instructions.
+</Steps>

@@ -22,6 +22,15 @@ fixtures:
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+    - publishConfig:
+        type: maven
+        coordinate: com.fern:exhaustive
+        registryUrl: "definitelyMavenCentral"
+        signature:
+            keyId: "test_kid"
+            password: "test_password"
+            secretKey: "test_secretkey"
+      outputFolder: signed_publish
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -37,4 +46,4 @@ allowedFailures:
   - idempotency-headers
   - trace
   - undiscriminated-unions
-
+  - unions

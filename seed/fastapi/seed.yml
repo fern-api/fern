@@ -1,4 +1,4 @@
-irVersion: v34
+irVersion: v37
 docker: fernapi/fern-fastapi-server:latest
 dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python

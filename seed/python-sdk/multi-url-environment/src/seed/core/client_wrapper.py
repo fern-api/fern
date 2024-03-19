@@ -5,6 +5,7 @@ import typing
 import httpx
 
 from ..environment import SeedMultiUrlEnvironmentEnvironment
+from .http_client import AsyncHttpClient, HttpClient
 
 
 class BaseClientWrapper:
@@ -17,8 +18,8 @@ class BaseClientWrapper:
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "seed",
-            "X-Fern-SDK-Version": "0.0.0",
+            "X-Fern-SDK-Name": "fern_multi-url-environment",
+            "X-Fern-SDK-Version": "0.0.1",
         }
         headers["Authorization"] = f"Bearer {self._get_token()}"
         return headers
@@ -42,7 +43,7 @@ class SyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.Client,
     ):
         super().__init__(token=token, environment=environment)
-        self.httpx_client = httpx_client
+        self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
 class AsyncClientWrapper(BaseClientWrapper):
@@ -54,4 +55,4 @@ class AsyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(token=token, environment=environment)
-        self.httpx_client = httpx_client
+        self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

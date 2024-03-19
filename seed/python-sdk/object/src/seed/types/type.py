@@ -39,7 +39,7 @@ class Type(pydantic.BaseModel):
         ),
         nine="TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu",
         ten=[10, 10],
-        eleven=[11.0],
+        eleven={11.0},
         twelve={"invalid": False, "exists": True},
         thirteen=13,
         fourteen={},
@@ -92,4 +92,5 @@ class Type(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

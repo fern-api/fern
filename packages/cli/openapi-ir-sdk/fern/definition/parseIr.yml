@@ -53,7 +53,7 @@ types:
 
   RequestWithExample:
     union:
-      octetStream: finalIr.OctetStremRequest
+      octetStream: finalIr.OctetStreamRequest
       multipart: finalIr.MultipartRequest
       json: JsonRequestWithExample
 
@@ -103,6 +103,7 @@ types:
     properties:
       name: string
       schema: SchemaWithExample
+      env: optional<string>
       parameterNameOverride:
         type: optional<string>
         docs: |

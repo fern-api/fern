@@ -14,6 +14,7 @@ import {
 } from "@fern-api/openapi-ir-sdk";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
+import { hasIncompleteExample } from "../hasIncompleteExample";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
@@ -41,7 +42,7 @@ export class ExampleEndpointFactory {
             const required = this.isSchemaRequired(requestSchemaIdResponse.schema);
             requestExample = this.exampleTypeFactory.buildExample({
                 schema: requestSchemaIdResponse.schema,
-                example: requestSchemaIdResponse.example?.value,
+                example: requestSchemaIdResponse.example?.value ?? requestSchemaIdResponse.example,
                 options: {
                     isParameter: false,
                     ignoreOptionals: true
@@ -57,7 +58,7 @@ export class ExampleEndpointFactory {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
             responseExample = this.exampleTypeFactory.buildExample({
                 schema: responseSchemaIdResponse.schema,
-                example: responseSchemaIdResponse.example?.value,
+                example: responseSchemaIdResponse.example?.value ?? responseSchemaIdResponse.example,
                 options: {
                     isParameter: false,
                     ignoreOptionals: false,
@@ -149,6 +150,9 @@ export class ExampleEndpointFactory {
             exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
         }
 
+        // Get all the code samples from incomplete examples
+        const codeSamples = endpoint.examples.filter(hasIncompleteExample).flatMap((example) => example.codeSamples);
+
         return {
             name: exampleName,
             description: undefined,
@@ -157,7 +161,7 @@ export class ExampleEndpointFactory {
             headers,
             request: requestExample,
             response: responseExample,
-            codeSamples: []
+            codeSamples
         };
     }
 

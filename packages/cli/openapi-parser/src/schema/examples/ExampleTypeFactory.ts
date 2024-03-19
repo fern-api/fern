@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, Examples } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FullExample,
@@ -25,6 +25,8 @@ export declare namespace ExampleTypeFactory {
         ignoreOptionals: boolean;
         /* True if example is for query or path parameter */
         isParameter: boolean;
+
+        maxCheckerDepth?: number;
     }
 }
 
@@ -44,7 +46,14 @@ export class ExampleTypeFactory {
         example: unknown | undefined;
         options: ExampleTypeFactory.Options;
     }): FullExample | undefined {
-        return this.buildExampleHelper({ schema, visitedSchemaIds: new Set(), example, options, depth: 0 });
+        return this.buildExampleHelper({
+            schema,
+            visitedSchemaIds: new Set(),
+            example,
+            // Default maxCheckerDepth to 5
+            options: { ...options, maxCheckerDepth: options.maxCheckerDepth ?? 5 },
+            depth: 0
+        });
     }
 
     private buildExampleHelper({
@@ -71,7 +80,7 @@ export class ExampleTypeFactory {
             case "nullable": {
                 if (
                     example == null &&
-                    !this.hasExample(schema.value) &&
+                    !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
                     (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
                     return undefined;
@@ -97,7 +106,7 @@ export class ExampleTypeFactory {
             case "optional": {
                 if (
                     example == null &&
-                    !this.hasExample(schema.value) &&
+                    !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
                     (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
                     return undefined;
@@ -250,6 +259,7 @@ export class ExampleTypeFactory {
             case "array": {
                 const fullExample = getFullExampleAsArray(example);
                 const itemExamples = [];
+                // If you have an example use that
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
@@ -263,17 +273,20 @@ export class ExampleTypeFactory {
                             itemExamples.push(itemExample);
                         }
                     }
+                } else {
+                    // Otherwise, generate an example
+                    const itemExample = this.buildExampleHelper({
+                        example: undefined,
+                        schema: schema.value,
+                        depth: depth + 1,
+                        visitedSchemaIds,
+                        options
+                    });
+                    if (itemExample != null) {
+                        itemExamples.push(itemExample);
+                    }
                 }
-                const itemExample = this.buildExampleHelper({
-                    example: undefined,
-                    schema: schema.value,
-                    depth: depth + 1,
-                    visitedSchemaIds,
-                    options
-                });
-                if (itemExample != null) {
-                    itemExamples.push(itemExample);
-                }
+
                 return FullExample.array(itemExamples);
             }
             case "map": {
@@ -372,23 +385,34 @@ export class ExampleTypeFactory {
         }
     }
 
-    private hasExample(schema: SchemaWithExample): boolean {
+    private hasExample(
+        schema: SchemaWithExample,
+        depth: number,
+        visitedSchemaIds: Set<SchemaId> = new Set(),
+        options: ExampleTypeFactory.Options
+    ): boolean {
+        if (this.exceedsMaxCheckerDepth(depth, options)) {
+            return false;
+        }
         switch (schema.type) {
             case "array":
-                return this.hasExample(schema.value);
+                return this.hasExample(schema.value, depth + 1, visitedSchemaIds, options);
             case "enum":
                 return schema.example != null;
             case "literal":
                 return false;
             case "map":
-                return schema.key.schema.example != null && this.hasExample(schema.value);
+                return (
+                    schema.key.schema.example != null &&
+                    this.hasExample(schema.value, depth + 1, visitedSchemaIds, options)
+                );
             case "object": {
                 const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0;
                 if (objectExample) {
                     return true;
                 }
                 for (const property of schema.properties) {
-                    if (this.hasExample(property.schema)) {
+                    if (this.hasExample(property.schema, depth + 1, visitedSchemaIds, options)) {
                         return true;
                     }
                 }
@@ -398,18 +422,29 @@ export class ExampleTypeFactory {
                 return schema.schema.example != null;
             case "reference": {
                 const resolvedSchema = this.schemas[schema.schema];
-                if (resolvedSchema != null) {
-                    return this.hasExample(resolvedSchema);
+
+                if (resolvedSchema != null && !visitedSchemaIds.has(schema.schema)) {
+                    visitedSchemaIds.add(schema.schema);
+                    const hasExample = this.hasExample(resolvedSchema, depth, visitedSchemaIds, options);
+                    visitedSchemaIds.delete(schema.schema);
+                    return hasExample;
                 }
+
                 return false;
             }
             case "unknown":
                 return schema.example != null;
             case "oneOf":
-                return Object.values(schema.value.schemas).some((schema) => this.hasExample(schema));
+                return Object.values(schema.value.schemas).some((schema) =>
+                    this.hasExample(schema, depth, visitedSchemaIds, options)
+                );
             default:
                 return false;
         }
+    }
+
+    private exceedsMaxCheckerDepth(depth: number, options: ExampleTypeFactory.Options): boolean {
+        return depth > (options.maxCheckerDepth ?? 0);
     }
 
     private exceedsMaxDepth(depth: number, options: ExampleTypeFactory.Options): boolean {
@@ -490,7 +525,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.string(schema.example);
                 } else {
-                    return PrimitiveExample.string(options.name ?? "string");
+                    return PrimitiveExample.string(options.name ?? Examples.STRING);
                 }
             case "base64":
                 if (example != null && typeof example === "string") {
@@ -498,7 +533,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.base64(schema.example);
                 } else {
-                    return PrimitiveExample.base64("SGVsbG8gd29ybGQh");
+                    return PrimitiveExample.base64(Examples.BASE64);
                 }
             case "boolean":
                 if (example != null && typeof example === "boolean") {
@@ -506,7 +541,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.boolean(schema.example);
                 } else {
-                    return PrimitiveExample.boolean(true);
+                    return PrimitiveExample.boolean(Examples.BOOLEAN);
                 }
             case "date":
                 if (example != null && typeof example === "string") {
@@ -514,15 +549,15 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.date(schema.example);
                 } else {
-                    return PrimitiveExample.date("2023-01-15");
+                    return PrimitiveExample.date(Examples.DATE);
                 }
             case "datetime":
                 if (example != null && typeof example === "string") {
-                    return PrimitiveExample.datetime(new Date(example));
+                    return PrimitiveExample.datetime(example);
                 } else if (schema.example != null) {
-                    return PrimitiveExample.datetime(new Date(schema.example));
+                    return PrimitiveExample.datetime(schema.example);
                 } else {
-                    return PrimitiveExample.datetime(new Date("2024-01-15T09:30:00Z"));
+                    return PrimitiveExample.datetime(Examples.DATE_TIME);
                 }
             case "double":
                 if (example != null && typeof example === "number") {
@@ -530,7 +565,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.double(schema.example);
                 } else {
-                    return PrimitiveExample.double(1.1);
+                    return PrimitiveExample.double(Examples.DOUBLE);
                 }
             case "float":
                 if (example != null && typeof example === "number") {
@@ -538,7 +573,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.float(schema.example);
                 } else {
-                    return PrimitiveExample.float(1.1);
+                    return PrimitiveExample.float(Examples.FLOAT);
                 }
             case "int":
                 if (example != null && typeof example === "number") {
@@ -546,7 +581,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.int(schema.example);
                 } else {
-                    return PrimitiveExample.int(1);
+                    return PrimitiveExample.int(Examples.INT);
                 }
             case "int64":
                 if (example != null && typeof example === "number") {
@@ -554,7 +589,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.int64(schema.example);
                 } else {
-                    return PrimitiveExample.int64(1000000);
+                    return PrimitiveExample.int64(Examples.INT64);
                 }
             default:
                 assertNever(schema);

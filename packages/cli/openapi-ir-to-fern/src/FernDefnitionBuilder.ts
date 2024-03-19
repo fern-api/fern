@@ -1,6 +1,6 @@
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
@@ -177,6 +177,18 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             return undefined;
         }
         const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replaceAll("__package__", "root"));
+
+        if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
+            if (this.rootApiFile.imports == null) {
+                this.rootApiFile.imports = {};
+            }
+            this.rootApiFile.imports[importPrefix] = relative(
+                dirname(AbsoluteFilePath.of(`/${file}`)),
+                AbsoluteFilePath.of(`/${fileToImport}`)
+            );
+            return importPrefix;
+        }
+
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.imports == null) {
             fernFile.imports = {};

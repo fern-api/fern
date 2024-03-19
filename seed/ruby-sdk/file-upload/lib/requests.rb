@@ -13,7 +13,7 @@ module SeedFileUploadClient
     # @param timeout_in_seconds [Long]
     # @return [RequestClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedFileUploadClient", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_file-upload", "X-Fern-SDK-Version": "0.0.1" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :multipart
         faraday.request :json
@@ -31,7 +31,7 @@ module SeedFileUploadClient
     # @param timeout_in_seconds [Long]
     # @return [AsyncRequestClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedFileUploadClient", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_file-upload", "X-Fern-SDK-Version": "0.0.1" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :multipart
         faraday.request :json

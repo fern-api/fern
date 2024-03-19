@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Migration } from "../types/Migration";
 
 export const Response: core.serialization.Schema<
     serializers.migration.getAttemptedMigrations.Response.Raw,
     SeedTrace.Migration[]
-> = core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Migration));
+> = core.serialization.list(Migration);
 
 export declare namespace Response {
-    type Raw = serializers.Migration.Raw[];
+    type Raw = Migration.Raw[];
 }

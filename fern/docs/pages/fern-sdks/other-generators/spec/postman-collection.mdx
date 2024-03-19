@@ -1,0 +1,49 @@
+---
+title: The Postman Collection generator
+description: Use Fern's Postman Collection generator and your API definition to output a Postman Collection to your local filesystem, or publish it to Postman.
+---
+
+[Source code](https://github.com/fern-api/fern/tree/main/generators/postman)<br />
+**Latest version**: `0.1.0`
+
+The [Postman](https://www.postman.com/) generator outputs a Postman Collection that includes example requests and responses for your endpoints (if they're in your API definition).
+
+## Local
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.1.0
+        output:
+          location: local-file-system
+          path: ../generated/postman
+```
+</CodeBlock>
+
+## Publish to Postman 
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  publish:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.1.0
+        output:
+          location: postman
+          api-key: ${POSTMAN_API_KEY}
+    workspace-id: ${POSTMAN_WORKSPACE_ID}
+```
+</CodeBlock>
+
+### Getting your Postman API Key
+
+Follow the instructions here: https://learning.postman.com/docs/developer/postman-api/authentication/#generate-a-postman-api-key
+
+### Getting your Postman Workspace ID 
+
+Follow the instructions here: https://support.postman.com/hc/en-us/articles/5063785095319-How-to-find-the-ID-of-an-element-in-Postman
+

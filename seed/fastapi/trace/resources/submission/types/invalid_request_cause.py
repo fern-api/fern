@@ -116,6 +116,7 @@ class _InvalidRequestCause:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
@@ -124,12 +125,14 @@ class _InvalidRequestCause:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing.Literal["unexpectedLanguage"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 InvalidRequestCause.update_forward_refs()

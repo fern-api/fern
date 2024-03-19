@@ -37,6 +37,20 @@ class ImdbClient:
             - request: CreateMovieRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import CreateMovieRequest
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.create_movie(
+            request=CreateMovieRequest(
+                title="string",
+                rating=1.1,
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -61,6 +75,8 @@ class ImdbClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
@@ -76,6 +92,16 @@ class ImdbClient:
             - movie_id: MovieId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.get_movie(
+            movie_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -94,6 +120,8 @@ class ImdbClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -120,6 +148,20 @@ class AsyncImdbClient:
             - request: CreateMovieRequest.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import CreateMovieRequest
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.imdb.create_movie(
+            request=CreateMovieRequest(
+                title="string",
+                rating=1.1,
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -144,6 +186,8 @@ class AsyncImdbClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
@@ -159,6 +203,16 @@ class AsyncImdbClient:
             - movie_id: MovieId.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.imdb.get_movie(
+            movie_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -177,6 +231,8 @@ class AsyncImdbClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore

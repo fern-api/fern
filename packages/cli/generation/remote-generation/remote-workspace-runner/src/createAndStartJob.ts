@@ -1,8 +1,11 @@
 import { FernToken } from "@fern-api/auth";
+import { generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
-import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import {
+    migrateIntermediateRepresentationForGenerator,
+    migrateIntermediateRepresentationToVersionForGenerator
+} from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
@@ -10,6 +13,10 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
+import { readFile } from "fs/promises";
+import path from "path";
+import tar from "tar";
+import tmp from "tmp-promise";
 import urlJoin from "url-join";
 import { substituteEnvVariables } from "./substituteEnvVariables";
 
@@ -22,17 +29,19 @@ export async function createAndStartJob({
     context,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    irVersionOverride
 }: {
     workspace: APIWorkspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    irVersionOverride: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
         workspace,
@@ -44,7 +53,7 @@ export async function createAndStartJob({
         token,
         whitelabel
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation });
+    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
 }
 
@@ -60,7 +69,7 @@ async function createJob({
 }: {
     workspace: APIWorkspace;
     organization: string;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
     shouldLogS3Url: boolean;
@@ -79,13 +88,60 @@ async function createJob({
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
+    let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
+    // Only write definition if output mode is github
+    if (generatorInvocation.outputMode.type.startsWith("github")) {
+        try {
+            const tmpDir = await tmp.dir();
+            const tarPath = path.join(tmpDir.path, "definition.tgz");
+            context.logger.debug(`Compressing definition at ${tmpDir.path}`);
+            await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
+
+            // Upload definition to S3
+            context.logger.debug("Getting upload URL for Fern definition.");
+            const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
+                apiName: workspace.name,
+                organizationName: organization,
+                version
+            });
+
+            if (!definitionUploadUrlRequest.ok) {
+                if (definitionUploadUrlRequest.error.content.reason === "status-code") {
+                    context.logger.debug(
+                        `Failed with status-code to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.body}`
+                    );
+                } else if (definitionUploadUrlRequest.error.content.reason === "non-json") {
+                    context.logger.debug(
+                        `Failed with non-json to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.rawBody}`
+                    );
+                } else if (definitionUploadUrlRequest.error.content.reason === "unknown") {
+                    context.logger.debug(
+                        `Failed to get upload URL as unknown error occurred continuing: ${definitionUploadUrlRequest.error.content.errorMessage}`
+                    );
+                }
+            } else {
+                context.logger.debug("Uploading definition...");
+                await axios.put(definitionUploadUrlRequest.body.s3Url, await readFile(tarPath));
+
+                // Create definition metadata
+                fernDefinitionMetadata = {
+                    definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
+                    outputPath: ".mock"
+                };
+            }
+        } catch (error) {
+            context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
+        }
+    }
+
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
         uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
-        whitelabel: whitelabelWithEnvVarSubstiutions
+        whitelabel: whitelabelWithEnvVarSubstiutions,
+        fernDefinitionMetadata
     });
 
     if (!createResponse.ok) {
@@ -137,21 +193,34 @@ async function startJob({
     intermediateRepresentation,
     generatorInvocation,
     job,
-    context
+    context,
+    irVersionOverride
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
+    irVersionOverride: string | undefined;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
-        intermediateRepresentation,
-        context,
-        targetGenerator: {
-            name: generatorInvocation.name,
-            version: generatorInvocation.version
-        }
-    });
+    const migratedIntermediateRepresentation =
+        irVersionOverride == null
+            ? await migrateIntermediateRepresentationForGenerator({
+                  intermediateRepresentation,
+                  context,
+                  targetGenerator: {
+                      name: generatorInvocation.name,
+                      version: generatorInvocation.version
+                  }
+              })
+            : await migrateIntermediateRepresentationToVersionForGenerator({
+                  intermediateRepresentation,
+                  context,
+                  irVersion: irVersionOverride,
+                  targetGenerator: {
+                      name: generatorInvocation.name,
+                      version: generatorInvocation.version
+                  }
+              });
 
     const formData = new FormData();
 

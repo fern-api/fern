@@ -14,7 +14,10 @@ except ImportError:
 
 class UpdatePlaylistRequest(pydantic.BaseModel):
     name: str
-    problems: typing.List[ProblemId] = pydantic.Field(description="The problems that make up the playlist.")
+    problems: typing.List[ProblemId] = pydantic.Field()
+    """
+    The problems that make up the playlist.
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -25,4 +28,5 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

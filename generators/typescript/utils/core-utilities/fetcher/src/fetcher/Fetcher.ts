@@ -11,7 +11,7 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: Record<string, string | string[]>;
+        queryParameters?: Record<string, string | string[] | object | object[]>;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -80,7 +80,13 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     // If not in Node.js the SDK uses global fetch if available,
     // and falls back to node-fetch.
     const fetchFn =
-        RUNTIME.type === "node" ? require("node-fetch") : typeof fetch == "function" ? fetch : require("node-fetch");
+        RUNTIME.type === "node"
+            ? // `.default` is required due to this issue:
+              // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
+              require("node-fetch").default
+            : typeof fetch == "function"
+            ? fetch
+            : require("node-fetch").default;
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();

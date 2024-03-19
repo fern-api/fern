@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir-sdk";
+import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
-import { getOpenAPIIRFromOpenAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -23,7 +23,10 @@ export async function generateOpenAPIIrForWorkspaces({
                     return;
                 }
 
-                const openAPIIr = await getOpenAPIIRFromOpenAPIWorkspace(workspace, context);
+                const openAPIIr = await parse({
+                    workspace,
+                    taskContext: context
+                });
 
                 const irOutputFilePath = path.resolve(irFilepath);
                 const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {

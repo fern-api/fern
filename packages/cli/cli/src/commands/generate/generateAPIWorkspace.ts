@@ -1,7 +1,10 @@
 import { FernToken } from "@fern-api/auth";
-import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "@fern-api/generators-configuration";
+import {
+    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    fernConfigJson,
+    GENERATORS_CONFIGURATION_FILENAME
+} from "@fern-api/configuration";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -9,8 +12,9 @@ import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 
 export async function generateWorkspace({
-    workspace,
     organization,
+    workspace,
+    projectConfig,
     context,
     groupName,
     version,
@@ -19,8 +23,9 @@ export async function generateWorkspace({
     useLocalDocker,
     keepDocker
 }: {
-    workspace: FernWorkspace;
     organization: string;
+    workspace: FernWorkspace;
+    projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
@@ -57,16 +62,17 @@ export async function generateWorkspace({
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({
-            organization,
+            projectConfig,
             workspace,
             generatorGroup: group,
             keepDocker,
-            context
+            context,
+            writeUnitTests: false
         });
     } else {
         await runRemoteGenerationForAPIWorkspace({
-            workspace,
             organization,
+            workspace,
             context,
             generatorGroup: group,
             version,

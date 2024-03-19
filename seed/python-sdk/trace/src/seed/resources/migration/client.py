@@ -29,6 +29,16 @@ class MigrationClient:
             - admin_key_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedTrace
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.migration.get_attempted_migrations(
+            admin_key_header="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -40,7 +50,7 @@ class MigrationClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "admin-key-header": admin_key_header,
+                        "admin-key-header": str(admin_key_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -48,6 +58,8 @@ class MigrationClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -70,6 +82,16 @@ class AsyncMigrationClient:
             - admin_key_header: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        await client.migration.get_attempted_migrations(
+            admin_key_header="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -81,7 +103,7 @@ class AsyncMigrationClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "admin-key-header": admin_key_header,
+                        "admin-key-header": str(admin_key_header),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -89,6 +111,8 @@ class AsyncMigrationClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()

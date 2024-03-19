@@ -1,0 +1,88 @@
+---
+title: Use Font Awesome or custom icons
+description: Use and style the 26,000+ icons available in the Font Awesome icon library in your Fern Docs. Fern also supports custom icons on its Business plan.
+---
+
+The `Icon` component is used to display and style an icon. We use Font Awesome to power the icons within Fern Docs.
+
+## Props
+
+| prop       | type    | description                                     | default       |
+|------------|-------- |-------------------------------------------------|---------------|
+| *icon*     | string  | Font Awesome icon (e.g., `'check'`)             | none          |
+| *color*    | string  | icon CSS color (e.g., `'red'` or `'#00641e80'`) | `'#0000009b'` |
+| *size*     | integer | icon size inside curly braces (e.g., `{8}`)     | `{4}`         |
+
+The `icon` prop is required. The `color` and `size` props are optional. 
+
+## Usage
+
+### Basic example
+
+<CodeBlock title='Example'>
+```mdx
+<Icon icon='check' color='green' size={6} />
+```
+</CodeBlock>
+
+This renders as:
+<Icon icon='check' color='green' size={6}/>
+
+### Set icon and style
+
+[Font Awesome](https://fontawesome.com/) is the Internet's icon library and toolkit, used by millions of designers, developers, and content creators. Fern Docs gives you access to all the icons available under the Font Awesome Pro plan.
+
+<Warning>
+Fern does not support the `SVG+JS` method.
+</Warning>
+
+To set the `icon` type and style, you can use the Font Awesome syntax:
+
+<CodeBlock title='Example with Font Awesome syntax'>
+```mdx
+<Icon icon='fa-solid fa-check' color='green' size={6} />
+```
+</CodeBlock>
+
+This renders as:
+<Icon icon='fa-solid fa-check' color='green' size={6} />
+
+You can omit the `fa-` prefix, and the default icon style is `fa-solid`. Thus, you can simplify the prop like this:
+
+<CodeBlock title='Simplified example with default style'>
+```mdx
+<Icon icon='check' color='green' size={6} />
+```
+</CodeBlock>
+
+You can use other Font Awesome icon styles:
+
+<CodeBlock title='Simplified example with light style'>
+```mdx
+<Icon icon='light check' color='green' size={6} />
+```
+</CodeBlock>
+
+This renders as:
+<Icon icon='light check' color='green' size={6} />
+
+View the sidebar at [Font Awesome's icon search page](https://fontawesome.com/search) for available styles.
+
+### Set icon size
+
+For the size prop, the value of 1 is equal to 0.25rem, which translates to 4px by default in common browsers. The default size value is 4, which translates to 16x16px.
+
+For example, to display an icon that's double the default size (36x36px), use `size={8}`:
+
+<CodeBlock title='Size example'>
+```mdx
+<Icon icon='check' color='green' size={8} />
+```
+</CodeBlock>
+
+This renders as:
+<Icon icon='check' color='green' size={8} />
+
+## Custom icons
+
+If you'd like to B.Y.O.I. (Bring Your Own Icons), reach out to us at [support@buildwithfern.com](mailto:support@buildwithfern.com). This is a paid feature available on our `Business plan`.

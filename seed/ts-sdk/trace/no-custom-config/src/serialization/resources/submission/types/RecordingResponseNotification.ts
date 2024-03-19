@@ -5,26 +5,27 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
+import { LightweightStackframeInformation } from "./LightweightStackframeInformation";
+import { TracedFile } from "./TracedFile";
 
 export const RecordingResponseNotification: core.serialization.ObjectSchema<
     serializers.RecordingResponseNotification.Raw,
     SeedTrace.RecordingResponseNotification
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: SubmissionId,
     testCaseId: core.serialization.string().optional(),
     lineNumber: core.serialization.number(),
-    lightweightStackInfo: core.serialization.lazyObject(
-        async () => (await import("../../..")).LightweightStackframeInformation
-    ),
-    tracedFile: core.serialization.lazyObject(async () => (await import("../../..")).TracedFile).optional(),
+    lightweightStackInfo: LightweightStackframeInformation,
+    tracedFile: TracedFile.optional(),
 });
 
 export declare namespace RecordingResponseNotification {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
+        submissionId: SubmissionId.Raw;
         testCaseId?: string | null;
         lineNumber: number;
-        lightweightStackInfo: serializers.LightweightStackframeInformation.Raw;
-        tracedFile?: serializers.TracedFile.Raw | null;
+        lightweightStackInfo: LightweightStackframeInformation.Raw;
+        tracedFile?: TracedFile.Raw | null;
     }
 }

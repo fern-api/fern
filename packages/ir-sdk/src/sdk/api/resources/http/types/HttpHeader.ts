@@ -7,4 +7,5 @@ import * as FernIr from "../../..";
 export interface HttpHeader extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
+    env: string | undefined;
 }

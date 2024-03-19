@@ -5,13 +5,12 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { File_ } from "./File_";
 
 export const Directory: core.serialization.ObjectSchema<serializers.Directory.Raw, SeedExamples.Directory> =
     core.serialization.object({
         name: core.serialization.string(),
-        files: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).File_))
-            .optional(),
+        files: core.serialization.list(File_).optional(),
         directories: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Directory))
             .optional(),
@@ -20,7 +19,7 @@ export const Directory: core.serialization.ObjectSchema<serializers.Directory.Ra
 export declare namespace Directory {
     interface Raw {
         name: string;
-        files?: serializers.File_.Raw[] | null;
+        files?: File_.Raw[] | null;
         directories?: serializers.Directory.Raw[] | null;
     }
 }

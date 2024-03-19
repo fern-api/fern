@@ -22,14 +22,14 @@ export class Package {
 
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
         const { for: for_ } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["for"] = for_;
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/reserved-keywords",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

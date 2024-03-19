@@ -9,6 +9,10 @@ types:
       generatorType: GeneratorType
       docker: string
       dockerCommand: optional<DockerCommand>
+      customFixtureConfig: 
+        type: optional<FixtureConfigurations>
+        docs: |
+          Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
       scripts: optional<list<ScriptConfig>>
@@ -47,7 +51,9 @@ types:
 
   FixtureConfigurations:
     properties:
+      publishConfig: unknown
       customConfig: unknown
+      audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
       outputMode: 

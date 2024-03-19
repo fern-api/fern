@@ -4,16 +4,8 @@
 
 import * as SeedEnum from "..";
 
-export type ColorOrOperand = SeedEnum.ColorOrOperand.Color | SeedEnum.ColorOrOperand.Operand;
-
-export declare namespace ColorOrOperand {
-    interface Color {
-        type: "color";
-        value: SeedEnum.Color;
-    }
-
-    interface Operand {
-        type: "operand";
-        value: SeedEnum.Operand;
-    }
-}
+/**
+ * @example
+ *     SeedEnum.Color.Red
+ */
+export type ColorOrOperand = SeedEnum.Color | SeedEnum.Operand;

@@ -5,6 +5,9 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ErrorInfo } from "./ErrorInfo";
+import { RunningSubmissionState } from "./RunningSubmissionState";
+import { WorkspaceRunDetails } from "./WorkspaceRunDetails";
 
 export const WorkspaceSubmissionStatus: core.serialization.Schema<
     serializers.WorkspaceSubmissionStatus.Raw,
@@ -13,13 +16,13 @@ export const WorkspaceSubmissionStatus: core.serialization.Schema<
     .union("type", {
         stopped: core.serialization.object({}),
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: ErrorInfo,
         }),
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: RunningSubmissionState,
         }),
-        ran: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
-        traced: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
+        ran: WorkspaceRunDetails,
+        traced: WorkspaceRunDetails,
     })
     .transform<SeedTrace.WorkspaceSubmissionStatus>({
         transform: (value) => {
@@ -55,19 +58,19 @@ export declare namespace WorkspaceSubmissionStatus {
 
     interface Errored {
         type: "errored";
-        value: serializers.ErrorInfo.Raw;
+        value: ErrorInfo.Raw;
     }
 
     interface Running {
         type: "running";
-        value: serializers.RunningSubmissionState.Raw;
+        value: RunningSubmissionState.Raw;
     }
 
-    interface Ran extends serializers.WorkspaceRunDetails.Raw {
+    interface Ran extends WorkspaceRunDetails.Raw {
         type: "ran";
     }
 
-    interface Traced extends serializers.WorkspaceRunDetails.Raw {
+    interface Traced extends WorkspaceRunDetails.Raw {
         type: "traced";
     }
 }

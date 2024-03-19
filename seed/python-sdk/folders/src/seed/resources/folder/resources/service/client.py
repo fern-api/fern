@@ -28,6 +28,13 @@ class ServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder.service.endpoint()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -46,6 +53,8 @@ class ServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -61,6 +70,15 @@ class ServiceClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.folder.service.unknown_request(
+            request={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -85,6 +103,8 @@ class ServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -105,6 +125,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder.service.endpoint()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -123,6 +150,8 @@ class AsyncServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -140,6 +169,15 @@ class AsyncServiceClient:
             - request: typing.Any.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.folder.service.unknown_request(
+            request={"key": "value"},
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -164,6 +202,8 @@ class AsyncServiceClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

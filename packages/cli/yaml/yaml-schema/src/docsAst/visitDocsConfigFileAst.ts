@@ -1,12 +1,5 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
-import {
-    DocsConfiguration,
-    NavigationConfig,
-    NavigationItem,
-    PageConfiguration,
-    SectionConfiguration,
-    TabbedNavigationConfig
-} from "@fern-fern/docs-config/api";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { NodePath } from "../NodePath";
@@ -14,7 +7,7 @@ import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 
 export async function visitDocsConfigFileYamlAst(
-    contents: DocsConfiguration,
+    contents: docsYml.RawSchemas.DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
     absoluteFilepathToConfiguration: AbsoluteFilePath
 ): Promise<void> {
@@ -26,12 +19,31 @@ export async function visitDocsConfigFileYamlAst(
     );
 
     if (contents.backgroundImage != null) {
-        await visitFilepath({
-            absoluteFilepathToConfiguration,
-            rawUnresolvedFilepath: contents.backgroundImage,
-            visitor,
-            nodePath: ["background-image"]
-        });
+        if (typeof contents.backgroundImage === "string") {
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: contents.backgroundImage,
+                visitor,
+                nodePath: ["background-image"]
+            });
+        } else {
+            if (contents.backgroundImage.dark != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: contents.backgroundImage.dark,
+                    visitor,
+                    nodePath: ["background-image", "dark"]
+                });
+            }
+            if (contents.backgroundImage.light != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: contents.backgroundImage.light,
+                    visitor,
+                    nodePath: ["background-image", "light"]
+                });
+            }
+        }
     }
     if (contents.favicon != null) {
         await visitFilepath({
@@ -182,7 +194,7 @@ async function visitNavigation({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigation: NavigationConfig;
+    navigation: docsYml.RawSchemas.NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -222,7 +234,7 @@ async function visitNavigationItem({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigationItem: NavigationItem;
+    navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -239,7 +251,8 @@ async function visitNavigationItem({
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
-                    content: (await readFile(absoluteFilepath)).toString()
+                    content: (await readFile(absoluteFilepath)).toString(),
+                    absoluteFilepath
                 },
                 [...nodePath, "page", navigationItem.path]
             );
@@ -260,16 +273,20 @@ async function visitNavigationItem({
     }
 }
 
-function navigationItemIsPage(item: NavigationItem): item is PageConfiguration {
+function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as PageConfiguration).page != null;
+    return (item as docsYml.RawSchemas.PageConfiguration).page != null;
 }
 
-function navigationItemIsSection(item: NavigationItem): item is SectionConfiguration {
+function navigationItemIsSection(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as SectionConfiguration).section != null;
+    return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
 }
 
-function navigationConfigIsTabbed(config: NavigationConfig): config is TabbedNavigationConfig {
-    return (config as TabbedNavigationConfig)[0]?.tab != null;
+function navigationConfigIsTabbed(
+    config: docsYml.RawSchemas.NavigationConfig
+): config is docsYml.RawSchemas.TabbedNavigationConfig {
+    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
 }

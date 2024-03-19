@@ -35,7 +35,7 @@ export async function registerWorkspacesV1({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
+                if (workspace.type === "oss") {
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }

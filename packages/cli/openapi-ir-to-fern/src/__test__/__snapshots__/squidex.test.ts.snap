@@ -2468,6 +2468,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssetContent": {
             "auth": true,
+            "availability": "deprecated",
             "display-name": "Get the asset content.",
             "docs": undefined,
             "method": "GET",
@@ -4555,6 +4556,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContentVersion": {
             "auth": true,
+            "availability": "deprecated",
             "display-name": "Get a content by version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "method": "GET",
@@ -5198,6 +5200,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postContents": {
             "auth": true,
+            "availability": "deprecated",
             "display-name": "Import content items.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [

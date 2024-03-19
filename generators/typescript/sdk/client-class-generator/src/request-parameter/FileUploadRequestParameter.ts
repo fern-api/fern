@@ -31,6 +31,10 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
+    public isOptional({ context }: { context: SdkContext }): boolean {
+        return false;
+    }
+
     public withQueryParameter(
         queryParameter: QueryParameter,
         context: SdkContext,

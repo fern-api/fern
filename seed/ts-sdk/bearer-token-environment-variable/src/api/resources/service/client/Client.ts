@@ -32,7 +32,7 @@ export class Service {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/bearer-token-environment-variable",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -73,7 +73,7 @@ export class Service {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process.env["COURIER_API_KEY"];
+        const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["COURIER_API_KEY"];
         if (bearer == null) {
             throw new errors.SeedBearerTokenEnvironmentVariableError({
                 message: "Please specify COURIER_API_KEY when instantiating the client.",

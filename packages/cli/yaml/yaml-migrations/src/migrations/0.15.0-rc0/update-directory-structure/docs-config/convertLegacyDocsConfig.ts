@@ -11,6 +11,7 @@ export function convertLegacyDocsConfig({
 }): MigratedDocs.DocsConfiguration {
     return {
         ...docsConfiguration,
+        navbarLinks: docsConfiguration.navbarLinks?.map((link) => ({ ...link, href: link.url })),
         instances: docsURLs,
         logo: typeof docsConfiguration.logo === "string" ? { dark: docsConfiguration.logo } : docsConfiguration.logo,
         navigation:

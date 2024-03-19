@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -14,16 +13,19 @@ import (
 // SnippetWriter writes codes snippets as AST expressions from examples.
 type SnippetWriter struct {
 	baseImportPath string
+	unionVersion   UnionVersion
 	types          map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // NewSnippetWriter constructs a new *SnippetWriter.
 func NewSnippetWriter(
 	baseImportPath string,
+	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 ) *SnippetWriter {
 	return &SnippetWriter{
 		baseImportPath: baseImportPath,
+		unionVersion:   unionVersion,
 		types:          types,
 	}
 }
@@ -147,11 +149,8 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			},
 		}
 	}
-	var parameters []ast.Expr
-	if parameter := s.getSnippetForExampleSingleUnionTypeProperties(exampleUnionType.SingleUnionType.Shape); parameter != nil {
-		parameters = append(parameters, parameter)
-	}
-	if len(parameters) == 0 {
+	parameter := s.getSnippetForExampleSingleUnionTypeProperties(exampleUnionType.SingleUnionType.Shape)
+	if parameter == nil {
 		// This union type doesn't have any properties, so we can just construct it
 		// as an in-line struct.
 		return &ast.StructType{
@@ -166,6 +165,18 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			},
 		}
 	}
+	if s.unionVersion == UnionVersionV1 {
+		// In UnionVersionV1, we just return a struct literal with the union type property set.
+		return &ast.StructType{
+			Name: importedReference,
+			Fields: []*ast.Field{
+				{
+					Key:   exampleUnionType.SingleUnionType.WireDiscriminantValue.Name.PascalCase.UnsafeName,
+					Value: parameter,
+				},
+			},
+		}
+	}
 	return &ast.CallExpr{
 		FunctionName: &ast.ImportedReference{
 			Name: fmt.Sprintf(
@@ -175,7 +186,7 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			),
 			ImportPath: importedReference.ImportPath,
 		},
-		Parameters: parameters,
+		Parameters: []ast.Expr{parameter},
 	}
 }
 
@@ -223,6 +234,19 @@ func (s *SnippetWriter) getSnippetForExampleUndiscriminatedUnionType(
 			},
 		}
 	}
+	parameter := s.GetSnippetForExampleTypeReference(exampleUndiscriminatedUnionType.SingleUnionType)
+	if s.unionVersion == UnionVersionV1 {
+		// In UnionVersionV1, we just return a struct literal with the union type property set.
+		return &ast.StructType{
+			Name: importedReference,
+			Fields: []*ast.Field{
+				{
+					Key:   field,
+					Value: parameter,
+				},
+			},
+		}
+	}
 	return &ast.CallExpr{
 		FunctionName: &ast.ImportedReference{
 			Name: fmt.Sprintf(
@@ -233,7 +257,7 @@ func (s *SnippetWriter) getSnippetForExampleUndiscriminatedUnionType(
 			ImportPath: importedReference.ImportPath,
 		},
 		Parameters: []ast.Expr{
-			s.GetSnippetForExampleTypeReference(exampleUndiscriminatedUnionType.SingleUnionType),
+			parameter,
 		},
 	}
 }
@@ -334,18 +358,61 @@ func (s *SnippetWriter) getSnippetForMap(
 func (s *SnippetWriter) getSnippetForUnknown(
 	unknownExample interface{},
 ) ast.Expr {
-	// Serialize the unknown as a JSON object, and simply
-	// specify the object literal in-line.
-	bytes, err := json.Marshal(unknownExample)
-	if err != nil {
-		// If we fail to serialize as JSON, we can still use 'nil'
-		// as a valid example.
+	// Unmarshal stores one of the following types in the interface value (re: https://pkg.go.dev/encoding/json#Unmarshal).
+	switch v := unknownExample.(type) {
+	case bool:
 		return &ast.BasicLit{
-			Value: "nil",
+			Value: strconv.FormatBool(v),
+		}
+	case string:
+		value := fmt.Sprintf("%q", v)
+		if strings.Contains(v, `"`) {
+			value = fmt.Sprintf("`%s`", value)
+		}
+		return &ast.BasicLit{
+			Value: value,
+		}
+	case float64:
+		return &ast.BasicLit{
+			Value: strconv.FormatFloat(v, 'f', -1, 64),
+		}
+	case []interface{}:
+		values := make([]ast.Expr, 0, len(v))
+		for _, value := range v {
+			values = append(values, s.getSnippetForUnknown(value))
+		}
+		return &ast.ArrayLit{
+			Type: &ast.ArrayType{
+				Expr: &ast.LocalReference{
+					Name: "interface{}",
+				},
+			},
+			Values: values,
+		}
+	case map[string]interface{}:
+		var (
+			keys   = make([]ast.Expr, 0, len(v))
+			values = make([]ast.Expr, 0, len(v))
+		)
+		for key, value := range v {
+			keys = append(keys, s.getSnippetForUnknown(key))
+			values = append(values, s.getSnippetForUnknown(value))
+		}
+		return &ast.MapLit{
+			Type: &ast.MapType{
+				Key: &ast.LocalReference{
+					Name: "string",
+				},
+				Value: &ast.LocalReference{
+					Name: "interface{}",
+				},
+			},
+			Keys:   keys,
+			Values: values,
 		}
 	}
 	return &ast.BasicLit{
-		Value: fmt.Sprintf("%q", string(bytes)),
+		Value: "nil",
 	}
 }
 

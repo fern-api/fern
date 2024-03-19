@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "seed_api_client/types/importing_a"
-require_relative "seed_api_client/types/root_type"
-require_relative "seed_api_client/a/types/a"
-require_relative "seed_api_client/ast/types/field_value"
-require_relative "seed_api_client/ast/types/container_value"
-require_relative "seed_api_client/ast/types/primitive_value"
-require_relative "seed_api_client/ast/types/object_value"
+require_relative "fern_circular_references/types/importing_a"
+require_relative "fern_circular_references/types/root_type"
+require_relative "fern_circular_references/a/types/a"
+require_relative "fern_circular_references/ast/types/field_value"
+require_relative "fern_circular_references/ast/types/container_value"
+require_relative "fern_circular_references/ast/types/primitive_value"
+require_relative "fern_circular_references/ast/types/object_value"

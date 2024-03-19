@@ -33,6 +33,15 @@ class DummyClient:
             - num_events: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedStreaming
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.dummy.generate_stream(
+            num_events=1,
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -57,6 +66,8 @@ class DummyClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 for _text in _response.iter_lines():
@@ -84,6 +95,15 @@ class AsyncDummyClient:
             - num_events: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.dummy.generate_stream(
+            num_events=1,
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -108,6 +128,8 @@ class AsyncDummyClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 async for _text in _response.aiter_lines():

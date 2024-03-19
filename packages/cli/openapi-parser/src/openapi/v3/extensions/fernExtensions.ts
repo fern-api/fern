@@ -1,8 +1,9 @@
 import { Values } from "@fern-api/core-utils";
+import { TypedExtensionId } from "./id";
 
 export const FernOpenAPIExtension = {
-    SDK_METHOD_NAME: "x-fern-sdk-method-name",
-    SDK_GROUP_NAME: "x-fern-sdk-group-name",
+    SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
+    SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
@@ -64,12 +65,14 @@ export const FernOpenAPIExtension = {
 
     /**
      * Used to specify if an endpoint should be generated
-     * as a paginated endpoint.
+     * as a paginated endpoint. Both cursor and offset pagination
+     * examples are shown below.
      *
      * Example usage:
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-pagination:
+     *         type: "cursor"
      *         page: $request.page
      *         next: $response.next
      *         results: $response.results
@@ -80,8 +83,8 @@ export const FernOpenAPIExtension = {
      *
      * Example usage:
      *   x-fern-pagination:
+     *     type: "offset"
      *     page: $request.page
-     *     next: $response.next
      *     results: $response.results
      *
      *   paths:
@@ -250,15 +253,15 @@ export const FernOpenAPIExtension = {
      *        response:
      *          body: {}
      *        code-samples:
-     *        - language: typescript
-     *          install: npm install my-client
-     *          code: |
-     *            import { MyClient } from "my-client";
-     *            const client = new MyClient();
-     *            const response = await client.myEndpoint();
-     *            console.log(response);
-     *          name: Console Log My Endpoint
-     *          description: This is a code sample that logs the response
+     *          - language: typescript
+     *            install: npm install my-client
+     *            code: |
+     *              import { MyClient } from "my-client";
+     *              const client = new MyClient();
+     *              const response = await client.myEndpoint();
+     *              console.log(response);
+     *            name: Console Log My Endpoint
+     *            description: This is a code sample that logs the response
      */
     EXAMPLES: "x-fern-examples",
 
@@ -310,6 +313,10 @@ export const FernOpenAPIExtension = {
      *    name: api_key
      *    optional: true
      *  - header: telemetry_id
+     *    env: MY_ENVVAR
+     *  - header: X-API-Version
+     *    name: version
+     *    type: literal<"2.10"> # The type of the header to use
      */
     FERN_GLOBAL_HEADERS: "x-fern-global-headers"
 } as const;

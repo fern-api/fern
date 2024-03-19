@@ -28,6 +28,13 @@ class PropertyBasedErrorClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedErrorProperty
+
+        client = SeedErrorProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.property_based_error.throw_error()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -46,6 +53,8 @@ class PropertyBasedErrorClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -71,6 +80,13 @@ class AsyncPropertyBasedErrorClient:
 
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedErrorProperty
+
+        client = AsyncSeedErrorProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.property_based_error.throw_error()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -89,6 +105,8 @@ class AsyncPropertyBasedErrorClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()

@@ -41,6 +41,7 @@ class PyProjectToml:
                 dependencies=self._dependency_manager.get_dependencies(),
                 python_version=self._python_version,
             ),
+            PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = ""
@@ -108,6 +109,21 @@ python = "^{self.python_version}"
 [tool.poetry.dev-dependencies]
 mypy = "^1.8.0"
 pytest = "^7.4.0"
+pytest-asyncio = "^0.23.5"
+python-dateutil = "^2.9.0"
+"""
+
+    @dataclass(frozen=True)
+    class PluginConfigurationBlock(Block):
+        def to_string(self) -> str:
+            return """
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+asyncio_mode = "auto"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
 """
 
     @dataclass(frozen=True)

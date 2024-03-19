@@ -206,6 +206,7 @@ class _VariableValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class ListValue(pydantic.BaseModel):
         type: typing.Literal["listValue"]
@@ -216,18 +217,21 @@ class _VariableValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
         type: typing.Literal["singlyLinkedListValue"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
         type: typing.Literal["doublyLinkedListValue"]
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class NullValue(pydantic.BaseModel):
         type: typing.Literal["nullValue"]

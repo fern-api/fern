@@ -1811,11 +1811,6 @@ allowed.",
                               "object_type": "org",
                               "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                             },
-                            {
-                              "access_level": "admin",
-                              "object_type": "org",
-                              "organization_id": "organization_id",
-                            },
                           ],
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                           "identities": [
@@ -1826,14 +1821,6 @@ allowed.",
                               "provider": "google-oauth2",
                               "sub": "000000000000000000001",
                               "user_id": "google-oauth2|000000000000000000001",
-                            },
-                            {
-                              "auth0_info": {},
-                              "email": "email",
-                              "email_verified": true,
-                              "provider": "provider",
-                              "sub": "sub",
-                              "user_id": "user_id",
                             },
                           ],
                           "invite": {
@@ -2586,7 +2573,6 @@ to a role as one action.
                   "actions": [
                     "read",
                     "update",
-                    "actions",
                   ],
                   "description": "Writer Action Group",
                   "key": "writer",
@@ -2597,7 +2583,6 @@ to a role as one action.
                     "actions": [
                       "read",
                       "update",
-                      "actions",
                     ],
                     "attributes": {
                       "attributes": {
@@ -2724,7 +2709,6 @@ This includes any permissions granted to perform the action.",
                     "actions": [
                       "read",
                       "update",
-                      "actions",
                     ],
                     "attributes": {
                       "attributes": {
@@ -2790,7 +2774,6 @@ This includes any permissions granted to perform the action.",
                       "actions": [
                         "read",
                         "update",
-                        "actions",
                       ],
                       "attributes": {
                         "attributes": {
@@ -2868,7 +2851,6 @@ Fields that will be provided will be completely overwritten.",
                     "actions": [
                       "read",
                       "update",
-                      "actions",
                     ],
                     "attributes": {
                       "attributes": {
@@ -4006,7 +3988,6 @@ If some of the permissions specified are already assigned, will skip them.",
                 "request": {
                   "permissions": [
                     "document:write",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -4021,7 +4002,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "contributor",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "maintainer",
@@ -4029,7 +4009,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "push",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4084,13 +4063,11 @@ If some of the permissions specified are already assigned, will skip them.",
                   "description": "the maintainer role can read from the repo and push changes",
                   "extends": [
                     "contributor",
-                    "extends",
                   ],
                   "key": "maintainer",
                   "name": "Maintainer",
                   "permissions": [
                     "push",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -4105,7 +4082,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "contributor",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "maintainer",
@@ -4113,7 +4089,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "push",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4242,7 +4217,6 @@ This includes any permissions granted to said role.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "contributor",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "maintainer",
@@ -4250,7 +4224,6 @@ This includes any permissions granted to said role.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "push",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4308,7 +4281,6 @@ This includes any permissions granted to said role.",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "extends": [
                           "contributor",
-                          "extends",
                         ],
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "maintainer",
@@ -4316,7 +4288,6 @@ This includes any permissions granted to said role.",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                         "permissions": [
                           "push",
-                          "permissions",
                         ],
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4376,7 +4347,6 @@ This includes any permissions granted to said role.",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "extends": [
                           "contributor",
-                          "extends",
                         ],
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "maintainer",
@@ -4384,7 +4354,6 @@ This includes any permissions granted to said role.",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                         "permissions": [
                           "push",
-                          "permissions",
                         ],
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4447,7 +4416,6 @@ This includes any permissions granted to said role.",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                       "extends": [
                         "contributor",
-                        "extends",
                       ],
                       "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                       "key": "maintainer",
@@ -4455,7 +4423,6 @@ This includes any permissions granted to said role.",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                       "permissions": [
                         "push",
-                        "permissions",
                       ],
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4519,7 +4486,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "request": {
                   "permissions": [
                     "document:share",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -4534,7 +4500,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "contributor",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "maintainer",
@@ -4542,7 +4507,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "push",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -4599,7 +4563,6 @@ Fields that will be provided will be completely overwritten.",
                   "description": "the maintainer role can read from the repo and push changes",
                   "permissions": [
                     "push",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -4614,7 +4577,6 @@ Fields that will be provided will be completely overwritten.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "contributor",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "maintainer",
@@ -4622,7 +4584,6 @@ Fields that will be provided will be completely overwritten.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "push",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
@@ -5673,7 +5634,6 @@ If some of the permissions specified are already assigned, will skip them.",
                 "request": {
                   "permissions": [
                     "document:write",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -5688,7 +5648,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "viewer",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "editor",
@@ -5696,7 +5655,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "document:write",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "updated_at": "2019-08-24T14:15:22Z",
@@ -5745,13 +5703,11 @@ If some of the permissions specified are already assigned, will skip them.",
                   "description": "the editor role can read and write to documents",
                   "extends": [
                     "viewer",
-                    "extends",
                   ],
                   "key": "editor",
                   "name": "Editor",
                   "permissions": [
                     "document:write",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -5766,7 +5722,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "viewer",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "editor",
@@ -5774,7 +5729,6 @@ If some of the permissions specified are already assigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "document:write",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "updated_at": "2019-08-24T14:15:22Z",
@@ -5892,7 +5846,6 @@ This includes any permissions granted to said role.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "viewer",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "editor",
@@ -5900,7 +5853,6 @@ This includes any permissions granted to said role.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "document:write",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "updated_at": "2019-08-24T14:15:22Z",
@@ -5952,7 +5904,6 @@ This includes any permissions granted to said role.",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "extends": [
                           "viewer",
-                          "extends",
                         ],
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "editor",
@@ -5960,7 +5911,6 @@ This includes any permissions granted to said role.",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                         "permissions": [
                           "document:write",
-                          "permissions",
                         ],
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "updated_at": "2019-08-24T14:15:22Z",
@@ -6014,7 +5964,6 @@ This includes any permissions granted to said role.",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "extends": [
                           "viewer",
-                          "extends",
                         ],
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "editor",
@@ -6022,7 +5971,6 @@ This includes any permissions granted to said role.",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                         "permissions": [
                           "document:write",
-                          "permissions",
                         ],
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "updated_at": "2019-08-24T14:15:22Z",
@@ -6075,7 +6023,6 @@ This includes any permissions granted to said role.",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "extends": [
                           "viewer",
-                          "extends",
                         ],
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "editor",
@@ -6083,7 +6030,6 @@ This includes any permissions granted to said role.",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                         "permissions": [
                           "document:write",
-                          "permissions",
                         ],
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "updated_at": "2019-08-24T14:15:22Z",
@@ -6152,7 +6098,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "request": {
                   "permissions": [
                     "document:share",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -6167,7 +6112,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "viewer",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "editor",
@@ -6175,7 +6119,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "document:write",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "updated_at": "2019-08-24T14:15:22Z",
@@ -6226,7 +6169,6 @@ Fields that will be provided will be completely overwritten.",
                   "description": "the editor role can read and write to documents",
                   "permissions": [
                     "document:write",
-                    "permissions",
                   ],
                 },
                 "response": {
@@ -6241,7 +6183,6 @@ Fields that will be provided will be completely overwritten.",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "extends": [
                       "viewer",
-                      "extends",
                     ],
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "editor",
@@ -6249,7 +6190,6 @@ Fields that will be provided will be completely overwritten.",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                     "permissions": [
                       "document:write",
-                      "permissions",
                     ],
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "updated_at": "2019-08-24T14:15:22Z",
@@ -6558,7 +6498,6 @@ and will return the existing tenant object in the response body.",
                           {
                             "roles": [
                               "admin",
-                              "roles",
                             ],
                             "status": "active",
                             "tenant": "stripe-inc",
@@ -6566,17 +6505,9 @@ and will return the existing tenant object in the response body.",
                           {
                             "roles": [
                               "viewer",
-                              "roles",
                             ],
                             "status": "pending",
                             "tenant": "othercompany.com",
-                          },
-                          {
-                            "roles": [
-                              "roles",
-                            ],
-                            "status": "active",
-                            "tenant": "tenant",
                           },
                         ],
                         "attributes": {
@@ -6603,10 +6534,6 @@ and will return the existing tenant object in the response body.",
                           {
                             "role": "viewer",
                             "tenant": "othercompany.com",
-                          },
-                          {
-                            "role": "role",
-                            "tenant": "tenant",
                           },
                         ],
                       },
@@ -7282,7 +7209,6 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "admin",
-                          "roles",
                         ],
                         "status": "active",
                         "tenant": "stripe-inc",
@@ -7290,17 +7216,9 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "viewer",
-                          "roles",
                         ],
                         "status": "pending",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "roles": [
-                          "roles",
-                        ],
-                        "status": "active",
-                        "tenant": "tenant",
                       },
                     ],
                     "attributes": {
@@ -7327,10 +7245,6 @@ and will return the existing user object in the response body.",
                       {
                         "role": "viewer",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "role": "role",
-                        "tenant": "tenant",
                       },
                     ],
                   },
@@ -7410,7 +7324,6 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "admin",
-                          "roles",
                         ],
                         "status": "active",
                         "tenant": "stripe-inc",
@@ -7418,17 +7331,9 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "viewer",
-                          "roles",
                         ],
                         "status": "pending",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "roles": [
-                          "roles",
-                        ],
-                        "status": "active",
-                        "tenant": "tenant",
                       },
                     ],
                     "attributes": {
@@ -7455,10 +7360,6 @@ and will return the existing user object in the response body.",
                       {
                         "role": "viewer",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "role": "role",
-                        "tenant": "tenant",
                       },
                     ],
                   },
@@ -7507,7 +7408,6 @@ and will return the existing user object in the response body.",
                           {
                             "roles": [
                               "admin",
-                              "roles",
                             ],
                             "status": "active",
                             "tenant": "stripe-inc",
@@ -7515,17 +7415,9 @@ and will return the existing user object in the response body.",
                           {
                             "roles": [
                               "viewer",
-                              "roles",
                             ],
                             "status": "pending",
                             "tenant": "othercompany.com",
-                          },
-                          {
-                            "roles": [
-                              "roles",
-                            ],
-                            "status": "active",
-                            "tenant": "tenant",
                           },
                         ],
                         "attributes": {
@@ -7552,10 +7444,6 @@ and will return the existing user object in the response body.",
                           {
                             "role": "viewer",
                             "tenant": "othercompany.com",
-                          },
-                          {
-                            "role": "role",
-                            "tenant": "tenant",
                           },
                         ],
                       },
@@ -7638,7 +7526,6 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "admin",
-                          "roles",
                         ],
                         "status": "active",
                         "tenant": "stripe-inc",
@@ -7646,17 +7533,9 @@ and will return the existing user object in the response body.",
                       {
                         "roles": [
                           "viewer",
-                          "roles",
                         ],
                         "status": "pending",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "roles": [
-                          "roles",
-                        ],
-                        "status": "active",
-                        "tenant": "tenant",
                       },
                     ],
                     "attributes": {
@@ -7683,10 +7562,6 @@ and will return the existing user object in the response body.",
                       {
                         "role": "viewer",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "role": "role",
-                        "tenant": "tenant",
                       },
                     ],
                   },
@@ -7797,7 +7672,6 @@ Fields that will be provided will be completely overwritten.",
                       {
                         "roles": [
                           "admin",
-                          "roles",
                         ],
                         "status": "active",
                         "tenant": "stripe-inc",
@@ -7805,17 +7679,9 @@ Fields that will be provided will be completely overwritten.",
                       {
                         "roles": [
                           "viewer",
-                          "roles",
                         ],
                         "status": "pending",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "roles": [
-                          "roles",
-                        ],
-                        "status": "active",
-                        "tenant": "tenant",
                       },
                     ],
                     "attributes": {
@@ -7842,10 +7708,6 @@ Fields that will be provided will be completely overwritten.",
                       {
                         "role": "viewer",
                         "tenant": "othercompany.com",
-                      },
-                      {
-                        "role": "role",
-                        "tenant": "tenant",
                       },
                     ],
                   },

@@ -143,6 +143,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         });
     }
 
+    public isOptional({ context }: { context: SdkContext }): boolean {
+        return this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
+    }
+
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey

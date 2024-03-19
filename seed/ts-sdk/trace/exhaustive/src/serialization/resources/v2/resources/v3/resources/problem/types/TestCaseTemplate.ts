@@ -5,22 +5,22 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { TestCaseTemplateId } from "./TestCaseTemplateId";
+import { TestCaseImplementation } from "./TestCaseImplementation";
 
 export const TestCaseTemplate: core.serialization.ObjectSchema<
     serializers.v2.v3.TestCaseTemplate.Raw,
     SeedTrace.v2.v3.TestCaseTemplate
 > = core.serialization.object({
-    templateId: core.serialization.lazy(async () => (await import("../../../../../../..")).v2.v3.TestCaseTemplateId),
+    templateId: TestCaseTemplateId,
     name: core.serialization.string(),
-    implementation: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.TestCaseImplementation
-    ),
+    implementation: TestCaseImplementation,
 });
 
 export declare namespace TestCaseTemplate {
     interface Raw {
-        templateId: serializers.v2.v3.TestCaseTemplateId.Raw;
+        templateId: TestCaseTemplateId.Raw;
         name: string;
-        implementation: serializers.v2.v3.TestCaseImplementation.Raw;
+        implementation: TestCaseImplementation.Raw;
     }
 }

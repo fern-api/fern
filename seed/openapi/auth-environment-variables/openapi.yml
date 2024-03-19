@@ -19,6 +19,26 @@ paths:
                 type: string
       security:
         - ApiKeyAuth: []
+  /apiKeyInHeader:
+    get:
+      description: GET request with custom api key
+      operationId: service_getWithHeader
+      tags:
+        - Service
+      parameters:
+        - name: X-Endpoint-Header
+          in: header
+          description: Specifies the endpoint key.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
 components:
   schemas: {}
   securitySchemes:

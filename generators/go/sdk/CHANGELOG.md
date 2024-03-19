@@ -7,6 +7,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.18.1 - 2024-03-12]
+
+- Fix: Go snippets correctly handle unknown examples.
+
+```go
+response, err := client.CreateUser(
+  ctx,
+  &acme.CreateUserRequest{
+    Name: "alice",
+    Metadata: map[string]interface{}{
+      "address": "123 Market Street",
+      "age":     28,
+    },
+  },
+)
+```
+
+## [0.18.0 - 2024-03-04]
+
+- Feature: Add support for simpler unions, which is configurable with `union: v1` (if
+  omitted, the default `v0` version will be used). With `v0`, a separate constructor for
+  each variant of the union was generated, but using these constructors is cumbersome for
+  large production APIs due to the sheer length of the function name. This improves the
+  experience by simply setting the discriminant at runtime, which prevents the need for
+  constructors entirely.
+
+```yaml
+- name: fernapi/fern-go-sdk
+  version: 0.18.0
+  config:
+    union: v1
+```
+
+```go
+// Before
+union := acme.NewStatusFromCloudServerAlertStatus(
+  &acme.CloudServerAlertStatus{
+    Value: "WARNING",
+  },
+)
+```
+
+```go
+// After
+union := &acme.Status{
+  CloudServerAlertStatus: &acme.CloudServerAlertStatus{
+    Value: "WARNING",
+  },
+)
+```
+
+- Feature: Add support for multiple files in upload endpoints. Endpoints that specify
+  multiple file parameters will include a `[]io.Reader` parameter, where each value
+  is individually named. If the `io.Reader` does not contain a name, a name is generated.
+
+```go
+func (c *Client) Upload(
+  ctx context.Context,
+  fileList []io.Reader,
+  opts ...option.RequestOption,
+) error {
+  ...
+}
+```
+
+## [0.17.0] - 2024-02-26
+
+- No changes since previous release candidate.
+
 ## [0.17.0-rc1] - 2024-02-23
 
 - Fix: Snippets for aliases to optional primitive values. With this, the generated snippet

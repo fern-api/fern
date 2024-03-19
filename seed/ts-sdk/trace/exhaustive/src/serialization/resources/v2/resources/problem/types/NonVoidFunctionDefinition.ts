@@ -5,20 +5,20 @@
 import * as serializers from "../../../../..";
 import * as SeedTrace from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
+import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages";
 
 export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
     serializers.v2.NonVoidFunctionDefinition.Raw,
     SeedTrace.v2.NonVoidFunctionDefinition
 > = core.serialization.object({
-    signature: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.NonVoidFunctionSignature),
-    code: core.serialization.lazyObject(
-        async () => (await import("../../../../..")).v2.FunctionImplementationForMultipleLanguages
-    ),
+    signature: NonVoidFunctionSignature,
+    code: FunctionImplementationForMultipleLanguages,
 });
 
 export declare namespace NonVoidFunctionDefinition {
     interface Raw {
-        signature: serializers.v2.NonVoidFunctionSignature.Raw;
-        code: serializers.v2.FunctionImplementationForMultipleLanguages.Raw;
+        signature: NonVoidFunctionSignature.Raw;
+        code: FunctionImplementationForMultipleLanguages.Raw;
     }
 }

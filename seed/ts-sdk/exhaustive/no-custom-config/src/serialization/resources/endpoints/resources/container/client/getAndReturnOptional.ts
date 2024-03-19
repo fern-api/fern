@@ -5,25 +5,22 @@
 import * as serializers from "../../../../..";
 import * as SeedExhaustive from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Request.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = core.serialization
-    .lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-    .optional();
+> = ObjectWithRequiredField.optional();
 
 export declare namespace Request {
-    type Raw = serializers.types.ObjectWithRequiredField.Raw | null | undefined;
+    type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Response.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = core.serialization
-    .lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-    .optional();
+> = ObjectWithRequiredField.optional();
 
 export declare namespace Response {
-    type Raw = serializers.types.ObjectWithRequiredField.Raw | null | undefined;
+    type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }

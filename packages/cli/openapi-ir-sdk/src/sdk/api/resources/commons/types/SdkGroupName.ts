@@ -5,4 +5,4 @@
 /**
  * This is populated by `x-fern-sdk-method-name`
  */
-export type SdkGroupName = string;
+export type SdkGroupName = string[];

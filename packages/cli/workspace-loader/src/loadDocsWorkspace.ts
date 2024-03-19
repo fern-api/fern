@@ -1,9 +1,7 @@
+import { docsYml, DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsConfiguration, DocsConfiguration as RawDocsConfiguration } from "@fern-fern/docs-config/api";
-import { DocsConfiguration as RawDocsConfigurationSerializer } from "@fern-fern/docs-config/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -43,7 +41,7 @@ export async function loadDocsConfiguration({
 }: {
     absolutePathToDocsDefinition: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<DocsConfiguration | undefined> {
+}): Promise<docsYml.RawSchemas.DocsConfiguration | undefined> {
     if (!(await doesPathExist(absolutePathToDocsDefinition))) {
         return undefined;
     }
@@ -63,7 +61,7 @@ export async function loadRawDocsConfiguration({
 }: {
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<RawDocsConfiguration> {
+}): Promise<docsYml.RawSchemas.DocsConfiguration> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
     const contentsJson = yaml.load(contentsStr.toString());
     return await validateSchema({
@@ -81,8 +79,8 @@ export async function validateSchema({
     value: unknown;
     context: TaskContext;
     filepathBeingParsed: string;
-}): Promise<RawDocsConfiguration> {
-    const result = await RawDocsConfigurationSerializer.parse(value);
+}): Promise<docsYml.RawSchemas.DocsConfiguration> {
+    const result = await docsYml.RawSchemas.Serializer.DocsConfiguration.parse(value);
     if (result.ok) {
         return result.value;
     }

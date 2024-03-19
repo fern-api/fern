@@ -148,6 +148,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "errors": [],
           "examples": [
             {
+              "_visit": [Function],
               "codeSamples": undefined,
               "docs": undefined,
               "endpointHeaders": [
@@ -184,6 +185,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   },
                 },
               ],
+              "exampleType": "userProvided",
               "name": undefined,
               "queryParameters": [
                 {
@@ -227,6 +229,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "env": undefined,
               "name": {
                 "name": {
                   "camelCase": {

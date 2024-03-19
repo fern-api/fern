@@ -74,6 +74,7 @@ class DebugVariableValue_MapValue(DebugMapValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
@@ -92,6 +93,7 @@ class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
@@ -101,6 +103,7 @@ class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListVa
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
@@ -110,6 +113,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListVa
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
@@ -135,6 +139,7 @@ class DebugVariableValue_GenericValue(GenericValue):
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 DebugVariableValue = typing.Union[

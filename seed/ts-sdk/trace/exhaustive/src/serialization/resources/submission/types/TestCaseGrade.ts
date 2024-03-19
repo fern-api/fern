@@ -5,12 +5,14 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { TestCaseHiddenGrade } from "./TestCaseHiddenGrade";
+import { TestCaseNonHiddenGrade } from "./TestCaseNonHiddenGrade";
 
 export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.Raw, SeedTrace.TestCaseGrade> =
     core.serialization
         .union("type", {
-            hidden: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseHiddenGrade),
-            nonHidden: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseNonHiddenGrade),
+            hidden: TestCaseHiddenGrade,
+            nonHidden: TestCaseNonHiddenGrade,
         })
         .transform<SeedTrace.TestCaseGrade>({
             transform: (value) => {
@@ -29,11 +31,11 @@ export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.
 export declare namespace TestCaseGrade {
     type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;
 
-    interface Hidden extends serializers.TestCaseHiddenGrade.Raw {
+    interface Hidden extends TestCaseHiddenGrade.Raw {
         type: "hidden";
     }
 
-    interface NonHidden extends serializers.TestCaseNonHiddenGrade.Raw {
+    interface NonHidden extends TestCaseNonHiddenGrade.Raw {
         type: "nonHidden";
     }
 }

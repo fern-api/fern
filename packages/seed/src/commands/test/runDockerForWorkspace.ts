@@ -1,14 +1,13 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage, GeneratorGroup } from "@fern-api/generators-configuration";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/types/api";
-import { OutputMode } from "../../config/api";
+import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
 import { ParsedDockerName } from "../../cli";
+import { OutputMode } from "../../config/api";
 
 const DUMMY_ORGANIZATION = "seed";
 const ALL_AUDIENCES: Audiences = { type: "all" };
@@ -20,6 +19,8 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
+    publishConfig,
+    selectAudiences,
     irVersion,
     outputVersion,
     outputMode,
@@ -28,34 +29,38 @@ export async function runDockerForWorkspace({
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
+    publishConfig: unknown;
+    selectAudiences?: string[];
     irVersion?: string;
     outputVersion?: string;
     outputMode: OutputMode;
     fixtureName: string;
     keepDocker: boolean | undefined;
 }): Promise<void> {
-    const generatorGroup: GeneratorGroup = {
+    const generatorGroup: generatorsYml.GeneratorGroup = {
         groupName: "test",
-        audiences: ALL_AUDIENCES,
+        audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
         generators: [
             {
                 name: docker.name,
                 version: docker.version,
                 config: customConfig,
-                outputMode: getOutputMode({ outputMode, language, fixtureName }),
+                outputMode: getOutputMode({ outputMode, language, fixtureName, publishConfig }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
                 smartCasing: false,
-                disableExamples: false
+                disableExamples: false,
+                irVersionOverride: irVersion
             }
         ]
     };
     await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,
+        absolutePathToFernConfig: undefined,
         workspace,
         generatorGroup,
         keepDocker: keepDocker ?? false,
@@ -68,18 +73,23 @@ export async function runDockerForWorkspace({
 function getOutputMode({
     outputMode,
     language,
-    fixtureName
+    fixtureName,
+    publishConfig
 }: {
     outputMode: OutputMode;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixtureName: string;
+    publishConfig: unknown;
 }): FernFiddle.OutputMode {
     switch (outputMode) {
         case "github":
+            const githubPublishInfo = publishConfig != null ? (publishConfig as GithubPublishInfo) : undefined;
             return FernFiddle.OutputMode.github({
                 repo: "fern",
                 owner: fixtureName,
-                publishInfo: language != null ? getGithubPublishInfo({ language, fixtureName }) : undefined
+                publishInfo:
+                    githubPublishInfo ??
+                    (language != null ? getGithubPublishInfo({ language, fixtureName }) : undefined)
             });
         case "local_files":
             return FernFiddle.remoteGen.OutputMode.downloadFiles();
@@ -87,7 +97,10 @@ function getOutputMode({
             if (language == null) {
                 throw new Error("Seed requires a language to be specified to test in publish mode");
             }
-            return FernFiddle.remoteGen.OutputMode.publishV2(getPublishInfo({ language, fixtureName }));
+            const publishOutputModeConfig = publishConfig != null ? (publishConfig as PublishOutputModeV2) : undefined;
+            return FernFiddle.remoteGen.OutputMode.publishV2(
+                publishOutputModeConfig ?? getPublishInfo({ language, fixtureName })
+            );
         }
     }
 }
@@ -96,7 +109,7 @@ function getGithubPublishInfo({
     language,
     fixtureName
 }: {
-    language: GenerationLanguage;
+    language: generatorsYml.GenerationLanguage;
     fixtureName: string;
 }): GithubPublishInfo | undefined {
     switch (language) {
@@ -131,7 +144,7 @@ function getPublishInfo({
     language,
     fixtureName
 }: {
-    language: GenerationLanguage;
+    language: generatorsYml.GenerationLanguage;
     fixtureName: string;
 }): PublishOutputModeV2 {
     switch (language) {

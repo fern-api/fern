@@ -1,8 +1,7 @@
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import fs from "fs";
@@ -63,7 +62,7 @@ export async function testWorkspaceFixtures({
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
     scripts: ScriptConfig[] | undefined;
@@ -119,6 +118,8 @@ export async function testWorkspaceFixtures({
                             docker,
                             scripts: runningScripts,
                             customConfig: fixtureConfigInstance.customConfig,
+                            publishConfig: fixtureConfigInstance.publishConfig,
+                            selectAudiences: fixtureConfigInstance.audiences,
                             taskContext: taskContextFactory.create(
                                 `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
                             ),
@@ -147,6 +148,7 @@ export async function testWorkspaceFixtures({
                         docker,
                         scripts: runningScripts,
                         customConfig: undefined,
+                        publishConfig: undefined,
                         taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                         outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                         outputMode: workspace.workspaceConfig.defaultOutputMode,
@@ -196,6 +198,8 @@ export async function acquireLocksAndRunTest({
     fixture,
     docker,
     customConfig,
+    publishConfig,
+    selectAudiences,
     scripts,
     taskContext,
     outputDir,
@@ -209,10 +213,12 @@ export async function acquireLocksAndRunTest({
     lock: Semaphore;
     irVersion: string | undefined;
     outputVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
+    publishConfig: unknown;
+    selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
@@ -233,6 +239,8 @@ export async function acquireLocksAndRunTest({
         language,
         docker,
         customConfig,
+        publishConfig,
+        selectAudiences,
         scripts,
         taskContext,
         outputDir,
@@ -255,6 +263,8 @@ async function testWithWriteToDisk({
     language,
     docker,
     customConfig,
+    publishConfig,
+    selectAudiences,
     scripts,
     taskContext,
     outputDir,
@@ -268,9 +278,11 @@ async function testWithWriteToDisk({
     fixture: string;
     irVersion: string | undefined;
     outputVersion: string | undefined;
-    language: GenerationLanguage | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
+    publishConfig: unknown;
+    selectAudiences?: string[];
     scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
@@ -313,6 +325,8 @@ async function testWithWriteToDisk({
             workspace: fernWorkspace,
             language,
             customConfig,
+            publishConfig,
+            selectAudiences,
             taskContext,
             irVersion,
             outputVersion,

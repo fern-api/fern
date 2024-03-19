@@ -3097,7 +3097,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -3111,7 +3111,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -3258,7 +3258,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -3272,7 +3272,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -3420,7 +3420,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -3434,7 +3434,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -3600,7 +3600,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "id": {
@@ -3614,7 +3614,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -5328,7 +5328,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -5419,7 +5419,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -5764,7 +5764,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -5855,7 +5855,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -6210,7 +6210,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -6301,7 +6301,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -6763,7 +6763,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -6854,7 +6854,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -7329,7 +7329,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -7420,7 +7420,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -7777,7 +7777,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -7868,7 +7868,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -8220,7 +8220,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -8311,7 +8311,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -8668,7 +8668,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -8759,7 +8759,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -9111,7 +9111,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -9202,7 +9202,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -9559,7 +9559,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -9650,7 +9650,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -10002,7 +10002,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -10093,7 +10093,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -10450,7 +10450,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -10541,7 +10541,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -10893,7 +10893,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -10984,7 +10984,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -11341,7 +11341,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -11432,7 +11432,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -11784,7 +11784,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -11875,7 +11875,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -12246,7 +12246,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -12330,7 +12330,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -12564,7 +12564,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -12655,7 +12655,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -12966,7 +12966,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -13057,7 +13057,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -13385,7 +13385,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -13476,7 +13476,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -13931,7 +13931,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -14022,7 +14022,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -14354,7 +14354,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -14445,7 +14445,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -14791,7 +14791,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -14882,7 +14882,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -15214,7 +15214,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -15305,7 +15305,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -15637,7 +15637,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -15728,7 +15728,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -16057,7 +16057,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -16148,7 +16148,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -16465,7 +16465,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -16556,7 +16556,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -18361,7 +18361,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "description": {
@@ -18400,7 +18400,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "numCalls": {
@@ -20135,7 +20135,7 @@ You will be assigned as owner of the new team automatically.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "eventId": {
@@ -20303,7 +20303,7 @@ You will be assigned as owner of the new team automatically.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "eventId": {
@@ -21316,7 +21316,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -21369,7 +21369,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -21421,7 +21421,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -21782,7 +21782,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -21835,7 +21835,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -21887,7 +21887,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -22271,7 +22271,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -22324,7 +22324,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -22376,7 +22376,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -22660,7 +22660,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -22713,7 +22713,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -22790,7 +22790,7 @@ You will be assigned as owner of the new team automatically.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "id": {
@@ -23116,7 +23116,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -23169,7 +23169,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -23221,7 +23221,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -23641,7 +23641,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -23694,7 +23694,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -23746,7 +23746,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -24270,7 +24270,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -24323,7 +24323,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -24375,7 +24375,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -24839,7 +24839,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -24892,7 +24892,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -24944,7 +24944,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -25293,7 +25293,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -25346,7 +25346,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -25398,7 +25398,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -25623,7 +25623,7 @@ You will be assigned as owner of the new team automatically.",
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [],
       "examples": [],
@@ -25723,7 +25723,7 @@ You will be assigned as owner of the new team automatically.",
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -26324,7 +26324,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -26377,7 +26377,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -26429,7 +26429,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -26766,7 +26766,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -26819,7 +26819,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -26871,7 +26871,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -27196,7 +27196,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -27249,7 +27249,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -27301,7 +27301,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -27626,7 +27626,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -27679,7 +27679,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -27731,7 +27731,7 @@ You will be assigned as owner of the new team automatically.",
                             "type": "primitive",
                             "value": {
                               "type": "datetime",
-                              "value": "2024-01-15T09:30:00.000Z",
+                              "value": "2024-01-15T09:30:00Z",
                             },
                           },
                           "id": {
@@ -28123,7 +28123,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -28180,7 +28180,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -28378,7 +28378,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -28814,7 +28814,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -28871,7 +28871,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "url": {
@@ -29479,7 +29479,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "status": {
@@ -29490,7 +29490,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                     },
@@ -29665,7 +29665,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "status": {
@@ -29676,7 +29676,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "url": {
@@ -30195,7 +30195,7 @@ You will be assigned as owner of the new team automatically.",
     {
       "audiences": [],
       "authed": true,
-      "availability": null,
+      "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [],
       "examples": [],
@@ -31959,7 +31959,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -32036,7 +32036,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -32624,7 +32624,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "createdBy": {
@@ -32701,7 +32701,7 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2024-01-15T09:30:00.000Z",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "lastModifiedBy": {
@@ -32956,7 +32956,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -33033,7 +33033,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -33454,7 +33454,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -33531,7 +33531,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -34253,7 +34253,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "createdBy": {
@@ -34330,7 +34330,7 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "lastModifiedBy": {
@@ -36979,7 +36979,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -37007,7 +37007,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -39182,7 +39182,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -39210,7 +39210,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -39419,7 +39419,7 @@ You will be assigned as owner of the new app automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -39447,7 +39447,7 @@ You will be assigned as owner of the new app automatically.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -39653,7 +39653,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "description": {
@@ -39681,7 +39681,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2024-01-15T09:30:00.000Z",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "name": {
@@ -39906,7 +39906,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -39934,7 +39934,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -40154,7 +40154,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -40182,7 +40182,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -40488,7 +40488,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "description": {
@@ -40516,7 +40516,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
-                  "value": "2024-01-15T09:30:00.000Z",
+                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "name": {
@@ -42240,7 +42240,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
   },
-  "globalHeaders": null,
+  "globalHeaders": [],
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "UsersDto",

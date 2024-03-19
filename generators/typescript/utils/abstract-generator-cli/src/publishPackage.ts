@@ -8,13 +8,15 @@ export async function publishPackage({
     logger,
     npmPackage,
     dryRun,
-    typescriptProject
+    typescriptProject,
+    shouldTolerateRepublish
 }: {
     generatorNotificationService: GeneratorNotificationService | undefined;
     logger: Logger;
     npmPackage: NpmPackage | undefined;
     dryRun: boolean;
     typescriptProject: PersistedTypescriptProject;
+    shouldTolerateRepublish: boolean;
 }): Promise<void> {
     if (npmPackage?.publishInfo == null) {
         throw new Error("npmPackage.publishInfo is not defined.");
@@ -30,7 +32,8 @@ export async function publishPackage({
     await typescriptProject.publish({
         logger,
         dryRun,
-        publishInfo: npmPackage.publishInfo
+        publishInfo: npmPackage.publishInfo,
+        shouldTolerateRepublish
     });
 
     await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));

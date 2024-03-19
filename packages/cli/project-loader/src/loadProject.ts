@@ -1,5 +1,5 @@
+import { APIS_DIRECTORY, fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { APIS_DIRECTORY, FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -18,6 +18,7 @@ export declare namespace loadProject {
          */
         defaultToAllApiWorkspaces: boolean;
         context: TaskContext;
+        nameOverride?: string;
     }
 }
 
@@ -26,11 +27,12 @@ export async function loadProject({
     cliVersion,
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
-    context
+    context,
+    nameOverride
 }: loadProject.Args): Promise<Project> {
-    const fernDirectory = await getFernDirectory();
+    const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
     const apiWorkspaces = await loadApis({
@@ -43,7 +45,7 @@ export async function loadProject({
     });
 
     return {
-        config: await loadProjectConfig({ directory: fernDirectory, context }),
+        config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
         apiWorkspaces,
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
     };

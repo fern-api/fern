@@ -9,12 +9,12 @@ import {
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "../../../../schema/convertSchemas";
+import { getExamplesString } from "../../../../schema/examples/getExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
-import { getExamplesString } from "../../../../schema/examples/getExample";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];
@@ -117,7 +117,7 @@ export function convertParameters({
             });
         } else if (resolvedParameter.in === "header") {
             if (!HEADERS_TO_SKIP.has(resolvedParameter.name) && !context.authHeaders.has(resolvedParameter.name)) {
-                convertedParameters.headers.push(convertedParameter);
+                convertedParameters.headers.push({ ...convertedParameter, env: undefined });
             } else {
                 context.logger.debug(
                     `Ignoring ${resolvedParameter.name} header, in ${httpMethod.toUpperCase()} ${path}`

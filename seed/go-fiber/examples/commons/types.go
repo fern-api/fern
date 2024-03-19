@@ -60,7 +60,7 @@ func (d Data) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"value"`
 		}{
-			Type:   d.Type,
+			Type:   "string",
 			String: d.String,
 		}
 		return json.Marshal(marshaler)
@@ -69,7 +69,7 @@ func (d Data) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			Base64 []byte `json:"value"`
 		}{
-			Type:   d.Type,
+			Type:   "base64",
 			Base64: d.Base64,
 		}
 		return json.Marshal(marshaler)
@@ -142,7 +142,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Metadata
 		}{
-			Type:     e.Type,
+			Type:     "metadata",
 			Metadata: e.Metadata,
 		}
 		return json.Marshal(marshaler)
@@ -151,7 +151,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Tag  Tag    `json:"value"`
 		}{
-			Type: e.Type,
+			Type: "tag",
 			Tag:  e.Tag,
 		}
 		return json.Marshal(marshaler)

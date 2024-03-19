@@ -64,7 +64,8 @@ export function parseAsyncAPI({
                     name,
                     schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
                     description: resolvedHeader.description,
-                    parameterNameOverride: undefined
+                    parameterNameOverride: undefined,
+                    env: undefined
                 });
             }
         }
@@ -140,7 +141,8 @@ export function parseAsyncAPI({
                     headers: headers.map((header) => {
                         return {
                             ...header,
-                            schema: convertSchemaWithExampleToSchema(header.schema)
+                            schema: convertSchemaWithExampleToSchema(header.schema),
+                            env: header.env
                         };
                     }),
                     queryParameters: queryParameters.map((param) => {

@@ -77,6 +77,7 @@ class _TestCaseImplementationReference:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
 
 TestCaseImplementationReference.update_forward_refs()

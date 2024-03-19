@@ -33,7 +33,8 @@ enum RubyClass {
     LONG = "Long",
     DATETIME = "DateTime",
     DATE = "Date",
-    UUID = "UUID",
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    UUID = "String",
     // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
     BASE64 = "String",
     OBJECT = "Object",
@@ -666,7 +667,7 @@ export class ClassReferenceFactory {
             map: (mt: MapType) =>
                 new HashReference({
                     keyType: this.fromTypeReference(mt.keyType),
-                    valueType: this.fromTypeReference(mt.keyType)
+                    valueType: this.fromTypeReference(mt.valueType)
                 }),
             // Optional types in Ruby look the same except they're defaulted to nil in signatures.
             optional: (tr: TypeReference) => this.fromTypeReference(tr),

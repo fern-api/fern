@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { NodeId } from "./NodeId";
+import { SinglyLinkedListValue } from "./SinglyLinkedListValue";
 
 export const SinglyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
     serializers.SinglyLinkedListNodeAndListValue.Raw,
     SeedTrace.SinglyLinkedListNodeAndListValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
-    fullList: core.serialization.lazyObject(async () => (await import("../../..")).SinglyLinkedListValue),
+    nodeId: NodeId,
+    fullList: SinglyLinkedListValue,
 });
 
 export declare namespace SinglyLinkedListNodeAndListValue {
     interface Raw {
-        nodeId: serializers.NodeId.Raw;
-        fullList: serializers.SinglyLinkedListValue.Raw;
+        nodeId: NodeId.Raw;
+        fullList: SinglyLinkedListValue.Raw;
     }
 }

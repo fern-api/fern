@@ -1,3 +1,4 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -12,7 +13,6 @@ import {
     ReferencedSchema,
     Schema
 } from "@fern-api/openapi-ir-sdk";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
 import {
@@ -102,8 +102,8 @@ export function buildReferenceTypeReference({
         context,
         fileContainingReference,
         declarationFile:
-            groupName != null
-                ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
+            groupName != null && groupName.length > 0
+                ? RelativeFilePath.of(`${groupName.map(camelCase).join("/")}.yml`)
                 : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
         type: schemaName
     });

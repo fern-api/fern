@@ -1,7 +1,7 @@
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { generatorsYml } from "@fern-api/configuration";
 
-export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
-    [GenerationLanguage.TYPESCRIPT]: new Set([
+export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
+    [generatorsYml.GenerationLanguage.TYPESCRIPT]: new Set([
         "any",
         "as",
         "boolean",
@@ -68,7 +68,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "Object",
         "Record"
     ]),
-    [GenerationLanguage.JAVA]: new Set([
+    [generatorsYml.GenerationLanguage.JAVA]: new Set([
         "abstract",
         "assert",
         "boolean",
@@ -121,7 +121,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "volatile",
         "while"
     ]),
-    [GenerationLanguage.PYTHON]: new Set([
+    [generatorsYml.GenerationLanguage.PYTHON]: new Set([
         "False",
         "None",
         "True",
@@ -160,10 +160,17 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "float",
         "int",
         "complex",
+        "bool",
+        "uuid",
+        "list",
+        "set",
+        "map",
+        "long",
         // the following aren't actually reserved, but we treat them as unavailable
-        "self"
+        "self",
+        "all"
     ]),
-    [GenerationLanguage.GO]: new Set([
+    [generatorsYml.GenerationLanguage.GO]: new Set([
         // Keywords - these are not allowed. https://go.dev/ref/spec#Keywords
         "break",
         "case",
@@ -215,7 +222,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "uint64",
         "uintptr"
     ]),
-    [GenerationLanguage.RUBY]: new Set([
+    [generatorsYml.GenerationLanguage.RUBY]: new Set([
         // https://docs.ruby-lang.org/en/2.2.0/keywords_rdoc.html
         "__ENCODING__",
         "__LINE__",

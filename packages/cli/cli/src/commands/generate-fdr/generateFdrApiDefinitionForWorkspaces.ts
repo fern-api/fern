@@ -1,4 +1,4 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
@@ -23,7 +23,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace =
-                    workspace.type === "openapi"
+                    workspace.type === "oss"
                         ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
                         : workspace;
 

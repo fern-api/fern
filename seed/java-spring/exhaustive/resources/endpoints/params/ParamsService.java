@@ -36,7 +36,7 @@ public interface ParamsService {
       Principal principal, @RequestParam("query") String query,
       @RequestParam("numer") Integer numer);
 
-  @GetMapping("/path/{param}")
+  @GetMapping("/path-query/{param}")
   void getWithPathAndQuery(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("param") String param, @RequestParam("query") String query);
 

@@ -17,6 +17,7 @@ class CreateProblemError_Generic(GenericCreateProblemError):
 
     class Config:
         allow_population_by_field_name = True
+        populate_by_name = True
 
 
 CreateProblemError = typing.Union[CreateProblemError_Generic]

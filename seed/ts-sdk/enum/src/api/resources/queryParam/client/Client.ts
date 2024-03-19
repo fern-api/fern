@@ -25,11 +25,18 @@ export class QueryParam {
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { operand, maybeOperand } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["operand"] = operand;
         if (maybeOperand != null) {
             _queryParams["maybeOperand"] = maybeOperand;
+        }
+
+        _queryParams["operandOrColor"] =
+            typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+        if (maybeOperandOrColor != null) {
+            _queryParams["maybeOperandOrColor"] =
+                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
         }
 
         const _response = await core.fetcher({
@@ -37,7 +44,7 @@ export class QueryParam {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -77,8 +84,8 @@ export class QueryParam {
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
     ): Promise<void> {
-        const { operand, maybeOperand } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (Array.isArray(operand)) {
             _queryParams["operand"] = operand.map((item) => item);
         } else {
@@ -93,12 +100,32 @@ export class QueryParam {
             }
         }
 
+        if (Array.isArray(operandOrColor)) {
+            _queryParams["operandOrColor"] = operandOrColor.map((item) =>
+                typeof item === "string" ? item : JSON.stringify(item)
+            );
+        } else {
+            _queryParams["operandOrColor"] =
+                typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+        }
+
+        if (maybeOperandOrColor != null) {
+            if (Array.isArray(maybeOperandOrColor)) {
+                _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
+                    typeof item === "string" ? item : JSON.stringify(item)
+                );
+            } else {
+                _queryParams["maybeOperandOrColor"] =
+                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+            }
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "query-list"),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

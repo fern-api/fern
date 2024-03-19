@@ -26,6 +26,16 @@ class ParamsClient:
             - param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path(
+            param="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -44,6 +54,8 @@ class ParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())
@@ -65,6 +77,17 @@ class ParamsClient:
             - number: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_query(
+            query="string",
+            number=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -93,6 +116,8 @@ class ParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -118,6 +143,17 @@ class ParamsClient:
             - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_allow_multiple_query(
+            query="string",
+            numer=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -146,6 +182,8 @@ class ParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -167,10 +205,23 @@ class ParamsClient:
             - query: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path_and_query(
+            param="string",
+            query="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path-query/{jsonable_encoder(param)}"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -194,6 +245,8 @@ class ParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -215,6 +268,17 @@ class ParamsClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.modify_with_path(
+            param="string",
+            request="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
@@ -234,6 +298,8 @@ class ParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())
@@ -256,6 +322,16 @@ class AsyncParamsClient:
             - param: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_path(
+            param="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -274,6 +350,8 @@ class AsyncParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())
@@ -295,6 +373,17 @@ class AsyncParamsClient:
             - number: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_query(
+            query="string",
+            number=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -323,6 +412,8 @@ class AsyncParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -348,6 +439,17 @@ class AsyncParamsClient:
             - numer: typing.Union[int, typing.Sequence[int]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_allow_multiple_query(
+            query="string",
+            numer=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -376,6 +478,8 @@ class AsyncParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -397,10 +501,23 @@ class AsyncParamsClient:
             - query: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.get_with_path_and_query(
+            param="string",
+            query="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path-query/{jsonable_encoder(param)}"
+            ),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -424,6 +541,8 @@ class AsyncParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -445,6 +564,17 @@ class AsyncParamsClient:
             - request: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.endpoints.params.modify_with_path(
+            param="string",
+            request="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
@@ -464,6 +594,8 @@ class AsyncParamsClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return construct(_response.json())

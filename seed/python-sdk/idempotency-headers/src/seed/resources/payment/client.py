@@ -45,6 +45,18 @@ class PaymentClient:
             - idempotency_expiration: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Currency
+        from seed.client import SeedIdempotencyHeaders
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.create(
+            amount=1,
+            currency=Currency.USD,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -62,8 +74,8 @@ class PaymentClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "Idempotency-Key": idempotency_key,
-                        "Idempotency-Expiration": idempotency_expiration,
+                        "Idempotency-Key": str(idempotency_key),
+                        "Idempotency-Expiration": str(idempotency_expiration),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -71,6 +83,8 @@ class PaymentClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -86,6 +100,16 @@ class PaymentClient:
             - payment_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import SeedIdempotencyHeaders
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.delete(
+            payment_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -104,6 +128,8 @@ class PaymentClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -138,6 +164,18 @@ class AsyncPaymentClient:
             - idempotency_expiration: int.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed import Currency
+        from seed.client import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.payment.create(
+            amount=1,
+            currency=Currency.USD,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -155,8 +193,8 @@ class AsyncPaymentClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "Idempotency-Key": idempotency_key,
-                        "Idempotency-Expiration": idempotency_expiration,
+                        "Idempotency-Key": str(idempotency_key),
+                        "Idempotency-Expiration": str(idempotency_expiration),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -164,6 +202,8 @@ class AsyncPaymentClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -179,6 +219,16 @@ class AsyncPaymentClient:
             - payment_id: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from seed.client import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.payment.delete(
+            payment_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -197,6 +247,8 @@ class AsyncPaymentClient:
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

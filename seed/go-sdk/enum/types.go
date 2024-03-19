@@ -30,71 +30,40 @@ func (c Color) Ptr() *Color {
 }
 
 type ColorOrOperand struct {
-	Type    string
 	Color   Color
 	Operand Operand
 }
 
 func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
-	return &ColorOrOperand{Type: "color", Color: value}
+	return &ColorOrOperand{Color: value}
 }
 
 func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
-	return &ColorOrOperand{Type: "operand", Operand: value}
+	return &ColorOrOperand{Operand: value}
 }
 
 func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	var valueColor Color
+	if err := json.Unmarshal(data, &valueColor); err == nil {
+		c.Color = valueColor
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	var valueOperand Operand
+	if err := json.Unmarshal(data, &valueOperand); err == nil {
+		c.Operand = valueOperand
+		return nil
 	}
-	c.Type = unmarshaler.Type
-	switch unmarshaler.Type {
-	case "color":
-		var valueUnmarshaler struct {
-			Color Color `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		c.Color = valueUnmarshaler.Color
-	case "operand":
-		var valueUnmarshaler struct {
-			Operand Operand `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		c.Operand = valueUnmarshaler.Operand
-	}
-	return nil
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
 }
 
 func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
-	switch c.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
-	case "color":
-		var marshaler = struct {
-			Type  string `json:"type"`
-			Color Color  `json:"value,omitempty"`
-		}{
-			Type:  c.Type,
-			Color: c.Color,
-		}
-		return json.Marshal(marshaler)
-	case "operand":
-		var marshaler = struct {
-			Type    string  `json:"type"`
-			Operand Operand `json:"value,omitempty"`
-		}{
-			Type:    c.Type,
-			Operand: c.Operand,
-		}
-		return json.Marshal(marshaler)
+	if c.Color != "" {
+		return json.Marshal(c.Color)
 	}
+	if c.Operand != "" {
+		return json.Marshal(c.Operand)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type ColorOrOperandVisitor interface {
@@ -103,14 +72,13 @@ type ColorOrOperandVisitor interface {
 }
 
 func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
-	switch c.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", c.Type, c)
-	case "color":
+	if c.Color != "" {
 		return visitor.VisitColor(c.Color)
-	case "operand":
+	}
+	if c.Operand != "" {
 		return visitor.VisitOperand(c.Operand)
 	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 // Tests enum name and value can be

@@ -1,0 +1,17 @@
+---
+title: Generate your API reference
+description: Use Fern Docs to generate your API reference documentation from your API definition, using your choice of either OpenAPI or Fern Definition.
+---
+
+A key benefit of using Fern Docs is that once you've defined your API, you get your API Reference documentation with just one line.
+Add `- api: API Reference` to your navigation in `docs.yml` and Fern takes care of the rest! You'll see your endpoints, types,
+and errors automatically populated from your [OpenAPI specification](/overview/define-your-api/openapi/overview) or [Fern Definition](/overview/define-your-api/ferndef/overview).
+
+Example:
+
+<CodeBlock title='docs.yml'>
+```yml
+navigation:
+  - api: API Reference
+```
+</CodeBlock>
