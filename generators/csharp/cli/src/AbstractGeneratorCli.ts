@@ -7,6 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
+import { existsSync } from "fs";
 import { cp, readdir, readFile } from "fs/promises";
 import { template } from "lodash";
 import tmp from "tmp-promise";
@@ -113,7 +114,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
                 customConfig.clientClassName,
                 getPackageNameFromPublishConfig(config)
             );
-            await this.writeProjectFiles(config, packageName);
+            // await this.writeProjectFiles(config, packageName);
             this.formatFiles(config);
 
             // ===========================================================
@@ -168,6 +169,9 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
 
     async writeProjectFiles(config: FernGeneratorExec.GeneratorConfig, projectName: string): Promise<void> {
         const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
+        if (existsSync(directoryPrefix)) {
+            return;
+        }
 
         // Create a new solution
         execSync(`cd ${directoryPrefix} && dotnet new sln -n ${projectName}`);

@@ -1,0 +1,13 @@
+using System.Text.Json.Serialization
+using SeedTraceClient.V2.V3
+using OneOf
+
+namespace SeedTraceClient.V2.V3
+
+public class TestCaseWithActualResultImplementation
+{
+    [JsonPropertyName("getActualResult")]
+    public NonVoidFunctionDefinition GetActualResult { get; init; }
+    [JsonPropertyName("assertCorrectnessCheck")]
+    public OneOf<DeepEqualityCorrectnessCheck,VoidFunctionDefinitionThatTakesActualResult> AssertCorrectnessCheck { get; init; }
+}
