@@ -100,13 +100,15 @@ function visitAndSortNavigationSchema(
     for (const navigationItem of Array.isArray(navigationItems) ? navigationItems : [navigationItems]) {
         if (typeof navigationItem === "string") {
             // item could either be a group name or method name
+            // however in this implementation, we only support method name
+            // TODO: consider allowing user to specify a "naked" group name that preserves the default order
             const foundItem = defaultItems.find(createItemMatcher(navigationItem, ir));
 
             if (foundItem != null && foundItem.type !== "subpackage") {
                 items.push(foundItem);
             }
         } else {
-            // item is a collection of groups
+            // item must be a collection of groups
 
             for (const [groupName, group] of Object.entries(navigationItem)) {
                 // item could either be a group name or method name
