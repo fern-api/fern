@@ -1,11 +1,26 @@
+using SeedExhaustiveClient.Types
+using System.Text.Json.Serialization
+
 namespace SeedExhaustiveClient.Types
 
 public class Animal
 {
-    namespace SeedExhaustiveClient.Types
-
-    private interface IBase
+    public class _Dog : Dog
     {
+        [JsonPropertyName("animal")]
+        public string Animal { get; } = "dog";
+
+
     }
-    
+
+
+    public class _Cat : Cat
+    {
+        [JsonPropertyName("animal")]
+        public string Animal { get; } = "cat";
+
+
+    }
+
+
 }

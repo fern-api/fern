@@ -7,6 +7,8 @@ public class NestedObjectWithRequiredField
 {
     [JsonPropertyName("string")]
     public string String { get; init; }
+
     [JsonPropertyName("NestedObject")]
     public ObjectWithOptionalField NestedObject { get; init; }
+
 }
