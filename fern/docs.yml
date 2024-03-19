@@ -11,7 +11,6 @@ tabs:
     icon: 'globe'
   fern-sdks:
     display-name: Fern SDKs
-    # the slug option for tabs does not work yet, the route generated is still /fern-sd-ks instead of /fern-sdks
     slug: fern-sdks
     icon: 'code'
   fern-docs:
