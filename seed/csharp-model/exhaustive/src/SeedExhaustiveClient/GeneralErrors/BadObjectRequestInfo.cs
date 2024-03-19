@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization
 
-namespace test
+namespace SeedExhaustiveClient
 
 public class BadObjectRequestInfo
 {

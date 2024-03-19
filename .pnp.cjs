@@ -4596,10 +4596,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
@@ -4628,7 +4630,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
         }]\

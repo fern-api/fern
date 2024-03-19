@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TestTODO\TestTODO.csproj" />
+      <ProjectReference Include="..\SeedExhaustiveClient\SeedExhaustiveClient.csproj" />
     </ItemGroup>
 
 </Project>

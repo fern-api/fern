@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization
-using test.Types
+using SeedExhaustiveClient.Types
 
-namespace test.Types
+namespace SeedExhaustiveClient.Types
 
 public class NestedObjectWithOptionalField
 {

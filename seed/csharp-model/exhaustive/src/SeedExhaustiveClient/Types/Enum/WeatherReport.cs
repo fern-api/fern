@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization
 using System
-using test.Utilities
+using SeedExhaustiveClient.Utilities
 
-namespace test.Types
+namespace SeedExhaustiveClient.Types
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum WeatherReport
