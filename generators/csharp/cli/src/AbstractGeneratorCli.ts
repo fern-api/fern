@@ -1,6 +1,6 @@
-import { File } from "@fern-api/csharp-codegen";
+import { File, packageUtils } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -10,6 +10,7 @@ import { execSync } from "child_process";
 import { cp, readdir, readFile } from "fs/promises";
 import { template } from "lodash";
 import tmp from "tmp-promise";
+import { BaseCustomConfigSchema } from "./BaseCustomConfig";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
@@ -20,7 +21,7 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
     [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error
 };
 
-export abstract class AbstractGeneratorCli<CustomConfig> {
+export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfigSchema> {
     public asIsRootDirectory = AbsoluteFilePath.of("/asIs");
 
     public async runCli(): Promise<void> {
@@ -80,41 +81,42 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate csharp project.");
             }
 
+            const intermediateRepresentation = await loadIntermediateRepresentation(config.irFilepath);
+
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
-                    await this.publishPackage(
-                        config,
-                        customConfig,
-                        generatorContext,
-                        await loadIntermediateRepresentation(config.irFilepath)
-                    );
+                    await this.publishPackage(config, customConfig, generatorContext, intermediateRepresentation);
                 },
                 github: async (githubOutputMode: FernGeneratorExec.GithubOutputMode) => {
                     await this.writeForGithub(
                         config,
                         customConfig,
                         generatorContext,
-                        await loadIntermediateRepresentation(config.irFilepath),
+                        intermediateRepresentation,
                         githubOutputMode
                     );
                 },
                 downloadFiles: async () => {
-                    await this.writeForDownload(
-                        config,
-                        customConfig,
-                        generatorContext,
-                        await loadIntermediateRepresentation(config.irFilepath)
-                    );
+                    await this.writeForDownload(config, customConfig, generatorContext, intermediateRepresentation);
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
                 }
             });
 
-            // Some universal work across model and SDK generators
+            // ===== Universal tasks across model and SDK generators =====
+
             // TODO: should probably also write tests here.
-            await this.writeProjectFiles(config, "TestTODO");
+            const packageName = packageUtils.getPackageName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName,
+                getPackageNameFromPublishConfig(config)
+            );
+            await this.writeProjectFiles(config, packageName);
             this.formatFiles(config);
+
+            // ===========================================================
 
             await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
@@ -190,7 +192,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         );
         execSync(`cd ${directoryPrefix} && dotnet sln add ./${testProjectName}/${testProjectName}.csproj`);
 
-        execSync("dotnet new gitignore");
+        // Create the gitignore
+        // execSync("dotnet new gitignore");
     }
 
     async zipDirectoryContents({
