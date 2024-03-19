@@ -3,16 +3,15 @@ title: Customize content using front matter
 description: Set the page title, meta description, a URL to suggest edits to the page, and its OpenGraph image by using front matter. 
 ---
 
-## Front matter
+You can optionally use front matter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. 
 
-You can optionally use front matter to set each page's title, meta description, a URL to suggest edits to the page, and its OpenGraph image. 
+Front matter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your front matter, as shown:
 
-Front matter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your front matter, as shown below.
-
-<CodeBlock title="Example front matter in .md or .mdx file">
+<CodeBlock title="Example front matter">
 ```mdx
 ---
 title: Introduction to the Fern toolkit for REST APIs
+slug: introduction
 description: Define your API with OpenAPI or Fern's simpler format, then generate SDKs, server boilerplate, and a documentation website with an API Reference. 
 editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/docs/pages/overview/introduction.mdx
 image: https://github.com/fern-api/fern/blob/main/fern/docs/images/logo-green.png
@@ -20,7 +19,7 @@ image: https://github.com/fern-api/fern/blob/main/fern/docs/images/logo-green.pn
 ```
 </CodeBlock>
 
-#### title
+## title
 **Type**: string<br />
 **Default**: The name of the page as specified in `docs.yml`
 
@@ -43,7 +42,7 @@ For example, if a page is defined like this in `docs.yml`:
 
 Then, if Fern does not find a `title` in that page's front matter, `Overview` is used for the default title. 
 
-##### Site-wide title text appended from docs.yml
+### Site-wide title text appended from docs.yml
 
 You can set a field named `title` in `docs.yml` like this:
 
@@ -60,19 +59,55 @@ The value you enter for this field is appended to every page's title across your
 
 For example, with the above setting in `docs.yml`, the `Overview` page's title becomes `Overview - Fern | Documentation`. 
 
-#### description
+## slug
+
+**Type**: string<br />
+**Default**: None
+
+The `slug` you set in a page's front matter overrides the URL for that page derived from `docs.yml`. This slug begins from the root of your docs site, ignoring the tab or section that the page is under. This allows you to set a custom full slug for any page.
+
+As an example, consider this navigation setup in `docs.yml`:
+
+<CodeBlock title='docs.yml navigation example'>
+```yaml
+navigation:
+  - tab: overview
+    layout:
+      - section: Support
+        contents:
+          - page: Email Us
+            path: ./pages/emailus.mdx
+            slug: email
+```
+</CodeBlock>
+
+The `slug` set in `docs.yml` affects only the final part of the URL, so the `emailus.mdx` page is available at `/overview/support/email`.
+
+In contrast, the `slug` that you set in front matter affects the full URL. For example, you can set the front matter `slug` to `email`, as shown:
+
+<CodeBlock title='Front matter in emailus.mdx'>
+```mdx
+---
+slug: email
+---
+```
+</CodeBlock>
+
+The page then becomes available at `/email`. 
+
+## description
 **Type**: string<br />
 **Default**: None
 
 Set the [meta description](https://web.dev/learn/html/metadata#description) for a page. Like the page title, the meta description is important for SEO. It impacts the text that search engines display about your page in search results snippets. It can also influence search engine indexing and ranking. For more information, see [Google's guidelines for meta descriptions](https://developers.google.com/search/docs/appearance/snippet#meta-descriptions).
 
-#### editThisPageUrl
+## editThisPageUrl
 **Type**: string (absolute URL)<br />
 **Default**: None
 
 Provide the absolute link to the source `.md` or `.mdx` file in GitHub. Fern uses it to add an `Edit this page` link to the page, which users of your documentation can use to suggest corrections or additions. 
 
-#### image
+## image
 **Type**: string (absolute URL)<br />
 **Default**: None
 
