@@ -68,6 +68,10 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def any_str() -> TypeHint:
+        return TypeHint(type=get_reference_to_typing_import("AnyStr"))
+
+    @staticmethod
     def optional(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Optional"),

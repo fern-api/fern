@@ -2,4 +2,4 @@
 
 import typing
 
-Operand = typing.Literal[">", "=", "less_than"]
+Operand = typing.Union[typing.AnyStr, typing.Literal[">", "=", "less_than"]]

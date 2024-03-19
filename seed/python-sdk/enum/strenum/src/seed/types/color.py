@@ -2,4 +2,4 @@
 
 import typing
 
-Color = typing.Literal["red", "blue"]
+Color = typing.Union[typing.AnyStr, typing.Literal["red", "blue"]]
