@@ -128,9 +128,16 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 value: convertSchemaWithExampleToSchema(schema.value),
                 groupName: schema.groupName
             });
-        case "oneOf":
-            // TODO: How do we handle this one?
-            return Schema.oneOf(convertToOneOf(schema.value));
+        case "oneOf": {
+            const oneOfSchema = convertToOneOf(schema.value);
+            return Schema.optional({
+                generatedName: oneOfSchema.generatedName,
+                nameOverride: oneOfSchema.nameOverride,
+                description: oneOfSchema.description,
+                value: Schema.oneOf(convertToOneOf(schema.value)),
+                groupName: oneOfSchema.groupName
+            });
+        }
         default:
             assertNever(schema);
     }
