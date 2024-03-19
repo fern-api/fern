@@ -2,7 +2,10 @@ import { MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
+import {
+    convertSchemaWithExampleToOptionalSchema,
+    convertSchemaWithExampleToSchema
+} from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -86,6 +89,8 @@ export function convertRequest({
                     : undefined,
             description: undefined,
             properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
+                const required: string[] | undefined = resolvedMultipartSchema.schema.required;
+                const isRequired = required !== undefined && required.includes(key);
                 if (
                     !isReferenceObject(definition) &&
                     ((definition.type === "string" && definition.format === "binary") ||
@@ -94,8 +99,6 @@ export function convertRequest({
                             definition.items.type === "string" &&
                             definition.items.format === "binary"))
                 ) {
-                    const required: string[] | undefined = resolvedMultipartSchema.schema.required;
-                    const isRequired = required !== undefined && required.includes(key);
                     return {
                         key,
                         schema: MultipartSchema.file({ isOptional: !isRequired, isArray: definition.type === "array" }),
@@ -104,10 +107,13 @@ export function convertRequest({
                 }
                 const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
                 const audiences = getExtension<string[]>(definition, FernOpenAPIExtension.AUDIENCES) ?? [];
+                const schema = isRequired
+                    ? convertSchemaWithExampleToSchema(schemaWithExample)
+                    : convertSchemaWithExampleToOptionalSchema(schemaWithExample);
                 return {
                     key,
                     audiences,
-                    schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),
+                    schema: MultipartSchema.json(schema),
                     description: undefined
                 };
             })
