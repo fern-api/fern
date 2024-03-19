@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as SeedUnions from "../../../../api";
 import * as core from "../../../../core";
+import { Foo } from "./Foo";
+import { Bar } from "./Bar";
 
 export const UnionWithDiscriminant: core.serialization.Schema<
     serializers.UnionWithDiscriminant.Raw,
@@ -12,10 +14,10 @@ export const UnionWithDiscriminant: core.serialization.Schema<
 > = core.serialization
     .union(core.serialization.discriminant("type", "_type"), {
         foo: core.serialization.object({
-            foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
+            foo: Foo,
         }),
         bar: core.serialization.object({
-            bar: core.serialization.lazyObject(async () => (await import("../../..")).Bar),
+            bar: Bar,
         }),
     })
     .transform<SeedUnions.UnionWithDiscriminant>({
@@ -28,11 +30,11 @@ export declare namespace UnionWithDiscriminant {
 
     interface Foo {
         _type: "foo";
-        foo: serializers.Foo.Raw;
+        foo: Foo.Raw;
     }
 
     interface Bar {
         _type: "bar";
-        bar: serializers.Bar.Raw;
+        bar: Bar.Raw;
     }
 }

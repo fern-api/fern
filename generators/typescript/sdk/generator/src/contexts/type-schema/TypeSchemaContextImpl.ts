@@ -126,17 +126,13 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
             name: typeName,
-            // importStrategy: getSchemaImportStrategy({
-            //     // dynamic import not needed for types
-            //     useDynamicImport: false
-            // }),
-            // This change does a direct import and doesn't import in the same file as the schema const is declared and being exported
-            // but it only handles the raw type, not the schema
-            importStrategy: {
-                type: isCircular ? "fromRoot" : "direct",
-                useDynamicImport: false,
-                namespaceImport: "serializers"
-            },
+            importStrategy: isCircular
+                ? {
+                      type: "fromRoot",
+                      useDynamicImport: false,
+                      namespaceImport: "serializers"
+                  }
+                : { type: "direct" },
             // TODO this should not be hardcoded here
             subImport: ["Raw"],
             importsManager: this.importsManager,
@@ -158,11 +154,6 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         const referenceToSchema = this.typeSchemaDeclarationReferencer
             .getReferenceToType({
                 name: typeName,
-                // importStrategy: getSchemaImportStrategy({
-                //     // use dynamic imports with schemas insides schemas,
-                //     // to avoid issues with circular imports
-                //     useDynamicImport: isGeneratingSchema && isCircular,
-                // }),
                 importStrategy: (() => {
                     // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
@@ -171,6 +162,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                         // Return default import strategy or another strategy based on your logic
                         return { type: "direct" };
                     } else {
+                        // We don't really know when or if this case is actually used
                         return getSchemaImportStrategy({ useDynamicImport: false });
                     }
                 })(),
@@ -179,12 +171,14 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             })
             .getExpression();
 
-        let schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema);
+        const schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema, {
+            isObject: typeDeclaration.shape.type === "object"
+        });
 
         // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
         // we only do this when we know there is a circular reference, because lazy is expensive
         if (isGeneratingSchema && isCircular) {
-            schema = this.wrapSchemaWithLazy(schema, typeName);
+            return this.wrapSchemaWithLazy(schema, typeName);
         }
 
         return schema;
