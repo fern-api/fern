@@ -90,13 +90,7 @@ function visitAndSortNavigationSchema(
                 item.type === "subpackage" ? item.subpackageId === navigationItem : item.value === navigationItem
             );
 
-            if (foundItem == null) {
-                throw new Error(`Navigation item ${navigationItem} not found`);
-            } else if (foundItem.type === "subpackage") {
-                throw new Error(
-                    `Navigation item ${navigationItem} is a SDK group name when it is expected to be a SDK method name`
-                );
-            } else {
+            if (foundItem != null && foundItem.type !== "subpackage") {
                 items.push(foundItem);
             }
         } else {
@@ -108,25 +102,15 @@ function visitAndSortNavigationSchema(
                     item.type === "subpackage" ? item.subpackageId === groupName : item.value === groupName
                 );
 
-                if (foundItem == null) {
-                    throw new Error(`Navigation item ${groupName} not found`);
-                } else if (foundItem.type === "subpackage") {
+                if (foundItem != null && foundItem.type === "subpackage") {
                     items.push({
                         type: "subpackage",
                         subpackageId: foundItem.subpackageId,
                         items: visitAndSortNavigationSchema(group, foundItem.items)
                     });
-                } else {
-                    throw new Error(
-                        `Navigation item ${groupName} is a SDK method name when it is expected to be a SDK group name`
-                    );
                 }
             }
         }
-    }
-
-    if (items.length !== defaultItems.length) {
-        throw new Error("Sorted schema does not match the default navigation");
     }
 
     return items;
