@@ -14,7 +14,7 @@ module SeedBytesClient
       @request_client = request_client
     end
 
-    # @param request [String] Base64 encoded bytes
+    # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
@@ -37,7 +37,7 @@ module SeedBytesClient
       @request_client = request_client
     end
 
-    # @param request [String] Base64 encoded bytes
+    # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)

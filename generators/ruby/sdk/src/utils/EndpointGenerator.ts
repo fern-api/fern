@@ -159,9 +159,9 @@ export class EndpointGenerator {
                             name:
                                 this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
                                 defaultBodyParameterName,
-                            type: B64StringClassReference,
+                            type: [B64StringClassReference, FileClassReference],
                             isOptional: br.isOptional,
-                            documentation: "Base64 encoded bytes"
+                            documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
                         })
                     ];
                 },
