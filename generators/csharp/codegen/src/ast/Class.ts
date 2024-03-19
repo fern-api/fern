@@ -25,6 +25,8 @@ export declare namespace Class {
         parentClassReference?: ClassReference;
         /* Any interfaces the class extends */
         interfaceReferences?: ClassReference[];
+        /* Defaults to false */
+        isNestedClass?: boolean;
     }
 }
 
@@ -37,19 +39,30 @@ export class Class extends AstNode {
     public readonly reference: ClassReference;
     public readonly parentClassReference: ClassReference | undefined;
     public readonly interfaceReferences: ClassReference[];
+    public readonly isNestedClass: boolean;
 
     private fields: Field[] = [];
     private methods: Method[] = [];
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
 
-    constructor({ name, namespace, access, sealed, partial, parentClassReference, interfaceReferences }: Class.Args) {
+    constructor({
+        name,
+        namespace,
+        access,
+        sealed,
+        partial,
+        parentClassReference,
+        interfaceReferences,
+        isNestedClass
+    }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
+        this.isNestedClass = isNestedClass ?? false;
 
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
@@ -77,17 +90,19 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.writeLine(`namespace ${this.namespace}`);
-        writer.newLine();
-        writer.write(`${this.access} `);
+        if (!this.isNestedClass) {
+            writer.writeLine(`namespace ${this.namespace}`);
+            writer.newLine();
+        }
+        writer.write(`${this.access}`);
         if (this.sealed) {
-            writer.write("sealed ");
+            writer.write(" sealed");
         }
         if (this.partial) {
-            writer.write("partial ");
+            writer.write(" partial");
         }
-        writer.write("class ");
-        writer.writeLine(`${this.name}`);
+        writer.write(" class");
+        writer.write(` ${this.name}`);
         if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
             writer.write(" : ");
             if (this.parentClassReference != null) {
@@ -104,33 +119,36 @@ export class Class extends AstNode {
                 }
             });
         }
+        writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
 
         writer.indent();
         for (const field of this.fields) {
             field.write(writer);
-            writer.writeLine("");
+            writer.newLine();
+            writer.newLine();
         }
         writer.dedent();
 
         writer.indent();
         for (const nestedClass of this.nestedClasses) {
             nestedClass.write(writer);
-            writer.writeLine("");
+            writer.newLine();
+            writer.newLine();
         }
         writer.dedent();
 
         writer.indent();
         for (const nestedInterface of this.nestedInterfaces) {
             nestedInterface.write(writer);
-            writer.writeLine("");
+            writer.newLine();
         }
         writer.dedent();
 
         writer.indent();
         for (const method of this.methods) {
             method.write(writer);
-            writer.writeLine("");
+            writer.newLine();
         }
         writer.dedent();
 

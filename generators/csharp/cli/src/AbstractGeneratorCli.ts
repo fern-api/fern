@@ -2,14 +2,13 @@ import { File, packageUtils } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
-import { cp, readdir, readFile } from "fs/promises";
+import { existsSync } from "fs";
+import { readFile } from "fs/promises";
 import { template } from "lodash";
-import tmp from "tmp-promise";
 import { BaseCustomConfigSchema } from "./BaseCustomConfig";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
@@ -114,6 +113,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
                 getPackageNameFromPublishConfig(config)
             );
             await this.writeProjectFiles(config, packageName);
+            await this.writeTestFiles(config, packageName);
             this.formatFiles(config);
 
             // ===========================================================
@@ -168,6 +168,9 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
 
     async writeProjectFiles(config: FernGeneratorExec.GeneratorConfig, projectName: string): Promise<void> {
         const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
+        if (!existsSync(directoryPrefix)) {
+            return;
+        }
 
         // Create a new solution
         execSync(`cd ${directoryPrefix} && dotnet new sln -n ${projectName}`);
@@ -193,28 +196,23 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
         execSync(`cd ${directoryPrefix} && dotnet sln add ./${testProjectName}/${testProjectName}.csproj`);
 
         // Create the gitignore
-        // execSync("dotnet new gitignore");
+        execSync(`cd ${AbsoluteFilePath.of(config.output.path)} && dotnet new gitignore`);
     }
 
-    async zipDirectoryContents({
-        directoryToZip,
-        destinationZip,
-        logger
-    }: {
-        directoryToZip: AbsoluteFilePath;
-        destinationZip: AbsoluteFilePath;
-        logger: Logger;
-    }): Promise<void> {
-        const zip = createLoggingExecutable("zip", {
-            cwd: directoryToZip,
-            logger,
-            // zip is noisy
-            doNotPipeOutput: true
-        });
+    async writeTestFiles(config: FernGeneratorExec.GeneratorConfig, projectName: string): Promise<void> {
+        const testProjectName = `${projectName}.Test`;
+        const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
 
-        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
-        await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
-        await cp(tmpZipLocation, destinationZip);
+        const testContents = template(
+            await readFile(join(this.asIsRootDirectory, RelativeFilePath.of("./cli/TemplateTestClient.cs")), "utf8")
+        )({ projectName });
+        await new File("TestClient.cs", RelativeFilePath.of(testProjectName), testContents).write(directoryPrefix);
+
+        const usingsContents = await readFile(
+            join(this.asIsRootDirectory, RelativeFilePath.of("./cli/Usings.cs")),
+            "utf8"
+        );
+        await new File("Usings.cs", RelativeFilePath.of(testProjectName), usingsContents).write(directoryPrefix);
     }
 }
 

@@ -6,4 +6,5 @@ public class ObjectWithMapOfMap
 {
     [JsonPropertyName("map")]
     public Dictionary<string,Dictionary<string,string>> Map { get; init; }
+
 }

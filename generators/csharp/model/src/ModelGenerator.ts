@@ -181,21 +181,25 @@ export class ModelGenerator {
             access: "private",
             partial: false
         });
-        baseProperties.forEach((property) => {
-            const maybeAnnotation = this.referenceGenerator.annotations.get(property.valueType);
-            baseInterface.addField(
-                csharp.field({
-                    name: getNameFromIrName(property.name.name),
-                    type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.valueType),
-                    access: "public",
-                    get: true,
-                    init: true,
-                    jsonPropertyName: property.name.wireValue,
-                    annotations: maybeAnnotation ? [maybeAnnotation] : undefined
-                })
-            );
-        });
-        class_.addNestedInterface(baseInterface);
+        let interfaceReferences: csharp.ClassReference[] | undefined = undefined;
+        if (baseProperties.length > 0) {
+            baseProperties.forEach((property) => {
+                const maybeAnnotation = this.referenceGenerator.annotations.get(property.valueType);
+                baseInterface.addField(
+                    csharp.field({
+                        name: getNameFromIrName(property.name.name),
+                        type: this.referenceGenerator.typeFromTypeReference(this.rootModule, property.valueType),
+                        access: "public",
+                        get: true,
+                        init: true,
+                        jsonPropertyName: property.name.wireValue,
+                        annotations: maybeAnnotation ? [maybeAnnotation] : undefined
+                    })
+                );
+            });
+            class_.addNestedInterface(baseInterface);
+            interfaceReferences = [baseInterface.reference];
+        }
 
         unionTypeDeclaration.types
             .map<csharp.Class | undefined>((member) => {
@@ -212,8 +216,11 @@ export class ModelGenerator {
 
                 return member.shape._visit<csharp.Class | undefined>({
                     samePropertiesAsObject: (objectType) => {
-                        const parentClassReference = this.referenceGenerator.classReferences.get(objectType.typeId);
-                        if (parentClassReference == null) {
+                        const parentClassReference = this.referenceGenerator.fromDeclaredTypeName(
+                            this.rootModule,
+                            objectType
+                        );
+                        if (parentClassReference == null || parentClassReference.internalType.type !== "reference") {
                             this.generatorContext.logger.error(
                                 "Could not find reference for object " +
                                     objectType.typeId +
@@ -223,12 +230,13 @@ export class ModelGenerator {
                             return;
                         }
                         const nestedClass = csharp.class_({
-                            name: getNameFromIrName(objectType.name),
+                            name: `_${getNameFromIrName(objectType.name)}`,
                             namespace,
                             partial: false,
                             access: "public",
-                            interfaceReferences: [baseInterface.reference],
-                            parentClassReference
+                            interfaceReferences,
+                            parentClassReference: parentClassReference.internalType.value,
+                            isNestedClass: true
                         });
                         nestedClass.addField(discriminantField);
 
@@ -236,11 +244,12 @@ export class ModelGenerator {
                     },
                     singleProperty: (property) => {
                         const nestedClass = csharp.class_({
-                            name: getNameFromIrName(property.name.name),
+                            name: `_${getNameFromIrName(property.name.name)}`,
                             namespace,
                             partial: false,
                             access: "public",
-                            interfaceReferences: [baseInterface.reference]
+                            interfaceReferences,
+                            isNestedClass: true
                         });
                         nestedClass.addField(discriminantField);
 
@@ -259,11 +268,12 @@ export class ModelGenerator {
                     },
                     noProperties: () => {
                         const nestedClass = csharp.class_({
-                            name: getNameFromIrName(member.discriminantValue.name),
+                            name: `_${getNameFromIrName(member.discriminantValue.name)}`,
                             namespace,
                             partial: false,
                             access: "public",
-                            interfaceReferences: [baseInterface.reference]
+                            interfaceReferences,
+                            isNestedClass: true
                         });
                         nestedClass.addField(discriminantField);
 

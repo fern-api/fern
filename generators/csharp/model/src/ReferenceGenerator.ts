@@ -16,15 +16,75 @@ export class ReferenceGenerator {
 
     private types: Map<TypeId, TypeDeclaration>;
     private references: Map<TypeReference, csharp.Type>;
-    public classReferences: Map<TypeId, csharp.ClassReference>;
     public annotations: Map<TypeReference, csharp.Annotation>;
 
     constructor(types: Map<TypeId, TypeDeclaration>, prebuiltUtilities: PrebuiltUtilities) {
         this.prebuiltUtilities = prebuiltUtilities;
         this.types = types;
         this.references = new Map();
-        this.classReferences = new Map();
         this.annotations = new Map();
+
+        for (const type of this.types.values()) {
+            type.shape;
+        }
+    }
+
+    public fromDeclaredTypeName(rootModule: string, typeName: DeclaredTypeName): csharp.Type {
+        const underlyingType = this.types.get(typeName.typeId);
+        if (underlyingType == null) {
+            throw new Error(`Type ${typeName.name.pascalCase.safeName} not found`);
+        }
+
+        const objectNamespace = csharp.Class.getNamespaceFromFernFilepath(rootModule, typeName.fernFilepath);
+        const objectClassReference = new csharp.ClassReference({
+            name: getNameFromIrName(typeName.name),
+            namespace: objectNamespace
+        });
+        const objectReference = csharp.Type.reference(objectClassReference);
+
+        return underlyingType.shape._visit({
+            alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),
+            object: () => objectReference,
+            enum: () => {
+                return csharp.Type.stringEnum(objectClassReference);
+            },
+            union: (union) => {
+                // TODO: we could do a better job sharing classreferences between this and the
+                // ultimate created class, maybe class should have a classReference as opposed to
+                // name and namespace that we then store
+                return csharp.Type.oneOf(
+                    union.types
+                        .map<csharp.Type | undefined>((member) => {
+                            const t = member.shape._visit<csharp.ClassReference | undefined>({
+                                samePropertiesAsObject: (objectType) =>
+                                    new csharp.ClassReference({
+                                        name: getNameFromIrName(objectType.name),
+                                        namespace: objectNamespace
+                                    }),
+                                singleProperty: (property) =>
+                                    new csharp.ClassReference({
+                                        name: getNameFromIrName(property.name.name),
+                                        namespace: objectNamespace
+                                    }),
+                                noProperties: () =>
+                                    new csharp.ClassReference({
+                                        name: getNameFromIrName(member.discriminantValue.name),
+                                        namespace: objectNamespace
+                                    }),
+                                _other: () => undefined
+                            });
+                            return t != null ? csharp.Type.reference(t) : undefined;
+                        })
+                        .filter((c): c is csharp.Type => c !== undefined)
+                );
+            },
+            undiscriminatedUnion: (union) => {
+                return csharp.Type.oneOf(
+                    union.members.map((member) => this.typeFromTypeReference(rootModule, member.type))
+                );
+            },
+            _other: () => objectReference
+        });
     }
 
     private typeFromContainerReference(rootModule: string, containerType: ContainerType): csharp.Type {
@@ -66,7 +126,6 @@ export class ReferenceGenerator {
                     namespace: objectNamespace
                 });
                 const objectReference = csharp.Type.reference(objectClassReference);
-                this.classReferences.set(value.typeId, objectClassReference);
 
                 return underlyingType.shape._visit({
                     alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),
