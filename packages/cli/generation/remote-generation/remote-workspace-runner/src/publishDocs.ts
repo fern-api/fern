@@ -207,7 +207,14 @@ async function constructRegisterDocsRequest({
         Object.entries(parsedDocsConfig.pages).map(([pageId, pageContent]) => {
             const frontmatter = matter(pageContent);
             const fullSlug = frontmatter.data.slug;
-            return [pageId, { fullSlug }];
+            return [
+                // the fullslug is "get" using the absolute path
+                // TODO: make this more robust
+                pageId.startsWith("/")
+                    ? AbsoluteFilePath.of(pageId)
+                    : convertFdrFilepathToAbsoluteFilepath(RelativeFilePath.of(pageId), parsedDocsConfig),
+                { fullSlug }
+            ];
         })
     );
     const convertedDocsConfiguration = await convertDocsConfiguration({
