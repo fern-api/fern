@@ -23,9 +23,9 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
         return [
             AST.NamedFunctionParameter(
                 name=self._get_request_parameter_name(),
-                type_hint=AST.TypeHint.optional(AST.TypeHint.bytes())
+                type_hint=AST.TypeHint.optional(AST.TypeHint.bytes_or_bytes_stream())
                 if self._request.is_optional
-                else AST.TypeHint.bytes(),
+                else AST.TypeHint.bytes_or_bytes_stream(),
             )
         ]
 

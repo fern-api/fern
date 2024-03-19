@@ -18,10 +18,15 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def upload(self, *, request: bytes, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def upload(
+        self,
+        *,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
-            - request: bytes.
+            - request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -69,10 +74,15 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def upload(self, *, request: bytes, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def upload(
+        self,
+        *,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
-            - request: bytes.
+            - request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

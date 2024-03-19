@@ -14,7 +14,7 @@ module SeedBytesClient
       @request_client = request_client
     end
 
-    # @param request [String] Base64 encoded bytes
+    # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
@@ -22,7 +22,7 @@ module SeedBytesClient
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.headers["Content-Type"] = "application/octet-stream"
-        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.body = request
       end
     end
   end
@@ -37,7 +37,7 @@ module SeedBytesClient
       @request_client = request_client
     end
 
-    # @param request [String] Base64 encoded bytes
+    # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
@@ -46,7 +46,7 @@ module SeedBytesClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.headers["Content-Type"] = "application/octet-stream"
-          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.body = request
         end
       end
     end

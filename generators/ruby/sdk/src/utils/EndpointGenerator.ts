@@ -159,9 +159,9 @@ export class EndpointGenerator {
                             name:
                                 this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
                                 defaultBodyParameterName,
-                            type: B64StringClassReference,
+                            type: [B64StringClassReference, FileClassReference],
                             isOptional: br.isOptional,
-                            documentation: "Base64 encoded bytes"
+                            documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
                         })
                     ];
                 },
@@ -281,6 +281,22 @@ export class EndpointGenerator {
             })
         ];
     }
+
+    private getFaradayBodyForBytes(): AstNode[] {
+        const prop = this.bodyAsProperties[0];
+        if (prop === undefined) {
+            throw new Error("No body properties found.");
+        }
+
+        return [
+            new Expression({
+                leftSide: `${this.blockArg}.body`,
+                rightSide: prop.name,
+                isAssignment: true
+            })
+        ];
+    }
+
     public getFaradayBody(): AstNode[] | undefined {
         const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable);
         if (this.endpoint.requestBody !== undefined) {
@@ -366,7 +382,7 @@ export class EndpointGenerator {
                             rightSide: `"${br.contentType ?? "application/octet-stream"}"`,
                             isAssignment: true
                         }),
-                        ...this.getFaradayBodyForReference(additionalBodyProperty)
+                        ...this.getFaradayBodyForBytes()
                     ];
                 },
                 _other: () => {

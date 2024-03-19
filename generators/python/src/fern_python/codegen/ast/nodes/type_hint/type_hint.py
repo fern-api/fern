@@ -53,6 +53,14 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
 
     @staticmethod
+    def bytes_or_bytes_stream() -> TypeHint:
+        return TypeHint.union(
+            TypeHint.bytes(),
+            TypeHint.iterator(TypeHint.bytes()),
+            TypeHint.async_iterator(TypeHint.bytes()),
+        )
+
+    @staticmethod
     def bytes() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("bytes"))
 

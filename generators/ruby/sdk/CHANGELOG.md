@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.2] - 2024-03-18
+
+- Improvement: type bytes requests to also take in IO types, indicating to users that they may pass in a stream of bytes
+
 ## [0.3.1] - 2024-03-12
 
 - Fix: use strings instead of UUIDs, which are helper classes in Ruby
