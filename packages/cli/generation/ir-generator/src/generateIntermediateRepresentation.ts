@@ -46,7 +46,8 @@ export async function generateIntermediateRepresentation({
     generationLanguage,
     smartCasing,
     disableExamples,
-    audiences
+    audiences,
+    irVersionOverride
 }: {
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;

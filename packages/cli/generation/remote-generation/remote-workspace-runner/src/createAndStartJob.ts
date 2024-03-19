@@ -2,7 +2,10 @@ import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
-import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import {
+    migrateIntermediateRepresentationForGenerator,
+    migrateIntermediateRepresentationToVersionForGenerator
+} from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
@@ -26,7 +29,8 @@ export async function createAndStartJob({
     context,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    irVersionOverride
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -37,6 +41,7 @@ export async function createAndStartJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    irVersionOverride: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
         workspace,
@@ -48,7 +53,7 @@ export async function createAndStartJob({
         token,
         whitelabel
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation });
+    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
 }
 
@@ -188,21 +193,34 @@ async function startJob({
     intermediateRepresentation,
     generatorInvocation,
     job,
-    context
+    context,
+    irVersionOverride
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
+    irVersionOverride: string | undefined;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
-        intermediateRepresentation,
-        context,
-        targetGenerator: {
-            name: generatorInvocation.name,
-            version: generatorInvocation.version
-        }
-    });
+    const migratedIntermediateRepresentation =
+        irVersionOverride == null
+            ? await migrateIntermediateRepresentationForGenerator({
+                  intermediateRepresentation,
+                  context,
+                  targetGenerator: {
+                      name: generatorInvocation.name,
+                      version: generatorInvocation.version
+                  }
+              })
+            : await migrateIntermediateRepresentationToVersionForGenerator({
+                  intermediateRepresentation,
+                  context,
+                  irVersion: irVersionOverride,
+                  targetGenerator: {
+                      name: generatorInvocation.name,
+                      version: generatorInvocation.version
+                  }
+              });
 
     const formData = new FormData();
 

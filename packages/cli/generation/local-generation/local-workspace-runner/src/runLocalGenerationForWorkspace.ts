@@ -50,7 +50,7 @@ export async function runLocalGenerationForWorkspace({
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
-                        irVersionOverride: undefined,
+                        irVersionOverride: generatorInvocation.irVersionOverride,
                         outputVersionOverride: undefined,
                         writeSnippets: false,
                         writeUnitTests: false
