@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout";
 
 export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedTestCase.Raw, SeedTrace.TracedTestCase> =
     core.serialization.object({
-        result: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResultWithStdout),
+        result: TestCaseResultWithStdout,
         traceResponsesSize: core.serialization.number(),
     });
 
 export declare namespace TracedTestCase {
     interface Raw {
-        result: serializers.TestCaseResultWithStdout.Raw;
+        result: TestCaseResultWithStdout.Raw;
         traceResponsesSize: number;
     }
 }

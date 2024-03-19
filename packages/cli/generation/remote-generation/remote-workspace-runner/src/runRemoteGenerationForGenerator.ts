@@ -17,7 +17,8 @@ export async function runRemoteGenerationForGenerator({
     audiences,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    irVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -28,6 +29,7 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    irVersionOverride: string | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -46,7 +48,8 @@ export async function runRemoteGenerationForGenerator({
         intermediateRepresentation,
         shouldLogS3Url,
         token,
-        whitelabel
+        whitelabel,
+        irVersionOverride
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

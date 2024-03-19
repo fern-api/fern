@@ -5,6 +5,9 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { BinaryTreeValue } from "./BinaryTreeValue";
+import { SinglyLinkedListValue } from "./SinglyLinkedListValue";
+import { DoublyLinkedListValue } from "./DoublyLinkedListValue";
 
 export const VariableValue: core.serialization.Schema<serializers.VariableValue.Raw, SeedTrace.VariableValue> =
     core.serialization
@@ -30,13 +33,9 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
                     core.serialization.lazy(async () => (await import("../../..")).VariableValue)
                 ),
             }),
-            binaryTreeValue: core.serialization.lazyObject(async () => (await import("../../..")).BinaryTreeValue),
-            singlyLinkedListValue: core.serialization.lazyObject(
-                async () => (await import("../../..")).SinglyLinkedListValue
-            ),
-            doublyLinkedListValue: core.serialization.lazyObject(
-                async () => (await import("../../..")).DoublyLinkedListValue
-            ),
+            binaryTreeValue: BinaryTreeValue,
+            singlyLinkedListValue: SinglyLinkedListValue,
+            doublyLinkedListValue: DoublyLinkedListValue,
             nullValue: core.serialization.object({}),
         })
         .transform<SeedTrace.VariableValue>({
@@ -119,15 +118,15 @@ export declare namespace VariableValue {
         value: serializers.VariableValue.Raw[];
     }
 
-    interface BinaryTreeValue extends serializers.BinaryTreeValue.Raw {
+    interface BinaryTreeValue extends BinaryTreeValue.Raw {
         type: "binaryTreeValue";
     }
 
-    interface SinglyLinkedListValue extends serializers.SinglyLinkedListValue.Raw {
+    interface SinglyLinkedListValue extends SinglyLinkedListValue.Raw {
         type: "singlyLinkedListValue";
     }
 
-    interface DoublyLinkedListValue extends serializers.DoublyLinkedListValue.Raw {
+    interface DoublyLinkedListValue extends DoublyLinkedListValue.Raw {
         type: "doublyLinkedListValue";
     }
 

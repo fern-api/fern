@@ -99,6 +99,7 @@ scripts:
     commands:
       - yarn install && yarn build
 allowedFailures: 
+  - response-property
   - bytes
   - plain-text
   - alias

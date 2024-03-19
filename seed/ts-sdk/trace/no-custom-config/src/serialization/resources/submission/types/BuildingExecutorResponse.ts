@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
+import { ExecutionSessionStatus } from "./ExecutionSessionStatus";
 
 export const BuildingExecutorResponse: core.serialization.ObjectSchema<
     serializers.BuildingExecutorResponse.Raw,
     SeedTrace.BuildingExecutorResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    status: core.serialization.lazy(async () => (await import("../../..")).ExecutionSessionStatus),
+    submissionId: SubmissionId,
+    status: ExecutionSessionStatus,
 });
 
 export declare namespace BuildingExecutorResponse {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
-        status: serializers.ExecutionSessionStatus.Raw;
+        submissionId: SubmissionId.Raw;
+        status: ExecutionSessionStatus.Raw;
     }
 }

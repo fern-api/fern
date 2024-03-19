@@ -5,12 +5,13 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { FileInfoV2 } from "./FileInfoV2";
 
 export const DefaultProvidedFile: core.serialization.ObjectSchema<
     serializers.v2.v3.DefaultProvidedFile.Raw,
     SeedTrace.v2.v3.DefaultProvidedFile
 > = core.serialization.object({
-    file: core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.FileInfoV2),
+    file: FileInfoV2,
     relatedTypes: core.serialization.list(
         core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType)
     ),
@@ -18,7 +19,7 @@ export const DefaultProvidedFile: core.serialization.ObjectSchema<
 
 export declare namespace DefaultProvidedFile {
     interface Raw {
-        file: serializers.v2.v3.FileInfoV2.Raw;
+        file: FileInfoV2.Raw;
         relatedTypes: serializers.VariableType.Raw[];
     }
 }

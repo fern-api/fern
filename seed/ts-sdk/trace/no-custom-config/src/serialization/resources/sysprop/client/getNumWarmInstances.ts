@@ -5,15 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Language } from "../../commons/types/Language";
 
 export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
     Record<SeedTrace.Language, number | undefined>
-> = core.serialization.record(
-    core.serialization.lazy(async () => (await import("../../..")).Language),
-    core.serialization.number().optional()
-);
+> = core.serialization.record(Language, core.serialization.number().optional());
 
 export declare namespace Response {
-    type Raw = Record<serializers.Language.Raw, number | null | undefined>;
+    type Raw = Record<Language.Raw, number | null | undefined>;
 }

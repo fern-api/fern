@@ -5,19 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
 
 export const RecordedResponseNotification: core.serialization.ObjectSchema<
     serializers.RecordedResponseNotification.Raw,
     SeedTrace.RecordedResponseNotification
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: SubmissionId,
     traceResponsesSize: core.serialization.number(),
     testCaseId: core.serialization.string().optional(),
 });
 
 export declare namespace RecordedResponseNotification {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
+        submissionId: SubmissionId.Raw;
         traceResponsesSize: number;
         testCaseId?: string | null;
     }

@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedAudiences from "../../../../api";
 import * as core from "../../../../core";
+import { Imported } from "../../commons/types/Imported";
 
 export const ImportingType: core.serialization.ObjectSchema<
     serializers.ImportingType.Raw,
     SeedAudiences.ImportingType
 > = core.serialization.object({
-    imported: core.serialization.lazy(async () => (await import("../../..")).Imported),
+    imported: Imported,
 });
 
 export declare namespace ImportingType {
     interface Raw {
-        imported: serializers.Imported.Raw;
+        imported: Imported.Raw;
     }
 }

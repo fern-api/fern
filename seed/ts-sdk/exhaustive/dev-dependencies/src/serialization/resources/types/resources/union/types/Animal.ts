@@ -5,11 +5,13 @@
 import * as serializers from "../../../../..";
 import * as Fiddle from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { Dog } from "./Dog";
+import { Cat } from "./Cat";
 
 export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, Fiddle.types.Animal> = core.serialization
     .union("animal", {
-        dog: core.serialization.lazyObject(async () => (await import("../../../../..")).types.Dog),
-        cat: core.serialization.lazyObject(async () => (await import("../../../../..")).types.Cat),
+        dog: Dog,
+        cat: Cat,
     })
     .transform<Fiddle.types.Animal>({
         transform: (value) => {
@@ -28,11 +30,11 @@ export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, Fid
 export declare namespace Animal {
     type Raw = Animal.Dog | Animal.Cat;
 
-    interface Dog extends serializers.types.Dog.Raw {
+    interface Dog extends Dog.Raw {
         animal: "dog";
     }
 
-    interface Cat extends serializers.types.Cat.Raw {
+    interface Cat extends Cat.Raw {
         animal: "cat";
     }
 }

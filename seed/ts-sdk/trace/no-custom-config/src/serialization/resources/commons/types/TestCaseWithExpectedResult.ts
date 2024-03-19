@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { TestCase } from "./TestCase";
 
 export const TestCaseWithExpectedResult: core.serialization.ObjectSchema<
     serializers.TestCaseWithExpectedResult.Raw,
     SeedTrace.TestCaseWithExpectedResult
 > = core.serialization.object({
-    testCase: core.serialization.lazyObject(async () => (await import("../../..")).TestCase),
+    testCase: TestCase,
     expectedResult: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
 });
 
 export declare namespace TestCaseWithExpectedResult {
     interface Raw {
-        testCase: serializers.TestCase.Raw;
+        testCase: TestCase.Raw;
         expectedResult: serializers.VariableValue.Raw;
     }
 }

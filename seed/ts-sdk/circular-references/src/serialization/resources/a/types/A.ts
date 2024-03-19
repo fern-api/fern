@@ -5,11 +5,12 @@
 import * as serializers from "../../..";
 import * as SeedApi from "../../../../api";
 import * as core from "../../../../core";
+import { RootType } from "../../../types/RootType";
 
 export const A: core.serialization.ObjectSchema<serializers.A.Raw, SeedApi.A> = core.serialization
     .object({})
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).RootType));
+    .extend(RootType);
 
 export declare namespace A {
-    interface Raw extends serializers.RootType.Raw {}
+    interface Raw extends RootType.Raw {}
 }

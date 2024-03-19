@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedQueryParameters from "../../../../api";
 import * as core from "../../../../core";
+import { User } from "./User";
 
 export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.Raw, SeedQueryParameters.NestedUser> =
     core.serialization.object({
         name: core.serialization.string(),
-        user: core.serialization.lazyObject(async () => (await import("../../..")).User),
+        user: User,
     });
 
 export declare namespace NestedUser {
     interface Raw {
         name: string;
-        user: serializers.User.Raw;
+        user: User.Raw;
     }
 }

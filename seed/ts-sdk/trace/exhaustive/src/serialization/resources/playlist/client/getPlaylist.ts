@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody";
 
 export const Error: core.serialization.Schema<
     serializers.playlist.getPlaylist.Error.Raw,
@@ -12,7 +13,7 @@ export const Error: core.serialization.Schema<
 > = core.serialization
     .union("errorName", {
         PlaylistIdNotFoundError: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import("../../..")).PlaylistIdNotFoundErrorBody),
+            content: PlaylistIdNotFoundErrorBody,
         }),
         UnauthorizedError: core.serialization.object({}),
     })
@@ -33,7 +34,7 @@ export declare namespace Error {
 
     interface PlaylistIdNotFoundError {
         errorName: "PlaylistIdNotFoundError";
-        content: serializers.PlaylistIdNotFoundErrorBody.Raw;
+        content: PlaylistIdNotFoundErrorBody.Raw;
     }
 
     interface UnauthorizedError {

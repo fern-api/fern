@@ -5,12 +5,13 @@
 import * as serializers from "..";
 import * as SeedResponseProperty from "../../api";
 import * as core from "../../core";
+import { StringResponse } from "./StringResponse";
 
 export const OptionalStringResponse: core.serialization.Schema<
     serializers.OptionalStringResponse.Raw,
     SeedResponseProperty.OptionalStringResponse
-> = core.serialization.lazyObject(async () => (await import("..")).StringResponse).optional();
+> = StringResponse.optional();
 
 export declare namespace OptionalStringResponse {
-    type Raw = serializers.StringResponse.Raw | null | undefined;
+    type Raw = StringResponse.Raw | null | undefined;
 }

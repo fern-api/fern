@@ -5,16 +5,17 @@
 import * as serializers from "../../../../..";
 import * as SeedTrace from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { TestCaseTemplate } from "./TestCaseTemplate";
 
 export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectSchema<
     serializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw,
     SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest
 > = core.serialization.object({
-    template: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.TestCaseTemplate),
+    template: TestCaseTemplate,
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
     interface Raw {
-        template: serializers.v2.TestCaseTemplate.Raw;
+        template: TestCaseTemplate.Raw;
     }
 }

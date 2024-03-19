@@ -5,18 +5,19 @@
 import * as serializers from "../../../..";
 import * as SeedIdempotencyHeaders from "../../../../../api";
 import * as core from "../../../../../core";
+import { Currency } from "../../types/Currency";
 
 export const CreatePaymentRequest: core.serialization.Schema<
     serializers.CreatePaymentRequest.Raw,
     SeedIdempotencyHeaders.CreatePaymentRequest
 > = core.serialization.object({
     amount: core.serialization.number(),
-    currency: core.serialization.lazy(async () => (await import("../../../..")).Currency),
+    currency: Currency,
 });
 
 export declare namespace CreatePaymentRequest {
     interface Raw {
         amount: number;
-        currency: serializers.Currency.Raw;
+        currency: Currency.Raw;
     }
 }

@@ -5,14 +5,15 @@
 import * as serializers from "..";
 import * as SeedObjectsWithImports from "../../api";
 import * as core from "../../core";
+import { Node } from "./Node";
 
 export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedObjectsWithImports.Tree> =
     core.serialization.object({
-        nodes: core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).Node)).optional(),
+        nodes: core.serialization.list(Node).optional(),
     });
 
 export declare namespace Tree {
     interface Raw {
-        nodes?: serializers.Node.Raw[] | null;
+        nodes?: Node.Raw[] | null;
     }
 }

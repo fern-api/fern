@@ -48,7 +48,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
                     token,
-                    whitelabel
+                    whitelabel,
+                    irVersionOverride: generatorInvocation.irVersionOverride
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

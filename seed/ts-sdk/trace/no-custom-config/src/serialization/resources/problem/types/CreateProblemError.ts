@@ -5,13 +5,14 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { GenericCreateProblemError } from "./GenericCreateProblemError";
 
 export const CreateProblemError: core.serialization.Schema<
     serializers.CreateProblemError.Raw,
     SeedTrace.CreateProblemError
 > = core.serialization
     .union(core.serialization.discriminant("errorType", "_type"), {
-        generic: core.serialization.lazyObject(async () => (await import("../../..")).GenericCreateProblemError),
+        generic: GenericCreateProblemError,
     })
     .transform<SeedTrace.CreateProblemError>({
         transform: (value) => value,
@@ -21,7 +22,7 @@ export const CreateProblemError: core.serialization.Schema<
 export declare namespace CreateProblemError {
     type Raw = CreateProblemError.Generic;
 
-    interface Generic extends serializers.GenericCreateProblemError.Raw {
+    interface Generic extends GenericCreateProblemError.Raw {
         _type: "generic";
     }
 }

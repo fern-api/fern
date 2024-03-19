@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { NodeId } from "./NodeId";
+import { DoublyLinkedListValue } from "./DoublyLinkedListValue";
 
 export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
     serializers.DoublyLinkedListNodeAndListValue.Raw,
     SeedTrace.DoublyLinkedListNodeAndListValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
-    fullList: core.serialization.lazyObject(async () => (await import("../../..")).DoublyLinkedListValue),
+    nodeId: NodeId,
+    fullList: DoublyLinkedListValue,
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {
     interface Raw {
-        nodeId: serializers.NodeId.Raw;
-        fullList: serializers.DoublyLinkedListValue.Raw;
+        nodeId: NodeId.Raw;
+        fullList: DoublyLinkedListValue.Raw;
     }
 }

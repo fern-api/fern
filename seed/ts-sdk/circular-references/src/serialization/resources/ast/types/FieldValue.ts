@@ -5,13 +5,15 @@
 import * as serializers from "../../..";
 import * as SeedApi from "../../../../api";
 import * as core from "../../../../core";
+import { PrimitiveValue } from "./PrimitiveValue";
+import { ObjectValue } from "./ObjectValue";
 
 export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, SeedApi.FieldValue> = core.serialization
     .union("type", {
         primitive_value: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).PrimitiveValue),
+            value: PrimitiveValue,
         }),
-        object_value: core.serialization.lazyObject(async () => (await import("../../..")).ObjectValue),
+        object_value: ObjectValue,
         container_value: core.serialization.object({
             value: core.serialization.lazy(async () => (await import("../../..")).ContainerValue),
         }),
@@ -26,10 +28,10 @@ export declare namespace FieldValue {
 
     interface PrimitiveValue {
         type: "primitive_value";
-        value: serializers.PrimitiveValue.Raw;
+        value: PrimitiveValue.Raw;
     }
 
-    interface ObjectValue extends serializers.ObjectValue.Raw {
+    interface ObjectValue extends ObjectValue.Raw {
         type: "object_value";
     }
 

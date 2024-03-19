@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { WorkspaceSubmissionUpdateInfo } from "./WorkspaceSubmissionUpdateInfo";
 
 export const WorkspaceSubmissionUpdate: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmissionUpdate.Raw,
     SeedTrace.WorkspaceSubmissionUpdate
 > = core.serialization.object({
     updateTime: core.serialization.date(),
-    updateInfo: core.serialization.lazy(async () => (await import("../../..")).WorkspaceSubmissionUpdateInfo),
+    updateInfo: WorkspaceSubmissionUpdateInfo,
 });
 
 export declare namespace WorkspaceSubmissionUpdate {
     interface Raw {
         updateTime: string;
-        updateInfo: serializers.WorkspaceSubmissionUpdateInfo.Raw;
+        updateInfo: WorkspaceSubmissionUpdateInfo.Raw;
     }
 }

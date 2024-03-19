@@ -228,8 +228,9 @@ navigation:
           - section: Customize branding
             slug: branding
             contents:
-              - page: Colors and fonts
-                path: ./docs/pages/fern-docs/config/branding/colors-and-fonts.mdx
+              - page: Colors, fonts, and background image
+                path: ./docs/pages/fern-docs/config/branding/colors-fonts-background-image.mdx
+                slug: colors-fonts-background-image
               - page: Logo and favicon
                 path: ./docs/pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain

@@ -5,24 +5,21 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { PlaylistId } from "./PlaylistId";
+import { UserId } from "../../commons/types/UserId";
+import { PlaylistCreateRequest } from "./PlaylistCreateRequest";
 
 export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw, SeedTrace.Playlist> =
     core.serialization
         .object({
-            playlistId: core.serialization.property(
-                "playlist_id",
-                core.serialization.lazy(async () => (await import("../../..")).PlaylistId)
-            ),
-            ownerId: core.serialization.property(
-                "owner-id",
-                core.serialization.lazy(async () => (await import("../../..")).UserId)
-            ),
+            playlistId: core.serialization.property("playlist_id", PlaylistId),
+            ownerId: core.serialization.property("owner-id", UserId),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).PlaylistCreateRequest));
+        .extend(PlaylistCreateRequest);
 
 export declare namespace Playlist {
-    interface Raw extends serializers.PlaylistCreateRequest.Raw {
-        playlist_id: serializers.PlaylistId.Raw;
-        "owner-id": serializers.UserId.Raw;
+    interface Raw extends PlaylistCreateRequest.Raw {
+        playlist_id: PlaylistId.Raw;
+        "owner-id": UserId.Raw;
     }
 }

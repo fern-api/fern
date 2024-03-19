@@ -19,3 +19,23 @@ export function migrateIntermediateRepresentationForGenerator({
     });
     return migrated.jsonify();
 }
+
+export function migrateIntermediateRepresentationToVersionForGenerator({
+    intermediateRepresentation,
+    context,
+    targetGenerator,
+    irVersion
+}: {
+    intermediateRepresentation: IntermediateRepresentation;
+    context: TaskContext;
+    targetGenerator: GeneratorNameAndVersion;
+    irVersion: string;
+}): Promise<unknown> {
+    const migrated = getIntermediateRepresentationMigrator().migrateThroughVersion({
+        version: irVersion,
+        intermediateRepresentation,
+        context,
+        targetGenerator
+    });
+    return migrated.jsonify();
+}

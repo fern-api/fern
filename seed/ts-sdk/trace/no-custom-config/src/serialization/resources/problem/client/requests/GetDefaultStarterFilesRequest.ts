@@ -5,21 +5,20 @@
 import * as serializers from "../../../..";
 import * as SeedTrace from "../../../../../api";
 import * as core from "../../../../../core";
+import { VariableTypeAndName } from "../../types/VariableTypeAndName";
 
 export const GetDefaultStarterFilesRequest: core.serialization.Schema<
     serializers.GetDefaultStarterFilesRequest.Raw,
     SeedTrace.GetDefaultStarterFilesRequest
 > = core.serialization.object({
-    inputParams: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../..")).VariableTypeAndName)
-    ),
+    inputParams: core.serialization.list(VariableTypeAndName),
     outputType: core.serialization.lazy(async () => (await import("../../../..")).VariableType),
     methodName: core.serialization.string(),
 });
 
 export declare namespace GetDefaultStarterFilesRequest {
     interface Raw {
-        inputParams: serializers.VariableTypeAndName.Raw[];
+        inputParams: VariableTypeAndName.Raw[];
         outputType: serializers.VariableType.Raw;
         methodName: string;
     }

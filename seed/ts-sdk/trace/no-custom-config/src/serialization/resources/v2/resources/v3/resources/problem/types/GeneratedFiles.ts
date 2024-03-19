@@ -5,29 +5,22 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { Files } from "./Files";
+import { Language } from "../../../../../../commons/types/Language";
 
 export const GeneratedFiles: core.serialization.ObjectSchema<
     serializers.v2.v3.GeneratedFiles.Raw,
     SeedTrace.v2.v3.GeneratedFiles
 > = core.serialization.object({
-    generatedTestCaseFiles: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.Files).optional()
-    ),
-    generatedTemplateFiles: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.Files).optional()
-    ),
-    other: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.Files).optional()
-    ),
+    generatedTestCaseFiles: core.serialization.record(Language, Files.optional()),
+    generatedTemplateFiles: core.serialization.record(Language, Files.optional()),
+    other: core.serialization.record(Language, Files.optional()),
 });
 
 export declare namespace GeneratedFiles {
     interface Raw {
-        generatedTestCaseFiles: Record<serializers.Language.Raw, serializers.v2.v3.Files.Raw | null | undefined>;
-        generatedTemplateFiles: Record<serializers.Language.Raw, serializers.v2.v3.Files.Raw | null | undefined>;
-        other: Record<serializers.Language.Raw, serializers.v2.v3.Files.Raw | null | undefined>;
+        generatedTestCaseFiles: Record<Language.Raw, Files.Raw | null | undefined>;
+        generatedTemplateFiles: Record<Language.Raw, Files.Raw | null | undefined>;
+        other: Record<Language.Raw, Files.Raw | null | undefined>;
     }
 }

@@ -1,13 +1,13 @@
 ---
-title: Customize colors and fonts
-description: Update your docs site's colors and fonts, including its primary accent, dark and light mode backgrounds, and fonts for headings, body, and code snippets.
+title: Custom colors, fonts, background image
+description: Configure your site's primary accent color and dark & light mode background colors; dark & light mode background image; and fonts for headings, body, and code.
 ---
 
-Every Fern Docs website has a special configuation file called `docs.yml`. Use this file to update the colors and fonts for your documentation site.
+Every Fern Docs website has a special configuation file called `docs.yml`. Use this file to update the colors, background image, and fonts for your documentation site.
 
 ## Colors
 
-#### Primary accent
+### Primary accent
 
 You can specify a primary accent color using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp). The primary accent color is used for several purposes, including:
 
@@ -23,7 +23,7 @@ colors:
 ```
 </CodeBlock>
 
-#### Background
+### Background
 
 Just like `accentPrimary`, you can specify the background color using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp).
 
@@ -34,6 +34,47 @@ colors:
   background:
     dark: "#0d0e11"
     light: "#ffffff"
+```
+</CodeBlock>
+
+## Background image
+
+Include the background image or images in your `fern/` project, then specify the path in `docs.yml`:
+
+<CodeBlock title="Example custom background images">
+```diff
+  fern/
+  ├─ openapi/
+  ├─ pages/
++ ├─ images/
++   ├─ bg-light.svg
++   └─ bg-dark.svg
+  ├─ docs.yml
+  └─ fern.config.json
+```
+</CodeBlock>
+
+The PNG, SVG, and JPG image formats are supported.
+
+### Single background image
+
+You can set a single background image for both light and dark modes:
+
+<CodeBlock title="docs.yml">
+```yaml
+background-image: ./images/bg.svg
+```
+</CodeBlock>
+
+### Light and dark mode background image
+
+You can set a different background image for each mode:
+
+<CodeBlock title="docs.yml">
+```yaml
+background-image:
+  light: ./images/bg-light.svg
+  dark: ./images/bg-dark.svg
 ```
 </CodeBlock>
 

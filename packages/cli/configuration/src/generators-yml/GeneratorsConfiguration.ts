@@ -34,6 +34,7 @@ export interface GeneratorGroup {
 
 export interface GeneratorInvocation {
     name: string;
+    irVersionOverride: string | undefined;
     version: string;
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;

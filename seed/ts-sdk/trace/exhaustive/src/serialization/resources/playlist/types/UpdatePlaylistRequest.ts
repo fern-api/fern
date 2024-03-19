@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemId } from "../../commons/types/ProblemId";
 
 export const UpdatePlaylistRequest: core.serialization.ObjectSchema<
     serializers.UpdatePlaylistRequest.Raw,
     SeedTrace.UpdatePlaylistRequest
 > = core.serialization.object({
     name: core.serialization.string(),
-    problems: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ProblemId)),
+    problems: core.serialization.list(ProblemId),
 });
 
 export declare namespace UpdatePlaylistRequest {
     interface Raw {
         name: string;
-        problems: serializers.ProblemId.Raw[];
+        problems: ProblemId.Raw[];
     }
 }

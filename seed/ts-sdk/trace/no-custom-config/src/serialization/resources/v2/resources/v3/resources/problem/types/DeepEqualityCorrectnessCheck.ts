@@ -5,18 +5,17 @@
 import * as serializers from "../../../../../../..";
 import * as SeedTrace from "../../../../../../../../api";
 import * as core from "../../../../../../../../core";
+import { ParameterId } from "./ParameterId";
 
 export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
     serializers.v2.v3.DeepEqualityCorrectnessCheck.Raw,
     SeedTrace.v2.v3.DeepEqualityCorrectnessCheck
 > = core.serialization.object({
-    expectedValueParameterId: core.serialization.lazy(
-        async () => (await import("../../../../../../..")).v2.v3.ParameterId
-    ),
+    expectedValueParameterId: ParameterId,
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
     interface Raw {
-        expectedValueParameterId: serializers.v2.v3.ParameterId.Raw;
+        expectedValueParameterId: ParameterId.Raw;
     }
 }

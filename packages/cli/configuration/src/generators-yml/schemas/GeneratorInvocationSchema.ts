@@ -8,6 +8,7 @@ export const GeneratorInvocationSchema = z.strictObject({
     output: z.optional(GeneratorOutputSchema),
     github: z.optional(GithubConfigurationSchema),
     config: z.unknown(),
+    "ir-version": z.optional(z.string()),
     // Feature flag used to enable better IR naming.
     "smart-casing": z.optional(z.boolean()),
     // Temporary way to unblock example serialization

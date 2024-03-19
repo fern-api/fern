@@ -5,35 +5,33 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemDescription } from "./ProblemDescription";
+import { ProblemFiles } from "./ProblemFiles";
+import { Language } from "../../commons/types/Language";
+import { VariableTypeAndName } from "./VariableTypeAndName";
+import { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult";
 
 export const CreateProblemRequest: core.serialization.ObjectSchema<
     serializers.CreateProblemRequest.Raw,
     SeedTrace.CreateProblemRequest
 > = core.serialization.object({
     problemName: core.serialization.string(),
-    problemDescription: core.serialization.lazyObject(async () => (await import("../../..")).ProblemDescription),
-    files: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../..")).ProblemFiles).optional()
-    ),
-    inputParams: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).VariableTypeAndName)
-    ),
+    problemDescription: ProblemDescription,
+    files: core.serialization.record(Language, ProblemFiles.optional()),
+    inputParams: core.serialization.list(VariableTypeAndName),
     outputType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
-    testcases: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).TestCaseWithExpectedResult)
-    ),
+    testcases: core.serialization.list(TestCaseWithExpectedResult),
     methodName: core.serialization.string(),
 });
 
 export declare namespace CreateProblemRequest {
     interface Raw {
         problemName: string;
-        problemDescription: serializers.ProblemDescription.Raw;
-        files: Record<serializers.Language.Raw, serializers.ProblemFiles.Raw | null | undefined>;
-        inputParams: serializers.VariableTypeAndName.Raw[];
+        problemDescription: ProblemDescription.Raw;
+        files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
+        inputParams: VariableTypeAndName.Raw[];
         outputType: serializers.VariableType.Raw;
-        testcases: serializers.TestCaseWithExpectedResult.Raw[];
+        testcases: TestCaseWithExpectedResult.Raw[];
         methodName: string;
     }
 }
