@@ -153,7 +153,8 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
-        language: getLanguageFromGeneratorName(generator.name)
+        language: getLanguageFromGeneratorName(generator.name),
+        irVersionOverride: generator["ir-version"] ?? undefined
     };
 }
 
