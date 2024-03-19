@@ -33,8 +33,11 @@ class EnumGenerator(AbstractTypeGenerator):
         if self._use_str_enums:
             self._source_file.add_declaration(
                 AST.TypeAliasDeclaration(
-                    type_hint=AST.TypeHint.literal(
-                        AST.Expression(", ".join(map(lambda v: f'"{v.name.wire_value}"', self._enum.values)))
+                    type_hint=AST.TypeHint.union(
+                        AST.TypeHint.any_str(),
+                        AST.TypeHint.literal(
+                            AST.Expression(", ".join(map(lambda v: f'"{v.name.wire_value}"', self._enum.values)))
+                        ),
                     ),
                     name=self._name.name.pascal_case.safe_name,
                 ),
