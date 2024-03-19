@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemId } from "../../commons/types/ProblemId";
 
 export const InitializeProblemRequest: core.serialization.ObjectSchema<
     serializers.InitializeProblemRequest.Raw,
     SeedTrace.InitializeProblemRequest
 > = core.serialization.object({
-    problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+    problemId: ProblemId,
     problemVersion: core.serialization.number().optional(),
 });
 
 export declare namespace InitializeProblemRequest {
     interface Raw {
-        problemId: serializers.ProblemId.Raw;
+        problemId: ProblemId.Raw;
         problemVersion?: number | null;
     }
 }

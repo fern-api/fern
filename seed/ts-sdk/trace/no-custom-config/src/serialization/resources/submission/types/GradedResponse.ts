@@ -5,19 +5,18 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
+import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout";
 
 export const GradedResponse: core.serialization.ObjectSchema<serializers.GradedResponse.Raw, SeedTrace.GradedResponse> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-        testCases: core.serialization.record(
-            core.serialization.string(),
-            core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResultWithStdout)
-        ),
+        submissionId: SubmissionId,
+        testCases: core.serialization.record(core.serialization.string(), TestCaseResultWithStdout),
     });
 
 export declare namespace GradedResponse {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
-        testCases: Record<string, serializers.TestCaseResultWithStdout.Raw>;
+        submissionId: SubmissionId.Raw;
+        testCases: Record<string, TestCaseResultWithStdout.Raw>;
     }
 }

@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionRequest } from "./SubmissionRequest";
+import { InvalidRequestCause } from "./InvalidRequestCause";
 
 export const InvalidRequestResponse: core.serialization.ObjectSchema<
     serializers.InvalidRequestResponse.Raw,
     SeedTrace.InvalidRequestResponse
 > = core.serialization.object({
-    request: core.serialization.lazy(async () => (await import("../../..")).SubmissionRequest),
-    cause: core.serialization.lazy(async () => (await import("../../..")).InvalidRequestCause),
+    request: SubmissionRequest,
+    cause: InvalidRequestCause,
 });
 
 export declare namespace InvalidRequestResponse {
     interface Raw {
-        request: serializers.SubmissionRequest.Raw;
-        cause: serializers.InvalidRequestCause.Raw;
+        request: SubmissionRequest.Raw;
+        cause: InvalidRequestCause.Raw;
     }
 }

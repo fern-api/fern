@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ExceptionInfo } from "./ExceptionInfo";
 
 export const InternalError: core.serialization.ObjectSchema<serializers.InternalError.Raw, SeedTrace.InternalError> =
     core.serialization.object({
-        exceptionInfo: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+        exceptionInfo: ExceptionInfo,
     });
 
 export declare namespace InternalError {
     interface Raw {
-        exceptionInfo: serializers.ExceptionInfo.Raw;
+        exceptionInfo: ExceptionInfo.Raw;
     }
 }

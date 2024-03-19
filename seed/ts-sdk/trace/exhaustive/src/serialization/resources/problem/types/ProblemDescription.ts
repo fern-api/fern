@@ -5,18 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemDescriptionBoard } from "./ProblemDescriptionBoard";
 
 export const ProblemDescription: core.serialization.ObjectSchema<
     serializers.ProblemDescription.Raw,
     SeedTrace.ProblemDescription
 > = core.serialization.object({
-    boards: core.serialization.list(
-        core.serialization.lazy(async () => (await import("../../..")).ProblemDescriptionBoard)
-    ),
+    boards: core.serialization.list(ProblemDescriptionBoard),
 });
 
 export declare namespace ProblemDescription {
     interface Raw {
-        boards: serializers.ProblemDescriptionBoard.Raw[];
+        boards: ProblemDescriptionBoard.Raw[];
     }
 }

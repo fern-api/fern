@@ -5,11 +5,12 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { ExceptionInfo } from "./ExceptionInfo";
 
 export const Exception: core.serialization.Schema<serializers.Exception.Raw, SeedExamples.Exception> =
     core.serialization
         .union("type", {
-            generic: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+            generic: ExceptionInfo,
             timeout: core.serialization.object({}),
         })
         .transform<SeedExamples.Exception>({
@@ -20,7 +21,7 @@ export const Exception: core.serialization.Schema<serializers.Exception.Raw, See
 export declare namespace Exception {
     type Raw = Exception.Generic | Exception.Timeout;
 
-    interface Generic extends serializers.ExceptionInfo.Raw {
+    interface Generic extends ExceptionInfo.Raw {
         type: "generic";
     }
 

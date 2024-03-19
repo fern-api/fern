@@ -5,12 +5,15 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { CompileError } from "./CompileError";
+import { RuntimeError } from "./RuntimeError";
+import { InternalError } from "./InternalError";
 
 export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization
     .union("type", {
-        compileError: core.serialization.lazyObject(async () => (await import("../../..")).CompileError),
-        runtimeError: core.serialization.lazyObject(async () => (await import("../../..")).RuntimeError),
-        internalError: core.serialization.lazyObject(async () => (await import("../../..")).InternalError),
+        compileError: CompileError,
+        runtimeError: RuntimeError,
+        internalError: InternalError,
     })
     .transform<SeedTrace.ErrorInfo>({
         transform: (value) => {
@@ -31,15 +34,15 @@ export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, See
 export declare namespace ErrorInfo {
     type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
 
-    interface CompileError extends serializers.CompileError.Raw {
+    interface CompileError extends CompileError.Raw {
         type: "compileError";
     }
 
-    interface RuntimeError extends serializers.RuntimeError.Raw {
+    interface RuntimeError extends RuntimeError.Raw {
         type: "runtimeError";
     }
 
-    interface InternalError extends serializers.InternalError.Raw {
+    interface InternalError extends InternalError.Raw {
         type: "internalError";
     }
 }

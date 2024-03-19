@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedExamples from "../../../../api";
 import * as core from "../../../../core";
+import { Movie } from "./Movie";
 
 export const ExtendedMovie: core.serialization.ObjectSchema<serializers.ExtendedMovie.Raw, SeedExamples.ExtendedMovie> =
     core.serialization
         .object({
             cast: core.serialization.list(core.serialization.string()),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).Movie));
+        .extend(Movie);
 
 export declare namespace ExtendedMovie {
-    interface Raw extends serializers.Movie.Raw {
+    interface Raw extends Movie.Raw {
         cast: string[];
     }
 }

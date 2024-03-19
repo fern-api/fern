@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ProblemId } from "../../commons/types/ProblemId";
+import { SubmissionId } from "./SubmissionId";
 
 export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
     serializers.CustomTestCasesUnsupported.Raw,
     SeedTrace.CustomTestCasesUnsupported
 > = core.serialization.object({
-    problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    problemId: ProblemId,
+    submissionId: SubmissionId,
 });
 
 export declare namespace CustomTestCasesUnsupported {
     interface Raw {
-        problemId: serializers.ProblemId.Raw;
-        submissionId: serializers.SubmissionId.Raw;
+        problemId: ProblemId.Raw;
+        submissionId: SubmissionId.Raw;
     }
 }

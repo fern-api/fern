@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { Language } from "../../commons/types/Language";
+import { ExecutionSessionStatus } from "./ExecutionSessionStatus";
 
 export const ExecutionSessionResponse: core.serialization.ObjectSchema<
     serializers.ExecutionSessionResponse.Raw,
@@ -12,15 +14,15 @@ export const ExecutionSessionResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     sessionId: core.serialization.string(),
     executionSessionUrl: core.serialization.string().optional(),
-    language: core.serialization.lazy(async () => (await import("../../..")).Language),
-    status: core.serialization.lazy(async () => (await import("../../..")).ExecutionSessionStatus),
+    language: Language,
+    status: ExecutionSessionStatus,
 });
 
 export declare namespace ExecutionSessionResponse {
     interface Raw {
         sessionId: string;
         executionSessionUrl?: string | null;
-        language: serializers.Language.Raw;
-        status: serializers.ExecutionSessionStatus.Raw;
+        language: Language.Raw;
+        status: ExecutionSessionStatus.Raw;
     }
 }

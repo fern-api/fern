@@ -5,20 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { TraceResponse } from "./TraceResponse";
 
 export const TraceResponsesPage: core.serialization.ObjectSchema<
     serializers.TraceResponsesPage.Raw,
     SeedTrace.TraceResponsesPage
 > = core.serialization.object({
     offset: core.serialization.number().optional(),
-    traceResponses: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).TraceResponse)
-    ),
+    traceResponses: core.serialization.list(TraceResponse),
 });
 
 export declare namespace TraceResponsesPage {
     interface Raw {
         offset?: number | null;
-        traceResponses: serializers.TraceResponse.Raw[];
+        traceResponses: TraceResponse.Raw[];
     }
 }

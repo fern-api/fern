@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.8] - 2024-03-18
+
+- Improvement: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
+
 ## [0.12.7] - 2024-03-14
 
 - Improvement: the SDK will now leverage environment variable defaults, where specified, for authentication variables, such as bearer tokens, api keys, custom headers, etc.

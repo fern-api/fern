@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { SubmissionId } from "./SubmissionId";
 
 export const StdoutResponse: core.serialization.ObjectSchema<serializers.StdoutResponse.Raw, SeedTrace.StdoutResponse> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: SubmissionId,
         stdout: core.serialization.string(),
     });
 
 export declare namespace StdoutResponse {
     interface Raw {
-        submissionId: serializers.SubmissionId.Raw;
+        submissionId: SubmissionId.Raw;
         stdout: string;
     }
 }

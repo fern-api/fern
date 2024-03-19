@@ -5,12 +5,14 @@
 import * as serializers from "../../..";
 import * as SeedUnions from "../../../../api";
 import * as core from "../../../../core";
+import { Foo } from "./Foo";
+import { Bar } from "./Bar";
 
 export const UnionWithoutKey: core.serialization.Schema<serializers.UnionWithoutKey.Raw, SeedUnions.UnionWithoutKey> =
     core.serialization
         .union("type", {
-            foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
-            bar: core.serialization.lazyObject(async () => (await import("../../..")).Bar),
+            foo: Foo,
+            bar: Bar,
         })
         .transform<SeedUnions.UnionWithoutKey>({
             transform: (value) => value,
@@ -20,11 +22,11 @@ export const UnionWithoutKey: core.serialization.Schema<serializers.UnionWithout
 export declare namespace UnionWithoutKey {
     type Raw = UnionWithoutKey.Foo | UnionWithoutKey.Bar;
 
-    interface Foo extends serializers.Foo.Raw {
+    interface Foo extends Foo.Raw {
         type: "foo";
     }
 
-    interface Bar extends serializers.Bar.Raw {
+    interface Bar extends Bar.Raw {
         type: "bar";
     }
 }

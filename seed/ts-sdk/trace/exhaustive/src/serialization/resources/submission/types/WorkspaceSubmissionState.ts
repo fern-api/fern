@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { WorkspaceSubmissionStatus } from "./WorkspaceSubmissionStatus";
 
 export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmissionState.Raw,
     SeedTrace.WorkspaceSubmissionState
 > = core.serialization.object({
-    status: core.serialization.lazy(async () => (await import("../../..")).WorkspaceSubmissionStatus),
+    status: WorkspaceSubmissionStatus,
 });
 
 export declare namespace WorkspaceSubmissionState {
     interface Raw {
-        status: serializers.WorkspaceSubmissionStatus.Raw;
+        status: WorkspaceSubmissionStatus.Raw;
     }
 }

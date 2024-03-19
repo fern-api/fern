@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { ExecutionSessionResponse } from "../types/ExecutionSessionResponse";
 
 export const Response: core.serialization.Schema<
     serializers.submission.getExecutionSession.Response.Raw,
     SeedTrace.ExecutionSessionResponse | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).ExecutionSessionResponse).optional();
+> = ExecutionSessionResponse.optional();
 
 export declare namespace Response {
-    type Raw = serializers.ExecutionSessionResponse.Raw | null | undefined;
+    type Raw = ExecutionSessionResponse.Raw | null | undefined;
 }

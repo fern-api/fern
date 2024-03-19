@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as SeedTrace from "../../../../api";
 import * as core from "../../../../core";
+import { TestSubmissionUpdateInfo } from "./TestSubmissionUpdateInfo";
 
 export const TestSubmissionUpdate: core.serialization.ObjectSchema<
     serializers.TestSubmissionUpdate.Raw,
     SeedTrace.TestSubmissionUpdate
 > = core.serialization.object({
     updateTime: core.serialization.date(),
-    updateInfo: core.serialization.lazy(async () => (await import("../../..")).TestSubmissionUpdateInfo),
+    updateInfo: TestSubmissionUpdateInfo,
 });
 
 export declare namespace TestSubmissionUpdate {
     interface Raw {
         updateTime: string;
-        updateInfo: serializers.TestSubmissionUpdateInfo.Raw;
+        updateInfo: TestSubmissionUpdateInfo.Raw;
     }
 }

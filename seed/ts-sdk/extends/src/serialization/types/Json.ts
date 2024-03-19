@@ -5,15 +5,16 @@
 import * as serializers from "..";
 import * as SeedExtends from "../../api";
 import * as core from "../../core";
+import { Docs } from "./Docs";
 
 export const Json: core.serialization.ObjectSchema<serializers.Json.Raw, SeedExtends.Json> = core.serialization
     .object({
         raw: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).Docs));
+    .extend(Docs);
 
 export declare namespace Json {
-    interface Raw extends serializers.Docs.Raw {
+    interface Raw extends Docs.Raw {
         raw: string;
     }
 }
