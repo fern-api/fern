@@ -114,7 +114,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
                 customConfig.clientClassName,
                 getPackageNameFromPublishConfig(config)
             );
-            // await this.writeProjectFiles(config, packageName);
+            await this.writeProjectFiles(config, packageName);
             this.formatFiles(config);
 
             // ===========================================================
@@ -169,7 +169,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
 
     async writeProjectFiles(config: FernGeneratorExec.GeneratorConfig, projectName: string): Promise<void> {
         const directoryPrefix = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of("src"));
-        if (existsSync(directoryPrefix)) {
+        if (!existsSync(directoryPrefix)) {
             return;
         }
 
@@ -197,7 +197,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
         execSync(`cd ${directoryPrefix} && dotnet sln add ./${testProjectName}/${testProjectName}.csproj`);
 
         // Create the gitignore
-        // execSync("dotnet new gitignore");
+        execSync(`cd ${directoryPrefix} && dotnet new gitignore`);
     }
 
     async zipDirectoryContents({
