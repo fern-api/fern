@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.12.4] - 2024-03-19
 
-- Improvement: Allow full forward compat with enums while keeping intellisense by unioning enum literals with typing.AnyStr.
+- Improvement: Allow full forward compat with enums while keeping intellisense by unioning enum literals with `typing.AnyStr`.
+
+  Before:
+
+  ```python
+  Operand = typing.Union[typing.AnyStr, typing.Literal[">", "=", "less_than"]]
+  ```
+
+  After:
+
+  ```python
+  Operand = typing.Literal[">", "=", "less_than"]
+  ```
 
 ## [0.12.3] - 2024-03-18
 
