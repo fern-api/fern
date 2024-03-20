@@ -193,7 +193,7 @@ When disabled (the default), the generated client includes an option to override
 
 ```typescript
 const acme = new AcmeClient({
-  environment: "localhost:8080",
+  environment: "localhost:8080"
 });
 ```
 
@@ -367,7 +367,6 @@ The generated TypeScript code has the following dependencies:
 - [@ungap/url-search-params](https://www.npmjs.com/package/@ungap/url-search-params)
 - [url-join](https://www.npmjs.com/package/url-join)
 - [form-data](https://www.npmjs.com/package/form-data)
-- [axios](https://www.npmjs.com/package/axios)
 - [js-base64](https://www.npmjs.com/package/js-base64)
 
 If you are packaging your code manually, make sure to include them in your `package.json`.
@@ -391,4 +390,3 @@ groups:
 ```
 
 Fern will handle the rest automatically.
-

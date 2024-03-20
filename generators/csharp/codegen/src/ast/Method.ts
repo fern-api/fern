@@ -18,15 +18,17 @@ export declare namespace Method {
         name: string;
         /* The access of the method */
         access: Access;
+        /* Whether the method is sync or async. Defaults to false. */
+        isAsync: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
         /* The return type of the method */
-        return: Type;
+        return_: Type;
         /* The body of the method */
-        body: string | ((writer: Writer) => void);
+        body: CodeBlock;
         /* Docs for the method */
         docs: string | undefined;
-        /* The type of the method */
+        /* The type of the method, defaults to INSTANCE */
         type?: MethodType;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
@@ -34,10 +36,28 @@ export declare namespace Method {
 }
 
 export class Method extends AstNode {
+    public readonly name: string;
+    public readonly isAsync: boolean;
+    public readonly access: Access;
+    public readonly return: Type;
+    public readonly body: CodeBlock;
+    public readonly docs: string | undefined;
+    public readonly type: MethodType;
+    public readonly reference: ClassReference | undefined;
+
     private parameters: Parameter[] = [];
 
-    constructor(private readonly args: Method.Args) {
+    constructor({ name, isAsync, access, return_, body, docs, type, classReference }: Method.Args) {
         super();
+
+        this.name = name;
+        this.isAsync = isAsync;
+        this.access = access;
+        this.return = return_;
+        this.body = body;
+        this.docs = docs;
+        this.type = type ?? MethodType.INSTANCE;
+        this.reference = classReference;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -45,7 +65,29 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
-        throw new Error("Method not implemented.");
+        writer.write(`${this.access} `);
+        if (this.type === MethodType.STATIC) {
+            writer.write("static ");
+        }
+        if (this.isAsync) {
+            writer.write("async ");
+        }
+        this.return.write(writer);
+        writer.write(` ${this.name}(`);
+        this.parameters.forEach((parameter, idx) => {
+            parameter.write(writer);
+            if (idx < this.parameters.length - 2) {
+                writer.write(", ");
+            }
+        });
+        writer.write(")");
+        writer.writeLine("{");
+
+        writer.indent();
+        this.body.write(writer);
+        writer.dedent();
+
+        writer.writeLine("}");
     }
 
     public getParameters(): Parameter[] {
@@ -55,7 +97,7 @@ export class Method extends AstNode {
     public getInvocation(args: Map<Parameter, CodeBlock>, on?: CodeBlock): MethodInvocation {
         return new MethodInvocation({
             method: this,
-            arguments: args,
+            arguments_: args,
             on
         });
     }
@@ -71,7 +113,7 @@ export class Method extends AstNode {
         }
         return new MethodInvocation({
             method: this,
-            arguments: args,
+            arguments_: args,
             on
         });
     }

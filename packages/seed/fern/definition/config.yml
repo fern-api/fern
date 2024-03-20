@@ -41,6 +41,7 @@ types:
       - typescript
       - go
       - ruby
+      - csharp
 
   GeneratorType:
     enum:

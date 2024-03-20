@@ -4,9 +4,9 @@ import { mkdir, writeFile } from "fs/promises";
 export class File {
     public filename: string;
     public directory: RelativeFilePath;
-    public fileContents: string;
+    public fileContents: string | Buffer;
 
-    constructor(filename: string, directory: RelativeFilePath, fileContents: string) {
+    constructor(filename: string, directory: RelativeFilePath, fileContents: string | Buffer) {
         this.filename = filename;
         this.directory = directory;
         this.fileContents = fileContents;

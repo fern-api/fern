@@ -6,7 +6,8 @@ import * as SeedUnions from "../../..";
 
 export type UnionWithBaseProperties =
     | SeedUnions.UnionWithBaseProperties.Integer
-    | SeedUnions.UnionWithBaseProperties.String;
+    | SeedUnions.UnionWithBaseProperties.String
+    | SeedUnions.UnionWithBaseProperties.Foo;
 
 export declare namespace UnionWithBaseProperties {
     interface Integer extends _Base {
@@ -17,6 +18,10 @@ export declare namespace UnionWithBaseProperties {
     interface String extends _Base {
         type: "string";
         value: string;
+    }
+
+    interface Foo extends SeedUnions.Foo, _Base {
+        type: "foo";
     }
 
     interface _Base {

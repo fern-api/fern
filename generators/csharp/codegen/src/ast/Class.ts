@@ -1,3 +1,4 @@
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -5,6 +6,7 @@ import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
+import { Interface } from "./Interface";
 import { Method } from "./Method";
 
 export declare namespace Class {
@@ -19,6 +21,12 @@ export declare namespace Class {
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
+        /* The class to inherit from if any */
+        parentClassReference?: ClassReference;
+        /* Any interfaces the class extends */
+        interfaceReferences?: ClassReference[];
+        /* Defaults to false */
+        isNestedClass?: boolean;
     }
 }
 
@@ -29,17 +37,35 @@ export class Class extends AstNode {
     public readonly sealed: boolean;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
+    public readonly parentClassReference: ClassReference | undefined;
+    public readonly interfaceReferences: ClassReference[];
+    public readonly isNestedClass: boolean;
 
     private fields: Field[] = [];
     private methods: Method[] = [];
+    private nestedClasses: Class[] = [];
+    private nestedInterfaces: Interface[] = [];
 
-    constructor({ name, namespace, access, sealed, partial }: Class.Args) {
+    constructor({
+        name,
+        namespace,
+        access,
+        sealed,
+        partial,
+        parentClassReference,
+        interfaceReferences,
+        isNestedClass
+    }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
+        this.isNestedClass = isNestedClass ?? false;
+
+        this.parentClassReference = parentClassReference;
+        this.interfaceReferences = interfaceReferences ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
@@ -55,28 +81,90 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
+    public addNestedClass(subClass: Class): void {
+        this.nestedClasses.push(subClass);
+    }
+
+    public addNestedInterface(subInterface: Interface): void {
+        this.nestedInterfaces.push(subInterface);
+    }
+
     public write(writer: Writer): void {
-        writer.writeLine(`namespace ${this.namespace}`);
-        writer.newLine();
-        writer.write(`${this.access} `);
+        if (!this.isNestedClass) {
+            writer.writeLine(`namespace ${this.namespace};`);
+            writer.newLine();
+        }
+        writer.write(`${this.access}`);
         if (this.sealed) {
-            writer.write("sealed ");
+            writer.write(" sealed");
         }
         if (this.partial) {
-            writer.write("partial ");
+            writer.write(" partial");
         }
-        writer.write("class ");
-        writer.writeLine(`${this.name}`);
+        writer.write(" class");
+        writer.write(` ${this.name}`);
+        if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
+            writer.write(" : ");
+            if (this.parentClassReference != null) {
+                this.parentClassReference.write(writer);
+                if (this.interfaceReferences.length > 0) {
+                    writer.write(", ");
+                }
+            }
+            this.interfaceReferences.forEach((interfaceReference, index) => {
+                interfaceReference.write(writer);
+                // Don't write a comma after the last interface
+                if (index < this.interfaceReferences.length - 1) {
+                    writer.write(", ");
+                }
+            });
+        }
+        writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
 
         writer.indent();
-        for (const field of this.fields) {
+        this.fields.forEach((field, index) => {
             field.write(writer);
-            writer.writeLine("");
-        }
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
         writer.dedent();
 
-        // TODO(dsinghvi): add support for methods
+        writer.indent();
+        this.nestedClasses.forEach((nestedClass, index) => {
+            nestedClass.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
+        writer.dedent();
+
+        writer.indent();
+        this.nestedInterfaces.forEach((nestedInterface, index) => {
+            nestedInterface.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
+        writer.dedent();
+
+        writer.indent();
+        this.methods.forEach((method, index) => {
+            method.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
+        writer.dedent();
 
         writer.writeLine("}");
     }
@@ -88,7 +176,7 @@ export class Class extends AstNode {
     public getInitializer(args: Map<Field, CodeBlock>): ClassInstantiation {
         return new ClassInstantiation({
             classReference: this.reference,
-            arguments: args
+            arguments_: args
         });
     }
 
@@ -103,7 +191,11 @@ export class Class extends AstNode {
         }
         return new ClassInstantiation({
             classReference: this.reference,
-            arguments: args
+            arguments_: args
         });
+    }
+
+    public static getNamespaceFromFernFilepath(rootNamespace: string, fernFilePath: FernFilepath): string {
+        return [rootNamespace, ...fernFilePath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }
 }

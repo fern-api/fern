@@ -18,7 +18,7 @@ export class CodeBlock extends AstNode {
 
     public write(writer: Writer): void {
         if (typeof this.value === "string") {
-            writer.writeLine(this.value);
+            writer.write(this.value);
         } else {
             this.value(writer);
         }

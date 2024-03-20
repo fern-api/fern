@@ -1,9 +1,11 @@
+import { packageUtils } from "@fern-api/csharp-codegen";
 import { AbstractGeneratorCli } from "@fern-api/csharp-generator-cli";
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { writeFile } from "fs/promises";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelGenerator } from "./ModelGenerator";
 
 export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSchema> {
     protected parseCustomConfig(customConfig: unknown): ModelCustomConfigSchema {
@@ -27,8 +29,29 @@ export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSch
         intermediateRepresentation: IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void> {
-        generatorContext.logger.info("Received IR", JSON.stringify(intermediateRepresentation, null, 2));
-        await writeFile(`/${config.output.path}/ir.json`, JSON.stringify(intermediateRepresentation, null, 2));
+        generatorContext.logger.info("Received IR, processing model generation for Github.");
+        const packageName = packageUtils.getPackageName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName,
+            getPackageNameFromPublishConfig(config)
+        );
+        const directoryPrefix = join(
+            AbsoluteFilePath.of(config.output.path),
+            RelativeFilePath.of("src"),
+            RelativeFilePath.of(packageName)
+        );
+
+        const clientName = packageUtils.getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
+
+        const files = new ModelGenerator(clientName, intermediateRepresentation, generatorContext).generateTypes();
+        for (const file of files) {
+            await file.write(directoryPrefix);
+        }
     }
 
     protected async writeForDownload(
@@ -37,8 +60,29 @@ export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSch
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
-        generatorContext.logger.info("Received IR", JSON.stringify(intermediateRepresentation, null, 2));
-        await writeFile(`/${config.output.path}/ir.json`, JSON.stringify(intermediateRepresentation, null, 2));
+        generatorContext.logger.info("Received IR, processing model generation for download.");
+        const packageName = packageUtils.getPackageName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName,
+            getPackageNameFromPublishConfig(config)
+        );
+        const directoryPrefix = join(
+            AbsoluteFilePath.of(config.output.path),
+            RelativeFilePath.of("src"),
+            RelativeFilePath.of(packageName)
+        );
+
+        const clientName = packageUtils.getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
+
+        const files = new ModelGenerator(clientName, intermediateRepresentation, generatorContext).generateTypes();
+        for (const file of files) {
+            await file.write(directoryPrefix);
+        }
     }
 
     protected shouldTolerateRepublish(customConfig: ModelCustomConfigSchema): boolean {

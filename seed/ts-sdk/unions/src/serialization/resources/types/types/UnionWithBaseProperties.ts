@@ -24,6 +24,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
                 value: core.serialization.string(),
             })
             .extend(_Base),
+        foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo).extend(_Base),
     })
     .transform<SeedUnions.UnionWithBaseProperties>({
         transform: (value) => value,
@@ -31,7 +32,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
     });
 
 export declare namespace UnionWithBaseProperties {
-    type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String;
+    type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String | UnionWithBaseProperties.Foo;
 
     interface Integer extends _Base {
         type: "integer";
@@ -41,6 +42,10 @@ export declare namespace UnionWithBaseProperties {
     interface String extends _Base {
         type: "string";
         value: string;
+    }
+
+    interface Foo extends _Base, serializers.Foo.Raw {
+        type: "foo";
     }
 
     interface _Base {
