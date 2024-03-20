@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using SeedTraceClient.V2
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using SeedTraceClient.V2;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestSubmissionStatusV2
 {

@@ -1,4 +1,4 @@
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TerminatedResponse
 {

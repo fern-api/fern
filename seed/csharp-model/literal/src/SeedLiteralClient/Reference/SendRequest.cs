@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedLiteralClient
+namespace SeedLiteralClient;
 
 public class SendRequest
 {

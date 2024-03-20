@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedAudiencesClient.FolderB
+using System.Text.Json.Serialization;
+using SeedAudiencesClient.FolderB;
 
-namespace SeedAudiencesClient.FolderA
+namespace SeedAudiencesClient.FolderA;
 
 public class Response
 {

@@ -1,16 +1,16 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class SubmissionTypeState
 {
-    public class _TestSubmissionState : TestSubmissionState
+    public class _Test : TestSubmissionState
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "test";
     }
-    public class _WorkspaceSubmissionState : WorkspaceSubmissionState
+    public class _Workspace : WorkspaceSubmissionState
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "workspace";

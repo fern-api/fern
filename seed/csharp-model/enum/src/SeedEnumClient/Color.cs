@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedEnumClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedEnumClient.Utilities;
 
-namespace SeedEnumClient
+namespace SeedEnumClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Color

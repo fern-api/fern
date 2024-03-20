@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedExtendsClient
+namespace SeedExtendsClient;
 
 public class Docs
 {

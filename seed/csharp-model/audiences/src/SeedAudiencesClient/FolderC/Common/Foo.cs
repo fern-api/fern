@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedAudiencesClient.FolderC
+namespace SeedAudiencesClient.FolderC;
 
 public class Foo
 {

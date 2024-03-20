@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using StringEnum
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using StringEnum;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class CreateProblemRequest
 {
@@ -20,7 +20,7 @@ public class CreateProblemRequest
     public List<VariableTypeAndName> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
-    public OneOf<IntegerType, DoubleType, BooleanType, StringType, CharType, ListType, MapType, BinaryTreeType, SinglyLinkedListType, DoublyLinkedListType> OutputType { get; init; }
+    public OneOf<VariableType._IntegerType, VariableType._DoubleType, VariableType._BooleanType, VariableType._StringType, VariableType._CharType, VariableType._ListType, VariableType._MapType, VariableType._BinaryTreeType, VariableType._SinglyLinkedListType, VariableType._DoublyLinkedListType> OutputType { get; init; }
 
     [JsonPropertyName("testcases")]
     public List<TestCaseWithExpectedResult> Testcases { get; init; }

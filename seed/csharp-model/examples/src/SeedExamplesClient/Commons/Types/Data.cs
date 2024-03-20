@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedExamplesClient.Commons
+namespace SeedExamplesClient.Commons;
 
 public class Data
 {
-    public class _Value
+    public class _String
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "string";
@@ -12,7 +12,7 @@ public class Data
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value
+    public class _Base64
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "base64";

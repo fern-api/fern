@@ -1,4 +1,4 @@
-namespace SeedApiClient
+namespace SeedApiClient;
 
 public class ObjectValue
 {

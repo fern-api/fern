@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class GetSubmissionStateResponse
 {
@@ -17,5 +17,5 @@ public class GetSubmissionStateResponse
     public StringEnum<Language> Language { get; init; }
 
     [JsonPropertyName("submissionTypeState")]
-    public OneOf<TestSubmissionState, WorkspaceSubmissionState> SubmissionTypeState { get; init; }
+    public OneOf<SubmissionTypeState._Test, SubmissionTypeState._Workspace> SubmissionTypeState { get; init; }
 }

@@ -1,14 +1,14 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class InvalidRequestResponse
 {
     [JsonPropertyName("request")]
-    public OneOf<InitializeProblemRequest, InitializeWorkspaceRequest, SubmitRequestV2, WorkspaceSubmitRequest, StopRequest> Request { get; init; }
+    public OneOf<SubmissionRequest._InitializeProblemRequest, SubmissionRequest._InitializeWorkspaceRequest, SubmissionRequest._SubmitV2, SubmissionRequest._WorkspaceSubmit, SubmissionRequest._Stop> Request { get; init; }
 
     [JsonPropertyName("cause")]
-    public OneOf<SubmissionIdNotFound, CustomTestCasesUnsupported, UnexpectedLanguageError> Cause { get; init; }
+    public OneOf<InvalidRequestCause._SubmissionIdNotFound, InvalidRequestCause._CustomTestCasesUnsupported, InvalidRequestCause._UnexpectedLanguage> Cause { get; init; }
 }

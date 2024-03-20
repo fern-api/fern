@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedExamplesClient
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedExamplesClient;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 public class Migration
 {

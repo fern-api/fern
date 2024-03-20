@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class WorkspaceRunDetails
 {
     [JsonPropertyName("exceptionV2")]
-    public OneOf<ExceptionInfo, Timeout>? ExceptionV2 { get; init; }
+    public OneOf<ExceptionV2._Generic, ExceptionV2._Timeout>? ExceptionV2 { get; init; }
 
     [JsonPropertyName("exception")]
     public ExceptionInfo? Exception { get; init; }

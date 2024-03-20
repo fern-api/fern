@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization
-using SeedTraceClient.V2.V3
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using SeedTraceClient.V2.V3;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient.V2.V3
+namespace SeedTraceClient.V2.V3;
 
 public class TestCaseV2
 {
@@ -11,10 +11,10 @@ public class TestCaseV2
     public TestCaseMetadata Metadata { get; init; }
 
     [JsonPropertyName("implementation")]
-    public OneOf<Value, TestCaseImplementation> Implementation { get; init; }
+    public OneOf<TestCaseImplementationReference._TemplateId, TestCaseImplementationReference._Implementation> Implementation { get; init; }
 
     [JsonPropertyName("arguments")]
-    public Dictionary<string, OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue>> Arguments { get; init; }
+    public Dictionary<string, OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue>> Arguments { get; init; }
 
     [JsonPropertyName("expects")]
     public TestCaseExpects? Expects { get; init; }

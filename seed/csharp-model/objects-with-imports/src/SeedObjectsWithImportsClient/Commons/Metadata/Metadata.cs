@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedObjectsWithImportsClient.Commons
+namespace SeedObjectsWithImportsClient.Commons;
 
 public class Metadata
 {

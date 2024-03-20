@@ -1,61 +1,61 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class CodeExecutionUpdate
 {
-    public class _BuildingExecutorResponse : BuildingExecutorResponse
+    public class _BuildingExecutor : BuildingExecutorResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "buildingExecutor";
     }
-    public class _RunningResponse : RunningResponse
+    public class _Running : RunningResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "running";
     }
-    public class _ErroredResponse : ErroredResponse
+    public class _Errored : ErroredResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "errored";
     }
-    public class _StoppedResponse : StoppedResponse
+    public class _Stopped : StoppedResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "stopped";
     }
-    public class _GradedResponse : GradedResponse
+    public class _Graded : GradedResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "graded";
     }
-    public class _GradedResponseV2 : GradedResponseV2
+    public class _GradedV2 : GradedResponseV2
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "gradedV2";
     }
-    public class _WorkspaceRanResponse : WorkspaceRanResponse
+    public class _WorkspaceRan : WorkspaceRanResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "workspaceRan";
     }
-    public class _RecordingResponseNotification : RecordingResponseNotification
+    public class _Recording : RecordingResponseNotification
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "recording";
     }
-    public class _RecordedResponseNotification : RecordedResponseNotification
+    public class _Recorded : RecordedResponseNotification
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "recorded";
     }
-    public class _InvalidRequestResponse : InvalidRequestResponse
+    public class _InvalidRequest : InvalidRequestResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "invalidRequest";
     }
-    public class _FinishedResponse : FinishedResponse
+    public class _Finished : FinishedResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "finished";

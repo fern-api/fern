@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedObjectsWithImportsClient
+using System.Text.Json.Serialization;
+using SeedObjectsWithImportsClient;
 
-namespace SeedObjectsWithImportsClient
+namespace SeedObjectsWithImportsClient;
 
 public class Tree
 {

@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class Test
 {
-    public class _Value
+    public class _And
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "and";
@@ -12,7 +12,7 @@ public class Test
         [JsonPropertyName("value")]
         public bool Value { get; init; }
     }
-    public class _Value
+    public class _Or
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "or";

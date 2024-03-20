@@ -1,7 +1,7 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ErrorInfo
 {

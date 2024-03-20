@@ -1,12 +1,12 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class CreateProblemResponse
 {
-    public class _Value
+    public class _Success
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "success";
@@ -14,12 +14,12 @@ public class CreateProblemResponse
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value
+    public class _Error
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "error";
 
         [JsonPropertyName("value")]
-        public OneOf<GenericCreateProblemError> Value { get; init; }
+        public OneOf<CreateProblemError._Generic> Value { get; init; }
     }
 }

@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedApiClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedApiClient.Utilities;
 
-namespace SeedApiClient
+namespace SeedApiClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum PrimitiveValue

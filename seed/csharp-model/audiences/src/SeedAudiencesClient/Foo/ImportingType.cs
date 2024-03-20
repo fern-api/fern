@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedAudiencesClient
+namespace SeedAudiencesClient;
 
 public class ImportingType
 {

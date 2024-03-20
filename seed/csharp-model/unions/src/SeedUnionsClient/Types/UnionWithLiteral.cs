@@ -1,11 +1,11 @@
-using SeedUnionsClient
-using System.Text.Json.Serialization
+using SeedUnionsClient;
+using System.Text.Json.Serialization;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class UnionWithLiteral
 {
-    public class _Value : IBase
+    public class _Fern : _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "fern";
@@ -13,9 +13,9 @@ public class UnionWithLiteral
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    namespace SeedUnionsClient
+    namespace SeedUnionsClient;
 
-    private interface IBase
+    private interface _IBase
     {
         [JsonPropertyName("base")]
         public string Base { get; init; }

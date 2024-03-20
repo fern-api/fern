@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class GradedTestCaseUpdate
 {
@@ -10,5 +10,5 @@ public class GradedTestCaseUpdate
     public string TestCaseId { get; init; }
 
     [JsonPropertyName("grade")]
-    public OneOf<TestCaseHiddenGrade, TestCaseNonHiddenGrade> Grade { get; init; }
+    public OneOf<TestCaseGrade._Hidden, TestCaseGrade._NonHidden> Grade { get; init; }
 }

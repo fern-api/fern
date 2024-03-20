@@ -1,12 +1,12 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ProblemDescriptionBoard
 {
-    public class _Value
+    public class _Html
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "html";
@@ -14,15 +14,15 @@ public class ProblemDescriptionBoard
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value
+    public class _Variable
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "variable";
 
         [JsonPropertyName("value")]
-        public OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue> Value { get; init; }
+        public OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue> Value { get; init; }
     }
-    public class _Value
+    public class _TestCaseId
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "testCaseId";

@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedObjectsWithImportsClient.Commons
+using System.Text.Json.Serialization;
+using SeedObjectsWithImportsClient.Commons;
 
-namespace SeedObjectsWithImportsClient
+namespace SeedObjectsWithImportsClient;
 
 public class Node
 {

@@ -15,6 +15,8 @@ export declare namespace Interface {
         access: Access;
         /* Defaults to false */
         partial?: boolean;
+        /* Defaults to false */
+        isNestedInterface?: boolean;
     }
 }
 
@@ -24,16 +26,18 @@ export class Interface extends AstNode {
     public readonly access: Access;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
+    public readonly isNestedInterface: boolean;
 
     private fields: Field[] = [];
     private methods: Method[] = [];
 
-    constructor({ name, namespace, access, partial }: Interface.Args) {
+    constructor({ name, namespace, access, partial, isNestedInterface }: Interface.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
         this.partial = partial ?? false;
+        this.isNestedInterface = isNestedInterface ?? false;
 
         this.reference = new ClassReference({
             name: this.name,
@@ -50,8 +54,10 @@ export class Interface extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.writeLine(`namespace ${this.namespace}`);
-        writer.newLine();
+        if (!this.isNestedInterface) {
+            writer.writeLine(`namespace ${this.namespace};`);
+            writer.newLine();
+        }
         writer.write(`${this.access} `);
         if (this.partial) {
             writer.write("partial ");

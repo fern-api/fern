@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedTraceClient.V2.V3
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient.V2.V3;
+using OneOf;
 
-namespace SeedTraceClient.V2.V3
+namespace SeedTraceClient.V2.V3;
 
 public class TestCaseImplementation
 {
@@ -10,5 +10,5 @@ public class TestCaseImplementation
     public TestCaseImplementationDescription Description { get; init; }
 
     [JsonPropertyName("function")]
-    public OneOf<TestCaseWithActualResultImplementation, VoidFunctionDefinition> Function { get; init; }
+    public OneOf<TestCaseFunction._WithActualResult, TestCaseFunction._Custom> Function { get; init; }
 }

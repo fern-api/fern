@@ -1,11 +1,11 @@
-using SeedExamplesClient
-using System.Text.Json.Serialization
+using SeedExamplesClient;
+using System.Text.Json.Serialization;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 public class Metadata
 {
-    public class _Value : IBase
+    public class _Html : _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "html";
@@ -13,7 +13,7 @@ public class Metadata
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value : IBase
+    public class _Markdown : _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "markdown";
@@ -21,9 +21,9 @@ public class Metadata
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    namespace SeedExamplesClient
+    namespace SeedExamplesClient;
 
-    private interface IBase
+    private interface _IBase
     {
         [JsonPropertyName("extra")]
         public Dictionary<string, string> Extra { get; init; }

@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class WorkspaceSubmissionUpdateInfo
 {
-    public class _Value
+    public class _Running
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "running";
@@ -15,7 +15,7 @@ public class WorkspaceSubmissionUpdateInfo
         [JsonPropertyName("value")]
         public StringEnum<RunningSubmissionState> Value { get; init; }
     }
-    public class _WorkspaceRunDetails : WorkspaceRunDetails
+    public class _Ran : WorkspaceRunDetails
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "ran";
@@ -30,18 +30,18 @@ public class WorkspaceSubmissionUpdateInfo
         [JsonPropertyName("type")]
         public string Type { get; } = "traced";
     }
-    public class _WorkspaceTracedUpdate : WorkspaceTracedUpdate
+    public class _TracedV2 : WorkspaceTracedUpdate
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "tracedV2";
     }
-    public class _Value
+    public class _Errored
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "errored";
 
         [JsonPropertyName("value")]
-        public OneOf<CompileError, RuntimeError, InternalError> Value { get; init; }
+        public OneOf<ErrorInfo._CompileError, ErrorInfo._RuntimeError, ErrorInfo._InternalError> Value { get; init; }
     }
     public class _Finished
     {

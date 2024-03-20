@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedNurseryApiClient
+namespace SeedNurseryApiClient;
 
 public class Record
 {

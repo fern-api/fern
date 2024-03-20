@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestCaseNonHiddenGrade
 {
@@ -10,10 +10,10 @@ public class TestCaseNonHiddenGrade
     public bool Passed { get; init; }
 
     [JsonPropertyName("actualResult")]
-    public OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue>? ActualResult { get; init; }
+    public OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue>? ActualResult { get; init; }
 
     [JsonPropertyName("exception")]
-    public OneOf<ExceptionInfo, Timeout>? Exception { get; init; }
+    public OneOf<ExceptionV2._Generic, ExceptionV2._Timeout>? Exception { get; init; }
 
     [JsonPropertyName("stdout")]
     public string Stdout { get; init; }

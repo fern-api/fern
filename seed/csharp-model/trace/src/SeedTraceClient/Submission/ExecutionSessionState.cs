@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ExecutionSessionState
 {

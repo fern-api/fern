@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedUnionsClient
+using System.Text.Json.Serialization;
+using SeedUnionsClient;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class Union
 {

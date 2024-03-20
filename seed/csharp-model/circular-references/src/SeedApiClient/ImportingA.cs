@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedApiClient
+using System.Text.Json.Serialization;
+using SeedApiClient;
 
-namespace SeedApiClient
+namespace SeedApiClient;
 
 public class ImportingA
 {

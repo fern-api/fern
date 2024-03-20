@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient.V2
+namespace SeedTraceClient.V2;
 
 public class TestCaseImplementationDescriptionBoard
 {
-    public class _Value
+    public class _Html
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "html";
@@ -12,7 +12,7 @@ public class TestCaseImplementationDescriptionBoard
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value
+    public class _ParamId
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "paramId";

@@ -176,7 +176,7 @@ export class ModelGenerator {
         // Generate a base interface that will get extended by the member classes
         const baseProperties = this.flattenedProperties.get(typeId) ?? [];
         const baseInterface = csharp.interface_({
-            name: "IBase",
+            name: "_IBase",
             namespace,
             access: "private",
             partial: false
@@ -230,7 +230,7 @@ export class ModelGenerator {
                             return;
                         }
                         const nestedClass = csharp.class_({
-                            name: `_${getNameFromIrName(objectType.name)}`,
+                            name: `_${getNameFromIrName(member.discriminantValue.name)}`,
                             namespace,
                             partial: false,
                             access: "public",
@@ -244,7 +244,7 @@ export class ModelGenerator {
                     },
                     singleProperty: (property) => {
                         const nestedClass = csharp.class_({
-                            name: `_${getNameFromIrName(property.name.name)}`,
+                            name: `_${getNameFromIrName(member.discriminantValue.name)}`,
                             namespace,
                             partial: false,
                             access: "public",

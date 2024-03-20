@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedExamplesClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedExamplesClient.Utilities;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum MigrationStatus

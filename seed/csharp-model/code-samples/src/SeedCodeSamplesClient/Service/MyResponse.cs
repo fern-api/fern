@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedCodeSamplesClient
+namespace SeedCodeSamplesClient;
 
 public class MyResponse
 {

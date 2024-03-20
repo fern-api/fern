@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedObjectsWithImportsClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedObjectsWithImportsClient.Utilities;
 
-namespace SeedObjectsWithImportsClient
+namespace SeedObjectsWithImportsClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum FileInfo

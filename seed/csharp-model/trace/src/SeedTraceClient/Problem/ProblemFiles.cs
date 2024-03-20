@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ProblemFiles
 {

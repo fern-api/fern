@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestSubmissionUpdateInfo
 {
-    public class _Value
+    public class _Running
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "running";
@@ -20,20 +20,20 @@ public class TestSubmissionUpdateInfo
         [JsonPropertyName("type")]
         public string Type { get; } = "stopped";
     }
-    public class _Value
+    public class _Errored
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "errored";
 
         [JsonPropertyName("value")]
-        public OneOf<CompileError, RuntimeError, InternalError> Value { get; init; }
+        public OneOf<ErrorInfo._CompileError, ErrorInfo._RuntimeError, ErrorInfo._InternalError> Value { get; init; }
     }
-    public class _GradedTestCaseUpdate : GradedTestCaseUpdate
+    public class _GradedTestCase : GradedTestCaseUpdate
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "gradedTestCase";
     }
-    public class _RecordedTestCaseUpdate : RecordedTestCaseUpdate
+    public class _RecordedTestCase : RecordedTestCaseUpdate
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "recordedTestCase";

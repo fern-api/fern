@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class GradedResponseV2
 {
@@ -10,5 +10,5 @@ public class GradedResponseV2
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCases")]
-    public Dictionary<string, OneOf<TestCaseHiddenGrade, TestCaseNonHiddenGrade>> TestCases { get; init; }
+    public Dictionary<string, OneOf<TestCaseGrade._Hidden, TestCaseGrade._NonHidden>> TestCases { get; init; }
 }

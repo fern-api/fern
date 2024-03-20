@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class SubmissionResponse
 {
@@ -11,7 +11,7 @@ public class SubmissionResponse
         [JsonPropertyName("type")]
         public string Type { get; } = "serverInitialized";
     }
-    public class _Value
+    public class _ProblemInitialized
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "problemInitialized";
@@ -24,20 +24,20 @@ public class SubmissionResponse
         [JsonPropertyName("type")]
         public string Type { get; } = "workspaceInitialized";
     }
-    public class _ExceptionInfo : ExceptionInfo
+    public class _ServerErrored : ExceptionInfo
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "serverErrored";
     }
-    public class _Value
+    public class _CodeExecutionUpdate
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "codeExecutionUpdate";
 
         [JsonPropertyName("value")]
-        public OneOf<BuildingExecutorResponse, RunningResponse, ErroredResponse, StoppedResponse, GradedResponse, GradedResponseV2, WorkspaceRanResponse, RecordingResponseNotification, RecordedResponseNotification, InvalidRequestResponse, FinishedResponse> Value { get; init; }
+        public OneOf<CodeExecutionUpdate._BuildingExecutor, CodeExecutionUpdate._Running, CodeExecutionUpdate._Errored, CodeExecutionUpdate._Stopped, CodeExecutionUpdate._Graded, CodeExecutionUpdate._GradedV2, CodeExecutionUpdate._WorkspaceRan, CodeExecutionUpdate._Recording, CodeExecutionUpdate._Recorded, CodeExecutionUpdate._InvalidRequest, CodeExecutionUpdate._Finished> Value { get; init; }
     }
-    public class _TerminatedResponse : TerminatedResponse
+    public class _Terminated : TerminatedResponse
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "terminated";

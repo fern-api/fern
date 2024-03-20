@@ -1,7 +1,7 @@
-using SeedExamplesClient.Commons
-using System.Text.Json.Serialization
+using SeedExamplesClient.Commons;
+using System.Text.Json.Serialization;
 
-namespace SeedExamplesClient.Commons
+namespace SeedExamplesClient.Commons;
 
 public class EventInfo
 {
@@ -10,7 +10,7 @@ public class EventInfo
         [JsonPropertyName("type")]
         public string Type { get; } = "metadata";
     }
-    public class _Value
+    public class _Tag
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "tag";

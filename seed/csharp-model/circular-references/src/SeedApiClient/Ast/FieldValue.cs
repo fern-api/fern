@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedApiClient
-using OneOf
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedApiClient;
+using OneOf;
 
-namespace SeedApiClient
+namespace SeedApiClient;
 
 public class FieldValue
 {
-    public class _Value
+    public class _PrimitiveValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "primitive_value";
@@ -20,12 +20,12 @@ public class FieldValue
         [JsonPropertyName("type")]
         public string Type { get; } = "object_value";
     }
-    public class _Value
+    public class _ContainerValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "container_value";
 
         [JsonPropertyName("value")]
-        public OneOf<Value, Value> Value { get; init; }
+        public OneOf<ContainerValue._List, ContainerValue._Optional> Value { get; init; }
     }
 }

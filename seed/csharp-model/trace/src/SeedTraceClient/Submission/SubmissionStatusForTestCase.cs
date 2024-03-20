@@ -1,25 +1,25 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
-using OneOf
+using SeedTraceClient;
+using System.Text.Json.Serialization;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class SubmissionStatusForTestCase
 {
-    public class _TestCaseResultWithStdout : TestCaseResultWithStdout
+    public class _Graded : TestCaseResultWithStdout
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "graded";
     }
-    public class _Value
+    public class _GradedV2
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "gradedV2";
 
         [JsonPropertyName("value")]
-        public OneOf<TestCaseHiddenGrade, TestCaseNonHiddenGrade> Value { get; init; }
+        public OneOf<TestCaseGrade._Hidden, TestCaseGrade._NonHidden> Value { get; init; }
     }
-    public class _TracedTestCase : TracedTestCase
+    public class _Traced : TracedTestCase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "traced";

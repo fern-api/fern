@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ActualResult
 {
@@ -12,19 +12,19 @@ public class ActualResult
         public string Type { get; } = "value";
 
         [JsonPropertyName("value")]
-        public OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue> Value { get; init; }
+        public OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue> Value { get; init; }
     }
-    public class _ExceptionInfo : ExceptionInfo
+    public class _Exception : ExceptionInfo
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "exception";
     }
-    public class _Value
+    public class _ExceptionV2
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "exceptionV2";
 
         [JsonPropertyName("value")]
-        public OneOf<ExceptionInfo, Timeout> Value { get; init; }
+        public OneOf<ExceptionV2._Generic, ExceptionV2._Timeout> Value { get; init; }
     }
 }

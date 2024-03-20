@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedErrorPropertyClient
+namespace SeedErrorPropertyClient;
 
 public class PropertyBasedErrorTestBody
 {

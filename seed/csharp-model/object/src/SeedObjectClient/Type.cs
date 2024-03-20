@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedObjectClient
+using System.Text.Json.Serialization;
+using SeedObjectClient;
 
-namespace SeedObjectClient
+namespace SeedObjectClient;
 
 public class Type
 {

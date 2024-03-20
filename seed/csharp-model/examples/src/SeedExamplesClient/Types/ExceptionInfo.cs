@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 public class ExceptionInfo
 {

@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestSubmissionState
 {
@@ -16,5 +16,5 @@ public class TestSubmissionState
     public List<TestCase> CustomTestCases { get; init; }
 
     [JsonPropertyName("status")]
-    public OneOf<Stopped, Value, Value, Value> Status { get; init; }
+    public OneOf<TestSubmissionStatus._Stopped, TestSubmissionStatus._Errored, TestSubmissionStatus._Running, TestSubmissionStatus._TestCaseIdToState> Status { get; init; }
 }

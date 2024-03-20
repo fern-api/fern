@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TraceResponse
 {
@@ -13,7 +13,7 @@ public class TraceResponse
     public int LineNumber { get; init; }
 
     [JsonPropertyName("returnValue")]
-    public OneOf<Value, Value, Value, Value, Value, DebugMapValue, Value, BinaryTreeNodeAndTreeValue, SinglyLinkedListNodeAndListValue, DoublyLinkedListNodeAndListValue, UndefinedValue, NullValue, GenericValue>? ReturnValue { get; init; }
+    public OneOf<DebugVariableValue._IntegerValue, DebugVariableValue._BooleanValue, DebugVariableValue._DoubleValue, DebugVariableValue._StringValue, DebugVariableValue._CharValue, DebugVariableValue._MapValue, DebugVariableValue._ListValue, DebugVariableValue._BinaryTreeNodeValue, DebugVariableValue._SinglyLinkedListNodeValue, DebugVariableValue._DoublyLinkedListNodeValue, DebugVariableValue._UndefinedValue, DebugVariableValue._NullValue, DebugVariableValue._GenericValue>? ReturnValue { get; init; }
 
     [JsonPropertyName("expressionLocation")]
     public ExpressionLocation? ExpressionLocation { get; init; }

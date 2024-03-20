@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class UnionWithPrimitive
 {
-    public class _Value
+    public class _Integer
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "integer";
@@ -12,7 +12,7 @@ public class UnionWithPrimitive
         [JsonPropertyName("value")]
         public int Value { get; init; }
     }
-    public class _Value
+    public class _String
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "string";

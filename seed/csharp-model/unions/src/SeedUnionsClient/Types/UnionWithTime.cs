@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class UnionWithTime
 {
@@ -12,7 +12,7 @@ public class UnionWithTime
         [JsonPropertyName("value")]
         public int Value { get; init; }
     }
-    public class _Value
+    public class _Date
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "date";
@@ -20,7 +20,7 @@ public class UnionWithTime
         [JsonPropertyName("value")]
         public DateOnly Value { get; init; }
     }
-    public class _Value
+    public class _Datetime
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "datetime";

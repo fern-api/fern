@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedTraceClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedTraceClient.Utilities;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum MigrationStatus

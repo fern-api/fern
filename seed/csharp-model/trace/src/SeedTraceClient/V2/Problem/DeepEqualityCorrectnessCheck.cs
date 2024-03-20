@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient.V2
+namespace SeedTraceClient.V2;
 
 public class DeepEqualityCorrectnessCheck
 {

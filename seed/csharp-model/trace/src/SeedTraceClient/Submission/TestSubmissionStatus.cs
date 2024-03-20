@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
-using StringEnum
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
+using StringEnum;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestSubmissionStatus
 {
@@ -12,15 +12,15 @@ public class TestSubmissionStatus
         [JsonPropertyName("type")]
         public string Type { get; } = "stopped";
     }
-    public class _Value
+    public class _Errored
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "errored";
 
         [JsonPropertyName("value")]
-        public OneOf<CompileError, RuntimeError, InternalError> Value { get; init; }
+        public OneOf<ErrorInfo._CompileError, ErrorInfo._RuntimeError, ErrorInfo._InternalError> Value { get; init; }
     }
-    public class _Value
+    public class _Running
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "running";
@@ -28,12 +28,12 @@ public class TestSubmissionStatus
         [JsonPropertyName("value")]
         public StringEnum<RunningSubmissionState> Value { get; init; }
     }
-    public class _Value
+    public class _TestCaseIdToState
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "testCaseIdToState";
 
         [JsonPropertyName("value")]
-        public Dictionary<string, OneOf<TestCaseResultWithStdout, Value, TracedTestCase>> Value { get; init; }
+        public Dictionary<string, OneOf<SubmissionStatusForTestCase._Graded, SubmissionStatusForTestCase._GradedV2, SubmissionStatusForTestCase._Traced>> Value { get; init; }
     }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCodeSamplesClient", "SeedCodeSamplesClient\SeedCodeSamplesClient.csproj", "{6DF26120-1772-4CF3-9846-014970095DCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCodeSamplesClient", "SeedCodeSamplesClient\SeedCodeSamplesClient.csproj", "{F164A3C3-A2FB-4A6F-AB4F-F8EF57F03F10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCodeSamplesClient.Test", "SeedCodeSamplesClient.Test\SeedCodeSamplesClient.Test.csproj", "{66FB1627-135F-4935-8BE7-5AB7497943FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCodeSamplesClient.Test", "SeedCodeSamplesClient.Test\SeedCodeSamplesClient.Test.csproj", "{5CC9305B-1EF5-463E-A488-1EFC600C5E41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6DF26120-1772-4CF3-9846-014970095DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DF26120-1772-4CF3-9846-014970095DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DF26120-1772-4CF3-9846-014970095DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DF26120-1772-4CF3-9846-014970095DCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66FB1627-135F-4935-8BE7-5AB7497943FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66FB1627-135F-4935-8BE7-5AB7497943FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66FB1627-135F-4935-8BE7-5AB7497943FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66FB1627-135F-4935-8BE7-5AB7497943FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F164A3C3-A2FB-4A6F-AB4F-F8EF57F03F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F164A3C3-A2FB-4A6F-AB4F-F8EF57F03F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F164A3C3-A2FB-4A6F-AB4F-F8EF57F03F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F164A3C3-A2FB-4A6F-AB4F-F8EF57F03F10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC9305B-1EF5-463E-A488-1EFC600C5E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC9305B-1EF5-463E-A488-1EFC600C5E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC9305B-1EF5-463E-A488-1EFC600C5E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC9305B-1EF5-463E-A488-1EFC600C5E41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

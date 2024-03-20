@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class UnionWithOptionalTime
 {
-    public class _Value
+    public class _Date
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "date";
@@ -12,7 +12,7 @@ public class UnionWithOptionalTime
         [JsonPropertyName("value")]
         public DateOnly? Value { get; init; }
     }
-    public class _Value
+    public class _Dateimte
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "dateimte";

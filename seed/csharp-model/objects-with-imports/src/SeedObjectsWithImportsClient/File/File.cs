@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using StringEnum
-using SeedObjectsWithImportsClient
+using System.Text.Json.Serialization;
+using StringEnum;
+using SeedObjectsWithImportsClient;
 
-namespace SeedObjectsWithImportsClient
+namespace SeedObjectsWithImportsClient;
 
 public class File
 {

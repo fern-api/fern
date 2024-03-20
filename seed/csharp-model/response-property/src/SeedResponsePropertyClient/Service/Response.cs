@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedResponsePropertyClient
+using System.Text.Json.Serialization;
+using SeedResponsePropertyClient;
 
-namespace SeedResponsePropertyClient
+namespace SeedResponsePropertyClient;
 
 public class Response
 {

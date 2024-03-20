@@ -1,12 +1,12 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class VariableValue
 {
-    public class _Value
+    public class _IntegerValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "integerValue";
@@ -14,7 +14,7 @@ public class VariableValue
         [JsonPropertyName("value")]
         public int Value { get; init; }
     }
-    public class _Value
+    public class _BooleanValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "booleanValue";
@@ -22,7 +22,7 @@ public class VariableValue
         [JsonPropertyName("value")]
         public bool Value { get; init; }
     }
-    public class _Value
+    public class _DoubleValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "doubleValue";
@@ -30,7 +30,7 @@ public class VariableValue
         [JsonPropertyName("value")]
         public double Value { get; init; }
     }
-    public class _Value
+    public class _StringValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "stringValue";
@@ -38,7 +38,7 @@ public class VariableValue
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Value
+    public class _CharValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "charValue";
@@ -51,13 +51,13 @@ public class VariableValue
         [JsonPropertyName("type")]
         public string Type { get; } = "mapValue";
     }
-    public class _Value
+    public class _ListValue
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "listValue";
 
         [JsonPropertyName("value")]
-        public List<OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue>> Value { get; init; }
+        public List<OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue>> Value { get; init; }
     }
     public class _BinaryTreeValue : BinaryTreeValue
     {

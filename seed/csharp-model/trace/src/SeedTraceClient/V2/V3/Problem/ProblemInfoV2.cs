@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using StringEnum
-using OneOf
-using SeedTraceClient.V2.V3
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using StringEnum;
+using OneOf;
+using SeedTraceClient.V2.V3;
 
-namespace SeedTraceClient.V2.V3
+namespace SeedTraceClient.V2.V3;
 
 public class ProblemInfoV2
 {
@@ -24,7 +24,7 @@ public class ProblemInfoV2
     public HashSet<StringEnum<Language>> SupportedLanguages { get; init; }
 
     [JsonPropertyName("customFiles")]
-    public OneOf<BasicCustomFiles, Value> CustomFiles { get; init; }
+    public OneOf<CustomFiles._Basic, CustomFiles._Custom> CustomFiles { get; init; }
 
     [JsonPropertyName("generatedFiles")]
     public GeneratedFiles GeneratedFiles { get; init; }

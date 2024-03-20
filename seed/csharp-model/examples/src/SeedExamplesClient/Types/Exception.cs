@@ -1,11 +1,11 @@
-using SeedExamplesClient
-using System.Text.Json.Serialization
+using SeedExamplesClient;
+using System.Text.Json.Serialization;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 public class Exception
 {
-    public class _ExceptionInfo : ExceptionInfo
+    public class _Generic : ExceptionInfo
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "generic";

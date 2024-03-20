@@ -1,7 +1,7 @@
-using System.Text.Json.Serialization
-using SeedExamplesClient
+using System.Text.Json.Serialization;
+using SeedExamplesClient;
 
-namespace SeedExamplesClient
+namespace SeedExamplesClient;
 
 public class Directory
 {

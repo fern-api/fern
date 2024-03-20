@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestSubmissionUpdate
 {
@@ -10,5 +10,5 @@ public class TestSubmissionUpdate
     public DateTime UpdateTime { get; init; }
 
     [JsonPropertyName("updateInfo")]
-    public OneOf<Value, Stopped, Value, GradedTestCaseUpdate, RecordedTestCaseUpdate, Finished> UpdateInfo { get; init; }
+    public OneOf<TestSubmissionUpdateInfo._Running, TestSubmissionUpdateInfo._Stopped, TestSubmissionUpdateInfo._Errored, TestSubmissionUpdateInfo._GradedTestCase, TestSubmissionUpdateInfo._RecordedTestCase, TestSubmissionUpdateInfo._Finished> UpdateInfo { get; init; }
 }

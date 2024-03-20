@@ -1,7 +1,7 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class InvalidRequestCause
 {
@@ -15,7 +15,7 @@ public class InvalidRequestCause
         [JsonPropertyName("type")]
         public string Type { get; } = "customTestCasesUnsupported";
     }
-    public class _UnexpectedLanguageError : UnexpectedLanguageError
+    public class _UnexpectedLanguage : UnexpectedLanguageError
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "unexpectedLanguage";

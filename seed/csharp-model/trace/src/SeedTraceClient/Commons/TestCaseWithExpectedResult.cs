@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedTraceClient
-using OneOf
+using System.Text.Json.Serialization;
+using SeedTraceClient;
+using OneOf;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestCaseWithExpectedResult
 {
@@ -10,5 +10,5 @@ public class TestCaseWithExpectedResult
     public TestCase TestCase { get; init; }
 
     [JsonPropertyName("expectedResult")]
-    public OneOf<Value, Value, Value, Value, Value, MapValue, Value, BinaryTreeValue, SinglyLinkedListValue, DoublyLinkedListValue, NullValue> ExpectedResult { get; init; }
+    public OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue> ExpectedResult { get; init; }
 }

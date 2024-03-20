@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class PlaylistIdNotFoundErrorBody
 {
-    public class _Value
+    public class _PlaylistId
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "playlistId";

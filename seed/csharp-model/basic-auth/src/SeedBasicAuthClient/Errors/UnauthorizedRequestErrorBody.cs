@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedBasicAuthClient
+namespace SeedBasicAuthClient;
 
 public class UnauthorizedRequestErrorBody
 {

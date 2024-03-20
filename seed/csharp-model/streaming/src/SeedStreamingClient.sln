@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient", "SeedStreamingClient\SeedStreamingClient.csproj", "{862AFC09-00ED-4692-AB69-99B1BE13F80F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient", "SeedStreamingClient\SeedStreamingClient.csproj", "{C925A197-DDCB-449A-B5FD-99088475FE6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient.Test", "SeedStreamingClient.Test\SeedStreamingClient.Test.csproj", "{7CD779CE-D372-4F05-88B8-29C5B4F08507}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient.Test", "SeedStreamingClient.Test\SeedStreamingClient.Test.csproj", "{5CD0854B-88F1-4149-AAA0-A111FA3A5361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C925A197-DDCB-449A-B5FD-99088475FE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C925A197-DDCB-449A-B5FD-99088475FE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C925A197-DDCB-449A-B5FD-99088475FE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C925A197-DDCB-449A-B5FD-99088475FE6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD0854B-88F1-4149-AAA0-A111FA3A5361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD0854B-88F1-4149-AAA0-A111FA3A5361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD0854B-88F1-4149-AAA0-A111FA3A5361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD0854B-88F1-4149-AAA0-A111FA3A5361}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

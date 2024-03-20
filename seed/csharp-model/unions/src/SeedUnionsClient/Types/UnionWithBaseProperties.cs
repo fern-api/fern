@@ -1,11 +1,11 @@
-using SeedUnionsClient
-using System.Text.Json.Serialization
+using SeedUnionsClient;
+using System.Text.Json.Serialization;
 
-namespace SeedUnionsClient
+namespace SeedUnionsClient;
 
 public class UnionWithBaseProperties
 {
-    public class _Value : IBase
+    public class _Integer : _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "integer";
@@ -13,7 +13,7 @@ public class UnionWithBaseProperties
         [JsonPropertyName("value")]
         public int Value { get; init; }
     }
-    public class _Value : IBase
+    public class _String : _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "string";
@@ -21,14 +21,14 @@ public class UnionWithBaseProperties
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    public class _Foo : Foo, IBase
+    public class _Foo : Foo, _IBase
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "foo";
     }
-    namespace SeedUnionsClient
+    namespace SeedUnionsClient;
 
-    private interface IBase
+    private interface _IBase
     {
         [JsonPropertyName("id")]
         public string Id { get; init; }

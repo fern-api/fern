@@ -1,11 +1,11 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class Scope
 {
     [JsonPropertyName("variables")]
-    public Dictionary<string, OneOf<Value, Value, Value, Value, Value, DebugMapValue, Value, BinaryTreeNodeAndTreeValue, SinglyLinkedListNodeAndListValue, DoublyLinkedListNodeAndListValue, UndefinedValue, NullValue, GenericValue>> Variables { get; init; }
+    public Dictionary<string, OneOf<DebugVariableValue._IntegerValue, DebugVariableValue._BooleanValue, DebugVariableValue._DoubleValue, DebugVariableValue._StringValue, DebugVariableValue._CharValue, DebugVariableValue._MapValue, DebugVariableValue._ListValue, DebugVariableValue._BinaryTreeNodeValue, DebugVariableValue._SinglyLinkedListNodeValue, DebugVariableValue._DoublyLinkedListNodeValue, DebugVariableValue._UndefinedValue, DebugVariableValue._NullValue, DebugVariableValue._GenericValue>> Variables { get; init; }
 }

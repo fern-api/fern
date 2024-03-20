@@ -1,16 +1,16 @@
-using SeedTraceClient.V2.V3
-using System.Text.Json.Serialization
+using SeedTraceClient.V2.V3;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient.V2.V3
+namespace SeedTraceClient.V2.V3;
 
 public class AssertCorrectnessCheck
 {
-    public class _DeepEqualityCorrectnessCheck : DeepEqualityCorrectnessCheck
+    public class _DeepEquality : DeepEqualityCorrectnessCheck
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "deepEquality";
     }
-    public class _VoidFunctionDefinitionThatTakesActualResult : VoidFunctionDefinitionThatTakesActualResult
+    public class _Custom : VoidFunctionDefinitionThatTakesActualResult
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "custom";

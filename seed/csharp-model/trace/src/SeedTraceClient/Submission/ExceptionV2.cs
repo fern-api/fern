@@ -1,11 +1,11 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ExceptionV2
 {
-    public class _ExceptionInfo : ExceptionInfo
+    public class _Generic : ExceptionInfo
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "generic";

@@ -1,11 +1,11 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ProblemDescription
 {
     [JsonPropertyName("boards")]
-    public List<OneOf<Value, Value, Value>> Boards { get; init; }
+    public List<OneOf<ProblemDescriptionBoard._Html, ProblemDescriptionBoard._Variable, ProblemDescriptionBoard._TestCaseId>> Boards { get; init; }
 }

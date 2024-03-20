@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization
-using SeedTraceClient.V2
-using StringEnum
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using SeedTraceClient.V2;
+using StringEnum;
+using SeedTraceClient;
 
-namespace SeedTraceClient.V2
+namespace SeedTraceClient.V2;
 
 public class BasicCustomFiles
 {

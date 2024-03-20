@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedResponsePropertyClient
+namespace SeedResponsePropertyClient;
 
 public class Movie
 {

@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using SeedObjectsWithImportsClient
-using SeedObjectsWithImportsClient.File
+using System.Text.Json.Serialization;
+using SeedObjectsWithImportsClient;
+using SeedObjectsWithImportsClient.File;
 
-namespace SeedObjectsWithImportsClient.File
+namespace SeedObjectsWithImportsClient.File;
 
 public class Directory
 {

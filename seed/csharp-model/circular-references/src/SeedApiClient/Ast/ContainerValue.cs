@@ -1,25 +1,25 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedApiClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedApiClient;
 
-namespace SeedApiClient
+namespace SeedApiClient;
 
 public class ContainerValue
 {
-    public class _Value
+    public class _List
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "list";
 
         [JsonPropertyName("value")]
-        public List<OneOf<Value, ObjectValue, Value>> Value { get; init; }
+        public List<OneOf<FieldValue._PrimitiveValue, FieldValue._ObjectValue, FieldValue._ContainerValue>> Value { get; init; }
     }
-    public class _Value
+    public class _Optional
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "optional";
 
         [JsonPropertyName("value")]
-        public OneOf<Value, ObjectValue, Value>? Value { get; init; }
+        public OneOf<FieldValue._PrimitiveValue, FieldValue._ObjectValue, FieldValue._ContainerValue>? Value { get; init; }
     }
 }

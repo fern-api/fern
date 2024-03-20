@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using System
-using SeedIdempotencyHeadersClient.Utilities
+using System.Text.Json.Serialization;
+using System;
+using SeedIdempotencyHeadersClient.Utilities;
 
-namespace SeedIdempotencyHeadersClient
+namespace SeedIdempotencyHeadersClient;
 
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Currency

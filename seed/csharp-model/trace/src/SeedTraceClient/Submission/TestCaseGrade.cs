@@ -1,16 +1,16 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class TestCaseGrade
 {
-    public class _TestCaseHiddenGrade : TestCaseHiddenGrade
+    public class _Hidden : TestCaseHiddenGrade
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "hidden";
     }
-    public class _TestCaseNonHiddenGrade : TestCaseNonHiddenGrade
+    public class _NonHidden : TestCaseNonHiddenGrade
     {
         [JsonPropertyName("type")]
         public string Type { get; } = "nonHidden";

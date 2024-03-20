@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization
-using OneOf
-using SeedTraceClient
+using System.Text.Json.Serialization;
+using OneOf;
+using SeedTraceClient;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class ErroredResponse
 {
@@ -10,5 +10,5 @@ public class ErroredResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("errorInfo")]
-    public OneOf<CompileError, RuntimeError, InternalError> ErrorInfo { get; init; }
+    public OneOf<ErrorInfo._CompileError, ErrorInfo._RuntimeError, ErrorInfo._InternalError> ErrorInfo { get; init; }
 }

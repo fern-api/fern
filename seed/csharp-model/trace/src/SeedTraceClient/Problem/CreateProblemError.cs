@@ -1,11 +1,11 @@
-using SeedTraceClient
-using System.Text.Json.Serialization
+using SeedTraceClient;
+using System.Text.Json.Serialization;
 
-namespace SeedTraceClient
+namespace SeedTraceClient;
 
 public class CreateProblemError
 {
-    public class _GenericCreateProblemError : GenericCreateProblemError
+    public class _Generic : GenericCreateProblemError
     {
         [JsonPropertyName("_type")]
         public string ErrorType { get; } = "generic";
