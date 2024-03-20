@@ -143,7 +143,7 @@ export class ReferenceGenerator {
                         return csharp.Type.oneOf(
                             union.types
                                 .map<csharp.Type | undefined>((member) => {
-                                    const memberObjectName = `${containerObjectName}.${getNameFromIrName(
+                                    const memberObjectName = `${containerObjectName}._${getNameFromIrName(
                                         member.discriminantValue.name
                                     )}`;
                                     const t = member.shape._visit<csharp.ClassReference | undefined>({

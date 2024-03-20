@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectClient", "SeedObjectClient\SeedObjectClient.csproj", "{648A5012-80A1-4EBF-B42A-625F945D538D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectClient.Test", "SeedObjectClient.Test\SeedObjectClient.Test.csproj", "{B8E1013C-696F-4F8F-8EFD-85E47D81EDBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{648A5012-80A1-4EBF-B42A-625F945D538D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648A5012-80A1-4EBF-B42A-625F945D538D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648A5012-80A1-4EBF-B42A-625F945D538D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648A5012-80A1-4EBF-B42A-625F945D538D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E1013C-696F-4F8F-8EFD-85E47D81EDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E1013C-696F-4F8F-8EFD-85E47D81EDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E1013C-696F-4F8F-8EFD-85E47D81EDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E1013C-696F-4F8F-8EFD-85E47D81EDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

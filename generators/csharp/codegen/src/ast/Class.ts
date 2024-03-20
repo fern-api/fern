@@ -91,7 +91,7 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
         if (!this.isNestedClass) {
-            writer.writeLine(`namespace ${this.namespace}`);
+            writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
         }
         writer.write(`${this.access}`);

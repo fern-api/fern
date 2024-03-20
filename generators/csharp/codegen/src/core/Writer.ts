@@ -117,7 +117,7 @@ export class Writer {
             Object.keys(this.references)
                 // filter out the current namespace
                 .filter((namespace) => namespace !== this.namespace)
-                .map((ref) => `using ${ref}`)
+                .map((ref) => `using ${ref};`)
                 .join("\n")
         );
     }
