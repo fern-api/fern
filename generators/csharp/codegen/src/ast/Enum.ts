@@ -68,7 +68,7 @@ export class Enum extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.writeLine(`namespace ${this.namespace}`);
+        writer.writeLine(`namespace ${this.namespace};`);
         writer.newLine();
 
         if (this.annotations.length > 0) {

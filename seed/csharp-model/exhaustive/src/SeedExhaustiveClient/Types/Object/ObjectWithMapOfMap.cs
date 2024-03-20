@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization
+using System.Text.Json.Serialization;
 
-namespace SeedExhaustiveClient.Types
+namespace SeedExhaustiveClient.Types;
 
 public class ObjectWithMapOfMap
 {

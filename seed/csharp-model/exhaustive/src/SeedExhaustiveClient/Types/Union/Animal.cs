@@ -1,7 +1,7 @@
-using SeedExhaustiveClient.Types
-using System.Text.Json.Serialization
+using SeedExhaustiveClient.Types;
+using System.Text.Json.Serialization;
 
-namespace SeedExhaustiveClient.Types
+namespace SeedExhaustiveClient.Types;
 
 public class Animal
 {

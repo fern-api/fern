@@ -55,7 +55,7 @@ export class Interface extends AstNode {
 
     public write(writer: Writer): void {
         if (!this.isNestedInterface) {
-            writer.writeLine(`namespace ${this.namespace}`);
+            writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
         }
         writer.write(`${this.access} `);
