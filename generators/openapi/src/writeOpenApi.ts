@@ -1,4 +1,5 @@
-import { ExitStatusUpdate, GeneratorConfig, GeneratorUpdate } from "@fern-fern/generator-exec-sdk/api";
+import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-sdk/api";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
@@ -19,7 +20,21 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
         // eslint-disable-next-line no-console
         console.log("beginning writeOpenApi");
         const configStr = await readFile(pathToConfig);
-        const config = JSON.parse(configStr.toString()) as GeneratorConfig;
+        // eslint-disable-next-line no-console
+        console.log(`Read ${pathToConfig}`);
+        const rawConfig = JSON.parse(configStr.toString());
+        const parsedConfig = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
+            unrecognizedObjectKeys: "passthrough"
+        });
+
+        if (!parsedConfig.ok) {
+            // eslint-disable-next-line no-console
+            console.log(`Failed to read ${pathToConfig}`);
+            return;
+        }
+
+        const config = parsedConfig.value;
+
         const customConfig = getCustomConfig(config);
 
         // eslint-disable-next-line no-console
