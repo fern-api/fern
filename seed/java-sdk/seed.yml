@@ -43,7 +43,6 @@ allowedFailures:
   - response-property
   - examples
   - exhaustive:local-files
-  - idempotency-headers
   - trace
   - undiscriminated-unions
   - unions

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.6] - 2024-03-20
+
+- Fix: the SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
+
 ## [0.8.5] - 2024-03-18
 
 - Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven Central.
