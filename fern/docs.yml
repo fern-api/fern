@@ -14,11 +14,11 @@ tabs:
   overview:
     display-name: Overview
     icon: "globe"
-  fern-sdks:
+  sdks:
     display-name: SDKs
     slug: sdks
     icon: code
-  fern-docs:
+  docs:
     display-name: Docs
     slug: docs
     icon: book
@@ -114,7 +114,7 @@ navigation:
             path: ./docs/pages/overview/changelog/december-2023.mdx
           - page: February 2024
             path: ./docs/pages/overview/changelog/february-2024.mdx
-  - tab: fern-sdks
+  - tab: sdks
     layout:
       - page: Overview
         path: ./docs/pages/fern-sdks/sdks-overview.mdx
@@ -201,20 +201,20 @@ navigation:
         snippets:
           python: fern-api
           typescript: "@fern-api/node-sdk"
-  - tab: fern-docs
+  - tab: docs
     layout:
       - page: Overview
         path: ./docs/pages/fern-docs/docs-overview.mdx
-      - section: Fern Docs Quickstarts
+      - section: Quickstarts
         slug: quickstarts
         contents:
-          - page: Fern Docs Quickstart with OpenAPI
+          - page: Use OpenAPI
             slug: openapi
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Fern Docs Quickstart with Fern Def
+          - page: Use a Fern Definition
             slug: ferndef
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - page: Pull request previews
+      - page: PR previews
         slug: previews
         path: ./docs/pages/fern-docs/previews.mdx
       - section: Configuration
@@ -224,12 +224,6 @@ navigation:
             path: ./docs/pages/fern-docs/config/config-overview.mdx
           - page: Navigation
             path: ./docs/pages/fern-docs/config/navigation.mdx
-          - page: Audiences
-            path: ./docs/pages/fern-docs/config/audiences.mdx
-          - page: SDK snippets
-            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
-            path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
           - section: Customize branding
             slug: branding
             contents:
@@ -241,18 +235,27 @@ navigation:
               - page: Custom domain
                 path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
 
-      - section: Content
+      - section: Writing Content
         contents:
-          - page: Generate API reference
-            path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
-            slug: generate-api-ref
           - page: Write Markdown content
             path: ./docs/pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
           - page: Frontmatter
             path: ./docs/pages/fern-docs/content/front-matter.mdx
-          - page: Syntax Highlighting
-            path: ./docs/pages/fern-docs/content/syntax-highlighting.mdx
+          - page: Code Snippets
+            path: ./docs/pages/fern-docs/content/code-snippets.mdx
+      
+      - section: API References
+        contents: 
+          - page: Generate API reference
+            path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
+            slug: generate-api-ref
+          - page: Audiences
+            path: ./docs/pages/fern-docs/config/audiences.mdx
+          - page: SDK snippets
+            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
+          - page: Endpoint errors
+            path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
 
       - section: Components
         slug: components
