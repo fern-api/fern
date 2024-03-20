@@ -7,8 +7,10 @@ export class GeneratorLoggingWrapper {
 
     constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
         if (generatorConfig.environment.type === "remote") {
+            // eslint-disable-next-line no-console
+            console.log("generatorConfig.environment.coordinatorUrlV2", generatorConfig.environment.coordinatorUrlV2);
             const generatorLoggingClient = new FernGeneratorExecClient({
-                environment: generatorConfig.environment.coordinatorUrl
+                environment: generatorConfig.environment.coordinatorUrlV2
             });
             const taskId = generatorConfig.environment.id;
             this.maybeSendUpdates = async (updates) => {
