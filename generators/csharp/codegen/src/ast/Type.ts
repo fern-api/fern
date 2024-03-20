@@ -141,7 +141,7 @@ export class Type extends AstNode {
             case "map":
                 writer.write("Dictionary<");
                 this.internalType.keyType.write(writer);
-                writer.write(",");
+                writer.write(", ");
                 this.internalType.valueType.write(writer);
                 writer.write(">");
                 break;
@@ -158,7 +158,7 @@ export class Type extends AstNode {
                 writer.write("OneOf<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
-                        writer.write(",");
+                        writer.write(", ");
                     }
                     value.write(writer);
                 });

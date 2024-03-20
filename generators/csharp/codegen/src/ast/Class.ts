@@ -114,7 +114,7 @@ export class Class extends AstNode {
             this.interfaceReferences.forEach((interfaceReference, index) => {
                 interfaceReference.write(writer);
                 // Don't write a comma after the last interface
-                if (index < this.interfaceReferences.length - 2) {
+                if (index < this.interfaceReferences.length - 1) {
                     writer.write(", ");
                 }
             });
@@ -123,33 +123,47 @@ export class Class extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
-        for (const field of this.fields) {
+        this.fields.forEach((field, index) => {
             field.write(writer);
-            writer.newLine();
-            writer.newLine();
-        }
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
         writer.dedent();
 
         writer.indent();
-        for (const nestedClass of this.nestedClasses) {
+        this.nestedClasses.forEach((nestedClass, index) => {
             nestedClass.write(writer);
-            writer.newLine();
-            writer.newLine();
-        }
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
         writer.dedent();
 
         writer.indent();
-        for (const nestedInterface of this.nestedInterfaces) {
+        this.nestedInterfaces.forEach((nestedInterface, index) => {
             nestedInterface.write(writer);
-            writer.newLine();
-        }
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
         writer.dedent();
 
         writer.indent();
-        for (const method of this.methods) {
+        this.methods.forEach((method, index) => {
             method.write(writer);
-            writer.newLine();
-        }
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
         writer.dedent();
 
         writer.writeLine("}");
