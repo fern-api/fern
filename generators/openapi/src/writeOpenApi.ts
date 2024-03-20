@@ -7,7 +7,7 @@ import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
-import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
+import { GeneratorNotificationService } from "./GeneratorNotificationService";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -24,7 +24,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 
         // eslint-disable-next-line no-console
         console.log("customConfig", JSON.stringify(customConfig));
-        const generatorLoggingClient = new GeneratorLoggingWrapper(config);
+        const generatorLoggingClient = new GeneratorNotificationService(config);
 
         try {
             // eslint-disable-next-line no-console
