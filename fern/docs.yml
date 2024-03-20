@@ -309,3 +309,4 @@ favicon: ./docs/images/favicon.ico
 layout:
   page-width: 1504px
   header-height: 83px
+  searchbar-placement: header
