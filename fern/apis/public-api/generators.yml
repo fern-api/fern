@@ -40,10 +40,11 @@ groups:
           coordinate: com.fern.api:fern-java-sdk
           username: fernapi
           password: ${MAVEN_PASSWORD}
-          signature:
-            keyId: ${MAVEN_CENTRAL_SECRET_KEY_KEY_ID}
-            password: ${MAVEN_CENTRAL_SECRET_KEY_PASSWORD}
-            secretKey: ${MAVEN_CENTRAL_SECRET_KEY}
+          # TODO: uncomment after this config is released
+          # signature:
+          #   keyId: ${MAVEN_CENTRAL_SECRET_KEY_KEY_ID}
+          #   password: ${MAVEN_CENTRAL_SECRET_KEY_PASSWORD}
+          #   secretKey: ${MAVEN_CENTRAL_SECRET_KEY}
         github:
           repository: fern-api/java-sdk
           license: MIT

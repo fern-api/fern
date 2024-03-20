@@ -54,11 +54,12 @@ jobs:
 
       - name: Publish to maven
         run: |
+          ./.publish/prepare.sh
           ./gradlew  publish
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_PUBLISH_REGISTRY_URL: "definitelyMavenCentral"
-          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.MAVEN_SIGNATURE_KID }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.MAVEN_SIGNATURE_SECRET_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.MAVEN_SIGNATURE_PASSWORD }}
+          MAVEN_SIGNATURE_KID: ${{ secrets.MAVEN_SIGNATURE_KID }}
+          MAVEN_SIGNATURE_SECRET_KEY: ${{ secrets.MAVEN_SIGNATURE_SECRET_KEY }}
+          MAVEN_SIGNATURE_PASSWORD: ${{ secrets.MAVEN_SIGNATURE_PASSWORD }}
