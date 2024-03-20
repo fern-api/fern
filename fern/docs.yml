@@ -15,13 +15,13 @@ tabs:
     display-name: Overview
     icon: "globe"
   fern-sdks:
-    display-name: Fern SDKs
+    display-name: SDKs
     slug: sdks
-    icon: "code"
+    icon: code
   fern-docs:
-    display-name: Fern Docs
-    slug: "docs"
-    icon: "book"
+    display-name: Docs
+    slug: docs
+    icon: book
 
 navigation:
   - tab: overview
