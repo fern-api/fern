@@ -1,4 +1,3 @@
-import { default as FormData } from "form-data";
 import qs from "qs";
 import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
@@ -67,7 +66,18 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : args.url;
 
     let body: BodyInit | undefined = undefined;
-    if (args.body instanceof FormData) {
+
+    // In Node.js environments, the SDK always uses`formdata-node`.
+    // If not in Node.js the SDK uses global FormData if available,
+    // and falls back to form-data (which has a `window` dependency).
+    const formdata =
+        RUNTIME.type === "node"
+            ? require("formdata-node").FormData
+            : globalThis != null && globalThis.FormData != null
+            ? globalThis.FormData
+            : require("form-data").default;
+
+    if (args.body instanceof formdata) {
         // @ts-expect-error
         body = args.body;
     } else if (args.body instanceof Uint8Array) {
