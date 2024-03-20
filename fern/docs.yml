@@ -20,6 +20,7 @@ tabs:
     icon: code
   docs:
     display-name: Docs
+    slug: docs
     icon: book
 
 navigation:
