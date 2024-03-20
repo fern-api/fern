@@ -148,8 +148,31 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
 
+        TypeName requestOptionsClassName = clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName();
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
+            MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(
+                            clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                            REQUEST_OPTIONS_PARAMETER_NAME)
+                    .returns(OKHTTP_CLIENT_FIELD.type)
+                    .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                    .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
+                    .endControlFlow()
+                    .addStatement(
+                            "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
+                                    ".connectTimeout(0, $T.SECONDS)" +
+                                    ".writeTimeout(0, $T.SECONDS)" +
+                                    ".readTimeout(0, $T.SECONDS).build()",
+                            OKHTTP_CLIENT_FIELD.name,
+                            REQUEST_OPTIONS_PARAMETER_NAME,
+                            REQUEST_OPTIONS_PARAMETER_NAME,
+                            TimeUnit.class,
+                            TimeUnit.class,
+                            TimeUnit.class)
+                    .build();
+            clientOptionsBuilder.addMethod(httpClientWithTimeoutGetter);
         }
 
         MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
