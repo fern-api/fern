@@ -8,6 +8,7 @@ public class GradedResponseV2
 {
     [JsonPropertyName("submissionId")]
     public Guid SubmissionId { get; init; }
+
     [JsonPropertyName("testCases")]
-    public Dictionary<string,OneOf<TestCaseHiddenGrade,TestCaseNonHiddenGrade>> TestCases { get; init; }
+    public Dictionary<string, OneOf<TestCaseHiddenGrade, TestCaseNonHiddenGrade>> TestCases { get; init; }
 }

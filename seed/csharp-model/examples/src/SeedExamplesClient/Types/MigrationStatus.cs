@@ -7,10 +7,12 @@ namespace SeedExamplesClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum MigrationStatus
 {
-    [EnumMember(Value ="RUNNING")]
+    [EnumMember(Value = "RUNNING")]
     Running,
-    [EnumMember(Value ="FAILED")]
+
+    [EnumMember(Value = "FAILED")]
     Failed,
-    [EnumMember(Value ="FINISHED")]
-    Finished,
+
+    [EnumMember(Value = "FINISHED")]
+    Finished
 }

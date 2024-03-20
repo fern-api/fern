@@ -1,39 +1,25 @@
-using SeedTraceClient
 using System.Text.Json.Serialization
 using OneOf
+using SeedTraceClient
 
 namespace SeedTraceClient
 
 public class CreateProblemResponse
 {
-    namespace SeedTraceClient
-
-    public class Value
-     : IBase{
+    public class _Value
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "success"
-        ;
-        
+        public string Type { get; } = "success";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
-    namespace SeedTraceClient
-
-    public class Value
-     : IBase{
+    public class _Value
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "error"
-        ;
-        
+        public string Type { get; } = "error";
+
         [JsonPropertyName("value")]
         public OneOf<GenericCreateProblemError> Value { get; init; }
     }
-    
-    namespace SeedTraceClient
-
-    private interface IBase
-    {
-    }
-    
 }

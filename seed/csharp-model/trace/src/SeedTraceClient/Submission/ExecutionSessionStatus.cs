@@ -7,16 +7,21 @@ namespace SeedTraceClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum ExecutionSessionStatus
 {
-    [EnumMember(Value ="CREATING_CONTAINER")]
+    [EnumMember(Value = "CREATING_CONTAINER")]
     CreatingContainer,
-    [EnumMember(Value ="PROVISIONING_CONTAINER")]
+
+    [EnumMember(Value = "PROVISIONING_CONTAINER")]
     ProvisioningContainer,
-    [EnumMember(Value ="PENDING_CONTAINER")]
+
+    [EnumMember(Value = "PENDING_CONTAINER")]
     PendingContainer,
-    [EnumMember(Value ="RUNNING_CONTAINER")]
+
+    [EnumMember(Value = "RUNNING_CONTAINER")]
     RunningContainer,
-    [EnumMember(Value ="LIVE_CONTAINER")]
+
+    [EnumMember(Value = "LIVE_CONTAINER")]
     LiveContainer,
-    [EnumMember(Value ="FAILED_TO_LAUNCH")]
-    FailedToLaunch,
+
+    [EnumMember(Value = "FAILED_TO_LAUNCH")]
+    FailedToLaunch
 }

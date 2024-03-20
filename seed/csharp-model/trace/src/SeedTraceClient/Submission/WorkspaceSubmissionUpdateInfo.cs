@@ -1,80 +1,51 @@
-using SeedTraceClient
 using System.Text.Json.Serialization
 using StringEnum
+using SeedTraceClient
 using OneOf
 
 namespace SeedTraceClient
 
 public class WorkspaceSubmissionUpdateInfo
 {
-    namespace SeedTraceClient
-
-    public class Value
-     : IBase{
+    public class _Value
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "running"
-        ;
-        
+        public string Type { get; } = "running";
+
         [JsonPropertyName("value")]
         public StringEnum<RunningSubmissionState> Value { get; init; }
     }
-    
-    namespace SeedTraceClient
-
-    public class WorkspaceRunDetails
-     : WorkspaceRunDetails, IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "ran"
-        ;
-        
-    }
-    
-    namespace SeedTraceClient
-
-    public class Stopped
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "stopped"
-        ;
-        
-    }
-    
-    namespace SeedTraceClient
-
-    public class Traced
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "traced"
-        ;
-        
-    }
-    
-    namespace SeedTraceClient
-
-    public class Value
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "errored"
-        ;
-        
-        [JsonPropertyName("value")]
-        public OneOf<CompileError,RuntimeError,InternalError> Value { get; init; }
-    }
-    
-    namespace SeedTraceClient
-
-    public class Finished
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "finished"
-        ;
-        
-    }
-    
-    namespace SeedTraceClient
-
-    private interface IBase
+    public class _WorkspaceRunDetails : WorkspaceRunDetails
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "ran";
     }
-    
+    public class _Stopped
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "stopped";
+    }
+    public class _Traced
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "traced";
+    }
+    public class _WorkspaceTracedUpdate : WorkspaceTracedUpdate
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "tracedV2";
+    }
+    public class _Value
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "errored";
+
+        [JsonPropertyName("value")]
+        public OneOf<CompileError, RuntimeError, InternalError> Value { get; init; }
+    }
+    public class _Finished
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "finished";
+    }
 }

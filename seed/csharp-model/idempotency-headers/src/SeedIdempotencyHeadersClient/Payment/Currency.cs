@@ -7,8 +7,9 @@ namespace SeedIdempotencyHeadersClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Currency
 {
-    [EnumMember(Value ="USD")]
+    [EnumMember(Value = "USD")]
     Usd,
-    [EnumMember(Value ="YEN")]
-    Yen,
+
+    [EnumMember(Value = "YEN")]
+    Yen
 }

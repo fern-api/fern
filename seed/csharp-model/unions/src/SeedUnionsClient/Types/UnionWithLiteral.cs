@@ -5,18 +5,14 @@ namespace SeedUnionsClient
 
 public class UnionWithLiteral
 {
-    namespace SeedUnionsClient
-
-    public class Value
-     : IBase{
+    public class _Value : IBase
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "fern"
-        ;
-        
+        public string Type { get; } = "fern";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
     namespace SeedUnionsClient
 
     private interface IBase
@@ -24,5 +20,4 @@ public class UnionWithLiteral
         [JsonPropertyName("base")]
         public string Base { get; init; }
     }
-    
 }

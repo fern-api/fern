@@ -9,6 +9,7 @@ public class DefaultProvidedFile
 {
     [JsonPropertyName("file")]
     public FileInfoV2 File { get; init; }
+
     [JsonPropertyName("relatedTypes")]
-    public List<OneOf<IntegerType,DoubleType,BooleanType,StringType,CharType,ListType,MapType,BinaryTreeType,SinglyLinkedListType,DoublyLinkedListType>> RelatedTypes { get; init; }
+    public List<OneOf<IntegerType, DoubleType, BooleanType, StringType, CharType, ListType, MapType, BinaryTreeType, SinglyLinkedListType, DoublyLinkedListType>> RelatedTypes { get; init; }
 }

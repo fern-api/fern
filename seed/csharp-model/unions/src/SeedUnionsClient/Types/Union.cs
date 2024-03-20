@@ -1,38 +1,24 @@
-using SeedUnionsClient
 using System.Text.Json.Serialization
+using SeedUnionsClient
 
 namespace SeedUnionsClient
 
 public class Union
 {
-    namespace SeedUnionsClient
-
-    public class Foo
-     : IBase{
+    public class _Foo
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "foo"
-        ;
-        
+        public string Type { get; } = "foo";
+
         [JsonPropertyName("foo")]
         public Foo Foo { get; init; }
     }
-    
-    namespace SeedUnionsClient
-
-    public class Bar
-     : IBase{
+    public class _Bar
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "bar"
-        ;
-        
+        public string Type { get; } = "bar";
+
         [JsonPropertyName("bar")]
         public Bar Bar { get; init; }
     }
-    
-    namespace SeedUnionsClient
-
-    private interface IBase
-    {
-    }
-    
 }

@@ -7,5 +7,5 @@ namespace SeedTraceClient
 public class WorkspaceSubmissionState
 {
     [JsonPropertyName("status")]
-    public OneOf<Stopped,Value,Value,WorkspaceRunDetails,WorkspaceRunDetails> Status { get; init; }
+    public OneOf<Stopped, Value, Value, WorkspaceRunDetails, WorkspaceRunDetails> Status { get; init; }
 }

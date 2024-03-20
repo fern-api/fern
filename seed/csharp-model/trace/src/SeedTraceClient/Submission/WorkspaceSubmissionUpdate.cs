@@ -8,6 +8,7 @@ public class WorkspaceSubmissionUpdate
 {
     [JsonPropertyName("updateTime")]
     public DateTime UpdateTime { get; init; }
+
     [JsonPropertyName("updateInfo")]
-    public OneOf<Value,WorkspaceRunDetails,Stopped,Traced,WorkspaceTracedUpdate,Value,Finished> UpdateInfo { get; init; }
+    public OneOf<Value, WorkspaceRunDetails, Stopped, Traced, WorkspaceTracedUpdate, Value, Finished> UpdateInfo { get; init; }
 }

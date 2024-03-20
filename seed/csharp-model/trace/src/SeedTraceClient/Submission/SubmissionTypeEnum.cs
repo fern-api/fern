@@ -7,6 +7,6 @@ namespace SeedTraceClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum SubmissionTypeEnum
 {
-    [EnumMember(Value ="TEST")]
-    Test,
+    [EnumMember(Value = "TEST")]
+    Test
 }

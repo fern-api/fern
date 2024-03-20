@@ -42,7 +42,7 @@ export class MethodInvocation extends AstNode {
         [...this.arguments.entries()].forEach(([parameter, assignment], idx) => {
             parameter.write(writer);
             assignment.write(writer);
-            if (idx < this.arguments.size - 2) {
+            if (idx < this.arguments.size - 1) {
                 writer.write(", ");
             }
         });

@@ -1,26 +1,15 @@
-using SeedTraceClient
 using System.Text.Json.Serialization
 
 namespace SeedTraceClient
 
 public class PlaylistIdNotFoundErrorBody
 {
-    namespace SeedTraceClient
-
-    public class Value
-     : IBase{
+    public class _Value
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "playlistId"
-        ;
-        
+        public string Type { get; } = "playlistId";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
-    namespace SeedTraceClient
-
-    private interface IBase
-    {
-    }
-    
 }

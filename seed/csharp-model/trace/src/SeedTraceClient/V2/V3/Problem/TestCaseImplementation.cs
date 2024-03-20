@@ -8,6 +8,7 @@ public class TestCaseImplementation
 {
     [JsonPropertyName("description")]
     public TestCaseImplementationDescription Description { get; init; }
+
     [JsonPropertyName("function")]
-    public OneOf<TestCaseWithActualResultImplementation,VoidFunctionDefinition> Function { get; init; }
+    public OneOf<TestCaseWithActualResultImplementation, VoidFunctionDefinition> Function { get; init; }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient", "SeedStreamingClient\SeedStreamingClient.csproj", "{3C410D31-A2D6-4CD8-ABA2-F98B217E0DAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient", "SeedStreamingClient\SeedStreamingClient.csproj", "{862AFC09-00ED-4692-AB69-99B1BE13F80F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient.Test", "SeedStreamingClient.Test\SeedStreamingClient.Test.csproj", "{F59A44B4-9413-4842-8396-8E97D6B76134}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreamingClient.Test", "SeedStreamingClient.Test\SeedStreamingClient.Test.csproj", "{7CD779CE-D372-4F05-88B8-29C5B4F08507}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C410D31-A2D6-4CD8-ABA2-F98B217E0DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C410D31-A2D6-4CD8-ABA2-F98B217E0DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C410D31-A2D6-4CD8-ABA2-F98B217E0DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C410D31-A2D6-4CD8-ABA2-F98B217E0DAC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F59A44B4-9413-4842-8396-8E97D6B76134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F59A44B4-9413-4842-8396-8E97D6B76134}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F59A44B4-9413-4842-8396-8E97D6B76134}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F59A44B4-9413-4842-8396-8E97D6B76134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{862AFC09-00ED-4692-AB69-99B1BE13F80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD779CE-D372-4F05-88B8-29C5B4F08507}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -8,6 +8,7 @@ public class BuildingExecutorResponse
 {
     [JsonPropertyName("submissionId")]
     public Guid SubmissionId { get; init; }
+
     [JsonPropertyName("status")]
     public StringEnum<ExecutionSessionStatus> Status { get; init; }
 }

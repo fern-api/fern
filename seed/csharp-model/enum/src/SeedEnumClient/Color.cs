@@ -7,8 +7,9 @@ namespace SeedEnumClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Color
 {
-    [EnumMember(Value ="red")]
+    [EnumMember(Value = "red")]
     Red,
-    [EnumMember(Value ="blue")]
-    Blue,
+
+    [EnumMember(Value = "blue")]
+    Blue
 }

@@ -8,5 +8,5 @@ namespace SeedTraceClient.V2
 public class FunctionImplementationForMultipleLanguages
 {
     [JsonPropertyName("codeByLanguage")]
-    public Dictionary<StringEnum<Language>,FunctionImplementation> CodeByLanguage { get; init; }
+    public Dictionary<StringEnum<Language>, FunctionImplementation> CodeByLanguage { get; init; }
 }

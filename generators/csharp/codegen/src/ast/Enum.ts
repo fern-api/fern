@@ -62,7 +62,7 @@ export class Enum extends AstNode {
                     name: "EnumMember",
                     namespace: "System.Text.Json.Serialization"
                 }),
-                argument: `Value ="${field.value}"`
+                argument: `Value = "${field.value}"`
             })
         });
     }
@@ -85,14 +85,17 @@ export class Enum extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
-        for (const field of this.fields) {
+        this.fields.forEach((field, index) => {
             writer.write("[");
             field.value.write(writer);
             writer.writeLine("]");
             writer.write(field.name);
-            writer.writeLine(",");
-            writer.writeNewLineIfLastLineNot();
-        }
+            if (index < this.fields.length - 1) {
+                writer.writeLine(",");
+                writer.newLine();
+            }
+        });
+        writer.writeNewLineIfLastLineNot();
         writer.dedent();
         writer.writeLine("}");
     }

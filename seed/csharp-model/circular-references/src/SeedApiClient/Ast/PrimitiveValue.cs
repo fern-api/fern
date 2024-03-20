@@ -7,8 +7,9 @@ namespace SeedApiClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum PrimitiveValue
 {
-    [EnumMember(Value ="STRING")]
+    [EnumMember(Value = "STRING")]
     String,
-    [EnumMember(Value ="NUMBER")]
-    Number,
+
+    [EnumMember(Value = "NUMBER")]
+    Number
 }

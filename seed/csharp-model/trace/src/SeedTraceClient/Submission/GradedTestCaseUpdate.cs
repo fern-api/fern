@@ -8,6 +8,7 @@ public class GradedTestCaseUpdate
 {
     [JsonPropertyName("testCaseId")]
     public string TestCaseId { get; init; }
+
     [JsonPropertyName("grade")]
-    public OneOf<TestCaseHiddenGrade,TestCaseNonHiddenGrade> Grade { get; init; }
+    public OneOf<TestCaseHiddenGrade, TestCaseNonHiddenGrade> Grade { get; init; }
 }

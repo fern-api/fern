@@ -7,10 +7,12 @@ namespace SeedEnumClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Operand
 {
-    [EnumMember(Value =">")]
+    [EnumMember(Value = ">")]
     GreaterThan,
-    [EnumMember(Value ="=")]
+
+    [EnumMember(Value = "=")]
     EqualTo,
-    [EnumMember(Value ="less_than")]
-    LessThan,
+
+    [EnumMember(Value = "less_than")]
+    LessThan
 }

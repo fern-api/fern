@@ -5,20 +5,14 @@ namespace SeedExamplesClient
 
 public class Exception
 {
-    namespace SeedExamplesClient
-
-    public class Timeout
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "timeout"
-        ;
-        
-    }
-    
-    namespace SeedExamplesClient
-
-    private interface IBase
+    public class _ExceptionInfo : ExceptionInfo
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "generic";
     }
-    
+    public class _Timeout
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "timeout";
+    }
 }

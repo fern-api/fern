@@ -7,12 +7,15 @@ namespace SeedExhaustiveClient.Types
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum WeatherReport
 {
-    [EnumMember(Value ="SUNNY")]
+    [EnumMember(Value = "SUNNY")]
     Sunny,
-    [EnumMember(Value ="CLOUDY")]
+
+    [EnumMember(Value = "CLOUDY")]
     Cloudy,
-    [EnumMember(Value ="RAINING")]
+
+    [EnumMember(Value = "RAINING")]
     Raining,
-    [EnumMember(Value ="SNOWING")]
-    Snowing,
+
+    [EnumMember(Value = "SNOWING")]
+    Snowing
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuthClient", "SeedCustomAuthClient\SeedCustomAuthClient.csproj", "{CE9C97D6-0A73-4852-8753-3F8C63F3DAA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuthClient", "SeedCustomAuthClient\SeedCustomAuthClient.csproj", "{97C5ABEB-8FE1-42BC-B8D0-310BB26EF0F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuthClient.Test", "SeedCustomAuthClient.Test\SeedCustomAuthClient.Test.csproj", "{C4238DD7-66D6-4A0A-A0B6-5740A4B15FDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuthClient.Test", "SeedCustomAuthClient.Test\SeedCustomAuthClient.Test.csproj", "{F50068DF-ADF0-42CC-A72A-E7FE6D5985B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CE9C97D6-0A73-4852-8753-3F8C63F3DAA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE9C97D6-0A73-4852-8753-3F8C63F3DAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE9C97D6-0A73-4852-8753-3F8C63F3DAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE9C97D6-0A73-4852-8753-3F8C63F3DAA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4238DD7-66D6-4A0A-A0B6-5740A4B15FDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4238DD7-66D6-4A0A-A0B6-5740A4B15FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4238DD7-66D6-4A0A-A0B6-5740A4B15FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4238DD7-66D6-4A0A-A0B6-5740A4B15FDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C5ABEB-8FE1-42BC-B8D0-310BB26EF0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C5ABEB-8FE1-42BC-B8D0-310BB26EF0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C5ABEB-8FE1-42BC-B8D0-310BB26EF0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C5ABEB-8FE1-42BC-B8D0-310BB26EF0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50068DF-ADF0-42CC-A72A-E7FE6D5985B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50068DF-ADF0-42CC-A72A-E7FE6D5985B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F50068DF-ADF0-42CC-A72A-E7FE6D5985B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F50068DF-ADF0-42CC-A72A-E7FE6D5985B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

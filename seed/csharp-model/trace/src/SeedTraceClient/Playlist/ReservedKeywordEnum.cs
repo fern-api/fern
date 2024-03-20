@@ -7,8 +7,9 @@ namespace SeedTraceClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum ReservedKeywordEnum
 {
-    [EnumMember(Value ="is")]
+    [EnumMember(Value = "is")]
     Is,
-    [EnumMember(Value ="as")]
-    As,
+
+    [EnumMember(Value = "as")]
+    As
 }

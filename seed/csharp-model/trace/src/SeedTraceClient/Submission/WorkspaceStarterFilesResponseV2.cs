@@ -8,5 +8,5 @@ namespace SeedTraceClient
 public class WorkspaceStarterFilesResponseV2
 {
     [JsonPropertyName("filesByLanguage")]
-    public Dictionary<StringEnum<Language>,Files> FilesByLanguage { get; init; }
+    public Dictionary<StringEnum<Language>, Files> FilesByLanguage { get; init; }
 }

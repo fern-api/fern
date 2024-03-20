@@ -1,26 +1,21 @@
-using SeedTraceClient.V2
 using System.Text.Json.Serialization
+using SeedTraceClient.V2
 
 namespace SeedTraceClient.V2
 
 public class TestCaseImplementationReference
 {
-    namespace SeedTraceClient.V2
-
-    public class Value
-     : IBase{
+    public class _Value
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "templateId"
-        ;
-        
+        public string Type { get; } = "templateId";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
-    namespace SeedTraceClient.V2
-
-    private interface IBase
+    public class _TestCaseImplementation : TestCaseImplementation
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "implementation";
     }
-    
 }

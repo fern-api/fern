@@ -5,30 +5,14 @@ namespace SeedUnionsClient
 
 public class UnionWithoutKey
 {
-    namespace SeedUnionsClient
-
-    public class Foo
-     : Foo, IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "foo"
-        ;
-        
-    }
-    
-    namespace SeedUnionsClient
-
-    public class Bar
-     : Bar, IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "bar"
-        ;
-        
-    }
-    
-    namespace SeedUnionsClient
-
-    private interface IBase
+    public class _Foo : Foo
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "foo";
     }
-    
+    public class _Bar : Bar
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "bar";
+    }
 }

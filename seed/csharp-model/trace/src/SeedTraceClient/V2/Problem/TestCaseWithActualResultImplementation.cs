@@ -8,6 +8,7 @@ public class TestCaseWithActualResultImplementation
 {
     [JsonPropertyName("getActualResult")]
     public NonVoidFunctionDefinition GetActualResult { get; init; }
+
     [JsonPropertyName("assertCorrectnessCheck")]
-    public OneOf<DeepEqualityCorrectnessCheck,VoidFunctionDefinitionThatTakesActualResult> AssertCorrectnessCheck { get; init; }
+    public OneOf<DeepEqualityCorrectnessCheck, VoidFunctionDefinitionThatTakesActualResult> AssertCorrectnessCheck { get; init; }
 }

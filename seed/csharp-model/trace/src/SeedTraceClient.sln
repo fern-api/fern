@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient", "SeedTraceClient\SeedTraceClient.csproj", "{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient", "SeedTraceClient\SeedTraceClient.csproj", "{A15136CB-C55B-4DC4-96F8-F6BDBC2A0C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient.Test", "SeedTraceClient.Test\SeedTraceClient.Test.csproj", "{AA247CCD-3123-44C7-9F17-C81C08D7A12C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTraceClient.Test", "SeedTraceClient.Test\SeedTraceClient.Test.csproj", "{4EDD6118-4E97-4184-8358-ADDF4A15892B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D28FDD09-1161-4726-82E1-FCF17F2F5ACE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA247CCD-3123-44C7-9F17-C81C08D7A12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15136CB-C55B-4DC4-96F8-F6BDBC2A0C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15136CB-C55B-4DC4-96F8-F6BDBC2A0C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15136CB-C55B-4DC4-96F8-F6BDBC2A0C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15136CB-C55B-4DC4-96F8-F6BDBC2A0C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDD6118-4E97-4184-8358-ADDF4A15892B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDD6118-4E97-4184-8358-ADDF4A15892B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDD6118-4E97-4184-8358-ADDF4A15892B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDD6118-4E97-4184-8358-ADDF4A15892B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

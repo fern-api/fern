@@ -11,6 +11,7 @@ public class TraceResponsesPageV2
     /// </summary>
     [JsonPropertyName("offset")]
     public int? Offset { get; init; }
+
     [JsonPropertyName("traceResponses")]
     public List<TraceResponseV2> TraceResponses { get; init; }
 }

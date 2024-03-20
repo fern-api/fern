@@ -8,6 +8,7 @@ public class RunningResponse
 {
     [JsonPropertyName("submissionId")]
     public Guid SubmissionId { get; init; }
+
     [JsonPropertyName("state")]
     public StringEnum<RunningSubmissionState> State { get; init; }
 }

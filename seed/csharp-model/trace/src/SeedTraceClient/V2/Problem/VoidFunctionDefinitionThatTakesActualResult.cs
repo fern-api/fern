@@ -7,6 +7,7 @@ public class VoidFunctionDefinitionThatTakesActualResult
 {
     [JsonPropertyName("additionalParameters")]
     public List<Parameter> AdditionalParameters { get; init; }
+
     [JsonPropertyName("code")]
     public FunctionImplementationForMultipleLanguages Code { get; init; }
 }

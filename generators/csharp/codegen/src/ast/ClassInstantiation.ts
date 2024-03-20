@@ -29,7 +29,7 @@ export class ClassInstantiation extends AstNode {
         [...this.arguments.entries()].forEach(([field, assignment], idx) => {
             writer.write(`${field.name}: `);
             assignment.write(writer);
-            if (idx < this.arguments.size - 2) {
+            if (idx < this.arguments.size - 1) {
                 writer.write(", ");
             }
         });

@@ -7,6 +7,7 @@ public class GetBasicSolutionFileRequest
 {
     [JsonPropertyName("methodName")]
     public string MethodName { get; init; }
+
     [JsonPropertyName("signature")]
     public NonVoidFunctionSignature Signature { get; init; }
 }

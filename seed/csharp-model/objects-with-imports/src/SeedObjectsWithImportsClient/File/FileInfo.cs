@@ -7,8 +7,9 @@ namespace SeedObjectsWithImportsClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum FileInfo
 {
-    [EnumMember(Value ="REGULAR")]
+    [EnumMember(Value = "REGULAR")]
     Regular,
-    [EnumMember(Value ="DIRECTORY")]
-    Directory,
+
+    [EnumMember(Value = "DIRECTORY")]
+    Directory
 }

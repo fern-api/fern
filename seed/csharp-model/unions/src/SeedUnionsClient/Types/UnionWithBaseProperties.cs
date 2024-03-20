@@ -5,40 +5,27 @@ namespace SeedUnionsClient
 
 public class UnionWithBaseProperties
 {
-    namespace SeedUnionsClient
-
-    public class Value
-     : IBase{
+    public class _Value : IBase
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "integer"
-        ;
-        
+        public string Type { get; } = "integer";
+
         [JsonPropertyName("value")]
         public int Value { get; init; }
     }
-    
-    namespace SeedUnionsClient
-
-    public class Value
-     : IBase{
+    public class _Value : IBase
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "string"
-        ;
-        
+        public string Type { get; } = "string";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
-    namespace SeedUnionsClient
-
-    public class Foo
-     : Foo, IBase{
+    public class _Foo : Foo, IBase
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "foo"
-        ;
-        
+        public string Type { get; } = "foo";
     }
-    
     namespace SeedUnionsClient
 
     private interface IBase
@@ -46,5 +33,4 @@ public class UnionWithBaseProperties
         [JsonPropertyName("id")]
         public string Id { get; init; }
     }
-    
 }

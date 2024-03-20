@@ -7,7 +7,8 @@ namespace SeedTraceClient
 public class InvalidRequestResponse
 {
     [JsonPropertyName("request")]
-    public OneOf<InitializeProblemRequest,InitializeWorkspaceRequest,SubmitRequestV2,WorkspaceSubmitRequest,StopRequest> Request { get; init; }
+    public OneOf<InitializeProblemRequest, InitializeWorkspaceRequest, SubmitRequestV2, WorkspaceSubmitRequest, StopRequest> Request { get; init; }
+
     [JsonPropertyName("cause")]
-    public OneOf<SubmissionIdNotFound,CustomTestCasesUnsupported,UnexpectedLanguageError> Cause { get; init; }
+    public OneOf<SubmissionIdNotFound, CustomTestCasesUnsupported, UnexpectedLanguageError> Cause { get; init; }
 }

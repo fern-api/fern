@@ -5,22 +5,17 @@ namespace SeedExamplesClient.Commons
 
 public class EventInfo
 {
-    namespace SeedExamplesClient.Commons
-
-    public class Value
-     : IBase{
+    public class _Metadata : Metadata
+    {
         [JsonPropertyName("type")]
-        public string Type { get; } = "tag"
-        ;
-        
+        public string Type { get; } = "metadata";
+    }
+    public class _Value
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "tag";
+
         [JsonPropertyName("value")]
         public string Value { get; init; }
     }
-    
-    namespace SeedExamplesClient.Commons
-
-    private interface IBase
-    {
-    }
-    
 }

@@ -7,5 +7,5 @@ namespace SeedTraceClient.V2.V3
 public class TestCaseImplementationDescription
 {
     [JsonPropertyName("boards")]
-    public List<OneOf<Value,Value>> Boards { get; init; }
+    public List<OneOf<Value, Value>> Boards { get; init; }
 }

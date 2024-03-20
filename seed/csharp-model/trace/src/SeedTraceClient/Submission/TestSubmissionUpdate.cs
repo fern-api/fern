@@ -8,6 +8,7 @@ public class TestSubmissionUpdate
 {
     [JsonPropertyName("updateTime")]
     public DateTime UpdateTime { get; init; }
+
     [JsonPropertyName("updateInfo")]
-    public OneOf<Value,Stopped,Value,GradedTestCaseUpdate,RecordedTestCaseUpdate,Finished> UpdateInfo { get; init; }
+    public OneOf<Value, Stopped, Value, GradedTestCaseUpdate, RecordedTestCaseUpdate, Finished> UpdateInfo { get; init; }
 }

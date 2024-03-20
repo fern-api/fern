@@ -5,20 +5,19 @@ namespace SeedTraceClient.V2.V3
 
 public class FunctionSignature
 {
-    namespace SeedTraceClient.V2.V3
-
-    public class NonVoidFunctionSignature
-     : NonVoidFunctionSignature, IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "nonVoid"
-        ;
-        
-    }
-    
-    namespace SeedTraceClient.V2.V3
-
-    private interface IBase
+    public class _VoidFunctionSignature : VoidFunctionSignature
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "void";
     }
-    
+    public class _NonVoidFunctionSignature : NonVoidFunctionSignature
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "nonVoid";
+    }
+    public class _VoidFunctionSignatureThatTakesActualResult : VoidFunctionSignatureThatTakesActualResult
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "voidThatTakesActualResult";
+    }
 }

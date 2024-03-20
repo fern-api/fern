@@ -7,22 +7,17 @@ namespace SeedTraceClient.V2.V3
 
 public class CustomFiles
 {
-    namespace SeedTraceClient.V2.V3
-
-    public class Value
-     : IBase{
-        [JsonPropertyName("type")]
-        public string Type { get; } = "custom"
-        ;
-        
-        [JsonPropertyName("value")]
-        public Dictionary<StringEnum<Language>,Files> Value { get; init; }
-    }
-    
-    namespace SeedTraceClient.V2.V3
-
-    private interface IBase
+    public class _BasicCustomFiles : BasicCustomFiles
     {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "basic";
     }
-    
+    public class _Value
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; } = "custom";
+
+        [JsonPropertyName("value")]
+        public Dictionary<StringEnum<Language>, Files> Value { get; init; }
+    }
 }

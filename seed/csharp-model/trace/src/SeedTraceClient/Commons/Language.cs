@@ -7,10 +7,12 @@ namespace SeedTraceClient
 [JsonConverter(typeof(TolerantEnumConverter))]
 public enum Language
 {
-    [EnumMember(Value ="JAVA")]
+    [EnumMember(Value = "JAVA")]
     Java,
-    [EnumMember(Value ="JAVASCRIPT")]
+
+    [EnumMember(Value = "JAVASCRIPT")]
     Javascript,
-    [EnumMember(Value ="PYTHON")]
-    Python,
+
+    [EnumMember(Value = "PYTHON")]
+    Python
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiClient", "SeedApiClient\SeedApiClient.csproj", "{B8FEDB27-4A5A-441D-9561-2DD925CF789D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiClient", "SeedApiClient\SeedApiClient.csproj", "{7CA7AC13-8D38-4948-9C62-25D8C260FA9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiClient.Test", "SeedApiClient.Test\SeedApiClient.Test.csproj", "{80E1EE2F-451C-4CE3-8B50-EBFF2368F381}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiClient.Test", "SeedApiClient.Test\SeedApiClient.Test.csproj", "{1A7D8B95-BE83-45C2-839E-3FBAD619B0E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B8FEDB27-4A5A-441D-9561-2DD925CF789D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8FEDB27-4A5A-441D-9561-2DD925CF789D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8FEDB27-4A5A-441D-9561-2DD925CF789D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8FEDB27-4A5A-441D-9561-2DD925CF789D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80E1EE2F-451C-4CE3-8B50-EBFF2368F381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80E1EE2F-451C-4CE3-8B50-EBFF2368F381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80E1EE2F-451C-4CE3-8B50-EBFF2368F381}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80E1EE2F-451C-4CE3-8B50-EBFF2368F381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CA7AC13-8D38-4948-9C62-25D8C260FA9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA7AC13-8D38-4948-9C62-25D8C260FA9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA7AC13-8D38-4948-9C62-25D8C260FA9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA7AC13-8D38-4948-9C62-25D8C260FA9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7D8B95-BE83-45C2-839E-3FBAD619B0E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7D8B95-BE83-45C2-839E-3FBAD619B0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7D8B95-BE83-45C2-839E-3FBAD619B0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7D8B95-BE83-45C2-839E-3FBAD619B0E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
