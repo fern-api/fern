@@ -20,7 +20,6 @@ tabs:
     icon: code
   docs:
     display-name: Docs
-    slug: docs
     icon: book
 
 navigation:
@@ -177,15 +176,6 @@ navigation:
               - page: Postman Collection generator
                 slug: postman
                 path: ./docs/pages/fern-sdks/other-generators/spec/postman-collection.mdx
-          # To include in nav once the Model pages are added
-          # - section: Model
-          #   contents:
-          #     - page: Pydantic
-          #       path: ./docs/pages/placeholder.mdx
-          #     - page: Ruby
-          #       path: ./docs/pages/placeholder.mdx
-          #     - page: Spring
-          #       path: ./docs/pages/placeholder.mdx
       - section: Guides
         contents:
           - page: Publish to Maven Central
@@ -235,17 +225,18 @@ navigation:
               - page: Custom domain
                 path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
 
-      - section: Writing Content
+      - section: Write content
+        slug: content
         contents:
           - page: Write Markdown content
             path: ./docs/pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
           - page: Frontmatter
             path: ./docs/pages/fern-docs/content/front-matter.mdx
-          - page: Code Snippets
+          - page: Code snippets
             path: ./docs/pages/fern-docs/content/code-snippets.mdx
       
-      - section: API References
+      - section: API references
         contents: 
           - page: Generate API reference
             path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
@@ -264,6 +255,7 @@ navigation:
             path: ./docs/pages/fern-docs/content/components/card.mdx
           - page: CodeBlocks
             path: ./docs/pages/fern-docs/content/components/codeblocks.mdx
+            slug: codeblocks
           - page: Callout
             path: ./docs/pages/fern-docs/content/components/callout.mdx
           - page: Icons
@@ -276,7 +268,7 @@ navigation:
             path: ./docs/pages/fern-docs/content/components/accordion.mdx
           - page: Steps
             path: ./docs/pages/fern-docs/content/components/steps.mdx
-          - page: Endpoint Snippets
+          - page: Endpoint snippets
             path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
 
 navbar-links:
