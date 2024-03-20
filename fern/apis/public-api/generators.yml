@@ -29,3 +29,23 @@ groups:
           license: MIT
         config:
           client_class_name: Fern
+  java-sdk:
+    audiences:
+      - external
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.8.6
+        output:
+          location: maven
+          coordinate: com.fern.api:fern-java-sdk
+          username: fernapi
+          password: ${MAVEN_PASSWORD}
+          signature:
+            keyId: ${MAVEN_CENTRAL_SECRET_KEY_KEY_ID}
+            password: ${MAVEN_CENTRAL_SECRET_KEY_PASSWORD}
+            secretKey: ${MAVEN_CENTRAL_SECRET_KEY}
+        github:
+          repository: fern-api/java-sdk
+          license: MIT
+        config:
+          client_class_name: Fern
