@@ -53,9 +53,9 @@ function getGithubPublishConfig(
                       signature:
                           value.signature != null
                               ? {
-                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature?.keyId ?? ""),
-                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature?.password ?? ""),
-                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature?.secretKey ?? "")
+                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature.keyId ?? ""),
+                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ""),
+                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
                                 }
                               : undefined
                   }),
@@ -205,7 +205,8 @@ function newDummyPublishOutputConfig(
                     password: (outputMode as MavenOutput)?.password ?? "",
                     registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
                     username: (outputMode as MavenOutput)?.username ?? "",
-                    coordinate: (outputMode as MavenOutput)?.coordinate ?? ""
+                    coordinate: (outputMode as MavenOutput)?.coordinate ?? "",
+                    signature: (outputMode as MavenOutput)?.signature
                 },
                 npm: {
                     registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",

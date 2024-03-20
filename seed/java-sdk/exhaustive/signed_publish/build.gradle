@@ -37,11 +37,17 @@ java {
 }
 
 signing {
-    sign publishing.publications
     def signingKeyId = findProperty("signingKeyId")
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    if (signingKey != null && signingPassword != null) {
+        useInMemoryPgpKeys(
+            signingKeyId,
+            signingKey,
+            signingPassword,
+        )
+        sign(publishing.publications)
+    }
 }
 test {
     useJUnitPlatform()

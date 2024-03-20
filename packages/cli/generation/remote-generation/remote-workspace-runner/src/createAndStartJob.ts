@@ -133,7 +133,17 @@ async function createJob({
             context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
         }
     }
-
+    context.logger.debug(
+        JSON.stringify({
+            apiName: workspace.name,
+            version,
+            organizationName: organization,
+            generators: [generatorConfigsWithEnvVarSubstitutions],
+            uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+            whitelabel: whitelabelWithEnvVarSubstiutions,
+            fernDefinitionMetadata
+        })
+    );
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,

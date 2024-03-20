@@ -318,11 +318,17 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     .pluginId("signing")
                     .build());
             buildGradle.addCustomBlocks("signing {\n"
-                    + "    sign publishing.publications\n"
                     + "    def signingKeyId = findProperty(\"signingKeyId\")\n"
                     + "    def signingKey = findProperty(\"signingKey\")\n"
                     + "    def signingPassword = findProperty(\"signingPassword\")\n"
-                    + "    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)\n"
+                    + "    if (signingKey != null && signingPassword != null) {\n"
+                    + "        useInMemoryPgpKeys(\n"
+                    + "            signingKeyId,\n"
+                    + "            signingKey,\n"
+                    + "            signingPassword,\n"
+                    + "        )\n"
+                    + "        sign(publishing.publications)\n"
+                    + "    }\n"
                     + "}");
         }
         if (addTestBlock) {
