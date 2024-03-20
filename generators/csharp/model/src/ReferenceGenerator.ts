@@ -135,6 +135,7 @@ export class ReferenceGenerator {
                         return csharp.Type.stringEnum(objectClassReference);
                     },
                     union: (union) => {
+                        const containerObjectName = getNameFromIrName(value.name);
                         this.annotations.set(typeReference, this.prebuiltUtilities.oneOfConverterAnnotation());
                         // TODO: we could do a better job sharing classreferences between this and the
                         // ultimate created class, maybe class should have a classReference as opposed to
@@ -142,20 +143,23 @@ export class ReferenceGenerator {
                         return csharp.Type.oneOf(
                             union.types
                                 .map<csharp.Type | undefined>((member) => {
+                                    const memberObjectName = `${containerObjectName}.${getNameFromIrName(
+                                        member.discriminantValue.name
+                                    )}`;
                                     const t = member.shape._visit<csharp.ClassReference | undefined>({
-                                        samePropertiesAsObject: (objectType) =>
+                                        samePropertiesAsObject: () =>
                                             new csharp.ClassReference({
-                                                name: getNameFromIrName(objectType.name),
+                                                name: memberObjectName,
                                                 namespace: objectNamespace
                                             }),
-                                        singleProperty: (property) =>
+                                        singleProperty: () =>
                                             new csharp.ClassReference({
-                                                name: getNameFromIrName(property.name.name),
+                                                name: memberObjectName,
                                                 namespace: objectNamespace
                                             }),
                                         noProperties: () =>
                                             new csharp.ClassReference({
-                                                name: getNameFromIrName(member.discriminantValue.name),
+                                                name: memberObjectName,
                                                 namespace: objectNamespace
                                             }),
                                         _other: () => undefined
