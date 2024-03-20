@@ -54,7 +54,5 @@ jobs:
           context: ./generators/openapi
           file: ./generators/openapi/Dockerfile
           platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
           push: true
           tags: fernapi/omarrida-openapi:latest
