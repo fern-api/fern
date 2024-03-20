@@ -23,7 +23,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
         const customConfig = getCustomConfig(config);
 
         // eslint-disable-next-line no-console
-        console.log("customConfig", customConfig);
+        console.log("customConfig", JSON.stringify(customConfig));
         const generatorLoggingClient = new GeneratorLoggingWrapper(config);
 
         try {
@@ -39,18 +39,18 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             console.log("loading ir");
             const ir = await loadIntermediateRepresentation(config.irFilepath);
             // eslint-disable-next-line no-console
-            console.log("parsed ir", ir);
+            console.log("parsed ir", JSON.stringify(ir));
             const openApiDefinition = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
                 mode
             });
             // eslint-disable-next-line no-console
-            console.log("openApiDefinition", openApiDefinition);
+            console.log("openApiDefinition", JSON.stringify(openApiDefinition));
 
             const openApiDefinitionWithCustomOverrides = merge(customConfig.customOverrides, openApiDefinition);
             // eslint-disable-next-line no-console
-            console.log("openApiDefinitionWithCustomOverrides", openApiDefinitionWithCustomOverrides);
+            console.log("openApiDefinitionWithCustomOverrides", JSON.stringify(openApiDefinitionWithCustomOverrides));
 
             if (customConfig.format === "json") {
                 // eslint-disable-next-line no-console
@@ -97,10 +97,10 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
     const irString = (await readFile(pathToFile)).toString();
     // eslint-disable-next-line no-console
-    console.log("irString", irString);
+    console.log("irString", JSON.stringify(irString));
     const irJson = JSON.parse(irString);
     // eslint-disable-next-line no-console
-    console.log("irJson", irJson);
+    console.log("irJson", JSON.stringify(irJson));
     // eslint-disable-next-line no-console
     console.log("parsing ir");
     return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);

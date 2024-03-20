@@ -6,6 +6,8 @@ export class GeneratorLoggingWrapper {
     };
 
     constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
+        // eslint-disable-next-line no-console
+        console.log("generatorConfig", JSON.stringify(generatorConfig));
         if (generatorConfig.environment.type === "remote") {
             // eslint-disable-next-line no-console
             console.log("generatorConfig.environment.coordinatorUrlV2", generatorConfig.environment.coordinatorUrlV2);
