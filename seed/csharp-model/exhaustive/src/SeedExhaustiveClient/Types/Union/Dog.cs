@@ -9,5 +9,4 @@ public class Dog
 
     [JsonPropertyName("likesToWoof")]
     public bool LikesToWoof { get; init; }
-
 }

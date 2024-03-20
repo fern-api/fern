@@ -9,18 +9,10 @@ public class Animal
     {
         [JsonPropertyName("animal")]
         public string Animal { get; } = "dog";
-
-
     }
-
-
     public class _Cat : Cat
     {
         [JsonPropertyName("animal")]
         public string Animal { get; } = "cat";
-
-
     }
-
-
 }

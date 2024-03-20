@@ -10,5 +10,4 @@ public class NestedObjectWithRequiredField
 
     [JsonPropertyName("NestedObject")]
     public ObjectWithOptionalField NestedObject { get; init; }
-
 }

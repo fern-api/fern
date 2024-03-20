@@ -38,6 +38,5 @@ public class ObjectWithOptionalField
     public HashSet<string>? Set { get; init; }
 
     [JsonPropertyName("map")]
-    public Dictionary<int,string>? Map { get; init; }
-
+    public Dictionary<int, string>? Map { get; init; }
 }
