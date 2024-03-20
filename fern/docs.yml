@@ -280,15 +280,12 @@ navigation:
             path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
 
 navbar-links:
-  - type: secondary
-    text: Home
-    url: https://buildwithfern.com
-  - type: secondary
-    text: Showcase
-    url: https://buildwithfern.com/showcase
-  - type: primary
+  - type: minimal
     text: GitHub
     url: https://github.com/fern-api/fern
+  - type: filled
+    text: Book a demo
+    url: https://buildwithfern.com/contact
 
 logo:
   href: https://www.buildwithfern.com
