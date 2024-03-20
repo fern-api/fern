@@ -1,6 +1,11 @@
 instances:
   - url: fern.docs.buildwithfern.com/learn
     custom-domain: buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
   # - url: fern-beta.docs.buildwithfern.com/learn
   #   custom-domain: staging.buildwithfern.com/learn
 title: Fern | Documentation
@@ -8,14 +13,15 @@ title: Fern | Documentation
 tabs:
   overview:
     display-name: Overview
-    icon: 'globe'
+    icon: "globe"
   fern-sdks:
     display-name: Fern SDKs
-    slug: fern-sdks
-    icon: 'code'
+    slug: sdks
+    icon: "code"
   fern-docs:
     display-name: Fern Docs
-    icon: 'book'
+    slug: "docs"
+    icon: "book"
 
 navigation:
   - tab: overview
@@ -234,6 +240,7 @@ navigation:
                 path: ./docs/pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain
                 path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
+
       - section: Content
         contents:
           - page: Generate API reference
@@ -242,29 +249,32 @@ navigation:
           - page: Write Markdown content
             path: ./docs/pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
-          - page: Front matter
+          - page: Frontmatter
             path: ./docs/pages/fern-docs/content/front-matter.mdx
-          - section: Component Library
-            slug: components
-            contents:
-              - page: Cards
-                path: ./docs/pages/fern-docs/content/components/card.mdx
-              - page: CodeBlock
-                path: ./docs/pages/fern-docs/content/components/codeblock.mdx
-              - page: Callout
-                path: ./docs/pages/fern-docs/content/components/callout.mdx
-              - page: Icons
-                path: ./docs/pages/fern-docs/content/components/icons.mdx
-              - page: Availability
-                path: ./docs/pages/fern-docs/content/components/availability.mdx
-              - page: Tabs
-                path: ./docs/pages/fern-docs/content/components/tabs.mdx
-              - page: Accordion
-                path: ./docs/pages/fern-docs/content/components/accordion.mdx
-              - page: Steps
-                path: ./docs/pages/fern-docs/content/components/steps.mdx
-              - page: Endpoint Snippets
-                path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
+          - page: Syntax Highlighting
+            path: ./docs/pages/fern-docs/content/syntax-highlighting.mdx
+
+      - section: Components
+        slug: components
+        contents:
+          - page: Cards
+            path: ./docs/pages/fern-docs/content/components/card.mdx
+          - page: CodeBlocks
+            path: ./docs/pages/fern-docs/content/components/codeblocks.mdx
+          - page: Callout
+            path: ./docs/pages/fern-docs/content/components/callout.mdx
+          - page: Icons
+            path: ./docs/pages/fern-docs/content/components/icons.mdx
+          - page: Availability
+            path: ./docs/pages/fern-docs/content/components/availability.mdx
+          - page: Tabs
+            path: ./docs/pages/fern-docs/content/components/tabs.mdx
+          - page: Accordion
+            path: ./docs/pages/fern-docs/content/components/accordion.mdx
+          - page: Steps
+            path: ./docs/pages/fern-docs/content/components/steps.mdx
+          - page: Endpoint Snippets
+            path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
 
 navbar-links:
   - type: secondary
@@ -286,11 +296,11 @@ logo:
 #   dark: ./docs/images/background.svg
 colors:
   accentPrimary:
-    dark: '#ADFF8C'
-    light: '#418326'
+    dark: "#ADFF8C"
+    light: "#418326"
   background:
-    dark: '#000000'
-    light: '#FFFFFF'
+    dark: "#000000"
+    light: "#FFFFFF"
 favicon: ./docs/images/favicon.ico
 
 layout:
