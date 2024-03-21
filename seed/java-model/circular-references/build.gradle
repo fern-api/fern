@@ -45,6 +45,13 @@ publishing {
             artifactId = 'circular-references'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/circular-references/fern.git'
+                    developerConnection = 'scm:git:git://github.com/circular-references/fern.git'
+                    url = 'https://github.com/circular-references/fern'
+                }
+            }
         }
     }
     repositories {

@@ -41,6 +41,7 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
                         .build())
                 .addDependencies()
                 .addDependencies(RootProjectGradleDependency.INSTANCE)
+                .shouldSignPackage(false)
                 .build();
         TypeSpec appTypeSpec = TypeSpec.classBuilder("App")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

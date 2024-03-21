@@ -42,6 +42,7 @@ export interface GeneratorInvocation {
     smartCasing: boolean;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
+    publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
 }
 
 export const GenerationLanguage = {

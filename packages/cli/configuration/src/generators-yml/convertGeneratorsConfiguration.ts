@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { PublishingMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -14,6 +15,7 @@ import {
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
+import { GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
@@ -154,7 +156,24 @@ async function convertGenerator({
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
-        irVersionOverride: generator["ir-version"] ?? undefined
+        irVersionOverride: generator["ir-version"] ?? undefined,
+        publishMetadata:
+            generator["publish-metadata"] != null
+                ? convertPublishMetadata({ publishMetadata: generator["publish-metadata"] })
+                : undefined
+    };
+}
+
+function convertPublishMetadata({
+    publishMetadata
+}: {
+    publishMetadata: GeneratorPublishMetadataSchema;
+}): PublishingMetadata {
+    return {
+        packageDescription: publishMetadata["package-description"],
+        publisherEmail: publishMetadata.email,
+        publisherName: publishMetadata.author,
+        referenceUrl: publishMetadata["reference-url"]
     };
 }
 
@@ -226,15 +245,28 @@ async function convertOutputMode({
                     token: generator.output.token ?? ""
                 })
             );
-        case "maven":
+        case "maven": {
+            const hasSignature = generator.output.signature != null;
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
-                    registryUrl: generator.output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    registryUrl:
+                        generator.output.url ?? hasSignature
+                            ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                            : "https://s01.oss.sonatype.org/content/repositories/releases/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
-                    coordinate: generator.output.coordinate
+                    coordinate: generator.output.coordinate,
+                    signature:
+                        generator.output.signature != null
+                            ? {
+                                  keyId: generator.output.signature.keyId,
+                                  secretKey: generator.output.signature.secretKey,
+                                  password: generator.output.signature.password
+                              }
+                            : undefined
                 })
             );
+        }
         case "postman":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.postman({
@@ -308,13 +340,24 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
-                registryUrl: output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                registryUrl:
+                    output.url ?? output.signature != null
+                        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                        : "https://s01.oss.sonatype.org/content/repositories/releases/",
                 coordinate: output.coordinate,
                 credentials:
                     output.username != null && output.password != null
                         ? {
                               username: output.username,
                               password: output.password
+                          }
+                        : undefined,
+                signature:
+                    output.signature != null
+                        ? {
+                              keyId: output.signature.keyId,
+                              password: output.signature.password,
+                              secretKey: output.signature.secretKey
                           }
                         : undefined
             });

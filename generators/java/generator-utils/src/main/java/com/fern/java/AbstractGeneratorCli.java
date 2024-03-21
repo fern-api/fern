@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.fern.java.output.GeneratedGradleProperties;
+import com.fern.java.output.GeneratedPublishScript;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,7 +199,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent()
                 && mavenGithubPublishInfo.get().getSignature().isPresent();
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock);
+        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
@@ -239,7 +241,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, customConfig, publishOutputMode);
 
         Boolean addSignatureBlock = mavenRegistryConfigV2.getSignature().isPresent();
-        addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent());
+        addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent(), generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
@@ -259,6 +261,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID, signature.getKeyId());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_PASSWORD, signature.getPassword());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY, signature.getSecretKey());
+                runCommandBlocking(
+                        new String[] { "./.publish/prepare.sh" },
+                        Paths.get(generatorConfig.getOutput().getPath()),
+                        publishEnvVars);
+
             }
             runCommandBlocking(
                     new String[] { "gradle", "publish" },
@@ -289,7 +296,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
     }
 
     private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
-            boolean addSignaturePlugin) {
+            boolean addSignaturePlugin, GeneratorConfig generatorConfig) {
+        String repositoryUrl = addSignaturePlugin ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://s01.oss.sonatype.org/content/repositories/releases/";
+
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
                         GradlePlugin.builder()
@@ -303,13 +312,15 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                                 .version("6.11.0")
                                 .build()))
                 .addCustomRepositories(GradleRepository.builder()
-                        .url("https://s01.oss.sonatype.org/content/repositories/releases/")
+                        .url(repositoryUrl)
                         .build())
                 .gradlePublishingConfig(maybeMavenCoordinate.map(mavenCoordinate -> GradlePublishingConfig.builder()
                         .version(mavenCoordinate.getVersion())
                         .group(mavenCoordinate.getGroup())
                         .artifact(mavenCoordinate.getArtifact())
                         .build()))
+                .generatorConfig(generatorConfig)
+                .shouldSignPackage(addSignaturePlugin)
                 .addAllDependencies(getBuildGradleDependencies())
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
@@ -318,12 +329,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     .pluginId("signing")
                     .build());
             buildGradle.addCustomBlocks("signing {\n"
-                    + "    sign publishing.publications\n"
-                    + "    def signingKeyId = findProperty(\"signingKeyId\")\n"
-                    + "    def signingKey = findProperty(\"signingKey\")\n"
-                    + "    def signingPassword = findProperty(\"signingPassword\")\n"
-                    + "    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)\n"
+                    + "    sign(publishing.publications)\n"
                     + "}");
+            // Generate an empty gradle.properties file
+            addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
+            // Generate script to populate that file
+            addGeneratedFile(new GeneratedPublishScript());
         }
         if (addTestBlock) {
             buildGradle.addCustomBlocks("test {\n"

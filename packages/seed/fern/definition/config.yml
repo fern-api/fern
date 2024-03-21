@@ -52,6 +52,7 @@ types:
   FixtureConfigurations:
     properties:
       publishConfig: unknown
+      publishMetadata: unknown
       customConfig: unknown
       audiences: optional<list<string>>
       outputFolder: string

@@ -25,7 +25,8 @@ export async function runDockerForWorkspace({
     outputVersion,
     outputMode,
     fixtureName,
-    keepDocker
+    keepDocker,
+    publishMetadata
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -40,6 +41,7 @@ export async function runDockerForWorkspace({
     outputMode: OutputMode;
     fixtureName: string;
     keepDocker: boolean | undefined;
+    publishMetadata: unknown;
 }): Promise<void> {
     const generatorGroup: generatorsYml.GeneratorGroup = {
         groupName: "test",
@@ -54,7 +56,9 @@ export async function runDockerForWorkspace({
                 language,
                 smartCasing: false,
                 disableExamples: false,
-                irVersionOverride: irVersion
+                irVersionOverride: irVersion,
+                publishMetadata:
+                    publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined
             }
         ]
     };

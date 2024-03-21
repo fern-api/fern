@@ -53,9 +53,9 @@ function getGithubPublishConfig(
                       signature:
                           value.signature != null
                               ? {
-                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature?.keyId ?? ""),
-                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature?.password ?? ""),
-                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature?.secretKey ?? "")
+                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature.keyId ?? ""),
+                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ""),
+                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
                                 }
                               : undefined
                   }),
@@ -94,15 +94,22 @@ export function getGeneratorConfig({
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
-            return newDummyPublishOutputConfig(outputVersion, value);
+            return {
+                ...newDummyPublishOutputConfig(outputVersion, value),
+                publishingMetadata: generatorInvocation.publishMetadata
+            };
         },
         publishV2: (value) => {
-            return newDummyPublishOutputConfig(outputVersion, value);
+            return {
+                ...newDummyPublishOutputConfig(outputVersion, value),
+                publishingMetadata: generatorInvocation.publishMetadata
+            };
         },
         downloadFiles: () => {
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         github: (value) => {
@@ -112,7 +119,8 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
@@ -135,7 +143,8 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
@@ -205,7 +214,8 @@ function newDummyPublishOutputConfig(
                     password: (outputMode as MavenOutput)?.password ?? "",
                     registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
                     username: (outputMode as MavenOutput)?.username ?? "",
-                    coordinate: (outputMode as MavenOutput)?.coordinate ?? ""
+                    coordinate: (outputMode as MavenOutput)?.coordinate ?? "",
+                    signature: (outputMode as MavenOutput)?.signature
                 },
                 npm: {
                     registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",

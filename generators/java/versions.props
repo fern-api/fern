@@ -9,7 +9,7 @@ org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
 com.fern.fern:irV31 = 0.0.3094
-com.fern.fern:generator-exec-client = 0.0.673
+com.fern.fern:generator-exec-client = 0.0.690
 
 # testing
 org.junit.jupiter:* = 5.5.0
