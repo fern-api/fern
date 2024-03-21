@@ -48,6 +48,13 @@ publishing {
             artifactId = 'websocket'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/websocket/fern.git'
+                    developerConnection = 'scm:git:git://github.com/websocket/fern.git'
+                    url = 'https://github.com/websocket/fern'
+                }
+            }
         }
     }
     repositories {

@@ -48,6 +48,13 @@ publishing {
             artifactId = 'file-upload'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/file-upload/fern.git'
+                    developerConnection = 'scm:git:git://github.com/file-upload/fern.git'
+                    url = 'https://github.com/file-upload/fern'
+                }
+            }
         }
     }
     repositories {

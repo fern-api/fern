@@ -320,6 +320,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                         .artifact(mavenCoordinate.getArtifact())
                         .build()))
                 .generatorConfig(generatorConfig)
+                .shouldSignPackage(addSignaturePlugin)
                 .addAllDependencies(getBuildGradleDependencies())
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");

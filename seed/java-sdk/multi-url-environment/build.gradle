@@ -48,6 +48,13 @@ publishing {
             artifactId = 'multi-url-environment'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/multi-url-environment/fern.git'
+                    developerConnection = 'scm:git:git://github.com/multi-url-environment/fern.git'
+                    url = 'https://github.com/multi-url-environment/fern'
+                }
+            }
         }
     }
     repositories {

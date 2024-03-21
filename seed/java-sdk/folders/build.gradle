@@ -48,6 +48,13 @@ publishing {
             artifactId = 'folders'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/folders/fern.git'
+                    developerConnection = 'scm:git:git://github.com/folders/fern.git'
+                    url = 'https://github.com/folders/fern'
+                }
+            }
         }
     }
     repositories {
