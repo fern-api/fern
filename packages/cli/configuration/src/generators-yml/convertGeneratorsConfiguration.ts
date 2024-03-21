@@ -226,10 +226,14 @@ async function convertOutputMode({
                     token: generator.output.token ?? ""
                 })
             );
-        case "maven":
+        case "maven": {
+            const hasSignature = generator.output.signature != null;
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
-                    registryUrl: generator.output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    registryUrl:
+                        generator.output.url ?? hasSignature
+                            ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                            : "https://s01.oss.sonatype.org/content/repositories/releases/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
                     coordinate: generator.output.coordinate,
@@ -243,6 +247,7 @@ async function convertOutputMode({
                             : undefined
                 })
             );
+        }
         case "postman":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.postman({
