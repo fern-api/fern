@@ -170,7 +170,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         if (license.isPresent()) {
             writer.beginControlFlow("licenses");
             writer.beginControlFlow("license");
-            writer.addLine("name = '" + license + "'");
+            writer.addLine("name = '" + license.get() + "'");
             writer.endControlFlow();
             writer.endControlFlow();
         }
