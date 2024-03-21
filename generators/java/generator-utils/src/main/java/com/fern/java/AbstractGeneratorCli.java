@@ -199,7 +199,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent()
                 && mavenGithubPublishInfo.get().getSignature().isPresent();
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock);
+        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
@@ -241,7 +241,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, customConfig, publishOutputMode);
 
         Boolean addSignatureBlock = mavenRegistryConfigV2.getSignature().isPresent();
-        addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent());
+        addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent(), generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
@@ -296,7 +296,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
     }
 
     private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
-            boolean addSignaturePlugin) {
+            boolean addSignaturePlugin, GeneratorConfig generatorConfig) {
         String repositoryUrl = addSignaturePlugin ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://s01.oss.sonatype.org/content/repositories/releases/";
 
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
@@ -319,6 +319,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                         .group(mavenCoordinate.getGroup())
                         .artifact(mavenCoordinate.getArtifact())
                         .build()))
+                .generatorConfig(generatorConfig)
                 .addAllDependencies(getBuildGradleDependencies())
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
