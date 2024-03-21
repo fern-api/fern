@@ -45,8 +45,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 unrecognizedObjectKeys: "passthrough"
             }
         );
-        const generatorNotificationService =
-            config.environment.type === "remote" ? new GeneratorNotificationServiceImpl(config.environment) : undefined;
+        const generatorNotificationService = new GeneratorNotificationServiceImpl(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
