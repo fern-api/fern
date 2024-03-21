@@ -40,7 +40,7 @@ export class GeneratorNotificationService {
         await this.flush();
     }
 
-    private async flush(): Promise<void> {
+    public async flush(): Promise<void> {
         if (!this.client || !this.taskId) {
             return;
         }
