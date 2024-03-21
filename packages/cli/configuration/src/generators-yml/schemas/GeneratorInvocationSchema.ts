@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { GeneratorOutputSchema } from "./GeneratorOutputSchema";
+import { GeneratorPublishMetadataSchema } from "./GeneratorPublishMetadataSchema";
 import { GithubConfigurationSchema } from "./GithubConfigurationSchema";
 
 export const GeneratorInvocationSchema = z.strictObject({
@@ -12,7 +13,8 @@ export const GeneratorInvocationSchema = z.strictObject({
     // Feature flag used to enable better IR naming.
     "smart-casing": z.optional(z.boolean()),
     // Temporary way to unblock example serialization
-    "disable-examples": z.optional(z.boolean())
+    "disable-examples": z.optional(z.boolean()),
+    "publish-metadata": z.optional(GeneratorPublishMetadataSchema)
 });
 
 export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

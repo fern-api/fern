@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { PublishingMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -14,6 +15,7 @@ import {
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
+import { GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
@@ -154,7 +156,24 @@ async function convertGenerator({
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
-        irVersionOverride: generator["ir-version"] ?? undefined
+        irVersionOverride: generator["ir-version"] ?? undefined,
+        publishMetadata:
+            generator["publish-metadata"] != null
+                ? convertPublishMetadata({ publishMetadata: generator["publish-metadata"] })
+                : undefined
+    };
+}
+
+function convertPublishMetadata({
+    publishMetadata
+}: {
+    publishMetadata: GeneratorPublishMetadataSchema;
+}): PublishingMetadata {
+    return {
+        packageDescription: publishMetadata["package-description"],
+        publisherEmail: publishMetadata["publisher-email"],
+        publisherName: publishMetadata["publisher-name"],
+        referenceUrl: publishMetadata["reference-url"]
     };
 }
 
