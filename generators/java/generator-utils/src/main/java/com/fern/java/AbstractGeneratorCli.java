@@ -330,7 +330,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
             // Generate an empty gradle.properties file
             addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
             // Generate script to populate that file
-            addGeneratedFile(GeneratedPublishScript.getGeneratedFile());
+            addGeneratedFile(new GeneratedPublishScript());
         }
         if (addTestBlock) {
             buildGradle.addCustomBlocks("test {\n"
