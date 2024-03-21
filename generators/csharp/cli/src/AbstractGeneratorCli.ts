@@ -7,7 +7,7 @@ import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serializati
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir, readFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
+import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -40,8 +40,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 unrecognizedObjectKeys: "passthrough"
             }
         );
-        const generatorNotificationService =
-            config.environment.type === "remote" ? new GeneratorNotificationServiceImpl(config.environment) : undefined;
+        const generatorNotificationService = new GeneratorNotificationServiceImpl(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
@@ -50,12 +49,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 CONSOLE_LOGGER.log(level, ...message);
 
                 // kick off log, but don't wait for it
-                void generatorNotificationService?.sendUpdateAndSwallowError(
-                    FernGeneratorExec.GeneratorUpdate.log({
-                        message: message.join(" "),
-                        level: LOG_LEVEL_CONVERSIONS[level]
-                    })
-                );
+                try {
+                    void generatorNotificationService?.sendUpdate(
+                        FernGeneratorExec.GeneratorUpdate.log({
+                            message: message.join(" "),
+                            level: LOG_LEVEL_CONVERSIONS[level]
+                        })
+                    );
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.warn("Encountered error when sending update", e);
+                }
             });
 
             // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
@@ -106,11 +110,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error"
