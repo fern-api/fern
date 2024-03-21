@@ -5223,6 +5223,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/openapi/",\
           "packageDependencies": [\
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.675"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@types/jest", "npm:29.0.3"],\

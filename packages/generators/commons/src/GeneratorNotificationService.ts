@@ -29,7 +29,7 @@ export class GeneratorNotificationServiceImpl implements GeneratorNotificationSe
     }
 
     public bufferUpdate(update: FernGeneratorExec.GeneratorUpdate): void {
-        if (! this.client) {
+        if (!this.client) {
             return;
         }
 
@@ -37,16 +37,16 @@ export class GeneratorNotificationServiceImpl implements GeneratorNotificationSe
     }
 
     public async sendUpdate(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
-        if (! this.client) {
+        if (!this.client) {
             return;
         }
-        
+
         this.buffer.push(update);
         await this.flush();
     }
 
     private async flush(): Promise<void> {
-        if (! this.client || ! this.taskId) {
+        if (!this.client || !this.taskId) {
             return;
         }
 
