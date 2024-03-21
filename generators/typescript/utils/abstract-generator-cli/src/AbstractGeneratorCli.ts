@@ -8,7 +8,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { cp, rm } from "fs";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
+import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";

@@ -3962,6 +3962,7 @@ __metadata:
   resolution: "@fern-typescript/abstract-generator-cli@workspace:generators/typescript/utils/abstract-generator-cli"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.675
     "@fern-fern/ir-sdk": 0.0.16
