@@ -297,6 +297,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
             boolean addSignaturePlugin) {
+        String repositoryUrl = addSignaturePlugin ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://s01.oss.sonatype.org/content/repositories/releases/";
+
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
                         GradlePlugin.builder()
@@ -310,7 +312,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                                 .version("6.11.0")
                                 .build()))
                 .addCustomRepositories(GradleRepository.builder()
-                        .url("https://s01.oss.sonatype.org/content/repositories/releases/")
+                        .url(repositoryUrl)
                         .build())
                 .gradlePublishingConfig(maybeMavenCoordinate.map(mavenCoordinate -> GradlePublishingConfig.builder()
                         .version(mavenCoordinate.getVersion())
