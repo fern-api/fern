@@ -45,6 +45,13 @@ publishing {
             artifactId = 'plain-text'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/plain-text/fern.git'
+                    developerConnection = 'scm:git:git://github.com/plain-text/fern.git'
+                    url = 'https://github.com/plain-text/fern'
+                }
+            }
         }
     }
     repositories {

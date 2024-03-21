@@ -1,5 +1,12 @@
 package com.fern.java.output;
 
+import com.fern.generator.exec.model.config.BasicLicense;
+import com.fern.generator.exec.model.config.CustomLicense;
+import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GithubOutputMode;
+import com.fern.generator.exec.model.config.LicenseConfig;
+import com.fern.generator.exec.model.config.OutputMode;
+import com.fern.generator.exec.model.config.PublishingMetadata;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
@@ -10,6 +17,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
+
+import javax.swing.text.html.Option;
 
 @Value.Immutable
 public abstract class GeneratedBuildGradle extends GeneratedFile {
@@ -25,6 +34,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public static final String MAVEN_SIGNING_KEY = "MAVEN_SIGNATURE_SECRET_KEY";
 
     public static final String MAVEN_SIGNING_PASSWORD = "MAVEN_SIGNATURE_PASSWORD";
+
+    public abstract Optional<GeneratorConfig> generatorConfig();
+
+    public abstract Boolean shouldSignPackage();
 
     public abstract List<GradlePlugin> plugins();
 
@@ -92,6 +105,9 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.addLine("artifactId = '" + gradlePublishingConfig().get().artifact() + "'");
             writer.addLine("version = '" + gradlePublishingConfig().get().version() + "'");
             writer.addLine("from components.java");
+
+            writePomPublishConfiguration(writer);
+
             writer.endControlFlow();
             writer.endControlFlow();
 
@@ -109,6 +125,72 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.addNewLine();
         }
         return writer.getContents();
+    }
+
+    private void writePomPublishConfiguration(RawFileWriter writer) {
+        if (!generatorConfig().isPresent()) {
+            return;
+        }
+        GeneratorConfig config = generatorConfig().get();
+
+        Optional<String> license = config.getLicense().map(licenseConfig -> licenseConfig.visit(
+                new LicenseConfig.Visitor<String>(){
+                    @Override
+                    public String visitBasic(BasicLicense basicLicense) {
+                        return basicLicense.getId().toString();
+                    }
+
+                    @Override
+                    public String visitCustom(CustomLicense customLicense) {
+                        return customLicense.toString();
+                    }
+
+                    @Override
+                    public String visitUnknown(String s) {
+                        return null;
+                    }
+                }
+        ));
+
+        Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
+        String organizationName = config.getOrganization();
+        String githubUrl = config.getOutput().getMode().getGithub().map(GithubOutputMode::getRepoUrl).orElseGet(() -> "https://github.com/YOUR-ORG/YOUR-REPO");
+
+        writer.beginControlFlow("pom");
+        if (pm.isPresent() && pm.get().getPublisherName().isPresent() || shouldSignPackage()) {
+            writer.addLine("name = '" + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
+        }
+        if (pm.isPresent() && pm.get().getPackageDescription().isPresent() || shouldSignPackage()) {
+            writer.addLine("description = '" + pm.flatMap(PublishingMetadata::getPackageDescription).orElseGet(() -> "The official SDK of " + organizationName) + "'");
+        }
+        if (pm.isPresent() && pm.get().getReferenceUrl().isPresent() || shouldSignPackage()) {
+            writer.addLine("url = '" + pm.flatMap(PublishingMetadata::getReferenceUrl).orElseGet(() -> "https://buildwithfern.com") + "'");
+        }
+
+        if (license.isPresent()) {
+            writer.beginControlFlow("licenses");
+            writer.beginControlFlow("license");
+            writer.addLine("name = '" + license + "'");
+            writer.endControlFlow();
+            writer.endControlFlow();
+        }
+
+        if (pm.isPresent() && (pm.get().getPublisherName().isPresent() || pm.get().getPublisherEmail().isPresent()) || shouldSignPackage()) {
+            writer.beginControlFlow("developers");
+            writer.beginControlFlow("developer");
+            writer.addLine("name = '" + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
+            writer.addLine("email = '" + pm.flatMap(PublishingMetadata::getPublisherEmail).orElseGet(() -> "developers@" + organizationName + ".com") + "'");
+            writer.endControlFlow();
+            writer.endControlFlow();
+        }
+
+        writer.beginControlFlow("scm");
+        writer.addLine("connection = 'scm:git:git://" + githubUrl.replace("https://", "") + ".git'");
+        writer.addLine("developerConnection = 'scm:git:git://" + githubUrl.replace("https://", "") + ".git'");
+        writer.addLine("url = '" + githubUrl + "'");
+        writer.endControlFlow();
+
+        writer.endControlFlow();
     }
 
     public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)

@@ -45,6 +45,13 @@ publishing {
             artifactId = 'object'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/object/fern.git'
+                    developerConnection = 'scm:git:git://github.com/object/fern.git'
+                    url = 'https://github.com/object/fern'
+                }
+            }
         }
     }
     repositories {

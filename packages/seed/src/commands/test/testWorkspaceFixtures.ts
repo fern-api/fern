@@ -131,7 +131,8 @@ export async function testWorkspaceFixtures({
                             outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
                             outputFolder: fixtureConfigInstance.outputFolder,
                             keepDocker,
-                            skipScripts
+                            skipScripts,
+                            publishMetadata: fixtureConfigInstance.publishMetadata
                         })
                     );
                 }
@@ -154,7 +155,8 @@ export async function testWorkspaceFixtures({
                         outputMode: workspace.workspaceConfig.defaultOutputMode,
                         outputFolder: fixture,
                         keepDocker,
-                        skipScripts
+                        skipScripts,
+                        publishMetadata: undefined
                     })
                 );
             }
@@ -207,7 +209,8 @@ export async function acquireLocksAndRunTest({
     outputMode,
     outputFolder,
     keepDocker,
-    skipScripts
+    skipScripts,
+    publishMetadata
 }: {
     id: string;
     lock: Semaphore;
@@ -227,6 +230,7 @@ export async function acquireLocksAndRunTest({
     outputFolder: string;
     keepDocker: boolean | undefined;
     skipScripts: boolean;
+    publishMetadata: unknown;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -248,7 +252,8 @@ export async function acquireLocksAndRunTest({
         outputMode,
         outputFolder,
         keepDocker,
-        skipScripts
+        skipScripts,
+        publishMetadata
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -272,7 +277,8 @@ async function testWithWriteToDisk({
     outputMode,
     outputFolder,
     keepDocker,
-    skipScripts
+    skipScripts,
+    publishMetadata
 }: {
     id: string;
     fixture: string;
@@ -291,6 +297,7 @@ async function testWithWriteToDisk({
     outputFolder: string;
     keepDocker: boolean | undefined;
     skipScripts: boolean;
+    publishMetadata: unknown;
 }): Promise<TestResult> {
     const metrics: TestCaseMetrics = {};
     try {
@@ -332,7 +339,8 @@ async function testWithWriteToDisk({
             outputVersion,
             outputMode,
             fixtureName: fixture,
-            keepDocker
+            keepDocker,
+            publishMetadata
         });
         generationStopwatch.stop();
         metrics.generationTime = generationStopwatch.duration();

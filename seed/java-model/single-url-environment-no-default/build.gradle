@@ -45,6 +45,13 @@ publishing {
             artifactId = 'single-url-environment-no-default'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/single-url-environment-no-default/fern.git'
+                    developerConnection = 'scm:git:git://github.com/single-url-environment-no-default/fern.git'
+                    url = 'https://github.com/single-url-environment-no-default/fern'
+                }
+            }
         }
     }
     repositories {

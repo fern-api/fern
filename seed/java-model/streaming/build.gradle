@@ -45,6 +45,13 @@ publishing {
             artifactId = 'streaming'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/streaming/fern.git'
+                    developerConnection = 'scm:git:git://github.com/streaming/fern.git'
+                    url = 'https://github.com/streaming/fern'
+                }
+            }
         }
     }
     repositories {

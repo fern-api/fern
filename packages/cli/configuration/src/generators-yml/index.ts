@@ -13,6 +13,7 @@ export {
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
+export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     type GeneratorsConfigurationSchema

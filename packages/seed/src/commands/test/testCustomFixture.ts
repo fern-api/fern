@@ -50,6 +50,7 @@ export async function testCustomFixture({
         scripts: undefined,
         customConfig: customFixtureConfig?.customConfig,
         publishConfig: customFixtureConfig?.publishConfig,
+        publishMetadata: customFixtureConfig?.publishMetadata,
         selectAudiences: customFixtureConfig?.audiences,
         taskContext,
         outputDir: absolutePathToOutput,

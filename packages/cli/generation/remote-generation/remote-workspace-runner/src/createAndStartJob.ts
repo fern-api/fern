@@ -80,7 +80,8 @@ async function createJob({
         id: generatorInvocation.name,
         version: generatorInvocation.version,
         outputMode: generatorInvocation.outputMode,
-        customConfig: generatorInvocation.config
+        customConfig: generatorInvocation.config,
+        publishMetadata: generatorInvocation.publishMetadata
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
     const whitelabelWithEnvVarSubstiutions =

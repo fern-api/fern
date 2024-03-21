@@ -48,6 +48,13 @@ publishing {
             artifactId = 'no-environment'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/no-environment/fern.git'
+                    developerConnection = 'scm:git:git://github.com/no-environment/fern.git'
+                    url = 'https://github.com/no-environment/fern'
+                }
+            }
         }
     }
     repositories {

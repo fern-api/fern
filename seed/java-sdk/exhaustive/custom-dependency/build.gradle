@@ -49,6 +49,13 @@ publishing {
             artifactId = 'exhaustive'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/exhaustive/fern.git'
+                    developerConnection = 'scm:git:git://github.com/exhaustive/fern.git'
+                    url = 'https://github.com/exhaustive/fern'
+                }
+            }
         }
     }
     repositories {
