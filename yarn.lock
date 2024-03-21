@@ -3184,6 +3184,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
+    "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.675
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46

@@ -9,7 +9,7 @@ import path from "path";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorNotificationService } from "./GeneratorNotificationService";
+import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
@@ -43,7 +43,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
         const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 
-        const generatorLoggingClient = new GeneratorNotificationService(config.value);
+        const generatorLoggingClient = new GeneratorNotificationServiceImpl(config.value.environment);
         // eslint-disable-next-line no-console
         console.log("Initialized generator logging client");
 
