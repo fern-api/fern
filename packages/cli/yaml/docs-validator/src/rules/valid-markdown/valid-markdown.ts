@@ -59,7 +59,7 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
+export async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
     try {
         const parsed = await serialize(markdown, {
             scope: {},

@@ -63,7 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^6.21.0",
     "chalk": "^5.0.1",
-    "depcheck": "^1.4.6",
+    "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.0",
