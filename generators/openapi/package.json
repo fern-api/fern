@@ -35,6 +35,7 @@
     "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
   },
   "dependencies": {
+    "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/generator-exec-sdk": "0.0.687",
     "@fern-fern/ir-sdk": "0.0.2828",
     "js-yaml": "^4.1.0",

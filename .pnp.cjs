@@ -5223,6 +5223,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/openapi/",\
           "packageDependencies": [\
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -5350,6 +5351,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/postman/",\
           "packageDependencies": [\
             ["@fern-api/postman-generator", "workspace:generators/postman"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@fern-fern/postman-sdk", "npm:0.0.46"],\
