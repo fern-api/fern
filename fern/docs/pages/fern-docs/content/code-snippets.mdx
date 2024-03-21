@@ -1,0 +1,224 @@
+---
+title: Code Snippets
+description: Write beautiful code snippets in your documentation
+excerpt: Configure syntax highlighting and more in your code snippets.
+---
+
+Fern uses [Shiki](https://shiki.matsu.io/) to do syntax highlighting. 
+It's very reliable and performant. Below are examples of how you can configure syntax
+highlighting in code snippets.
+
+## Basic
+
+To create a code snippet, you need to wrap your code in three backticks. 
+You can also specify the language for syntax highlighting after the opening backticks.
+
+<Tabs>
+    <Tab title="Example">
+        ```js
+        console.log("hello world")
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````mdx
+        ```js
+        console.log("hello world")
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+## Titles
+
+You can add a title to your code snippet by adding a title after the language identifier. 
+The title must be wrapped in quotes.
+
+<Tabs>
+    <Tab title="Example">
+        ```js title="Hello World Snippet"
+        console.log("hello world")
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````mdx
+        ```js title="Hello World Snippet"
+        console.log("hello world")
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+## Line Highlighting
+
+You can highlight specific lines in your code snippet by 
+placing a numeric range inside `{}` after the language identifier. 
+The range is inclusive, so `2-4` will highlight lines 2, 3, and 4.
+
+<Tabs>
+    <Tab title="Example">
+        ```js {2-4}
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````markdown
+        ```javascript {2-4}
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+The range can be a single number, a comma-separated list of numbers, or ranges.
+For example, `{1,3,5-7}` will highlight lines 1, 3, 5, 6, and 7.
+
+## Line Focusing
+
+Instead of highlighting lines, you can focus on specific lines by adding a 
+`focus` attribute after the language identifier. The `focus` attribute works 
+the same way as the `highlight` attribute.
+
+<Tabs>
+    <Tab title="Example">
+        ```javascript focus={2-4}
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````markdown
+        ```javascript focus={2-4}
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+## Max Height
+
+You can control the max height of the code block by adding 
+a `maxLines` attribute after the language identifier. The 
+`maxLines` attribute should be a number representing the maximum 
+number of lines to display. By default, the code block will display up to 20 lines.
+
+<Tabs>
+    <Tab title="Example">
+        ```python maxLines=10
+        def is_prime(num):
+            """Check if a number is prime."""
+            if num <= 1:
+                return False
+            for i in range(2, num):
+                if num % i == 0:
+                    return False
+            return True
+
+        start = 10
+        end = 50
+
+        print(f"Prime numbers between {start} and {end} are:")
+
+        prime_numbers = []
+
+        for num in range(start, end+1):
+            if is_prime(num):
+                prime_numbers.append(num)
+
+        for prime in prime_numbers:
+            print(prime)
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````markdown maxLines=10
+        ```python maxLines=10
+        def is_prime(num):
+            """Check if a number is prime."""
+            if num <= 1:
+                return False
+            for i in range(2, num):
+                if num % i == 0:
+                    return False
+            return True
+
+        start = 10
+        end = 50
+
+        print(f"Prime numbers between {start} and {end} are:")
+
+        prime_numbers = []
+
+        for num in range(start, end+1):
+            if is_prime(num):
+                prime_numbers.append(num)
+
+        for prime in prime_numbers:
+            print(prime)
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+<Note>
+  To disable the default 20 lines limit, you can set `maxLines` to `0`, or add the `fullHeight` attribute after the
+  language identifier.
+</Note>
+
+## Combining Attributes
+
+You can combine the `title`, `highlight`, `focus`, and `maxLines` 
+attributes to create a code block with a title, highlighted lines, 
+and a maximum height.
+
+<Tabs>
+    <Tab title="Example">
+        ```javascript title="Hello, World!" {2-4} maxLines=5
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        console.log("Line 6");
+        console.log("Line 7");
+        console.log("Line 8");
+        console.log("Line 9");
+        console.log("Line 10");
+        ```
+    </Tab>
+    <Tab title = "Markdown">
+        ````markdown maxLines=5
+        ```javascript title="Hello, World!" {2-4} maxLines=5
+        console.log("Line 1");
+        console.log("Line 2");
+        console.log("Line 3");
+        console.log("Line 4");
+        console.log("Line 5");
+        console.log("Line 6");
+        console.log("Line 7");
+        console.log("Line 8");
+        console.log("Line 9");
+        console.log("Line 10");
+        ```
+        ````
+    </Tab>
+</Tabs>
+
+## Tabbed Code Blocks
+
+To render multiple code blocks in tabs, 
+please refer to the [CodeBlocks](/docs/components/codeblocks) 
+documentation.

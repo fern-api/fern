@@ -5,6 +5,7 @@ on:
     paths:
       - "fern/docs/**"
       - "fern/apis/public-api/**"
+      - "fern/docs.yml"
     branches:
       - main
   workflow_dispatch:

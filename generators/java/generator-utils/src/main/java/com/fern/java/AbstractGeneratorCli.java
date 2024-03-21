@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.fern.java.output.GeneratedGradleProperties;
+import com.fern.java.output.GeneratedPublishScript;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -259,6 +261,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID, signature.getKeyId());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_PASSWORD, signature.getPassword());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY, signature.getSecretKey());
+                runCommandBlocking(
+                        new String[] { "./.publish/prepare.sh" },
+                        Paths.get(generatorConfig.getOutput().getPath()),
+                        publishEnvVars);
+
             }
             runCommandBlocking(
                     new String[] { "gradle", "publish" },
@@ -318,12 +325,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     .pluginId("signing")
                     .build());
             buildGradle.addCustomBlocks("signing {\n"
-                    + "    sign publishing.publications\n"
-                    + "    def signingKeyId = findProperty(\"signingKeyId\")\n"
-                    + "    def signingKey = findProperty(\"signingKey\")\n"
-                    + "    def signingPassword = findProperty(\"signingPassword\")\n"
-                    + "    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)\n"
+                    + "    sign(publishing.publications)\n"
                     + "}");
+            // Generate an empty gradle.properties file
+            addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
+            // Generate script to populate that file
+            addGeneratedFile(new GeneratedPublishScript());
         }
         if (addTestBlock) {
             buildGradle.addCustomBlocks("test {\n"

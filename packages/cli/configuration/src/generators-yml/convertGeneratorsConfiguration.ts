@@ -232,7 +232,15 @@ async function convertOutputMode({
                     registryUrl: generator.output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
-                    coordinate: generator.output.coordinate
+                    coordinate: generator.output.coordinate,
+                    signature:
+                        generator.output.signature != null
+                            ? {
+                                  keyId: generator.output.signature.keyId,
+                                  secretKey: generator.output.signature.secretKey,
+                                  password: generator.output.signature.password
+                              }
+                            : undefined
                 })
             );
         case "postman":
@@ -315,6 +323,14 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                         ? {
                               username: output.username,
                               password: output.password
+                          }
+                        : undefined,
+                signature:
+                    output.signature != null
+                        ? {
+                              keyId: output.signature.keyId,
+                              password: output.signature.password,
+                              secretKey: output.signature.secretKey
                           }
                         : undefined
             });

@@ -20,11 +20,11 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public static final String JAVA_LIBRARY_PLUGIN_ID = "java-library";
     public static final String MAVEN_PUBLISH_PLUGIN_ID = "maven-publish";
 
-    public static final String MAVEN_SIGNING_KEY_ID = "ORG_GRADLE_PROJECT_signingKeyId";
+    public static final String MAVEN_SIGNING_KEY_ID = "MAVEN_SIGNATURE_KID";
 
-    public static final String MAVEN_SIGNING_KEY = "ORG_GRADLE_PROJECT_signingKey";
+    public static final String MAVEN_SIGNING_KEY = "MAVEN_SIGNATURE_SECRET_KEY";
 
-    public static final String MAVEN_SIGNING_PASSWORD = "ORG_GRADLE_PROJECT_signingPassword";
+    public static final String MAVEN_SIGNING_PASSWORD = "MAVEN_SIGNATURE_PASSWORD";
 
     public abstract List<GradlePlugin> plugins();
 

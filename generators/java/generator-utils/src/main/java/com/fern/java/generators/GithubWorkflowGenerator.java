@@ -82,7 +82,13 @@ public final class GithubWorkflowGenerator {
                 + "          architecture: x64\n"
                 + "\n"
                 + "      - name: Publish to maven\n"
-                + "        run: |\n"
+                + "        run: |\n";
+
+        if (maybeSignatureGithubInfo.isPresent()) {
+            content = content
+                    + "          ./.publish/prepare.sh\n";
+        }
+        content = content
                 + "          ./gradlew  publish\n"
                 + "        env:\n"
                 + "          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}\n"

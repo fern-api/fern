@@ -1,6 +1,11 @@
 instances:
   - url: fern.docs.buildwithfern.com/learn
     custom-domain: buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
   # - url: fern-beta.docs.buildwithfern.com/learn
   #   custom-domain: staging.buildwithfern.com/learn
 title: Fern | Documentation
@@ -8,14 +13,15 @@ title: Fern | Documentation
 tabs:
   overview:
     display-name: Overview
-    icon: 'globe'
-  fern-sdks:
-    display-name: Fern SDKs
-    slug: fern-sdks
-    icon: 'code'
-  fern-docs:
-    display-name: Fern Docs
-    icon: 'book'
+    icon: "globe"
+  sdks:
+    display-name: SDKs
+    slug: sdks
+    icon: code
+  docs:
+    display-name: Docs
+    slug: docs
+    icon: book
 
 navigation:
   - tab: overview
@@ -108,7 +114,7 @@ navigation:
             path: ./docs/pages/overview/changelog/december-2023.mdx
           - page: February 2024
             path: ./docs/pages/overview/changelog/february-2024.mdx
-  - tab: fern-sdks
+  - tab: sdks
     layout:
       - page: Overview
         path: ./docs/pages/fern-sdks/sdks-overview.mdx
@@ -171,15 +177,6 @@ navigation:
               - page: Postman Collection generator
                 slug: postman
                 path: ./docs/pages/fern-sdks/other-generators/spec/postman-collection.mdx
-          # To include in nav once the Model pages are added
-          # - section: Model
-          #   contents:
-          #     - page: Pydantic
-          #       path: ./docs/pages/placeholder.mdx
-          #     - page: Ruby
-          #       path: ./docs/pages/placeholder.mdx
-          #     - page: Spring
-          #       path: ./docs/pages/placeholder.mdx
       - section: Guides
         contents:
           - page: Publish to Maven Central
@@ -195,20 +192,20 @@ navigation:
         snippets:
           python: fern-api
           typescript: "@fern-api/node-sdk"
-  - tab: fern-docs
+  - tab: docs
     layout:
       - page: Overview
         path: ./docs/pages/fern-docs/docs-overview.mdx
-      - section: Fern Docs Quickstarts
+      - section: Quickstarts
         slug: quickstarts
         contents:
-          - page: Fern Docs Quickstart with OpenAPI
+          - page: Use OpenAPI
             slug: openapi
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Fern Docs Quickstart with Fern Def
+          - page: Use a Fern Definition
             slug: ferndef
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - page: Pull request previews
+      - page: PR previews
         slug: previews
         path: ./docs/pages/fern-docs/previews.mdx
       - section: Configuration
@@ -218,12 +215,6 @@ navigation:
             path: ./docs/pages/fern-docs/config/config-overview.mdx
           - page: Navigation
             path: ./docs/pages/fern-docs/config/navigation.mdx
-          - page: Audiences
-            path: ./docs/pages/fern-docs/config/audiences.mdx
-          - page: SDK snippets
-            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
-            path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
           - section: Customize branding
             slug: branding
             contents:
@@ -234,48 +225,60 @@ navigation:
                 path: ./docs/pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain
                 path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
-      - section: Content
+
+      - section: Write content
+        slug: content
         contents:
-          - page: Generate API reference
-            path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
-            slug: generate-api-ref
           - page: Write Markdown content
             path: ./docs/pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
-          - page: Front matter
+          - page: Frontmatter
             path: ./docs/pages/fern-docs/content/front-matter.mdx
-          - section: Component Library
-            slug: components
-            contents:
-              - page: Cards
-                path: ./docs/pages/fern-docs/content/components/card.mdx
-              - page: CodeBlock
-                path: ./docs/pages/fern-docs/content/components/codeblock.mdx
-              - page: Callout
-                path: ./docs/pages/fern-docs/content/components/callout.mdx
-              - page: Icons
-                path: ./docs/pages/fern-docs/content/components/icons.mdx
-              - page: Availability
-                path: ./docs/pages/fern-docs/content/components/availability.mdx
-              - page: Tabs
-                path: ./docs/pages/fern-docs/content/components/tabs.mdx
-              - page: Accordion
-                path: ./docs/pages/fern-docs/content/components/accordion.mdx
-              - page: Steps
-                path: ./docs/pages/fern-docs/content/components/steps.mdx
-              - page: Endpoint Snippets
-                path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
+          - page: Code snippets
+            path: ./docs/pages/fern-docs/content/code-snippets.mdx
+      
+      - section: API references
+        contents: 
+          - page: Generate API reference
+            path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
+            slug: generate-api-ref
+          - page: Audiences
+            path: ./docs/pages/fern-docs/config/audiences.mdx
+          - page: SDK snippets
+            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
+          - page: Endpoint errors
+            path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
+
+      - section: Components
+        slug: components
+        contents:
+          - page: Cards
+            path: ./docs/pages/fern-docs/content/components/card.mdx
+          - page: CodeBlocks
+            path: ./docs/pages/fern-docs/content/components/codeblocks.mdx
+            slug: codeblocks
+          - page: Callout
+            path: ./docs/pages/fern-docs/content/components/callout.mdx
+          - page: Icons
+            path: ./docs/pages/fern-docs/content/components/icons.mdx
+          - page: Availability
+            path: ./docs/pages/fern-docs/content/components/availability.mdx
+          - page: Tabs
+            path: ./docs/pages/fern-docs/content/components/tabs.mdx
+          - page: Accordion
+            path: ./docs/pages/fern-docs/content/components/accordion.mdx
+          - page: Steps
+            path: ./docs/pages/fern-docs/content/components/steps.mdx
+          - page: Endpoint snippets
+            path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
 
 navbar-links:
-  - type: secondary
-    text: Home
-    url: https://buildwithfern.com
-  - type: secondary
-    text: Showcase
-    url: https://buildwithfern.com/showcase
-  - type: primary
+  - type: minimal
     text: GitHub
     url: https://github.com/fern-api/fern
+  - type: filled
+    text: Book a demo
+    url: https://buildwithfern.com/contact
 
 logo:
   href: https://www.buildwithfern.com
@@ -286,13 +289,14 @@ logo:
 #   dark: ./docs/images/background.svg
 colors:
   accentPrimary:
-    dark: '#ADFF8C'
-    light: '#418326'
+    dark: "#ADFF8C"
+    light: "#418326"
   background:
-    dark: '#000000'
-    light: '#FFFFFF'
+    dark: "#000000"
+    light: "#FFFFFF"
 favicon: ./docs/images/favicon.ico
 
 layout:
   page-width: 1504px
   header-height: 83px
+  searchbar-placement: header

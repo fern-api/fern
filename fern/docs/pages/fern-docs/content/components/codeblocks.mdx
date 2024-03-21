@@ -1,0 +1,53 @@
+---
+title: Display code snippets using CodeBlocks
+description: The CodeBlock component displays a code snippet, with an optional title and language. Use the CodeBlocks component to show multiple snippets in a tabbed view.
+---
+
+The `CodeBlocks` component is used when you want to display a code snippet along with a title in a tabbed view.
+
+Within the `CodeBlocks` component, only use [Markdown fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) along with optional [syntax highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting). Please refer to Fern's [Code snippets](/docs/content/code-snippets) guide for a full list of highlighting features.
+
+<Tip>
+  If you do not provide a `title` prop for a code block that is inside a `CodeBlocks` component, it will display as
+  `Untitled`. In practice, you should always add a `title` to all fenced code blocks when used within `CodeBlocks`.
+</Tip>
+
+## Usage
+
+Create a tabbed view containing multiple `CodeBlock` components with the `CodeBlocks` component.
+
+<Note>
+  The `CodeBlocks` component does not take any props. For `CodeBlock` components inside a `CodeBlocks` component, be
+  sure to set their `title` props to give descriptive titles to the tabs. Otherwise, the tabs by default display
+  `Untitled`.
+</Note>
+
+Example:
+
+````mdx
+<CodeBlocks>
+  
+```bash title="Install the Fern CLI tool for a single project"
+npm install fern-api
+```
+
+```bash title="Install the Fern CLI tool globally"
+npm install -g fern-api
+```
+
+</CodeBlocks>
+````
+
+This renders as:
+
+<CodeBlocks>
+  
+```bash title="Install the Fern CLI tool for a single project"
+npm install fern-api
+```
+
+```bash title="Install the Fern CLI tool globally"
+npm install -g fern-api
+```
+
+</CodeBlocks>
