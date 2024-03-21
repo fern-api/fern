@@ -94,15 +94,22 @@ export function getGeneratorConfig({
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
-            return newDummyPublishOutputConfig(outputVersion, value);
+            return {
+                ...newDummyPublishOutputConfig(outputVersion, value),
+                publishingMetadata: generatorInvocation.publishMetadata
+            };
         },
         publishV2: (value) => {
-            return newDummyPublishOutputConfig(outputVersion, value);
+            return {
+                ...newDummyPublishOutputConfig(outputVersion, value),
+                publishingMetadata: generatorInvocation.publishMetadata
+            };
         },
         downloadFiles: () => {
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         github: (value) => {
@@ -112,7 +119,8 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
@@ -135,7 +143,8 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);

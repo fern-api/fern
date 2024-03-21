@@ -5565,7 +5565,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.479"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.486"],\
             ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5803,18 +5803,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-sdk", [\
-        ["npm:0.0.479", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.479-e161b6543d-8c73dedada.zip/node_modules/@fern-fern/fiddle-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.479"],\
-            ["form-data", "npm:4.0.0"],\
-            ["js-base64", "npm:3.7.2"],\
-            ["node-fetch", "virtual:e657f79e17f7be411787c1bc05f40f4332f715c3a1325e07b20386fce53bc3433558a6a1b22169757d70ef4efa88471acf338992c86a01132da7d1d58ebd4dd4#npm:2.7.0"],\
-            ["qs", "npm:6.11.2"],\
-            ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:0.0.486", {\
           "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.486-e707873ab5-c6fe5bc40d.zip/node_modules/@fern-fern/fiddle-sdk/",\
           "packageDependencies": [\

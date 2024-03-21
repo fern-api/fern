@@ -35,7 +35,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     public static final String MAVEN_SIGNING_PASSWORD = "MAVEN_SIGNATURE_PASSWORD";
 
-    public abstract GeneratorConfig generatorConfig();
+    public abstract Optional<GeneratorConfig> generatorConfig();
 
     public abstract List<GradlePlugin> plugins();
 
@@ -126,8 +126,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     }
 
     private void writePomPublishConfiguration(RawFileWriter writer) {
-        GeneratorConfig config = generatorConfig();
-
+        if (!generatorConfig().isPresent()) {
+            return;
+        }
+        GeneratorConfig config = generatorConfig().get();
 
         Optional<String> license = config.getLicense().map(licenseConfig -> licenseConfig.visit(
                 new LicenseConfig.Visitor<String>(){
@@ -157,11 +159,13 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addLine("description = '" + pm.flatMap(PublishingMetadata::getPackageDescription).orElseGet(() -> "The official SDK of " + organizationName) + "'");
         writer.addLine("url = '" + pm.flatMap(PublishingMetadata::getReferenceUrl).orElseGet(() -> "https://buildwithfern.com") + "'");
 
-        writer.beginControlFlow("licenses");
-        writer.beginControlFlow("license");
-        writer.addLine("name = '" + license + "'");
-        writer.endControlFlow();
-        writer.endControlFlow();
+        if (license.isPresent()) {
+            writer.beginControlFlow("licenses");
+            writer.beginControlFlow("license");
+            writer.addLine("name = '" + license + "'");
+            writer.endControlFlow();
+            writer.endControlFlow();
+        }
 
         writer.beginControlFlow("developers");
         writer.beginControlFlow("developer");
@@ -171,8 +175,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.endControlFlow();
 
         writer.beginControlFlow("scm");
-        writer.addLine("connection = 'scm:git:git://" + githubUrl.replace("https://", "") + "'");
-        writer.addLine("developerConnection = 'scm:git:git://" + githubUrl.replace("https://", "") + "'");
+        writer.addLine("connection = 'scm:git:git://" + githubUrl.replace("https://", "") + ".git'");
+        writer.addLine("developerConnection = 'scm:git:git://" + githubUrl.replace("https://", "") + ".git'");
         writer.addLine("url = '" + githubUrl + "'");
         writer.endControlFlow();
 

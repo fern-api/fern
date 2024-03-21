@@ -30,6 +30,11 @@ fixtures:
             keyId: "test_kid"
             password: "test_password"
             secretKey: "test_secretkey"
+      publishMetadata:
+        packageDescription: My very good and lengthy description
+        publisherEmail: "me@gmail.com"
+        publisherName: "Fern"
+        referenceUrl: "https://buildwithfern.com"
       outputFolder: signed_publish
 scripts:
   - docker: fernapi/java-seed

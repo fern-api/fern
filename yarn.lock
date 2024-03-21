@@ -3388,7 +3388,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.479
+    "@fern-fern/fiddle-sdk": ^0.0.486
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3606,19 +3606,6 @@ __metadata:
   version: 0.0.80
   resolution: "@fern-fern/docs-config@npm:0.0.80"
   checksum: 8b3501c55ba321c5e838c07364d68a9ad78114f7b11985c1fcc87bbb2de12bb8805f70fc2bef8a4e9ef375cd4d82f4e89462a33532cc7c22650f04ab7d810480
-  languageName: node
-  linkType: hard
-
-"@fern-fern/fiddle-sdk@npm:^0.0.479":
-  version: 0.0.479
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.479"
-  dependencies:
-    form-data: 4.0.0
-    js-base64: 3.7.2
-    node-fetch: 2.7.0
-    qs: 6.11.2
-    url-join: 4.0.1
-  checksum: 8c73dedada72b0da806721f8b5759b23af32a054cef1b01e8b86571ff55299e6b80e562a89cdf9a5d21c32cf79a6ca285497bd0c97916a6babe330eebf9df315
   languageName: node
   linkType: hard
 
