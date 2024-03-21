@@ -340,7 +340,10 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
-                registryUrl: output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                registryUrl:
+                    output.url ?? output.signature != null
+                        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                        : "https://s01.oss.sonatype.org/content/repositories/releases/",
                 coordinate: output.coordinate,
                 credentials:
                     output.username != null && output.password != null
