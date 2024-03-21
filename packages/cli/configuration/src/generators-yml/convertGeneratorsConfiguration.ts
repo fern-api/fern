@@ -171,8 +171,8 @@ function convertPublishMetadata({
 }): PublishingMetadata {
     return {
         packageDescription: publishMetadata["package-description"],
-        publisherEmail: publishMetadata["publisher-email"],
-        publisherName: publishMetadata["publisher-name"],
+        publisherEmail: publishMetadata.email,
+        publisherName: publishMetadata.author,
         referenceUrl: publishMetadata["reference-url"]
     };
 }
