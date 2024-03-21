@@ -45,6 +45,13 @@ publishing {
             artifactId = 'unions'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/unions/fern.git'
+                    developerConnection = 'scm:git:git://github.com/unions/fern.git'
+                    url = 'https://github.com/unions/fern'
+                }
+            }
         }
     }
     repositories {

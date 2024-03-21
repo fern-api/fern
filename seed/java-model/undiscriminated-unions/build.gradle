@@ -45,6 +45,13 @@ publishing {
             artifactId = 'undiscriminated-unions'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/undiscriminated-unions/fern.git'
+                    developerConnection = 'scm:git:git://github.com/undiscriminated-unions/fern.git'
+                    url = 'https://github.com/undiscriminated-unions/fern'
+                }
+            }
         }
     }
     repositories {

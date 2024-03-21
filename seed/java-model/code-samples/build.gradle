@@ -45,6 +45,13 @@ publishing {
             artifactId = 'code-samples'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/code-samples/fern.git'
+                    developerConnection = 'scm:git:git://github.com/code-samples/fern.git'
+                    url = 'https://github.com/code-samples/fern'
+                }
+            }
         }
     }
     repositories {

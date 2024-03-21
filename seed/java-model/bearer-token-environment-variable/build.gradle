@@ -45,6 +45,13 @@ publishing {
             artifactId = 'bearer-token-environment-variable'
             version = '0.0.1'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/bearer-token-environment-variable/fern.git'
+                    developerConnection = 'scm:git:git://github.com/bearer-token-environment-variable/fern.git'
+                    url = 'https://github.com/bearer-token-environment-variable/fern'
+                }
+            }
         }
     }
     repositories {
