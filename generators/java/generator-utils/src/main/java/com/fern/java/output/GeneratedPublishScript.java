@@ -20,7 +20,7 @@ public class GeneratedPublishScript extends GeneratedFile {
 
     private String contents() {
         return "# Write key ring file\n" +
-            "echo $MAVEN_SIGNATURE_SECRET_KEY > armored_key.asc\n" +
+            "echo \"$MAVEN_SIGNATURE_SECRET_KEY\" > armored_key.asc\n" +
             "gpg -o publish_key.gpg --dearmor armored_key.asc\n\n" +
             "# Generate gradle.properties file\n" +
             "echo \"signing.keyId=$MAVEN_SIGNATURE_KID\" > gradle.properties\n" +
