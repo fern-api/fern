@@ -8,7 +8,7 @@ import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
-import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -35,7 +35,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 
         const customConfig = getCustomConfig(config);
 
-        const generatorLoggingClient = new GeneratorNotificationServiceImpl(config.environment);
+        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
 
         try {
             await generatorLoggingClient.sendUpdate(

@@ -8,7 +8,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { cp, rm } from "fs";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -45,7 +45,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 unrecognizedObjectKeys: "passthrough"
             }
         );
-        const generatorNotificationService = new GeneratorNotificationServiceImpl(config.environment);
+        const generatorNotificationService = new GeneratorNotificationService(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);

@@ -1,11 +1,6 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 
-export interface GeneratorNotificationService {
-    bufferUpdate: (update: FernGeneratorExec.GeneratorUpdate) => void;
-    sendUpdate: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
-}
-
-export class GeneratorNotificationServiceImpl implements GeneratorNotificationService {
+export class GeneratorNotificationService {
     private client: FernGeneratorExecClient | undefined;
     private taskId: FernGeneratorExec.TaskId | undefined;
     private buffer: FernGeneratorExec.GeneratorUpdate[] = [];

@@ -7,7 +7,7 @@ import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serializati
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir, readFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { GeneratorNotificationServiceImpl } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -40,7 +40,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 unrecognizedObjectKeys: "passthrough"
             }
         );
-        const generatorNotificationService = new GeneratorNotificationServiceImpl(config.environment);
+        const generatorNotificationService = new GeneratorNotificationService(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
