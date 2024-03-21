@@ -45,6 +45,7 @@ public class GeneratedBuildGradleTest {
                         .artifact(mavenCoordinate.getArtifact())
                         .build())
                 .addAllDependencies(deps)
+                .shouldSignPackage(false)
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
                 .build();
 
