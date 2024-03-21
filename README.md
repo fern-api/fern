@@ -63,9 +63,9 @@ Check out docs built with Fern:
 
 - [docs.vellum.ai](https://docs.vellum.ai)
 - [docs.superagent.sh](https://docs.superagent.sh/)
-- [docs.propexo.com](https://docs.propexo.com/)
+- [docs.hume.ai](https://docs.hume.ai/)
 
-Get started [here](https://github.com/fern-api/docs-starter).
+Get started [here](https://github.com/fern-api/docs-starter-openapi).
 
 ## 🌿 Generators
 
@@ -76,11 +76,11 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 | Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-node-sdk`     | `0.11.0`       | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
-| `fernapi/fern-python-sdk`              | `0.9.0`        | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-java-sdk`                | `0.8.0`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/fern-ruby-sdk`                | `0.0.6`        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
-| `fernapi/fern-go-sdk`                  | `0.16.0`       | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| `fernapi/fern-typescript-node-sdk`     | `0.12.8`       | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
+| `fernapi/fern-python-sdk`              | `0.12.4`        | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-sdk`                | `0.8.6`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/fern-ruby-sdk`                | `0.3.2`        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
+| `fernapi/fern-go-sdk`                  | `0.18.0`       | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
 
 ### Server-side Generators
 
@@ -89,9 +89,9 @@ who write their API definition (as an OpenAPI spec or Fern definition) and want 
 
 | Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-express` | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
-| `fernapi/fern-fastapi-server` | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)     | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
-| `fernapi/fern-java-spring`    | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)        | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
+| `fernapi/fern-typescript-express` | `0.12.8`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
+| `fernapi/fern-fastapi-server` | `0.12.4`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)     | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
+| `fernapi/fern-java-spring`    | `0.8.6`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)        | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
 
 ### Model Generators
 
@@ -99,9 +99,9 @@ Fern's model generators will output schemas or types defined in your OpenAPI spe
 
 | Generator ID                  | Latest Version | Changelog                                                 | Entrypoint                                                                    |
 | ----------------------------- | -------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model` | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
-| `fernapi/fern-java-model`     | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
-| `fernapi/fern-ruby-model`     | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
+| `fernapi/fern-pydantic-model` | `0.12.8`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
+| `fernapi/fern-java-model`     | `0.8.6`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
+| `fernapi/fern-ruby-model`     | `0.3.2`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
 
 ### Spec Generators
 
