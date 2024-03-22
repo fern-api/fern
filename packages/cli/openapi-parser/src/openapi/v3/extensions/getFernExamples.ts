@@ -2,6 +2,7 @@ import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
+import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
 export function getFernExamples(operationObject: OpenAPIV3.OperationObject): EndpointExample[] {
@@ -9,7 +10,7 @@ export function getFernExamples(operationObject: OpenAPIV3.OperationObject): End
         getExtension<RawSchemas.ExampleEndpointCallSchema[]>(operationObject, FernOpenAPIExtension.EXAMPLES) ?? [];
     const validated = raw.map((value) => RawSchemas.ExampleEndpointCallSchema.parse(value));
     // TODO: Not validated
-    return validated.map(
+    const fernExamples = validated.map(
         (value): EndpointExample => ({
             name: value.name,
             pathParameters: value["path-parameters"]
@@ -55,4 +56,36 @@ export function getFernExamples(operationObject: OpenAPIV3.OperationObject): End
             description: undefined
         })
     );
+
+    const redoclyCodeSamplesKebabCase =
+        getExtension<RawSchemas.XCodeSampleSchema[]>(operationObject, OpenAPIExtension.CODE_SAMPLES) ?? [];
+    const redoclyCodeSamplesCamelCase =
+        getExtension<RawSchemas.XCodeSampleSchema[]>(operationObject, OpenAPIExtension.CODESAMPLES) ?? [];
+    const redoclyCodeSamples = [...redoclyCodeSamplesKebabCase, ...redoclyCodeSamplesCamelCase].map((value) =>
+        RawSchemas.XCodeSampleSchema.parse(value)
+    );
+
+    if (redoclyCodeSamples.length > 0) {
+        fernExamples.push({
+            name: undefined,
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            request: undefined,
+            response: undefined,
+            codeSamples: redoclyCodeSamples.map(
+                (value): FernOpenapiIr.CustomCodeSample =>
+                    FernOpenapiIr.CustomCodeSample.language({
+                        name: value.label ?? value.lang,
+                        language: value.lang,
+                        code: value.source,
+                        install: undefined,
+                        description: undefined
+                    })
+            ),
+            description: undefined
+        });
+    }
+
+    return fernExamples;
 }

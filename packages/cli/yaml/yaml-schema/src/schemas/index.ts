@@ -63,3 +63,4 @@ export { WebSocketChannelSchema } from "./WebSocketChannelSchema";
 export { WithDocsSchema } from "./WithDocsSchema";
 export { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 export { WithNameSchema } from "./WithNameSchema";
+export { XCodeSampleSchema } from "./XCodeSampleSchema";
