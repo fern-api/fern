@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.0.31-rc0] - 2024-03-29
+## [0.0.31] - 2024-03-22
+
+- Fix: Update open api generator to v2 urls.
+- Improvment: Refactor generator notification and config parsing logic to a shared utility, and remove the dependency on the generator-exec-sdk.
+
+## [0.0.31-rc0] - 2024-03-20
 
 - Fix: Update open api generator to v2 urls.
 

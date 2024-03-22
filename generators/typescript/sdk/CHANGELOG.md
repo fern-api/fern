@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.12.8-rc0] - 2024-03-18
 
 - Improvement: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
+- Improvement: Remove cli dependency on generator-exec-sdk and use shared logic for generator config parsing and cli debug logging.
+
+## [0.12.8-rc0] - 2024-03-18
+
+- Improvement: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
 
 ## [0.12.7] - 2024-03-14
 

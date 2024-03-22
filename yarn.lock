@@ -3183,7 +3183,6 @@ __metadata:
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.687
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
