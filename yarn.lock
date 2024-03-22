@@ -3154,6 +3154,7 @@ __metadata:
     prettier: ^2.7.1
     swagger2openapi: 7.0.8
     typescript: 4.6.4
+    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 
