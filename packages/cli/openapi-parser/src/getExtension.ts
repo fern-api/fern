@@ -1,3 +1,4 @@
+import { compact } from "lodash-es";
 import { z } from "zod";
 import { AbstractOpenAPIV3ParserContext } from "./openapi/v3/AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
@@ -36,7 +37,8 @@ export function getExtensionAndValidate<T>(
     object: object,
     extension: Extension<T>,
     schema: z.ZodSchema,
-    context: AbstractOpenAPIV3ParserContext
+    context: AbstractOpenAPIV3ParserContext,
+    breadcrumbs: string | string[] = []
 ): T | undefined {
     try {
         const extensionValue = getExtension<T>(object, extension);
@@ -44,7 +46,8 @@ export function getExtensionAndValidate<T>(
             return schema.parse(extensionValue);
         }
     } catch (e) {
-        context.logger.error(`Failed to parse ${extension}`);
+        const breadcrumb = compact(breadcrumbs).join(" -> ");
+        context.logger.error(`${breadcrumb.length > 0 ? `${breadcrumb}: ` : ""}Failed to parse ${extension}`);
     }
     return undefined;
 }

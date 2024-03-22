@@ -3,11 +3,13 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
+import { OperationContext } from "../converters/contexts";
 import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
 import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
 export function getExamplesFromExtension(
+    operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
@@ -16,7 +18,8 @@ export function getExamplesFromExtension(
             operationObject,
             FernOpenAPIExtension.EXAMPLES,
             RawSchemas.ExampleEndpointCallArraySchema,
-            context
+            context,
+            [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
     // TODO: Not validated
@@ -72,7 +75,8 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB,
             RedoclyCodeSampleArraySchema,
-            context
+            context,
+            [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
     const redoclyCodeSamplesCamelCase =
@@ -80,7 +84,8 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
             RedoclyCodeSampleArraySchema,
-            context
+            context,
+            [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
     const redoclyCodeSamples: RedoclyCodeSampleSchema[] = [
