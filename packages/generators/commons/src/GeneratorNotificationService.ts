@@ -1,7 +1,9 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
+import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-sdk/api";
 
-export { GeneratorExecParsing };
+export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
+
 export class GeneratorNotificationService {
     private client: FernGeneratorExecClient | undefined;
     private taskId: FernGeneratorExec.TaskId | undefined;

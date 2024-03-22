@@ -1,4 +1,4 @@
-import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-sdk/api";
+import {  } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
@@ -8,7 +8,7 @@ import path from "path";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorNotificationService, GeneratorExecParsing } from "@fern-api/generator-commons";
+import { GeneratorNotificationService, GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-api/generator-commons";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
