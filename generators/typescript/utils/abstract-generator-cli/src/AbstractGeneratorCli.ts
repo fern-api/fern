@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
@@ -8,7 +9,6 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { cp, rm } from "fs";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -54,7 +54,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 CONSOLE_LOGGER.log(level, ...message);
 
                 // kick off log, but don't wait for it
-                generatorNotificationService?.bufferUpdate(
+                generatorNotificationService.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level]
@@ -67,7 +67,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 isPackagePrivate: this.isPackagePrivate(customConfig)
             });
 
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
                         npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined
@@ -169,7 +169,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.successful({
                         zipFilename: OUTPUT_ZIP_FILENAME
@@ -179,7 +179,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // eslint-disable-next-line no-console
             console.log("Sent success event to coordinator");
         } catch (e) {
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error"

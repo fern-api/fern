@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { GeneratorContext, GeneratorNotificationService } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -7,7 +7,6 @@ import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serializati
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir, readFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -50,7 +49,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
                 // kick off log, but don't wait for it
                 try {
-                    void generatorNotificationService?.sendUpdate(
+                    void generatorNotificationService.sendUpdate(
                         FernGeneratorExec.GeneratorUpdate.log({
                             message: message.join(" "),
                             level: LOG_LEVEL_CONVERSIONS[level]
@@ -63,7 +62,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
-            // await generatorNotificationService?.sendUpdateOrThrow(
+            // await generatorNotificationService.sendUpdateOrThrow(
             //     FernGeneratorExec.GeneratorUpdate.initV2({
             //         publishingToRegistry: config.output.mode._visit<FernGeneratorExec.RegistryType | undefined>({
             //             publish: () => this.registry,
@@ -110,11 +109,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error"

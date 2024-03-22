@@ -1,7 +1,7 @@
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
 
 export async function publishPackage({
     generatorNotificationService,
@@ -27,7 +27,7 @@ export async function publishPackage({
         version: npmPackage.version
     });
 
-    await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate));
+    await generatorNotificationService.sendUpdate(FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate));
 
     await typescriptProject.publish({
         logger,
@@ -36,5 +36,5 @@ export async function publishPackage({
         shouldTolerateRepublish
     });
 
-    await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));
+    await generatorNotificationService.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));
 }
