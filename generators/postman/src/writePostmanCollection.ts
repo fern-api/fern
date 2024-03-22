@@ -99,7 +99,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 // eslint-disable-next-line no-console
                 console.log("Writing Github workflows...");
                 await writePostmanGithubWorkflows({
-                    config: config,
+                    config,
                     githubOutputMode: outputMode
                 });
             } else if (postmanGeneratorConfig?.publishing != null) {
