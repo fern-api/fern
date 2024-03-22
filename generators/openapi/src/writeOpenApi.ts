@@ -6,7 +6,13 @@ import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
-import { GeneratorNotificationService, GeneratorExecParsing, GeneratorUpdate, ExitStatusUpdate } from "@fern-api/generator-commons";
+import {
+    GeneratorNotificationService,
+    GeneratorExecParsing,
+    GeneratorUpdate,
+    ExitStatusUpdate,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -15,21 +21,7 @@ export type Mode = "stoplight" | "openapi";
 
 export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
     try {
-        const configStr = await readFile(pathToConfig);
-        // eslint-disable-next-line no-console
-        console.log(`Read ${pathToConfig}`);
-        const rawConfig = JSON.parse(configStr.toString());
-        const parsedConfig = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
-            unrecognizedObjectKeys: "passthrough"
-        });
-
-        if (!parsedConfig.ok) {
-            // eslint-disable-next-line no-console
-            console.log(`Failed to read ${pathToConfig}`);
-            return;
-        }
-
-        const config = parsedConfig.value;
+        const config = await parseGeneratorConfig(pathToConfig);
 
         const customConfig = getCustomConfig(config);
 

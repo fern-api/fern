@@ -3,3 +3,4 @@ export * from "./ConfigUtilities";
 export * from "./GeneratorContext";
 export * from "./PersistedProject";
 export * from "./GeneratorNotificationService";
+export * from "./parseGeneratorConfig";

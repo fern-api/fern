@@ -1,4 +1,3 @@
-import {  } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
@@ -8,7 +7,14 @@ import path from "path";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorNotificationService, GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-api/generator-commons";
+import {
+    GeneratorNotificationService,
+    GeneratorExecParsing,
+    ExitStatusUpdate,
+    GeneratorUpdate,
+    LogLevel,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
@@ -19,30 +25,16 @@ export const getCollectionOutputFilename = (postmanGeneratorConfig?: PostmanGene
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
     try {
-        // eslint-disable-next-line no-console
-        console.log("Starting generator...");
-        const configStr = await readFile(pathToConfig);
-        // eslint-disable-next-line no-console
-        console.log(`Read ${pathToConfig}`);
-        const rawConfig = JSON.parse(configStr.toString());
-        const config = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
-            unrecognizedObjectKeys: "passthrough"
-        });
-
-        if (!config.ok) {
-            // eslint-disable-next-line no-console
-            console.log(`Failed to read ${pathToConfig}`);
-            return;
-        }
+        const config = await parseGeneratorConfig(pathToConfig);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const postmanGeneratorConfig = config.value.customConfig as any as PostmanGeneratorConfigSchema;
+        const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
         // eslint-disable-next-line no-console
         console.log("Validated custom config");
 
         const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 
-        const generatorLoggingClient = new GeneratorNotificationService(config.value.environment);
+        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
         // eslint-disable-next-line no-console
         console.log("Initialized generator logging client");
 
@@ -53,9 +45,9 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
 
-            const ir = await loadIntermediateRepresentation(config.value.irFilepath);
+            const ir = await loadIntermediateRepresentation(config.irFilepath);
             // eslint-disable-next-line no-console
-            console.log(`Loaded intermediate representation from ${config.value.irFilepath}`);
+            console.log(`Loaded intermediate representation from ${config.irFilepath}`);
 
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.log({
@@ -71,7 +63,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             console.log("Converted ir to postman collection");
 
             await writeFile(
-                path.join(config.value.output.path, collectionOutputFilename),
+                path.join(config.output.path, collectionOutputFilename),
                 JSON.stringify(rawCollectionDefinition, undefined, 2)
             );
             // eslint-disable-next-line no-console
@@ -83,7 +75,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
 
-            const outputMode = config.value.output.mode;
+            const outputMode = config.output.mode;
             if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
                     // eslint-disable-next-line no-console
@@ -107,7 +99,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 // eslint-disable-next-line no-console
                 console.log("Writing Github workflows...");
                 await writePostmanGithubWorkflows({
-                    config: config.value,
+                    config: config,
                     githubOutputMode: outputMode
                 });
             } else if (postmanGeneratorConfig?.publishing != null) {

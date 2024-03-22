@@ -1,5 +1,11 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext, GeneratorNotificationService, GeneratorExecParsing, FernGeneratorExec } from "@fern-api/generator-commons";
+import {
+    GeneratorContext,
+    GeneratorNotificationService,
+    GeneratorExecParsing,
+    FernGeneratorExec,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -24,19 +30,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }
 
     public async run(pathToConfig: string): Promise<void> {
-        const configStr = await readFile(pathToConfig);
-        const rawConfig = JSON.parse(configStr.toString());
-        const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow(
-            {
-                ...rawConfig,
-                // in this version of the fiddle client, it requires unknown
-                // properties to be present
-                customConfig: rawConfig.customConfig ?? {}
-            },
-            {
-                unrecognizedObjectKeys: "passthrough"
-            }
-        );
+        const config = await parseGeneratorConfig(pathToConfig);
         const generatorNotificationService = new GeneratorNotificationService(config.environment);
 
         try {
