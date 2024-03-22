@@ -89,7 +89,7 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
-    const examples = [...getExamplesFromExtension(operation, context)];
+    const examples = [...getExamplesFromExtension(operationContext, operation, context)];
     // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
     // const readmeCodeSamples = getReadmeCodeSamples(operation);
     // if (readmeCodeSamples.length > 0) {
