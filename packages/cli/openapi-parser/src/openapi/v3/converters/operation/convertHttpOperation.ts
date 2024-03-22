@@ -6,8 +6,8 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { getFernExamples } from "../../extensions/getFernExamples";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { convertParameters } from "../endpoint/convertParameters";
@@ -89,7 +89,7 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
-    const examples = [...getFernExamples(operation)];
+    const examples = [...getExamplesFromExtension(operation)];
     // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
     // const readmeCodeSamples = getReadmeCodeSamples(operation);
     // if (readmeCodeSamples.length > 0) {

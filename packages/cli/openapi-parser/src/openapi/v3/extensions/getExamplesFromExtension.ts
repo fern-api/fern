@@ -2,10 +2,11 @@ import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
+import { XCodeSampleSchema } from "../schemas/XCodeSampleSchema";
 import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
-export function getFernExamples(operationObject: OpenAPIV3.OperationObject): EndpointExample[] {
+export function getExamplesFromExtension(operationObject: OpenAPIV3.OperationObject): EndpointExample[] {
     const raw =
         getExtension<RawSchemas.ExampleEndpointCallSchema[]>(operationObject, FernOpenAPIExtension.EXAMPLES) ?? [];
     const validated = raw.map((value) => RawSchemas.ExampleEndpointCallSchema.parse(value));
@@ -58,11 +59,11 @@ export function getFernExamples(operationObject: OpenAPIV3.OperationObject): End
     );
 
     const redoclyCodeSamplesKebabCase =
-        getExtension<RawSchemas.XCodeSampleSchema[]>(operationObject, OpenAPIExtension.CODE_SAMPLES) ?? [];
+        getExtension<XCodeSampleSchema[]>(operationObject, OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB) ?? [];
     const redoclyCodeSamplesCamelCase =
-        getExtension<RawSchemas.XCodeSampleSchema[]>(operationObject, OpenAPIExtension.CODESAMPLES) ?? [];
+        getExtension<XCodeSampleSchema[]>(operationObject, OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL) ?? [];
     const redoclyCodeSamples = [...redoclyCodeSamplesKebabCase, ...redoclyCodeSamplesCamelCase].map((value) =>
-        RawSchemas.XCodeSampleSchema.parse(value)
+        XCodeSampleSchema.parse(value)
     );
 
     if (redoclyCodeSamples.length > 0) {

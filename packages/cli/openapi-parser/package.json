@@ -38,7 +38,8 @@
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",
-    "swagger2openapi": "7.0.8"
+    "swagger2openapi": "7.0.8",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
