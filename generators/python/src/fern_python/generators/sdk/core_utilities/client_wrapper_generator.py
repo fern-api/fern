@@ -129,7 +129,7 @@ class ClientWrapperGenerator:
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}"),
             ),
         )
-    
+
     def _get_timeout_constructor_parameter(self) -> ConstructorParameter:
         return ConstructorParameter(
             constructor_parameter_name=ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,

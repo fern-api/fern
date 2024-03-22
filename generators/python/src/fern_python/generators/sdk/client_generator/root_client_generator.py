@@ -417,23 +417,23 @@ class RootClientGenerator:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
             writer.write(f"{timeout_local_variable} = ")
-            writer.write_node(AST.Expression(
-                        AST.ConditionalExpression(
-                            left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
-                            right=AST.ConditionalExpression(
-                                left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                                    if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                                    else AST.Expression(AST.TypeHint.none()),
-                                right=AST.Expression("None"),
-                                test=AST.Expression(
-                                    f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
-                                ),
-                            ),
+            writer.write_node(
+                AST.Expression(
+                    AST.ConditionalExpression(
+                        left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
+                        right=AST.ConditionalExpression(
+                            left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                            else AST.Expression(AST.TypeHint.none()),
+                            right=AST.Expression("None"),
                             test=AST.Expression(
-                                f"{self._timeout_constructor_parameter_name} is not None"
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
                             ),
                         ),
-                    ),)
+                        test=AST.Expression(f"{self._timeout_constructor_parameter_name} is not None"),
+                    ),
+                ),
+            )
 
             for param in constructor_parameters:
                 if param.validation_check is not None:
