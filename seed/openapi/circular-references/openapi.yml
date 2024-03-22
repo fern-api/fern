@@ -102,6 +102,9 @@ components:
     ObjectFieldValue:
       title: ObjectFieldValue
       type: object
+      description: >-
+        This type allows us to test a circular reference with a union type (see
+        FieldValue).
       properties:
         name:
           $ref: '#/components/schemas/FieldName'

@@ -1609,7 +1609,8 @@
         ]
       },
       "referencedTypes": {},
-      "examples": []
+      "examples": [],
+      "docs": "This type allows us to test a circular reference with a union type (see FieldValue)."
     }
   },
   "errors": {},

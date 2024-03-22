@@ -234,6 +234,7 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	}
 }
 
+// This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`

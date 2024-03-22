@@ -6,6 +6,7 @@ require "json"
 
 module SeedApiClient
   class Ast
+    # This type allows us to test a circular reference with a union type (see FieldValue).
     class ObjectFieldValue
       attr_reader :name, :value, :additional_properties
 

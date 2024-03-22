@@ -14,6 +14,10 @@ except ImportError:
 
 
 class ObjectFieldValue(pydantic.BaseModel):
+    """
+    This type allows us to test a circular reference with a union type (see FieldValue).
+    """
+
     name: FieldName
     value: FieldValue
 
