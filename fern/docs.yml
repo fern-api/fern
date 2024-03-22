@@ -205,9 +205,6 @@ navigation:
           - page: Use a Fern Definition
             slug: ferndef
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - page: PR previews
-        slug: previews
-        path: ./docs/pages/fern-docs/previews.mdx
       - section: Configuration
         slug: config
         contents:
@@ -215,6 +212,9 @@ navigation:
             path: ./docs/pages/fern-docs/config/config-overview.mdx
           - page: Navigation
             path: ./docs/pages/fern-docs/config/navigation.mdx
+          - page: PR previews
+            slug: previews
+            path: ./docs/pages/fern-docs/config/previews.mdx
           - section: Customize branding
             slug: branding
             contents:
