@@ -59,7 +59,6 @@ export class ExampleGenerator {
     public flattenedProperties: Map<TypeId, ExampleObjectProperty[]>;
 
     constructor(ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">) {
-        // eslint-disable-next-line no-console
         this.ir = ir;
 
         this.types = new Map();
@@ -553,7 +552,7 @@ export class ExampleGenerator {
         if (this.exceedsMaxDepth(depth)) {
             return this.generateExampleUnknown({});
         }
-        
+
         switch (typeReference.type) {
             case "container":
                 return this.generateExampleContainer(typeReference.container, depth);
