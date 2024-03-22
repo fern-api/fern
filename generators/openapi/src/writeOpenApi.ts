@@ -1,5 +1,4 @@
 import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-sdk/api";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
@@ -8,7 +7,7 @@ import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { GeneratorNotificationService, GeneratorExecParsing } from "@fern-api/generator-commons";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";

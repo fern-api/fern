@@ -1,5 +1,7 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 
+export { GeneratorExecParsing };
 export class GeneratorNotificationService {
     private client: FernGeneratorExecClient | undefined;
     private taskId: FernGeneratorExec.TaskId | undefined;
