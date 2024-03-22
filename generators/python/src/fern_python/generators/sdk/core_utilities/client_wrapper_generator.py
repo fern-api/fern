@@ -54,10 +54,13 @@ class ClientWrapperGenerator:
 
     GET_HEADERS_METHOD_NAME = "get_headers"
     GET_BASE_URL_METHOD_NAME = "get_base_url"
+    GET_TIMEOUT_METHOD_NAME = "get_timeout"
     GET_ENVIRONMENT_METHOD_NAME = "get_environment"
 
     BASE_URL_PARAMETER_NAME = "base_url"
     ENVIRONMENT_PARAMETER_NAME = "environment"
+
+    TIMEOUT_PARAMETER_NAME = "timeout"
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
@@ -77,8 +80,10 @@ class ClientWrapperGenerator:
     def generate(self, source_file: SourceFile, project: Project) -> None:
         constructor_info = self._get_constructor_info()
         url_constructor_param = self._get_url_storage_info()
+        timeout_param = self._get_timeout_constructor_parameter()
         constructor_parameters = [param for param in constructor_info.constructor_parameters]
         constructor_parameters.append(url_constructor_param)
+        constructor_parameters.append(timeout_param)
 
         source_file.add_class_declaration(
             declaration=self._create_base_client_wrapper_class_declaration(
@@ -122,6 +127,18 @@ class ClientWrapperGenerator:
                 name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
                 signature=AST.FunctionSignature(return_type=AST.TypeHint.str_()),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}"),
+            ),
+        )
+
+    def _get_timeout_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
+            private_member_name=f"_{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}",
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.optional(AST.TypeHint.float_())),
+                body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}"),
             ),
         )
 

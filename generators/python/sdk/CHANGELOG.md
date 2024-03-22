@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.5] - 2024-03-22
+
+- Fix: the python SDK uses the timeout provided to the top level client as the default per-request, previously if there was no timeout override in the RequestOptions, we'd default to 60s, even if a timeout was provided at the client level.
+
 ## [0.12.4] - 2024-03-19
 
 - Improvement: Allow full forward compat with enums while keeping intellisense by unioning enum literals with `typing.AnyStr`.

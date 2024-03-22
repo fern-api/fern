@@ -374,10 +374,7 @@ class RootClientGenerator:
             RootClientConstructorParameter(
                 constructor_parameter_name=self._timeout_constructor_parameter_name,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
-                initializer=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                else AST.Expression(AST.TypeHint.none()),
-                docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.",
+                docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.",
             )
         )
         parameters.append(
@@ -418,6 +415,26 @@ class RootClientGenerator:
         self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
+            timeout_local_variable = "_defaulted_timeout"
+            writer.write(f"{timeout_local_variable} = ")
+            writer.write_node(
+                AST.Expression(
+                    AST.ConditionalExpression(
+                        left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
+                        right=AST.ConditionalExpression(
+                            left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                            else AST.Expression(AST.TypeHint.none()),
+                            right=AST.Expression("None"),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
+                            ),
+                        ),
+                        test=AST.Expression(f"{self._timeout_constructor_parameter_name} is not None"),
+                    ),
+                ),
+            )
+
             for param in constructor_parameters:
                 if param.validation_check is not None:
                     writer.write_node(param.validation_check)
@@ -471,7 +488,7 @@ class RootClientGenerator:
                                 kwargs=[
                                     (
                                         "timeout",
-                                        AST.Expression(f"{self._timeout_constructor_parameter_name}"),
+                                        AST.Expression(f"{timeout_local_variable}"),
                                     )
                                 ],
                             ),
@@ -481,6 +498,12 @@ class RootClientGenerator:
                             ),
                         ),
                     ),
+                )
+            )
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
+                    AST.Expression(timeout_local_variable),
                 )
             )
             for param in self._get_constructor_parameters(is_async=is_async):

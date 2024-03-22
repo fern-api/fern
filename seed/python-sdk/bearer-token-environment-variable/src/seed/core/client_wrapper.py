@@ -8,9 +8,16 @@ from .http_client import AsyncHttpClient, HttpClient
 
 
 class BaseClientWrapper:
-    def __init__(self, *, api_key: typing.Union[str, typing.Callable[[], str]], base_url: str):
+    def __init__(
+        self,
+        *,
+        api_key: typing.Union[str, typing.Callable[[], str]],
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+    ):
         self._api_key = api_key
         self._base_url = base_url
+        self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
@@ -30,18 +37,31 @@ class BaseClientWrapper:
     def get_base_url(self) -> str:
         return self._base_url
 
+    def get_timeout(self) -> typing.Optional[float]:
+        return self._timeout
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
-        self, *, api_key: typing.Union[str, typing.Callable[[], str]], base_url: str, httpx_client: httpx.Client
+        self,
+        *,
+        api_key: typing.Union[str, typing.Callable[[], str]],
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, base_url=base_url)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
 class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
-        self, *, api_key: typing.Union[str, typing.Callable[[], str]], base_url: str, httpx_client: httpx.AsyncClient
+        self,
+        *,
+        api_key: typing.Union[str, typing.Callable[[], str]],
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, base_url=base_url)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

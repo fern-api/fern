@@ -21,7 +21,7 @@ class SeedAuthEnvironmentVariables:
 
         - api_key: typing.Optional[str].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -40,9 +40,10 @@ class SeedAuthEnvironmentVariables:
         base_url: str,
         x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
-        timeout: typing.Optional[float] = 60,
+        timeout: typing.Optional[float] = None,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if x_another_header is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
@@ -53,7 +54,8 @@ class SeedAuthEnvironmentVariables:
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
-            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx.Client(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            timeout=_defaulted_timeout,
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
@@ -69,7 +71,7 @@ class AsyncSeedAuthEnvironmentVariables:
 
         - api_key: typing.Optional[str].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -88,9 +90,10 @@ class AsyncSeedAuthEnvironmentVariables:
         base_url: str,
         x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
-        timeout: typing.Optional[float] = 60,
+        timeout: typing.Optional[float] = None,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if x_another_header is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
@@ -101,6 +104,7 @@ class AsyncSeedAuthEnvironmentVariables:
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
-            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            timeout=_defaulted_timeout,
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
