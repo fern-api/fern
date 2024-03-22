@@ -41,6 +41,7 @@ class SeedIdempotencyHeaders:
             base_url=base_url,
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.payment = PaymentClient(client_wrapper=self._client_wrapper)
 
@@ -78,5 +79,6 @@ class AsyncSeedIdempotencyHeaders:
             base_url=base_url,
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.payment = AsyncPaymentClient(client_wrapper=self._client_wrapper)

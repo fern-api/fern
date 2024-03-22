@@ -36,7 +36,9 @@ class SeedApi:
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.a = AClient(client_wrapper=self._client_wrapper)
         self.folder = FolderClient(client_wrapper=self._client_wrapper)
@@ -72,7 +74,7 @@ class SeedApi:
             ),
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
@@ -111,7 +113,9 @@ class AsyncSeedApi:
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.a = AsyncAClient(client_wrapper=self._client_wrapper)
         self.folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
@@ -147,7 +151,7 @@ class AsyncSeedApi:
             ),
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )

@@ -46,6 +46,7 @@ class SeedBasicAuth:
             username=username,
             password=password,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
 
@@ -88,5 +89,6 @@ class AsyncSeedBasicAuth:
             username=username,
             password=password,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.basic_auth = AsyncBasicAuthClient(client_wrapper=self._client_wrapper)

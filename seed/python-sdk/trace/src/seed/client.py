@@ -58,6 +58,7 @@ class SeedTrace:
             x_random_header=x_random_header,
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.v_2 = V2Client(client_wrapper=self._client_wrapper)
         self.admin = AdminClient(client_wrapper=self._client_wrapper)
@@ -111,6 +112,7 @@ class AsyncSeedTrace:
             x_random_header=x_random_header,
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.v_2 = AsyncV2Client(client_wrapper=self._client_wrapper)
         self.admin = AsyncAdminClient(client_wrapper=self._client_wrapper)

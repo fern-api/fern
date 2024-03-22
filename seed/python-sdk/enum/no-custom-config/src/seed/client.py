@@ -32,7 +32,9 @@ class SeedEnum:
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.inlined_request = InlinedRequestClient(client_wrapper=self._client_wrapper)
         self.path_param = PathParamClient(client_wrapper=self._client_wrapper)
@@ -65,7 +67,9 @@ class AsyncSeedEnum:
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.inlined_request = AsyncInlinedRequestClient(client_wrapper=self._client_wrapper)
         self.path_param = AsyncPathParamClient(client_wrapper=self._client_wrapper)

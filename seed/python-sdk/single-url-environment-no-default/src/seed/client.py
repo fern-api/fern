@@ -46,6 +46,7 @@ class SeedSingleUrlEnvironmentNoDefault:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.dummy = DummyClient(client_wrapper=self._client_wrapper)
 
@@ -87,6 +88,7 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.dummy = AsyncDummyClient(client_wrapper=self._client_wrapper)
 

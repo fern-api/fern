@@ -483,6 +483,12 @@ class RootClientGenerator:
                     ),
                 )
             )
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
+                    AST.Expression(self._timeout_constructor_parameter_name),
+                )
+            )
             for param in self._get_constructor_parameters(is_async=is_async):
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")

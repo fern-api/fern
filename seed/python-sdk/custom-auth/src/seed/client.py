@@ -41,6 +41,7 @@ class SeedCustomAuth:
             base_url=base_url,
             custom_auth_scheme=custom_auth_scheme,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.custom_auth = CustomAuthClient(client_wrapper=self._client_wrapper)
 
@@ -78,5 +79,6 @@ class AsyncSeedCustomAuth:
             base_url=base_url,
             custom_auth_scheme=custom_auth_scheme,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.custom_auth = AsyncCustomAuthClient(client_wrapper=self._client_wrapper)

@@ -30,7 +30,9 @@ class SeedErrorProperty:
         self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.property_based_error = PropertyBasedErrorClient(client_wrapper=self._client_wrapper)
 
@@ -61,6 +63,8 @@ class AsyncSeedErrorProperty:
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+            base_url=base_url,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.property_based_error = AsyncPropertyBasedErrorClient(client_wrapper=self._client_wrapper)

@@ -61,6 +61,7 @@ class SeedExamples:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.file = FileClient(client_wrapper=self._client_wrapper)
         self.health = HealthClient(client_wrapper=self._client_wrapper)
@@ -101,7 +102,7 @@ class SeedExamples:
             ),
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
@@ -151,6 +152,7 @@ class AsyncSeedExamples:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.file = AsyncFileClient(client_wrapper=self._client_wrapper)
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
@@ -191,7 +193,7 @@ class AsyncSeedExamples:
             ),
             timeout=request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
+            else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )

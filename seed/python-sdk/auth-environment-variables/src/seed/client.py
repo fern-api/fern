@@ -54,6 +54,7 @@ class SeedAuthEnvironmentVariables:
             x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
@@ -102,5 +103,6 @@ class AsyncSeedAuthEnvironmentVariables:
             x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)

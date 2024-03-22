@@ -330,13 +330,8 @@ class EndpointFunctionGenerator:
                 context=self._context, endpoint=endpoint, is_async=is_async
             )
 
-            timeout_default = (
-                "None"
-                if self._context.custom_config.timeout_in_seconds == "infinity"
-                else f"{self._context.custom_config.timeout_in_seconds}"
-            )
             timeout = AST.Expression(
-                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else {timeout_default}"
+                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}()"
             )
             files = (
                 request_body_parameters.get_files()

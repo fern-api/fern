@@ -44,6 +44,7 @@ class SeedMultiUrlEnvironment:
             environment=environment,
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.ec_2 = Ec2Client(client_wrapper=self._client_wrapper)
         self.s_3 = S3Client(client_wrapper=self._client_wrapper)
@@ -83,6 +84,7 @@ class AsyncSeedMultiUrlEnvironment:
             environment=environment,
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.ec_2 = AsyncEc2Client(client_wrapper=self._client_wrapper)
         self.s_3 = AsyncS3Client(client_wrapper=self._client_wrapper)

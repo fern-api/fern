@@ -45,6 +45,7 @@ class SeedExhaustive:
             base_url=base_url,
             token=token,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
         self.inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
@@ -86,6 +87,7 @@ class AsyncSeedExhaustive:
             base_url=base_url,
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
+            timeout=timeout,
         )
         self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
         self.inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
