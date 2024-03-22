@@ -11,7 +11,7 @@ export async function publishPackage({
     typescriptProject,
     shouldTolerateRepublish
 }: {
-    generatorNotificationService: GeneratorNotificationService | undefined;
+    generatorNotificationService: GeneratorNotificationService;
     logger: Logger;
     npmPackage: NpmPackage | undefined;
     dryRun: boolean;
