@@ -40,7 +40,7 @@
     "@fern-fern/generator-exec-sdk": "0.0.687",
     "@fern-fern/ir-sdk": "^32",
     "lodash-es": "^4.17.21",
-    "zod": "^3.22.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

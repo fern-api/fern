@@ -44,7 +44,7 @@
     "lodash-es": "^4.17.21",
     "tar": "^6.2.0",
     "tmp-promise": "^3.0.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
