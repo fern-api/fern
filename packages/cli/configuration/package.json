@@ -36,7 +36,7 @@
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
     "tinycolor2": "^1.6.0",
-    "zod": "^3.22.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

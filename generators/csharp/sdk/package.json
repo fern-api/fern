@@ -35,7 +35,7 @@
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/generator-exec-sdk": "0.0.687",
     "@fern-fern/ir-sdk": "0.0.3318",
-    "zod": "^3.22.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
