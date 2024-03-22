@@ -126,11 +126,11 @@ __pycache__/
 poetry.toml
 """,
         )
-        self._get_github_workflow(project, output_mode, write_unit_tests)
+        project.add_file(".github/workflows/ci.yml", self._get_github_workflow(output_mode, write_unit_tests))
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
-    def _get_github_workflow(self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool) -> None:
-        workflow_yaml = f"""name: Test SDK
+    def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+        workflow_yaml = f"""name: ci
 
 on: [push]
 jobs:
@@ -164,33 +164,18 @@ jobs:
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
-
-      - name: Install Fern
-        run: npm install -g fern-api
-
       - name: Test
-        run: |
-            {'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
+        run: {'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
 """
-        project.add_file(".github/workflows/tests.yml", workflow_yaml)
-
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
             if publish_info_union.type != "pypi":
                 raise RuntimeError("Publish info is for " + publish_info_union.type)
 
-            workflow_yaml = f"""name: Publish SDK
-
-# Only trigger, when the test workflow succeeds
-on:
-workflow_run:
-    workflows: ["Test SDK"]
-    types:
-    - completed
-
-jobs:
+            workflow_yaml += f"""
   publish:
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event.workflow_run.conclusion == 'success'
+    needs: [compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
@@ -212,7 +197,7 @@ jobs:
           {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
           {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
 """
-            project.add_file(".github/workflows/ci.yml", workflow_yaml)
+        return workflow_yaml
 
     def _get_client_test(self) -> str:
         return """import pytest
