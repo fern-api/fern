@@ -125,8 +125,6 @@ func (c *ContainerValue) Accept(visitor ContainerValueVisitor) error {
 	}
 }
 
-type FieldName = string
-
 type FieldValue struct {
 	Type           string
 	PrimitiveValue PrimitiveValue
@@ -232,19 +230,6 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	case "container_value":
 		return visitor.VisitContainerValue(f.ContainerValue)
 	}
-}
-
-// This type allows us to test a circular reference with a union type (see FieldValue).
-type ObjectFieldValue struct {
-	Name  FieldName   `json:"name" url:"name"`
-	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`
-}
-
-func (o *ObjectFieldValue) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
 }
 
 type ObjectValue struct {
