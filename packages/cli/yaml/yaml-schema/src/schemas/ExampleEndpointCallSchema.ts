@@ -14,3 +14,7 @@ export const ExampleEndpointCallSchema = WithNameAndDocsSchema.extend({
 });
 
 export type ExampleEndpointCallSchema = z.infer<typeof ExampleEndpointCallSchema>;
+
+export const ExampleEndpointCallArraySchema = z.array(ExampleEndpointCallSchema);
+
+export type ExampleEndpointCallArraySchema = z.infer<typeof ExampleEndpointCallArraySchema>;

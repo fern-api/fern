@@ -1,10 +1,9 @@
 import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
-import { z } from "zod";
 import { getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { XCodeSampleSchema } from "../schemas/XCodeSampleSchema";
+import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
 import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -12,11 +11,11 @@ export function getExamplesFromExtension(
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
-    const exampleEndpointCalls: RawSchemas.ExampleEndpointCallSchema[] =
+    const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
         getExtensionAndValidate(
             operationObject,
             FernOpenAPIExtension.EXAMPLES,
-            z.array(RawSchemas.ExampleEndpointCallSchema),
+            RawSchemas.ExampleEndpointCallArraySchema,
             context
         ) ?? [];
 
@@ -69,22 +68,25 @@ export function getExamplesFromExtension(
     );
 
     const redoclyCodeSamplesKebabCase =
-        getExtensionAndValidate<XCodeSampleSchema[]>(
+        getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB,
-            z.array(XCodeSampleSchema),
+            RedoclyCodeSampleArraySchema,
             context
         ) ?? [];
 
     const redoclyCodeSamplesCamelCase =
-        getExtensionAndValidate<XCodeSampleSchema[]>(
+        getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
-            z.array(XCodeSampleSchema),
+            RedoclyCodeSampleArraySchema,
             context
         ) ?? [];
 
-    const redoclyCodeSamples: XCodeSampleSchema[] = [...redoclyCodeSamplesCamelCase, ...redoclyCodeSamplesKebabCase];
+    const redoclyCodeSamples: RedoclyCodeSampleSchema[] = [
+        ...redoclyCodeSamplesCamelCase,
+        ...redoclyCodeSamplesKebabCase
+    ];
 
     if (redoclyCodeSamples.length > 0) {
         fernExamples.push({
