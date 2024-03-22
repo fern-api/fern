@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.8] - 2024-03-22
 
-- Improvement: Remove cli dependency on generator-exec-sdk and use shared logic for generator config parsing and cli debug logging.
+- Internal: Shared generator notification and config parsing logic.
 
 ## [0.0.7] - 2024-02-15
 

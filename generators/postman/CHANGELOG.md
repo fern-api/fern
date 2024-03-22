@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1] - 2024-03-22
 
-- Improvment: Refactor generator notification and config parsing logic to a shared utility, and remove the dependency on the generator-exec-sdk.
+- Internal: Shared generator notification and config parsing logic.
 
 ## [0.1.0] - 2024-02-11
 - Fix: The Postman generator no longer times out on the latest CLI version. 
