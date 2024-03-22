@@ -2,6 +2,16 @@
 
 from . import a, ast
 from .a import A
-from .ast import ContainerValue, FieldValue, ObjectValue, PrimitiveValue
+from .ast import ContainerValue, FieldName, FieldValue, ObjectFieldValue, ObjectValue, PrimitiveValue
 
-__all__ = ["A", "ContainerValue", "FieldValue", "ObjectValue", "PrimitiveValue", "a", "ast"]
+__all__ = [
+    "A",
+    "ContainerValue",
+    "FieldName",
+    "FieldValue",
+    "ObjectFieldValue",
+    "ObjectValue",
+    "PrimitiveValue",
+    "a",
+    "ast",
+]

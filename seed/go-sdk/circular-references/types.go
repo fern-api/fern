@@ -179,6 +179,8 @@ func (c *ContainerValue) Accept(visitor ContainerValueVisitor) error {
 	}
 }
 
+type FieldName = string
+
 type FieldValue struct {
 	Type           string
 	PrimitiveValue PrimitiveValue
@@ -284,6 +286,36 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	case "container_value":
 		return visitor.VisitContainerValue(f.ContainerValue)
 	}
+}
+
+type ObjectFieldValue struct {
+	Name  FieldName   `json:"name" url:"name"`
+	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectFieldValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectFieldValue(value)
+	o._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectFieldValue) String() string {
+	if len(o._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(o._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }
 
 type ObjectValue struct {

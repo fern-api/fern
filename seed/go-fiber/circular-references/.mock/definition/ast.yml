@@ -1,9 +1,4 @@
 types:
-  FieldValue:
-    union:
-      primitive_value: PrimitiveValue
-      object_value: ObjectValue
-      container_value: ContainerValue
   ContainerValue:
     union:
       list: list<FieldValue>
@@ -14,3 +9,14 @@ types:
       - NUMBER
   ObjectValue:
     properties: {}
+  FieldName: string
+  FieldValue:
+    union:
+      primitive_value: PrimitiveValue
+      object_value: ObjectValue
+      container_value: ContainerValue
+  ObjectFieldValue:
+    properties:
+      name: FieldName
+      value: FieldValue
+

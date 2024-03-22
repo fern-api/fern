@@ -2800,6 +2800,9 @@ exports[`generate IR 2`] = `
       "type_ast:ContainerValue",
       "type_ast:PrimitiveValue",
       "type_ast:ObjectValue",
+      "type_ast:SimpleTreeNode",
+      "type_ast:FieldType",
+      "type_ast:ObjectType",
     ],
     "typesReferencedOnlyByService": {},
   },
@@ -2954,6 +2957,9 @@ exports[`generate IR 2`] = `
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",
         "type_ast:ObjectValue",
+        "type_ast:SimpleTreeNode",
+        "type_ast:FieldType",
+        "type_ast:ObjectType",
       ],
       "webhooks": null,
       "websocket": null,
@@ -3624,6 +3630,346 @@ exports[`generate IR 2`] = `
         ],
       },
     },
+    "type_ast:FieldType": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+              "originalName": "ast",
+              "pascalCase": {
+                "safeName": "Ast",
+                "unsafeName": "Ast",
+              },
+              "screamingSnakeCase": {
+                "safeName": "AST",
+                "unsafeName": "AST",
+              },
+              "snakeCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+            "originalName": "ast",
+            "pascalCase": {
+              "safeName": "Ast",
+              "unsafeName": "Ast",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AST",
+              "unsafeName": "AST",
+            },
+            "snakeCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "fieldType",
+            "unsafeName": "fieldType",
+          },
+          "originalName": "FieldType",
+          "pascalCase": {
+            "safeName": "FieldType",
+            "unsafeName": "FieldType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FIELD_TYPE",
+            "unsafeName": "FIELD_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "field_type",
+            "unsafeName": "field_type",
+          },
+        },
+        "typeId": "type_ast:FieldType",
+      },
+      "referencedTypes": [
+        "type_ast:PrimitiveValue",
+        "type_ast:ObjectType",
+        "type_ast:FieldType",
+      ],
+      "shape": {
+        "_type": "union",
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "extends": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "primitive",
+                  "unsafeName": "primitive",
+                },
+                "originalName": "primitive",
+                "pascalCase": {
+                  "safeName": "Primitive",
+                  "unsafeName": "Primitive",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRIMITIVE",
+                  "unsafeName": "PRIMITIVE",
+                },
+                "snakeCase": {
+                  "safeName": "primitive",
+                  "unsafeName": "primitive",
+                },
+              },
+              "wireValue": "primitive",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "singleProperty",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                  "originalName": "value",
+                  "pascalCase": {
+                    "safeName": "Value",
+                    "unsafeName": "Value",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "VALUE",
+                    "unsafeName": "VALUE",
+                  },
+                  "snakeCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                },
+                "wireValue": "value",
+              },
+              "type": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                      "originalName": "ast",
+                      "pascalCase": {
+                        "safeName": "Ast",
+                        "unsafeName": "Ast",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "AST",
+                        "unsafeName": "AST",
+                      },
+                      "snakeCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "ast",
+                      "unsafeName": "ast",
+                    },
+                    "originalName": "ast",
+                    "pascalCase": {
+                      "safeName": "Ast",
+                      "unsafeName": "Ast",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "AST",
+                      "unsafeName": "AST",
+                    },
+                    "snakeCase": {
+                      "safeName": "ast",
+                      "unsafeName": "ast",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "primitiveValue",
+                    "unsafeName": "primitiveValue",
+                  },
+                  "originalName": "PrimitiveValue",
+                  "pascalCase": {
+                    "safeName": "PrimitiveValue",
+                    "unsafeName": "PrimitiveValue",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "PRIMITIVE_VALUE",
+                    "unsafeName": "PRIMITIVE_VALUE",
+                  },
+                  "snakeCase": {
+                    "safeName": "primitive_value",
+                    "unsafeName": "primitive_value",
+                  },
+                },
+                "typeId": "type_ast:PrimitiveValue",
+              },
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "object",
+                  "unsafeName": "object",
+                },
+                "originalName": "object",
+                "pascalCase": {
+                  "safeName": "Object",
+                  "unsafeName": "Object",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "OBJECT",
+                  "unsafeName": "OBJECT",
+                },
+                "snakeCase": {
+                  "safeName": "object",
+                  "unsafeName": "object",
+                },
+              },
+              "wireValue": "object",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "samePropertiesAsObject",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "ast",
+                      "unsafeName": "ast",
+                    },
+                    "originalName": "ast",
+                    "pascalCase": {
+                      "safeName": "Ast",
+                      "unsafeName": "Ast",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "AST",
+                      "unsafeName": "AST",
+                    },
+                    "snakeCase": {
+                      "safeName": "ast",
+                      "unsafeName": "ast",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "ast",
+                    "unsafeName": "ast",
+                  },
+                  "originalName": "ast",
+                  "pascalCase": {
+                    "safeName": "Ast",
+                    "unsafeName": "Ast",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "AST",
+                    "unsafeName": "AST",
+                  },
+                  "snakeCase": {
+                    "safeName": "ast",
+                    "unsafeName": "ast",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "objectType",
+                  "unsafeName": "objectType",
+                },
+                "originalName": "ObjectType",
+                "pascalCase": {
+                  "safeName": "ObjectType",
+                  "unsafeName": "ObjectType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "OBJECT_TYPE",
+                  "unsafeName": "OBJECT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "object_type",
+                  "unsafeName": "object_type",
+                },
+              },
+              "typeId": "type_ast:ObjectType",
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "unknown",
+                  "unsafeName": "unknown",
+                },
+                "originalName": "unknown",
+                "pascalCase": {
+                  "safeName": "Unknown",
+                  "unsafeName": "Unknown",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "UNKNOWN",
+                  "unsafeName": "UNKNOWN",
+                },
+                "snakeCase": {
+                  "safeName": "unknown",
+                  "unsafeName": "unknown",
+                },
+              },
+              "wireValue": "unknown",
+            },
+            "docs": "For conveying that a type is unknown.
+",
+            "shape": {
+              "_type": "noProperties",
+            },
+          },
+        ],
+      },
+    },
     "type_ast:FieldValue": {
       "availability": null,
       "docs": null,
@@ -4052,6 +4398,189 @@ exports[`generate IR 2`] = `
         ],
       },
     },
+    "type_ast:ObjectType": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+              "originalName": "ast",
+              "pascalCase": {
+                "safeName": "Ast",
+                "unsafeName": "Ast",
+              },
+              "screamingSnakeCase": {
+                "safeName": "AST",
+                "unsafeName": "AST",
+              },
+              "snakeCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+            "originalName": "ast",
+            "pascalCase": {
+              "safeName": "Ast",
+              "unsafeName": "Ast",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AST",
+              "unsafeName": "AST",
+            },
+            "snakeCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "objectType",
+            "unsafeName": "objectType",
+          },
+          "originalName": "ObjectType",
+          "pascalCase": {
+            "safeName": "ObjectType",
+            "unsafeName": "ObjectType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "OBJECT_TYPE",
+            "unsafeName": "OBJECT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "object_type",
+            "unsafeName": "object_type",
+          },
+        },
+        "typeId": "type_ast:ObjectType",
+      },
+      "referencedTypes": [
+        "type_ast:FieldType",
+        "type_ast:PrimitiveValue",
+        "type_ast:ObjectType",
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "fields",
+                  "unsafeName": "fields",
+                },
+                "originalName": "fields",
+                "pascalCase": {
+                  "safeName": "Fields",
+                  "unsafeName": "Fields",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FIELDS",
+                  "unsafeName": "FIELDS",
+                },
+                "snakeCase": {
+                  "safeName": "fields",
+                  "unsafeName": "fields",
+                },
+              },
+              "wireValue": "fields",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "map",
+                "keyType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+                "valueType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "ast",
+                          "unsafeName": "ast",
+                        },
+                        "originalName": "ast",
+                        "pascalCase": {
+                          "safeName": "Ast",
+                          "unsafeName": "Ast",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "AST",
+                          "unsafeName": "AST",
+                        },
+                        "snakeCase": {
+                          "safeName": "ast",
+                          "unsafeName": "ast",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                      "originalName": "ast",
+                      "pascalCase": {
+                        "safeName": "Ast",
+                        "unsafeName": "Ast",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "AST",
+                        "unsafeName": "AST",
+                      },
+                      "snakeCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "fieldType",
+                      "unsafeName": "fieldType",
+                    },
+                    "originalName": "FieldType",
+                    "pascalCase": {
+                      "safeName": "FieldType",
+                      "unsafeName": "FieldType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FIELD_TYPE",
+                      "unsafeName": "FIELD_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "field_type",
+                      "unsafeName": "field_type",
+                    },
+                  },
+                  "typeId": "type_ast:FieldType",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
     "type_ast:ObjectValue": {
       "availability": null,
       "docs": null,
@@ -4251,6 +4780,213 @@ exports[`generate IR 2`] = `
                 },
               },
               "wireValue": "NUMBER",
+            },
+          },
+        ],
+      },
+    },
+    "type_ast:SimpleTreeNode": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+              "originalName": "ast",
+              "pascalCase": {
+                "safeName": "Ast",
+                "unsafeName": "Ast",
+              },
+              "screamingSnakeCase": {
+                "safeName": "AST",
+                "unsafeName": "AST",
+              },
+              "snakeCase": {
+                "safeName": "ast",
+                "unsafeName": "ast",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+            "originalName": "ast",
+            "pascalCase": {
+              "safeName": "Ast",
+              "unsafeName": "Ast",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AST",
+              "unsafeName": "AST",
+            },
+            "snakeCase": {
+              "safeName": "ast",
+              "unsafeName": "ast",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "simpleTreeNode",
+            "unsafeName": "simpleTreeNode",
+          },
+          "originalName": "SimpleTreeNode",
+          "pascalCase": {
+            "safeName": "SimpleTreeNode",
+            "unsafeName": "SimpleTreeNode",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SIMPLE_TREE_NODE",
+            "unsafeName": "SIMPLE_TREE_NODE",
+          },
+          "snakeCase": {
+            "safeName": "simple_tree_node",
+            "unsafeName": "simple_tree_node",
+          },
+        },
+        "typeId": "type_ast:SimpleTreeNode",
+      },
+      "referencedTypes": [
+        "type_ast:SimpleTreeNode",
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "itemDescription",
+                  "unsafeName": "itemDescription",
+                },
+                "originalName": "item_description",
+                "pascalCase": {
+                  "safeName": "ItemDescription",
+                  "unsafeName": "ItemDescription",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ITEM_DESCRIPTION",
+                  "unsafeName": "ITEM_DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "item_description",
+                  "unsafeName": "item_description",
+                },
+              },
+              "wireValue": "item_description",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "children",
+                  "unsafeName": "children",
+                },
+                "originalName": "children",
+                "pascalCase": {
+                  "safeName": "Children",
+                  "unsafeName": "Children",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CHILDREN",
+                  "unsafeName": "CHILDREN",
+                },
+                "snakeCase": {
+                  "safeName": "children",
+                  "unsafeName": "children",
+                },
+              },
+              "wireValue": "children",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "list",
+                "list": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "ast",
+                          "unsafeName": "ast",
+                        },
+                        "originalName": "ast",
+                        "pascalCase": {
+                          "safeName": "Ast",
+                          "unsafeName": "Ast",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "AST",
+                          "unsafeName": "AST",
+                        },
+                        "snakeCase": {
+                          "safeName": "ast",
+                          "unsafeName": "ast",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                      "originalName": "ast",
+                      "pascalCase": {
+                        "safeName": "Ast",
+                        "unsafeName": "Ast",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "AST",
+                        "unsafeName": "AST",
+                      },
+                      "snakeCase": {
+                        "safeName": "ast",
+                        "unsafeName": "ast",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "simpleTreeNode",
+                      "unsafeName": "simpleTreeNode",
+                    },
+                    "originalName": "SimpleTreeNode",
+                    "pascalCase": {
+                      "safeName": "SimpleTreeNode",
+                      "unsafeName": "SimpleTreeNode",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SIMPLE_TREE_NODE",
+                      "unsafeName": "SIMPLE_TREE_NODE",
+                    },
+                    "snakeCase": {
+                      "safeName": "simple_tree_node",
+                      "unsafeName": "simple_tree_node",
+                    },
+                  },
+                  "typeId": "type_ast:SimpleTreeNode",
+                },
+              },
             },
           },
         ],

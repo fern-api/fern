@@ -26,40 +26,6 @@ components:
       properties: {}
       allOf:
         - $ref: '#/components/schemas/RootType'
-    FieldValue:
-      title: FieldValue
-      oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - primitive_value
-            value:
-              $ref: '#/components/schemas/PrimitiveValue'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - object_value
-            - $ref: '#/components/schemas/ObjectValue'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - container_value
-            value:
-              $ref: '#/components/schemas/ContainerValue'
-          required:
-            - type
     ContainerValue:
       title: ContainerValue
       oneOf:
@@ -96,4 +62,52 @@ components:
       title: ObjectValue
       type: object
       properties: {}
+    FieldName:
+      title: FieldName
+      type: string
+    FieldValue:
+      title: FieldValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - primitive_value
+            value:
+              $ref: '#/components/schemas/PrimitiveValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - object_value
+            - $ref: '#/components/schemas/ObjectValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - container_value
+            value:
+              $ref: '#/components/schemas/ContainerValue'
+          required:
+            - type
+    ObjectFieldValue:
+      title: ObjectFieldValue
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/FieldName'
+        value:
+          $ref: '#/components/schemas/FieldValue'
+      required:
+        - name
+        - value
   securitySchemes: {}
