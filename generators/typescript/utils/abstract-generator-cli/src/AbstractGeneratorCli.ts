@@ -1,14 +1,18 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    GeneratorNotificationService,
+    GeneratorExecParsing,
+    FernGeneratorExec,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { cp, rm } from "fs";
 import { readFile } from "fs/promises";
+import { parse } from "path";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -32,21 +36,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }
 
     public async run(pathToConfig: string): Promise<void> {
-        const configStr = await readFile(pathToConfig);
-        const rawConfig = JSON.parse(configStr.toString());
-        const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow(
-            {
-                ...rawConfig,
-                // in this version of the fiddle client, it requires unknown
-                // properties to be present
-                customConfig: rawConfig.customConfig ?? {}
-            },
-            {
-                unrecognizedObjectKeys: "passthrough"
-            }
-        );
-        const generatorNotificationService =
-            config.environment.type === "remote" ? new GeneratorNotificationServiceImpl(config.environment) : undefined;
+        const config = await parseGeneratorConfig(pathToConfig);
+        const generatorNotificationService = new GeneratorNotificationService(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
@@ -55,7 +46,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 CONSOLE_LOGGER.log(level, ...message);
 
                 // kick off log, but don't wait for it
-                generatorNotificationService?.bufferUpdate(
+                generatorNotificationService.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level]
@@ -68,7 +59,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 isPackagePrivate: this.isPackagePrivate(customConfig)
             });
 
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
                         npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined
@@ -170,7 +161,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.successful({
                         zipFilename: OUTPUT_ZIP_FILENAME
@@ -180,7 +171,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // eslint-disable-next-line no-console
             console.log("Sent success event to coordinator");
         } catch (e) {
-            await generatorNotificationService?.sendUpdate(
+            await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error"

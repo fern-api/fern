@@ -1,4 +1,4 @@
-import { GeneratorConfig, GithubOutputMode } from "@fern-fern/generator-exec-sdk/api";
+import { GeneratorConfig, GithubOutputMode } from "@fern-api/generator-commons";
 import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";

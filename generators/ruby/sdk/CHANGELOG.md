@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.3] - 2024-03-22
+
+- Internal: Shared generator notification and config parsing logic.
+
 ## [0.3.2] - 2024-03-18
 
 - Improvement: type bytes requests to also take in IO types, indicating to users that they may pass in a stream of bytes
