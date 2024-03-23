@@ -15,9 +15,9 @@ To explicitly set the SDK method you can leverage the extensions:
 - `x-fern-sdk-group-name` which groups SDK methods together
 - `x-fern-sdk-method-name` which is used as the method name in the SDK
 
-The OpenAPI below will `client.users.create()`:
+The OpenAPI below will generate `client.users.create()`:
 
-```yaml openapi.yaml
+```yaml title="openapi.yaml"
 paths:
   /users:
     post:
@@ -28,7 +28,7 @@ paths:
 If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the root.
 For example, the following OpenAPI will generate `client.create_user()`:
 
-```yaml openapi.yaml
+```yaml title="openapi.yaml"
 paths:
   /users:
     post:
@@ -46,7 +46,7 @@ Note that this configuration is optional, and even when provided `name` or `env`
 
 For bearer authentication:
 
-```yaml openapi.yaml
+```yaml title="openapi.yaml"
 components:
   securitySchemes:
     BearerAuth:
@@ -69,7 +69,7 @@ class Client:
 
 Similarly, for basic authentication the configuration is:
 
-```yaml openapi.yaml
+```yaml title="openapi.yaml"
 components:
   securitySchemes:
     BasicAuth:
@@ -86,7 +86,7 @@ components:
 
 And for a custom auth header configuration:
 
-```yaml openapi.yaml
+```yaml title="openapi.yaml"
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -99,9 +99,8 @@ components:
 ```
 
 ## Global headers
-At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs
-expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to
-plug theirs in easily:
+At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to plug theirs in easily:
+
 ```python
 import os
 
@@ -110,10 +109,10 @@ class Client:
   def __init__(self, *, apiKey: str)
 ```
 
-To configure global headers, Fern will automatically pull out headers that are used in every request, or the majority of requests and mark them as global.
+To configure global headers, Fern will automatically pull out headers that are used in every request, or the majority of requests, and mark them as global.
 In order to label additional headers as global, or to alias the names of global headers, you can leverage the `x-fern-global-headers` extension:
 
-```yaml
+```yaml title="openapi.yml"
 x-fern-global-headers:
   - header: custom_api_key
     name: api_key
@@ -139,7 +138,7 @@ extension.
 In the example below, we've added some descriptions to enum values. These descriptions will
 propagate into the generated SDK and docs website.
 
-```yaml openapi.yml
+```yaml title="openapi.yml" {9-13}
 components:
   schemas:
     CardSuit:
@@ -148,7 +147,7 @@ components:
         - diamonds
         - hearts
         - spades
-      x-fern-enum: # <----
+      x-fern-enum:
         clubs:
           description: Some docs about clubs
         spades:
@@ -161,7 +160,7 @@ generated code not to compile.
 
 For example, the following OpenAPI
 
-```yaml openapi.yml
+```yaml title="openapi.yml" {9,12}
 components:
   schemas:
     Operand:
@@ -179,7 +178,7 @@ components:
 
 would generate
 
-```typescript operand.ts
+```typescript title="operand.ts"
 export enum Operand {
   GreaterThan = ">",
   LessThan = "<",
@@ -190,7 +189,7 @@ export enum Operand {
 
 OpenAPI allows you to define inlined schemas that do not have names.
 
-```yaml openapi.yml
+```yaml title="Inline type in openapi.yml" {11}
 components:
   schemas:
     Movie:
@@ -201,7 +200,7 @@ components:
         cast:
           type: array
           items:
-            type: object # <---- Inline Type
+            type: object
             properties:
               firstName:
                 type: string
@@ -214,13 +213,13 @@ components:
 Fern automatically generates names for all the inlined schemas. For example, in this example,
 Fern would generate the name `CastItem` for the inlined array item schema.
 
-```typescript
+```typescript title="Auto-generated name" {6}
 export interface Movie {
     name?: string;
     cast?: CastItem[]
 }
 
-export interface CastItem  { # <----- Auto-generated name
+export interface CastItem  {
     firstName?: string;
     lastName?: string;
     age?: integer;
@@ -229,7 +228,7 @@ export interface CastItem  { # <----- Auto-generated name
 
 If you want to override the generated name, you can use the extension `x-fern-type-name`.
 
-```yaml openapi.yml
+```yaml title="openapi.yml" {12}
 components:
   schemas:
     Movie:
@@ -241,7 +240,7 @@ components:
           type: array
           items:
             type: object
-            x-fern-type-name: Person # <----
+            x-fern-type-name: Person
             properties:
               firstName:
                 type: string
@@ -253,13 +252,13 @@ components:
 
 This would replace `CastItem` with `Person` and the generated code would read more idiomatically:
 
-```typescript
+```typescript title="Overridden name" {6}
 export interface Movie {
     name?: string;
     cast?: Person[]
 }
 
-export interface Person  { # <---- Overridden name
+export interface Person  {
     firstName?: string;
     lastName?: string;
     age?: integer;
@@ -274,8 +273,7 @@ parameters.
 For example, if you have a header `X-API-Version`, you may want the parameter
 in code to be called `version`.
 
-<CodeBlock title="openapi.yml">
-```yaml
+```yaml title="Specify the parameter name in openapi.yml" {8}
 paths:
   "/user":
     get:
@@ -283,39 +281,34 @@ paths:
       parameters:
         - in: header
           name: X-API-Version
-          x-fern-parameter-name: version # <---- specify the parameter name
+          x-fern-parameter-name: version
           schema:
             type: string
           required: true
       ...
 ```
-</CodeBlock>
 
 ## Server names
 
 The `x-fern-server-name` extension is used to name your servers.
 
-<CodeBlock title="openapi.yml">
-```yaml
+```yaml title="openapi.yml"
 servers:
 - url: https://api.example.com
   x-fern-server-name: Production
 - url: https://sandbox.example.com
   x-fern-server-name: Sandbox
 ```
-</CodeBlock>
 
 In a generated TypeScript SDK, you'd see:
 
-<CodeBlock title="environment.ts">
-```yaml
+```typescript title="environment.ts"
 export const ExampleEnvironment = {
     Production: "https://api.example.com",
 } as const;
 
 export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ```
-</CodeBlock>
 
 ## Audiences
 
@@ -324,12 +317,11 @@ so that you can filter your SDKs and Docs as you would like in Fern.
 
 In the example below, we have marked the `POST /users` endpoint with the `public` audience.
 
-<CodeBlock title="openapi.yml">
-```yaml
+```yaml title="Mark a public audience in openapi.yml" {4-5}
 paths:
   /users:
     post:
-      x-fern-audiences: # <---- mark with the public audience
+      x-fern-audiences:
         - public
       operationId: users_create
       ...
@@ -338,44 +330,39 @@ paths:
       operationId: projects_create
       ...
 ```
-</CodeBlock>
 
 ### Audiences with SDKs
 
 To filter to the public audience when generating code, update your `generators.yml` configuration to include:
 
-<CodeBlock title="generators.yml">
-```yaml
+```yaml title="Filter to the public audience in generators.yml" {3-4}
 groups:
   sdks:
-    audiences: # <---- the generators will now be filtered to the public audience
+    audiences:
       - public
     generators:
       - name: fernapi/fern-tyepscript-node-sdk
         version: 0.8.8
         ...
 ```
-</CodeBlock>
 
 ### Audiences with Docs
 
-If generating Fern Docs, you'll need to update your `docs.yml` configuration to include:
+If generating Fern Docs, update your `docs.yml` configuration to include:
 
-<CodeBlock title="docs.yml">
-```yaml
+```yaml title="Filter the API Reference to the public audience in docs.yml" {3-4}
 navigation:
   - api: API Reference
-    audiences: # <---- the API Reference will now be filtered to the public audience
+    audiences:
       - public
 ```
-</CodeBlock>
 
 ## Streaming
 
 The `x-fern-streaming` extension is used to specify that an endpoint's response is streamed.
-Simply include the `x-fern-streaming` extension within your endpoint like so:
+Include the `x-fern-streaming` extension within your endpoint like so:
 
-```yaml openapi.yml
+```yaml title="x-fern-streaming in openapi.yml" {4}
 paths:
   /logs:
     post:
@@ -409,7 +396,7 @@ components:
 If you want to generate both a non-streaming and streaming SDK method variant for the same endpoint,
 you can use the extended `x-fern-streaming` syntax:
 
-```yaml openapi.yml
+```yaml title="Extended x-fern-streaming syntax in openapi.yml" {4-9}
 paths:
   /logs:
     post:
@@ -460,27 +447,25 @@ variant.
 
 ## Ignoring schemas or endpoints
 
-If you want Fern to skip reading any endpoint or schemas, you can use the
-`x-fern-ignore` extension.
+If you want Fern to skip reading any endpoints or schemas, use the `x-fern-ignore` extension.
 
-To skip an endpoint, you must add `x-fern-ignore: true` at the operation
-level.
+To skip an endpoint, add `x-fern-ignore: true` at the operation level.
 
-```yaml openapi.yml
+```yaml title="x-fern-ignore at operation level in openapi.yml" {4}
 paths:
   /users:
     get:
-      x-fern-ignore: true # <-----------
+      x-fern-ignore: true
       ...
 ```
 
-To skip a schema, you msut add `x-fern-ignore: true` at the schema level.
+To skip a schema, add `x-fern-ignore: true` at the schema level.
 
-```yaml openapi.yml
+```yaml title="x-fern-ignore at schema level in openapi.yml" {4}
 components:
   schemas:
     SchemaToSkip:
-      x-fern-ignore: true # <-----------
+      x-fern-ignore: true 
       ...
 ```
 
@@ -495,13 +480,12 @@ Below is an example of how someone can overlay the extensions `x-fern-sdk-method
 shown in the third tab.
 
 <CodeBlocks>
-    <CodeBlock title="openapi.yml">
-    ```yaml
+    ```yaml title="openapi.yml" {5}
     openapi: 3.0.0
     info:
       title: User API
       version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml # <---------
+    x-fern-overrides-filepath: overrides.yml
     paths:
       /users:
         get:
@@ -513,25 +497,21 @@ shown in the third tab.
             '500':
               description: Internal Server Error
     ```
-    </CodeBlock>
 
-    <CodeBlock title="overrides.yml">
-    ```yaml
+    ```yaml title="overrides.yml"
     paths:
       /users:
         get:
           x-fern-sdk-group-name: users
           x-fern-sdk-method-name: get
     ```
-    </CodeBlock>
 
-    <CodeBlock title="Overlayed OpenAPI">
-    ```yaml
+    ```yaml title="Overlayed OpenAPI" {4-5}
     paths:
       /users:
         get:
-          x-fern-sdk-group-name: users # <---------------
-          x-fern-sdk-method-name: get  # <---------------
+          x-fern-sdk-group-name: users
+          x-fern-sdk-method-name: get
           summary: Get a list of users
           description: Retrieve a list of users from the system.
           responses:
@@ -540,7 +520,6 @@ shown in the third tab.
             '500':
               description: Internal Server Error
     ```
-    </CodeBlock>
 </CodeBlocks>
 
 ## Request + response examples
@@ -552,18 +531,19 @@ you want to show more than one example in your documentation.
 `x-fern-examples` is an array of examples. Each element of the array
 can contain `path-parameters`, `query-parameters`, `request` and `response`
 examples values that are all associated.
-```yaml openapi.yml
+
+```yaml title="openapi.yml" {5-16}
 paths:
   /users/{userId}:
     get:
       x-fern-examples:
-        - path-parameters: # <----- Example 1
+        - path-parameters:
             userId: user-1234
           response:
             body:
               name: Foo
               ssn: 1234
-        - path-parameters: # <----- Example 2
+        - path-parameters: 
             userId: user-4567
           response:
             body:
@@ -582,10 +562,9 @@ components:
 
 ### Code samples
 
-If you'd like to specify custom code samples for your example,
-use `code-samples`.
+If you'd like to specify custom code samples for your example, use `code-samples`.
 
-```yaml openapi.yml
+```yaml title="openapi.yml" {11-16}
 paths:
   /users/{userId}:
     get:
@@ -596,7 +575,7 @@ paths:
             body:
               name: Foo
               ssn: 1234
-          code-samples: # <----------- Add your code samples here
+          code-samples:
             - sdk: typescript
               code: |
                 import { UserClient } from "...";
@@ -606,7 +585,7 @@ paths:
 
 If you're on the Fern Starter plan or higher for SDKs you won't have to worry about manually adding code samples! Our generators do that for you.
 
-### Availability
+## Availability
 
 The `x-fern-availability` extension is used to mark the availability of an endpoint. The availability information propagates into the generated Fern Docs website as visual tags.
 
@@ -617,15 +596,12 @@ The options are:
 
 The example below marks that the `POST /pet` endpoint is `deprecated`.
 
-<CodeBlock title="openapi.yml">
-```yaml
+```yaml title="x-fern-availability in openapi.yml" {4}
 paths:
   /pet:
     post:
-      x-fern-availability: deprecated <----
-      ...
+      x-fern-availability: deprecated
 ```
-</CodeBlock>
 
 ### Request new extensions
 

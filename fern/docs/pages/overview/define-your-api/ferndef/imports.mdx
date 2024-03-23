@@ -5,15 +5,12 @@ description: Use imports to reference API types and errors from other Fern Defin
 
 Imports allow you to reference types and errors from other files.
 
-<CodeBlock title="persion.yml">
-```yaml
+```yaml title="person.yml"
 types:
   Person: ...
 ```
-</CodeBlock>
 
-<CodeBlock title="family.yml">
-```yaml
+```yaml title="family.yml"
 imports:
   person: ./path/to/person.yml
 types:
@@ -21,6 +18,5 @@ types:
     properties:
       people: list<person.Person> # use an imported type
 ```
-</CodeBlock>
 
 Note that you can only import files that exist in your Fern Definition (i.e., in the same `definition/` folder).
