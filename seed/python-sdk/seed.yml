@@ -72,3 +72,4 @@ allowedFailures:
   - exhaustive:union-utils
   - exhaustive:additional_init_exports
   - trace
+  - circular-references-advanced
