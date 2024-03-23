@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import {
     EndpointExample,
@@ -13,6 +13,7 @@ import {
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
+import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
 import { hasIncompleteExample } from "../hasIncompleteExample";
 
@@ -28,9 +29,13 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
+        if (endpoint.path === "/multipart/complete") {
+            // eslint-disable-next-line no-console
+            console.log("HEY");
+        }
         this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
 
-        const requestSchemaIdResponse = getRequestSchema(endpoint.request);
+        const requestSchemaIdResponse = getRequestSchema(endpoint.request, this.logger);
         const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
         if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
@@ -185,14 +190,56 @@ type SchemaIdResponse =
     | { type: "present"; schema: SchemaWithExample; example: NamedFullExample | undefined }
     | { type: "unsupported" };
 
-function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
+function getRequestSchema(
+    request: RequestWithExample | null | undefined,
+    logger: Logger
+): SchemaIdResponse | undefined {
     if (request == null) {
         return undefined;
     }
-    if (request.type !== "json") {
-        return { type: "unsupported" };
+
+    if (request.type === "multipart") {
+        return {
+            type: "present",
+            schema: SchemaWithExample.object({
+                properties: request.properties
+                    .map((property) => {
+                        if (property.schema.type === "file") {
+                            // TODO: Support file properties in multipart requests
+                            logger.warn(
+                                "Generated examples for file properties are not supported in multipart requests"
+                            );
+                            return undefined;
+                        }
+                        return {
+                            key: property.key,
+                            // Convert the schema to a schema with example to ensure that the example is generated
+                            // This is a workaround for the fact that the example is not getting parsed upstream
+                            // TODO: Fix the example parsing upstream
+                            schema: convertSchemaToSchemaWithExample(property.schema.value),
+                            audiences: [],
+                            conflict: {},
+                            generatedName: property.key
+                        };
+                    })
+                    .filter(isNonNullish),
+                allOf: [],
+                allOfPropertyConflicts: [],
+                fullExamples: undefined,
+                description: request.description,
+                nameOverride: undefined,
+                generatedName: "",
+                groupName: undefined
+            }),
+            example: undefined
+        };
     }
-    return { type: "present", schema: request.schema, example: request.fullExamples?.[0] ?? undefined };
+
+    if (request.type === "json") {
+        return { type: "present", schema: request.schema, example: request.fullExamples?.[0] ?? undefined };
+    }
+
+    return { type: "unsupported" };
 }
 
 function getResponseSchema(response: ResponseWithExample | null | undefined): SchemaIdResponse | undefined {

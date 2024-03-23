@@ -124,15 +124,16 @@ export function generateIr({
     );
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
-        // if x-fern-examples is not present, generate an example
+        // if no examples are provided, generate one
+        // if all examples are incomplete, fill in the incomplete ones
         let examples = endpointWithExample.examples;
         if (!disableExamples && (examples.length === 0 || examples.every(hasIncompleteExample))) {
-            const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
-            if (endpointExample != null) {
+            const generatedExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+            if (generatedExample != null) {
                 examples = [
-                    endpointExample,
-                    // Remove incomplete examples
-                    ...endpointWithExample.examples.filter((example) => !hasIncompleteExample(example))
+                    generatedExample,
+                    // Fill in incomplete examples (this is undesired behavior, but we need to support it for now)
+                    ...endpointWithExample.examples.map((example) => ({ ...generatedExample, ...example }))
                 ];
             }
         }
