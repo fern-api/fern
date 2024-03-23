@@ -3,6 +3,7 @@ import { Logger } from "@fern-api/logger";
 import {
     EndpointExample,
     EndpointWithExample,
+    FernOpenapiIr,
     FullExample,
     HeaderExample,
     NamedFullExample,
@@ -29,21 +30,13 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
-        if (endpoint.path === "/multipart/complete") {
-            // eslint-disable-next-line no-console
-            console.log("HEY");
-        }
         this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
 
-        const requestSchemaIdResponse = getRequestSchema(endpoint.request, this.logger);
+        const requestSchemaIdResponse = getRequestSchema(endpoint.request);
         const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
-        if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
-            return undefined;
-        }
-
         let requestExample = undefined;
-        if (requestSchemaIdResponse != null) {
+        if (requestSchemaIdResponse != null && requestSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(requestSchemaIdResponse.schema);
             requestExample = this.exampleTypeFactory.buildExample({
                 schema: requestSchemaIdResponse.schema,
@@ -59,7 +52,7 @@ export class ExampleEndpointFactory {
         }
 
         let responseExample = undefined;
-        if (responseSchemaIdResponse != null) {
+        if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
             responseExample = this.exampleTypeFactory.buildExample({
                 schema: responseSchemaIdResponse.schema,
@@ -150,9 +143,13 @@ export class ExampleEndpointFactory {
             }
         }
 
-        let exampleName = requestSchemaIdResponse?.example?.name;
-        if (exampleName == null && requestSchemaIdResponse?.schema != null) {
-            exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
+        let exampleName = undefined;
+
+        if (requestSchemaIdResponse?.type === "present") {
+            requestSchemaIdResponse?.example?.name;
+            if (exampleName == null && requestSchemaIdResponse?.schema != null) {
+                exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
+            }
         }
 
         // Get all the code samples from incomplete examples
@@ -190,10 +187,7 @@ type SchemaIdResponse =
     | { type: "present"; schema: SchemaWithExample; example: NamedFullExample | undefined }
     | { type: "unsupported" };
 
-function getRequestSchema(
-    request: RequestWithExample | null | undefined,
-    logger: Logger
-): SchemaIdResponse | undefined {
+function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
         return undefined;
     }
@@ -201,36 +195,7 @@ function getRequestSchema(
     if (request.type === "multipart") {
         return {
             type: "present",
-            schema: SchemaWithExample.object({
-                properties: request.properties
-                    .map((property) => {
-                        if (property.schema.type === "file") {
-                            // TODO: Support file properties in multipart requests
-                            logger.warn(
-                                "Generated examples for file properties are not supported in multipart requests"
-                            );
-                            return undefined;
-                        }
-                        return {
-                            key: property.key,
-                            // Convert the schema to a schema with example to ensure that the example is generated
-                            // This is a workaround for the fact that the example is not getting parsed upstream
-                            // TODO: Fix the example parsing upstream
-                            schema: convertSchemaToSchemaWithExample(property.schema.value),
-                            audiences: [],
-                            conflict: {},
-                            generatedName: property.key
-                        };
-                    })
-                    .filter(isNonNullish),
-                allOf: [],
-                allOfPropertyConflicts: [],
-                fullExamples: undefined,
-                description: request.description,
-                nameOverride: undefined,
-                generatedName: "",
-                groupName: undefined
-            }),
+            schema: convertMultipartRequestToSchema(request),
             example: undefined
         };
     }
@@ -304,4 +269,68 @@ export function getNameFromSchemaWithExample(schema: SchemaWithExample): string 
         default:
             assertNever(schema);
     }
+}
+function convertMultipartRequestToSchema(request: RequestWithExample.Multipart): FernOpenapiIr.SchemaWithExample {
+    return SchemaWithExample.object({
+        properties: request.properties
+            .map((property) => {
+                if (property.schema.type === "file") {
+                    // TODO: Support file properties in multipart requests
+                    const innerSchema = SchemaWithExample.primitive({
+                        schema: FernOpenapiIr.PrimitiveSchemaValueWithExample.string({
+                            minLength: undefined,
+                            maxLength: undefined,
+                            example: undefined
+                        }),
+                        description: property.description,
+                        nameOverride: undefined,
+                        generatedName: "",
+                        groupName: undefined
+                    });
+                    const maybeArraySchema = property.schema.isArray
+                        ? SchemaWithExample.array({
+                              value: innerSchema,
+                              groupName: undefined,
+                              nameOverride: undefined,
+                              generatedName: "",
+                              description: undefined
+                          })
+                        : innerSchema;
+                    const maybeOptionalSchema = property.schema.isOptional
+                        ? SchemaWithExample.optional({
+                              value: maybeArraySchema,
+                              groupName: undefined,
+                              nameOverride: undefined,
+                              generatedName: "",
+                              description: undefined
+                          })
+                        : maybeArraySchema;
+                    return {
+                        key: property.key,
+                        schema: maybeOptionalSchema,
+                        audiences: [],
+                        conflict: {},
+                        generatedName: property.key
+                    };
+                }
+                return {
+                    key: property.key,
+                    // Convert the schema to a schema with example to ensure that the example is generated
+                    // This is a workaround for the fact that the example is not getting parsed upstream
+                    // TODO: Fix the example parsing upstream
+                    schema: convertSchemaToSchemaWithExample(property.schema.value),
+                    audiences: [],
+                    conflict: {},
+                    generatedName: property.key
+                };
+            })
+            .filter(isNonNullish),
+        allOf: [],
+        allOfPropertyConflicts: [],
+        fullExamples: undefined,
+        description: request.description,
+        nameOverride: undefined,
+        generatedName: "",
+        groupName: undefined
+    });
 }

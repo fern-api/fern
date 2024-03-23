@@ -127,14 +127,27 @@ export function generateIr({
         // if no examples are provided, generate one
         // if all examples are incomplete, fill in the incomplete ones
         let examples = endpointWithExample.examples;
-        if (!disableExamples && (examples.length === 0 || examples.every(hasIncompleteExample))) {
+        if (!disableExamples) {
             const generatedExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (generatedExample != null) {
-                examples = [
-                    generatedExample,
+                if (examples.length === 0) {
+                    examples.push(generatedExample);
+                } else {
                     // Fill in incomplete examples (this is undesired behavior, but we need to support it for now)
-                    ...endpointWithExample.examples.map((example) => ({ ...generatedExample, ...example }))
-                ];
+                    examples = endpointWithExample.examples.map((example) => {
+                        if (hasIncompleteExample(example)) {
+                            return {
+                                ...example,
+                                request: example.request ?? generatedExample.request,
+                                response: example.response ?? generatedExample.response,
+                                queryParameters: example.queryParameters ?? generatedExample.queryParameters,
+                                pathParameters: example.pathParameters ?? generatedExample.pathParameters,
+                                headers: example.headers ?? generatedExample.headers
+                            };
+                        }
+                        return example;
+                    });
+                }
             }
         }
 

@@ -393,7 +393,8 @@ function getRequest({
                 headers,
                 body: {
                     properties
-                }
+                },
+                "content-type": "multipart/form-data"
             }
         };
     }
