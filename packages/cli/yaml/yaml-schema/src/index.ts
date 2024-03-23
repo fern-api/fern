@@ -6,6 +6,10 @@ export {
     type TypeDeclarationName
 } from "./ast/DefinitionFileAstVisitor";
 export {
+    type GeneratorsYmlFileAstNodeTypes,
+    type GeneratorsYmlFileAstNodeVisitor
+} from "./ast/GeneratorsYmlAstVisitor";
+export {
     type PackageMarkerAstNodeTypes,
     type PackageMarkerAstNodeVisitor,
     type PackageMarkerAstVisitor

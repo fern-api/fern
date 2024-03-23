@@ -3,5 +3,4 @@ export { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles";
 export { getAllPackageMarkers } from "./getAllPackageMarkers";
 export { getDefinitionFile } from "./getDefinitionFile";
 export { visitAllDefinitionFiles } from "./visitAllDefinitionFiles";
-export { visitAllGeneratorFiles } from "./visitAllGeneratorFiles";
 export { visitAllPackageMarkers } from "./visitAllPackageMarkers";

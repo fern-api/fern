@@ -5,6 +5,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
     DefinitionFileAstNodeTypes,
     DefinitionFileSchema,
+    GeneratorsYmlFileAstNodeTypes,
     PackageMarkerAstNodeTypes,
     PackageMarkerFileSchema,
     RootApiFileAstNodeTypes,
@@ -26,10 +27,7 @@ export interface RuleVisitors {
     rootApiFile?: RuleVisitor<RootApiFileAstNodeTypes, RootApiFileSchema>;
     definitionFile?: RuleVisitor<DefinitionFileAstNodeTypes, DefinitionFileSchema>;
     packageMarker?: RuleVisitor<PackageMarkerAstNodeTypes, PackageMarkerFileSchema>;
-    generatorFile?: RuleVisitor<
-        generatorsYml.GeneratorsConfigurationSchema,
-        generatorsYml.GeneratorsConfigurationSchema
-    >;
+    generatorsYml?: RuleVisitor<GeneratorsYmlFileAstNodeTypes, generatorsYml.GeneratorsConfigurationSchema>;
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {

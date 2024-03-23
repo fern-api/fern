@@ -1,28 +1,49 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { NodePath, NodePathItem } from "@fern-api/yaml-schema";
 import { Rule } from "../../Rule";
 import { ValidationViolation } from "../../ValidationViolation";
 
-export const ImportFileExistsRule: Rule = {
+interface Package {
+    data: PackageContents;
+    subpackages: Record<string, Package>;
+}
+
+interface PackageContents {
+    // websocket
+    channel: boolean;
+    // rest
+    endpoints: string[];
+    // webhooks
+    webhooks: string[];
+}
+
+export const ValidGeneratorsYmlNavigationRule: Rule = {
     name: "import-file-exists",
     create: ({ workspace }) => {
-        const relativePaths = Object.keys(getAllDefinitionFiles(workspace.definition));
+        const definitionFiles = Object.keys(getAllDefinitionFiles(workspace.definition));
+        const package: Package = {
+            data: {
+                messages: [],
+                endpoints: [],
+                webhooks: []
+            },
+            subpackages: {}
+        };
+        for (const [_, file] of Object.entries(getAllDefinitionFiles(workspace.definition))) {
+            const packageContents: PackageContents = {
+                channel: file.contents.channel ?? false,
+                endpoints: Object.keys(file.contents.service?.endpoints ?? {}),
+                webhooks: Object.keys(file.contents.webhooks ?? {}),
+            };
 
-        const absolutePaths = new Set<string>();
-        relativePaths.forEach((relativeFilepath) => {
-            const absolutePath = join(workspace.definition.absoluteFilepath, RelativeFilePath.of(relativeFilepath));
-            absolutePaths.add(absolutePath);
-        });
-
+        }
         return {
-            generatorFile: {
-                api: async (api, { relativeFilepath }) => {
-                    if (generatorsYml.isAPIDefinitionListWithNavigation(api)) {
-                        validateIrNavigation(ir, api.navigation, relativeFilepath, ["api"]);
-                    }
+            generatorsYml: {
+                file: async (generatorsYmlFile) => {
+                    return [];
                 }
             }
         };

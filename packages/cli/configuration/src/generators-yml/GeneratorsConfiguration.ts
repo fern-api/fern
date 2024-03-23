@@ -11,7 +11,6 @@ export interface GeneratorsConfiguration {
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
-    relativePathToConfiguration: RelativeFilePath;
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 
