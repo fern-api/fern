@@ -1,7 +1,7 @@
-import { assertNever, isNonNullish, WithoutQuestionMarks } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, isPlainObject, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
-import { startCase } from "lodash-es";
+import { noop, startCase } from "lodash-es";
 import { convertTypeReference } from "./convertTypeShape";
 
 export function convertPackage(
@@ -95,7 +95,7 @@ function convertService(
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples
                 .filter((example) => example.exampleType === "userProvided")
-                .map((example) => convertHttpEndpointExample(example, ir))
+                .map((example) => convertHttpEndpointExample(example, irEndpoint, ir))
         })
     );
 }
@@ -509,6 +509,7 @@ function convertResponseErrorsV2(
 
 function convertHttpEndpointExample(
     irExample: Ir.http.HttpEndpointExample,
+    irEndpoint: Ir.http.HttpEndpoint,
     ir: Ir.ir.IntermediateRepresentation
 ): WithoutQuestionMarks<APIV1Write.ExampleEndpointCall> {
     return {
@@ -535,7 +536,48 @@ function convertHttpEndpointExample(
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,
-        requestBodyV3: irExample.request != null ? { type: "json", value: irExample.request.jsonExample } : undefined,
+        requestBodyV3: irEndpoint.requestBody?._visit<APIV1Write.ExampleEndpointRequest | undefined>({
+            inlinedRequestBody: () =>
+                irExample.request != null ? { type: "json", value: irExample.request.jsonExample } : undefined,
+            reference: () =>
+                irExample.request != null ? { type: "json", value: irExample.request.jsonExample } : undefined,
+            fileUpload: (fileUploadSchema) => {
+                if (irExample.request == null) {
+                    return undefined;
+                }
+
+                const value: Record<string, APIV1Write.FormValue> = {};
+
+                if (isPlainObject(irExample.request.jsonExample)) {
+                    const fullExample = irExample.request.jsonExample;
+                    for (const property of fileUploadSchema.properties) {
+                        property._visit({
+                            file: (file) => {
+                                // TODO: support provided file examples, file arrays
+                                if (!file.isOptional) {
+                                    value[file.key.wireValue] = {
+                                        type: "filename",
+                                        value: "filename.xyz"
+                                    };
+                                }
+                            },
+                            bodyProperty: (bodyProperty) => {
+                                value[bodyProperty.name.wireValue] = {
+                                    type: "json",
+                                    value: fullExample[bodyProperty.name.wireValue]
+                                };
+                            },
+                            _other: noop
+                        });
+                    }
+                }
+
+                return { type: "form", value };
+            },
+            // TODO: support bytes
+            bytes: () => undefined,
+            _other: () => undefined
+        }),
         responseStatusCode: Ir.http.ExampleResponse._visit(irExample.response, {
             ok: ({ body }) => (body != null ? 200 : 204),
             error: ({ error: errorName }) => {
