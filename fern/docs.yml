@@ -205,6 +205,7 @@ navigation:
           - page: Use a Fern Definition
             slug: ferndef
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
+
       - section: Configuration
         slug: config
         contents:
@@ -225,6 +226,12 @@ navigation:
                 path: ./docs/pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain
                 path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
+
+      - section: Publish
+        contents:
+          - page: Publish updates with GitHub Actions
+            path: ./docs/pages/fern-docs/publish/github-actions.mdx
+            slug: github-actions
 
       - section: Write content
         slug: content

@@ -1,0 +1,164 @@
+---
+title: Update your docs with GitHub Actions
+desc: Use Fern's CI/CD pipeline with GitHub Actions to validate and publish your site whenever you push your docs updates to GitHub.
+---
+
+Use Fern's CI/CD pipeline with GitHub Actions to validate and publish your site whenever you push your docs updates to GitHub.
+
+## Requirements
+
+- Complete either of our Docs Quickstarts:
+<Cards>
+  <Card
+    title='Quickstart with OpenAPI'
+    icon='book'
+    href='/learn/docs/quickstarts/openapi'
+  />
+  <Card
+    title='Quickstart with Fern Definition'
+    icon='book'
+    href='/learn/docs/quickstarts/ferndef'
+  />
+</Cards>
+
+## Overview of Fern's GitHub Actions
+
+The `docs-starter` repository that you cloned has a `.github/workflows/` folder at its root. The `.workflows/` folder contains three GitHub Actions files:
+
+```yml title="fern-docs"
+├─  .github/workflows/
+  ├─ check.yml
+  ├─ preview-docs.yml
+  └─ publish-docs.yml
+├─ fern/
+└─ README.md
+```
+
+- The `check.yml` workflow runs [`fern check`](/learn/overview/cli/commands/fern-check) whenever a pull request is created or updates are pushed to the `main` branch. `fern check` validates your API definition and documentation and outputs warnings and errors.
+- The `preview-docs.yml` workflow runs [`fern generate --docs --preview`](/learn/overview/cli/commands/fern-generate#preview) whenever a pull request (PR) is created. It generates a preview site containing the updates and displays the preview URL in the PR.
+- The `publish-docs.yml` workflow runs [`fern generate --docs`](/learn/overview/cli/commands/fern-generate#for-documentation) whenever updates are pushed to the `main` branch. This is the same Fern CLI command you used to publish your starter site in one of the Quickstarts.
+
+We recommend that you use these GitHub Actions to automate publishing updates. Instead of running `fern generate --docs` manually, push your updates to GitHub and let Fern's GitHub Actions validate, preview, and publish the updates for you. Learn how to set up your repository for their use in the steps below.
+
+## Steps
+
+<Steps>
+
+### Step 1: Set up your repository with a Fern token
+
+From within your local `fern/` repository, run:
+
+```shell title="Fern CLI"
+fern token 
+```
+
+The output from this command contains a string called a Fern Token that begins with `fern_`. It is an access token unique to the GitHub account you used to login to the Fern CLI. Copy your token to a secure location. 
+
+### Step 2: Add your Fern token to your remote repository
+
+In your browser, open the **Settings** tab for the GitHub repository you created from the `docs-starter-openapi` or `docs-starter-fern-definition` template. It is the rightmost tab at the top of the repository page.
+
+Under the **Security** section of the sidebar, click **Secrets and variables**, then **Actions**:
+
+<img src="https://fern-image-hosting.s3.amazonaws.com/fern/secrets-actions.png" alt="Screenshot of GitHub repository Settings page sidebar with menu option Actions highlighted" width="50%" />
+
+Scroll down to the **Repository Secrets** section in the main panel, then click **New repository secret**.
+
+![Screenshot of GitHub page with a form for adding a new secret. The Name field contains the text FERN_TOKEN and the Secret field contains a blurred string. At the bottom is an 'Add secret' button.](https://fern-image-hosting.s3.amazonaws.com/fern/add-fern-token.png)
+
+For the **Name** of the secret, enter `FERN_TOKEN`.
+
+In the **Secret** field, paste in the Fern token that you created in Step 1. 
+
+Finally, click **Add secret**:
+
+### Step 3: Push the changes you made in the Quickstart to GitHub
+
+You can use Fern's GitHub Actions to publish updates to your docs site in two ways:
+1. Push directly to the `main` branch. The `check` and `publish-docs` workflows validate your changes and update your production site.
+2. Create and push a new branch, then submit a PR for the new branch. The `check` and `preview-docs` workflows validate your changes and create a preview site. If everything looks good, the PR can be merged, which results in a push to the `main` branch. This triggers the `publish-docs` workflow, which updates your production site. 
+
+This step demonstrates the first of these ways, and the remaining steps demonstrates the second.
+
+In the Quickstart, you made changes to `docs.yml` and `fern.config.json` on the `main` branch. From your local cloned repository, commit and push those changes with the following command:
+
+```shell title="CLI"
+git add . && git commit -m "update site config" && git push
+```
+
+This adds, commits, and pushes your updates directly to the `main` branch of your GitHub repository.
+
+On the webpage for that repository, click the **Actions** tab across the top. In this tab, you should see two workflow runs for **update site config**, for **fern-check** and **publish-docs**. You might need to wait for them to finish running. Once your pushed updates are successfully checked and published, you will see a green check next to each run, like this:
+
+<img src="https://fern-image-hosting.s3.amazonaws.com/fern/update-site-config.png" alt="Screenshot of the text 'update site config' with a check mark next to it indicating a successful workflow run" width="50%" />
+
+### Step 4: Create a new git branch for updates
+
+In the previous step, you pushed updates made to the `main` branch. In practice, we recommend that you use the second method of creating a new git branch for all updates. The new branch is then pushed to GitHub, then a pull request is submitted for that branch to be reviewed and merged. Let's walk through this scenario.
+
+To begin, create and switch to a new git branch named `update-docs-example`:
+
+```shell title="CLI"
+git switch -c update-docs-example
+```
+
+### Step 5: Make an example update
+
+<Tabs>
+  <Tab title="If you used the Docs Quickstart with OpenAPI">
+    Open the `openapi/openapi.yml` file in your local repository and make a small update. For example, update the text for the `addPet` endpoint's `summary`:
+
+    ```yaml title="Example update in openapi.yml" {6}
+    paths:
+      /pet:
+        post:
+          tags:
+            - pet
+          summary: Add new pet
+    ```
+  </Tab>
+  <Tab title="If you used the Docs Quickstart with Fern Definition">
+    Open the `definition/pet.yml` file in your local repository and make a small update. For example, update the text for the `add` endpoint's `display-name`:
+
+    ```yaml title="Example update in pet.yml" {3}
+      endpoints:
+        add:
+          display-name: Add new pet
+    ```
+  </Tab>
+</Tabs>
+
+### Step 6: Push the updated branch
+
+<Tip title="Tip">
+If you want to preview your updates _before_ pushing them to GitHub, run `fern generate --docs --preview` manually.
+</Tip>
+
+Run the following CLI command:
+```shell title="CLI"
+git add . && git commit -m 'update pet API definition' && git push -u origin update-docs-example
+```
+
+This adds, commits, and pushes the `update-docs-example` branch to your GitHub repository.
+
+### Step 7: Submit PR and verify the update
+
+Go to the **Code** tab on the GitHub page for your repository. Click the **Compare & pull request** button at the top. On the **Open a pull request** page, you can scroll down to view the changes in the PR.
+
+Click the button to **Create pull request**. The GitHub Actions `check` and `preview-docs` run automatically. Once the `preview-docs` workflow successfully completes, a preview URL is generated to the PR's page.
+
+Click the preview URL and view the **API Reference** for **Pet** to verify that the update was made. Look for **Add new pet** in the sidebar.
+
+### Step 8: Merge the PR
+
+Return to the PR's page. Click the **Merge pull request** button located near the bottom of the page, then click **Confirm merge**. This publishes the update to the production site. 
+
+<Note title="Note">
+In practice, typically a team member other than the one who submitted the PR reviews and merges the PR, as part of an approval process.
+</Note>
+
+</Steps>
+
+## Support
+
+Need help? Email us at [support@buildwithfern.com](mailto:support@buildwithfern.com) or join our [Discord community](https://discord.com/invite/JkkXumPzcG).
