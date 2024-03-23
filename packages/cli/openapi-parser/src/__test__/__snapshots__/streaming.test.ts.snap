@@ -11,7 +11,29 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "UserStreamRequest",
       "headers": [],
       "internal": null,
@@ -228,7 +250,29 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "UserV2StreamRequest",
       "headers": [],
       "internal": null,
@@ -459,7 +503,29 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "UserV3StreamRequest",
       "headers": [],
       "internal": null,

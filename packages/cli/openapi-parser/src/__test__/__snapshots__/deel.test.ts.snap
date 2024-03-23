@@ -5692,7 +5692,55 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "contract_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "filename": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "filename",
+                    },
+                  },
+                  "key": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AddContractDocumentRequest",
       "headers": [],
       "internal": null,
@@ -5770,7 +5818,55 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "contract_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "filename": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "filename",
+                    },
+                  },
+                  "key": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EditContractDocumentRequest",
       "headers": [],
       "internal": null,

@@ -146,7 +146,7 @@ export class ExampleEndpointFactory {
         let exampleName = undefined;
 
         if (requestSchemaIdResponse?.type === "present") {
-            requestSchemaIdResponse?.example?.name;
+            exampleName = requestSchemaIdResponse?.example?.name;
             if (exampleName == null && requestSchemaIdResponse?.schema != null) {
                 exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
             }

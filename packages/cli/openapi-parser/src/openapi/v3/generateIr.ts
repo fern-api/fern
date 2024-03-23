@@ -124,30 +124,16 @@ export function generateIr({
     );
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
-        // if no examples are provided, generate one
-        // if all examples are incomplete, fill in the incomplete ones
+        // if x-fern-examples is not present, generate an example
         let examples = endpointWithExample.examples;
-        if (!disableExamples) {
-            const generatedExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
-            if (generatedExample != null) {
-                if (examples.length === 0) {
-                    examples.push(generatedExample);
-                } else {
-                    // Fill in incomplete examples (this is undesired behavior, but we need to support it for now)
-                    examples = endpointWithExample.examples.map((example) => {
-                        if (hasIncompleteExample(example)) {
-                            return {
-                                ...example,
-                                request: example.request ?? generatedExample.request,
-                                response: example.response ?? generatedExample.response,
-                                queryParameters: example.queryParameters ?? generatedExample.queryParameters,
-                                pathParameters: example.pathParameters ?? generatedExample.pathParameters,
-                                headers: example.headers ?? generatedExample.headers
-                            };
-                        }
-                        return example;
-                    });
-                }
+        if (!disableExamples && (examples.length === 0 || examples.every(hasIncompleteExample))) {
+            const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+            if (endpointExample != null) {
+                examples = [
+                    endpointExample,
+                    // Remove incomplete examples (codesamples are included in generated examples)
+                    ...endpointWithExample.examples.filter((example) => !hasIncompleteExample(example))
+                ];
             }
         }
 
