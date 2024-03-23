@@ -73,7 +73,7 @@ See TypeScript Node.js SDK Configuration options: [noSerdeLayer](/sdks/sdk-gener
 
 See TypeScript Node.js SDK Configuration options: [outputSourceFiles](/sdks/sdk-generators/typescript#outputsourcefiles).
 
-### `areImplementationsOptional`
+### `optionalImplementations`
 
 **Type:** boolean
 **Default:** `false`
@@ -81,7 +81,7 @@ See TypeScript Node.js SDK Configuration options: [outputSourceFiles](/sdks/sdk-
 By default, the generated `register()` will require an implementatiion for every
 service defined in your Fern Definition.
 
-If `areImplementationsOptional` is enabled, then `register()` won't require any
+If `optionalImplementations` is enabled, then `register()` won't require any
 implementations. Note that this is mildly dangerous: if you forget to include
 an implementation, then your server behavior may drift from your docs and clients.
 
