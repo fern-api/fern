@@ -59,24 +59,24 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
-                "generatedName": "GetExampleResponseZero",
+                "generatedName": "NotFound",
                 "groupName": null,
                 "nameOverride": null,
                 "properties": [
                   {
                     "audiences": [],
                     "conflict": {},
-                    "generatedName": "getExampleResponseZeroMessage",
+                    "generatedName": "notFoundMessage",
                     "key": "message",
                     "schema": {
                       "description": null,
-                      "generatedName": "getExampleResponseZeroMessage",
+                      "generatedName": "notFoundMessage",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "description": null,
-                        "generatedName": "GetExampleResponseZeroMessage",
+                        "generatedName": "NotFoundMessage",
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {

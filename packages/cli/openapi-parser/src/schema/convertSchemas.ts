@@ -53,7 +53,7 @@ export function convertSchema(
             context.resolveSchemaReference(schema),
             wrapAsNullable,
             context,
-            breadcrumbs, // update: getBreadcrumbFromReference(schema),
+            getBreadcrumbsFromReference(schema),
             propertiesToExclude,
             referencedAsRequest
         );
@@ -638,8 +638,33 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
 }
 
 export function getBreadcrumbsFromReference(ref: OpenAPIV3.ReferenceObject): string[] {
-    // unimplmemented
-    return [];
+    let breadcrumbs: string[] = ref.$ref
+        .replace(SCHEMA_REFERENCE_PREFIX, "")
+        .replace(SCHEMA_INLINE_REFERENCE_PREFIX, "")
+        .split("/")
+        .map((breadcrumb) => breadcrumb.replace(/~1/g, "/"));
+
+    // Remove "properties" from breadcrumbs if it's present after the first element
+    let propertiesIndex = breadcrumbs.indexOf("properties");
+    while (propertiesIndex !== -1 && propertiesIndex < breadcrumbs.length - 1) {
+        breadcrumbs.splice(propertiesIndex, 1); // Remove "properties" element
+        propertiesIndex = breadcrumbs.indexOf("properties");
+    }
+
+    // Remove "content" and "application/json" from breadcrumbs if they are present
+    if (breadcrumbs[1] === "content" && breadcrumbs[2] === "application/json") {
+        breadcrumbs.splice(1, 2);
+    }
+
+    // Remove "schema" from the end of breadcrumbs if it's present
+    if (breadcrumbs[breadcrumbs.length - 1] === "schema") {
+        breadcrumbs.pop();
+    }
+
+    // Filter out any empty strings
+    breadcrumbs = breadcrumbs.filter((breadcrumb) => breadcrumb !== "");
+
+    return breadcrumbs;
 }
 
 export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
