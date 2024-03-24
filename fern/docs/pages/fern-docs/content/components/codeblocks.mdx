@@ -1,26 +1,21 @@
 ---
-title: Display code snippets using CodeBlocks
-description: The CodeBlock component displays a code snippet, with an optional title and language. Use the CodeBlocks component to show multiple snippets in a tabbed view.
+title: Display code in tabs with CodeBlocks
+description: Use the CodeBlocks component to show multiple code snippets in a tabbed view.
 ---
 
-The `CodeBlocks` component is used when you want to display a code snippet along with a title in a tabbed view.
+The `CodeBlocks` component is used to display multiple code snippets in a tabbed view. It does not take any props.
 
-Within the `CodeBlocks` component, only use [Markdown fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) along with optional [syntax highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting). Please refer to Fern's [Code snippets](/docs/content/code-snippets) guide for a full list of highlighting features.
+Within the `CodeBlocks` component, use [Markdown fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) along with a title and optional [syntax highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting). Please refer to Fern's [Code snippets](/docs/content/code-snippets) guide for a full list of highlighting features.
 
-<Tip>
-  If you do not provide a `title` prop for a code block that is inside a `CodeBlocks` component, it will display as
-  `Untitled`. In practice, you should always add a `title` to all fenced code blocks when used within `CodeBlocks`.
-</Tip>
+<Note>
+The `CodeBlock` component (singular) is deprecated in favor of using Markdown fenced code blocks. The `CodeBlock` component was previously used to add a title to a fenced code block, but Fern now supports setting the title directly on the code block instead. If you used `CodeBlock` in your docs before, it will continue to work, but we recommend that you phase out its use.
+</Note>
 
 ## Usage
 
-Create a tabbed view containing multiple `CodeBlock` components with the `CodeBlocks` component.
-
-<Note>
-  The `CodeBlocks` component does not take any props. For `CodeBlock` components inside a `CodeBlocks` component, be
-  sure to set their `title` props to give descriptive titles to the tabs. Otherwise, the tabs by default display
-  `Untitled`.
-</Note>
+<Warning>
+  For fenced code blocks inside a `CodeBlocks` component, be sure to set their `title` to give descriptive titles to the tabs. Otherwise, the tabs by default display `Untitled`.
+</Warning>
 
 Example:
 
