@@ -113,7 +113,7 @@ For example, we're adding support for asynchronous / bi-directional protocols
 ## Quality of code generation
 
 We built Fern from first principles to ensure that **we always generate
-idimoatic code.** There are a number of [footguns](https://en.wiktionary.org/wiki/footgun) in OpenAPI: if you use them,
+idiomatic code.** There are a number of [footguns](https://en.wiktionary.org/wiki/footgun) in OpenAPI: if you use them,
 it's impossible to generate high-quality code. Here are examples:
 
 - Using inline (anonymous) types in an OpenAPI spec makes it impossible to generate idiomatic
@@ -137,7 +137,7 @@ Beyond the format, we've built Fern based on best practices in compiling. This i
 - **Producing an intermediate representation** so that different generators don't
   have to implement duplicative logic. Beyond saving time, this reduces errors and
   increases consistency among outputs.
-- **Using AST representations,** rather than templates, to enable more complex and
+- **Using abstract syntax tree (AST) representations ** rather than templates, to enable more complex and
   idiomatic code generation.
 
 ## Focus on server-side API development
