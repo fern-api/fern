@@ -35,7 +35,7 @@ exports[`open api parser inline-schema-reference simple 1`] = `
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "GetExampleResponseZero",
+          "NotFound",
           "Schema1",
           "Schema2",
           "GetExampleResponseMessage",
@@ -47,7 +47,7 @@ exports[`open api parser inline-schema-reference simple 1`] = `
           "message": "optional<string>",
         },
       },
-      "GetExampleResponseZero": {
+      "NotFound": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
