@@ -38,12 +38,25 @@ export function convertSchema(
     propertiesToExclude: Set<string> = new Set()
 ): SchemaWithExample {
     if (isReferenceObject(schema)) {
-        if (!referencedAsRequest) {
-            context.markSchemaAsReferencedByNonRequest(getSchemaIdFromReference(schema));
-        } else {
-            context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
+        const schemaId = getSchemaIdFromReference(schema);
+        if (schemaId != null) {
+            if (!referencedAsRequest) {
+                context.markSchemaAsReferencedByNonRequest(schemaId);
+            } else {
+                context.markSchemaAsReferencedByRequest(schemaId);
+            }
+            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
         }
-        return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
+        // if the schema id is null, we should convert the entire schema and inline it
+        // in the OpenAPI IR
+        return convertSchemaObject(
+            context.resolveSchemaReference(schema),
+            wrapAsNullable,
+            context,
+            breadcrumbs, // update: getBreadcrumbFromReference(schema),
+            propertiesToExclude,
+            referencedAsRequest
+        );
     } else {
         return convertSchemaObject(
             schema,
@@ -617,15 +630,16 @@ export function convertSchemaObject(
     );
 }
 
-export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
-    if (ref.$ref.startsWith(SCHEMA_INLINE_REFERENCE_PREFIX)) {
-        return ref.$ref.replace(SCHEMA_INLINE_REFERENCE_PREFIX, "").split("/")[0] ?? "unknown";
-    }
-
+export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-        throw new Error(`Cannot get schema id from reference: ${ref.$ref}`);
+        return undefined;
     }
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
+}
+
+export function getBreadcrumbsFromReference(ref: OpenAPIV3.ReferenceObject): string[] {
+    // unimplmemented
+    return [];
 }
 
 export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
@@ -633,11 +647,17 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
     const generatedName = getGeneratedTypeName(breadcrumbs);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const description = (schema as any).description;
+
+    const schemaId = getSchemaIdFromReference(schema);
+    if (schemaId == null) {
+        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`);
+    }
+
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
-        schema: getSchemaIdFromReference(schema),
+        schema: schemaId,
         description: description ?? undefined,
         groupName: undefined
     });

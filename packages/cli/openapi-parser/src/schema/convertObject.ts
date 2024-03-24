@@ -11,7 +11,12 @@ import {
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
+import {
+    convertSchema,
+    convertToReferencedSchema,
+    getBreadcrumbsFromReference,
+    getSchemaIdFromReference
+} from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -94,6 +99,10 @@ export function convertObject({
             }
 
             const schemaId = getSchemaIdFromReference(allOfElement);
+            // HACK: when the allOf is a non schema refere, we can skip for now
+            if (schemaId == null) {
+                continue;
+            }
             parents.push({
                 schemaId,
                 convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
@@ -265,7 +274,7 @@ function getAllProperties({
 }): Record<string, SchemaWithExample> {
     let properties: Record<string, SchemaWithExample> = {};
     const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
-        ? [context.resolveSchemaReference(schema), [getSchemaIdFromReference(schema)]]
+        ? [context.resolveSchemaReference(schema), getBreadcrumbsFromReference(schema)]
         : [schema, breadcrumbs];
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {
