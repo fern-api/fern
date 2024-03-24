@@ -6,7 +6,7 @@ import {
     Schema,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
-import { isEqual } from "lodash-es";
+import { isEqual, uniqueId } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
@@ -617,6 +617,11 @@ export function convertSchemaObject(
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
+    if (ref.$ref.endsWith("/schema")) {
+        // Split the input string by '/' and then capitalize the first letter of each word
+        return ref.$ref;
+    }
+
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
         throw new Error(`Cannot get schema id from reference: ${ref.$ref}`);
     }

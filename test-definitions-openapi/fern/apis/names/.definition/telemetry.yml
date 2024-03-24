@@ -1,0 +1,37 @@
+imports:
+  telemetry: infra/telemetry.yml
+types:
+  TelemetryGetTelemetryDataResponse:
+    properties:
+      time:
+        docs: Time spent to process this request
+        type: optional<double>
+      status: optional<string>
+      result: optional<telemetry.TelemetryData>
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getTelemetryData:
+      path: /telemetry
+      method: GET
+      auth: false
+      display-name: Collect telemetry data
+      request:
+        name: TelemetryGetTelemetryDataRequest
+        query-parameters:
+          anonymize:
+            type: optional<boolean>
+            docs: If true, anonymize result
+      response:
+        docs: successful operation
+        type: TelemetryGetTelemetryDataResponse
+      examples:
+        - response:
+            body:
+              time: 1.1
+              status: status
+              result:
+                cpu: 1.1
+                memory: 1.1
+                network: 1.1
