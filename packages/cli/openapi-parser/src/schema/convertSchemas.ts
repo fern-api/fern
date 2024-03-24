@@ -27,6 +27,7 @@ import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
+export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -617,9 +618,8 @@ export function convertSchemaObject(
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
-    if (ref.$ref.endsWith("/schema")) {
-        // Split the input string by '/' and then capitalize the first letter of each word
-        return ref.$ref;
+    if (ref.$ref.startsWith(SCHEMA_INLINE_REFERENCE_PREFIX)) {
+        return ref.$ref.replace(SCHEMA_INLINE_REFERENCE_PREFIX, "").split("/")[0] ?? "unknown";
     }
 
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {

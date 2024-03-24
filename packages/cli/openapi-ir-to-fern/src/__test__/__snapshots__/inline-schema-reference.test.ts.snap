@@ -31,23 +31,23 @@ exports[`open api parser inline-schema-reference simple 1`] = `
       },
     },
     "types": {
-      "ComponentsResponsesNotFoundContentApplication1JsonSchema": {
-        "docs": undefined,
-        "properties": {
-          "message": "optional<string>",
-        },
-      },
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "ComponentsResponsesNotFoundContentApplication1JsonSchema",
+          "NotFound",
           "Schema1",
           "Schema2",
           "GetExampleResponseMessage",
         ],
       },
       "GetExampleResponseMessage": {
+        "docs": undefined,
+        "properties": {
+          "message": "optional<string>",
+        },
+      },
+      "NotFound": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",

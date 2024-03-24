@@ -2,7 +2,7 @@ import { Logger } from "@fern-api/logger";
 import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-import { SCHEMA_REFERENCE_PREFIX } from "../../schema/convertSchemas";
+import { SCHEMA_REFERENCE_PREFIX, getSchemaIdFromReference } from "../../schema/convertSchemas";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -56,76 +56,48 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         ) {
             throw new Error(`Failed to resolve ${schema.$ref}`);
         }
-        let schemaKey: string;
         let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined;
 
-        if (startsWithSchemaReferencePrefix) {
-            schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
-            const splitSchemaKey = schemaKey.split("/");
+        const schemaKey = schema.$ref.substring(2);
+        const parts = schemaKey.split("/");
+        let currentObject: any = this.document;
 
-            if (splitSchemaKey[0] == null) {
-                throw new Error(`${schema.$ref} is undefined`);
+        for (const part of parts) {
+            // Replace any escaped characters back to their original form
+            const key = part.replace(/~1/g, "/");
+
+            currentObject = currentObject[key];
+        }
+
+        resolvedSchema = currentObject;
+
+        if (resolvedSchema == null) {
+            throw new Error(`${schemaKey} is undefined`);
+        }
+
+        if (isReferenceObject(resolvedSchema)) {
+            resolvedSchema = this.resolveSchemaReference(resolvedSchema);
+        }
+
+        if (parts[1] === "properties" && parts[2] != null) {
+            const resolvedProperty = resolvedSchema.properties?.[parts[2]];
+            if (resolvedProperty == null) {
+                throw new Error(`${schema.$ref} is undefined. Property does not exist on object.`);
+            } else if (isReferenceObject(resolvedProperty)) {
+                resolvedSchema = this.resolveSchemaReference(resolvedProperty);
+            } else {
+                resolvedSchema = resolvedProperty;
             }
-            resolvedSchema = this.document.components.schemas[splitSchemaKey[0]];
-            if (resolvedSchema == null) {
-                throw new Error(`${splitSchemaKey[0]} is undefined`);
-            }
-            if (isReferenceObject(resolvedSchema)) {
-                resolvedSchema = this.resolveSchemaReference(resolvedSchema);
-            }
+        }
 
-            if (splitSchemaKey[1] === "properties" && splitSchemaKey[2] != null) {
-                const resolvedProperty = resolvedSchema.properties?.[splitSchemaKey[2]];
-                if (resolvedProperty == null) {
-                    throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
-                } else if (isReferenceObject(resolvedProperty)) {
-                    resolvedSchema = this.resolveSchemaReference(resolvedProperty);
-                } else {
-                    resolvedSchema = resolvedProperty;
-                }
-            }
-
-            return resolvedSchema;
-        } else {
-            schemaKey = schema.$ref.substring(2);
-            const parts = schemaKey.split("/");
-            let currentObject: any = this.document;
-
-            for (const part of parts) {
-                // Replace any escaped characters back to their original form
-                const key = part.replace(/~1/g, "/");
-
-                // Access the next nested property
-                currentObject = currentObject[key];
-            }
-
-            resolvedSchema = currentObject;
-
-            if (resolvedSchema == null) {
-                throw new Error(`${schemaKey} is undefined`);
-            }
-
-            if (isReferenceObject(resolvedSchema)) {
-                resolvedSchema = this.resolveSchemaReference(resolvedSchema);
-            }
-
-            if (parts[1] === "properties" && parts[2] != null) {
-                const resolvedProperty = resolvedSchema.properties?.[parts[2]];
-                if (resolvedProperty == null) {
-                    throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
-                } else if (isReferenceObject(resolvedProperty)) {
-                    resolvedSchema = this.resolveSchemaReference(resolvedProperty);
-                } else {
-                    resolvedSchema = resolvedProperty;
-                }
-            }
-
-            const schemaId = schema.$ref;
+        // if the schema is defined inline, we need to add it to components.schemas
+        if (endsWithSchemaSuffix) {
+            const schemaId = getSchemaIdFromReference(schema);
 
             this.document.components.schemas[schemaId] = resolvedSchema;
-
-            return resolvedSchema;
         }
+
+        return resolvedSchema;
     }
 
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject {
