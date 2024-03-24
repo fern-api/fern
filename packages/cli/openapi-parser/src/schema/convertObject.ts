@@ -14,13 +14,13 @@ import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import {
     convertSchema,
     convertToReferencedSchema,
-    getBreadcrumbsFromReference,
     getSchemaIdFromReference
 } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -274,7 +274,7 @@ function getAllProperties({
 }): Record<string, SchemaWithExample> {
     let properties: Record<string, SchemaWithExample> = {};
     const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
-        ? [context.resolveSchemaReference(schema), getBreadcrumbsFromReference(schema)]
+        ? [context.resolveSchemaReference(schema), getBreadcrumbsFromReference(schema.$ref)]
         : [schema, breadcrumbs];
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {
