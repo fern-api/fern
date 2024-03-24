@@ -6,7 +6,7 @@ import {
     Schema,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
-import { isEqual, uniqueId } from "lodash-es";
+import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
