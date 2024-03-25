@@ -333,42 +333,11 @@ types:
     union:
       inlinedRequestBody: ExampleInlinedRequestBody
       reference: types.ExampleTypeReference
-      multipart: ExampleMultipartRequestBody
 
   ExampleInlinedRequestBody:
     extends: commons.WithJsonExample
     properties:
       properties: list<ExampleInlinedRequestBodyProperty>
-  
-  ExampleMultipartRequestBody: 
-    properties:
-      properties: list<ExampleMultipartRequestBodyProperty>
-  ExampleMultipartRequestBodyProperty: 
-    union: 
-      file: ExampleMultipartFileProperty
-      bodyProperty: ExampleInlinedRequestBodyProperty
-  ExampleMultipartFileProperty:
-    union:
-      file: ExampleMultipartFilePropertySingle
-      fileArray: ExampleMultipartFilePropertyArray
-  ExampleMultipartFilePropertySingle:
-    properties:
-      key: commons.NameAndWireValue
-      isOptional: boolean
-      example: ExampleFile
-  ExampleMultipartFilePropertyArray:
-    properties:
-      key: commons.NameAndWireValue
-      isOptional: boolean
-      example: list<ExampleFile>
-  ExampleFile: 
-    properties: 
-      filename: string
-      absoluteFilepath: 
-        type: optional<string>
-        docs: | 
-          Used by IR -> FDR converter to send the docs a real example file. 
-          Can eventually be used by the mock server to store real file examples. 
 
   ExampleInlinedRequestBodyProperty:
     properties:
@@ -384,11 +353,10 @@ types:
     union:
       ok: ExampleEndpointSuccessResponse
       error: ExampleEndpointErrorResponse
-  
-  ExampleSuccessResponseBody:
-    union:
-      reference: optional<types.ExampleTypeReference>
-      file: ExampleMultipartRequestBody
+
+  ExampleEndpointSuccessResponse:
+    properties:
+      body: optional<types.ExampleTypeReference>
 
   ExampleEndpointErrorResponse:
     properties:
