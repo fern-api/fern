@@ -11,10 +11,12 @@ from .resources import (
     req_with_headers,
     types,
 )
+from .version import __version__
 
 __all__ = [
     "BadObjectRequestInfo",
     "BadRequestBody",
+    "__version__",
     "endpoints",
     "general_errors",
     "inlined_requests",

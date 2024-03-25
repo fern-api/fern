@@ -250,6 +250,7 @@ from .resources import (
     v_2,
 )
 from .environment import SeedTraceEnvironment
+from .version import __version__
 
 __all__ = [
     "ActualResult",
@@ -490,6 +491,7 @@ __all__ = [
     "WorkspaceSubmissionUpdateInfo_TracedV2",
     "WorkspaceSubmitRequest",
     "WorkspaceTracedUpdate",
+    "__version__",
     "admin",
     "commons",
     "homepage",
