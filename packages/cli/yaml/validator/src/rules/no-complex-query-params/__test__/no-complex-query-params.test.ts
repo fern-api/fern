@@ -61,12 +61,6 @@ describe("no-complex-query-params", () => {
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "r"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error"
-            },
-            {
-                message: "map<string, ObjectWithLiteral> is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "u"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
             }
         ]);
     });
