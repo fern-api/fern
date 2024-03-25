@@ -137,6 +137,7 @@ export function parseAsyncAPI({
 
             const tag = document.tags?.[0];
             parsedChannel = {
+                description: channel.description ?? undefined,
                 handshake: {
                     headers: headers.map((header) => {
                         return {
@@ -158,7 +159,6 @@ export function parseAsyncAPI({
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
                 summary: undefined,
                 path: channelPath,
-                description: undefined,
                 examples
             };
             break;
