@@ -6666,6 +6666,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
+            ["formdata-node", "npm:6.0.3"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["node-fetch", "npm:3.3.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -14669,6 +14670,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/form-data-encoder-npm-2.0.1-1eb15a5536-66a8dd84d7.zip/node_modules/form-data-encoder/",\
           "packageDependencies": [\
             ["form-data-encoder", "npm:2.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["formdata-node", [\
+        ["npm:6.0.3", {\
+          "packageLocation": "./.yarn/cache/formdata-node-npm-6.0.3-c432b83b2e-0c404dad51.zip/node_modules/formdata-node/",\
+          "packageDependencies": [\
+            ["formdata-node", "npm:6.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\

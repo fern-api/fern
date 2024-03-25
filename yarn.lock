@@ -4355,6 +4355,7 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: 4.0.0
+    formdata-node: ^6.0.3
     jest: ^29.7.0
     node-fetch: ^3.3.2
     organize-imports-cli: ^0.10.0
@@ -11263,6 +11264,13 @@ env-cmd@toddbluhm/env-cmd:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 10c1780fa13dbe1ff3100114c2ce1f9307f8be10b14bf16e103815356ff567b6be39d70fc4a40f8990b9660012dc24b0f5e1dde1b6426166eb23a445ba068ca3
+  languageName: node
+  linkType: hard
+
+"formdata-node@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "formdata-node@npm:6.0.3"
+  checksum: 0c404dad51aac1e570bef1c20b702da9f4facac9db889398d333ca92a7ae4ab8c005ad249e2df184870fe388aedfe28fc81e8a0aabda7295a19316c1fbaf7407
   languageName: node
   linkType: hard
 
