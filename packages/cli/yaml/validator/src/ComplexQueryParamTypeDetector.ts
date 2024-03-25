@@ -97,7 +97,7 @@ export class ComplexQueryParamTypeDetector {
                 if (type.keyType._type === "primitive" && type.valueType._type !== "container") {
                     return false;
                 }
-                
+
                 return (
                     this.isResolvedReferenceComplex({
                         type: type.keyType,
