@@ -22,6 +22,10 @@ export function buildChannel({
         auth: false
     };
 
+    if (channel.description != null) {  
+        convertedChannel.docs = channel.description;
+    }
+
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     if (channel.handshake.queryParameters.length > 0) {
         for (const queryParameter of channel.handshake.queryParameters) {

@@ -18,6 +18,7 @@ export interface Message {
 }
 
 export interface Channel {
+    description?: string;
     address?: string;
     bindings?: Bindings;
     publish?: PublishEvent;
