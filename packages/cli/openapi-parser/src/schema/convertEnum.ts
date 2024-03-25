@@ -37,8 +37,8 @@ export function convertEnum({
         const generatedName = valueIsValidName ? value : generateEnumNameFromValue(value);
 
         if (nameOverride != null && !VALID_ENUM_NAME_REGEX.test(nameOverride)) {
+            context?.logger.warn(`Enum name override ${nameOverride} is not a valid name. Falling back on ${generatedName}.`);
             nameOverride = undefined;
-            context?.logger.warn("Enum name override {$nameOverride} is not a valid name. Falling back on {$generatedName}.");
         }
 
         return {
