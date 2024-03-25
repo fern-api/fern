@@ -2373,7 +2373,7 @@ __metadata:
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
-    "@types/tar": ^6.1.7
+    "@types/tar": ^6.1.11
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2394,7 +2394,7 @@ __metadata:
     ora: ^7.0.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tar: ^6.2.0
+    tar: ^6.2.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
@@ -3281,7 +3281,7 @@ __metadata:
     "@types/lodash-es": ^4.17.9
     "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
-    "@types/tar": ^6.1.7
+    "@types/tar": ^6.1.11
     "@types/terminal-link": ^1.2.0
     axios: ^0.28.0
     chalk: ^5.0.1
@@ -3296,7 +3296,7 @@ __metadata:
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tar: ^6.2.0
+    tar: ^6.2.1
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -3506,7 +3506,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
-    "@types/tar": ^6.1.7
+    "@types/tar": ^6.1.11
     axios: ^0.28.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -3517,7 +3517,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tar: ^6.2.0
+    tar: ^6.2.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     zod: ^3.22.3
@@ -6437,13 +6437,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tar@npm:^6.1.7":
-  version: 6.1.7
-  resolution: "@types/tar@npm:6.1.7"
+"@types/tar@npm:^6.1.11":
+  version: 6.1.11
+  resolution: "@types/tar@npm:6.1.11"
   dependencies:
     "@types/node": "*"
     minipass: ^4.0.0
-  checksum: 74a346c86eb9fd1d7849b675e019ec784accf2f4a2abedc607e5449809f5205db6c31a7c0e7ac34e1ae5beabc3d260dbf82d7829398791397b971a56de4028b9
+  checksum: 9b79f61f9179db65ecd3f5e9c0d2152839ad13381d39c38c3a9408aa1f3a2b061ba195e7d758be1863294a0ce69df6659f0e3e09f440c9f5309bded58bc87c89
   languageName: node
   linkType: hard
 
@@ -20262,9 +20262,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "tar@npm:6.2.0"
+"tar@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "tar@npm:6.2.1"
   dependencies:
     chownr: ^2.0.0
     fs-minipass: ^2.0.0
@@ -20272,7 +20272,7 @@ env-cmd@toddbluhm/env-cmd:
     minizlib: ^2.1.1
     mkdirp: ^1.0.3
     yallist: ^4.0.0
-  checksum: db4d9fe74a2082c3a5016630092c54c8375ff3b280186938cfd104f2e089c4fd9bad58688ef6be9cf186a889671bf355c7cda38f09bbf60604b281715ca57f5c
+  checksum: f1322768c9741a25356c11373bce918483f40fa9a25c69c59410c8a1247632487edef5fe76c5f12ac51a6356d2f1829e96d2bc34098668a2fc34d76050ac2b6c
   languageName: node
   linkType: hard
 
