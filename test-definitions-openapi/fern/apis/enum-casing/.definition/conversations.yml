@@ -1,0 +1,682 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /conversations.create
+      method: POST
+      auth: true
+      docs: Creates a conversation.
+      request:
+        name: ConversationsCreateRequest
+        body:
+          properties:
+            description:
+              docs: Description for the conversation.
+              type: optional<string>
+            group:
+              docs: The group that the conversation is associated with.
+              type: optional<string>
+            is_spam:
+              docs: Whether the conversation is spam.
+              type: optional<boolean>
+            members:
+              docs: The users in the conversation.
+              type: optional<list<string>>
+            messages:
+              docs: Initial messages on the conversation.
+              type: optional<list<root.ConversationsCreateRequestMessage>>
+            metadata: optional<root.ConversationsCreateRequestMetadata>
+            source_channel:
+              docs: Whether the conversation is from a source channel.
+              type: optional<string>
+            stage: optional<root.StageInit>
+            tags:
+              docs: Tags associated with the conversation.
+              type: optional<list<root.SetTagWithValue>>
+            title:
+              docs: The title for the conversation.
+              type: optional<string>
+            type: root.ConversationsCreateRequestTypeValue
+            user_sessions:
+              docs: |
+                The IDs of user sessions associated with the conversation.
+              type: optional<list<string>>
+      response:
+        docs: Success.
+        type: root.ConversationsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            tags:
+              - id: TAG-12345
+            type: support
+          response:
+            body:
+              conversation:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                description: description
+                group:
+                  display_id: display_id
+                  id: id
+                  name: name
+                members: []
+                metadata:
+                  url_context: url_context
+                stage:
+                  name: name
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+                title: title
+    delete:
+      path: /conversations.delete
+      method: POST
+      auth: true
+      docs: Deletes the requested conversation.
+      request:
+        name: ConversationsDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the conversation to delete.
+      response:
+        docs: Success.
+        type: root.ConversationsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              string:
+                key: value
+    export:
+      path: /conversations.export
+      method: GET
+      auth: true
+      docs: Exports a collection of conversation items.
+      request:
+        name: ConversationsExportQuery
+        query-parameters:
+          applies_to_parts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations belonging to any of the provided parts.
+          first:
+            type: optional<integer>
+            docs: >
+              The number of conversation items to return. The default is '50',
+              the
+
+              maximum is '5000'.
+          group:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversation that belong to the given groups.
+          is_creator_verified:
+            type: optional<boolean>
+            docs: |
+              Filters for conversations that are created by verified users.
+          is_spam:
+            type: optional<boolean>
+            docs: Filters for conversations that are spam.
+          members:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations where these users are participants.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversations owned by any of these users.
+          rev_org:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations that are associated with any of the
+              provided Rev organizations.
+          sla_summary.stage:
+            type: optional<root.SlaSummaryStage>
+            allow-multiple: true
+            docs: Filters for records with any of the provided SLA stages.
+          source_channels:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for conversations with any of the provided source
+              channels.
+          stage.name:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for records in the provided stage(s) by name.
+          tags:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversations with any of the provided tags.
+          tags_v2.id:
+            type: optional<string>
+            docs: The ID of the tag.
+          tags_v2.value:
+            type: optional<string>
+            docs: >
+              The value for the object's association with the tag. If specified,
+
+              the value must be one that's specified in the tag's allowed
+              values.
+      response:
+        docs: Success.
+        type: root.ConversationsExportResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            tags_v2.id: TAG-12345
+          response:
+            body:
+              conversations:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  group:
+                    id: id
+                  members: []
+                  stage:
+                    name: name
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+                  title: title
+    exportPost:
+      path: /conversations.export
+      method: POST
+      auth: true
+      docs: Exports a collection of conversation items.
+      request:
+        name: ConversationsExportRequest
+        body:
+          properties:
+            applies_to_parts:
+              docs: >
+                Filters for conversations belonging to any of the provided
+                parts.
+              type: optional<list<string>>
+            first:
+              docs: |
+                The number of conversation items to return. The default is '50',
+                the maximum is '5000'.
+              type: optional<integer>
+            group:
+              docs: |
+                Filters for conversation that belong to the given groups.
+              type: optional<list<string>>
+            is_creator_verified:
+              docs: |
+                Filters for conversations that are created by verified users.
+              type: optional<boolean>
+            is_spam:
+              docs: Filters for conversations that are spam.
+              type: optional<boolean>
+            members:
+              docs: |
+                Filters for conversations where these users are participants.
+              type: optional<list<string>>
+            owned_by:
+              docs: Filters for conversations owned by any of these users.
+              type: optional<list<string>>
+            rev_org:
+              docs: |
+                Filters for conversations that are associated with any of the
+                provided Rev organizations.
+              type: optional<list<string>>
+            sla_summary: optional<root.SlaSummaryFilter>
+            source_channels:
+              docs: >
+                Filters for conversations with any of the provided source
+                channels.
+              type: optional<list<string>>
+            stage: optional<root.StageFilter>
+            tags:
+              docs: Filters for conversations with any of the provided tags.
+              type: optional<list<string>>
+            tags_v2:
+              docs: >
+                Filters for conversations with any of the provided tags with
+                value.
+              type: optional<list<root.TagWithValueFilter>>
+      response:
+        docs: Success.
+        type: root.ConversationsExportResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              conversations:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  group:
+                    id: id
+                  members: []
+                  stage:
+                    name: name
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+                  title: title
+    get:
+      path: /conversations.get
+      method: GET
+      auth: true
+      docs: Gets the requested conversation's information.
+      request:
+        name: ConversationsGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The requested conversation's ID.
+      response:
+        docs: Success.
+        type: root.ConversationsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              conversation:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                description: description
+                group:
+                  display_id: display_id
+                  id: id
+                  name: name
+                members: []
+                metadata:
+                  url_context: url_context
+                stage:
+                  name: name
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+                title: title
+    getPost:
+      path: /conversations.get
+      method: POST
+      auth: true
+      docs: Gets the requested conversation's information.
+      request:
+        name: ConversationsGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The requested conversation's ID.
+      response:
+        docs: Success.
+        type: root.ConversationsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              conversation:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                description: description
+                group:
+                  display_id: display_id
+                  id: id
+                  name: name
+                members: []
+                metadata:
+                  url_context: url_context
+                stage:
+                  name: name
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+                title: title
+    list:
+      path: /conversations.list
+      method: GET
+      auth: true
+      docs: Lists the available conversations.
+      request:
+        name: ConversationsListQuery
+        query-parameters:
+          applies_to_parts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations belonging to any of the provided parts.
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          group:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversation that belong to the given groups.
+          is_creator_verified:
+            type: optional<boolean>
+            docs: |
+              Filters for conversations that are created by verified users.
+          is_spam:
+            type: optional<boolean>
+            docs: Filters for conversations that are spam.
+          limit:
+            type: optional<integer>
+            docs: >
+              The maximum number of conversations to return. The default is
+              '50'.
+          members:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations where these users are participants.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversations owned by any of these users.
+          rev_org:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for conversations that are associated with any of the
+              provided Rev organizations.
+          sla_summary.stage:
+            type: optional<root.SlaSummaryStage>
+            allow-multiple: true
+            docs: Filters for records with any of the provided SLA stages.
+          source_channels:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for conversations with any of the provided source
+              channels.
+          stage.name:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for records in the provided stage(s) by name.
+          tags:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for conversations with any of the provided tags.
+          tags_v2.id:
+            type: optional<string>
+            docs: The ID of the tag.
+          tags_v2.value:
+            type: optional<string>
+            docs: >
+              The value for the object's association with the tag. If specified,
+
+              the value must be one that's specified in the tag's allowed
+              values.
+      response:
+        docs: Success.
+        type: root.ConversationsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            tags_v2.id: TAG-12345
+          response:
+            body:
+              conversations:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  group:
+                    id: id
+                  members: []
+                  stage:
+                    name: name
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    listPost:
+      path: /conversations.list
+      method: POST
+      auth: true
+      docs: Lists the available conversations.
+      request:
+        name: ConversationsListRequest
+        body:
+          properties:
+            applies_to_parts:
+              docs: >
+                Filters for conversations belonging to any of the provided
+                parts.
+              type: optional<list<string>>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            group:
+              docs: |
+                Filters for conversation that belong to the given groups.
+              type: optional<list<string>>
+            is_creator_verified:
+              docs: |
+                Filters for conversations that are created by verified users.
+              type: optional<boolean>
+            is_spam:
+              docs: Filters for conversations that are spam.
+              type: optional<boolean>
+            limit:
+              docs: >
+                The maximum number of conversations to return. The default is
+                '50'.
+              type: optional<integer>
+            members:
+              docs: |
+                Filters for conversations where these users are participants.
+              type: optional<list<string>>
+            mode: optional<root.ListMode>
+            owned_by:
+              docs: Filters for conversations owned by any of these users.
+              type: optional<list<string>>
+            rev_org:
+              docs: |
+                Filters for conversations that are associated with any of the
+                provided Rev organizations.
+              type: optional<list<string>>
+            sla_summary: optional<root.SlaSummaryFilter>
+            source_channels:
+              docs: >
+                Filters for conversations with any of the provided source
+                channels.
+              type: optional<list<string>>
+            stage: optional<root.StageFilter>
+            tags:
+              docs: Filters for conversations with any of the provided tags.
+              type: optional<list<string>>
+            tags_v2:
+              docs: >
+                Filters for conversations with any of the provided tags with
+                value.
+              type: optional<list<root.TagWithValueFilter>>
+      response:
+        docs: Success.
+        type: root.ConversationsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              conversations:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  group:
+                    id: id
+                  members: []
+                  stage:
+                    name: name
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    update:
+      path: /conversations.update
+      method: POST
+      auth: true
+      docs: Updates the requested conversation.
+      request:
+        name: ConversationsUpdateRequest
+        body:
+          properties:
+            applies_to_parts: optional<root.ConversationsUpdateRequestAppliesToParts>
+            description:
+              docs: The updated description for the conversation.
+              type: optional<string>
+            group:
+              docs: The group that the conversation is associated with.
+              type: optional<string>
+            id:
+              type: string
+              docs: The ID of the conversation to update.
+            is_spam:
+              docs: Whether the conversation is spam.
+              type: optional<boolean>
+            metadata: optional<root.ConversationsUpdateRequestMetadata>
+            stage: optional<root.StageUpdate>
+            status:
+              docs: The updated status of the conversation.
+              type: optional<string>
+            tags: optional<root.ConversationsUpdateRequestTags>
+            title:
+              docs: The updated title of the conversation.
+              type: optional<string>
+            user_sessions: optional<root.ConversationsUpdateRequestUserSessions>
+      response:
+        docs: Success.
+        type: root.ConversationsUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              conversation:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                description: description
+                group:
+                  display_id: display_id
+                  id: id
+                  name: name
+                members: []
+                metadata:
+                  url_context: url_context
+                stage:
+                  name: name
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+                title: title
+  display-name: conversations
+docs: DevRev conversation interaction.

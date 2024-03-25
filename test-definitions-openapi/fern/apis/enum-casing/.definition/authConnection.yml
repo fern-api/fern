@@ -1,0 +1,198 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    dev-org-auth-connections-create:
+      path: /dev-orgs.auth-connections.create
+      method: POST
+      auth: true
+      docs: |
+        Creates a new enterprise authentication connection for a Dev
+        organization. This authentication connection will not be enabled by
+        default for the organization and the user will need to explicitly
+        enable this. Keep in mind that at a time, only one authentication
+        connection can be enabled for a Dev organization. At present, only 5
+        enterprise connections can be created by an organization.
+      request:
+        body: root.DevOrgAuthConnectionsCreateRequest
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    dev-org-auth-connections-delete:
+      path: /dev-orgs.auth-connections.delete
+      method: POST
+      auth: true
+      docs: |
+        Deletes an authentication connection. Only enterprise connections which
+        are explicitly set up for a Dev organization can be deleted. Default
+        connections can not be deleted using this method.
+      request:
+        name: DevOrgAuthConnectionsDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: ID of the authentication connection to be deleted.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+    dev-org-auth-connections-get:
+      path: /dev-orgs.auth-connections.get
+      method: GET
+      auth: true
+      docs: Retrieves the details for an authentication connection.
+      request:
+        name: DevOrgAuthConnectionsGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: ID of the authentication connection.
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    dev-org-auth-connections-get-post:
+      path: /dev-orgs.auth-connections.get
+      method: POST
+      auth: true
+      docs: Retrieves the details for an authentication connection.
+      request:
+        name: DevOrgAuthConnectionsGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: ID of the authentication connection.
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    dev-org-auth-connections-list:
+      path: /dev-orgs.auth-connections.list
+      method: GET
+      auth: true
+      docs: |
+        Lists all the authentication connections available for a Dev
+        organization. This list will include both social and enterprise
+        connections which are either available by default or are explicitly
+        created by the user.
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              auth_connections: []
+    dev-org-auth-connections-list-post:
+      path: /dev-orgs.auth-connections.list
+      method: POST
+      auth: true
+      docs: |
+        Lists all the authentication connections available for a Dev
+        organization. This list will include both social and enterprise
+        connections which are either available by default or are explicitly
+        created by the user.
+      request:
+        body: root.empty
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              auth_connections: []
+    dev-org-auth-connections-toggle:
+      path: /dev-orgs.auth-connections.toggle
+      method: POST
+      auth: true
+      docs: |
+        Enable or disable an authentication connection for a Dev organization.
+        Currently, only 1 authentication connection can be enabled at a time.
+        When a new authentication connection is enabled, the connection which
+        is currently enabled for the Dev organization is automatically
+        disabled.
+      request:
+        name: DevOrgAuthConnectionsToggleRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: ID of the authentication connection to be toggled.
+            toggle: optional<root.AuthConnectionToggle>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+    dev-org-auth-connections-update:
+      path: /dev-orgs.auth-connections.update
+      method: POST
+      auth: true
+      docs: Updates an authentication connection.
+      request:
+        body: root.DevOrgAuthConnectionsUpdateRequest
+      response:
+        docs: Success.
+        type: root.DevOrgAuthConnectionsUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+  display-name: auth-connection
+docs: Auth Connections of DevOrg.

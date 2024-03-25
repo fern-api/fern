@@ -1,0 +1,698 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /rev-users.create
+      method: POST
+      auth: true
+      docs: |
+        Creates a Rev user for a Rev organization. Rev user can be a customer
+        or a lead of an organization.
+      request:
+        name: RevUsersCreateRequest
+        body:
+          properties:
+            artifacts:
+              docs: The IDs of the artifacts to associate with the Rev user.
+              type: optional<list<string>>
+            custom_fields:
+              docs: Application-defined custom fields.
+              type: optional<map<string, unknown>>
+            custom_schema_fragments:
+              docs: The schema fragment IDs associated with the Rev user.
+              type: optional<list<string>>
+            description:
+              docs: Description of the Rev user.
+              type: optional<string>
+            display_name:
+              docs: |
+                The user's display name. The name is non-unique and mutable.
+              type: optional<string>
+            email:
+              docs: Email address of the Rev user.
+              type: optional<string>
+            external_ref:
+              docs: >
+                External ref is a mutable unique identifier for a user within
+                the
+
+                Dev organization from your primary customer record. If none is
+
+                available, a good alternative is the email address/phone number
+
+                which could uniquely identify the user. If none is specified, a
+
+                system-generated identifier will be assigned to the user.
+              type: optional<string>
+            phone_numbers:
+              docs: Phone numbers, in E.164 format, of the Rev user.
+              type: optional<list<string>>
+            rev_org:
+              docs: >
+                The ID of Rev organization for which a Rev user is to be
+                created.
+              type: optional<string>
+            tags:
+              docs: Tags associated with the Rev user.
+              type: optional<list<root.SetTagWithValue>>
+      response:
+        docs: Success.
+        type: root.RevUsersCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.ConflictError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            rev_org: REV-AbCdEfGh
+            tags:
+              - id: TAG-12345
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+    delete:
+      path: /rev-users.delete
+      method: POST
+      auth: true
+      docs: Deletes a Rev user.
+      request:
+        name: RevUsersDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of Rev user to delete.
+      response:
+        docs: Success.
+        type: root.RevUsersDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              string:
+                key: value
+    get:
+      path: /rev-users.get
+      method: GET
+      auth: true
+      docs: Returns the Rev user of a Rev organization by its ID.
+      request:
+        name: RevUsersGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The ID of Rev user to be retrieved.
+      response:
+        docs: Success.
+        type: root.RevUsersGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+    getPost:
+      path: /rev-users.get
+      method: POST
+      auth: true
+      docs: Returns the Rev user of a Rev organization by its ID.
+      request:
+        name: RevUsersGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of Rev user to be retrieved.
+      response:
+        docs: Success.
+        type: root.RevUsersGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+    link-rev-user-to-rev-org:
+      path: /rev-users.link
+      method: POST
+      auth: true
+      docs: Links a rev user to a rev org.
+      request:
+        name: LinkRevUserToRevOrgRequest
+        body:
+          properties:
+            rev_org_don:
+              type: string
+              docs: The don of the rev org to link the rev user to.
+            user_don:
+              type: string
+              docs: The don of the rev user to link.
+      response:
+        docs: Success.
+        type: root.LinkRevUserToRevOrgResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            rev_org_don: REV-AbCdEfGh
+            user_don: user_don
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+    list:
+      path: /rev-users.list
+      method: GET
+      auth: true
+      docs: |
+        Returns a list of all Rev Users belonging to the authenticated user's
+        Dev Organization.
+      request:
+        name: RevUsersListQuery
+        query-parameters:
+          created_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for Rev users that were created by the specified user(s).
+          created_date.after:
+            type: optional<datetime>
+            docs: >
+              Filters for objects created after the provided timestamp
+              (inclusive).
+          created_date.before:
+            type: optional<datetime>
+            docs: |
+              Filters for objects created before the provided timestamp
+              (inclusive).
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          custom_fields:
+            type: optional<map<string, unknown>>
+            docs: Filters for custom fields.
+          email:
+            type: optional<string>
+            allow-multiple: true
+            docs: List of emails of Rev users to be filtered.
+          external_ref:
+            type: optional<string>
+            allow-multiple: true
+            docs: List of external refs to filter Rev users for.
+          is_verified:
+            type: optional<boolean>
+            docs: Value of is_verified field to filter the Rev users.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of Rev users to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          modified_date.after:
+            type: optional<datetime>
+            docs: >
+              Filters for objects created after the provided timestamp
+              (inclusive).
+          modified_date.before:
+            type: optional<datetime>
+            docs: |
+              Filters for objects created before the provided timestamp
+              (inclusive).
+          phone_numbers:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              List of phone numbers, in E.164 format, to filter Rev users on.
+          rev_org:
+            type: optional<string>
+            allow-multiple: true
+            docs: List of IDs of Rev organizations to be filtered.
+          sort_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Fields to sort the Rev users by and the direction to sort them.
+          tags:
+            type: optional<string>
+            allow-multiple: true
+            docs: List of tags to be filtered.
+      response:
+        docs: Success.
+        type: root.RevUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            created_date.after: '2023-01-01T12:00:00Z'
+            created_date.before: '2023-01-01T12:00:00Z'
+            modified_date.after: '2023-01-01T12:00:00Z'
+            modified_date.before: '2023-01-01T12:00:00Z'
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              rev_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+                  artifacts:
+                    - id: id
+                  custom_schema_fragments:
+                    - custom_schema_fragments
+                  description: description
+                  external_ref: external_ref
+                  is_verified: true
+                  stock_schema_fragment: >-
+                    don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                  subtype: subtype
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+    listPost:
+      path: /rev-users.list
+      method: POST
+      auth: true
+      docs: |
+        Returns a list of all Rev Users belonging to the authenticated user's
+        Dev Organization.
+      request:
+        name: RevUsersListRequest
+        body:
+          properties:
+            created_by:
+              docs: >
+                Filters for Rev users that were created by the specified
+                user(s).
+              type: optional<list<string>>
+            created_date: optional<root.DateTimeFilter>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            custom_fields:
+              docs: Filters for custom fields.
+              type: optional<map<string, unknown>>
+            email:
+              docs: List of emails of Rev users to be filtered.
+              type: optional<list<string>>
+            external_ref:
+              docs: List of external refs to filter Rev users for.
+              type: optional<list<string>>
+            is_verified:
+              docs: Value of is_verified field to filter the Rev users.
+              type: optional<boolean>
+            limit:
+              docs: |
+                The maximum number of Rev users to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            modified_date: optional<root.DateTimeFilter>
+            phone_numbers:
+              docs: |
+                List of phone numbers, in E.164 format, to filter Rev users on.
+              type: optional<list<string>>
+            rev_org:
+              docs: List of IDs of Rev organizations to be filtered.
+              type: optional<list<string>>
+            sort_by:
+              docs: |
+                Fields to sort the Rev users by and the direction to sort them.
+              type: optional<list<string>>
+            tags:
+              docs: List of tags to be filtered.
+              type: optional<list<string>>
+      response:
+        docs: Success.
+        type: root.RevUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              rev_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+                  artifacts:
+                    - id: id
+                  custom_schema_fragments:
+                    - custom_schema_fragments
+                  description: description
+                  external_ref: external_ref
+                  is_verified: true
+                  stock_schema_fragment: >-
+                    don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                  subtype: subtype
+                  tags:
+                    - tag:
+                        id: id
+                        name: name
+    unlink-rev-user-from-rev-org:
+      path: /rev-users.unlink
+      method: POST
+      auth: true
+      docs: Unlinks a rev user from a rev org.
+      request:
+        name: UnlinkRevUserFromRevOrgRequest
+        body:
+          properties:
+            rev_org_don:
+              type: string
+              docs: The don of the rev org to unlink the rev user from.
+            user_don:
+              type: string
+              docs: The don of the rev user to unlink.
+      response:
+        docs: Success.
+        type: root.UnlinkRevUserFromRevOrgResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            rev_org_don: REV-AbCdEfGh
+            user_don: user_don
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+    update:
+      path: /rev-users.update
+      method: POST
+      auth: true
+      docs: Updates a Rev user.
+      request:
+        name: RevUsersUpdateRequest
+        body:
+          properties:
+            artifacts: optional<root.RevUsersUpdateRequestArtifacts>
+            custom_fields:
+              docs: Application-defined custom fields.
+              type: optional<map<string, unknown>>
+            custom_schema_fragments: optional<root.RevUsersUpdateRequestCustomSchemaFragments>
+            description:
+              docs: Updated description of the Rev user.
+              type: optional<string>
+            display_name:
+              docs: Updated display name of the Rev user.
+              type: optional<string>
+            email:
+              docs: Updated email address of the Rev user.
+              type: optional<string>
+            external_ref:
+              docs: Updated external ref value of the Rev user.
+              type: optional<string>
+            id:
+              type: string
+              docs: The ID of Rev user to update.
+            phone_numbers:
+              docs: The phone numbers, in E.164 format, of the Rev user.
+              type: optional<list<string>>
+            tags:
+              docs: Tags associated with the Rev user.
+              type: optional<list<root.SetTagWithValue>>
+      response:
+        docs: Success.
+        type: root.RevUsersUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+            tags:
+              - id: TAG-12345
+          response:
+            body:
+              rev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                artifacts:
+                  - id: id
+                custom_fields:
+                  custom_fields:
+                    key: value
+                custom_schema_fragments:
+                  - custom_schema_fragments
+                description: description
+                external_ref: external_ref
+                is_verified: true
+                stock_schema_fragment: >-
+                  don:core:<partition>:devo/<dev-org-id>:custom_type_fragment/<custom-type-fragment-id>
+                subtype: subtype
+                tags:
+                  - tag:
+                      id: id
+                      name: name
+  display-name: rev-users
+docs: Rev user interactions.

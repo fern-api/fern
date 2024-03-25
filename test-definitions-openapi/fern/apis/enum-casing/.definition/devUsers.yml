@@ -1,0 +1,302 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /dev-users.get
+      method: GET
+      auth: true
+      docs: Gets the requested user's information.
+      request:
+        name: DevUsersGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: User ID of the requested Dev user.
+      response:
+        docs: Success.
+        type: root.DevUsersGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              dev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                external_identities:
+                  - {}
+    getPost:
+      path: /dev-users.get
+      method: POST
+      auth: true
+      docs: Gets the requested user's information.
+      request:
+        name: DevUsersGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: User ID of the requested Dev user.
+      response:
+        docs: Success.
+        type: root.DevUsersGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              dev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                external_identities:
+                  - {}
+    list:
+      path: /dev-users.list
+      method: GET
+      auth: true
+      docs: Lists users within your organization.
+      request:
+        name: DevUsersListQuery
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          email:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters Dev users based on email addresses.
+          external_identity.id:
+            type: optional<string>
+            docs: Unique ID of the user in the external source.
+          external_identity.issuer:
+            type: optional<string>
+            docs: Issuer of the external identity of the user.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of Dev users to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          sort_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Fields to sort the Dev users by and the direction to sort them.
+          state:
+            type: optional<root.UserState>
+            allow-multiple: true
+            docs: Filters Dev users based on state.
+      response:
+        docs: Success.
+        type: root.DevUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              dev_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+                  external_identities:
+                    - {}
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    listPost:
+      path: /dev-users.list
+      method: POST
+      auth: true
+      docs: Lists users within your organization.
+      request:
+        name: DevUsersListRequest
+        body:
+          properties:
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            email:
+              docs: Filters Dev users based on email addresses.
+              type: optional<list<string>>
+            external_identity:
+              docs: Filters Dev users based on external identity.
+              type: optional<list<root.DevUserExternalIdentityFilter>>
+            limit:
+              docs: |
+                The maximum number of Dev users to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            sort_by:
+              docs: |
+                Fields to sort the Dev users by and the direction to sort them.
+              type: optional<list<string>>
+            state:
+              docs: Filters Dev users based on state.
+              type: optional<list<root.UserState>>
+      response:
+        docs: Success.
+        type: root.DevUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              dev_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+                  external_identities:
+                    - {}
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    self:
+      path: /dev-users.self
+      method: GET
+      auth: true
+      docs: Gets the authenticated user's information.
+      response:
+        docs: Success.
+        type: root.DevUsersSelfResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              dev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                external_identities:
+                  - {}
+    selfPost:
+      path: /dev-users.self
+      method: POST
+      auth: true
+      docs: Gets the authenticated user's information.
+      request:
+        body: root.DevUsersSelfRequest
+      response:
+        docs: Success.
+        type: root.DevUsersSelfResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              dev_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+                external_identities:
+                  - {}
+  display-name: dev-users
+docs: Dev user interactions.

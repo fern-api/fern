@@ -1,0 +1,517 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    count:
+      path: /articles.count
+      method: GET
+      auth: true
+      docs: Get count of articles matching given filter.
+      request:
+        name: ArticlesCountQuery
+        query-parameters:
+          applies_to_parts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for articles belonging to any of the provided parts.
+          authored_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for articles authored by any of the provided users.
+          created_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for articles created by any of the provided users.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for articles owned by any of the provided users.
+      response:
+        docs: Success.
+        type: root.ArticlesCountResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              count: 1
+    countPost:
+      path: /articles.count
+      method: POST
+      auth: true
+      docs: Get count of articles matching given filter.
+      request:
+        name: ArticlesCountRequest
+        body:
+          properties:
+            applies_to_parts:
+              docs: |
+                Filters for articles belonging to any of the provided parts.
+              type: optional<list<string>>
+            authored_by:
+              docs: |
+                Filters for articles authored by any of the provided users.
+              type: optional<list<string>>
+            created_by:
+              docs: |
+                Filters for articles created by any of the provided users.
+              type: optional<list<string>>
+            owned_by:
+              docs: Filters for articles owned by any of the provided users.
+              type: optional<list<string>>
+            shared_with:
+              docs: Filter for articles based on intended audience.
+              type: optional<list<root.SharedWithMembershipFilter>>
+      response:
+        docs: Success.
+        type: root.ArticlesCountResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              count: 1
+    create-article:
+      path: /articles.create
+      method: POST
+      auth: true
+      docs: |
+        Article is an object which can contain a URL or artifacts in the
+        resource. It also contains the data regarding the owner, author, status
+        and published date of the object. This call creates an article.
+      request:
+        name: ArticlesCreateRequest
+        body:
+          properties:
+            access_level: optional<root.AccessLevel>
+            applies_to_parts:
+              docs: The parts that the article applies to.
+              type: list<string>
+            authored_by:
+              docs: The authors of the article.
+              type: optional<list<string>>
+            description:
+              docs: Description for the article.
+              type: optional<string>
+            extracted_content:
+              docs: ID of the extracted content artifact.
+              type: optional<list<string>>
+            language:
+              docs: Language of the article.
+              type: optional<string>
+            owned_by:
+              docs: The users that own the article.
+              type: list<string>
+            parent:
+              docs: The parent directory of the article.
+              type: optional<string>
+            published_at:
+              docs: The published date of the article.
+              type: optional<datetime>
+            resource: root.ArticlesCreateRequestResource
+            shared_with:
+              docs: |
+                Information about the role the member receives due to the share.
+              type: optional<list<root.SharedWithMembership>>
+            status: optional<root.ArticleStatus>
+            tags:
+              docs: Tags associated with the article.
+              type: optional<list<root.SetTagWithValue>>
+            title:
+              type: string
+              docs: Name of the article.
+      response:
+        docs: Success.
+        type: root.ArticlesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            applies_to_parts:
+              - applies_to_parts
+            owned_by:
+              - owned_by
+            published_at: '2023-01-01T12:00:00Z'
+            resource: {}
+            tags:
+              - id: TAG-12345
+            title: title
+          response:
+            body:
+              article:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                applies_to_parts: []
+                description: description
+                extracted_content:
+                  - id: id
+                parent:
+                  display_id: display_id
+                  id: id
+                rank: rank
+                resource:
+                  artifacts:
+                    - id: id
+                  url: url
+                title: title
+    delete-article:
+      path: /articles.delete
+      method: POST
+      auth: true
+      docs: Deletes an article.
+      request:
+        name: ArticlesDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the article to delete.
+      response:
+        docs: Success.
+        type: root.ArticlesDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: ARTICLE-12345
+          response:
+            body:
+              string:
+                key: value
+    get-article:
+      path: /articles.get
+      method: GET
+      auth: true
+      docs: Gets an article.
+      request:
+        name: GetArticleQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The ID of the required article.
+      response:
+        docs: Success.
+        type: root.ArticlesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: ARTICLE-12345
+          response:
+            body:
+              article:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                applies_to_parts: []
+                description: description
+                extracted_content:
+                  - id: id
+                parent:
+                  display_id: display_id
+                  id: id
+                rank: rank
+                resource:
+                  artifacts:
+                    - id: id
+                  url: url
+                title: title
+    get-article-post:
+      path: /articles.get
+      method: POST
+      auth: true
+      docs: Gets an article.
+      request:
+        name: ArticlesGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the required article.
+      response:
+        docs: Success.
+        type: root.ArticlesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: ARTICLE-12345
+          response:
+            body:
+              article:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                applies_to_parts: []
+                description: description
+                extracted_content:
+                  - id: id
+                parent:
+                  display_id: display_id
+                  id: id
+                rank: rank
+                resource:
+                  artifacts:
+                    - id: id
+                  url: url
+                title: title
+    list-articles:
+      path: /articles.list
+      method: GET
+      auth: true
+      docs: Lists a collection of articles.
+      request:
+        name: ListArticlesQuery
+        query-parameters:
+          applies_to_parts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for articles belonging to any of the provided parts.
+          authored_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for articles authored by any of the provided users.
+          created_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for articles created by any of the provided users.
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of articles to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for articles owned by any of the provided users.
+      response:
+        docs: Success.
+        type: root.ArticlesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              articles:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  applies_to_parts: []
+                  description: description
+                  extracted_content:
+                    - id: id
+                  parent:
+                    id: id
+                  rank: rank
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              total: 1
+    list-articles-post:
+      path: /articles.list
+      method: POST
+      auth: true
+      docs: Lists a collection of articles.
+      request:
+        name: ArticlesListRequest
+        body:
+          properties:
+            applies_to_parts:
+              docs: |
+                Filters for articles belonging to any of the provided parts.
+              type: optional<list<string>>
+            authored_by:
+              docs: |
+                Filters for articles authored by any of the provided users.
+              type: optional<list<string>>
+            created_by:
+              docs: |
+                Filters for articles created by any of the provided users.
+              type: optional<list<string>>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            limit:
+              docs: |
+                The maximum number of articles to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            owned_by:
+              docs: Filters for articles owned by any of the provided users.
+              type: optional<list<string>>
+            shared_with:
+              docs: Filter for articles based on intended audience.
+              type: optional<list<root.SharedWithMembershipFilter>>
+      response:
+        docs: Success.
+        type: root.ArticlesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              articles:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  applies_to_parts: []
+                  description: description
+                  extracted_content:
+                    - id: id
+                  parent:
+                    id: id
+                  rank: rank
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              total: 1
+    update-article:
+      path: /articles.update
+      method: POST
+      auth: true
+      docs: Updates an article.
+      request:
+        name: ArticlesUpdateRequest
+        body:
+          properties:
+            access_level: optional<root.AccessLevel>
+            applies_to_parts: optional<root.ArticlesUpdateRequestAppliesToParts>
+            artifacts: optional<root.ArticlesUpdateRequestArtifacts>
+            authored_by: optional<root.ArticlesUpdateRequestAuthoredBy>
+            description:
+              docs: |
+                Updated description of the article object, or unchanged if not
+                provided.
+              type: optional<string>
+            extracted_content: optional<root.ArticlesUpdateRequestExtractedContent>
+            id:
+              type: string
+              docs: The article's ID.
+            language:
+              docs: Updates the language of the article.
+              type: optional<string>
+            owned_by: optional<root.ArticlesUpdateRequestOwnedBy>
+            parent:
+              docs: The updated parent directory for the article.
+              type: optional<string>
+            published_version:
+              docs: Updates the the latest published version.
+              type: optional<string>
+            reorder: optional<root.ArticlesUpdateRequestReorder>
+            shared_with: optional<root.ArticlesUpdateRequestSharedWith>
+            status: optional<root.ArticleStatus>
+            tags: optional<root.ArticlesUpdateRequestTags>
+            title:
+              docs: >
+                Updated title of the article object, or unchanged if not
+                provided.
+              type: optional<string>
+            url:
+              docs: Updates the URL of the external article.
+              type: optional<string>
+      response:
+        docs: Success.
+        type: root.ArticlesUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: ARTICLE-12345
+          response:
+            body:
+              article:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                applies_to_parts: []
+                description: description
+                extracted_content:
+                  - id: id
+                parent:
+                  display_id: display_id
+                  id: id
+                rank: rank
+                resource:
+                  artifacts:
+                    - id: id
+                  url: url
+                title: title
+  display-name: articles
+docs: Articles management APIs.

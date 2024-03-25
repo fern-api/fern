@@ -1,0 +1,483 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    metric-definitions-list:
+      path: /metric-definitions.list
+      method: GET
+      auth: true
+      docs: Lists metric definitions matching a filter.
+      request:
+        name: MetricDefinitionsListQuery
+        query-parameters:
+          applies_to_type:
+            type: optional<root.MetricDefinitionAppliesTo>
+            allow-multiple: true
+            docs: The type of objects the metric definition applies to.
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of records to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          type:
+            type: optional<root.MetricDefinitionMetricType>
+            allow-multiple: true
+            docs: The type of metric definitions sought.
+      response:
+        docs: Success.
+        type: root.MetricDefinitionsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              metric_definitions:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    metric-definitions-list-post:
+      path: /metric-definitions.list
+      method: POST
+      auth: true
+      docs: Lists metric definitions matching a filter.
+      request:
+        name: MetricDefinitionsListRequest
+        body:
+          properties:
+            applies_to_type:
+              docs: The type of objects the metric definition applies to.
+              type: optional<list<root.MetricDefinitionAppliesTo>>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            limit:
+              docs: |
+                The maximum number of records to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            type:
+              docs: The type of metric definitions sought.
+              type: optional<list<root.MetricDefinitionMetricType>>
+      response:
+        docs: Success.
+        type: root.MetricDefinitionsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              metric_definitions:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    assign:
+      path: /slas.assign
+      method: POST
+      auth: true
+      docs: ' Assigns the SLA to a set of Rev organizations.'
+      request:
+        name: SlasAssignRequest
+        body:
+          properties:
+            id:
+              docs: |
+                The SLA which would be assigned to the Rev organizations. If
+                omitted, the SLA of all the rev organizations referenced will be
+                unset.
+              type: optional<string>
+            rev_orgs:
+              docs: The Rev organizations to apply the SLA to.
+              type: list<string>
+      response:
+        docs: Success.
+        type: root.SlasAssignResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            rev_orgs:
+              - rev_orgs
+          response:
+            body:
+              results:
+                - error:
+                    message: message
+                    status: 1
+                  rev_org:
+                    id: id
+    create:
+      path: /slas.create
+      method: POST
+      auth: true
+      docs: Creates an SLA in draft status.
+      request:
+        name: SlasCreateRequest
+        body:
+          properties:
+            account_selector: optional<root.AccountsFilters>
+            description:
+              docs: Description of the purpose and capabilities of the SLA.
+              type: optional<string>
+            evaluation_period: optional<root.SlaEvaluationPeriod>
+            name:
+              type: string
+              docs: Human-readable name.
+            policies:
+              docs: |
+                The policies encompassed by this SLA, ordered in decreasing
+                priority.
+              type: optional<list<root.SetSlaPolicy>>
+      response:
+        docs: Success.
+        type: root.SlasCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              sla:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                compensation:
+                  compensation:
+                    key: value
+                description: description
+                evaluation_period: monthly
+                name: name
+                policies:
+                  - {}
+                status: archived
+    get:
+      path: /slas.get
+      method: GET
+      auth: true
+      docs: Gets an SLA.
+      request:
+        name: SlasGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The ID of the SLA to get.
+      response:
+        docs: Success.
+        type: root.SlasGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              sla:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                compensation:
+                  compensation:
+                    key: value
+                description: description
+                evaluation_period: monthly
+                name: name
+                policies:
+                  - {}
+                status: archived
+    getPost:
+      path: /slas.get
+      method: POST
+      auth: true
+      docs: Gets an SLA.
+      request:
+        name: SlasGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the SLA to get.
+      response:
+        docs: Success.
+        type: root.SlasGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              sla:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                compensation:
+                  compensation:
+                    key: value
+                description: description
+                evaluation_period: monthly
+                name: name
+                policies:
+                  - {}
+                status: archived
+    list:
+      path: /slas.list
+      method: GET
+      auth: true
+      docs: Lists SLAs matching a filter.
+      request:
+        name: SlasListQuery
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          limit:
+            type: optional<integer>
+            docs: The maximum number of SLAs to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          status:
+            type: optional<root.SlaStatus>
+            allow-multiple: true
+            docs: The SLA statuses the filter matches.
+      response:
+        docs: Success.
+        type: root.SlasListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              slas:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  evaluation_period: monthly
+                  name: name
+                  policies:
+                    - {}
+                  status: archived
+    listPost:
+      path: /slas.list
+      method: POST
+      auth: true
+      docs: Lists SLAs matching a filter.
+      request:
+        name: SlasListRequest
+        body:
+          properties:
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            limit:
+              docs: |
+                The maximum number of SLAs to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            status:
+              docs: The SLA statuses the filter matches.
+              type: optional<list<root.SlaStatus>>
+      response:
+        docs: Success.
+        type: root.SlasListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              slas:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  description: description
+                  evaluation_period: monthly
+                  name: name
+                  policies:
+                    - {}
+                  status: archived
+    transition:
+      path: /slas.transition
+      method: POST
+      auth: true
+      docs: Changes the status of an SLA.
+      request:
+        name: SlasTransitionRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The updated SLA.
+            status: root.SlaStatus
+      response:
+        docs: Success.
+        type: root.SlasTransitionResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+            status: archived
+          response:
+            body:
+              sla:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                compensation:
+                  compensation:
+                    key: value
+                description: description
+                evaluation_period: monthly
+                name: name
+                policies:
+                  - {}
+                status: archived
+    update:
+      path: /slas.update
+      method: POST
+      auth: true
+      docs: Updates a draft SLA.
+      request:
+        name: SlasUpdateRequest
+        body:
+          properties:
+            account_selector: optional<root.AccountsFilters>
+            description:
+              docs: Description of the purpose and capabilities of the SLA.
+              type: optional<string>
+            evaluation_period: optional<root.SlaEvaluationPeriod>
+            id:
+              type: string
+              docs: The SLA's ID.
+            name:
+              docs: Human-readable name.
+              type: optional<string>
+            policies:
+              docs: |
+                The policies encompassed by this SLA, ordered in decreasing
+                priority, the whole array will be overwritten by the contents of
+                this array.
+              type: optional<list<root.SetSlaPolicy>>
+      response:
+        docs: Success.
+        type: root.SlasUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              sla:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                compensation:
+                  compensation:
+                    key: value
+                description: description
+                evaluation_period: monthly
+                name: name
+                policies:
+                  - {}
+                status: archived
+  display-name: slas
+docs: Management APIs for Service Level Agreements.

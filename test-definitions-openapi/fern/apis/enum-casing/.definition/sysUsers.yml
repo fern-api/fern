@@ -1,0 +1,173 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /sys-users.list
+      method: GET
+      auth: true
+      docs: Lists system users within your organization.
+      request:
+        name: SysUsersListQuery
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of system users to return. Value can range from
+              '1' to '100', with a default of '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          sort_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Fields to sort the system users by and the direction to sort them.
+      response:
+        docs: Success.
+        type: root.SysUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              sys_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+    listPost:
+      path: /sys-users.list
+      method: POST
+      auth: true
+      docs: Lists system users within your organization.
+      request:
+        name: SysUsersListRequest
+        body:
+          properties:
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            limit:
+              docs: >
+                The maximum number of system users to return. Value can range
+                from
+
+                '1' to '100', with a default of '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            sort_by:
+              docs: >
+                Fields to sort the system users by and the direction to sort
+                them.
+              type: optional<list<string>>
+      response:
+        docs: Success.
+        type: root.SysUsersListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              sys_users:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  display_name: display_name
+                  display_picture:
+                    id: id
+                  email: email
+                  full_name: full_name
+                  phone_numbers:
+                    - phone_numbers
+                  state: active
+    update:
+      path: /sys-users.update
+      method: POST
+      auth: true
+      docs: Updates the system user.
+      request:
+        name: SysUsersUpdateRequest
+        body:
+          properties:
+            display_name:
+              docs: Updated display name for the system user.
+              type: optional<string>
+            display_picture:
+              docs: Artifact ID of the system user's new display picture.
+              type: optional<string>
+            full_name:
+              docs: Updated full name for the system user.
+              type: optional<string>
+            id:
+              type: string
+              docs: The ID of system user to update.
+      response:
+        docs: Success.
+        type: root.SysUsersUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              sys_user:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                display_name: display_name
+                display_picture:
+                  display_id: display_id
+                  id: id
+                email: email
+                full_name: full_name
+                phone_numbers:
+                  - phone_numbers
+                state: active
+  display-name: sys-users
+docs: System user interactions

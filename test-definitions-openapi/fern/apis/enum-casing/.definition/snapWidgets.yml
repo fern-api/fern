@@ -1,0 +1,25 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /snap-widgets.create
+      method: POST
+      auth: true
+      docs: Create a snap widget object.
+      request:
+        body: root.SnapWidgetsCreateRequest
+      response:
+        docs: Success.
+        type: root.SnapWidgetsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+  display-name: snap-widgets
+docs: SnapWidget APIs

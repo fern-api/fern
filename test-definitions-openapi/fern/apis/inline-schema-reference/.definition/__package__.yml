@@ -1,0 +1,34 @@
+types:
+  NotFound:
+    properties:
+      message: optional<string>
+  GetExampleResponse:
+    discriminated: false
+    union:
+      - NotFound
+      - Schema1
+      - Schema2
+  Schema1:
+    properties:
+      id: optional<integer>
+      name: optional<string>
+  Schema2:
+    properties:
+      email: optional<string>
+      age: optional<integer>
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      path: /example
+      method: GET
+      auth: false
+      display-name: Get Example
+      response:
+        docs: Successful response
+        type: GetExampleResponse
+      examples:
+        - response:
+            body:
+              message: message

@@ -1,0 +1,8 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Code Samples API
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme

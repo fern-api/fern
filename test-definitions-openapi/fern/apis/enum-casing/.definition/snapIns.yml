@@ -1,0 +1,97 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    resources:
+      path: /snap-ins.resources
+      method: GET
+      auth: true
+      docs: Gets snap-in resources for a user in a snap-in.
+      request:
+        name: SnapInsResourcesQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The ID of the snap-in to get resources for.
+          user:
+            type: string
+            docs: The ID of the user to get resources for.
+      response:
+        docs: Success.
+        type: root.SnapInsResourcesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+            user: user
+          response:
+            body:
+              event_sources:
+                key: key
+                value: value
+              inputs:
+                inputs:
+                  key: value
+              keyrings:
+                key: key
+                value:
+                  id: id
+                  secret: secret
+              snap_in_version:
+                display_id: display_id
+                id: id
+    resourcesPost:
+      path: /snap-ins.resources
+      method: POST
+      auth: true
+      docs: Gets snap-in resources for a user in a snap-in.
+      request:
+        name: SnapInsResourcesRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the snap-in to get resources for.
+            user:
+              type: string
+              docs: The ID of the user to get resources for.
+      response:
+        docs: Success.
+        type: root.SnapInsResourcesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+            user: user
+          response:
+            body:
+              event_sources:
+                key: key
+                value: value
+              inputs:
+                inputs:
+                  key: value
+              keyrings:
+                key: key
+                value:
+                  id: id
+                  secret: secret
+              snap_in_version:
+                display_id: display_id
+                id: id
+  display-name: snap-ins
+docs: DevRev snap-ins interactions.

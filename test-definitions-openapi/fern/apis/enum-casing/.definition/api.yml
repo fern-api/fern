@@ -1,0 +1,13 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: DevRev REST API
+environments:
+  Default: https://api.devrev.ai
+default-environment: Default
+auth-schemes:
+  auth-token:
+    header: Authorization
+    name: apiKey
+    type: string
+auth: auth-token

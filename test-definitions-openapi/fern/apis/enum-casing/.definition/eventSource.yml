@@ -1,0 +1,209 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    event-sources-get:
+      path: /event-sources.get
+      method: GET
+      auth: true
+      docs: Gets an event source.
+      request:
+        name: EventSourcesGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The event source's ID.
+      response:
+        docs: Success.
+        type: root.EventSourceGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              event_source:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                config:
+                  config:
+                    key: value
+                name: name
+                setup_instructions:
+                  content: content
+                status: active
+                trigger_url: trigger_url
+    event-sources-get-post:
+      path: /event-sources.get
+      method: POST
+      auth: true
+      docs: Gets an event source.
+      request:
+        name: EventSourceGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The event source's ID.
+      response:
+        docs: Success.
+        type: root.EventSourceGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              event_source:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                config:
+                  config:
+                    key: value
+                name: name
+                setup_instructions:
+                  content: content
+                status: active
+                trigger_url: trigger_url
+    event-sources-schedule-event:
+      path: /event-sources.schedule
+      method: POST
+      auth: true
+      docs: |
+        Schedules an event to be published to the specified event source.
+      request:
+        name: EventSourcesScheduleEventRequest
+        body:
+          properties:
+            event_key:
+              docs: |
+                A unique key for this event (scoped to an event source) used for
+                updating/getting/deleting scheduled events.
+              type: optional<string>
+            event_type:
+              type: string
+              docs: The type of the event.
+            id:
+              type: string
+              docs: The event source's ID.
+            payload:
+              type: string
+              docs: The raw payload of the event.
+            publish_at:
+              docs: >
+                The timestamp at which the event should be published. The event
+                is
+
+                guaranteed to be published after this. If omitted, the event is
+
+                published immediately.
+              type: optional<datetime>
+            update_if_exists:
+              docs: >
+                Whether or not to update an existing scheduled event with the
+                same
+
+                event key. If this is false, and an event is already scheduled
+                with
+
+                the same event key, then HTTP 409 Conflict is returned.
+              type: optional<boolean>
+      response:
+        docs: Success.
+        type: root.EventSourcesScheduleEventResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            event_type: event_type
+            id: id
+            payload: payload
+            publish_at: '2023-01-01T12:00:00Z'
+          response:
+            body:
+              event_key: event_key
+    event-sources-delete-scheduled-event:
+      path: /event-sources.unschedule
+      method: POST
+      auth: true
+      docs: Deletes an event scheduled for the specified event source.
+      request:
+        name: EventSourcesDeleteScheduledEventRequest
+        body:
+          properties:
+            event_key:
+              type: string
+              docs: The event key for the event which we want to delete.
+            id:
+              type: string
+              docs: The event source's ID.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            event_key: event_key
+            id: id
+    track-events-publish:
+      path: /track-events.publish
+      method: POST
+      auth: true
+      docs: Allows publishing of events (example from plug widget).
+      request:
+        name: TrackEventsPublishRequest
+        body:
+          properties:
+            events_list: list<root.TrackEvent>
+      response:
+        docs: Success.
+        type: root.TrackEventsPublishResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            events_list:
+              - event_time: '2023-01-01T12:00:00Z'
+                name: name
+                payload: {}
+          response:
+            body:
+              string:
+                key: value
+  display-name: event-source
+docs: Event source interactions.

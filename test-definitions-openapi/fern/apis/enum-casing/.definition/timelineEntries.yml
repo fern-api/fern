@@ -1,0 +1,257 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /timeline-entries.create
+      method: POST
+      auth: true
+      docs: Creates a new entry on an object's timeline.
+      request:
+        body: root.TimelineEntriesCreateRequest
+      response:
+        docs: Success.
+        type: root.TimelineEntriesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    delete:
+      path: /timeline-entries.delete
+      method: POST
+      auth: true
+      docs: Deletes an entry from an object's timeline.
+      request:
+        name: TimelineEntriesDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the timeline entry to delete.
+      response:
+        docs: Success.
+        type: root.TimelineEntriesDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: >-
+              don:core:<partition>:devo/<dev-org-id>:ticket/123:timeline_event/<timeline-event-id>
+          response:
+            body:
+              string:
+                key: value
+    get:
+      path: /timeline-entries.get
+      method: GET
+      auth: true
+      docs: Gets an entry on an object's timeline.
+      request:
+        name: TimelineEntriesGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The ID of the timeline entry to get.
+      response:
+        docs: Success.
+        type: root.TimelineEntriesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    getPost:
+      path: /timeline-entries.get
+      method: POST
+      auth: true
+      docs: Gets an entry on an object's timeline.
+      request:
+        name: TimelineEntriesGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the timeline entry to get.
+      response:
+        docs: Success.
+        type: root.TimelineEntriesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    list:
+      path: /timeline-entries.list
+      method: GET
+      auth: true
+      docs: Lists the timeline entries for an object.
+      request:
+        name: TimelineEntriesListQuery
+        query-parameters:
+          object:
+            type: string
+            docs: The ID of the object to list timeline entries for.
+          collections:
+            type: optional<root.TimelineEntriesCollection>
+            allow-multiple: true
+            docs: |
+              The collection(s) to list entries from, otherwise if not provided,
+              all entries are returned.
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          labels:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for entries containing at least one of the provided
+              labels,
+
+              otherwise if no labels are provided, then no label filtering is
+              done.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of entries to return. If not set, then this
+              defaults to `50`.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          visibility:
+            type: optional<root.TimelineEntryVisibility>
+            allow-multiple: true
+            docs: >
+              The visibility of the timeline entries to filter for. Note this is
+              a
+
+              strict filter, such that only entries with the exact visibilities
+
+              specified will be returned.
+      response:
+        docs: Success.
+        type: root.TimelineEntriesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            object: PROD-12345
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              timeline_entries: []
+    listPost:
+      path: /timeline-entries.list
+      method: POST
+      auth: true
+      docs: Lists the timeline entries for an object.
+      request:
+        name: TimelineEntriesListRequest
+        body:
+          properties:
+            collections:
+              docs: >
+                The collection(s) to list entries from, otherwise if not
+                provided,
+
+                all entries are returned.
+              type: optional<list<root.TimelineEntriesCollection>>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            labels:
+              docs: >
+                Filters for entries containing at least one of the provided
+                labels,
+
+                otherwise if no labels are provided, then no label filtering is
+
+                done.
+              type: optional<list<string>>
+            limit:
+              docs: |
+                The maximum number of entries to return. If not set, then this
+                defaults to `50`.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            object:
+              type: string
+              docs: The ID of the object to list timeline entries for.
+            visibility:
+              docs: >
+                The visibility of the timeline entries to filter for. Note this
+                is
+
+                a strict filter, such that only entries with the exact
+                visibilities
+
+                specified will be returned.
+              type: optional<list<root.TimelineEntryVisibility>>
+      response:
+        docs: Success.
+        type: root.TimelineEntriesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            object: PROD-12345
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              timeline_entries: []
+    update:
+      path: /timeline-entries.update
+      method: POST
+      auth: true
+      docs: Updates an entry on an object's timeline.
+      request:
+        body: root.TimelineEntriesUpdateRequest
+      response:
+        docs: Success.
+        type: root.TimelineEntriesUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+  display-name: timeline-entries
+docs: APIs to manage timeline entries for objects.

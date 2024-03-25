@@ -1,0 +1,916 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    code-changes-create:
+      path: /code-changes.create
+      method: POST
+      auth: true
+      docs: Create CodeChange object.
+      request:
+        body: root.CodeChangesCreateRequest
+      response:
+        docs: Success.
+        type: root.CodeChangesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              code_change:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                branch: branch
+                description: description
+                external_identifier: external_identifier
+                filtered_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+                repo_url: repo_url
+                source: github
+                title: title
+                total_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+    code-changes-delete:
+      path: /code-changes.delete
+      method: POST
+      auth: true
+      docs: Delete CodeChange object.
+      request:
+        name: CodeChangesDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: ID of the code change object which is to be deleted.
+      response:
+        docs: Success.
+        type: root.CodeChangesDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              string:
+                key: value
+    code-changes-get:
+      path: /code-changes.get
+      method: GET
+      auth: true
+      docs: Get CodeChange object.
+      request:
+        name: CodeChangesGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The code change object ID.
+      response:
+        docs: Success.
+        type: root.CodeChangesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - query-parameters:
+            id: id
+          response:
+            body:
+              code_change:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                branch: branch
+                description: description
+                external_identifier: external_identifier
+                filtered_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+                repo_url: repo_url
+                source: github
+                title: title
+                total_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+    code-changes-get-post:
+      path: /code-changes.get
+      method: POST
+      auth: true
+      docs: Get CodeChange object.
+      request:
+        name: CodeChangesGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The code change object ID.
+      response:
+        docs: Success.
+        type: root.CodeChangesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              code_change:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                branch: branch
+                description: description
+                external_identifier: external_identifier
+                filtered_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+                repo_url: repo_url
+                source: github
+                title: title
+                total_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+    code-changes-list:
+      path: /code-changes.list
+      method: GET
+      auth: true
+      docs: List CodeChange objects.
+      request:
+        name: CodeChangesListQuery
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          limit:
+            type: optional<integer>
+            docs: >
+              The maximum number of code change objects to return. The default
+              is
+
+              '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+      response:
+        docs: Success.
+        type: root.CodeChangesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              code_changes:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  branch: branch
+                  description: description
+                  external_identifier: external_identifier
+                  repo_url: repo_url
+                  source: github
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    code-changes-list-post:
+      path: /code-changes.list
+      method: POST
+      auth: true
+      docs: List CodeChange objects.
+      request:
+        name: CodeChangesListRequest
+        body:
+          properties:
+            created_date: optional<root.DateFilter>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            limit:
+              docs: >
+                The maximum number of code change objects to return. The default
+                is
+
+                '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            modified_date: optional<root.DateFilter>
+      response:
+        docs: Success.
+        type: root.CodeChangesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              code_changes:
+                - created_date: '2023-01-01T12:00:00Z'
+                  display_id: display_id
+                  id: id
+                  modified_date: '2023-01-01T12:00:00Z'
+                  branch: branch
+                  description: description
+                  external_identifier: external_identifier
+                  repo_url: repo_url
+                  source: github
+                  title: title
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+    code-changes-update:
+      path: /code-changes.update
+      method: POST
+      auth: true
+      docs: Update CodeChange object.
+      request:
+        name: CodeChangesUpdateRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The ID of the code change object to be updated.
+      response:
+        docs: Success.
+        type: root.CodeChangesUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              code_change:
+                created_date: '2023-01-01T12:00:00Z'
+                display_id: display_id
+                id: id
+                modified_date: '2023-01-01T12:00:00Z'
+                branch: branch
+                description: description
+                external_identifier: external_identifier
+                filtered_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+                repo_url: repo_url
+                source: github
+                title: title
+                total_loc:
+                  file_count: 1
+                  lines_added: 1
+                  lines_deleted: 1
+                  lines_modified: 1
+    create:
+      path: /works.create
+      method: POST
+      auth: true
+      docs: |
+        Creates new work ([issue](https://devrev.ai/docs/product/build),
+        [ticket](https://devrev.ai/docs/product/support)) item.
+        [task](https://docs.devrev.ai/product/tasks) and opportunity work types
+        are supported in the beta version.
+      request:
+        body: root.WorksCreateRequest
+      response:
+        docs: Success.
+        type: root.WorksCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    delete:
+      path: /works.delete
+      method: POST
+      auth: true
+      docs: Deletes a work item.
+      request:
+        name: WorksDeleteRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The work's ID.
+      response:
+        docs: Success.
+        type: root.WorksDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            id: ISS-12345
+          response:
+            body:
+              string:
+                key: value
+    export:
+      path: /works.export
+      method: GET
+      auth: true
+      docs: Exports a collection of work items.
+      request:
+        name: WorksExportQuery
+        query-parameters:
+          applies_to_part:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work belonging to any of the provided parts.
+          created_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work created by any of these users.
+          custom_fields:
+            type: optional<map<string, unknown>>
+            docs: Filters for custom fields.
+          first:
+            type: optional<integer>
+            docs: >
+              The number of work items to return. The default is '50', the
+              maximum
+
+              is '5000'.
+          issue.accounts:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided Accounts.
+          issue.priority:
+            type: optional<root.IssuePriority>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided priorities.
+          issue.priority_v2:
+            type: optional<integer>
+            allow-multiple: true
+            docs: |
+              Filters for issues with any of the provided priority enum ids.
+          issue.rev_orgs:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for issues with any of the provided Rev organizations.
+          issue.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided subtypes.
+          opportunity.account:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for opportunities belonging to any of the provided
+              accounts.
+          opportunity.contacts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for opportunities with any of the provided contacts.
+          opportunity.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for opportunity with any of the provided subtypes.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work owned by any of these users.
+          reported_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work reported by any of these users.
+          sort_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Fields to sort the work items by and the direction to sort them.
+          stage.name:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for records in the provided stage(s) by name.
+          staged_info.is_staged:
+            type: optional<boolean>
+            docs: Filters for issues that are staged.
+          sync_metadata.last_sync_in.status:
+            type: optional<root.SyncMetadataFilterSyncInFilterStatus>
+            allow-multiple: true
+            docs: Filters for works with selected sync statuses.
+          sync_metadata.last_sync_in.sync_unit:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for works modified with selected sync units.
+          sync_metadata.last_sync_out.status:
+            type: optional<root.SyncMetadataFilterSyncOutFilterStatus>
+            allow-multiple: true
+            docs: Filters for works with selected sync statuses.
+          sync_metadata.last_sync_out.sync_unit:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for works modified with selected sync units.
+          sync_metadata.origin_system:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for issues synced from this specific origin system.
+          tags:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work with any of the provided tags.
+          ticket.channels:
+            type: optional<root.TicketChannels>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided channels.
+          ticket.group:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for tickets belonging to specific groups.
+          ticket.is_spam:
+            type: optional<boolean>
+            docs: Filters for tickets that are spam.
+          ticket.needs_response:
+            type: optional<boolean>
+            docs: Filters for tickets that need response.
+          ticket.rev_org:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for tickets that are associated with any of the provided
+              Rev
+
+              organizations.
+          ticket.severity:
+            type: optional<root.TicketSeverity>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided severities.
+          ticket.sla_summary.stage:
+            type: optional<root.SlaSummaryStage>
+            allow-multiple: true
+            docs: Filters for records with any of the provided SLA stages.
+          ticket.source_channel:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for tickets with any of the provided source channels.
+          ticket.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided subtypes.
+          type:
+            type: optional<root.WorkType>
+            allow-multiple: true
+            docs: Filters for work of the provided types.
+      response:
+        docs: Success.
+        type: root.WorksExportResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              works: []
+    exportPost:
+      path: /works.export
+      method: POST
+      auth: true
+      docs: Exports a collection of work items.
+      request:
+        name: WorksExportRequest
+        body:
+          properties:
+            actual_close_date: optional<root.DateFilter>
+            applies_to_part:
+              docs: Filters for work belonging to any of the provided parts.
+              type: optional<list<string>>
+            created_by:
+              docs: Filters for work created by any of these users.
+              type: optional<list<string>>
+            created_date: optional<root.DateFilter>
+            custom_fields:
+              docs: Filters for custom fields.
+              type: optional<map<string, unknown>>
+            first:
+              docs: |
+                The number of work items to return. The default is '50', the
+                maximum is '5000'.
+              type: optional<integer>
+            issue: optional<root.WorksFilterIssue>
+            modified_date: optional<root.DateFilter>
+            opportunity: optional<root.WorksFilterOpportunity>
+            owned_by:
+              docs: Filters for work owned by any of these users.
+              type: optional<list<string>>
+            reported_by:
+              docs: Filters for work reported by any of these users.
+              type: optional<list<string>>
+            sort_by:
+              docs: |
+                Fields to sort the work items by and the direction to sort them.
+              type: optional<list<string>>
+            stage: optional<root.StageFilter>
+            staged_info: optional<root.StagedInfoFilter>
+            sync_metadata: optional<root.SyncMetadataFilter>
+            tags:
+              docs: Filters for work with any of the provided tags.
+              type: optional<list<string>>
+            target_close_date: optional<root.DateFilter>
+            ticket: optional<root.WorksFilterTicket>
+            type:
+              docs: Filters for work of the provided types.
+              type: optional<list<root.WorkType>>
+      response:
+        docs: Success.
+        type: root.WorksExportResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              works: []
+    get:
+      path: /works.get
+      method: GET
+      auth: true
+      docs: Gets a work item's information.
+      request:
+        name: WorksGetQuery
+        query-parameters:
+          id:
+            type: string
+            docs: The work's ID.
+      response:
+        docs: Success.
+        type: root.WorksGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    getPost:
+      path: /works.get
+      method: POST
+      auth: true
+      docs: Gets a work item's information.
+      request:
+        name: WorksGetRequest
+        body:
+          properties:
+            id:
+              type: string
+              docs: The work's ID.
+      response:
+        docs: Success.
+        type: root.WorksGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+    list:
+      path: /works.list
+      method: GET
+      auth: true
+      docs: Lists a collection of work items.
+      request:
+        name: WorksListQuery
+        query-parameters:
+          applies_to_part:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work belonging to any of the provided parts.
+          created_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work created by any of these users.
+          cursor:
+            type: optional<string>
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+
+              starts from the beginning.
+          custom_fields:
+            type: optional<map<string, unknown>>
+            docs: Filters for custom fields.
+          issue.accounts:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided Accounts.
+          issue.priority:
+            type: optional<root.IssuePriority>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided priorities.
+          issue.priority_v2:
+            type: optional<integer>
+            allow-multiple: true
+            docs: |
+              Filters for issues with any of the provided priority enum ids.
+          issue.rev_orgs:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for issues with any of the provided Rev organizations.
+          issue.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for issues with any of the provided subtypes.
+          limit:
+            type: optional<integer>
+            docs: |
+              The maximum number of works to return. The default is '50'.
+          mode:
+            type: optional<root.ListMode>
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+          opportunity.account:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for opportunities belonging to any of the provided
+              accounts.
+          opportunity.contacts:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for opportunities with any of the provided contacts.
+          opportunity.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for opportunity with any of the provided subtypes.
+          owned_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work owned by any of these users.
+          reported_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work reported by any of these users.
+          sort_by:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Fields to sort the works by and the direction to sort them.
+          stage.name:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for records in the provided stage(s) by name.
+          staged_info.is_staged:
+            type: optional<boolean>
+            docs: Filters for issues that are staged.
+          sync_metadata.last_sync_in.status:
+            type: optional<root.SyncMetadataFilterSyncInFilterStatus>
+            allow-multiple: true
+            docs: Filters for works with selected sync statuses.
+          sync_metadata.last_sync_in.sync_unit:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for works modified with selected sync units.
+          sync_metadata.last_sync_out.status:
+            type: optional<root.SyncMetadataFilterSyncOutFilterStatus>
+            allow-multiple: true
+            docs: Filters for works with selected sync statuses.
+          sync_metadata.last_sync_out.sync_unit:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for works modified with selected sync units.
+          sync_metadata.origin_system:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for issues synced from this specific origin system.
+          tags:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for work with any of the provided tags.
+          ticket.channels:
+            type: optional<root.TicketChannels>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided channels.
+          ticket.group:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for tickets belonging to specific groups.
+          ticket.is_spam:
+            type: optional<boolean>
+            docs: Filters for tickets that are spam.
+          ticket.needs_response:
+            type: optional<boolean>
+            docs: Filters for tickets that need response.
+          ticket.rev_org:
+            type: optional<string>
+            allow-multiple: true
+            docs: >
+              Filters for tickets that are associated with any of the provided
+              Rev
+
+              organizations.
+          ticket.severity:
+            type: optional<root.TicketSeverity>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided severities.
+          ticket.sla_summary.stage:
+            type: optional<root.SlaSummaryStage>
+            allow-multiple: true
+            docs: Filters for records with any of the provided SLA stages.
+          ticket.source_channel:
+            type: optional<string>
+            allow-multiple: true
+            docs: |
+              Filters for tickets with any of the provided source channels.
+          ticket.subtype:
+            type: optional<string>
+            allow-multiple: true
+            docs: Filters for tickets with any of the provided subtypes.
+          type:
+            type: optional<root.WorkType>
+            allow-multiple: true
+            docs: Filters for work of the provided types.
+      response:
+        docs: Success.
+        type: root.WorksListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              works: []
+    listPost:
+      path: /works.list
+      method: POST
+      auth: true
+      docs: Lists a collection of work items.
+      request:
+        name: WorksListRequest
+        body:
+          properties:
+            actual_close_date: optional<root.DateFilter>
+            applies_to_part:
+              docs: Filters for work belonging to any of the provided parts.
+              type: optional<list<string>>
+            created_by:
+              docs: Filters for work created by any of these users.
+              type: optional<list<string>>
+            created_date: optional<root.DateFilter>
+            cursor:
+              docs: |
+                The cursor to resume iteration from. If not provided, then
+                iteration starts from the beginning.
+              type: optional<string>
+            custom_fields:
+              docs: Filters for custom fields.
+              type: optional<map<string, unknown>>
+            issue: optional<root.WorksFilterIssue>
+            limit:
+              docs: |
+                The maximum number of works to return. The default is '50'.
+              type: optional<integer>
+            mode: optional<root.ListMode>
+            modified_date: optional<root.DateFilter>
+            opportunity: optional<root.WorksFilterOpportunity>
+            owned_by:
+              docs: Filters for work owned by any of these users.
+              type: optional<list<string>>
+            reported_by:
+              docs: Filters for work reported by any of these users.
+              type: optional<list<string>>
+            sort_by:
+              docs: |
+                Fields to sort the works by and the direction to sort them.
+              type: optional<list<string>>
+            stage: optional<root.StageFilter>
+            staged_info: optional<root.StagedInfoFilter>
+            sync_metadata: optional<root.SyncMetadataFilter>
+            tags:
+              docs: Filters for work with any of the provided tags.
+              type: optional<list<string>>
+            target_close_date: optional<root.DateFilter>
+            ticket: optional<root.WorksFilterTicket>
+            type:
+              docs: Filters for work of the provided types.
+              type: optional<list<root.WorkType>>
+      response:
+        docs: Success.
+        type: root.WorksListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              next_cursor: next_cursor
+              prev_cursor: prev_cursor
+              works: []
+    update:
+      path: /works.update
+      method: POST
+      auth: true
+      docs: Updates a work item's information.
+      request:
+        body: root.WorksUpdateRequest
+      response:
+        docs: Success.
+        type: root.WorksUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+  display-name: works
+docs: DevRev work interactions.
