@@ -4433,7 +4433,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["qs", "npm:6.11.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:18.2.0"],\
-            ["sass", "npm:1.71.0"],\
+            ["sass", "npm:1.72.0"],\
             ["stylelint", "npm:16.2.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"],\
@@ -23443,10 +23443,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["sass", [\
-        ["npm:1.71.0", {\
-          "packageLocation": "./.yarn/cache/sass-npm-1.71.0-38088726c4-5ba6b4b994.zip/node_modules/sass/",\
+        ["npm:1.72.0", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.72.0-fb38bb530c-f420079c7d.zip/node_modules/sass/",\
           "packageDependencies": [\
-            ["sass", "npm:1.71.0"],\
+            ["sass", "npm:1.72.0"],\
             ["chokidar", "npm:3.6.0"],\
             ["immutable", "npm:4.3.5"],\
             ["source-map-js", "npm:1.0.2"]\
@@ -26436,7 +26436,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lightningcss", null],\
             ["postcss", "npm:8.4.35"],\
             ["rollup", "npm:4.12.0"],\
-            ["sass", "npm:1.71.0"],\
+            ["sass", "npm:1.72.0"],\
             ["stylus", null],\
             ["sugarss", null],\
             ["terser", null]\

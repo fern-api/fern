@@ -2320,7 +2320,7 @@ __metadata:
     qs: 6.11.2
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.71.0
+    sass: ^1.72.0
     stylelint: ^16.2.1
     typescript: 4.6.4
     url-join: ^5.0.0
@@ -19277,16 +19277,16 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.71.0":
-  version: 1.71.0
-  resolution: "sass@npm:1.71.0"
+"sass@npm:^1.72.0":
+  version: 1.72.0
+  resolution: "sass@npm:1.72.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 5ba6b4b994c7ae94286919d8be8a3692038c27175b4ad3a3ac43f51a91188590d3ddd3a0ef1022135503b9d70d0732efdbedfd56f3ee1a4651549f5b13f8942f
+  checksum: f420079c7d51660b7256ee52463c1499ede36f7fd5c8ef50c687451777ad641509001454dea45244073cedd7c00e7a3bc1c362e55206ac6686171b994edb41e4
   languageName: node
   linkType: hard
 
