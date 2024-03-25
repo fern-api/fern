@@ -326,7 +326,7 @@ class SdkGenerator(AbstractGenerator):
     def _generate_version(
         self,
         project: Project,
-    ):
+    ) -> None:
         filepath = Filepath(
             directories=(),
             file=Filepath.FilepathPart(module_name="version"),
@@ -335,7 +335,7 @@ class SdkGenerator(AbstractGenerator):
         contents = f'''
 from importlib import metadata
 
-__version__ = metadata.version("{project._project_config.package_name}")
+__version__ = metadata.version("{project._project_config.package_name if project._project_config is not None else "__package__"}")
 '''
         project.add_file(filepath_nested, contents)
         project.register_export_in_project(

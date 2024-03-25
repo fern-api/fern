@@ -110,7 +110,7 @@ class Project:
             else os.path.join(self._root_filepath, str(filepath))
         )
 
-    def register_export_in_project(self, filepath_in_project: Filepath, exports: Set[str]):
+    def register_export_in_project(self, filepath_in_project: Filepath, exports: Set[str]) -> None:
         self._module_manager.register_exports(
             filepath=filepath_in_project,
             exports=exports,
