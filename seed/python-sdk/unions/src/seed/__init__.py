@@ -39,6 +39,7 @@ from .resources import (
     types,
     union,
 )
+from .version import __version__
 
 __all__ = [
     "Bar",
@@ -76,6 +77,7 @@ __all__ = [
     "UnionWithoutKey_Foo",
     "Union_Bar",
     "Union_Foo",
+    "__version__",
     "types",
     "union",
 ]

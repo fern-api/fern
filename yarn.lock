@@ -16116,6 +16116,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"node@workspace:generators/typescript/playground/node":
+  version: 0.0.0-use.local
+  resolution: "node@workspace:generators/typescript/playground/node"
+  languageName: unknown
+  linkType: soft
+
 "nopt@npm:^4.0.1, nopt@npm:^4.0.3":
   version: 4.0.3
   resolution: "nopt@npm:4.0.3"

@@ -124,6 +124,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/typescript/playground/browser"\
       },\
       {\
+        "name": "node",\
+        "reference": "workspace:generators/typescript/playground/node"\
+      },\
+      {\
         "name": "@fern-typescript/sdk-generator-cli",\
         "reference": "workspace:generators/typescript/sdk/cli"\
       },\
@@ -464,7 +468,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/union-generator", ["workspace:generators/typescript/model/union-generator"]],\
       ["@fern-typescript/union-schema-generator", ["workspace:generators/typescript/model/union-schema-generator"]],\
       ["@fern-typescript/zurg", ["workspace:generators/typescript/utils/core-utilities/zurg"]],\
-      ["fern", ["workspace:."]]\
+      ["fern", ["workspace:."]],\
+      ["node", ["workspace:generators/typescript/playground/node"]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -19896,6 +19901,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "react"\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["node", [\
+        ["workspace:generators/typescript/playground/node", {\
+          "packageLocation": "./generators/typescript/playground/node/",\
+          "packageDependencies": [\
+            ["node", "workspace:generators/typescript/playground/node"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["node-domexception", [\
