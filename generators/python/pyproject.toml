@@ -15,7 +15,7 @@ fern_fern_ir_v37 = "^0.0.3433"
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.2"
 mypy = "^0.971"
-black = "^22.6.0"
+black = "^24.3.0"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
