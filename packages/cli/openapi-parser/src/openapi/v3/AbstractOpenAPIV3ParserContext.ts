@@ -2,7 +2,6 @@ import { Logger } from "@fern-api/logger";
 import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-import { SCHEMA_REFERENCE_PREFIX } from "../../schema/convertSchemas";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -46,37 +45,31 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
-        if (
-            this.document.components == null ||
-            this.document.components.schemas == null ||
-            !schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)
-        ) {
+        // Step 1: Get keys
+        const keys = schema.$ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                throw new Error(`Failed to resolve ${schema.$ref}`);
+            }
+            resolvedSchema = resolvedSchema[key];
+        }
+        if (resolvedSchema == null) {
             throw new Error(`Failed to resolve ${schema.$ref}`);
         }
-        const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
-        const splitSchemaKey = schemaKey.split("/");
-        if (splitSchemaKey[0] == null) {
-            throw new Error(`${schema.$ref} is undefined`);
-        }
-        let resolvedSchema = this.document.components.schemas[splitSchemaKey[0]];
-        if (resolvedSchema == null) {
-            throw new Error(`${splitSchemaKey[0]} is undefined`);
-        }
+
+        // Step 3: If the result is another reference object, make a recursive call
         if (isReferenceObject(resolvedSchema)) {
             resolvedSchema = this.resolveSchemaReference(resolvedSchema);
         }
 
-        if (splitSchemaKey[1] === "properties" && splitSchemaKey[2] != null) {
-            const resolvedProperty = resolvedSchema.properties?.[splitSchemaKey[2]];
-            if (resolvedProperty == null) {
-                throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
-            } else if (isReferenceObject(resolvedProperty)) {
-                resolvedSchema = this.resolveSchemaReference(resolvedProperty);
-            } else {
-                resolvedSchema = resolvedProperty;
-            }
-        }
-
+        // Step 4: If the result is a schema object, return it
         return resolvedSchema;
     }
 
