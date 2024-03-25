@@ -5,6 +5,7 @@ export interface Strategy {
 
 export const STARTS_WITH_COMPONENTS_SCHEMAS: Strategy = {
     // if the first three breadcrumbs are "#", "components", "schemas"
+    // then the fourth breadcrumb will be a user-defined value that we want to extract
     isApplicable: (refUnderProcessing: string[]) =>
         refUnderProcessing[0] === "#" && refUnderProcessing[1] === "components" && refUnderProcessing[2] === "schemas",
     applyStrategy: (refUnderProcessing: string[]) => {
@@ -19,6 +20,7 @@ export const STARTS_WITH_COMPONENTS_SCHEMAS: Strategy = {
 
 export const STARTS_WITH_COMPONENTS_RESPONSES: Strategy = {
     // if the first three breadcrumbs are "#", "components", "responses"
+    // then the fourth breadcrumb will be a user-defined value that we want to extract
     isApplicable: (breadcrumbs: string[]) =>
         breadcrumbs[0] === "#" && breadcrumbs[1] === "components" && breadcrumbs[2] === "responses",
     applyStrategy: (refUnderProcessing: string[]) => {
@@ -35,6 +37,7 @@ export const STARTS_WITH_COMPONENTS_RESPONSES: Strategy = {
 
 export const STARTS_WITH_COMPONENTS_PARAMETERS: Strategy = {
     // if the first three breadcrumbs are "#", "components", "parameters"
+    // then the fourth breadcrumb will be a user-defined value that we want to extract
     isApplicable: (refUnderProcessing: string[]) =>
         refUnderProcessing[0] === "#" &&
         refUnderProcessing[1] === "components" &&
@@ -57,6 +60,7 @@ export const STARTS_WITH_COMPONENTS_PARAMETERS: Strategy = {
 
 export const EXTRACT_PROPERTY: Strategy = {
     // if the first breadcrumb is "properties"
+    // then the second breadcrumb will be a user-defined value that we want to extract
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "properties",
     applyStrategy: (refUnderProcessing: string[]) => {
         const newBreadcrumbs = [refUnderProcessing[1] ?? ""];
@@ -70,6 +74,7 @@ export const EXTRACT_PROPERTY: Strategy = {
 
 export const REMOVE_ITEMS_KEYWORD: Strategy = {
     // if the first breadcrumb is "items"
+    // then we want to remove it from the breadcrumbs array
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "items",
     applyStrategy: (refUnderProcessing: string[]) => {
         return {
@@ -81,6 +86,7 @@ export const REMOVE_ITEMS_KEYWORD: Strategy = {
 
 export const REMOVE_ALL_OF_KEYWORD: Strategy = {
     // if the first breadcrumb is "allOf"
+    // then we want to remove it from the breadcrumbs array
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "allOf",
     applyStrategy: (refUnderProcessing: string[]) => {
         return {
@@ -92,6 +98,7 @@ export const REMOVE_ALL_OF_KEYWORD: Strategy = {
 
 export const REMOVE_ANY_OF_KEYWORD: Strategy = {
     // if the first breadcrumb is "anyOf"
+    // then we want to remove it from the breadcrumbs array
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "anyOf",
     applyStrategy: (refUnderProcessing: string[]) => {
         return {
@@ -103,6 +110,7 @@ export const REMOVE_ANY_OF_KEYWORD: Strategy = {
 
 export const REMOVE_ONE_OF_KEYWORD: Strategy = {
     // if the first breadcrumb is "oneOf"
+    // then we want to remove it from the breadcrumbs array
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "oneOf",
     applyStrategy: (refUnderProcessing: string[]) => {
         return {
