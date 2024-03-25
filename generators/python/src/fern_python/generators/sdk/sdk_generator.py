@@ -5,8 +5,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import AST, Project
-from fern_python.codegen import filepath
+from fern_python.codegen import AST, Project, filepath
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
@@ -332,17 +331,16 @@ class SdkGenerator(AbstractGenerator):
             file=Filepath.FilepathPart(module_name="version"),
         )
         filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
-        contents = f'''
+        contents = f"""
 from importlib import metadata
 
 __version__ = metadata.version("{project._project_config.package_name if project._project_config is not None else "__package__"}")
-'''
+"""
         project.add_file(filepath_nested, contents)
         project.register_export_in_project(
             filepath_in_project=filepath,
             exports={"__version__"},
         )
-
 
     def _generate_readme(
         self,
