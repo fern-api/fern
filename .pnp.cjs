@@ -4488,7 +4488,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/tar", "npm:6.1.7"],\
+            ["@types/tar", "npm:6.1.11"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -4509,7 +4509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ora", "npm:7.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["tar", "npm:6.2.0"],\
+            ["tar", "npm:6.2.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
@@ -5452,7 +5452,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/mime-types", "npm:2.1.4"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/tar", "npm:6.1.7"],\
+            ["@types/tar", "npm:6.1.11"],\
             ["@types/terminal-link", "npm:1.2.0"],\
             ["axios", "npm:0.28.0"],\
             ["chalk", "npm:5.0.1"],\
@@ -5467,7 +5467,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mime-types", "npm:2.1.35"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["tar", "npm:6.2.0"],\
+            ["tar", "npm:6.2.1"],\
             ["terminal-link", "npm:3.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -5690,7 +5690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/tar", "npm:6.1.7"],\
+            ["@types/tar", "npm:6.1.11"],\
             ["axios", "npm:0.28.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -5701,7 +5701,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["tar", "npm:6.2.0"],\
+            ["tar", "npm:6.2.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -9003,10 +9003,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/tar", [\
-        ["npm:6.1.7", {\
-          "packageLocation": "./.yarn/cache/@types-tar-npm-6.1.7-6b0cf188a2-74a346c86e.zip/node_modules/@types/tar/",\
+        ["npm:6.1.11", {\
+          "packageLocation": "./.yarn/cache/@types-tar-npm-6.1.11-2b8694c91a-9b79f61f91.zip/node_modules/@types/tar/",\
           "packageDependencies": [\
-            ["@types/tar", "npm:6.1.7"],\
+            ["@types/tar", "npm:6.1.11"],\
             ["@types/node", "npm:18.7.18"],\
             ["minipass", "npm:4.0.0"]\
           ],\
@@ -25061,10 +25061,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:6.2.0", {\
-          "packageLocation": "./.yarn/cache/tar-npm-6.2.0-3eb25205a7-db4d9fe74a.zip/node_modules/tar/",\
+        ["npm:6.2.1", {\
+          "packageLocation": "./.yarn/cache/tar-npm-6.2.1-237800bb20-f1322768c9.zip/node_modules/tar/",\
           "packageDependencies": [\
-            ["tar", "npm:6.2.0"],\
+            ["tar", "npm:6.2.1"],\
             ["chownr", "npm:2.0.0"],\
             ["fs-minipass", "npm:2.1.0"],\
             ["minipass", "npm:5.0.0"],\
