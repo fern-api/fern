@@ -1,6 +1,7 @@
 import { EnumValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { replaceStartingNumber } from "./utils/replaceStartingNumber";
 
 export const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
@@ -13,7 +14,8 @@ export function convertEnum({
     enumValues,
     description,
     wrapAsNullable,
-    groupName
+    groupName,
+    context
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -23,6 +25,7 @@ export function convertEnum({
     description: string | undefined;
     wrapAsNullable: boolean;
     groupName: SdkGroupName | undefined;
+    context: SchemaParserContext | undefined;
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
@@ -30,9 +33,19 @@ export function convertEnum({
         const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
         const valueIsValidName = VALID_ENUM_NAME_REGEX.test(value);
+        let nameOverride = fernEnumValue?.name ?? enumVarName;
+        const generatedName = valueIsValidName ? value : generateEnumNameFromValue(value);
+
+        if (nameOverride != null && !VALID_ENUM_NAME_REGEX.test(nameOverride)) {
+            context?.logger.warn(
+                `Enum name override ${nameOverride} is not a valid name. Falling back on ${generatedName}.`
+            );
+            nameOverride = undefined;
+        }
+
         return {
-            nameOverride: fernEnumValue?.name ?? enumVarName,
-            generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
+            nameOverride,
+            generatedName,
             value,
             description: fernEnumValue?.description,
             casing: {

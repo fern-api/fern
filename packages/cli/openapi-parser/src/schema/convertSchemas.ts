@@ -185,7 +185,8 @@ export function convertSchemaObject(
             enumValues: schema.enum,
             description,
             wrapAsNullable,
-            groupName
+            groupName,
+            context
         });
     }
 
@@ -453,7 +454,8 @@ export function convertSchemaObject(
                     enumValues: maybeAllEnumValues,
                     description,
                     wrapAsNullable,
-                    groupName
+                    groupName,
+                    context
                 });
             }
 
