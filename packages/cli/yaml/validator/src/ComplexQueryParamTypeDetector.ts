@@ -93,8 +93,13 @@ export class ComplexQueryParamTypeDetector {
             case "literal":
                 return false;
             case "map":
-                // if the key of the map is a primitive and the value is not a union type, we consider it NOT complex
-                if (type.keyType._type === "primitive" && type.valueType._type !== "container") {
+                // if the key of the map is a primitive and the value is not a union type, we consider it NOT complex.
+                if (
+                    type.keyType._type === "primitive" &&
+                    (type.valueType._type !== "named" ||
+                        (!isRawDiscriminatedUnionDefinition(type.valueType.declaration) &&
+                            !isRawUndiscriminatedUnionDefinition(type.valueType.declaration)))
+                ) {
                     return false;
                 }
 
