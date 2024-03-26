@@ -181,6 +181,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=self._union.discriminant.wire_value,
+            default_value=discriminant_value
         )
 
     def _get_discriminant_value_for_single_union_type(

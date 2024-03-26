@@ -9,7 +9,7 @@ from .void_function_definition_that_takes_actual_result import VoidFunctionDefin
 
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
-    type: typing.Literal["deepEquality"]
+    type: typing.Literal["deepEquality"] = "deepEquality"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
-    type: typing.Literal["custom"]
+    type: typing.Literal["custom"] = "custom"
 
     class Config:
         frozen = True

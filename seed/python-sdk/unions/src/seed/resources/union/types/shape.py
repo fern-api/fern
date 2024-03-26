@@ -34,7 +34,7 @@ class Base(pydantic.BaseModel):
 
 
 class Shape_Circle(Circle, Base):
-    type: typing.Literal["circle"]
+    type: typing.Literal["circle"] = "circle"
 
     class Config:
         frozen = True
@@ -44,7 +44,7 @@ class Shape_Circle(Circle, Base):
 
 
 class Shape_Square(Square, Base):
-    type: typing.Literal["square"]
+    type: typing.Literal["square"] = "square"
 
     class Config:
         frozen = True

@@ -14,7 +14,7 @@ except ImportError:
 
 
 class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
-    type: typing.Literal["templateId"]
+    type: typing.Literal["templateId"] = "templateId"
     value: TestCaseTemplateId
 
     class Config:
@@ -23,7 +23,7 @@ class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
 
 
 class TestCaseImplementationReference_Implementation(TestCaseImplementation):
-    type: typing.Literal["implementation"]
+    type: typing.Literal["implementation"] = "implementation"
 
     class Config:
         frozen = True

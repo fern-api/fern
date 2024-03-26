@@ -14,7 +14,7 @@ except ImportError:
 
 
 class EventInfo_Metadata(Metadata):
-    type: typing.Literal["metadata"]
+    type: typing.Literal["metadata"] = "metadata"
 
     class Config:
         frozen = True
@@ -24,7 +24,7 @@ class EventInfo_Metadata(Metadata):
 
 
 class EventInfo_Tag(pydantic.BaseModel):
-    type: typing.Literal["tag"]
+    type: typing.Literal["tag"] = "tag"
     value: Tag
 
     class Config:

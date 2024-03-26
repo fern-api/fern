@@ -11,7 +11,7 @@ except ImportError:
 
 
 class VariableType_IntegerType(pydantic.BaseModel):
-    type: typing.Literal["integerType"]
+    type: typing.Literal["integerType"] = "integerType"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class VariableType_IntegerType(pydantic.BaseModel):
 
 
 class VariableType_DoubleType(pydantic.BaseModel):
-    type: typing.Literal["doubleType"]
+    type: typing.Literal["doubleType"] = "doubleType"
 
     class Config:
         frozen = True
@@ -27,7 +27,7 @@ class VariableType_DoubleType(pydantic.BaseModel):
 
 
 class VariableType_BooleanType(pydantic.BaseModel):
-    type: typing.Literal["booleanType"]
+    type: typing.Literal["booleanType"] = "booleanType"
 
     class Config:
         frozen = True
@@ -35,7 +35,7 @@ class VariableType_BooleanType(pydantic.BaseModel):
 
 
 class VariableType_StringType(pydantic.BaseModel):
-    type: typing.Literal["stringType"]
+    type: typing.Literal["stringType"] = "stringType"
 
     class Config:
         frozen = True
@@ -43,7 +43,7 @@ class VariableType_StringType(pydantic.BaseModel):
 
 
 class VariableType_CharType(pydantic.BaseModel):
-    type: typing.Literal["charType"]
+    type: typing.Literal["charType"] = "charType"
 
     class Config:
         frozen = True
@@ -51,7 +51,7 @@ class VariableType_CharType(pydantic.BaseModel):
 
 
 class VariableType_ListType(ListType):
-    type: typing.Literal["listType"]
+    type: typing.Literal["listType"] = "listType"
 
     class Config:
         frozen = True
@@ -61,7 +61,7 @@ class VariableType_ListType(ListType):
 
 
 class VariableType_MapType(MapType):
-    type: typing.Literal["mapType"]
+    type: typing.Literal["mapType"] = "mapType"
 
     class Config:
         frozen = True
@@ -71,7 +71,7 @@ class VariableType_MapType(MapType):
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):
-    type: typing.Literal["binaryTreeType"]
+    type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
     class Config:
         frozen = True
@@ -79,7 +79,7 @@ class VariableType_BinaryTreeType(pydantic.BaseModel):
 
 
 class VariableType_SinglyLinkedListType(pydantic.BaseModel):
-    type: typing.Literal["singlyLinkedListType"]
+    type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
     class Config:
         frozen = True
@@ -87,7 +87,7 @@ class VariableType_SinglyLinkedListType(pydantic.BaseModel):
 
 
 class VariableType_DoublyLinkedListType(pydantic.BaseModel):
-    type: typing.Literal["doublyLinkedListType"]
+    type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
     class Config:
         frozen = True

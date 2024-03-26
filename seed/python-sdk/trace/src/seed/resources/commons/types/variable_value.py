@@ -19,7 +19,7 @@ except ImportError:
 
 
 class VariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing.Literal["integerValue"]
+    type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
     class Config:
@@ -28,7 +28,7 @@ class VariableValue_IntegerValue(pydantic.BaseModel):
 
 
 class VariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing.Literal["booleanValue"]
+    type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
     class Config:
@@ -37,7 +37,7 @@ class VariableValue_BooleanValue(pydantic.BaseModel):
 
 
 class VariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing.Literal["doubleValue"]
+    type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
     class Config:
@@ -46,7 +46,7 @@ class VariableValue_DoubleValue(pydantic.BaseModel):
 
 
 class VariableValue_StringValue(pydantic.BaseModel):
-    type: typing.Literal["stringValue"]
+    type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
     class Config:
@@ -55,7 +55,7 @@ class VariableValue_StringValue(pydantic.BaseModel):
 
 
 class VariableValue_CharValue(pydantic.BaseModel):
-    type: typing.Literal["charValue"]
+    type: typing.Literal["charValue"] = "charValue"
     value: str
 
     class Config:
@@ -64,7 +64,7 @@ class VariableValue_CharValue(pydantic.BaseModel):
 
 
 class VariableValue_MapValue(MapValue):
-    type: typing.Literal["mapValue"]
+    type: typing.Literal["mapValue"] = "mapValue"
 
     class Config:
         frozen = True
@@ -74,7 +74,7 @@ class VariableValue_MapValue(MapValue):
 
 
 class VariableValue_ListValue(pydantic.BaseModel):
-    type: typing.Literal["listValue"]
+    type: typing.Literal["listValue"] = "listValue"
     value: typing.List[VariableValue]
 
     class Config:
@@ -83,7 +83,7 @@ class VariableValue_ListValue(pydantic.BaseModel):
 
 
 class VariableValue_BinaryTreeValue(BinaryTreeValue):
-    type: typing.Literal["binaryTreeValue"]
+    type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
     class Config:
         frozen = True
@@ -93,7 +93,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
-    type: typing.Literal["singlyLinkedListValue"]
+    type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
     class Config:
         frozen = True
@@ -103,7 +103,7 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
-    type: typing.Literal["doublyLinkedListValue"]
+    type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
     class Config:
         frozen = True
@@ -113,7 +113,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
 
 
 class VariableValue_NullValue(pydantic.BaseModel):
-    type: typing.Literal["nullValue"]
+    type: typing.Literal["nullValue"] = "nullValue"
 
     class Config:
         frozen = True

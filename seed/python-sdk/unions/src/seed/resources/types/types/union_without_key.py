@@ -9,7 +9,7 @@ from .foo import Foo
 
 
 class UnionWithoutKey_Foo(Foo):
-    type: typing.Literal["foo"]
+    type: typing.Literal["foo"] = "foo"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class UnionWithoutKey_Foo(Foo):
 
 
 class UnionWithoutKey_Bar(Bar):
-    type: typing.Literal["bar"]
+    type: typing.Literal["bar"] = "bar"
 
     class Config:
         frozen = True

@@ -11,7 +11,7 @@ except ImportError:
 
 
 class ProblemDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing.Literal["html"]
+    type: typing.Literal["html"] = "html"
     value: str
 
     class Config:
@@ -20,7 +20,7 @@ class ProblemDescriptionBoard_Html(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
-    type: typing.Literal["variable"]
+    type: typing.Literal["variable"] = "variable"
     value: VariableValue
 
     class Config:
@@ -29,7 +29,7 @@ class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
-    type: typing.Literal["testCaseId"]
+    type: typing.Literal["testCaseId"] = "testCaseId"
     value: str
 
     class Config:

@@ -9,7 +9,7 @@ from .workspace_submission_state import WorkspaceSubmissionState
 
 
 class SubmissionTypeState_Test(TestSubmissionState):
-    type: typing.Literal["test"]
+    type: typing.Literal["test"] = "test"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
 
 class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
-    type: typing.Literal["workspace"]
+    type: typing.Literal["workspace"] = "workspace"
 
     class Config:
         frozen = True

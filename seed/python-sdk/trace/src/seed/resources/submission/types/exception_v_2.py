@@ -13,7 +13,7 @@ except ImportError:
 
 
 class ExceptionV2_Generic(ExceptionInfo):
-    type: typing.Literal["generic"]
+    type: typing.Literal["generic"] = "generic"
 
     class Config:
         frozen = True
@@ -23,7 +23,7 @@ class ExceptionV2_Generic(ExceptionInfo):
 
 
 class ExceptionV2_Timeout(pydantic.BaseModel):
-    type: typing.Literal["timeout"]
+    type: typing.Literal["timeout"] = "timeout"
 
     class Config:
         frozen = True

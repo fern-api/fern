@@ -11,7 +11,7 @@ except ImportError:
 
 
 class Test_And(pydantic.BaseModel):
-    type: typing.Literal["and"]
+    type: typing.Literal["and"] = "and"
     value: bool
 
     class Config:
@@ -20,7 +20,7 @@ class Test_And(pydantic.BaseModel):
 
 
 class Test_Or(pydantic.BaseModel):
-    type: typing.Literal["or"]
+    type: typing.Literal["or"] = "or"
     value: bool
 
     class Config:

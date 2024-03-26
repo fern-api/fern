@@ -68,7 +68,7 @@ class Animal(pydantic.BaseModel):
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):
-        animal: typing.Literal["dog"]
+        animal: typing.Literal["dog"] = "dog"
 
         class Config:
             frozen = True
@@ -77,7 +77,7 @@ class _Animal:
             populate_by_name = True
 
     class Cat(resources_types_resources_union_types_cat_Cat):
-        animal: typing.Literal["cat"]
+        animal: typing.Literal["cat"] = "cat"
 
         class Config:
             frozen = True

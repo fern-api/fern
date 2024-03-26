@@ -9,7 +9,7 @@ from .dog import Dog
 
 
 class Animal_Dog(Dog):
-    animal: typing.Literal["dog"]
+    animal: typing.Literal["dog"] = "dog"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class Animal_Dog(Dog):
 
 
 class Animal_Cat(Cat):
-    animal: typing.Literal["cat"]
+    animal: typing.Literal["cat"] = "cat"
 
     class Config:
         frozen = True

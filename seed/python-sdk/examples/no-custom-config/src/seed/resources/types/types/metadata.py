@@ -39,7 +39,7 @@ class Base(pydantic.BaseModel):
 
 
 class Metadata_Html(Base):
-    type: typing.Literal["html"]
+    type: typing.Literal["html"] = "html"
     value: str
 
     class Config:
@@ -50,7 +50,7 @@ class Metadata_Html(Base):
 
 
 class Metadata_Markdown(Base):
-    type: typing.Literal["markdown"]
+    type: typing.Literal["markdown"] = "markdown"
     value: str
 
     class Config:
