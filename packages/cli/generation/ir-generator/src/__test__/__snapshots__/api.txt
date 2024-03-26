@@ -310,8 +310,8 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "rating": 1.1,
-                  "title": "string",
+                  "movie_rating": 1.1,
+                  "movie_title": "string",
                 },
                 "shape": {
                   "shape": {
@@ -320,24 +320,24 @@ exports[`generate IR 1`] = `
                         "name": {
                           "name": {
                             "camelCase": {
-                              "safeName": "title",
-                              "unsafeName": "title",
+                              "safeName": "movieTitle",
+                              "unsafeName": "movieTitle",
                             },
-                            "originalName": "title",
+                            "originalName": "movie_title",
                             "pascalCase": {
-                              "safeName": "Title",
-                              "unsafeName": "Title",
+                              "safeName": "MovieTitle",
+                              "unsafeName": "MovieTitle",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "TITLE",
-                              "unsafeName": "TITLE",
+                              "safeName": "MOVIE_TITLE",
+                              "unsafeName": "MOVIE_TITLE",
                             },
                             "snakeCase": {
-                              "safeName": "title",
-                              "unsafeName": "title",
+                              "safeName": "movie_title",
+                              "unsafeName": "movie_title",
                             },
                           },
-                          "wireValue": "title",
+                          "wireValue": "movie_title",
                         },
                         "originalTypeDeclaration": {
                           "fernFilepath": {
@@ -421,24 +421,24 @@ exports[`generate IR 1`] = `
                         "name": {
                           "name": {
                             "camelCase": {
-                              "safeName": "rating",
-                              "unsafeName": "rating",
+                              "safeName": "movieRating",
+                              "unsafeName": "movieRating",
                             },
-                            "originalName": "rating",
+                            "originalName": "movie_rating",
                             "pascalCase": {
-                              "safeName": "Rating",
-                              "unsafeName": "Rating",
+                              "safeName": "MovieRating",
+                              "unsafeName": "MovieRating",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "RATING",
-                              "unsafeName": "RATING",
+                              "safeName": "MOVIE_RATING",
+                              "unsafeName": "MOVIE_RATING",
                             },
                             "snakeCase": {
-                              "safeName": "rating",
-                              "unsafeName": "rating",
+                              "safeName": "movie_rating",
+                              "unsafeName": "movie_rating",
                             },
                           },
-                          "wireValue": "rating",
+                          "wireValue": "movie_rating",
                         },
                         "originalTypeDeclaration": {
                           "fernFilepath": {
@@ -967,7 +967,7 @@ exports[`generate IR 1`] = `
                   "safeName": "movieID",
                   "unsafeName": "movieID",
                 },
-                "originalName": "movieId",
+                "originalName": "movie_id",
                 "pascalCase": {
                   "safeName": "MovieID",
                   "unsafeName": "MovieID",
@@ -1137,7 +1137,7 @@ exports[`generate IR 1`] = `
                       "safeName": "movieID",
                       "unsafeName": "movieID",
                     },
-                    "originalName": "movieId",
+                    "originalName": "movie_id",
                     "pascalCase": {
                       "safeName": "MovieID",
                       "unsafeName": "MovieID",
@@ -1246,9 +1246,9 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "id": "string",
-                    "rating": 1.1,
-                    "title": "string",
+                    "_id": "string",
+                    "movie_rating": 1.1,
+                    "movie_title": "string",
                   },
                   "shape": {
                     "shape": {
@@ -1260,7 +1260,7 @@ exports[`generate IR 1`] = `
                                 "safeName": "id",
                                 "unsafeName": "id",
                               },
-                              "originalName": "id",
+                              "originalName": "_id",
                               "pascalCase": {
                                 "safeName": "ID",
                                 "unsafeName": "ID",
@@ -1274,7 +1274,7 @@ exports[`generate IR 1`] = `
                                 "unsafeName": "id",
                               },
                             },
-                            "wireValue": "id",
+                            "wireValue": "_id",
                           },
                           "originalTypeDeclaration": {
                             "fernFilepath": {
@@ -1432,24 +1432,24 @@ exports[`generate IR 1`] = `
                           "name": {
                             "name": {
                               "camelCase": {
-                                "safeName": "title",
-                                "unsafeName": "title",
+                                "safeName": "movieTitle",
+                                "unsafeName": "movieTitle",
                               },
-                              "originalName": "title",
+                              "originalName": "movie_title",
                               "pascalCase": {
-                                "safeName": "Title",
-                                "unsafeName": "Title",
+                                "safeName": "MovieTitle",
+                                "unsafeName": "MovieTitle",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "TITLE",
-                                "unsafeName": "TITLE",
+                                "safeName": "MOVIE_TITLE",
+                                "unsafeName": "MOVIE_TITLE",
                               },
                               "snakeCase": {
-                                "safeName": "title",
-                                "unsafeName": "title",
+                                "safeName": "movie_title",
+                                "unsafeName": "movie_title",
                               },
                             },
-                            "wireValue": "title",
+                            "wireValue": "movie_title",
                           },
                           "originalTypeDeclaration": {
                             "fernFilepath": {
@@ -1533,24 +1533,24 @@ exports[`generate IR 1`] = `
                           "name": {
                             "name": {
                               "camelCase": {
-                                "safeName": "rating",
-                                "unsafeName": "rating",
+                                "safeName": "movieRating",
+                                "unsafeName": "movieRating",
                               },
-                              "originalName": "rating",
+                              "originalName": "movie_rating",
                               "pascalCase": {
-                                "safeName": "Rating",
-                                "unsafeName": "Rating",
+                                "safeName": "MovieRating",
+                                "unsafeName": "MovieRating",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "RATING",
-                                "unsafeName": "RATING",
+                                "safeName": "MOVIE_RATING",
+                                "unsafeName": "MOVIE_RATING",
                               },
                               "snakeCase": {
-                                "safeName": "rating",
-                                "unsafeName": "rating",
+                                "safeName": "movie_rating",
+                                "unsafeName": "movie_rating",
                               },
                             },
-                            "wireValue": "rating",
+                            "wireValue": "movie_rating",
                           },
                           "originalTypeDeclaration": {
                             "fernFilepath": {
@@ -1717,7 +1717,7 @@ exports[`generate IR 1`] = `
                       "safeName": "movieID",
                       "unsafeName": "movieID",
                     },
-                    "originalName": "movieId",
+                    "originalName": "movie_id",
                     "pascalCase": {
                       "safeName": "MovieID",
                       "unsafeName": "MovieID",
@@ -1902,7 +1902,7 @@ exports[`generate IR 1`] = `
             "head": "/movies/",
             "parts": [
               {
-                "pathParameter": "movieId",
+                "pathParameter": "movie_id",
                 "tail": "",
               },
             ],
@@ -1935,7 +1935,7 @@ exports[`generate IR 1`] = `
             "head": "/",
             "parts": [
               {
-                "pathParameter": "movieId",
+                "pathParameter": "movie_id",
                 "tail": "",
               },
             ],
@@ -1949,7 +1949,7 @@ exports[`generate IR 1`] = `
                   "safeName": "movieID",
                   "unsafeName": "movieID",
                 },
-                "originalName": "movieId",
+                "originalName": "movie_id",
                 "pascalCase": {
                   "safeName": "MovieID",
                   "unsafeName": "MovieID",
@@ -2321,24 +2321,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "title",
-                  "unsafeName": "title",
+                  "safeName": "movieTitle",
+                  "unsafeName": "movieTitle",
                 },
-                "originalName": "title",
+                "originalName": "movie_title",
                 "pascalCase": {
-                  "safeName": "Title",
-                  "unsafeName": "Title",
+                  "safeName": "MovieTitle",
+                  "unsafeName": "MovieTitle",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "TITLE",
-                  "unsafeName": "TITLE",
+                  "safeName": "MOVIE_TITLE",
+                  "unsafeName": "MOVIE_TITLE",
                 },
                 "snakeCase": {
-                  "safeName": "title",
-                  "unsafeName": "title",
+                  "safeName": "movie_title",
+                  "unsafeName": "movie_title",
                 },
               },
-              "wireValue": "title",
+              "wireValue": "movie_title",
             },
             "valueType": {
               "_type": "primitive",
@@ -2351,24 +2351,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "rating",
-                  "unsafeName": "rating",
+                  "safeName": "movieRating",
+                  "unsafeName": "movieRating",
                 },
-                "originalName": "rating",
+                "originalName": "movie_rating",
                 "pascalCase": {
-                  "safeName": "Rating",
-                  "unsafeName": "Rating",
+                  "safeName": "MovieRating",
+                  "unsafeName": "MovieRating",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "RATING",
-                  "unsafeName": "RATING",
+                  "safeName": "MOVIE_RATING",
+                  "unsafeName": "MOVIE_RATING",
                 },
                 "snakeCase": {
-                  "safeName": "rating",
-                  "unsafeName": "rating",
+                  "safeName": "movie_rating",
+                  "unsafeName": "movie_rating",
                 },
               },
-              "wireValue": "rating",
+              "wireValue": "movie_rating",
             },
             "valueType": {
               "_type": "primitive",
@@ -2463,7 +2463,7 @@ exports[`generate IR 1`] = `
                   "safeName": "id",
                   "unsafeName": "id",
                 },
-                "originalName": "id",
+                "originalName": "_id",
                 "pascalCase": {
                   "safeName": "ID",
                   "unsafeName": "ID",
@@ -2477,7 +2477,7 @@ exports[`generate IR 1`] = `
                   "unsafeName": "id",
                 },
               },
-              "wireValue": "id",
+              "wireValue": "_id",
             },
             "valueType": {
               "_type": "named",
@@ -2552,24 +2552,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "title",
-                  "unsafeName": "title",
+                  "safeName": "movieTitle",
+                  "unsafeName": "movieTitle",
                 },
-                "originalName": "title",
+                "originalName": "movie_title",
                 "pascalCase": {
-                  "safeName": "Title",
-                  "unsafeName": "Title",
+                  "safeName": "MovieTitle",
+                  "unsafeName": "MovieTitle",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "TITLE",
-                  "unsafeName": "TITLE",
+                  "safeName": "MOVIE_TITLE",
+                  "unsafeName": "MOVIE_TITLE",
                 },
                 "snakeCase": {
-                  "safeName": "title",
-                  "unsafeName": "title",
+                  "safeName": "movie_title",
+                  "unsafeName": "movie_title",
                 },
               },
-              "wireValue": "title",
+              "wireValue": "movie_title",
             },
             "valueType": {
               "_type": "primitive",
@@ -2582,24 +2582,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "rating",
-                  "unsafeName": "rating",
+                  "safeName": "movieRating",
+                  "unsafeName": "movieRating",
                 },
-                "originalName": "rating",
+                "originalName": "movie_rating",
                 "pascalCase": {
-                  "safeName": "Rating",
-                  "unsafeName": "Rating",
+                  "safeName": "MovieRating",
+                  "unsafeName": "MovieRating",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "RATING",
-                  "unsafeName": "RATING",
+                  "safeName": "MOVIE_RATING",
+                  "unsafeName": "MOVIE_RATING",
                 },
                 "snakeCase": {
-                  "safeName": "rating",
-                  "unsafeName": "rating",
+                  "safeName": "movie_rating",
+                  "unsafeName": "movie_rating",
                 },
               },
-              "wireValue": "rating",
+              "wireValue": "movie_rating",
             },
             "valueType": {
               "_type": "primitive",
