@@ -13,9 +13,9 @@ except ImportError:
 
 
 class Movie(pydantic.BaseModel):
-    id: MovieId = pydantic.Field(alias="_id")
-    movie_title: str
-    movie_rating: float = pydantic.Field()
+    id: MovieId
+    title: str
+    rating: float = pydantic.Field()
     """
     The rating scale is one to five stars
     """
@@ -29,7 +29,5 @@ class Movie(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
         extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

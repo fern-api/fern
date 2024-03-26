@@ -14,23 +14,23 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateMovieRequest.Builder.class)
 public final class CreateMovieRequest {
-    private final String movieTitle;
+    private final String title;
 
-    private final double movieRating;
+    private final double rating;
 
-    private CreateMovieRequest(String movieTitle, double movieRating) {
-        this.movieTitle = movieTitle;
-        this.movieRating = movieRating;
+    private CreateMovieRequest(String title, double rating) {
+        this.title = title;
+        this.rating = rating;
     }
 
-    @JsonProperty("movie_title")
-    public String getMovieTitle() {
-        return movieTitle;
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
     }
 
-    @JsonProperty("movie_rating")
-    public double getMovieRating() {
-        return movieRating;
+    @JsonProperty("rating")
+    public double getRating() {
+        return rating;
     }
 
     @java.lang.Override
@@ -40,12 +40,12 @@ public final class CreateMovieRequest {
     }
 
     private boolean equalTo(CreateMovieRequest other) {
-        return movieTitle.equals(other.movieTitle) && movieRating == other.movieRating;
+        return title.equals(other.title) && rating == other.rating;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.movieTitle, this.movieRating);
+        return Objects.hash(this.title, this.rating);
     }
 
     @java.lang.Override
@@ -53,18 +53,18 @@ public final class CreateMovieRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static MovieTitleStage builder() {
+    public static TitleStage builder() {
         return new Builder();
     }
 
-    public interface MovieTitleStage {
-        MovieRatingStage movieTitle(String movieTitle);
+    public interface TitleStage {
+        RatingStage title(String title);
 
         Builder from(CreateMovieRequest other);
     }
 
-    public interface MovieRatingStage {
-        _FinalStage movieRating(double movieRating);
+    public interface RatingStage {
+        _FinalStage rating(double rating);
     }
 
     public interface _FinalStage {
@@ -72,37 +72,37 @@ public final class CreateMovieRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements MovieTitleStage, MovieRatingStage, _FinalStage {
-        private String movieTitle;
+    public static final class Builder implements TitleStage, RatingStage, _FinalStage {
+        private String title;
 
-        private double movieRating;
+        private double rating;
 
         private Builder() {}
 
         @java.lang.Override
         public Builder from(CreateMovieRequest other) {
-            movieTitle(other.getMovieTitle());
-            movieRating(other.getMovieRating());
+            title(other.getTitle());
+            rating(other.getRating());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("movie_title")
-        public MovieRatingStage movieTitle(String movieTitle) {
-            this.movieTitle = movieTitle;
+        @JsonSetter("title")
+        public RatingStage title(String title) {
+            this.title = title;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("movie_rating")
-        public _FinalStage movieRating(double movieRating) {
-            this.movieRating = movieRating;
+        @JsonSetter("rating")
+        public _FinalStage rating(double rating) {
+            this.rating = rating;
             return this;
         }
 
         @java.lang.Override
         public CreateMovieRequest build() {
-            return new CreateMovieRequest(movieTitle, movieRating);
+            return new CreateMovieRequest(title, rating);
         }
     }
 }

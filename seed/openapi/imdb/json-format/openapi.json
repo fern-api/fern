@@ -37,7 +37,7 @@
         }
       }
     },
-    "/movies/{movie_id}": {
+    "/movies/{movieId}": {
       "get": {
         "operationId": "imdb_getMovie",
         "tags": [
@@ -45,7 +45,7 @@
         ],
         "parameters": [
           {
-            "name": "movie_id",
+            "name": "movieId",
             "in": "path",
             "required": true,
             "schema": {
@@ -88,39 +88,39 @@
         "title": "Movie",
         "type": "object",
         "properties": {
-          "_id": {
+          "id": {
             "$ref": "#/components/schemas/MovieId"
           },
-          "movie_title": {
+          "title": {
             "type": "string"
           },
-          "movie_rating": {
+          "rating": {
             "type": "number",
             "format": "double",
             "description": "The rating scale is one to five stars"
           }
         },
         "required": [
-          "_id",
-          "movie_title",
-          "movie_rating"
+          "id",
+          "title",
+          "rating"
         ]
       },
       "CreateMovieRequest": {
         "title": "CreateMovieRequest",
         "type": "object",
         "properties": {
-          "movie_title": {
+          "title": {
             "type": "string"
           },
-          "movie_rating": {
+          "rating": {
             "type": "number",
             "format": "double"
           }
         },
         "required": [
-          "movie_title",
-          "movie_rating"
+          "title",
+          "rating"
         ]
       }
     },

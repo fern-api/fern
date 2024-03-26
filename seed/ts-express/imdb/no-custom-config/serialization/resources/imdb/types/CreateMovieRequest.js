@@ -29,6 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateMovieRequest = void 0;
 const core = __importStar(require("../../../../core"));
 exports.CreateMovieRequest = core.serialization.object({
-    movieTitle: core.serialization.property("movie_title", core.serialization.string()),
-    movieRating: core.serialization.property("movie_rating", core.serialization.number()),
+    title: core.serialization.string(),
+    rating: core.serialization.number(),
 });

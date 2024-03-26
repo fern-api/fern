@@ -11,7 +11,7 @@ export interface ImdbServiceMethods {
         locals: any;
     }): void | Promise<void>;
     getMovie(req: express.Request<{
-        movie_id: serializers.MovieId.Raw;
+        movieId: serializers.MovieId.Raw;
     }, SeedApi.Movie, never, never>, res: {
         send: (responseBody: SeedApi.Movie) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

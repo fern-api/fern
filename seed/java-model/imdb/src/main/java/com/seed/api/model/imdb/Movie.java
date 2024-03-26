@@ -16,32 +16,32 @@ import java.util.Objects;
 public final class Movie {
     private final String id;
 
-    private final String movieTitle;
+    private final String title;
 
-    private final double movieRating;
+    private final double rating;
 
-    private Movie(String id, String movieTitle, double movieRating) {
+    private Movie(String id, String title, double rating) {
         this.id = id;
-        this.movieTitle = movieTitle;
-        this.movieRating = movieRating;
+        this.title = title;
+        this.rating = rating;
     }
 
-    @JsonProperty("_id")
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
 
-    @JsonProperty("movie_title")
-    public String getMovieTitle() {
-        return movieTitle;
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
     }
 
     /**
      * @return The rating scale is one to five stars
      */
-    @JsonProperty("movie_rating")
-    public double getMovieRating() {
-        return movieRating;
+    @JsonProperty("rating")
+    public double getRating() {
+        return rating;
     }
 
     @java.lang.Override
@@ -51,12 +51,12 @@ public final class Movie {
     }
 
     private boolean equalTo(Movie other) {
-        return id.equals(other.id) && movieTitle.equals(other.movieTitle) && movieRating == other.movieRating;
+        return id.equals(other.id) && title.equals(other.title) && rating == other.rating;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.movieTitle, this.movieRating);
+        return Objects.hash(this.id, this.title, this.rating);
     }
 
     @java.lang.Override
@@ -69,17 +69,17 @@ public final class Movie {
     }
 
     public interface IdStage {
-        MovieTitleStage id(String id);
+        TitleStage id(String id);
 
         Builder from(Movie other);
     }
 
-    public interface MovieTitleStage {
-        MovieRatingStage movieTitle(String movieTitle);
+    public interface TitleStage {
+        RatingStage title(String title);
     }
 
-    public interface MovieRatingStage {
-        _FinalStage movieRating(double movieRating);
+    public interface RatingStage {
+        _FinalStage rating(double rating);
     }
 
     public interface _FinalStage {
@@ -87,34 +87,34 @@ public final class Movie {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, MovieTitleStage, MovieRatingStage, _FinalStage {
+    public static final class Builder implements IdStage, TitleStage, RatingStage, _FinalStage {
         private String id;
 
-        private String movieTitle;
+        private String title;
 
-        private double movieRating;
+        private double rating;
 
         private Builder() {}
 
         @java.lang.Override
         public Builder from(Movie other) {
             id(other.getId());
-            movieTitle(other.getMovieTitle());
-            movieRating(other.getMovieRating());
+            title(other.getTitle());
+            rating(other.getRating());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("_id")
-        public MovieTitleStage id(String id) {
+        @JsonSetter("id")
+        public TitleStage id(String id) {
             this.id = id;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("movie_title")
-        public MovieRatingStage movieTitle(String movieTitle) {
-            this.movieTitle = movieTitle;
+        @JsonSetter("title")
+        public RatingStage title(String title) {
+            this.title = title;
             return this;
         }
 
@@ -123,15 +123,15 @@ public final class Movie {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("movie_rating")
-        public _FinalStage movieRating(double movieRating) {
-            this.movieRating = movieRating;
+        @JsonSetter("rating")
+        public _FinalStage rating(double rating) {
+            this.rating = rating;
             return this;
         }
 
         @java.lang.Override
         public Movie build() {
-            return new Movie(id, movieTitle, movieRating);
+            return new Movie(id, title, rating);
         }
     }
 }

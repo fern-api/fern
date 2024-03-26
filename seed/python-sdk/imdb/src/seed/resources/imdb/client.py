@@ -47,8 +47,8 @@ class ImdbClient:
         )
         client.imdb.create_movie(
             request=CreateMovieRequest(
-                movie_title="string",
-                movie_rating=1.1,
+                title="string",
+                rating=1.1,
             ),
         )
         """
@@ -158,8 +158,8 @@ class AsyncImdbClient:
         )
         await client.imdb.create_movie(
             request=CreateMovieRequest(
-                movie_title="string",
-                movie_rating=1.1,
+                title="string",
+                rating=1.1,
             ),
         )
         """

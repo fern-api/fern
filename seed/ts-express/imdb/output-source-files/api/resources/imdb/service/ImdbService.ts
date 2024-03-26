@@ -19,7 +19,7 @@ export interface ImdbServiceMethods {
     getMovie(
         req: express.Request<
             {
-                movie_id: serializers.MovieId.Raw;
+                movieId: serializers.MovieId.Raw;
             },
             SeedApi.Movie,
             never,
@@ -89,7 +89,7 @@ export class ImdbService {
                 next(request.errors);
             }
         });
-        this.router.get("/:movie_id", async (req, res, next) => {
+        this.router.get("/:movieId", async (req, res, next) => {
             try {
                 await this.methods.getMovie(req as any, {
                     send: async (responseBody) => {

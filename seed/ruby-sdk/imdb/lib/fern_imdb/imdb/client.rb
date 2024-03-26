@@ -20,8 +20,8 @@ module SeedApiClient
     # Add a movie to the database
     #
     # @param request [Hash] Request of type Imdb::CreateMovieRequest, as a Hash
-    #   * :movie_title (String)
-    #   * :movie_rating (Float)
+    #   * :title (String)
+    #   * :rating (Float)
     # @param request_options [RequestOptions]
     # @return [Imdb::MOVIE_ID]
     def create_movie(request:, request_options: nil)
@@ -60,8 +60,8 @@ module SeedApiClient
     # Add a movie to the database
     #
     # @param request [Hash] Request of type Imdb::CreateMovieRequest, as a Hash
-    #   * :movie_title (String)
-    #   * :movie_rating (Float)
+    #   * :title (String)
+    #   * :rating (Float)
     # @param request_options [RequestOptions]
     # @return [Imdb::MOVIE_ID]
     def create_movie(request:, request_options: nil)

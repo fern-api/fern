@@ -94,12 +94,6 @@ fixtures:
     - customConfig:
         includeApiReference: true
       outputFolder: examples-with-api-reference
-  imdb:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        preserveOriginalPropertyCasing: true
-      outputFolder: preserve-original-property-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:

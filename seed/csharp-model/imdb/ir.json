@@ -201,7 +201,7 @@
           {
             "name": {
               "name": {
-                "originalName": "_id",
+                "originalName": "id",
                 "camelCase": {
                   "unsafeName": "id",
                   "safeName": "id"
@@ -219,7 +219,7 @@
                   "safeName": "Id"
                 }
               },
-              "wireValue": "_id"
+              "wireValue": "id"
             },
             "valueType": {
               "type": "named",
@@ -291,25 +291,25 @@
           {
             "name": {
               "name": {
-                "originalName": "movie_title",
+                "originalName": "title",
                 "camelCase": {
-                  "unsafeName": "movieTitle",
-                  "safeName": "movieTitle"
+                  "unsafeName": "title",
+                  "safeName": "title"
                 },
                 "snakeCase": {
-                  "unsafeName": "movie_title",
-                  "safeName": "movie_title"
+                  "unsafeName": "title",
+                  "safeName": "title"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "MOVIE_TITLE",
-                  "safeName": "MOVIE_TITLE"
+                  "unsafeName": "TITLE",
+                  "safeName": "TITLE"
                 },
                 "pascalCase": {
-                  "unsafeName": "MovieTitle",
-                  "safeName": "MovieTitle"
+                  "unsafeName": "Title",
+                  "safeName": "Title"
                 }
               },
-              "wireValue": "movie_title"
+              "wireValue": "title"
             },
             "valueType": {
               "primitive": "STRING",
@@ -319,25 +319,25 @@
           {
             "name": {
               "name": {
-                "originalName": "movie_rating",
+                "originalName": "rating",
                 "camelCase": {
-                  "unsafeName": "movieRating",
-                  "safeName": "movieRating"
+                  "unsafeName": "rating",
+                  "safeName": "rating"
                 },
                 "snakeCase": {
-                  "unsafeName": "movie_rating",
-                  "safeName": "movie_rating"
+                  "unsafeName": "rating",
+                  "safeName": "rating"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "MOVIE_RATING",
-                  "safeName": "MOVIE_RATING"
+                  "unsafeName": "RATING",
+                  "safeName": "RATING"
                 },
                 "pascalCase": {
-                  "unsafeName": "MovieRating",
-                  "safeName": "MovieRating"
+                  "unsafeName": "Rating",
+                  "safeName": "Rating"
                 }
               },
-              "wireValue": "movie_rating"
+              "wireValue": "rating"
             },
             "valueType": {
               "primitive": "DOUBLE",
@@ -423,25 +423,25 @@
           {
             "name": {
               "name": {
-                "originalName": "movie_title",
+                "originalName": "title",
                 "camelCase": {
-                  "unsafeName": "movieTitle",
-                  "safeName": "movieTitle"
+                  "unsafeName": "title",
+                  "safeName": "title"
                 },
                 "snakeCase": {
-                  "unsafeName": "movie_title",
-                  "safeName": "movie_title"
+                  "unsafeName": "title",
+                  "safeName": "title"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "MOVIE_TITLE",
-                  "safeName": "MOVIE_TITLE"
+                  "unsafeName": "TITLE",
+                  "safeName": "TITLE"
                 },
                 "pascalCase": {
-                  "unsafeName": "MovieTitle",
-                  "safeName": "MovieTitle"
+                  "unsafeName": "Title",
+                  "safeName": "Title"
                 }
               },
-              "wireValue": "movie_title"
+              "wireValue": "title"
             },
             "valueType": {
               "primitive": "STRING",
@@ -451,25 +451,25 @@
           {
             "name": {
               "name": {
-                "originalName": "movie_rating",
+                "originalName": "rating",
                 "camelCase": {
-                  "unsafeName": "movieRating",
-                  "safeName": "movieRating"
+                  "unsafeName": "rating",
+                  "safeName": "rating"
                 },
                 "snakeCase": {
-                  "unsafeName": "movie_rating",
-                  "safeName": "movie_rating"
+                  "unsafeName": "rating",
+                  "safeName": "rating"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "MOVIE_RATING",
-                  "safeName": "MOVIE_RATING"
+                  "unsafeName": "RATING",
+                  "safeName": "RATING"
                 },
                 "pascalCase": {
-                  "unsafeName": "MovieRating",
-                  "safeName": "MovieRating"
+                  "unsafeName": "Rating",
+                  "safeName": "Rating"
                 }
               },
-              "wireValue": "movie_rating"
+              "wireValue": "rating"
             },
             "valueType": {
               "primitive": "DOUBLE",
@@ -996,7 +996,7 @@
             "head": "/",
             "parts": [
               {
-                "pathParameter": "movie_id",
+                "pathParameter": "movieId",
                 "tail": ""
               }
             ]
@@ -1005,7 +1005,7 @@
             "head": "/movies/",
             "parts": [
               {
-                "pathParameter": "movie_id",
+                "pathParameter": "movieId",
                 "tail": ""
               }
             ]
@@ -1013,7 +1013,7 @@
           "pathParameters": [
             {
               "name": {
-                "originalName": "movie_id",
+                "originalName": "movieId",
                 "camelCase": {
                   "unsafeName": "movieId",
                   "safeName": "movieId"
@@ -1103,7 +1103,7 @@
           "allPathParameters": [
             {
               "name": {
-                "originalName": "movie_id",
+                "originalName": "movieId",
                 "camelCase": {
                   "unsafeName": "movieId",
                   "safeName": "movieId"
