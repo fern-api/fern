@@ -3,6 +3,6 @@
  */
 
 export interface CreateMovieRequest {
-    title: string;
-    rating: number;
+    movieTitle: string;
+    movieRating: number;
 }

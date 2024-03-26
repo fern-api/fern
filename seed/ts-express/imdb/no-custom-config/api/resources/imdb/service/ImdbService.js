@@ -89,7 +89,7 @@ class ImdbService {
                 next(request.errors);
             }
         }));
-        this.router.get("/:movieId", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/:movie_id", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getMovie(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {

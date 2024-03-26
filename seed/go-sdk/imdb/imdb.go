@@ -9,8 +9,8 @@ import (
 )
 
 type CreateMovieRequest struct {
-	Title  string  `json:"title" url:"title"`
-	Rating float64 `json:"rating" url:"rating"`
+	MovieTitle  string  `json:"movie_title" url:"movie_title"`
+	MovieRating float64 `json:"movie_rating" url:"movie_rating"`
 
 	_rawJSON json.RawMessage
 }
@@ -39,10 +39,10 @@ func (c *CreateMovieRequest) String() string {
 }
 
 type Movie struct {
-	Id    MovieId `json:"id" url:"id"`
-	Title string  `json:"title" url:"title"`
+	Id         MovieId `json:"_id" url:"_id"`
+	MovieTitle string  `json:"movie_title" url:"movie_title"`
 	// The rating scale is one to five stars
-	Rating float64 `json:"rating" url:"rating"`
+	MovieRating float64 `json:"movie_rating" url:"movie_rating"`
 
 	_rawJSON json.RawMessage
 }

@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Movie = void 0;
 const core = __importStar(require("../../../../core"));
 exports.Movie = core.serialization.object({
-    id: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../..")))).MovieId; })),
-    title: core.serialization.string(),
-    rating: core.serialization.number(),
+    id: core.serialization.property("_id", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require("../../..")))).MovieId; }))),
+    movieTitle: core.serialization.property("movie_title", core.serialization.string()),
+    movieRating: core.serialization.property("movie_rating", core.serialization.number()),
 });

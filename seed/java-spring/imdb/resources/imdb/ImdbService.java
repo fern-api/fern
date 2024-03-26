@@ -26,8 +26,8 @@ public interface ImdbService {
   MovieId createMovie(@RequestBody CreateMovieRequest body);
 
   @GetMapping(
-      value = "/{movieId}",
+      value = "/{movie_id}",
       produces = "application/json"
   )
-  Movie getMovie(@PathVariable("movieId") MovieId movieId) throws MovieDoesNotExistError;
+  Movie getMovie(@PathVariable("movie_id") MovieId movieId) throws MovieDoesNotExistError;
 }

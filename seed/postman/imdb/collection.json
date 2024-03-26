@@ -54,7 +54,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"example\",\n    \"rating\": 0\n}",
+              "raw": "{\n    \"movie_title\": \"example\",\n    \"movie_rating\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -70,18 +70,18 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/movies/:movieId",
+              "raw": "{{baseUrl}}/movies/:movie_id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "movies",
-                ":movieId"
+                ":movie_id"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "movieId",
+                  "key": "movie_id",
                   "value": "",
                   "description": null
                 }

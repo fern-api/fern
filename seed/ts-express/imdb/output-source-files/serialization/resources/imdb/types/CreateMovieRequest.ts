@@ -10,13 +10,13 @@ export const CreateMovieRequest: core.serialization.ObjectSchema<
     serializers.CreateMovieRequest.Raw,
     SeedApi.CreateMovieRequest
 > = core.serialization.object({
-    title: core.serialization.string(),
-    rating: core.serialization.number(),
+    movieTitle: core.serialization.property("movie_title", core.serialization.string()),
+    movieRating: core.serialization.property("movie_rating", core.serialization.number()),
 });
 
 export declare namespace CreateMovieRequest {
     interface Raw {
-        title: string;
-        rating: number;
+        movie_title: string;
+        movie_rating: number;
     }
 }

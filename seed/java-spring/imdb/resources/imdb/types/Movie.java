@@ -21,32 +21,32 @@ import java.util.Objects;
 public final class Movie {
   private final MovieId id;
 
-  private final String title;
+  private final String movieTitle;
 
-  private final double rating;
+  private final double movieRating;
 
-  private Movie(MovieId id, String title, double rating) {
+  private Movie(MovieId id, String movieTitle, double movieRating) {
     this.id = id;
-    this.title = title;
-    this.rating = rating;
+    this.movieTitle = movieTitle;
+    this.movieRating = movieRating;
   }
 
-  @JsonProperty("id")
+  @JsonProperty("_id")
   public MovieId getId() {
     return id;
   }
 
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
+  @JsonProperty("movie_title")
+  public String getMovieTitle() {
+    return movieTitle;
   }
 
   /**
    * @return The rating scale is one to five stars
    */
-  @JsonProperty("rating")
-  public double getRating() {
-    return rating;
+  @JsonProperty("movie_rating")
+  public double getMovieRating() {
+    return movieRating;
   }
 
   @java.lang.Override
@@ -56,12 +56,12 @@ public final class Movie {
   }
 
   private boolean equalTo(Movie other) {
-    return id.equals(other.id) && title.equals(other.title) && rating == other.rating;
+    return id.equals(other.id) && movieTitle.equals(other.movieTitle) && movieRating == other.movieRating;
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.id, this.title, this.rating);
+    return Objects.hash(this.id, this.movieTitle, this.movieRating);
   }
 
   @java.lang.Override
@@ -74,17 +74,17 @@ public final class Movie {
   }
 
   public interface IdStage {
-    TitleStage id(MovieId id);
+    MovieTitleStage id(MovieId id);
 
     Builder from(Movie other);
   }
 
-  public interface TitleStage {
-    RatingStage title(String title);
+  public interface MovieTitleStage {
+    MovieRatingStage movieTitle(String movieTitle);
   }
 
-  public interface RatingStage {
-    _FinalStage rating(double rating);
+  public interface MovieRatingStage {
+    _FinalStage movieRating(double movieRating);
   }
 
   public interface _FinalStage {
@@ -94,12 +94,12 @@ public final class Movie {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, TitleStage, RatingStage, _FinalStage {
+  public static final class Builder implements IdStage, MovieTitleStage, MovieRatingStage, _FinalStage {
     private MovieId id;
 
-    private String title;
+    private String movieTitle;
 
-    private double rating;
+    private double movieRating;
 
     private Builder() {
     }
@@ -107,22 +107,22 @@ public final class Movie {
     @java.lang.Override
     public Builder from(Movie other) {
       id(other.getId());
-      title(other.getTitle());
-      rating(other.getRating());
+      movieTitle(other.getMovieTitle());
+      movieRating(other.getMovieRating());
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("id")
-    public TitleStage id(MovieId id) {
+    @JsonSetter("_id")
+    public MovieTitleStage id(MovieId id) {
       this.id = id;
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("title")
-    public RatingStage title(String title) {
-      this.title = title;
+    @JsonSetter("movie_title")
+    public MovieRatingStage movieTitle(String movieTitle) {
+      this.movieTitle = movieTitle;
       return this;
     }
 
@@ -131,15 +131,15 @@ public final class Movie {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
-    @JsonSetter("rating")
-    public _FinalStage rating(double rating) {
-      this.rating = rating;
+    @JsonSetter("movie_rating")
+    public _FinalStage movieRating(double movieRating) {
+      this.movieRating = movieRating;
       return this;
     }
 
     @java.lang.Override
     public Movie build() {
-      return new Movie(id, title, rating);
+      return new Movie(id, movieTitle, movieRating);
     }
   }
 }

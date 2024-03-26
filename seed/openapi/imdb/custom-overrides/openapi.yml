@@ -24,13 +24,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateMovieRequest'
-  /movies/{movieId}:
+  /movies/{movie_id}:
     get:
       operationId: imdb_getMovie
       tags:
         - Imdb
       parameters:
-        - name: movieId
+        - name: movie_id
           in: path
           required: true
           schema:
@@ -57,30 +57,30 @@ components:
       title: Movie
       type: object
       properties:
-        id:
+        _id:
           $ref: '#/components/schemas/MovieId'
-        title:
+        movie_title:
           type: string
-        rating:
+        movie_rating:
           type: number
           format: double
           description: The rating scale is one to five stars
       required:
-        - id
-        - title
-        - rating
+        - _id
+        - movie_title
+        - movie_rating
     CreateMovieRequest:
       title: CreateMovieRequest
       type: object
       properties:
-        title:
+        movie_title:
           type: string
-        rating:
+        movie_rating:
           type: number
           format: double
       required:
-        - title
-        - rating
+        - movie_title
+        - movie_rating
   securitySchemes:
     BearerAuth:
       type: http

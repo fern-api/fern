@@ -7,7 +7,7 @@ import * as core from "../../../../core";
 export declare const CreateMovieRequest: core.serialization.ObjectSchema<serializers.CreateMovieRequest.Raw, SeedApi.CreateMovieRequest>;
 export declare namespace CreateMovieRequest {
     interface Raw {
-        title: string;
-        rating: number;
+        movie_title: string;
+        movie_rating: number;
     }
 }
