@@ -6,64 +6,167 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
-  # - url: fern-beta.docs.buildwithfern.com/learn
-  #   custom-domain: staging.buildwithfern.com/learn
 title: Fern | Documentation
 
-tabs:
-  overview:
-    display-name: Overview
-    icon: "globe"
-  sdks:
-    display-name: SDKs
-    slug: sdks
-    icon: code
-  docs:
-    display-name: Docs
-    slug: docs
-    icon: book
-
-navigation:
-  - tab: overview
-    layout:
+navigation: 
+  - section: Home
+    contents: 
       - page: Introduction
-        path: ./docs/pages/overview/introduction.mdx
-      - page: Why Fern?
-        path: ./docs/pages/overview/why-fern.mdx
-      - page: Get started
-        path: ./docs/pages/overview/get-started.mdx
-      - section: Define your API
+        path: ./overview/intro.mdx
+  - section: SDKs
+    contents: 
+      - page: Overview
+        path: ./overview/dummy.mdx
+      - page: Quickstart
+        path: ./overview/dummy.mdx
+      - section: Features
+        contents: 
+          - page: Strongly typed
+            path: ./overview/dummy.mdx
+          - page: Idiomatic method names
+            path: ./overview/dummy.mdx
+          - page: Schema Validation
+            path: ./overview/dummy.mdx
+          - page: Auto-Pagination
+            path: ./overview/dummy.mdx
+          - page: Retries with backoff
+            path: ./overview/dummy.mdx
+          - page: Webhook Signature Verification
+            path: ./overview/dummy.mdx
+          - page: Forward Compatibility  
+            path: ./overview/dummy.mdx
+          - page: Multipart Form Data
+            path: ./overview/dummy.mdx
+          - page: Idempotency Headers
+            path: ./overview/dummy.mdx
+          - page: Server-Sent Events
+            path: ./overview/dummy.mdx
+          - page: Integration Tests
+            path: ./overview/dummy.mdx
+          - page: Code Snippets
+            path: ./overview/dummy.mdx
+          - page: Augment with custom code
+            path: ./overview/dummy.mdx
+          - page: Merging multiple APIs
+            path: ./overview/dummy.mdx
+          - page: GitHub integration
+            path: ./overview/dummy.mdx
+  - section: Docs
+    contents: 
+      - page: Overview
+        path: ./overview/dummy.mdx
+      - page: Quickstart
+        path: ./overview/dummy.mdx
+      - section: Global Settings
+        contents: 
+          - page: URLs
+            path: ./overview/dummy.mdx
+          - page: Colors
+            path: ./overview/dummy.mdx
+          - page: Layout
+            path: ./overview/dummy.mdx
+          - page: Navigation
+            path: ./overview/dummy.mdx
+          - page: Typography
+            path: ./overview/dummy.mdx
+          - page: CSS and JS Overrides
+            path: ./overview/dummy.mdx
+          - page: Call to actions
+            path: ./overview/dummy.mdx
+      - section: Writing Content
+        contents: 
+          - page: Page Titles and Metadata
+            path: ./overview/dummy.mdx
+          - page: Headers and Text
+            path: ./overview/dummy.mdx
+          - page: Images, Videos and Embeds
+            path: ./overview/dummy.mdx
+          - page: Lists and Tables
+            path: ./overview/dummy.mdx
+          - page: Code Blocks
+            path: ./overview/dummy.mdx
+      - section: API References
+        contents: 
+          - page: API Definition Setup
+            path: ./overview/dummy.mdx
+          - page: Errors, Audiences, and Snippets 
+            path: ./overview/dummy.mdx
+          - page: API Playground
+            path: ./overview/dummy.mdx
+      - section: Custom Components
+        contents: 
+          - page: Cards
+            path: ./overview/dummy.mdx
+          - page: CodeBlocks
+            path: ./overview/dummy.mdx
+          - page: Callouts
+            path: ./overview/dummy.mdx
+          - page: Icons
+            path: ./overview/dummy.mdx
+          - page: Availability
+            path: ./overview/dummy.mdx
+          - page: Tabs
+            path: ./overview/dummy.mdx
+          - page: Accordion
+            path: ./overview/dummy.mdx
+          - page: Steps
+            path: ./overview/dummy.mdx
+          - page: Endpoint Snippets
+            path: ./overview/dummy.mdx
+  - section: Configuration
+    contents: 
+      - section: Fern Folder
         contents:
-          # TBD
-          # - page: Overview
-          #   path: ./docs/pages/overview/define-your-api/api-overview.mdx
-          - section: OpenAPI
-            slug: openapi
-            contents:
+          - page: Overview
+            path: ./overview/dummy.mdx
+          - page: generators.yml
+            path: ./overview/dummy.mdx
+          - page: docs.yml
+            path: ./overview/dummy.mdx
+      - section: API Definitions
+        contents:
+          - section: OpenAPI Spec
+            contents: 
               - page: Overview
-                path: ./docs/pages/overview/define-your-api/openapi/openapi-overview.mdx
-              - page: OpenAPI Extensions
-                path: ./docs/pages/overview/define-your-api/openapi/extensions.mdx
-                slug: extensions
-              - page: OpenAPI Examples
-                path: ./docs/pages/overview/define-your-api/openapi/examples.mdx
-                slug: examples
+                path: ./overview/dummy.mdx
+              - section: Extensions
+                contents: 
+                  - page: Overriding Names
+                    path: ./overview/dummy.mdx
+                  - page: Auth and Global Headers
+                    path: ./overview/dummy.mdx
+                  - page: Audiences
+                    path: ./overview/dummy.mdx
+                  - page: Ignoring Endpoints
+                    path: ./overview/dummy.mdx
+                  - page: Overlaying Customizations
+                    path: ./overview/dummy.mdx
+                  - page: Server Sent Events
+                    path: ./overview/dummy.mdx
+                  - page: Examples
+                    path: ./overview/dummy.mdx
+          - section: AsyncAPI Spec
+            contents: 
+              - page: Overview
+                path: ./overview/dummy.mdx
+          - section: gRPC
+            contents: 
+              - page: Overview
+                path: ./overview/dummy.mdx
           - section: Fern Definition
-            slug: ferndef
             contents:
               - page: Overview
-                path: ./docs/pages/overview/define-your-api/ferndef/ferndef-overview.mdx
+                path: ./overview/dummy.mdx
               - page: Export to OpenAPI
-                slug: export-openapi
-                path: ./docs/pages/overview/define-your-api/ferndef/export-openapi.mdx
+                path: ./overview/dummy.mdx
               - page: Types
-                path: ./docs/pages/overview/define-your-api/ferndef/types.mdx
+                path: ./overview/dummy.mdx
               - page: Endpoints
-                path: ./docs/pages/overview/define-your-api/ferndef/endpoints.mdx
+                path: ./overview/dummy.mdx
               - page: Errors
-                path: ./docs/pages/overview/define-your-api/ferndef/errors.mdx
+                path: ./overview/dummy.mdx
               - page: Imports
-                path: ./docs/pages/overview/define-your-api/ferndef/imports.mdx
+                path: ./overview/dummy.mdx
               - page: Examples
                 path: ./docs/pages/overview/define-your-api/ferndef/examples.mdx
               - page: Audiences
@@ -74,206 +177,22 @@ navigation:
                 path: ./docs/pages/overview/define-your-api/ferndef/api-yml.mdx
               - page: Packages
                 path: ./docs/pages/overview/define-your-api/ferndef/packages.mdx
-              - page: Comparison with OpenAPI
-                path: ./docs/pages/overview/define-your-api/ferndef/comparison.mdx
-      - section: Fern CLI tool
-        slug: cli
+      - section: Fern CLI
         contents:
-          - page: Overview
-            path: ./docs/pages/overview/cli/cli-overview.mdx
-          - section: CLI commands
-            slug: commands
-            contents:
-              - page: fern generate
-                path: ./docs/pages/overview/cli/cli-commands/fern-generate.mdx
-              - page: fern check
-                path: ./docs/pages/overview/cli/cli-commands/fern-check.mdx
-              - page: fern add
-                path: ./docs/pages/overview/cli/cli-commands/fern-add.mdx
-              - page: fern init
-                path: ./docs/pages/overview/cli/cli-commands/fern-init.mdx
-              - page: fern write-definition
-                path: ./docs/pages/overview/cli/cli-commands/fern-write-definition.mdx
-              - page: fern upgrade
-                path: ./docs/pages/overview/cli/cli-commands/fern-upgrade.mdx
-              - page: fern token
-                path: ./docs/pages/overview/cli/cli-commands/fern-token.mdx
-              - page: fern login
-                path: ./docs/pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern format
-                path: ./docs/pages/overview/cli/cli-commands/fern-format.mdx
-              - page: fern help
-                path: ./docs/pages/overview/cli/cli-commands/fern-help.mdx
-              - page: fern version
-                path: ./docs/pages/overview/cli/cli-commands/fern-version.mdx
-      - section: Changelog
-        contents:
-          - page: December 2023
-            path: ./docs/pages/overview/changelog/december-2023.mdx
-          - page: February 2024
-            path: ./docs/pages/overview/changelog/february-2024.mdx
-  - tab: sdks
-    layout:
-      - page: Overview
-        path: ./docs/pages/fern-sdks/sdks-overview.mdx
-      - section: Fern SDKs Quickstarts
-        slug: quickstarts
-        contents:
-          - page: Fern SDKs Quickstart with OpenAPI
-            slug: openapi
-            path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-openapi.mdx
-          - page: Fern SDKs Quickstart with Fern Def
-            slug: ferndef
-            path: ./docs/pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
-      - section: SDK generators
-        contents:
-          - page: TypeScript SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/typescript-sdk.mdx
-            slug: typescript
-          - page: Python SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/python-sdk.mdx
-            slug: python
-          - page: Java SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/java-sdk.mdx
-            slug: java
-          - page: Go SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/go-sdk.mdx
-            slug: go
-          - page: Ruby SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/ruby-sdk.mdx
-            slug: ruby
-          - page: C# SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/csharp-sdk.mdx
-            slug: csharp
-          - page: PHP SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/php-sdk.mdx
-            slug: php
-          - page: Swift SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/swift-sdk.mdx
-            slug: swift
-          - page: Rust SDK
-            path: ./docs/pages/fern-sdks/sdk-generators/rust-sdk.mdx
-            slug: rust
-      - section: Other generators
-        contents:
-          - section: Server-side
-            contents:
-              - page: Express.js
-                path: ./docs/pages/fern-sdks/other-generators/server-side/express.mdx
-                slug: express
-              - page: FastAPI
-                path: ./docs/pages/fern-sdks/other-generators/server-side/fastapi.mdx
-                slug: fastapi
-              - page: Spring
-                path: ./docs/pages/fern-sdks/other-generators/server-side/spring.mdx
-          - section: Specification
-            slug: spec
-            contents:
-              - page: OpenAPI generator
-                slug: openapi
-                path: ./docs/pages/fern-sdks/other-generators/spec/openapi-generator.mdx
-              - page: Postman Collection generator
-                slug: postman
-                path: ./docs/pages/fern-sdks/other-generators/spec/postman-collection.mdx
-      - section: Guides
-        contents:
-          - page: Publish to Maven Central
-            path: ./docs/pages/fern-sdks/guides/publish-to-maven-central.mdx
-            slug: publish-maven
-          - page: Update SDKs with Fern's GitHub Bot
-            path: ./docs/pages/fern-sdks/guides/github-bot.mdx
-            slug: github-bot
-      - api: API Reference
-        api-name: public-api
-        # audiences:
-        #   - external
-        snippets:
-          python: fern-api
-          typescript: "@fern-api/node-sdk"
-  - tab: docs
-    layout:
-      - page: Overview
-        path: ./docs/pages/fern-docs/docs-overview.mdx
-      - section: Quickstarts
-        slug: quickstarts
-        contents:
-          - page: Use OpenAPI
-            slug: openapi
-            path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Use a Fern Definition
-            slug: ferndef
-            path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - section: Configuration
-        slug: config
-        contents:
-          - page: Overview
-            path: ./docs/pages/fern-docs/config/config-overview.mdx
-          - page: Navigation
-            path: ./docs/pages/fern-docs/config/navigation.mdx
-          - page: PR previews
-            slug: previews
-            path: ./docs/pages/fern-docs/config/previews.mdx
-          - section: Customize branding
-            slug: branding
-            contents:
-              - page: Colors, fonts, and background image
-                path: ./docs/pages/fern-docs/config/branding/colors-fonts-background-image.mdx
-                slug: colors-fonts-background-image
-              - page: Logo and favicon
-                path: ./docs/pages/fern-docs/config/branding/logo-and-favicon.mdx
-              - page: Custom domain
-                path: ./docs/pages/fern-docs/config/branding/custom-domain.mdx
-
-      - section: Write content
-        slug: content
-        contents:
-          - page: Write Markdown content
-            path: ./docs/pages/fern-docs/content/write-markdown.mdx
-            slug: write-markdown
-          - page: Frontmatter
-            path: ./docs/pages/fern-docs/content/front-matter.mdx
-          - page: Code snippets
-            path: ./docs/pages/fern-docs/content/code-snippets.mdx
-      
-      - section: API references
-        contents: 
-          - page: Generate API reference
-            path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
-            slug: generate-api-ref
-          - page: Audiences
-            path: ./docs/pages/fern-docs/config/audiences.mdx
-          - page: SDK snippets
-            path: ./docs/pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
-            path: ./docs/pages/fern-docs/config/endpoint-errors.mdx
-
-      - section: Components
-        slug: components
-        contents:
-          - page: Cards
-            path: ./docs/pages/fern-docs/content/components/card.mdx
-          - page: CodeBlocks
-            path: ./docs/pages/fern-docs/content/components/codeblocks.mdx
-            slug: codeblocks
-          - page: Callout
-            path: ./docs/pages/fern-docs/content/components/callout.mdx
-          - page: Icons
-            path: ./docs/pages/fern-docs/content/components/icons.mdx
-          - page: Availability
-            path: ./docs/pages/fern-docs/content/components/availability.mdx
-          - page: Tabs
-            path: ./docs/pages/fern-docs/content/components/tabs.mdx
-          - page: Accordion
-            path: ./docs/pages/fern-docs/content/components/accordion.mdx
-          - page: Steps
-            path: ./docs/pages/fern-docs/content/components/steps.mdx
-          - page: Endpoint snippets
-            path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
+          - page: fern init
+            path: ./overview/dummy.mdx
+          - page: fern check
+            path: ./overview/dummy.mdx
+          - page: fern generate
+            path: ./overview/dummy.mdx
+          - page: fern login
+            path: ./overview/dummy.mdx
+          - page: fern token
+            path: ./overview/dummy.mdx
+  - api: API Reference
+    api-name: public-api
 
 navbar-links:
-  - type: minimal
-    text: GitHub
-    url: https://github.com/fern-api/fern
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
@@ -283,15 +202,14 @@ logo:
   light: ./docs/images/logo-green.png
   dark: ./docs/images/logo-white.png
   height: 30
-# background-image:
-#   dark: ./docs/images/background.svg
+
 colors:
   accentPrimary:
     dark: "#ADFF8C"
-    light: "#418326"
+    # light: "#418326"
   background:
     dark: "#000000"
-    light: "#FFFFFF"
+    # light: "#FFFFFF"
 favicon: ./docs/images/favicon.ico
 
 layout:
