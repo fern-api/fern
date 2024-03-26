@@ -25,7 +25,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "form-data": "4.0.0",
     "node-fetch": "^3.3.2",
     "qs": "6.11.2"
   },

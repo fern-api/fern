@@ -1,4 +1,3 @@
-import { default as FormData } from "form-data";
 import qs from "qs";
 import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
@@ -47,6 +46,13 @@ const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
 const DEFAULT_MAX_RETRIES = 2;
 
+function isFormData(body: unknown): body is FormData {
+    if (!body) {
+        return false;
+    }
+    return String(body) === "[object FormData]" && typeof body === "object";
+}
+
 async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
@@ -67,8 +73,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : args.url;
 
     let body: BodyInit | undefined = undefined;
-    if (args.body instanceof FormData) {
-        // @ts-expect-error
+    if (isFormData(args.body)) {
         body = args.body;
     } else if (args.body instanceof Uint8Array) {
         body = args.body;
