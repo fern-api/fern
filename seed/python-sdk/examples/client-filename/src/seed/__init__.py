@@ -35,6 +35,7 @@ from .resources import (
     types,
 )
 from .environment import SeedExhaustiveEnvironment
+from .version import __version__
 
 __all__ = [
     "Actor",
@@ -65,6 +66,7 @@ __all__ = [
     "Test_And",
     "Test_Or",
     "Tree",
+    "__version__",
     "commons",
     "file",
     "health",

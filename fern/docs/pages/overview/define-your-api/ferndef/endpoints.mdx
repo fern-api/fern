@@ -11,7 +11,7 @@ improves clarity and makes the generated SDKs more idiomatic.
 Each service defines:
 
 1. A **base-path**: A common prefix for all the endpoints' HTTP paths
-2. Whether the service requires [authentication](/overview/define-your-api/ferndef/api-yml-reference#authentication)
+2. Whether the service requires [authentication](/learn/overview/define-your-api/ferndef/api-yml-reference#authentication)
 3. **Endpoints**
 
 <CodeBlock title='user.yml'>
@@ -54,7 +54,7 @@ service:
 
 The full path for the endpoint is the concatenation of:
 
-- The [environment](/overview/define-your-api/ferndef/api-yml-reference#environments) URL
+- The [environment](/learn/overview/define-your-api/ferndef/api-yml-reference#environments) URL
 - The service `base-path`
 - The endpoint `path`
 
@@ -259,7 +259,7 @@ errors:
 
 </CodeBlock>
 
-You can learn more about how to define errors on the [Errors](/overview/define-your-api/ferndef/errors) page.
+You can learn more about how to define errors on the [Errors](/learn/overview/define-your-api/ferndef/errors) page.
 
 ## Specifying examples
 
@@ -359,7 +359,7 @@ service:
 ````
 
 Examples contain all the information about the endpoint call, including
-the request body, path paramters, query parameters, headers, and response body.
+the request body, path parameters, query parameters, headers, and response body.
 
 <CodeBlock title='user.yml'>
   ```yaml examples: - path-parameters: userId: some-user-id query-parameters:

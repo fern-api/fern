@@ -45,7 +45,10 @@ export function convertStreamingOperation({
                 isStreaming: true
             });
             if (streamingRequestBody?.schemaReference != null) {
-                context.excludeSchema(getSchemaIdFromReference(streamingRequestBody.schemaReference));
+                const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
+                if (schemaId != null) {
+                    context.excludeSchema(schemaId);
+                }
             }
             const streamingResponses = getResponses({
                 operation: operationContext.operation,

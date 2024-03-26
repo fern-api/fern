@@ -100,8 +100,6 @@ navigation:
                 path: ./docs/pages/overview/cli/cli-commands/fern-token.mdx
               - page: fern login
                 path: ./docs/pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern register
-                path: ./docs/pages/overview/cli/cli-commands/fern-register.mdx
               - page: fern format
                 path: ./docs/pages/overview/cli/cli-commands/fern-format.mdx
               - page: fern help

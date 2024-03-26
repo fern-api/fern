@@ -2,5 +2,6 @@
 
 from .resources import dummy
 from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
+from .version import __version__
 
-__all__ = ["SeedSingleUrlEnvironmentDefaultEnvironment", "dummy"]
+__all__ = ["SeedSingleUrlEnvironmentDefaultEnvironment", "__version__", "dummy"]

@@ -15,6 +15,7 @@ from .resources import (
     a,
     ast,
 )
+from .version import __version__
 
 __all__ = [
     "A",
@@ -29,6 +30,7 @@ __all__ = [
     "ObjectValue",
     "PrimitiveValue",
     "RootType",
+    "__version__",
     "a",
     "ast",
 ]
