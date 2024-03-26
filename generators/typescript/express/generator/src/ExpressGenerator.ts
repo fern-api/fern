@@ -59,6 +59,7 @@ export declare namespace ExpressGenerator {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         outputEsm: boolean;
+        preserveOriginalPropertyCasing: boolean;
     }
 }
 
@@ -180,7 +181,8 @@ export class ExpressGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            preserveOriginalPropertyCasing: config.preserveOriginalPropertyCasing,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,

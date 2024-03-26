@@ -97,9 +97,9 @@ fixtures:
   imdb:
     - customConfig: null
       outputFolder: no-custom-config
-    # - customConfig:
-    #     preserveOriginalPropertyCasing: true
-    #   outputFolder: preserve-original-property-casing
+    - customConfig:
+        preserveOriginalPropertyCasing: true
+      outputFolder: preserve-original-property-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:
