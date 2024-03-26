@@ -26,6 +26,7 @@ from .request_body_parameters import (
     InlinedRequestBodyParameters,
     ReferencedRequestBodyParameters,
 )
+from fern_python.generators.sdk.client_generator import request_body_parameters
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -84,28 +85,8 @@ class EndpointFunctionGenerator:
             else False
         )
 
-        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
-            self._endpoint.request_body.visit(
-                inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=inlined_request_body,
-                    context=self._context,
-                ),
-                reference=lambda referenced_request_body: ReferencedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=referenced_request_body,
-                    context=self._context,
-                ),
-                file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
-                    endpoint=self._endpoint, request=file_upload_request, context=self._context
-                ),
-                bytes=lambda bytes_request: BytesRequestBodyParameters(
-                    endpoint=self._endpoint, request=bytes_request, context=self._context
-                ),
-            )
-            if self._endpoint.request_body is not None
-            else None
-        )
+        request_body_parameters = self._get_request_body_parameters()
+
         named_parameters = self._get_endpoint_named_parameters(
             service=self._service,
             endpoint=self._endpoint,
@@ -152,6 +133,106 @@ class EndpointFunctionGenerator:
             is_default_body_parameter_used=request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
+
+    def generate_paginated(self) -> Optional[GeneratedEndpointFunction]:
+        if self._endpoint.paginated is not None:
+            return None
+
+        request_body_parameters = self._get_request_body_parameters()
+        named_parameters = self._get_endpoint_named_parameters(
+            service=self._service,
+            endpoint=self._endpoint,
+            request_body_parameters=request_body_parameters,
+            idempotency_headers=self._idempotency_headers,
+        )
+
+        function_declaration = AST.FunctionDeclaration(
+            name=self._endpoint.name.get_as_name().snake_case.unsafe_name,
+            is_async=self._is_async,
+            docstring=self._get_docstring_for_endpoint(
+                endpoint=self._endpoint,
+                named_parameters=named_parameters,
+                path_parameters=self._endpoint.all_path_parameters,
+                snippet=None,
+            ),
+            signature=AST.FunctionSignature(
+                parameters=self._get_endpoint_path_parameters(),
+                named_parameters=named_parameters,
+                return_type=(
+                    self._get_response_body_type(self._endpoint.response, self._is_async, is_auto_paginated=True)
+                    if self._endpoint.response is not None
+                    else AST.TypeHint.none()
+                ),
+            ),
+            body=self._create_paginated_endpoint_body_writer(
+                endpoint=self._endpoint,
+                is_async=self._is_async
+            ),
+        )
+        return GeneratedEndpointFunction(
+            function=function_declaration,
+            is_default_body_parameter_used=request_body_parameters is not None,
+            # TODO: add snippets for paginated functions that show processing an iterator
+            snippet=None,
+        )
+    
+    def _pagination_property_to_dot_access(self, pagination_property: ir_types.PaginationProperty) -> str: 
+        property_path = pagination_property.property_path or []
+        property_path.append(pagination_property.property.name.name)
+        return ".".join([prop.snake_case.safe_name for prop in property_path])
+    
+    def _create_paginated_endpoint_body_writer(
+        self,
+        *,
+        endpoint: ir_types.HttpEndpoint,
+        pagination: ir_types.Pagination,
+        is_async: bool,
+    ) -> AST.CodeWriter:
+        """
+        (async) def function():
+            resp = client.function_paginated(...)
+            yield resp.results
+            while resp.next_page is not None:
+                resp = (await) client.function_paginated(next_page=resp.next_page)
+                yield resp.results
+        """
+        pagination_union = pagination.get_as_union()
+        result_path = self._pagination_property_to_dot_access(pagination_union.results.property)
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"resp = client.{get_endpoint_name(endpoint)}()")
+            endpoint.pagination
+            writer.write_line(f"yield resp.{result_path}")
+            writer.write_line(f"while resp.next_page is not None:")
+            with writer.indent():
+                writer.write_line(f"resp = {"await" if is_async else ""} client.{get_endpoint_name(endpoint)}(next_page=resp.next_page)")
+                writer.write_line(f"yield resp.{result_path}")
+
+        return AST.CodeWriter(write)
+    
+    def _get_request_body_parameters(self) -> Optional[AbstractRequestBodyParameters]:
+        return (
+            self._endpoint.request_body.visit(
+                inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
+                    endpoint=self._endpoint,
+                    request_body=inlined_request_body,
+                    context=self._context,
+                ),
+                reference=lambda referenced_request_body: ReferencedRequestBodyParameters(
+                    endpoint=self._endpoint,
+                    request_body=referenced_request_body,
+                    context=self._context,
+                ),
+                file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
+                    endpoint=self._endpoint, request=file_upload_request, context=self._context
+                ),
+                bytes=lambda bytes_request: BytesRequestBodyParameters(
+                    endpoint=self._endpoint, request=bytes_request, context=self._context
+                ),
+            )
+            if self._endpoint.request_body is not None
+            else None
+        )
+
 
     def _get_endpoint_path_parameters(
         self,
@@ -582,8 +663,8 @@ class EndpointFunctionGenerator:
                 return path_parameter
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
-        return response.visit(
+    def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool, is_auto_paginated: Optional[bool] = None) -> AST.TypeHint:
+        resp_type =  response.visit(
             file_download=lambda _: (
                 AST.TypeHint.async_iterator(AST.TypeHint.bytes())
                 if self._is_async
@@ -595,6 +676,10 @@ class EndpointFunctionGenerator:
             ),
             text=lambda _: AST.TypeHint.str_(),
         )
+
+        if is_auto_paginated:
+            return AST.TypeHint.async_iterator(resp_type) if is_async else AST.TypeHint.iterator(resp_type)
+        return resp_type
 
     def _get_json_response_body_type(
         self,
@@ -764,11 +849,11 @@ class EndpointFunctionGenerator:
         ]
 
         if len(query_parameters) == 0:
-            return self._context.core_utilities.jsonable_encoder(
+            return self._context.core_utilities.query_encoder(self._context.core_utilities.jsonable_encoder(
                 AST.Expression(
                     f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
                 )
-            )
+            ))
 
         def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
@@ -781,11 +866,11 @@ class EndpointFunctionGenerator:
             )
             writer.write_line("},")
 
-        return self._context.core_utilities.jsonable_encoder(
+        return self._context.core_utilities.query_encoder(self._context.core_utilities.jsonable_encoder(
             self._context.core_utilities.remove_none_from_dict(
                 AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
             )
-        )
+        ))
 
     def _is_datetime(
         self,
@@ -1086,7 +1171,10 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    return endpoint.name.get_as_name().snake_case.unsafe_name
+    base_name = endpoint.name.get_as_name().snake_case.unsafe_name
+    if endpoint.pagination is not None:
+        return f"{base_name}_paginated"
+    return base_name
 
 
 def get_parameter_name(name: ir_types.Name) -> str:

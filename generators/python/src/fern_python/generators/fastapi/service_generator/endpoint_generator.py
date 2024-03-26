@@ -351,13 +351,23 @@ class EndpointGenerator:
             writer.write_line(")")
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
-            file_download=raise_file_download_unsupported,
-            json=lambda json_response: self._get_json_response_body_type(json_response),
-            text=lambda _: AST.TypeHint.str_(),
-            streaming=lambda _: raise_streaming_unsupported(),
-        )
+    def _get_response_body_type(self, response: ir_types.HttpResponse, endpoint: ir_types.HttpEndpoint) -> AST.TypeHint:
+        if endpoint.pagination is None:
+            return response.visit(
+                file_download=raise_file_download_unsupported,
+                json=lambda json_response: self._get_json_response_body_type(json_response),
+                text=lambda _: AST.TypeHint.str_(),
+                streaming=lambda _: raise_streaming_unsupported(),
+            )
+        else:
+            interior_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                endpoint.pagination.get_as_union().results.property.value_type,
+                in_endpoint=True,
+            )
+            if self._custom_config.async_handlers:
+                return AST.TypeHint.async_iterator(interior_type)
+            else:
+                return AST.TypeHint.iterator(interior_type)
 
     def _get_json_response_body_type(
         self,
