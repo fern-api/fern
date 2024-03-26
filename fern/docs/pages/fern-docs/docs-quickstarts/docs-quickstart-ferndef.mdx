@@ -17,7 +17,9 @@ Prefer to use OpenAPI? We've got you covered: [Fern Docs Quickstart with OpenAPI
 
 ---
 
-## Instructions
+## Steps
+
+<Steps>
 
 ### Step 1: Create a new GitHub repository from our starter template
 
@@ -109,11 +111,13 @@ Once the documentation is generated, Fern displays the URL where you can view th
 
 Instead of `petstore-ferndef`, you should see the organization name that you added to `docs.yml` in Step 3. 
 
-### Step 6: Customize your documentation
+### Step 6: Automate publishing updates
 
-You must run `fern generate --docs` after any modifications to re-generate and publish your documentation site.
+In the previous step, you used `fern generate --docs` from the command line to manually generate and publish your documentation. While it's useful for you to know how this command works, going forward, we recommend that you use Fern's CI/CD pipeline instead. 
 
-To preview updates to your documentation before publishing changes, run `fern generate --docs --preview`.
+Our CI/CD pipeline uses GitHub Actions to automate validating, previewing, and publishing your documentation. [Visit our GitHub Actions docs](/learn/docs/publish/github-actions) to set it up before going on to the next step.
+
+### Step 7: Customize your documentation
 
 To modify the API Reference:
 
@@ -131,11 +135,11 @@ To learn about Fern's built-in component library you can use in Markdown:
 
 - See [Components](/learn/docs/components).
 
-### Step 7: Set up a custom domain, subdomain, or subpath
+### Step 8: Set up a custom domain, subdomain, or subpath
 
 If you wish to use a custom domain (such as `https://example.com`), or a subdomain or subpath on your custom domain (such as `https://docs.example.com` or `https://example.com/docs`), visit the [Custom domain](/learn/docs/config/branding/custom-domain) page. 
 
----
+</Steps>
 
 Good luck creating beautiful and functional documentation! 🌿
 
