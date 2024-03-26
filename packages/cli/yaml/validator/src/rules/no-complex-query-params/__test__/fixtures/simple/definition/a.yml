@@ -86,4 +86,3 @@ service:
           t: map<string, User>
           u: map<string, ObjectWithLiteral>
           v: PrimitiveUndiscriminatedUnion
-          w: optional<map<string, unknown>>
