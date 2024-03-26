@@ -273,17 +273,33 @@ function getRequest({
             resolvedSchema.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            const requestTypeReference = buildTypeReference({
-                schema: request.schema,
-                fileContainingReference: declarationFile,
-                context
-            });
-            const convertedRequest: ConvertedRequest = {
-                schemaIdsToExclude: [],
-                value: {
-                    body: requestTypeReference
-                }
-            };
+            let requestTypeReference;
+            let convertedRequest: ConvertedRequest;
+            if (maybeSchemaId === generatedRequestName && !nonRequestReferencedSchemas.includes(maybeSchemaId)) {
+                requestTypeReference = buildTypeReference({
+                    schema: resolvedSchema,
+                    fileContainingReference: declarationFile,
+                    context
+                });
+                convertedRequest = {
+                    schemaIdsToExclude: [maybeSchemaId],
+                    value: {
+                        body: requestTypeReference
+                    }
+                };
+            } else {
+                requestTypeReference = buildTypeReference({
+                    schema: request.schema,
+                    fileContainingReference: declarationFile,
+                    context
+                });
+                convertedRequest = {
+                    schemaIdsToExclude: [],
+                    value: {
+                        body: requestTypeReference
+                    }
+                };
+            }
 
             const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0;
             const hasHeaders = Object.keys(headers ?? {}).length > 0;
