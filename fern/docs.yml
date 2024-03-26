@@ -8,19 +8,40 @@ instances:
         branch: main
 title: Fern | Documentation
 
-navigation: 
-  - section: Home
-    contents: 
+tabs:
+  home:
+    display-name: Home
+    icon: globe
+  sdks:
+    display-name: Generate SDKs
+    slug: sdks
+    icon: code
+  docs:
+    display-name: Generate docs
+    slug: docs
+    icon: book
+  config:
+    display-name: Configure
+    slug: config
+    icon: puzzle
+  api:
+    display-name: API reference
+    slug: api
+    icon: asterisk
+
+navigation:
+  - tab: home
+    layout:
       - page: Introduction
         path: ./overview/intro.mdx
-  - section: SDKs
-    contents: 
+  - tab: sdks
+    layout:
       - page: Overview
         path: ./overview/dummy.mdx
       - page: Quickstart
         path: ./overview/dummy.mdx
       - section: Features
-        contents: 
+        contents:
           - page: Strongly typed
             path: ./overview/dummy.mdx
           - page: Idiomatic method names
@@ -33,7 +54,7 @@ navigation:
             path: ./overview/dummy.mdx
           - page: Webhook Signature Verification
             path: ./overview/dummy.mdx
-          - page: Forward Compatibility  
+          - page: Forward Compatibility
             path: ./overview/dummy.mdx
           - page: Multipart Form Data
             path: ./overview/dummy.mdx
@@ -51,16 +72,18 @@ navigation:
             path: ./overview/dummy.mdx
           - page: GitHub integration
             path: ./overview/dummy.mdx
-  - section: Docs
-    contents: 
+  - tab: docs
+    layout:
       - page: Overview
         path: ./overview/dummy.mdx
       - page: Quickstart
         path: ./overview/dummy.mdx
       - section: Global Settings
-        contents: 
+        collapsed: true
+        contents:
           - page: URLs
             path: ./overview/dummy.mdx
+            slug: urls
           - page: Colors
             path: ./overview/dummy.mdx
           - page: Layout
@@ -74,7 +97,8 @@ navigation:
           - page: Call to actions
             path: ./overview/dummy.mdx
       - section: Writing Content
-        contents: 
+        collapsed: true
+        contents:
           - page: Page Titles and Metadata
             path: ./overview/dummy.mdx
           - page: Headers and Text
@@ -86,35 +110,37 @@ navigation:
           - page: Code Blocks
             path: ./overview/dummy.mdx
       - section: API References
-        contents: 
+        collapsed: true
+        contents:
           - page: API Definition Setup
             path: ./overview/dummy.mdx
-          - page: Errors, Audiences, and Snippets 
+          - page: Errors, Audiences, and Snippets
             path: ./overview/dummy.mdx
           - page: API Playground
             path: ./overview/dummy.mdx
       - section: Custom Components
-        contents: 
-          - page: Cards
-            path: ./overview/dummy.mdx
-          - page: CodeBlocks
-            path: ./overview/dummy.mdx
-          - page: Callouts
-            path: ./overview/dummy.mdx
-          - page: Icons
+        collapsed: true
+        contents:
+          - page: Accordion
             path: ./overview/dummy.mdx
           - page: Availability
             path: ./overview/dummy.mdx
-          - page: Tabs
+          - page: Callout
             path: ./overview/dummy.mdx
-          - page: Accordion
+          - page: Cards
             path: ./overview/dummy.mdx
-          - page: Steps
+          - page: Code Blocks
             path: ./overview/dummy.mdx
           - page: Endpoint Snippets
             path: ./overview/dummy.mdx
-  - section: Configuration
-    contents: 
+          - page: Icon
+            path: ./overview/dummy.mdx
+          - page: Steps
+            path: ./overview/dummy.mdx
+          - page: Tabs
+            path: ./overview/dummy.mdx
+  - tab: config
+    layout:
       - section: Fern Folder
         contents:
           - page: Overview
@@ -126,11 +152,11 @@ navigation:
       - section: API Definitions
         contents:
           - section: OpenAPI Spec
-            contents: 
+            contents:
               - page: Overview
                 path: ./overview/dummy.mdx
               - section: Extensions
-                contents: 
+                contents:
                   - page: Overriding Names
                     path: ./overview/dummy.mdx
                   - page: Auth and Global Headers
@@ -146,11 +172,11 @@ navigation:
                   - page: Examples
                     path: ./overview/dummy.mdx
           - section: AsyncAPI Spec
-            contents: 
+            contents:
               - page: Overview
                 path: ./overview/dummy.mdx
           - section: gRPC
-            contents: 
+            contents:
               - page: Overview
                 path: ./overview/dummy.mdx
           - section: Fern Definition
@@ -189,8 +215,10 @@ navigation:
             path: ./overview/dummy.mdx
           - page: fern token
             path: ./overview/dummy.mdx
-  - api: API Reference
-    api-name: public-api
+  - tab: api
+    layout:
+      - api: API Reference
+        api-name: public-api
 
 navbar-links:
   - type: filled
@@ -204,7 +232,7 @@ logo:
   height: 30
 
 colors:
-  accentPrimary:
+  accent-primary:
     dark: "#ADFF8C"
     # light: "#418326"
   background:
@@ -216,3 +244,4 @@ layout:
   page-width: 1504px
   header-height: 83px
   searchbar-placement: header
+  tabs-placement: header
