@@ -33,6 +33,7 @@ export declare namespace TypeGenerator {
         includeOtherInUnionTypes: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
+        preserveOriginalPropertyCasing: boolean;
     }
 
     export namespace generateType {
@@ -54,19 +55,22 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
     private includeOtherInUnionTypes: boolean;
     private includeSerdeLayer: boolean;
     private noOptionalProperties: boolean;
+    private preserveOriginalPropertyCasing: boolean;
 
     constructor({
         useBrandedStringAliases,
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         includeSerdeLayer,
-        noOptionalProperties
+        noOptionalProperties,
+        preserveOriginalPropertyCasing
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
+        this.preserveOriginalPropertyCasing = preserveOriginalPropertyCasing;
     }
 
     public generateType({
@@ -129,7 +133,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
         });
     }
 
@@ -158,7 +163,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: this.includeOtherInUnionTypes,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
         });
     }
 
@@ -185,7 +191,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
         });
     }
 
@@ -213,7 +220,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
-            includeEnumUtils: this.includeUtilsOnUnionMembers
+            includeEnumUtils: this.includeUtilsOnUnionMembers,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
         });
     }
 
@@ -241,7 +249,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
-                  noOptionalProperties: this.noOptionalProperties
+                  noOptionalProperties: this.noOptionalProperties,
+                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -251,7 +260,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
-                  noOptionalProperties: this.noOptionalProperties
+                  noOptionalProperties: this.noOptionalProperties,
+                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
               });
     }
 }

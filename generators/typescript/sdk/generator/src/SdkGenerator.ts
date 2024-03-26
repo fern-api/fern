@@ -92,6 +92,7 @@ export declare namespace SdkGenerator {
         noOptionalProperties: boolean;
         includeApiReference: boolean;
         tolerateRepublish: boolean;
+        preserveOriginalPropertyCasing: boolean;
     }
 }
 
@@ -242,7 +243,8 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            preserveOriginalPropertyCasing: config.preserveOriginalPropertyCasing
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
