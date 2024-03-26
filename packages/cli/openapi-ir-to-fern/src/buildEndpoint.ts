@@ -1,11 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { HttpRequestBodySchema } from "@fern-api/yaml-schema/src/schemas";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
+import { buildTypeDeclaration, ConvertedTypeDeclaration } from "./buildTypeDeclaration";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
@@ -273,22 +275,26 @@ function getRequest({
             resolvedSchema.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            let requestTypeReference;
             let convertedRequest: ConvertedRequest;
-            if (maybeSchemaId === generatedRequestName && !nonRequestReferencedSchemas.includes(maybeSchemaId)) {
-                requestTypeReference = buildTypeReference({
-                    schema: resolvedSchema,
-                    fileContainingReference: declarationFile,
-                    context
-                });
+            const requestTypeDeclaration = buildTypeDeclaration({
+                schema: resolvedSchema,
+                declarationFile,
+                context
+            });
+            const maybeInlinedSchema = getInlineDeclaration(requestTypeDeclaration, context, declarationFile);
+            if (
+                maybeSchemaId === generatedRequestName &&
+                !nonRequestReferencedSchemas.includes(maybeSchemaId) &&
+                maybeInlinedSchema != null
+            ) {
                 convertedRequest = {
                     schemaIdsToExclude: [maybeSchemaId],
                     value: {
-                        body: requestTypeReference
+                        body: maybeInlinedSchema
                     }
                 };
             } else {
-                requestTypeReference = buildTypeReference({
+                const requestTypeReference = buildTypeReference({
                     schema: request.schema,
                     fileContainingReference: declarationFile,
                     context
@@ -413,4 +419,40 @@ function getRequest({
             }
         };
     }
+}
+
+function getInlineDeclaration(
+    typeDeclaration: ConvertedTypeDeclaration,
+    context: OpenApiIrConverterContext,
+    declarationFile: RelativeFilePath
+): HttpRequestBodySchema | undefined {
+    if (typeof typeDeclaration.schema === "string") {
+        return typeDeclaration.schema;
+    } else if ("properties" in typeDeclaration.schema && "extensions" in typeDeclaration.schema) {
+        // Object type declaration
+        if (typeDeclaration.schema.extends == null && typeDeclaration.schema.properties != null) {
+            return {
+                properties: typeDeclaration.schema.properties
+            };
+        } else if (typeDeclaration.schema.extends != null && typeDeclaration.schema.properties == null) {
+            return {
+                extends: typeDeclaration.schema.extends
+            };
+        } else if (typeDeclaration.schema.extends != null && typeDeclaration.schema.properties != null) {
+            return {
+                extends: typeDeclaration.schema.extends,
+                properties: typeDeclaration.schema.properties
+            };
+        }
+    } else if ("type" in typeDeclaration.schema) {
+        // Alias Type Declaration
+        const schema = context.getSchema(typeDeclaration.schema.type);
+        const aliasedTypeDeclaration = buildTypeDeclaration({
+            schema,
+            declarationFile,
+            context
+        });
+        return getInlineDeclaration(aliasedTypeDeclaration, context, declarationFile);
+    }
+    return;
 }
