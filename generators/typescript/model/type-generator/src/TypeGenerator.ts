@@ -134,7 +134,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
-            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
         });
     }
 
@@ -164,7 +164,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             includeOtherInUnionTypes: this.includeOtherInUnionTypes,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
-            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
         });
     }
 
@@ -192,7 +192,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
-            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
         });
     }
 
@@ -221,7 +221,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             includeEnumUtils: this.includeUtilsOnUnionMembers,
-            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+            preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
         });
     }
 
@@ -250,7 +250,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
                   noOptionalProperties: this.noOptionalProperties,
-                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -261,7 +261,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
                   noOptionalProperties: this.noOptionalProperties,
-                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing,
+                  preserveOriginalPropertyCasing: this.preserveOriginalPropertyCasing
               });
     }
 }

@@ -22,7 +22,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             noSerdeLayer,
             outputEsm: parsed?.outputEsm ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? false,
-            preserveOriginalPropertyCasing: parsed?.preserveOriginalPropertyCasing ?? false,
+            preserveOriginalPropertyCasing: parsed?.preserveOriginalPropertyCasing ?? false
         };
     }
 

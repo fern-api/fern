@@ -182,7 +182,7 @@ export class ExpressGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: false,
-            preserveOriginalPropertyCasing: config.preserveOriginalPropertyCasing,
+            preserveOriginalPropertyCasing: config.preserveOriginalPropertyCasing
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
