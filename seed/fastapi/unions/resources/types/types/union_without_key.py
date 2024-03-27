@@ -60,14 +60,14 @@ class UnionWithoutKey(pydantic.BaseModel):
 
 class _UnionWithoutKey:
     class Foo(resources_types_types_foo_Foo):
-        type: typing.Literal["foo"]
+        type: typing.Literal["foo"] = "foo"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Bar(resources_types_types_bar_Bar):
-        type: typing.Literal["bar"]
+        type: typing.Literal["bar"] = "bar"
 
         class Config:
             allow_population_by_field_name = True

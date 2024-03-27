@@ -112,7 +112,7 @@ class InvalidRequestCause(pydantic.BaseModel):
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
-        type: typing.Literal["submissionIdNotFound"]
+        type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
         class Config:
             allow_population_by_field_name = True
@@ -121,14 +121,14 @@ class _InvalidRequestCause:
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
-        type: typing.Literal["customTestCasesUnsupported"]
+        type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
-        type: typing.Literal["unexpectedLanguage"]
+        type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
         class Config:
             allow_population_by_field_name = True

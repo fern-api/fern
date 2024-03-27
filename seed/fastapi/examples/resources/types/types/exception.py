@@ -68,14 +68,14 @@ class Exception(pydantic.BaseModel):
 
 class _Exception:
     class Generic(ExceptionInfo):
-        type: typing.Literal["generic"]
+        type: typing.Literal["generic"] = "generic"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Timeout(pydantic.BaseModel):
-        type: typing.Literal["timeout"]
+        type: typing.Literal["timeout"] = "timeout"
 
 
 Exception.update_forward_refs()

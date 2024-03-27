@@ -119,35 +119,35 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
 
 class _WorkspaceSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
-        type: typing.Literal["running"]
+        type: typing.Literal["running"] = "running"
         value: RunningSubmissionState
 
     class Ran(WorkspaceRunDetails):
-        type: typing.Literal["ran"]
+        type: typing.Literal["ran"] = "ran"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Stopped(pydantic.BaseModel):
-        type: typing.Literal["stopped"]
+        type: typing.Literal["stopped"] = "stopped"
 
     class Traced(pydantic.BaseModel):
-        type: typing.Literal["traced"]
+        type: typing.Literal["traced"] = "traced"
 
     class TracedV2(WorkspaceTracedUpdate):
-        type: typing.Literal["tracedV2"]
+        type: typing.Literal["tracedV2"] = "tracedV2"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Errored(pydantic.BaseModel):
-        type: typing.Literal["errored"]
+        type: typing.Literal["errored"] = "errored"
         value: ErrorInfo
 
     class Finished(pydantic.BaseModel):
-        type: typing.Literal["finished"]
+        type: typing.Literal["finished"] = "finished"
 
 
 WorkspaceSubmissionUpdateInfo.update_forward_refs()

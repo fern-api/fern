@@ -72,15 +72,15 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
 
 class _ProblemDescriptionBoard:
     class Html(pydantic.BaseModel):
-        type: typing.Literal["html"]
+        type: typing.Literal["html"] = "html"
         value: str
 
     class Variable(pydantic.BaseModel):
-        type: typing.Literal["variable"]
+        type: typing.Literal["variable"] = "variable"
         value: VariableValue
 
     class TestCaseId(pydantic.BaseModel):
-        type: typing.Literal["testCaseId"]
+        type: typing.Literal["testCaseId"] = "testCaseId"
         value: str
 
 

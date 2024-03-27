@@ -111,32 +111,32 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
 
 class _TestSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
-        type: typing.Literal["running"]
+        type: typing.Literal["running"] = "running"
         value: RunningSubmissionState
 
     class Stopped(pydantic.BaseModel):
-        type: typing.Literal["stopped"]
+        type: typing.Literal["stopped"] = "stopped"
 
     class Errored(pydantic.BaseModel):
-        type: typing.Literal["errored"]
+        type: typing.Literal["errored"] = "errored"
         value: ErrorInfo
 
     class GradedTestCase(GradedTestCaseUpdate):
-        type: typing.Literal["gradedTestCase"]
+        type: typing.Literal["gradedTestCase"] = "gradedTestCase"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class RecordedTestCase(RecordedTestCaseUpdate):
-        type: typing.Literal["recordedTestCase"]
+        type: typing.Literal["recordedTestCase"] = "recordedTestCase"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Finished(pydantic.BaseModel):
-        type: typing.Literal["finished"]
+        type: typing.Literal["finished"] = "finished"
 
 
 TestSubmissionUpdateInfo.update_forward_refs()

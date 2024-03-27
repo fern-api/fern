@@ -139,42 +139,42 @@ from .map_type import MapType as resources_commons_types_map_type_MapType  # noq
 
 class _VariableType:
     class IntegerType(pydantic.BaseModel):
-        type: typing.Literal["integerType"]
+        type: typing.Literal["integerType"] = "integerType"
 
     class DoubleType(pydantic.BaseModel):
-        type: typing.Literal["doubleType"]
+        type: typing.Literal["doubleType"] = "doubleType"
 
     class BooleanType(pydantic.BaseModel):
-        type: typing.Literal["booleanType"]
+        type: typing.Literal["booleanType"] = "booleanType"
 
     class StringType(pydantic.BaseModel):
-        type: typing.Literal["stringType"]
+        type: typing.Literal["stringType"] = "stringType"
 
     class CharType(pydantic.BaseModel):
-        type: typing.Literal["charType"]
+        type: typing.Literal["charType"] = "charType"
 
     class ListType(resources_commons_types_list_type_ListType):
-        type: typing.Literal["listType"]
+        type: typing.Literal["listType"] = "listType"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class MapType(resources_commons_types_map_type_MapType):
-        type: typing.Literal["mapType"]
+        type: typing.Literal["mapType"] = "mapType"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class BinaryTreeType(pydantic.BaseModel):
-        type: typing.Literal["binaryTreeType"]
+        type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
     class SinglyLinkedListType(pydantic.BaseModel):
-        type: typing.Literal["singlyLinkedListType"]
+        type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
     class DoublyLinkedListType(pydantic.BaseModel):
-        type: typing.Literal["doublyLinkedListType"]
+        type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
 
 _VariableType.ListType.update_forward_refs(

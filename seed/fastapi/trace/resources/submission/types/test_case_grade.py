@@ -60,14 +60,14 @@ class TestCaseGrade(pydantic.BaseModel):
 
 class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):
-        type: typing.Literal["hidden"]
+        type: typing.Literal["hidden"] = "hidden"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class NonHidden(TestCaseNonHiddenGrade):
-        type: typing.Literal["nonHidden"]
+        type: typing.Literal["nonHidden"] = "nonHidden"
 
         class Config:
             allow_population_by_field_name = True

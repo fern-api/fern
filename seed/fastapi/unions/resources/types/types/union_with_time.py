@@ -65,15 +65,15 @@ class UnionWithTime(pydantic.BaseModel):
 
 class _UnionWithTime:
     class Value(pydantic.BaseModel):
-        type: typing.Literal["value"]
+        type: typing.Literal["value"] = "value"
         value: int
 
     class Date(pydantic.BaseModel):
-        type: typing.Literal["date"]
+        type: typing.Literal["date"] = "date"
         value: dt.date
 
     class Datetime(pydantic.BaseModel):
-        type: typing.Literal["datetime"]
+        type: typing.Literal["datetime"] = "datetime"
         value: dt.datetime
 
 

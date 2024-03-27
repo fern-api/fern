@@ -58,11 +58,11 @@ class Data(pydantic.BaseModel):
 
 class _Data:
     class String(pydantic.BaseModel):
-        type: typing.Literal["string"]
+        type: typing.Literal["string"] = "string"
         value: str
 
     class Base64(pydantic.BaseModel):
-        type: typing.Literal["base64"]
+        type: typing.Literal["base64"] = "base64"
         value: str
 
 

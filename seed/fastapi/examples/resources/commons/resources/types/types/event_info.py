@@ -73,14 +73,14 @@ class EventInfo(pydantic.BaseModel):
 
 class _EventInfo:
     class Metadata(resources_commons_resources_types_types_metadata_Metadata):
-        type: typing.Literal["metadata"]
+        type: typing.Literal["metadata"] = "metadata"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Tag(pydantic.BaseModel):
-        type: typing.Literal["tag"]
+        type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
 
 
