@@ -31,6 +31,6 @@ class Data_Base64(pydantic.BaseModel):
 """
 from seed.resources.commons import Data_String
 
-Data_String(type="string", value="data")
+Data_String(value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

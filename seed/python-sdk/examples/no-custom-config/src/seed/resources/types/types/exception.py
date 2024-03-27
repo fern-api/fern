@@ -34,7 +34,6 @@ class Exception_Timeout(pydantic.BaseModel):
 from seed import Exception_Generic
 
 Exception_Generic(
-    type="generic",
     exception_type="Unavailable",
     exception_message="This component is unavailable!",
     exception_stacktrace="<logs>",

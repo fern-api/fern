@@ -17,7 +17,7 @@ class Base(pydantic.BaseModel):
     """
     from seed import Metadata_Html
 
-    Metadata_Html(type="html", value="<head>...</head>")
+    Metadata_Html(value="<head>...</head>")
     """
 
     extra: typing.Dict[str, str]
@@ -63,6 +63,6 @@ class Metadata_Markdown(Base):
 """
 from seed import Metadata_Html
 
-Metadata_Html(type="html", value="<head>...</head>")
+Metadata_Html(value="<head>...</head>")
 """
 Metadata = typing.Union[Metadata_Html, Metadata_Markdown]
