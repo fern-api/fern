@@ -181,6 +181,7 @@ class EndpointFunctionGenerator:
         property_path.append(pagination_property.property.name.name)
         return ".".join([prop.snake_case.safe_name for prop in property_path])
     
+
     def _create_paginated_endpoint_body_writer(
         self,
         *,
@@ -198,13 +199,28 @@ class EndpointFunctionGenerator:
         """
         pagination_union = pagination.get_as_union()
         result_path = self._pagination_property_to_dot_access(pagination_union.results.property)
+        # TODO: allow for passing in a null example and defaulting to the param names.
+        endpoint_snippet = EndpointFunctionSnippetGenerator(
+            context=self._context,
+            snippet_writer=self.snippet_writer,
+            service=self._service,
+            endpoint=endpoint,
+            example=example,
+        ).generate_snippet()
+        endpoint_snippet_with_next_token = EndpointFunctionSnippetGenerator(
+            context=self._context,
+            snippet_writer=self.snippet_writer,
+            service=self._service,
+            endpoint=endpoint,
+            example=example,
+        ).generate_snippet()
         def write(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"resp = client.{get_endpoint_name(endpoint)}()")
+            writer.write_line(f"resp = self.{endpoint_snippet}")
             endpoint.pagination
             writer.write_line(f"yield resp.{result_path}")
             writer.write_line(f"while resp.next_page is not None:")
             with writer.indent():
-                writer.write_line(f"resp = {"await" if is_async else ""} client.{get_endpoint_name(endpoint)}(next_page=resp.next_page)")
+                writer.write_line(f"resp = {"await" if is_async else ""} self.{endpoint_snippet_with_next_token}")
                 writer.write_line(f"yield resp.{result_path}")
 
         return AST.CodeWriter(write)
