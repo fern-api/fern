@@ -1,11 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { HttpRequestBodySchema } from "@fern-api/yaml-schema/src/schemas";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
+import { buildTypeDeclaration, ConvertedTypeDeclaration } from "./buildTypeDeclaration";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
@@ -273,17 +275,37 @@ function getRequest({
             resolvedSchema.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            const requestTypeReference = buildTypeReference({
-                schema: request.schema,
-                fileContainingReference: declarationFile,
+            let convertedRequest: ConvertedRequest;
+            const requestTypeDeclaration = buildTypeDeclaration({
+                schema: resolvedSchema,
+                declarationFile,
                 context
             });
-            const convertedRequest: ConvertedRequest = {
-                schemaIdsToExclude: [],
-                value: {
-                    body: requestTypeReference
-                }
-            };
+            const maybeInlinedSchema = getInlineDeclaration(requestTypeDeclaration, context, declarationFile);
+            if (
+                maybeSchemaId === generatedRequestName &&
+                !nonRequestReferencedSchemas.includes(maybeSchemaId) &&
+                maybeInlinedSchema != null
+            ) {
+                convertedRequest = {
+                    schemaIdsToExclude: [maybeSchemaId],
+                    value: {
+                        body: maybeInlinedSchema
+                    }
+                };
+            } else {
+                const requestTypeReference = buildTypeReference({
+                    schema: request.schema,
+                    fileContainingReference: declarationFile,
+                    context
+                });
+                convertedRequest = {
+                    schemaIdsToExclude: [],
+                    value: {
+                        body: requestTypeReference
+                    }
+                };
+            }
 
             const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0;
             const hasHeaders = Object.keys(headers ?? {}).length > 0;
@@ -397,4 +419,40 @@ function getRequest({
             }
         };
     }
+}
+
+function getInlineDeclaration(
+    typeDeclaration: ConvertedTypeDeclaration,
+    context: OpenApiIrConverterContext,
+    declarationFile: RelativeFilePath
+): HttpRequestBodySchema | undefined {
+    if (typeof typeDeclaration.schema === "string") {
+        return typeDeclaration.schema;
+    } else if ("properties" in typeDeclaration.schema && "extensions" in typeDeclaration.schema) {
+        // Object type declaration
+        if (typeDeclaration.schema.extends == null && typeDeclaration.schema.properties != null) {
+            return {
+                properties: typeDeclaration.schema.properties
+            };
+        } else if (typeDeclaration.schema.extends != null && typeDeclaration.schema.properties == null) {
+            return {
+                extends: typeDeclaration.schema.extends
+            };
+        } else if (typeDeclaration.schema.extends != null && typeDeclaration.schema.properties != null) {
+            return {
+                extends: typeDeclaration.schema.extends,
+                properties: typeDeclaration.schema.properties
+            };
+        }
+    } else if ("type" in typeDeclaration.schema) {
+        // Alias Type Declaration
+        const schema = context.getSchema(typeDeclaration.schema.type);
+        const aliasedTypeDeclaration = buildTypeDeclaration({
+            schema,
+            declarationFile,
+            context
+        });
+        return getInlineDeclaration(aliasedTypeDeclaration, context, declarationFile);
+    }
+    return;
 }
