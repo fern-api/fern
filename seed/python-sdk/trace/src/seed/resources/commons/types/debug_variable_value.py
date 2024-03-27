@@ -23,7 +23,7 @@ except ImportError:
 
 
 class DebugVariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing.Literal["integerValue"]
+    type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
     class Config:
@@ -32,7 +32,7 @@ class DebugVariableValue_IntegerValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing.Literal["booleanValue"]
+    type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
     class Config:
@@ -41,7 +41,7 @@ class DebugVariableValue_BooleanValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing.Literal["doubleValue"]
+    type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
     class Config:
@@ -50,7 +50,7 @@ class DebugVariableValue_DoubleValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_StringValue(pydantic.BaseModel):
-    type: typing.Literal["stringValue"]
+    type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
     class Config:
@@ -59,7 +59,7 @@ class DebugVariableValue_StringValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_CharValue(pydantic.BaseModel):
-    type: typing.Literal["charValue"]
+    type: typing.Literal["charValue"] = "charValue"
     value: str
 
     class Config:
@@ -68,7 +68,7 @@ class DebugVariableValue_CharValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_MapValue(DebugMapValue):
-    type: typing.Literal["mapValue"]
+    type: typing.Literal["mapValue"] = "mapValue"
 
     class Config:
         frozen = True
@@ -78,7 +78,7 @@ class DebugVariableValue_MapValue(DebugMapValue):
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
-    type: typing.Literal["listValue"]
+    type: typing.Literal["listValue"] = "listValue"
     value: typing.List[DebugVariableValue]
 
     class Config:
@@ -87,7 +87,7 @@ class DebugVariableValue_ListValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
-    type: typing.Literal["binaryTreeNodeValue"]
+    type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
 
     class Config:
         frozen = True
@@ -97,7 +97,7 @@ class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
-    type: typing.Literal["singlyLinkedListNodeValue"]
+    type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
 
     class Config:
         frozen = True
@@ -107,7 +107,7 @@ class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListVa
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
-    type: typing.Literal["doublyLinkedListNodeValue"]
+    type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
 
     class Config:
         frozen = True
@@ -117,7 +117,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListVa
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
-    type: typing.Literal["undefinedValue"]
+    type: typing.Literal["undefinedValue"] = "undefinedValue"
 
     class Config:
         frozen = True
@@ -125,7 +125,7 @@ class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_NullValue(pydantic.BaseModel):
-    type: typing.Literal["nullValue"]
+    type: typing.Literal["nullValue"] = "nullValue"
 
     class Config:
         frozen = True
@@ -133,7 +133,7 @@ class DebugVariableValue_NullValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_GenericValue(GenericValue):
-    type: typing.Literal["genericValue"]
+    type: typing.Literal["genericValue"] = "genericValue"
 
     class Config:
         frozen = True

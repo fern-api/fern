@@ -64,7 +64,7 @@ class ProblemClient:
             request=CreateProblemRequest(
                 problem_name="string",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                    boards=[ProblemDescriptionBoard_Html(value="string")],
                 ),
                 files={
                     Language.JAVA: ProblemFiles(
@@ -91,13 +91,9 @@ class ProblemClient:
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="string",
-                            params=[
-                                VariableValue_IntegerValue(type="integerValue", value=1)
-                            ],
+                            params=[VariableValue_IntegerValue(value=1)],
                         ),
-                        expected_result=VariableValue_IntegerValue(
-                            type="integerValue", value=1
-                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
                     )
                 ],
                 method_name="string",
@@ -179,7 +175,7 @@ class ProblemClient:
             request=CreateProblemRequest(
                 problem_name="string",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                    boards=[ProblemDescriptionBoard_Html(value="string")],
                 ),
                 files={
                     Language.JAVA: ProblemFiles(
@@ -206,13 +202,9 @@ class ProblemClient:
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="string",
-                            params=[
-                                VariableValue_IntegerValue(type="integerValue", value=1)
-                            ],
+                            params=[VariableValue_IntegerValue(value=1)],
                         ),
-                        expected_result=VariableValue_IntegerValue(
-                            type="integerValue", value=1
-                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
                     )
                 ],
                 method_name="string",
@@ -420,7 +412,7 @@ class AsyncProblemClient:
             request=CreateProblemRequest(
                 problem_name="string",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                    boards=[ProblemDescriptionBoard_Html(value="string")],
                 ),
                 files={
                     Language.JAVA: ProblemFiles(
@@ -447,13 +439,9 @@ class AsyncProblemClient:
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="string",
-                            params=[
-                                VariableValue_IntegerValue(type="integerValue", value=1)
-                            ],
+                            params=[VariableValue_IntegerValue(value=1)],
                         ),
-                        expected_result=VariableValue_IntegerValue(
-                            type="integerValue", value=1
-                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
                     )
                 ],
                 method_name="string",
@@ -535,7 +523,7 @@ class AsyncProblemClient:
             request=CreateProblemRequest(
                 problem_name="string",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(type="html", value="string")],
+                    boards=[ProblemDescriptionBoard_Html(value="string")],
                 ),
                 files={
                     Language.JAVA: ProblemFiles(
@@ -562,13 +550,9 @@ class AsyncProblemClient:
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="string",
-                            params=[
-                                VariableValue_IntegerValue(type="integerValue", value=1)
-                            ],
+                            params=[VariableValue_IntegerValue(value=1)],
                         ),
-                        expected_result=VariableValue_IntegerValue(
-                            type="integerValue", value=1
-                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
                     )
                 ],
                 method_name="string",

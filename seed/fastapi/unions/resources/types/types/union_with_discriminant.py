@@ -60,7 +60,7 @@ class UnionWithDiscriminant(pydantic.BaseModel):
 
 class _UnionWithDiscriminant:
     class Foo(pydantic.BaseModel):
-        type: typing.Literal["foo"] = pydantic.Field(alias="_type")
+        type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
         foo: resources_types_types_foo_Foo
 
         class Config:
@@ -68,7 +68,7 @@ class _UnionWithDiscriminant:
             populate_by_name = True
 
     class Bar(pydantic.BaseModel):
-        type: typing.Literal["bar"] = pydantic.Field(alias="_type")
+        type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
         bar: resources_types_types_bar_Bar
 
         class Config:

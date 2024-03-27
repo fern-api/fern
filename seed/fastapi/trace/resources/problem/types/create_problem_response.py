@@ -58,11 +58,11 @@ class CreateProblemResponse(pydantic.BaseModel):
 
 class _CreateProblemResponse:
     class Success(pydantic.BaseModel):
-        type: typing.Literal["success"]
+        type: typing.Literal["success"] = "success"
         value: ProblemId
 
     class Error(pydantic.BaseModel):
-        type: typing.Literal["error"]
+        type: typing.Literal["error"] = "error"
         value: CreateProblemError
 
 

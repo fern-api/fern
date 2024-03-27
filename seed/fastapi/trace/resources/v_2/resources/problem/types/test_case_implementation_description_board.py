@@ -64,11 +64,11 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
 
 class _TestCaseImplementationDescriptionBoard:
     class Html(pydantic.BaseModel):
-        type: typing.Literal["html"]
+        type: typing.Literal["html"] = "html"
         value: str
 
     class ParamId(pydantic.BaseModel):
-        type: typing.Literal["paramId"]
+        type: typing.Literal["paramId"] = "paramId"
         value: ParameterId
 
 

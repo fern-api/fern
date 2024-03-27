@@ -61,11 +61,11 @@ from .field_value import FieldValue  # noqa: E402
 
 class _ContainerValue:
     class List(pydantic.BaseModel):
-        type: typing.Literal["list"]
+        type: typing.Literal["list"] = "list"
         value: typing.List[FieldValue]
 
     class Optional(pydantic.BaseModel):
-        type: typing.Literal["optional"]
+        type: typing.Literal["optional"] = "optional"
         value: typing.Optional[FieldValue]
 
 

@@ -182,59 +182,59 @@ from .map_value import MapValue as resources_commons_types_map_value_MapValue  #
 
 class _VariableValue:
     class IntegerValue(pydantic.BaseModel):
-        type: typing.Literal["integerValue"]
+        type: typing.Literal["integerValue"] = "integerValue"
         value: int
 
     class BooleanValue(pydantic.BaseModel):
-        type: typing.Literal["booleanValue"]
+        type: typing.Literal["booleanValue"] = "booleanValue"
         value: bool
 
     class DoubleValue(pydantic.BaseModel):
-        type: typing.Literal["doubleValue"]
+        type: typing.Literal["doubleValue"] = "doubleValue"
         value: float
 
     class StringValue(pydantic.BaseModel):
-        type: typing.Literal["stringValue"]
+        type: typing.Literal["stringValue"] = "stringValue"
         value: str
 
     class CharValue(pydantic.BaseModel):
-        type: typing.Literal["charValue"]
+        type: typing.Literal["charValue"] = "charValue"
         value: str
 
     class MapValue(resources_commons_types_map_value_MapValue):
-        type: typing.Literal["mapValue"]
+        type: typing.Literal["mapValue"] = "mapValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class ListValue(pydantic.BaseModel):
-        type: typing.Literal["listValue"]
+        type: typing.Literal["listValue"] = "listValue"
         value: typing.List[VariableValue]
 
     class BinaryTreeValue(resources_commons_types_binary_tree_value_BinaryTreeValue):
-        type: typing.Literal["binaryTreeValue"]
+        type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
-        type: typing.Literal["singlyLinkedListValue"]
+        type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
-        type: typing.Literal["doublyLinkedListValue"]
+        type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class NullValue(pydantic.BaseModel):
-        type: typing.Literal["nullValue"]
+        type: typing.Literal["nullValue"] = "nullValue"
 
 
 _VariableValue.MapValue.update_forward_refs(

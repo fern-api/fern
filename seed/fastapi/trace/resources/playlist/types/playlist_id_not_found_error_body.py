@@ -52,7 +52,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
 
 class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(pydantic.BaseModel):
-        type: typing.Literal["playlistId"]
+        type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
 
 

@@ -10,7 +10,7 @@ from .void_function_signature_that_takes_actual_result import VoidFunctionSignat
 
 
 class FunctionSignature_Void(VoidFunctionSignature):
-    type: typing.Literal["void"]
+    type: typing.Literal["void"] = "void"
 
     class Config:
         frozen = True
@@ -20,7 +20,7 @@ class FunctionSignature_Void(VoidFunctionSignature):
 
 
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
-    type: typing.Literal["nonVoid"]
+    type: typing.Literal["nonVoid"] = "nonVoid"
 
     class Config:
         frozen = True
@@ -30,7 +30,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
 
 
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-    type: typing.Literal["voidThatTakesActualResult"]
+    type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
     class Config:
         frozen = True

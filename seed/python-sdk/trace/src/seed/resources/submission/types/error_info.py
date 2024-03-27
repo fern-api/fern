@@ -10,7 +10,7 @@ from .runtime_error import RuntimeError
 
 
 class ErrorInfo_CompileError(CompileError):
-    type: typing.Literal["compileError"]
+    type: typing.Literal["compileError"] = "compileError"
 
     class Config:
         frozen = True
@@ -20,7 +20,7 @@ class ErrorInfo_CompileError(CompileError):
 
 
 class ErrorInfo_RuntimeError(RuntimeError):
-    type: typing.Literal["runtimeError"]
+    type: typing.Literal["runtimeError"] = "runtimeError"
 
     class Config:
         frozen = True
@@ -30,7 +30,7 @@ class ErrorInfo_RuntimeError(RuntimeError):
 
 
 class ErrorInfo_InternalError(InternalError):
-    type: typing.Literal["internalError"]
+    type: typing.Literal["internalError"] = "internalError"
 
     class Config:
         frozen = True

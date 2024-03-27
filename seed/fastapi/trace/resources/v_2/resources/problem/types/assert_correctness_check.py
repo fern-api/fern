@@ -69,14 +69,14 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
 
 class _AssertCorrectnessCheck:
     class DeepEquality(DeepEqualityCorrectnessCheck):
-        type: typing.Literal["deepEquality"]
+        type: typing.Literal["deepEquality"] = "deepEquality"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
-        type: typing.Literal["custom"]
+        type: typing.Literal["custom"] = "custom"
 
         class Config:
             allow_population_by_field_name = True

@@ -27,7 +27,7 @@ class Test(pydantic.BaseModel):
     """
     from seed.examples import Test_And
 
-    Test_And(type="and", value=True)
+    Test_And(value=True)
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
@@ -58,11 +58,11 @@ class Test(pydantic.BaseModel):
 
 class _Test:
     class And(pydantic.BaseModel):
-        type: typing.Literal["and"]
+        type: typing.Literal["and"] = "and"
         value: bool
 
     class Or(pydantic.BaseModel):
-        type: typing.Literal["or"]
+        type: typing.Literal["or"] = "or"
         value: bool
 
 

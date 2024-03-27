@@ -14,7 +14,7 @@ except ImportError:
 
 
 class CreateProblemResponse_Success(pydantic.BaseModel):
-    type: typing.Literal["success"]
+    type: typing.Literal["success"] = "success"
     value: ProblemId
 
     class Config:
@@ -23,7 +23,7 @@ class CreateProblemResponse_Success(pydantic.BaseModel):
 
 
 class CreateProblemResponse_Error(pydantic.BaseModel):
-    type: typing.Literal["error"]
+    type: typing.Literal["error"] = "error"
     value: CreateProblemError
 
     class Config:

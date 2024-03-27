@@ -68,18 +68,18 @@ class ActualResult(pydantic.BaseModel):
 
 class _ActualResult:
     class Value(pydantic.BaseModel):
-        type: typing.Literal["value"]
+        type: typing.Literal["value"] = "value"
         value: VariableValue
 
     class Exception(ExceptionInfo):
-        type: typing.Literal["exception"]
+        type: typing.Literal["exception"] = "exception"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class ExceptionV2(pydantic.BaseModel):
-        type: typing.Literal["exceptionV2"]
+        type: typing.Literal["exceptionV2"] = "exceptionV2"
         value: resources_submission_types_exception_v_2_ExceptionV2
 
 

@@ -30,7 +30,6 @@ class EventInfo(pydantic.BaseModel):
     from seed.examples.resources.commons import EventInfo_Metadata
 
     EventInfo_Metadata(
-        type="metadata",
         id="metadata-alskjfg8",
         data={"one": "two"},
         json_string='{"one": "two"}',
@@ -73,14 +72,14 @@ class EventInfo(pydantic.BaseModel):
 
 class _EventInfo:
     class Metadata(resources_commons_resources_types_types_metadata_Metadata):
-        type: typing.Literal["metadata"]
+        type: typing.Literal["metadata"] = "metadata"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Tag(pydantic.BaseModel):
-        type: typing.Literal["tag"]
+        type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
 
 

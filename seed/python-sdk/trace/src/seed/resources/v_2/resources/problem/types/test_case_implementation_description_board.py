@@ -13,7 +13,7 @@ except ImportError:
 
 
 class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing.Literal["html"]
+    type: typing.Literal["html"] = "html"
     value: str
 
     class Config:
@@ -22,7 +22,7 @@ class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
 
 
 class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
-    type: typing.Literal["paramId"]
+    type: typing.Literal["paramId"] = "paramId"
     value: ParameterId
 
     class Config:

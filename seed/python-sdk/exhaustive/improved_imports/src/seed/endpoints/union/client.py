@@ -42,7 +42,6 @@ class UnionClient:
         )
         client.endpoints.union.get_and_return_union(
             request=Animal_Dog(
-                animal="dog",
                 name="string",
                 likes_to_woof=True,
             ),
@@ -105,7 +104,6 @@ class AsyncUnionClient:
         )
         await client.endpoints.union.get_and_return_union(
             request=Animal_Dog(
-                animal="dog",
                 name="string",
                 likes_to_woof=True,
             ),

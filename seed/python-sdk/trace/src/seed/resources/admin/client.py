@@ -134,7 +134,7 @@ class AdminClient:
                     "2024-01-15 09:30:00+00:00",
                 ),
                 update_info=TestSubmissionUpdateInfo_Running(
-                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                    value=RunningSubmissionState.QUEUEING_SUBMISSION
                 ),
             ),
         )
@@ -282,7 +282,7 @@ class AdminClient:
                     "2024-01-15 09:30:00+00:00",
                 ),
                 update_info=WorkspaceSubmissionUpdateInfo_Running(
-                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                    value=RunningSubmissionState.QUEUEING_SUBMISSION
                 ),
             ),
         )
@@ -376,9 +376,7 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -468,9 +466,7 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(),
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -555,9 +551,7 @@ class AdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(
-                    type="generic",
-                ),
+                exception_v_2=ExceptionV2_Generic(),
                 exception=ExceptionInfo(),
                 stdout="string",
             ),
@@ -567,9 +561,7 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -655,9 +647,7 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(),
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -813,7 +803,7 @@ class AsyncAdminClient:
                     "2024-01-15 09:30:00+00:00",
                 ),
                 update_info=TestSubmissionUpdateInfo_Running(
-                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                    value=RunningSubmissionState.QUEUEING_SUBMISSION
                 ),
             ),
         )
@@ -961,7 +951,7 @@ class AsyncAdminClient:
                     "2024-01-15 09:30:00+00:00",
                 ),
                 update_info=WorkspaceSubmissionUpdateInfo_Running(
-                    type="running", value=RunningSubmissionState.QUEUEING_SUBMISSION
+                    value=RunningSubmissionState.QUEUEING_SUBMISSION
                 ),
             ),
         )
@@ -1055,9 +1045,7 @@ class AsyncAdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -1147,9 +1135,7 @@ class AsyncAdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(),
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -1234,9 +1220,7 @@ class AsyncAdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(
-                    type="generic",
-                ),
+                exception_v_2=ExceptionV2_Generic(),
                 exception=ExceptionInfo(),
                 stdout="string",
             ),
@@ -1246,9 +1230,7 @@ class AsyncAdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",
@@ -1334,9 +1316,7 @@ class AsyncAdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(),
-                    return_value=DebugVariableValue_IntegerValue(
-                        type="integerValue", value=1
-                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(),
                     stack=StackInformation(),
                     stdout="string",

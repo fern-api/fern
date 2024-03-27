@@ -115,31 +115,31 @@ class SubmissionRequest(pydantic.BaseModel):
 
 class _SubmissionRequest:
     class InitializeProblemRequest(resources_submission_types_initialize_problem_request_InitializeProblemRequest):
-        type: typing.Literal["initializeProblemRequest"]
+        type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class InitializeWorkspaceRequest(pydantic.BaseModel):
-        type: typing.Literal["initializeWorkspaceRequest"]
+        type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class SubmitV2(SubmitRequestV2):
-        type: typing.Literal["submitV2"]
+        type: typing.Literal["submitV2"] = "submitV2"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
-        type: typing.Literal["workspaceSubmit"]
+        type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Stop(StopRequest):
-        type: typing.Literal["stop"]
+        type: typing.Literal["stop"] = "stop"
 
         class Config:
             allow_population_by_field_name = True

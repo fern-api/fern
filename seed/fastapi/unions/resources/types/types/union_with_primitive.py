@@ -54,11 +54,11 @@ class UnionWithPrimitive(pydantic.BaseModel):
 
 class _UnionWithPrimitive:
     class Integer(pydantic.BaseModel):
-        type: typing.Literal["integer"]
+        type: typing.Literal["integer"] = "integer"
         value: int
 
     class String(pydantic.BaseModel):
-        type: typing.Literal["string"]
+        type: typing.Literal["string"] = "string"
         value: str
 
 

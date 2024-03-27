@@ -78,21 +78,21 @@ class FunctionSignature(pydantic.BaseModel):
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):
-        type: typing.Literal["void"]
+        type: typing.Literal["void"] = "void"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class NonVoid(NonVoidFunctionSignature):
-        type: typing.Literal["nonVoid"]
+        type: typing.Literal["nonVoid"] = "nonVoid"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-        type: typing.Literal["voidThatTakesActualResult"]
+        type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
         class Config:
             allow_population_by_field_name = True

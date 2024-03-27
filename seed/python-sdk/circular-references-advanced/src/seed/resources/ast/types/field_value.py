@@ -14,7 +14,7 @@ except ImportError:
 
 
 class FieldValue_PrimitiveValue(pydantic.BaseModel):
-    type: typing.Literal["primitive_value"]
+    type: typing.Literal["primitive_value"] = "primitive_value"
     value: PrimitiveValue
 
     class Config:
@@ -23,7 +23,7 @@ class FieldValue_PrimitiveValue(pydantic.BaseModel):
 
 
 class FieldValue_ObjectValue(ObjectValue):
-    type: typing.Literal["object_value"]
+    type: typing.Literal["object_value"] = "object_value"
 
     class Config:
         frozen = True
@@ -33,7 +33,7 @@ class FieldValue_ObjectValue(ObjectValue):
 
 
 class FieldValue_ContainerValue(pydantic.BaseModel):
-    type: typing.Literal["container_value"]
+    type: typing.Literal["container_value"] = "container_value"
     value: ContainerValue
 
     class Config:

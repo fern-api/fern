@@ -47,7 +47,7 @@ class UnionWithLiteral(pydantic.BaseModel):
 
 class _UnionWithLiteral:
     class Fern(pydantic.BaseModel):
-        type: typing.Literal["fern"]
+        type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
 
 
