@@ -29,7 +29,6 @@ class Exception(pydantic.BaseModel):
     from seed.examples import Exception_Generic
 
     Exception_Generic(
-        type="generic",
         exception_type="Unavailable",
         exception_message="This component is unavailable!",
         exception_stacktrace="<logs>",

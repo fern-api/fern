@@ -30,7 +30,6 @@ class EventInfo(pydantic.BaseModel):
     from seed.examples.resources.commons import EventInfo_Metadata
 
     EventInfo_Metadata(
-        type="metadata",
         id="metadata-alskjfg8",
         data={"one": "two"},
         json_string='{"one": "two"}',

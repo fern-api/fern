@@ -27,7 +27,7 @@ class Data(pydantic.BaseModel):
     """
     from seed.examples.resources.commons import Data_String
 
-    Data_String(type="string", value="data")
+    Data_String(value="data")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
